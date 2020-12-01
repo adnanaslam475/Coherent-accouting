@@ -1,0 +1,67 @@
+<div>
+  <div class="text-right clearfix">
+    <label>Total sellers: {{retailers?.length}}</label>
+  </div>
+
+  <div class="card empty-div text-center" *ngIf="hideSpinner && retailers?.length == 0">
+    <app-empty-item-list></app-empty-item-list>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3" *ngFor="let retailer of retailers">
+
+      <ba-card baCardClass="list-2 button-panel df-size-button-panel box-shadow">
+        <div class="card-header">
+          <div class="username-tab" data-title="Username">
+        <span [title]="retailer?.countryName"
+              [class]="'flag-span flag-icon flag-icon-'+ retailer?.countryISOCode.toLowerCase()"></span>
+            <!-- <i class="fa fa-user-circle" aria-hidden="true"></i> -->
+            <a target="_blank" href="{{retailer?.url}}">
+              <span> {{retailer?.retailerUsername}}</span>
+            </a>
+            <div class="top-seller">
+              <img *ngIf="retailer?.topRated" class="top-seller-image" src="assets/image/top-seller.png" alt="top-rate">
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div data-title="FeedbackScore">
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            <label class="font-weight-bold">Feedback Score: </label>
+            <span> {{retailer?.feedbackScore}}</span>
+          </div>
+          <div data-title="SellerListings">
+            <i class="fa fa-cubes" aria-hidden="true"></i>
+            <label class="font-weight-bold">Listings: </label>
+            <span> {{retailer?.sellerListings}}</span>
+          </div>
+          <div data-title="sellThroughRate">
+            <i class="far fa-chart-bar" aria-hidden="true"></i>
+            <label class="font-weight-bold">Sell Through Rate: </label>
+            <span> {{retailer?.sellThroughRate}} %</span>
+          </div>
+          <div data-title="searchedDaysAgo">
+            <i class="fas fa-calendar-check" aria-hidden="true"></i>
+            <label class="font-weight-bold">Last Searched: </label>
+            <span> {{retailer?.searchedDaysAgo === null ? 'Never' : retailer?.searchedDaysAgo + ' Days ago'}} </span>
+          </div>
+          <div class="text-center" data-title="save">
+            <button type="button" class="tabledit-save-button btn btn-sm btn-primary" (click)="saveRetailer(retailer)">
+              <i class="fa fa-floppy-o" aria-hidden="true"></i>
+              Save
+            </button>
+            <button type="button" class="tabledit-save-button btn btn-sm btn-danger" (click)="deleteRetailer(retailer)">
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+              Remove
+            </button>
+          </div>
+        </div>
+      </ba-card>
+
+    </div>
+  </div>
+
+</div>
+<div *ngIf="!hideSpinner" class="loading-gif">
+  <ba-loader></ba-loader>
+</div>

@@ -1,0 +1,75 @@
+<div *ngIf="isLoaded">
+  <div class="row">
+      <div class="form-group col-sm-4 float-left total-number">
+          <label>Total tracking numbers: {{trackingList?.totalElements}}</label>
+      </div>
+      <label for="ddlpageSize" class="col-sm-5 col-form-label text-right">Page Size:</label>
+      <div class="form-group col-sm-3">
+          <select id="ddlpageSize" [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)" class="form-control">
+                  <option selected>20</option>
+                  <option>40</option>
+                  <option>60</option>
+                  <option>80</option>
+                  <option>100</option>
+              </select>
+      </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="card-deck mb-10 text-center">
+      <div *ngFor="let tracking of trackingList?.elements" class="card-new mb-5 box-shadow">
+          <div class="card-header">
+              <div data-title="trackingNumber">
+                  <i class="fa fa-barcode" aria-hidden="true"></i>
+                  <span>{{tracking?.trackingNumber}}</span>
+              </div>
+          </div>
+          <div class="card-body text-left">
+              <div data-title="Status">
+                  <i class="fa fa-tags fa-smaller" aria-hidden="true"></i>
+                  <label class="font-weight-bold">Status: </label>
+                  <i *ngIf="trackingStatusList[trackingStatus.STATUS_DELIVERED] === tracking?.trackingStatus" class="fa fa-check" matTooltip="Delivered!" [matTooltipPosition]="'right'"></i>
+                  <i *ngIf="trackingStatusList[trackingStatus.STATUS_TRANSIT] === tracking?.trackingStatus" class="fa fa-plane" matTooltip="In Transit!" [matTooltipPosition]="'right'"></i>
+                  <i *ngIf="trackingStatusList[trackingStatus.STATUS_EXPIRED] === tracking?.trackingStatus" class="fa fa-times" matTooltip="Expired!" [matTooltipPosition]="'right'"></i>
+              </div>
+              <div data-title="DeliveryDate" *ngIf="tracking.shippingDate">
+                  <i class="fa fa-calendar fa-smaller" aria-hidden="true"></i>
+                  <label class="font-weight-bold">Shipping Date: </label>
+                  <span> {{tracking?.shippingDate}}</span>
+              </div>
+              <div data-title="City" *ngIf="tracking.shippingCity">
+                  <i class="fa fa-compass" aria-hidden="true"></i>
+                  <label class="font-weight-bold">Shipping City: </label>
+                  <span> {{tracking?.shippingCity}}</span>
+              </div>
+              <div data-title="State" *ngIf="tracking.shippingState">
+                  <i class="fa fa-compass" aria-hidden="true"></i>
+                  <label class="font-weight-bold">Shipping State: </label>
+                  <span> {{tracking?.shippingState}}</span>
+              </div>
+              <div data-title="Delivery Date" *ngIf="tracking.deliveryDate">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                  <label class="font-weight-bold">Delivery Date: </label>
+                  <span> {{tracking?.deliveryDate}}</span>
+              </div>
+              <div data-title="Delivery City" *ngIf="tracking.deliveryCity">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  <label class="font-weight-bold">Delivery City: </label>
+                  <span> {{tracking?.deliveryCity}}</span>
+              </div>
+              <div data-title="Delivery State" *ngIf="tracking.deliveryState">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  <label class="font-weight-bold">Delivery State: </label>
+                  <span> {{tracking?.deliveryState}}</span>
+              </div>
+              
+          </div>
+      </div>
+  </div>
+</div>
+<div class="pageionation-custom">
+  <pagination [boundaryLinks]="true" [maxSize]="paginationMaxSize" [rotate]="false" [totalItems]="trackingList?.totalElements" (pageChanged)="pageChanged($event)" [itemsPerPage]="pageSize" class="pagination-sm"></pagination>
+</div>
+
+<div *ngIf="!isLoaded" class="loading-gif">
+<ba-loader></ba-loader>
+</div>

@@ -1,0 +1,19 @@
+@import "../../../../assets/scss/base/variables";
+.mat-dialog-container {
+    background: #fff;
+    color: $middle-gray;
+}
+
+.mat-dialog-title {
+    border-bottom: 1px solid $middle-gray;
+}
+
+.mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mat-dialog-content {
+    overflow-x: hidden;
+    color: $middle-gray;
+}

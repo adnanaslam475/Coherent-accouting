@@ -1,0 +1,25 @@
+#formDiv {
+    width: 90%;
+    padding: 10px;
+}
+
+.inline-div {
+    display: inline-block;
+}
+
+.line {
+    border-bottom: 1px solid black;
+}
+
+.upload-label {
+    padding-right: 0px;
+    text-align: right;
+}
+
+.back-btn {
+    cursor: pointer;
+}
+
+.button-div {
+    padding: 0 !important;
+}

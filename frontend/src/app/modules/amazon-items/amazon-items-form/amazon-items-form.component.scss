@@ -1,0 +1,19 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.mat-toggles-wrapper {
+  font-size: 0;
+
+  mat-slide-toggle {
+    width: 33.3333%;
+    margin-bottom: 5px;
+    padding-right: 5px;
+  }
+}
+
+.filters {
+  > .row {
+    margin-bottom: 15px;
+  }
+}
+
+

@@ -1,0 +1,219 @@
+<div class="clearfix"></div>
+
+<app-item-user-statistics [retailerUserName]="searchItemsListParam?.retailerUserName" [totalPrice]="totalPrice"
+                          [avgPrice]="avgPrice" [totalItems]="itemsList?.length"></app-item-user-statistics>
+
+<div *ngIf="isLoaded">
+
+  <div class="pagination-custom">
+    <pagination #pagination [boundaryLinks]="true" [(ngModel)]="searchItemsListParam.pageNumber"
+                [maxSize]="paginationMaxSize" [rotate]="false"
+                [totalItems]="totalItems" (pageChanged)="pageChanged($event)"
+                [itemsPerPage]="pageSize" class="pagination-sm"></pagination>
+  </div>
+
+  <div class="card text-center" *ngIf="hideSpinner && itemsList?.length == 0">
+    <app-empty-item-list></app-empty-item-list>
+  </div>
+
+  <ba-card baCardClass="button-panel df-size-button-panel box-shadow">
+    <div class="filters-top row">
+      <div class="col-sm-12 text-right">
+
+        <div class="filters-top-item">
+          <label for="ddlSortField">Sort By:</label>
+          <select id="ddlSortField" (change)="onSortFieldChange($event.target.value)" class="form-control">
+            <option selected value="searchTimesSold">Sold for search</option>
+            <option value="timesSold">Total Sold</option>
+            <option value="saleDate">Last Sale Date</option>
+          </select>
+        </div>
+
+        <div class="filters-top-item">
+          <label for="ddlSortOrder">Order By:</label>
+          <select id="ddlSortOrder" (change)="onSortOrderChange($event.target.value)" class="form-control">
+            <option value="asc">Ascending</option>
+            <option value="desc" selected>Descending</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </ba-card>
+
+  <ba-card *ngFor="let item of itemsList" baCardClass="list-1 button-panel df-size-button-panel box-shadow">
+    <div class="row">
+      <div [ngClass]="{
+          'col-5': (item?.bestMatch),
+          'col': (!item?.bestMatch)
+        }">
+        <div class="row">
+          <div class="col-auto pr-0 text-center">
+            <app-image [src]="item?.picture" [alt]="item?.itemTitle"></app-image>
+          </div>
+
+          <div class="col text-ellipsis">
+
+            <a class="item-title mb-2 text-ellipsis" target="_blank " [attr.href]="item?.url"
+               tooltip="{{item?.itemTitle}}">
+              <span *ngIf="item?.itemTitle" class="font-weight-bold "> {{item?.itemTitle}}</span>
+              <span *ngIf="!item?.itemTitle" class="float-right ">N/A</span>
+            </a>
+
+            <div class="row">
+              <div class="col">
+                <!-- PRICE -->
+                <div class="col-item">
+                  <i class="fa fa-money fa-smaller " aria-hidden="true"></i>
+                  <label class="col-item-key">Price: </label>
+                  <span class="col-item-value price-color">
+                {{item?.price ? item?.price : 'N/A'}}
+              </span>
+                </div>
+                <!-- LAST SALE -->
+                <div class="col-item">
+                  <i class="fa fa-calendar fa-smaller " aria-hidden="true"></i>
+                  <label class="col-item-key">Last sale: </label>
+                  <span class="col-item-value">
+                {{item?.saleDate ? item?.saleDate : 'N/A'}}
+              </span>
+                </div>
+              </div>
+              <div class="col">
+                <!-- SOLD FOR SEARCH / TIMES SOLD -->
+                <div class="col-item">
+                  <i class="fa fa-paper-plane fa-smaller " aria-hidden="true"></i>
+                  <label class="col-item-key">
+                    Sold for search<span *ngIf="item.timesSold"> / total sold</span>:
+                  </label>
+                  <span class="col-item-value">
+                {{item?.searchTimesSold ? item?.searchTimesSold : 'N/A'}}
+                    <span *ngIf="item.timesSold"> / {{item?.timesSold}}</span>
+              </span>
+                </div>
+                <!-- UPC -->
+                <div class="col-item">
+                  <i class="fa fa-barcode fa-smaller " aria-hidden="true"></i>
+                  <label class="col-item-key">UPC: </label>
+                  <span class="col-item-value">
+                {{item?.upc ? item?.upc : 'N/A'}}
+              </span>
+                </div>
+              </div>
+              <div class="col">
+                <!-- ORDERS -->
+                <div class="col-item">
+                  <i class="fa fa-area-chart fa-smaller " aria-hidden="true"></i>
+                  <label class="col-item-key">Orders: </label>
+                  <span class="col-item-value">
+                <span class="fa-stack" (click)="openOrders(item?.orders); ">
+                  <i class="fa fa-square-o fa-stack-2x "></i>
+                  <i class="fa fa-bar-chart fa-stack-1x "></i>
+                </span>
+              </span>
+                </div>
+                <!-- SUPPLIERS -->
+                <div class="col-item">
+                  <i class="fa fa-cube fa-smaller " aria-hidden="true"></i>
+                  <label class="col-item-key">Find Supplier: </label>
+                  <span class="col-item-value">
+                <span class="fa-stack icon-red" (click)="openMoreDetails(item);">
+                  <i class="fa fa-bullseye fa-stack-2x "></i>
+                </span>
+              </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="item?.bestMatch" class="col-4">
+        <div class="row" *ngIf="item?.bestMatch && item?.bestMatch.amazonUrl ">
+          <div class="col-auto pr-0 text-center">
+            <app-image [src]="item?.bestMatch.amazonPicture" [alt]="item?.bestMatch.amazonTitle"></app-image>
+          </div>
+          <div class="col text-ellipsis">
+            <!-- AMAZON-TITLE -->
+            <a class="item-title" target="_blank " [attr.href]="item?.bestMatch.amazonUrl"
+               tooltip="{{item?.bestMatch.amazonTitle}}">
+              <span *ngIf="item?.bestMatch.amazonTitle"
+                    class="font-weight-bold "> {{item?.bestMatch.amazonTitle}}</span>
+              <span *ngIf="!item?.bestMatch.amazonTitle" class="float-right ">N/A</span>
+            </a>
+            <!-- AMAZON-INFO -->
+            <div class="col-item">
+              <i class="fa fa-money fa-smaller " aria-hidden="true"></i>
+              <label class="col-item-key">Price: </label>
+              <span class="col-item-value">
+                {{item?.bestMatch.amazonPrice ? item?.bestMatch.amazonPrice : 'N/A'}}
+              </span>
+            </div>
+            <!-- MORE AMAZON ITEMS -->
+            <div class="col-item">
+              <i class="fa fa-cube fa-smaller " aria-hidden="true"></i>
+              <label class="col-item-key">More Source Items: </label>
+              <span class="col-item-value">
+                <i class="float-right fa fa-amazon-items" (click)="openMoreDetails(item);"></i>
+              </span>
+            </div>
+            <!--ASIN -->
+            <div class="col-item">
+              <i class="fa fa-barcode fa-smaller " aria-hidden="true"></i>
+              <label class="col-item-key">ASIN: </label>
+              <span class="col-item-value">
+                <span *ngIf="item?.bestMatch.asin" class="float-right"> {{item?.bestMatch.asin}}</span>
+                <img *ngIf="!item?.bestMatch && !item?.bestMatch.asin" class="loader-property"
+                     src="assets/image/loading.gif" alt="loading"/>
+              </span>
+            </div>
+            <!-- AMAZON PRIME OR ADD_ON -->
+            <div class="col-item" *ngIf="item?.bestMatch.prime || item?.bestMatch.addOn">
+              <i class="fa fa-tags fa-smaller " aria-hidden="true"></i>
+              <label class="col-item-key"></label>
+              <span class="col-item-value">
+                 <img *ngIf="(item?.bestMatch.prime)" class="prime-item" src="assets/image/checkprime.png" alt="Prime"
+                      style="max-width: 70px;"/>
+                  <i *ngIf="item?.bestMatch.addOn && !item?.bestMatch.prime" class="addon-item sh-icon sh-icon-addon">Add-on Item</i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!item?.bestMatch?.amazonUrl" class="no-item-img">
+          <img src="assets/image/productnotavl.jpg" alt="no-item"/>
+        </div>
+      </div>
+
+      <div *ngIf="item?.bestMatch" class="col-1 d-flex flex-column text-center profit-div justify-content-center">
+        <div class="header uppercase">
+          Profit
+        </div>
+        <div class="contet text-center">
+          <div class="d-block">
+            <i class="fa fa-usd" aria-hidden="true"></i>
+          </div>
+          <div class="d-block price-color"
+               [ngClass]="{'price-color-green': item?.profit >= 0}">
+            <span>{{item?.profit}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-2 d-flex flex-column actions justify-content-center">
+        <button type="button" class="btn btn-sm mb-2 btn-primary" (click)="saveItems(item)">
+          <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          Save
+        </button>
+        <button type="button" class="btn btn-sm btn-danger" (click)="deleteItem(item)">
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
+          Remove
+        </button>
+      </div>
+    </div>
+
+  </ba-card>
+</div>
+
+<div *ngIf="!hideSpinner" class="loading-gif">
+  <ba-loader></ba-loader>
+</div>

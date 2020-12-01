@@ -1,0 +1,157 @@
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Bronze</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="the-price">
+                        <h1>
+                            $9.99<span class="subscript">/mo</span></h1>
+                        <small>7 days FREE trial</small>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <i class="fa fa-binoculars"></i>Unlimited search for Sellers
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>
+                                <i class="fa fa-briefcase"></i>Unlimited saved sellers
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="fa fa-bar-chart-o"></i>Unlimited sellers analysys
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" (click)="makePayment()">pay</button>
+                    <div id="paypal-button-container"></div>
+                    <ngx-paypal [config]="payPalConfig" (click)="makePayment()"></ngx-paypal>
+                    <a href="http://www.jquery2dotnet.com" class="btn btn-success" role="button">Sign Up</a> 1 month FREE trial</div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+<div *ngIf="!loading" class="table-responsive">
+    <div class="membership-pricing-table">
+        <table>
+            <tbody>
+                <tr>
+                    <th></th>
+                    <th class="plan-header plan-header-blue">
+                        <div class="pricing-plan-name">1 month</div>
+                        <div class="pricing-plan-price">
+                            <sup>$</sup><s class="cross"><span class=price-color>19<span>.99</span></span></s>
+                            <span class="new-price"><sup>$</sup>9<span>.99</span></span>
+                        </div>
+                        <!-- <div class="pricing-plan-period">1 month</div> -->
+                    </th>
+                    <th class="plan-header plan-header-standard">
+                        <div class="header-plan-inner">
+                            <!--<span class="plan-head"> </span>-->
+                            <span class="recommended-plan-ribbon">RECOMMENDED</span>
+                            <div class="pricing-plan-name">3 month</div>
+                            <div class="pricing-plan-price">
+                                <sup>$</sup><s class="cross"><span class=price-color>49<span>.99</span></span></s>
+                                <span class="new-price-second"><sup>$</sup>24<span>.99</span></span>
+                            </div>
+                            <!-- <div class="pricing-plan-period">6 month</div> -->
+                        </div>
+                    </th>
+                    <th class="plan-header plan-header-blue">
+                        <div class="pricing-plan-name">6 month</div>
+                        <div class="pricing-plan-price">
+                            <sup>$</sup><s class="cross"><span class=price-color>89<span>.99</span></span></s>
+                            <span class="new-price"><sup>$</sup>49<span>.99</span></span>
+                        </div>
+                        <!-- <div class="pricing-plan-period">3 month</div> -->
+                    </th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="action-header">
+                        <a class="payment-button" (click)="makePayment(ONE_MONTH, oneMonths)">
+                            <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/buy-logo-small.png" alt="Buy now with PayPal" />
+                        </a>
+                    </td>
+                    <td class="action-header">
+                        <a class="payment-button" (click)="makePayment(THREE_MONTH, threeMonths)">
+                            <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/buy-logo-small.png" alt="Buy now with PayPal" />
+                        </a>
+                    </td>
+                    <td class="action-header">
+                        <a class="payment-button" (click)="makePayment(SIX_MONTH, sixMonths)">
+                            <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/buy-logo-small.png" alt="Buy now with PayPal" />
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Unlimited search for Sellers:</td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                </tr>
+                <tr>
+                    <td>Unlimited saved sellers:</td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                </tr>
+                <tr>
+                    <td>Unlimited sellers analysys:</td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                </tr>
+                <tr>
+                    <td>Unlimited search for items:</td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                </tr>
+                <tr>
+                    <td>Unlimited saved items:</td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                </tr>
+                <tr>
+                    <td>Unlimited items analysys:</td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                </tr>
+                <tr>
+                    <td>Unlimited search for trakings:</td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                </tr>
+                <tr>
+                    <td>Unlimited saved trackings:</td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                </tr>
+                <tr>
+                    <td>Status update of trackings:</td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                    <td><span class="fas fa-check-circle"></span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div *ngIf="loading" class="loading-gif">
+    <img src="assets/image/loading.gif" alt="loading" />
+</div>

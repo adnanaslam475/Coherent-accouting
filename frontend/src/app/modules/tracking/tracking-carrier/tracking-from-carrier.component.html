@@ -1,0 +1,50 @@
+
+
+      <div class="panel panel-default" *ngIf="!isFormSubmited">
+        <div class="panel-body form-horizontal">
+            <form [formGroup]="trackingFormByCarrier" (ngSubmit)="searchTrackingByCarrier(trackingFormByCarrier)" #form="ngForm">
+                
+                <div class="form-group row" [ngClass]="{'has-error': !readOnly && trackingFormByCarrier.controls['shippingDateFrom'].invalid && (trackingFormByCarrier.controls['shippingDateFrom'].touched || form.submitted)}">
+                    <label for="shippingDateFrom" class="col-form-label control-label">Shipping date from: </label>
+                    
+                    <div class="col-sm-3">
+                        <input id="shippingDateFrom" matInput [matDatepicker]="shippingDateFrom" formControlName="shippingDateFrom" [max]="maxDate">
+                        <mat-datepicker-toggle matSuffix [for]="shippingDateFrom"></mat-datepicker-toggle>
+                        <mat-datepicker #shippingDateFrom></mat-datepicker>
+                            
+                    </div>
+                    <label for="shippingDateTo" class="col-form-label control-label">Shipping date to: </label>
+                    <div class="col-sm-3">
+                        <input id="shippingDateTo" matInput [matDatepicker]="shippingDateTo" formControlName="shippingDateTo" [max]="maxDate">
+                        <mat-datepicker-toggle matSuffix [for]="shippingDateTo"></mat-datepicker-toggle>
+                        <mat-datepicker #shippingDateTo></mat-datepicker>
+                            
+                    </div>
+                    <div class="col-sm-3">
+                        <select [formControl]=" trackingFormByCarrier.controls['carrier']" class="form-control" name="carrier">
+                            <option selected ="selected"  value="fedex">FEDEX</option>
+                            <!-- <option selected ="selected" value="usps">USPS</option> -->
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary">
+                             <i class="fas fa-search" aria-hidden="true"></i> Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div *ngIf="isFormSubmited">
+        <div class="row">
+            <div class="col-sm-4 col-form-label text-left">
+                <a class="btn btn-default" (click)="isFormSubmited = !isFormSubmited">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    <span class="back-btn">Back</span>
+                </a>
+            </div>
+        </div>
+        <app-tracking-carrier-list [searchTrackingParamsByCarrier]="searchTrackingParamsByCarrier"></app-tracking-carrier-list>
+    </div>
+    

@@ -1,0 +1,25 @@
+.xlsx,
+.xls,
+.csv,
+.txt {
+    margin: 4px 0;
+}
+
+.xlsx:before,
+.xls:before,
+.csv:before,
+.txt:before {
+    margin-right: 10px;
+    padding: 11px 15px 12px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.txt:before {
+    content: "";
+    background: purple url(../../../../assets/image/txt.svg) no-repeat center;
+}
+
+.xls:before {
+    content: "";
+    background: green url(../../../../assets/image/xls.svg) no-repeat center;
+}

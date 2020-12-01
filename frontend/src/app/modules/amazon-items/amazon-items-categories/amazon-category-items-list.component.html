@@ -1,0 +1,43 @@
+<div>
+   <div *ngIf="hideSpinner">
+     <div class="categories-form">
+       <div class="row">
+         <label for="category" class="col-sm-4 col-form-label">Category:</label>
+         <div class="form-group col-sm-8">
+             <select id="category" class="form-control" [(ngModel)]="selectedCategory" (ngModelChange)="retrieveSubCategories(selectedCategory?.category)">
+                 <option *ngFor="let category of categories" [ngValue]="category" >{{ category.name }}</option>
+             </select>
+         </div>
+       </div>
+       <div class="row">
+         <label for="subCategory" class="col-sm-4 col-form-label">Sub category:</label>
+         <div class="form-group col-sm-8" >
+             <select id="subCategory" class="form-control" [(ngModel)]="selectedSubCategory" (ngModelChange)="retrieveSubSubCategories(selectedSubCategory?.category)">
+                 <option *ngFor="let category of subCategories" [ngValue]="category" >{{ category.name }}</option>
+             </select>
+         </div>
+       </div>
+       <div class="row">
+         <label for="subSubCategory" class="col-sm-4 col-form-label">Sub sub category:</label>
+         <div class="form-group col-sm-8">
+             <select id="subSubCategory" class="form-control" [(ngModel)]="selectedSubSubCategory">
+                 <option *ngFor="let category of subSubCategories" [ngValue]="category" >{{ category.name }}</option>
+             </select>
+         </div>
+       </div>
+       <div class="row submit-search">
+         <div class="col-sm-12">
+             <button type="button" class="btn btn-primary export-btn" (click)="retrieveItemsData()">Submit</button>
+         </div>
+       </div>
+     </div>
+     <div class="row category-items" *ngFor="let rowItems of rows">
+       <top-item class="col-3" *ngFor="let item of rowItems" [item]="item"></top-item>
+     </div>
+   </div>
+   <div class="pageionation-custom" *ngIf="rows && rows.length > 0">
+       <pagination  [boundaryLinks]="false" [maxSize]="2" [rotate]="false"
+       [totalItems]="100" (pageChanged)="pageChanged($event)"
+        [itemsPerPage]="50" class="pagination-sm"></pagination>
+   </div>
+</div>

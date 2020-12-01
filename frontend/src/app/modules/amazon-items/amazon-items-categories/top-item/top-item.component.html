@@ -1,0 +1,25 @@
+<ba-card baCardClass="button-panel df-size-button-panel box-shadow">
+  <span class="item-badge">
+    <span class="item-badge-label">
+      <span class="item-badge-text">{{item?.rank}}</span>
+    </span>
+  </span>
+  <div class="item-content">
+    <div class="item-image">
+      <img src="{{item.amazonImage}}" width="200" height="200" [alt]="item?.amazonTitle">
+    </div>
+    <a target="_blank" title="{{item?.amazonTitle}})" href="{{item?.amazonUrl}}">
+      <h2 class="item-title">{{item?.amazonTitle}}</h2>
+    </a>
+    <div class="row align-items-center">
+      <bar-rating  class="col-auto" [(rate)]="item.amazonRating" [max]="5" [theme]="'stars'" [readOnly]="true" [showText]="false"></bar-rating>
+      <a class="item-reviews" target="_blank" href="{{item?.amazonUrl+'#customerReviews'}}">{{item?.amazonReviews}}</a>
+    </div>
+    <div class="row align-items-center">
+      <span class="col item-price float-right price-color">{{item?.amazonPrice}}</span>
+      <div *ngIf="item?.prime" class="col-auto">
+          <img alt="Prime" src="assets/image/checkprime.png">
+      </div>
+    </div>
+  </div>
+</ba-card>

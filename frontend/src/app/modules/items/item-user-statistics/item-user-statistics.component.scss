@@ -1,0 +1,135 @@
+.content {
+    flex-direction: column;
+}
+
+.card-deck {
+    padding-top: 20px;
+    margin: 0 auto;
+}
+
+.card-new {
+    width: 22%;
+    padding: 5px;
+    z-index: 2;
+    background: #fff;
+    border: 1px solid #ccc;
+    -webkit-box-shadow: 6px 6px 5px rgba(0, 0, 0, 0.4);
+    box-shadow: 6px 6px 5px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.13);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.13);
+}
+
+.card-title {
+    // margin-top: 50px;
+    color: white;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.card-body {
+    padding: 0;
+}
+
+.card-icon {
+    font-size: 70px;
+    color: white;
+}
+
+.title-div {
+    margin-top: 10px;
+}
+
+.first-card {
+    background-color: #03A5DB;
+    .title-div {
+        margin-left: 20px;
+    }
+}
+
+.second-card {
+    background-color: #52E89E;
+    .title-div {
+        margin-left: 20px;
+    }
+}
+
+.third-card {
+    background-color: #FE9C1C;
+}
+
+@media screen and (min-width: 600px) and (max-width: 1330px) {
+    .third-card {
+        .title-div {
+            width: 50%;
+        }
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1250px) {
+    app-api-card {
+        margin: 0 4px 0 0;
+        &.last {
+            margin: 0 0 0 0;
+        }
+    }
+    app-github {
+        margin: 20px -30px -20px;
+    }
+    .card-body {
+        margin-left: 25%;
+    }
+    .title-div {
+        margin-top: 10px;
+    }
+    .first-card {
+        background-color: #03A5DB;
+        .title-div {
+            margin-left: 0px;
+        }
+    }
+    .second-card {
+        background-color: #52E89E;
+        .title-div {
+            margin-left: 0px;
+        }
+    }
+    .third-card {
+        .title-div {
+            margin-left: -15px;
+            width: auto;
+        }
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .content {
+        /* https://github.com/angular/flex-layout/issues/295 */
+        display: block !important;
+    }
+    app-api-card {
+        /* https://github.com/angular/flex-layout/issues/295 */
+        display: block !important;
+        margin: 0 0 12px 0;
+    }
+    app-github {
+        margin: 8px -12px -8px;
+    }
+    .card-body {
+        margin-left: 20%;
+    }
+    .title-div {
+        margin-top: 10px;
+    }
+    .first-card {
+        background-color: #03A5DB;
+        .title-div {
+            margin-left: 0px;
+        }
+    }
+    .second-card {
+        background-color: #52E89E;
+        .title-div {
+            margin-left: 0px;
+        }
+    }
+}

@@ -1,0 +1,149 @@
+<div class="row">
+  <div class="col-sm-12" *ngIf="dataSource">
+      <div class="example-container mat-elevation-z8">
+          <mat-table matSort (matSortChange)="sortData($event)" #table [dataSource]="dataSource">
+        
+            <!-- Image Column -->
+            <ng-container matColumnDef="amazonImage">
+              <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+
+              <mat-cell *matCellDef="let element">
+                <img [src]="element.amazonImage" [alt]="element.amazonTitle">
+              </mat-cell>
+            </ng-container>
+        
+            <!-- Product Info Column -->
+            <ng-container matColumnDef="amazonTitle">
+              <mat-header-cell *matHeaderCellDef> Product Info </mat-header-cell>
+              <mat-cell class="p-2" *matCellDef="let element" tooltip="{{element.amazonTitle}}" placement="top" hide-delay="0">
+                <a [href]="element.amazonUrl" target="_blank">{{element.amazonTitle}}</a>
+                <!-- Brand -->
+                <span class="subinformation">Brand: 
+                  <span class="brand-subinformation">{{element?.brandItem}}</span>
+                </span>
+                <!-- ASIN -->
+                <span class="subinformation text-uppercase">ASIN: 
+                  <span class="asin-subinformation">{{element?.asin}}</span>
+                </span>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Seller info -->
+            <ng-container matColumnDef="sellerInfo">
+              <mat-header-cell *matHeaderCellDef>Seller Info</mat-header-cell>
+              <mat-cell *matCellDef="let element" class="text-left">
+                <!-- Seller Name -->
+                <span class="subinformation">
+                  <span class="font-weight-bold">Seller Name:</span>
+                  <span class="seller-type-suinformation">{{element?.sellerName}}</span>
+                </span>
+                <!-- Seller Type -->
+                <span class="subinformation">
+                  <span class="font-weight-bold">Seller Type:</span>
+                  <span class="seller-type-suinformation">{{element?.sellerType}}</span>
+                </span>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Category (BSR) Column -->
+            <ng-container matColumnDef="amazonCategory">
+              <mat-header-cell *matHeaderCellDef>Category (BSR) </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                  <button class="btn btn-sm btn-primary btn-icon" type="button"
+                    (click)="openCategoryDetails($event, element?.amazonRanks)">
+                    <i class="fa fa-info" aria-hidden="true"></i>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Price Column -->
+            <ng-container matColumnDef="amazonPrice">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Price
+                <ng-container *ngTemplateOutlet="arrowRef; context: {$implicit: 'amazonPrice'}"></ng-container>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.amazonPrice}} </mat-cell>
+            </ng-container>
+
+            <!-- Profit Column -->
+            <ng-container matColumnDef="profit">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Profit
+                <ng-container *ngTemplateOutlet="arrowRef; context: {$implicit: 'profit'}"></ng-container>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.profit}} </mat-cell>
+            </ng-container>
+
+            <!-- No. Sellers Column -->
+            <ng-container matColumnDef="numberOfAmazonSellers">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                No. Sellers
+                <ng-container *ngTemplateOutlet="arrowRef; context: {$implicit: 'numberOfAmazonSellers'}"></ng-container>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.numberOfAmazonSellers}} </mat-cell>
+            </ng-container>
+
+            <!-- Avg Rating Column -->
+            <ng-container matColumnDef="amazonRating">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Avg. Rating
+                <ng-container *ngTemplateOutlet="arrowRef; context: {$implicit: 'amazonRating'}"></ng-container>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <bar-rating *ngIf="element && element.amazonRating" [(rate)]="element.amazonRating" [max]="5" [theme]="'stars'" [readOnly]="true" [showText]="false"></bar-rating>
+                <span>{{element?.amazonRating}}</span>
+                <div *ngIf="element?.amazonRating ">
+                  <i *ngIf="!element?.amazonRating ">N/A</i>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Reviews Column -->
+            <ng-container matColumnDef="amazonReviews">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Reviews
+                <ng-container *ngTemplateOutlet="arrowRef; context: {$implicit: 'amazonReviews'}"></ng-container>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <span *ngIf="element && element.amazonReviews">{{element.amazonReviews}}</span>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Sales/Month Column -->
+            <ng-container matColumnDef="estimatedSalesPerMonth">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Sales Per Month 
+                <ng-container *ngTemplateOutlet="arrowRef; context: {$implicit: 'estimatedSalesPerMonth'}"></ng-container>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.estimatedSalesPerMonth}} </mat-cell>
+            </ng-container>
+
+            <!-- Fees Column -->
+            <ng-container matColumnDef="fee">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Fees
+                <ng-container *ngTemplateOutlet="arrowRef; context: {$implicit: 'fee'}"></ng-container>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.fee}} </mat-cell>
+            </ng-container>
+        
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"
+                     (click)="selection.toggle(row)">
+            </mat-row>
+          </mat-table>
+        </div>
+  </div>
+</div>
+
+<!-- Sort Arrow -->
+<ng-template #arrowRef let-item>
+  <div class="mat-sort-header-arrow mat-custom-arrow" [class.active-arrow]="sortColumnsData?.active === item">
+    <div class="mat-sort-header-stem"></div>
+    <div class="mat-sort-header-indicator" [@indicator]="getArrowDirection()">
+      <div class="mat-sort-header-pointer-left" [@leftPointer]="getArrowDirection()"></div>
+      <div class="mat-sort-header-pointer-right" [@rightPointer]="getArrowDirection()"></div>
+      <div class="mat-sort-header-pointer-middle"></div>
+    </div>
+  </div>
+</ng-template>

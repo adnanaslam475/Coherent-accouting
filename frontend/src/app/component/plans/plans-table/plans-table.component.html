@@ -1,0 +1,35 @@
+<div class="table-responsive">
+    <div class="membership-pricing-table">
+        <table>
+            <tbody>
+                <tr>
+                    <th></th>
+                    <th class="plan-header plan-header-blue" *ngFor="let subscribed of tableData.names; let i = index">
+                        <div class="header-plan-inner">
+                            <span *ngIf="tableData.recommended[i]" class="recommended-plan-ribbon">RECOMMENDED</span>
+                            <div class="pricing-plan-name">{{tableData.months[i]}} {{tableData.months[i] === 1 ?
+                                'month' : 'months'}}</div>
+                            <div class="pricing-plan-name">{{tableData.fees[i]}}$</div>
+                            <div class="pricing-plan-name">{{tableData.names[i]}}</div>
+                            <div *ngIf="tableData.trackingLimits[i]" class="pricing-plan-name"> {{tableData.trackingLimits[i]}} trackings/day</div>
+                        </div>
+                    </th>
+                </tr>
+                <tr *ngFor="let propertiesDesc of plansProperties">
+                    <td>{{propertiesDesc.name}}</td>
+                    <td *ngFor="let propertyData of tableData[propertiesDesc.property]">
+                        <span class="fas" [ngClass]="{'fa-check-circle': propertyData, 'fa-times-circle': !propertyData}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="action-header" *ngFor="let fee of tableData.fees; let i = index">
+                        <a class="payment-button" (click)="makePayment(i)">
+                            <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/buy-logo-small.png" alt="Buy now with PayPal" />
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

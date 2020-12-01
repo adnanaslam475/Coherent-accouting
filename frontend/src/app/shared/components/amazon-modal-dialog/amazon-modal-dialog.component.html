@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>More Source Items</h2>
+<mat-dialog-content *ngIf="amazonList && amazonList.length > 0">
+  <ba-card *ngFor="let item of amazonList" baCardClass="list-1 button-panel df-size-button-panel box-shadow"
+           (click)="saveItem(item)">
+    <!-- AMAZON-ITEMS -->
+    <div *ngIf="item && item?.sourceUrl">
+
+      <div class="row">
+        <div class="col-md-2 align-self-center text-center">
+          <div class="item-image-wrapper">
+            <div class="item-image">
+              <img *ngIf="item?.sourceImage " [src]="item?.sourceImage" [alt]="item?.sourceTitle ">
+              <img *ngIf="!item?.sourceImage " src="assets/image/default-img.png " [alt]="item?.sourceTitle ">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <div class="mb-3">
+            <ng-container *ngIf="item?.prime || item?.addOn">
+              <img *ngIf="(item?.prime && !item?.addOn) || (item?.prime && item?.addOn)"
+                   class="prime-item"
+                   src="assets/image/checkprime.png" alt="Prime"/>
+              <i *ngIf="item?.addOn && !item?.prime"
+                 class="addon-item sh-icon sh-icon-addon">Add-on Item</i>
+            </ng-container>
+
+            <a target="_blank " [attr.href]="item?.amazonUrl" (click)="preventClose($event)">
+              <span *ngIf="item?.sourceTitle" class="font-weight-bold "> {{item?.sourceTitle}}</span>
+              <span *ngIf="!item?.sourceTitle" class="float-right ">N/A</span>
+            </a>
+          </div>
+
+          <div class="col-item" data-title="Price">
+            <i class="fa fa-money fa-smaller " aria-hidden="true "></i>
+            <label class="col-item-key">Price: </label>
+            <span class="price-color">{{item?.sourcePrice ? item?.sourcePrice : 'N/A'}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="!item?.sourceUrl" class="no-item-img">
+      <img src="assets/image/productnotavl.jpg" alt="no-item"/>
+    </div>
+  </ba-card>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="btn btn-default" (click)="close()">Close</button>
+</mat-dialog-actions>

@@ -1,0 +1,84 @@
+.referral-discount {
+  margin: 0;
+  width: 100%;
+  padding: 10px;
+  justify-content: center;
+  color: white;
+
+  &.referral-discount-green {
+    background: #03ac03;
+  }
+
+  &.referral-discount-red {
+    background: red;
+  }
+}
+
+.icon { 
+  display: block;
+  width: 30px;
+  height: 33px;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+}
+
+.success-icon {
+  background-image: url('../../../assets/img/success-icon.png');
+}
+
+.false-icon {
+  background-image: url('../../../assets/img/false-icon.png');
+}
+
+
+.ref-url-content {
+  label { 
+    width: 100%;
+  }
+
+  input {
+    width: 80%;
+    padding: 0 10px;
+    font-size: 13px;
+    color: #333;
+    vertical-align: middle;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.075);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .input-group-button {
+    width: 1%;
+    vertical-align: middle;
+
+    .btn {
+      margin-left: -1px;
+      position: relative;
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc,#eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-appearance: none
+    }
+  }
+}

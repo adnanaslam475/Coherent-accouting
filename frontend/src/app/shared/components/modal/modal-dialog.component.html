@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Account settings</h1>
+<mat-dialog-content [formGroup]="countryForm">
+  <p>Please fill your account settings</p>
+  <!-- <mat-form-field> -->
+    <div class="country">
+      <select [formControl]="countryForm.controls['country']" class="form-control" formControlName="country">
+        <option [ngValue]="null" disabled>Country of business</option>
+        <option *ngFor="let country of countries" [ngValue]="country.isoAlpha2Country">{{ country.country }}</option>
+      </select>
+    </div>
+  <!-- </mat-form-field> -->
+  <!-- <mat-form-field> -->
+    <div class="accountType">
+      <select [formControl]="countryForm.controls['accountType']" class="form-control" formControlName="accountType">
+        <option [ngValue]="null" disabled>Account type</option>
+        <option *ngFor="let accountType of accountTypes" [ngValue]="accountType.accountType">{{ accountType.displayName }}</option>
+      </select>
+    </div>
+  <!-- </mat-form-field> -->
+</mat-dialog-content>
+<div mat-dialog-actions>
+  <!-- <button mat-button (click)="onSaveClick()">Continue</button>
+  <button class="mat-raised-button"(click)="close()">Close</button>  -->
+  <button mat-button class="mat-raised-button mat-primary"(click)="onSaveClick(countryForm)">Continue</button>
+  <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> --> 
+</div> 

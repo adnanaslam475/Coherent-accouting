@@ -1,0 +1,104 @@
+.panel {
+    margin-top: 60px;
+    padding: 20px;
+    background: #fff;
+    color: #292c33;
+    .panel-body {
+        padding: 20px 0;
+        padding-bottom: 30px;
+    }
+}
+
+.panel-header {
+    border-bottom: 1px solid #292c33;
+    h2 {
+        border-bottom: 3px solid #23a3dc;
+        padding: 10px;
+        margin: -2px auto;
+        width: 37%;
+        text-align: center;
+        &:after {
+            content: '';
+            width: 0;
+            height: 0;
+            position: absolute;
+            left: 50%;
+            margin-left: -10px;
+            bottom: 0;
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent transparent #23a3dc transparent;
+        }
+    }
+}
+
+.icon-circle {
+    margin-bottom: 10px;
+    &~span {
+        color: #292c33;
+    }
+    .fa {
+        font-size: 25px;
+        color: #292c33;
+        margin: 0 auto;
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        border: 2px solid #23a3dc;
+        line-height: 100px;
+        cursor: pointer;
+        &:hover {
+            background-color: #23a3dc;
+            color: #fff;
+            border: 1px solid #23a3dc;
+            -moz-box-shadow: inset 0px 0px 0px 5px #ffffff63;
+            -o-box-shadow: inset 0px 0px 0px 5px #ffffff63;
+            -ms-box-shadow: inset 0px 0px 0px 5px #ffffff63;
+            -webkit-box-shadow: inset 0px 0px 0px 5px #ffffff63;
+            box-shadow: inset 0px 0px 0px 5px #ffffff63;
+        }
+    }
+    i:before {
+        margin-left: 0px;
+        font-size: 40px;
+    }
+}
+
+@media (min-width:320px) and (max-width:768px) {
+    .icon-circle {
+        margin-bottom: 5px;
+        .fa {
+            font-size: 15px;
+            color: #292c33;
+            margin: 0 auto;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            border: 2px solid #23a3dc;
+            line-height: 40px;
+            cursor: pointer;
+        }
+    }
+    .icon-circle .fa:hover {
+        background-color: #23a3dc;
+        color: #fff;
+        border: 1px solid #23a3dc;
+        -moz-box-shadow: inset 0px 0px 0px 5px #ffffff63;
+        -o-box-shadow: inset 0px 0px 0px 5px #ffffff63;
+        -ms-box-shadow: inset 0px 0px 0px 5px #ffffff63;
+        -webkit-box-shadow: inset 0px 0px 0px 5px #ffffff63;
+        box-shadow: inset 0px 0px 0px 5px #ffffff63;
+    }
+    .icon-circle i:before {
+        margin-left: 0px;
+        font-size: 20px;
+    }
+    .col-md-3-offset {
+        margin-left: 0;
+    }
+}
+
+h5 {
+    font-size: 18px;
+    margin: 10px;
+}

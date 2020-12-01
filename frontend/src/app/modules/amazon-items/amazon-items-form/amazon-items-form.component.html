@@ -1,0 +1,192 @@
+<div *ngIf="!isSubmitted">
+
+  <ba-card title="Categories" baCardClass="button-panel df-size-button-panel">
+
+    <form (submit)="submit(amazonItemForm)" [formGroup]="amazonItemForm" #form="ngForm">
+      <div class="row">
+        <div class="departments col-sm-7">
+          <div class="mat-toggles-wrapper">
+            <mat-slide-toggle (change)="slideChecked($event, 'cyber-monday')">Cyber Monday Deals Week</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'alexa-skills')">Alexa Skills</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'amazon-devices')">Amazon Devices</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'warehouse-deals')">Amazon Warehouse</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'appliances')">Appliances</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'mobile-apps')">Apps & Games</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'arts-crafts')">Arts, Crafts & Sewing</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'automotive')">Automotive Parts & Accessories
+            </mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'baby-products')">Baby</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'beauty')">Beauty & Personal Care</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'books')">Books</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'popular')">CDs & Vinyl</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'mobile')">Cell Phones & Accessories</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'fashion')">Clothing, Shoes & Jewelry</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'fashion-womens')">Women</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'fashion-mens')">Men</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'fashion-girls')">Girls</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'fashion-boys')">Boys</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'fashion-baby')">Baby</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'collectibles')">Collectibles & Fine Art</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'computers')">Computers</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'courses')">Courses</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'financial')">Credit and Payment Cards</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'digital-music')">Digital Music</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'electronics')">Electronics</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'lawngarden')">Garden & Outdoor</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'gift-cards')" value>Gift Cards</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'grocery')">Grocery & Gourmet Food</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'handmade')">Handmade</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'hpc')">Health, Household & Baby Care</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'local-services')">Home & Business Services
+            </mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'garden')">Home & Kitchen</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'industrial')">Industrial & Scientific</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'prime-exclusive')">Just for Prime</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'digital-text')">Kindle Store</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'fashion-luggage')">Luggage & Travel Gear
+            </mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'luxury-beauty')">Luxury Beauty</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'magazines')">Magazine Subscriptions</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'movies-tv')">Movies & TV</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'mi')">Musical Instruments</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'office-products')">Office Products</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'pets')">Pet Supplies</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'pantry')">Prime Pantry</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'instant-video')">Prime Video</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'software')">Software</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'sporting')">Sports & Outdoors</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'tools')">Tools & Home Improvement</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'toys-and-games')">Toys & Games</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'vehicles')">Vehicles</mat-slide-toggle>
+            <mat-slide-toggle (change)="slideChecked($event, 'videogames')">Video Games</mat-slide-toggle>
+          </div>
+        </div>
+        <div class="filters col-sm-5">
+
+          <div class="row align-items-center">
+            <div class="col-4">
+              <i class="fas fa-info-circle" tooltip="Min and Max price range" placement="top" hide-delay="0"></i> Price:
+            </div>
+            <div class="col-4">
+              <input type="text" formControlName="priceFrom" class="form-control" placeholder="Min">
+            </div>
+            <div class="col-4">
+              <input type="text" formControlName="priceTo" class="form-control" placeholder="Max">
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-4">
+              <i class="fas fa-info-circle" tooltip="Min and Max Amazon BSR" placement="top" hide-delay="0"></i> Rank:
+            </div>
+            <div class="col-4">
+              <input type="text" formControlName="fromBSR" class="form-control" placeholder="Min">
+            </div>
+            <div class="col-4">
+              <input type="text" formControlName="toBSR" class="form-control" placeholder="Max">
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-4">
+              <i class="fas fa-info-circle" tooltip="Min and Max number of Reviews" placement="top" hide-delay="0"></i> Reviews:
+            </div>
+            <div class="col-4">
+              <input type="text" formControlName="reviewsFrom" class="form-control" placeholder="Min">
+            </div>
+            <div class="col-4">
+              <input type="text" formControlName="reviewsTo" class="form-control" placeholder="Max">
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-4">
+              <i class="fas fa-info-circle" tooltip="Rating : from 0 to 5" placement="top" hide-delay="0"></i> Rating:
+            </div>
+            <div class="col-4"
+                 [ngClass]="{'has-error': amazonItemForm.controls['ratingFrom'].invalid && (amazonItemForm.controls['ratingFrom'].touched || form.submitted)}">
+              <input type="text" formControlName="ratingFrom" class="form-control" placeholder="Min">
+              <span
+                *ngIf="amazonItemForm.controls['ratingFrom'].invalid && (amazonItemForm.controls['ratingFrom'].touched || form.submitted)"
+                class="help-block">Rating between 1 and 5!</span>
+            </div>
+            <div class="col-4"
+                 [ngClass]="{'has-error': amazonItemForm.controls['ratingTo'].invalid && (amazonItemForm.controls['ratingTo'].touched || form.submitted)}">
+              <input type="text" formControlName="ratingTo" class="form-control" placeholder="Max">
+              <span
+                *ngIf="amazonItemForm.controls['ratingTo'].invalid && (amazonItemForm.controls['ratingTo'].touched || form.submitted)"
+                class="help-block">Rating between 1 and 5!</span>
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-4">
+              <i class="fas fa-info-circle" tooltip="For dropshippers shows same item from another marketplace" placement="top" hide-delay="0"></i> Show supplier:
+            </div>
+            <div class="col-4">
+              <mat-slide-toggle (change)="supplierChecked($event)">no / yes</mat-slide-toggle>
+            </div>
+            <div class="col-4">
+              <select [attr.disabled]="showSupplierDdl ? null : ''" formControlName="source" class="form-control"
+                      name="provider">
+                <option value="null" selected="selected">Select...</option>
+                <option value="walmart">Walmart</option>
+                <option value="home-depot">Home Depot</option>
+                <option disabled>Toys on us</option>
+                <option disabled>Sears</option>
+                <option disabled>Overstock</option>
+                <option disabled>Target</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-4">
+              <i class="fas fa-info-circle" tooltip="No. Sellers selling this item." placement="top" hide-delay="0"></i> No.Sellers:
+            </div>
+            <div class="col-4">
+              <input type="text" formControlName="numberOfSellersFrom" class="form-control" placeholder="Min">
+            </div>
+            <div class="col-4">
+              <input type="text" formControlName="numberOfSellersTo" class="form-control" placeholder="Max">
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-4">
+              <i class="fas fa-info-circle" tooltip="Keyword contained in the title or describtion" placement="top" hide-delay="0"></i> Keyword
+            </div>
+            <div class="col-8"
+                 [ngClass]="{'has-error': amazonItemForm.controls['keyWord'].invalid && (amazonItemForm.controls['keyWord'].touched || form.submitted)}">
+              <input type="text" formControlName="keyWord" required class="form-control" placeholder="Keyword">
+              <span
+                *ngIf="amazonItemForm.controls['keyWord'].invalid && (amazonItemForm.controls['keyWord'].touched || form.submitted)"
+                class="help-block">Keyword required!</span>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="text-center action-button my-3">
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-search" aria-hidden="true"></i> Search
+        </button>
+      </div>
+    </form>
+
+  </ba-card>
+
+</div>
+<div *ngIf="isSubmitted">
+  <a class="btn btn-default btn-back float-left" (click)="resetForm()">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    <span>Back</span>
+  </a>
+  <app-amazon-items-list *ngIf="amazonSearchParams.checkSource"
+                         [amazonSearchParams]="amazonSearchParams"></app-amazon-items-list>
+  <app-amazon-items-list-source *ngIf="!amazonSearchParams.checkSource"
+                                [amazonSearchParams]="amazonSearchParams"></app-amazon-items-list-source>
+</div>
+

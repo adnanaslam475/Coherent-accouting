@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>{{title}}</h2>
+
+<mat-dialog-content>
+  <div data-title="Ranks" *ngIf="amazonRankList">
+    <ul class="list-ranks">
+      <li *ngFor="let rank of amazonRankList">{{rank}}</li>
+    </ul>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="btn btn-default" (click)="close()">Close</button>
+</mat-dialog-actions>

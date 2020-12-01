@@ -1,0 +1,215 @@
+<div class="panel">
+  <div class="panel-body container-fluid" *ngIf="databaseSearchForm">
+    <form [formGroup]="databaseSearchForm">
+      <div class="row row-lg">
+        <!-- MAIN CATEGORIES -->
+        <div class="form-group col-md-5 researchcolumn">
+          <div class="wrap">
+            <div class="title">
+              <h5>MAIN CATEGORIES</h5>
+              
+              <div class="row main-categories-row">
+                <div class="form-group col-md-6">
+                  <ng-template ngFor let-category [ngForOf]="categories" let-i="index" >
+                    <mat-checkbox class="row category-checkbox" *ngIf="i<=(categories.length - 1)/2" [checked]="category.selected" (change)="onChangeCategories(category, $event.checked)">
+                      {{category.label}}
+                    </mat-checkbox>
+                  </ng-template>
+                </div>
+                
+                <div class="form-group col-md-6">
+                  <ng-template ngFor let-category [ngForOf]="categories" let-i="index" >
+                    <mat-checkbox class="row category-checkbox" *ngIf="i>(categories.length-1)/2" [checked]="category.selected" (change)="onChangeCategories(category, $event.checked)">
+                      {{category.label}}
+                    </mat-checkbox>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MIN-MAX -->  
+        <div class="col-md-4 researchcolumn">
+          <div class="title">
+            <h5>MIN - MAX</h5>
+            <div class="row">	
+              <!-- PRICE -->
+              <div class="row">
+                <div class="form-group col-md-3 research-label">
+                  <label class="control-label" tooltip="Price in $" placement="top" hide-delay="0">Price ($)</label>
+                </div>
+                <div class="form-group col-md-9 row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Min" formControlName="minPrice" />
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Max" formControlName="maxPrice" />
+                  </div>
+                </div>
+              </div>
+              <!-- NO. REVIEWS -->
+              <div class="row">
+                <div class="form-group col-md-3 research-label">
+                  <label class="control-label" tooltip="Number of Reviews" placement="top" hide-delay="0">No. Reviews</label>
+                </div>
+                <div class="form-group col-md-9 row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Min" formControlName="minReviews" />
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Max" formControlName="maxReviews" />
+                  </div>
+                </div>
+              </div>
+              <!-- Avg. Review -->
+              <div class="row">
+                <div class="form-group col-md-3 research-label">
+                  <label class="control-label" tooltip="Average Review (1-5)" placement="top" hide-delay="0">Avg. Reviews</label>
+                </div>
+                <div class="form-group col-md-9 row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Min" formControlName="minRating">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Max" formControlName="maxRating">
+                  </div>
+                </div>
+              </div>
+              <!-- Est. Sales -->
+              <div class="row">
+                <div class="form-group col-md-3 research-label">
+                  <label class="control-label" tooltip="Number of Sales per month" placement="top" hide-delay="0">Est. Sales</label>
+                </div>
+                <div class="form-group col-md-9 row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Min" formControlName="minSalesPerMonth">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Max" formControlName="maxSalesPerMonth">
+                  </div>
+                </div>
+              </div>
+              <!-- Est Rev. ($) -->
+              <div class="row">
+                <div class="form-group col-md-3 research-label">
+                  <label class="control-label" tooltip="Estimate Revenue per month in $" placement="top" hide-delay="0">Est Rev. ($)</label>
+                </div>
+                <div class="form-group col-md-9 row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Min" formControlName="minRevenuePerMonth">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Max" formControlName="maxRevenuePerMonth">
+                  </div>
+                </div>
+              </div>
+              <!-- Amazon BSR -->
+              <div class="row">
+                <div class="form-group col-md-3 research-label">
+                  <label class="control-label" tooltip="Amazon Best Seller Rank for main category" placement="top" hide-delay="0">Amazon BSR</label>
+                </div>
+                <div class="form-group col-md-9 row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Min" formControlName="minAmazonSellerRank">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Max" formControlName="maxAmazonSellerRank">
+                  </div>
+                </div>
+              </div>
+              <!-- No. Sellers -->
+              <div class="row">
+                <div class="form-group col-md-3 research-label">
+                  <label class="control-label" tooltip="Number of Sellers" placement="top" hide-delay="0">No. Sellers</label>
+                </div>
+                <div class="form-group col-md-9 row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Min" formControlName="minNumberOfSellers">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Max" formControlName="maxNumberOfSellers">
+                  </div>
+                </div>
+              </div>
+              <!-- Net ($) -->
+              <div class="row">
+                <div class="form-group col-md-3 research-label">
+                  <label class="control-label" tooltip="Net in $" placement="top" hide-delay="0">Profit ($)</label>
+                </div>
+                <div class="form-group col-md-9 row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Min" formControlName="minProfit">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Max" formControlName="maxProfit">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-12">
+                <button class="btn btn-raised btn-primary btn-block" type="submit" (click)="onSubmit(databaseSearchForm.value, false)">
+                  <i class="fas fa-search"></i>
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SELLER TYPE -->
+        <div class="col-md-3 researchcolumn">
+          <div class="col-md-12">
+            <mat-form-field class="mat-input-container mat-form-field ng-tns-c5-0 mat-form-field-type-mat-select mat-form-field-can-float mat-primary ng-untouched ng-pristine ng-valid mat-form-field-should-float">
+              <mat-select placeholder="SELLER TYPE" multiple formControlName="sellerType">
+                <mat-option *ngFor="let seller of sellerTypes" [value]="seller">{{seller}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- TITLE -->
+          <div class="col-md-12">
+            <h5 class="title">TITLE</h5>
+          </div>
+
+          <div class="col-md-12">
+            <label for="include"></label>
+            <input id="include" type="text" class="form-control" placeholder="Included keywords" formControlName="titleKeyword">
+          </div>
+
+          <div class="col-md-12">
+            <label for="excluded-title"></label>
+            <input id="excluded-title" type="text" class="form-control" placeholder="Excluded keywords" formControlName="excludeTitleKeywords">
+          </div>
+
+          <div class="col-md-12">
+            <h5 class="title">BRAND</h5>
+          </div>
+
+          <div class="col-md-12">
+            <label for="included-brand"></label>
+            <input id="included-brand" type="text" class="form-control" placeholder="Included keywords" formControlName="brand">
+          </div>
+
+          <div class="col-md-12">
+            <mat-form-field>
+              <mat-select placeholder="ORDERED BY" formControlName="direction">
+                <mat-option [value]="'asc'">Ascending</mat-option>
+                <mat-option [value]="'desc'">Descending</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-database-table-result *ngIf="databaseSearchResult.length > 0" [result]="databaseSearchResult"></app-database-table-result>
+
+<div class="form-group col-md-12 mt-5" *ngIf="databaseSearchResult.length > 0">
+  <button class="btn btn-raised btn-primary btn-block" type="submit" (click)="onSubmit(databaseSearchForm.value, true)">
+    Load more Products
+  </button>
+</div>
+<ng4-loading-spinner [template]="loadingTemplate" [loadingText]="'Please wait...'" [zIndex]="999" [timeout]="1000000"></ng4-loading-spinner>

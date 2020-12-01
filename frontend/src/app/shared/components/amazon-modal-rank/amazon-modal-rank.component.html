@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Sales Rank</h2>
+
+<mat-dialog-content>
+  <div class="row">
+    <div class="col-md-6">
+      <div data-title="numberOfAmazonSellers ">
+        <select class="form-control" name="rank" (change)="onRankSelected($event.target.value)">
+          <option [ngValue]="null">Select...</option>
+          <option *ngFor="let key of objectKeys(amazonRankList)" [label]="amazonRankList[key]+' in '+key" [value]="key"></option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="font-26" style="white-space: nowrap" data-title="numberOfAmazonSellers ">
+        <span class="mr-1">{{ estimate ? estimate?.estimatedSalesPerDay : '0-0'}}</span>
+        <span>Sales Per Day</span>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button type="button" class="btn btn-primary saveBtn" (click)="saveItem()">
+    Save
+  </button>
+  <button class="btn btn-default" (click)="close()">Close</button>
+</mat-dialog-actions>

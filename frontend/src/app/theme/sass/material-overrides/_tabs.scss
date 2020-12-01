@@ -1,0 +1,75 @@
+.al-content {
+  .mat-tab-nav-bar {
+    position: sticky;
+    top: $top-height;
+    margin: -25px -30px 25px;
+    background-color: $bootstrap-panel-bg !important;
+    border: 0;
+    box-shadow: $bootstrap-panel-shadow;
+    z-index: 3;
+  }
+
+  @media screen and (max-width: $resXS) {
+    .mat-tab-nav-bar {
+      margin: -15px -20px 15px;
+    }
+  }
+
+  .mat-tab-links {
+    font-size: 0;
+  }
+
+  .mat-tab-link {
+    background-color: transparent;
+
+    .mat-ripple-element {
+      display: none !important;
+    }
+
+    &:hover {
+      color: $primary;
+    }
+
+    &:after {
+      content: '';
+      background-color: $primary;
+      width: 100%;
+      height: 0;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transition: all .2s ease-in;
+    }
+  }
+
+  .mat-tab-link.mat-tab-label-active {
+    &:after {
+      height: 4px;
+    }
+  }
+
+  .mat-tab-group.mat-primary,
+  .mat-tab-nav-bar.mat-primary {
+    .mat-tab-label:focus,
+    .mat-tab-link:focus {
+      color: $primary;
+    }
+  }
+
+  .mat-tab-nav-bar.mat-primary {
+    .mat-tab-link:focus {
+      background-color: transparent !important;
+    }
+  }
+
+  .mat-tab-link.mat-tab-label-active {
+    &:focus,
+    &:active,
+    &:visited,
+    &:focus-within
+     {
+      background-color: transparent !important;
+      color: $primary;
+    }
+  }
+}

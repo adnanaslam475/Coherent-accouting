@@ -1,0 +1,17 @@
+.spinner-position {
+    margin-top: 5px;
+}
+
+.loading-gif {
+    display: inline-block;
+    margin: 0;
+    width: 40px;
+    img {
+        margin-top: -5px;
+        margin-left: 11px;
+    }
+}
+
+.error-message {
+    display: block;
+}

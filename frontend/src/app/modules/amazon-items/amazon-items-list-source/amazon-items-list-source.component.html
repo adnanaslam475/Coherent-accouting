@@ -1,0 +1,159 @@
+<div class="pagination-custom">
+  <pagination #pagination [boundaryLinks]="true" [(ngModel)]="page" [maxSize]="paginationMaxSize" [rotate]="false"
+              [totalItems]="totalItems" (pageChanged)="pageChanged($event)"
+              [itemsPerPage]="pageSize" class="pagination-sm"></pagination>
+</div>
+
+<ba-card *ngFor="let item of amazonItems " baCardClass="list-1 button-panel df-size-button-panel box-shadow">
+  <div class="row">
+    <div class="col-auto pr-0 text-center">
+      <app-image class="mb-1" [src]="item?.amazonImage" [alt]="item?.itemTitle"></app-image>
+      <img *ngIf="(item?.prime)" class="prime-item" src="assets/image/checkprime.png" alt="Prime"/>
+      <i *ngIf="item?.addOn && !item?.prime" class="addon-item sh-icon sh-icon-addon">Add-on Item</i>
+      <i *ngIf="item?.addOn && !item?.prime" class="addon-item sh-icon sh-icon-addon">Add-on Item</i>
+      <i *ngIf="(item?.veroItem)" class="fa fa-exclamation-triangle" title="Vero Item" style="font-size:20px;color:red"></i>
+    </div>
+    <div class="col">
+
+      <div class="row mb-3">
+        <div class="col">
+          <a target="_blank " [attr.href]="item?.amazonUrl">
+            <span *ngIf="item?.amazonTitle" class="font-weight-bold "> {{item?.amazonTitle}}</span>
+            <span *ngIf="!item?.amazonTitle" class="float-right ">N/A</span>
+          </a>
+        </div>
+        <div class="col-auto actions">
+          <div class="row">
+            <div class="col-auto">
+              <button type="button" class="btn btn-danger" (click)="deleteItem(item)">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                Remove
+              </button>
+            </div>
+            <div class="col-auto">
+              <button type="button" class="btn btn-primary" (click)="saveItems(item)">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <!-- CATEGORY -->
+          <div class="col-item" data-title="amazonCategory ">
+            <i class="fa fa-shopping-cart fa-smaller " aria-hidden="true "></i>
+            <label class="col-item-key">Category: </label>
+            <span class="col-item-value" tooltip="{{item?.amazonCategory}}">
+              {{item?.amazonCategory ? item?.amazonCategory : 'N/A'}}
+            </span>
+          </div>
+          <!-- PRICE -->
+          <div class="col-item" data-title="Price">
+            <i class="fa fa-money fa-smaller " aria-hidden="true "></i>
+            <label class="col-item-key">Price: </label>
+            <span class="price-color col-item-value">
+              {{item?.amazonPrice ? item?.amazonPrice : 'N/A'}}
+            </span>
+          </div>
+          <!-- RATING -->
+          <div class="col-item" *ngIf="item?.amazonRating " data-title="Rating">
+            <i class="fa fa-thumbs-o-up fa-smaller " aria-hidden="true "></i>
+            <label class="col-item-key">Rating: </label>
+
+            <div class="rating-bar col-item-value">
+              <bar-rating [(rate)]="item.amazonRating" [max]="5" [theme]="'stars'" [readOnly]="true"
+                          [showText]="false"></bar-rating>
+              <span>{{item?.amazonRating}}</span>
+              <span *ngIf="item?.amazonReviews " style="margin-left: 0;"
+                    tooltip="Number of reviews" placement="top">({{item?.amazonReviews}})</span>
+              <span *ngIf="!item?.amazonReviews " style="margin-left: 0;">(N/A)</span>
+              <div *ngIf="item?.amazonRating ">
+                <i *ngIf="!item?.amazonRating ">N/A</i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <!-- ORDERS -->
+          <!--<div data-title="amazonReviews">-->
+          <!--<i class="fa fa-area-chart fa-smaller " aria-hidden="true "></i>-->
+          <!--<label class="font-weight-bold ">Reviews: </label>-->
+          <!--<span *ngIf="item?.amazonReviews " class="float-right "> {{item?.amazonReviews}}</span>-->
+          <!--<span *ngIf="!item?.amazonReviews " class="float-right ">N/A</span>-->
+          <!--</div>-->
+          <!--<div data-title="Rank ">-->
+          <!--<i class="fa fa-calendar fa-smaller " aria-hidden="true "></i>-->
+          <!--<label class="font-weight-bold ">Ranks: </label>-->
+          <!--<span class="float-right ">-->
+          <!--<button type="button" class="btn btn-sm btn-primary saveBtn"-->
+          <!--(click)="openRankModal(item?.amazonRanks)">-->
+          <!--Rank-->
+          <!--</button>-->
+          <!--</span>-->
+          <!--</div>-->
+          <div class="col-item" data-title="numberOfAmazonSellers ">
+            <i class="fa fa-users fa-smaller " aria-hidden="true "></i>
+            <label class="col-item-key ">Number of Sellers: </label>
+            <span *ngIf="item?.numberOfAmazonSellers " class="col-item-value"> {{item?.numberOfAmazonSellers}}</span>
+            <span *ngIf="!item?.numberOfAmazonSellers " class="float-right ">N/A</span>
+          </div>
+          <div class="col-item" data-title="asin ">
+            <i class="fa fa-barcode fa-smaller " aria-hidden="true "></i>
+            <label class="col-item-key">ASIN: </label>
+            <span class="col-item-value">
+              {{item?.asin ? item?.asin : 'N/A'}}
+            </span>
+          </div>
+          <div class="col-item" data-title="Seller ">
+            <i class="fa fa-user fa-smaller " aria-hidden="true "></i>
+            <label class="col-item-key">Seller: </label>
+            <span class="col-item-value" tooltip="{{item?.sellerName}}">
+              {{item?.sellerName ? item?.sellerName : 'N/A'}}
+            </span>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="col-item" data-title="Best category">
+            <i class="fa fa-check-square-o fa-smaller " aria-hidden="true "></i>
+            <label class="col-item-key">Best category: </label>
+            <span class="col-item-value" tooltip="{{item?.estimatedSalesCatrgory}}">
+              {{item?.estimatedSalesCatrgory ? item?.estimatedSalesCatrgory : 'N/A'}}
+            </span>
+          </div>
+          <div class="col-item" data-title="Estimated Sales">
+            <i class="fa fa-pie-chart fa-smaller " aria-hidden="true "></i>
+            <label class="col-item-key">Estimated Sales/Day: </label>
+            <span class="col-item-value">
+              {{item?.estimatedSalesPerDay ? item?.estimatedSalesPerDay : 'N/A'}}
+            </span>
+          </div>
+          <div class="col-item" data-title="Estimate">
+            <i class="fa fa-signal fa-smaller " aria-hidden="true "></i>
+            <label class="col-item-key">Estimate sales: </label>
+            <span class="col-item-value">
+                  <!--<button type="button" class="btn btn-sm btn-primary saveBtn" >-->
+                    <!--&lt;!&ndash; <i class="fa fa-trash-o" aria-hidden="true"></i> &ndash;&gt;-->
+                    <!--Rank-->
+                  <!--</button>-->
+
+                <button class="btn btn-sm btn-primary btn-icon" type="button" (click)="openCalculateRankModal(item)">
+                  <i class="ion-stats-bars"></i>
+                </button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- /.row -->
+</ba-card>
+
+<div *ngIf="!hideSpinner" class="loading-gif">
+  <ba-loader></ba-loader>
+</div>

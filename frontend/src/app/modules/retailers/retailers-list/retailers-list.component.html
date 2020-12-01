@@ -1,0 +1,115 @@
+<div *ngIf="isLoaded">
+
+  <ba-card baCardClass="button-panel df-size-button-panel box-shadow">
+    <div class="filters-top row">
+      <div class="col-sm-3 align-self-center">
+        <label style="margin-bottom: 0;">Total sellers: {{retailersSaved?.totalElements}}</label>
+      </div>
+
+      <div class="col-sm-9 text-right">
+
+        <div class="filters-top-item">
+          <label for="ddlpageSize">Sort By:</label>
+          <select id="ddlSortField" (change)="onSortFieldChange($event.target.value)" class="form-control">
+            <option selected value="sellThroughRate">Sell Through Rate</option>
+            <option value="lastSearchDate">Last Search Date</option>
+            <option value="feedbackScore">Feedback Score</option>
+            <option value="retailerListings">Retailer Listings</option>
+          </select>
+        </div>
+
+        <div class="filters-top-item">
+          <label for="ddlpageSize">Order By:</label>
+          <select id="ddlSortField" (change)="onDirectionChange($event.target.value)" class="form-control">
+            <option value="asc" selected>Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+
+        <div class="filters-top-item">
+          <label for="ddlpageSize">Page Size:</label>
+          <select id="ddlpageSize" [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)"
+                  class="form-control">
+            <option selected>20</option>
+            <option>40</option>
+            <option>60</option>
+            <option>80</option>
+            <option>100</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+  </ba-card>
+
+  <div class="card mb-5 text-center" *ngIf="isLoaded && retailersSaved?.elements.length == 0">
+    <app-empty-item-list></app-empty-item-list>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3" *ngFor="let retailer of retailersSaved?.elements">
+
+      <ba-card baCardClass="list-2 button-panel df-size-button-panel box-shadow">
+
+        <div class="card-header">
+          <div class="username-tab" data-title="Username">
+          <span [title]="retailer?.countryName"
+                [class]="'flag-span flag-icon flag-icon-'+ retailer?.countryISOCode.toLowerCase()"></span>
+            <!-- <i class="fa fa-user-circle" aria-hidden="true"></i> -->
+            <a target="_blank" href="{{retailer.url}}">
+              <span> {{retailer?.retailerUsername}}</span>
+            </a>
+            <div class="top-seller">
+              <img *ngIf="retailer?.topRated" class="top-seller-image" src="assets/image/top-seller.png" alt="top-rate">
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div data-title="FeedbackScore">
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            <label class="font-weight-bold">Feedback Score: </label>
+            <span> {{retailer?.feedbackScore}}</span>
+          </div>
+          <div data-title="SellerListings">
+            <i class="fa fa-cubes" aria-hidden="true"></i>
+            <label class="font-weight-bold">Listings: </label>
+            <span> {{retailer?.sellerListings}}</span>
+          </div>
+          <div data-title="sellThroughRate">
+            <i class="far fa-chart-bar" aria-hidden="true"></i>
+            <label class="font-weight-bold">Sell Through Rate: </label>
+            <span> {{retailer?.sellThroughRate}} %</span>
+          </div>
+          <div data-title="searchedDaysAgo">
+            <i class="fas fa-calendar-check" aria-hidden="true"></i>
+            <label class="font-weight-bold">Last Searched: </label>
+            <span> {{retailer?.searchedDaysAgo === null ? 'Never' : retailer?.searchedDaysAgo + ' Days ago'}} </span>
+          </div>
+          <div class="text-center" data-title="save">
+            <button [routerLink]="['/system/items/search', retailer?.retailerUsername]" class="btn btn-sm btn-primary"><i
+              class="fa fa-search"></i> Search
+            </button>
+            <button type="button" class="tabledit-save-button btn btn-sm btn-danger" (click)="deleteRetailer(retailer)">
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+              Delete
+            </button>
+          </div>
+        </div>
+
+      </ba-card>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="!isLoaded" class="loading-gif">
+  <ba-loader></ba-loader>
+</div>
+
+
+<div class="pagination-custom">
+  <pagination #pagination [boundaryLinks]="true" [(ngModel)]="page" [maxSize]="paginationMaxSize" [rotate]="false"
+              [totalItems]="retailersSaved?.totalElements" (pageChanged)="pageChanged($event)"
+              [itemsPerPage]="pageSize" class="pagination-sm"></pagination>
+</div>
+

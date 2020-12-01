@@ -1,0 +1,63 @@
+<div class="row referral-discount" *ngIf="affiliateInfo" [ngClass]="affiliateInfo.eligibleForDiscount ? 'referral-discount-green' : 'referral-discount-red'">
+  <ng-template [ngIf]="affiliateInfo.eligibleForDiscount">
+    If you pay now you will save {{affiliateInfo?.referrerDiscount | percent}} + {{affiliateInfo?.refereeDiscount | currency}}
+  </ng-template>
+  <ng-template [ngIf]="!affiliateInfo.eligibleForDiscount">
+    Next Discount payment: {{affiliateInfo?.eligibleForDiscountDate}}
+  </ng-template>
+</div>
+
+<div class="panel mt-15">
+  <div class="panel-body container-fluid p-4" *ngIf="affiliateInfo && refUrl">
+      <div class="row ref-url-content justify-content-md-center">
+        <div class="input-group col-md-8">
+          <label for="refUrl">My Referral URL</label>
+          <input id="refUrl" type="text" [value]="refUrl" readonly #userinput>
+          <span class="input-group-button">
+            <button class="btn btn-light" type="button" (click)="copyInputMessage(userinput)" matTooltip="Copy to Clipboard">
+              <i class="fa fa-copy"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="col-md-8 affiliate-program-table">
+          <h4 class="text-center">Your Referred friends</h4>
+          <mat-table [dataSource]="dataSource">
+        
+            <!-- Id Column -->
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <i class="fa fa-user fa-2x"></i>
+              </mat-cell>
+            </ng-container>
+        
+            <!-- Username Column -->
+            <ng-container matColumnDef="username">
+              <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+            </ng-container>
+        
+            <!-- Subscribed to Date Column -->
+            <ng-container matColumnDef="registrationDate">
+              <mat-header-cell *matHeaderCellDef> Subscribed to Date </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.subscriptionDate}} </mat-cell>
+            </ng-container>
+        
+            <!-- Paid for current month Column -->
+            <ng-container matColumnDef="paidForCurrentMonth">
+              <mat-header-cell *matHeaderCellDef> Paid for current month </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="icon success-icon" *ngIf="element.hasValidPayment"></span>
+                <span class="icon false-icon" *ngIf="!element.hasValidPayment"></span> 
+              </mat-cell>
+            </ng-container>
+        
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          </div>
+      </div>
+  </div>
+</div>

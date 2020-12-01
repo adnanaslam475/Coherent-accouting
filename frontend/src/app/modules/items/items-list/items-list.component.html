@@ -1,0 +1,251 @@
+<div *ngIf="isLoaded">
+  <ba-card baCardClass="button-panel df-size-button-panel box-shadow">
+    <div class="filters-top row">
+      <div class="col-sm-2 align-self-center">
+        <label style="margin-bottom: 0;">Total items: {{savedItems?.totalElements}}</label>
+      </div>
+
+      <div class="col-sm-10 text-right">
+
+        <div class="filters-top-item">
+          <label for="ddlpageSize">Sort By:</label>
+          <select id="ddlSortField" (change)="onSortFieldChange($event.target.value)" class="form-control">
+            <option selected value="saleDate">Sale Date</option>
+            <option value="timesSold">Times Sold</option>
+            <option value="profit">Profit</option>
+            <option value="id">Last Added</option>
+          </select>
+        </div>
+
+        <div class="filters-top-item">
+          <label for="ddlpageSize">Order By:</label>
+          <select id="ddlSortField" (change)="onDirectionChange($event.target.value)" class="form-control">
+            <option value="asc" selected>Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+
+        <div class="filters-top-item">
+          <label for="ddlpageSize">Page Size:</label>
+          <select id="ddlpageSize" [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)"
+                  class="form-control">
+            <option selected>20</option>
+            <option>40</option>
+            <option>60</option>
+            <option>80</option>
+            <option>100</option>
+          </select>
+        </div>
+
+        <div class="filters-top-item text-center">
+          <button type="button" class="btn btn-primary export-btn mb-1" [ngClass]="{'disabled': isExportSomeDisabled()}"
+                  (click)="exportSelected()"><i class="fa fa-download"></i>Export selected
+          </button>
+          <br>
+          <button type="button" class="btn btn-primary export-btn" [ngClass]="{'disabled': isExportAllDisabled()}"
+                  (click)="exportAll()"><i class="fa fa-download"></i>Export all
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </ba-card>
+
+
+  <!-- EMPTY-LIST -->
+  <div class="list-wrapper">
+    <div class="card mb-5 text-center" *ngIf="isLoaded && savedItems && savedItems.elements.length == 0">
+      <app-empty-item-list></app-empty-item-list>
+    </div>
+    <div class="row text-center blue-color titles-table"
+         *ngIf="isLoaded && savedItems && savedItems.elements.length !== 0">
+      <div class="col-md-6">
+        Ebay Items
+      </div>
+      <div class="col-md-6">
+        Source Items
+      </div>
+    </div>
+    <!-- ITEMS -->
+    <div class="row panel panel-default box-shadow" *ngFor="let item of savedItems.elements">
+      <!-- EBAY-ITEMS -->
+      <div class="col-md-6 text-center titles-table-small">
+        Ebay Item
+      </div>
+      <div class="col-md-6 panel-body">
+        <div class="row">
+          <!-- EBAY-IMG -->
+          <div class="col-md-3 align-self-center nopadding">
+            <input type="checkbox" class="item-checkbox" (change)="addToSelected($event, item.id)">
+            <div class="profile-itempic">
+              <div *ngIf="item?.picture" [ngStyle]="{'background-image': 'url(' + item?.picture + ')'}"
+                   class="circle-img-responsive"></div>
+              <img *ngIf="!item?.picture" src="assets/image/default-img.png" [alt]="item?.itemTitle"
+                   class="circle-img-responsive ">
+            </div>
+          </div>
+          <!-- EBAY-CONTENT -->
+          <div class="col-md-9">
+            <!-- EBAY-TITLE -->
+            <div class="profile-itemtitle col-md-12 text-left nopadding">
+              <a target="_blank" [attr.href]="item?.url" class="middle-gray-color">
+                <span *ngIf="item?.itemTitle" class="font-weight-bold"> {{item?.itemTitle}}</span>
+                <span *ngIf="!item?.itemTitle && !loadedSpinners" class="font-weight-bold"> N/A</span>
+                <!-- <img *ngIf="!item?.itemTitle && loadedSpinners" class="loader-property" src="assets/image/loading.gif" alt="loading" /> -->
+              </a>
+            </div>
+            <div class="row padding-top-10">
+              <!-- EBAY-ITEM-INFO -->
+              <div class="col-md-6 font-14">
+                <!-- PRICE -->
+                <div class="content-body" data-title="Price">
+                  <i class="fa fa-money fa-smaller" aria-hidden="true"></i>
+                  <label class="font-weight-bold">Price: </label>
+                  <span *ngIf="item?.price" class="float-right price-color"> {{item?.price}}</span>
+                  <span *ngIf="!item?.price && !loadedSpinners" class="float-right price-color"> N/A</span>
+                  <!-- <img *ngIf="!item?.price && loadedSpinners" class="loader-property" src="assets/image/loading.gif" alt="loading" /> -->
+                </div>
+                <!-- SALES_DATE -->
+                <div class="content-body font-14" data-title="LastSale">
+                  <i class="fa fa-calendar fa-smaller" aria-hidden="true"></i>
+                  <label class="font-weight-bold">Last sale: </label>
+                  <span *ngIf="item?.saleDate" class="float-right"> {{item?.saleDate}}</span>
+                  <span *ngIf="!item?.saleDate && !loadedSpinners" class="float-right"> N/A</span>
+                  <!-- <img *ngIf="!item?.saleDate && loadedSpinners" class="loader-property" src="assets/image/loading.gif" alt="loading" /> -->
+                </div>
+              </div>
+              <div class="col-md-6 font-14">
+                <!-- TIME-SOLD -->
+                <div class="content-body" data-title="TimesSold">
+                  <i class="fa fa-paper-plane fa-smaller" aria-hidden="true"></i>
+                  <label class="font-weight-bold">Times sold: </label>
+                  <span *ngIf="item?.timesSold" class="float-right"> {{item?.timesSold}}</span>
+                  <span *ngIf="!item?.timesSold && !loadedSpinners" class="float-right price-color"> N/A</span>
+                  <!-- <img *ngIf="!item?.timesSold && loadedSpinners" class="loader-property" src="assets/image/loading.gif" alt="loading" /> -->
+                </div>
+                <!-- UPC -->
+                <div class="content-body font-14" data-title="UPC">
+                  <i class="fa fa-barcode fa-smaller" aria-hidden="true"></i>
+                  <label class="font-weight-bold">UPC: </label>
+                  <span *ngIf="item?.upc" class="float-right"> {{item?.upc}}</span>
+                  <span *ngIf="!item?.upc && !loadedSpinners" class="float-right">N/A</span>
+                  <!-- <img *ngIf="!item?.upc && loadedSpinners" class="loader-property" src="assets/image/loading.gif" alt="loading" /> -->
+                </div>
+              </div>
+              <div class="col-md-6 font-14">
+                <!-- ORDERS -->
+                <div class="content-body" data-title="Orders">
+                  <i class="fa fa-area-chart fa-smaller" aria-hidden="true"></i>
+                  <label class="font-weight-bold">Orders: </label>
+                  <span class="fa-stack float-right" (click)="openOrders(item?.orders);">
+                                        <i class="fa fa-square-o fa-stack-2x "></i>
+                                        <i class="fa fa-bar-chart fa-stack-1x"></i>
+                                      </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- AMAZON-ITEMS -->
+      <div class="col-md-4 panel-body amazon-body">
+        <div class="row" *ngIf="item?.amazonUrl">
+          <!-- AMAZON-IMG -->
+          <div class="col-md-6 text-center titles-table-small">
+            Amazon Item
+          </div>
+          <div class="col-md-4 align-self-center nopadding">
+            <div class="profile-itempic">
+              <div *ngIf="item?.picture" [ngStyle]="{'background-image': 'url(' + item?.amazonPicture + ')'}"
+                   class="circle-img-responsive"></div>
+              <img *ngIf="!item?.picture" src="assets/image/default-img.png" [alt]="item?.itemTitle"
+                   class="circle-img-responsive">
+            </div>
+          </div>
+          <!-- AMAZON-CONTENT -->
+          <div class="col-md-8 nopadding">
+            <!-- AMAZON-TITLE -->
+            <div class="profile-itemtitle col-md-12 text-left">
+              <a target="_blank" [attr.href]="item?.amazonUrl" class="middle-gray-color">
+                <span *ngIf="item?.itemTitle" class="font-weight-bold"> {{item?.itemTitle}}</span>
+                <span *ngIf="!item?.itemTitle && !loadedSpinners" class="float-right price-color"> N/A</span>
+                <!-- <img *ngIf="!item?.itemTitle && loadedSpinners" class="loader-property" src="assets/image/loading.gif" alt="loading" /> -->
+              </a>
+            </div>
+            <!-- AMAZON-INFO -->
+            <div class="col-md-10 col-md-offset-1 font-14 padding-top-10">
+              <!-- PRICE -->
+              <div class="content-body" data-title="Price">
+                <i class="fa fa-money fa-smaller" aria-hidden="true"></i>
+                <label class="font-weight-bold">Price: </label>
+                <span *ngIf="item?.amazonPrice" class="float-right price-color"> {{item?.amazonPrice}}</span>
+                <span *ngIf="!item?.amazonPrice && !loadedSpinners" class="float-right price-color"> N/A</span>
+                <!-- <img *ngIf="!item?.amazonPrice && loadedSpinners" class="loader-property" src="assets/image/loading.gif" alt="loading" /> -->
+              </div>
+            </div>
+            <!-- ASIN -->
+            <div class="col-md-10 col-md-offset-1 font-14 padding-top-10">
+              <div class="content-body" data-title="Price">
+                <i class="fa fa-barcode fa-smaller" aria-hidden="true"></i>
+                <label class="font-weight-bold">ASIN: </label>
+                <span *ngIf="item?.asin" class="float-right"> {{item?.asin}}</span>
+                <span *ngIf="!item?.asin && !loadedSpinners" class="float-right price-color"> N/A</span>
+              </div>
+            </div>
+            <!-- ADD-ON OR PRIME -->
+            <div class="col-md-10 col-md-offset-1 font-14" *ngIf="item?.prime || item?.addOn">
+              <div class="content-body row" data-title="Price">
+                <div class="col-md-2">
+                  <i class="fa fa- fa-smaller" aria-hidden="true"></i>
+                </div>
+                <div class="col-md-10" *ngIf="(item?.prime && !item?.addOn) || (item?.prime && item?.addOn)">
+                  <img class="float-right" src="assets/image/checkprime.png" alt="Prime" style="max-width: 70px;"/>
+                </div>
+                <div *ngIf="item?.addOn && !item?.prime">
+                  <i class="sh-icon sh-icon-addon">Add-on Item</i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!item?.amazonUrl && loadedSpinners" class="loading-gif loading-center">
+          <img src="assets/image/loading.gif" alt="loading"/>
+        </div>
+        <div *ngIf="!item?.amazonUrl && !loadedSpinners" class="no-item-img">
+          <img src="assets/image/productnotavl.jpg" alt="no-item"/>
+        </div>
+      </div>
+      <div class="col-md-1 text-center profit-div" data-title="delete">
+        <div class="header uppercase">
+          Profit
+        </div>
+        <div class="contet text-center">
+          <div class="d-block">
+            <i class="fa fa-usd" aria-hidden="true"></i>
+          </div>
+          <div class="d-block price-color" [ngClass]="{'price-color-green': item?.profit >= 0}">
+            <span>{{item?.profit}}</span>
+          </div>
+        </div>
+      </div>
+      <!-- DELETE BUTTON -->
+      <div class="col-md-1 text-center delete-btn-container" data-title="delete">
+        <button type="button" class="btn btn-sm btn-danger col-md-12" (click)="deleteItem(item)">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="!isLoaded" class="loading-gif">
+  <ba-loader></ba-loader>
+</div>
+
+<div class="pagination-custom">
+  <pagination #pagination [boundaryLinks]="true"
+              [maxSize]="paginationMaxSize" [rotate]="false"
+              [totalItems]="savedItems?.totalElements" (pageChanged)="pageChanged($event)"
+              [itemsPerPage]="pageSize" class="pagination-sm"></pagination>
+</div>

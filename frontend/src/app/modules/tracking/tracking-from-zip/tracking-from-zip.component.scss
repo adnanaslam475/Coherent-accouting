@@ -1,0 +1,34 @@
+.spinner-position {
+    margin-top: 5px;
+}
+
+.loading-gif {
+    display: inline-block;
+    margin: 0;
+    width: 40px;
+    img {
+        margin-top: -5px;
+        margin-left: 11px;
+    }
+}
+p {
+    color: red;
+    align-content: center;
+}
+#dateRangeFrom {
+    width: 150px;
+}
+
+#dateRangeTo {
+    width: 150px;
+}
+.red-mark {
+    color: red;
+}
+
+.col-form-label {
+    margin-left: 25px;
+}
+.error-message {
+    display: block;
+}

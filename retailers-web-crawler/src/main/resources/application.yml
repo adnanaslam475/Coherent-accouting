@@ -1,0 +1,37 @@
+# JACKSON
+spring:
+  application:
+    name: retailers-web-crawler
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 600
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+
+#logging:
+#  level:
+#    org.springframework:
+#      security: DEBUG
+
+# Discovery Server Access
+eureka:
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:1111/eureka/
+
+# HTTP Server (Tomcat) Port
+server: 
+  port: 8080
+  contextPath: /crawler
+  
+# Disable Spring Boot's "Whitelabel" default error page, so we can use our ownn
+error:
+  whitelabel:
+    enabled: false

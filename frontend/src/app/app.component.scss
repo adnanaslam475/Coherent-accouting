@@ -1,0 +1,55 @@
+@import '../assets/scss/base/variables';
+@import '../assets/scss/mixins/breakpoint';
+.app-wrapper {
+    .container-fluid {
+        background-color: $white;
+        margin-top: 10px;
+        padding-top: 20px;
+        .col-sm-9 {
+            padding-right: 0px;
+        }
+    }
+}
+
+:host {
+    display: block;
+}
+
+.content {
+    margin: 50px 70px;
+}
+
+.div-center {
+    margin: 0 auto;
+}
+
+@media screen and (min-width: 600px) and (max-width: 1279px) {
+    .content {
+        margin: 20px 30px;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .content {
+        margin: 8px 12px;
+    }
+}
+
+::ng-deep {
+  bar-rating {
+    display: inline-block;
+    vertical-align: middle;
+
+    .br.br {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .br-stars {
+      .br-unit {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+}

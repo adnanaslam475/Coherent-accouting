@@ -1,0 +1,33 @@
+//@import "../../../../assets/scss/base/variables";
+//@import "../../../theme/sass/conf/conf";
+//
+//.mat-dialog-container {
+//  background-color: $bootstrap-panel-bg;
+//  box-shadow: $bootstrap-panel-shadow;
+//  border-radius: $bootstrap-panel-radius;
+//}
+//
+//.mat-dialog-title {
+//    border-bottom: 1px solid $middle-gray;
+//}
+//
+//.mat-dialog-actions {
+//    border-top: 1px solid $middle-gray;
+//    display: flex;
+//    justify-content: flex-end;
+//}
+//
+//.mat-dialog-content {
+//    overflow-x: hidden;
+//    color: $middle-gray;
+//    .row {
+//        &.entity-item:hover {
+//            background: #23a3dc;
+//            color: white;
+//        }
+//    }
+//}
+
+.mat-dialog-content {
+  width: 680px;
+}

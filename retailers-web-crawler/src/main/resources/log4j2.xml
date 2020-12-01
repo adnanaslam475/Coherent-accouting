@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+<Properties>
+    <Property name="log-path">logs_crawler</Property>
+    <Property name="archive">${log-path}/archive</Property>
+</Properties>
+  <Appenders>
+    <!-- Console Appender -->
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n" />
+    </Console>
+    <!-- File Appender -->
+    <RollingFile name="RollingFile"
+             fileName="${log-path}/crawler.log"
+             filePattern="${archive}/crawler.log.%d{yyyy-MM-dd-hh-mm}.gz">
+    <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+        <Policies>
+             <TimeBasedTriggeringPolicy interval="86400" />
+             <SizeBasedTriggeringPolicy size="3 MB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="30"/>
+</RollingFile>
+    
+  </Appenders>
+
+  <Loggers>
+    <!-- Log everything in custom package -->
+    <Logger name="com.example.crawler" level="info" additivity="false">
+      <AppenderRef ref="Console" />
+      <AppenderRef ref="RollingFile" />
+    </Logger>
+
+    <!-- Log everything in Spring Boot -->
+    <Logger name="org.springframework.boot" level="info" additivity="false">
+      <AppenderRef ref="Console" />
+      <AppenderRef ref="RollingFile" />
+    </Logger>
+
+    <!-- Log everything in Spring Core -->
+    <Logger name="org.springframework.core" level="info" additivity="false">
+      <AppenderRef ref="Console" />
+      <AppenderRef ref="RollingFile" />
+    </Logger>
+    <Logger name="org.hibernate.SQL" level="info" additivity="false">
+	  <AppenderRef ref="Console" />
+	   <AppenderRef ref="RollingFile" />
+	</Logger>
+	<!-- Log everything in hibernate -->
+    <Logger name="org.hibernate" level="info" additivity="false">
+      <AppenderRef ref="Console" />
+      <AppenderRef ref="RollingFile" />
+    </Logger>
+
+    <Root level="info">
+      <AppenderRef ref="Console" />
+      <AppenderRef ref="RollingFile" />
+    </Root>
+    
+  </Loggers>
+</Configuration>
+
+

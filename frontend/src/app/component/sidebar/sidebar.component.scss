@@ -1,0 +1,71 @@
+@import '../../../assets/scss/base/variables';
+nav.sidebar {
+    margin: 60px 0;
+    height: auto;
+    margin-left: 0px;
+    display: flex;
+    display: -webkit-flex;
+    z-index: 1000;
+    padding: 0;
+    li:first-child {
+        border-top: 1px #e5e5e5 solid;
+    }
+    li {
+        margin-bottom: 5px;
+        background-color: $white;
+        border-bottom: 1px #e5e5e5 solid;
+        a {
+            width: 100%;
+        }
+    }
+}
+
+.navbar-inverse .navbar-collapse {
+    border-color: #101010;
+}
+
+#sidebar-navbar {
+    width: 100%;
+}
+
+.sidebar-icon {
+    padding-top: 4px;
+    padding-right: 5px;
+}
+
+.navbar-inverse {
+    border-color: $dark-hover;
+}
+
+nav.sidebar {
+    border-top: 1px $border-devider solid;
+}
+
+.navbar-inverse .navbar-nav {
+    li {
+        cursor: pointer;
+        a {
+            color: $font-color;
+            display: block;
+            font-size: 15px;
+            border: 1px solid #ddd;
+            padding: 9px 9px 8px 9px;
+            border-radius: 2px;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            background: #fcfcfc;
+            &:hover,
+            &:focus {
+                color: $light-hover;
+                background-color: $light-border-devider;
+            }
+        }
+        &.active {
+            a {
+                background: $header-background;
+                border-color: $header-background;
+                color: $white;
+            }
+        }
+    }
+}
