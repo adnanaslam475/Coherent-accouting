@@ -1,17 +1,17 @@
 <template>
     <div class="auth-wrapper auth-v2">
       <b-row class="auth-inner m-0">
-  
+
         <!-- Brand logo-->
         <b-link class="brand-logo">
           <vuexy-logo />
-  
+
           <h2 class="brand-text text-primary ml-1">
             Vuexy
           </h2>
         </b-link>
         <!-- /Brand logo-->
-  
+
         <!-- Left Text-->
         <b-col
           lg="8"
@@ -26,7 +26,7 @@
           </div>
         </b-col>
         <!-- /Left Text-->
-  
+
         <!-- Register-->
         <b-col
           lg="4"
@@ -44,7 +44,7 @@
             <b-card-text class="mb-2">
               Make your app management easy and fun!
             </b-card-text>
-  
+
             <!-- form -->
             <validation-observer
               ref="registerForm"
@@ -61,7 +61,7 @@
                 >
                   <validation-provider
                     #default="{ errors }"
-                    name="firstname"
+                    name="first name"
                     vid="firstname"
                     rules="required"
                   >
@@ -70,19 +70,19 @@
                       v-model="firstname"
                       name="register-firstname"
                       :state="errors.length > 0 ? false:null"
-                      placeholder="John"
+                      placeholder="First name"
                     />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
-  
+
                 <b-form-group
                   label="Last Name"
                   label-for="register-lastname"
                 >
                   <validation-provider
                     #default="{ errors }"
-                    name="lastname"
+                    name="last name"
                     vid="lastname"
                     rules="required"
                   >
@@ -91,12 +91,54 @@
                       v-model="lastname"
                       name="register-lastname"
                       :state="errors.length > 0 ? false:null"
-                      placeholder="Doe"
+                      placeholder="Last name"
                     />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
-  
+
+                <b-form-group
+                  label="Company name"
+                  label-for="register-companyName"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="company name"
+                    vid="company_name"
+                    rules="required"
+                  >
+                    <b-form-input
+                      id="register-companyName"
+                      v-model="companyName"
+                      name="register-companyName"
+                      :state="errors.length > 0 ? false:null"
+                      placeholder="Company name"
+                    />
+                    <small class="text-danger">{{ errors[0] }}</small>
+                  </validation-provider>
+                </b-form-group>
+
+                <b-form-group
+                  label="Company address"
+                  label-for="register-companyAddress"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="company address"
+                    vid="company_address"
+                    rules="required"
+                  >
+                    <b-form-input
+                      id="register-companyAddress"
+                      v-model="companyAddress"
+                      name="register-companyAddress"
+                      :state="errors.length > 0 ? false:null"
+                      placeholder="Company address"
+                    />
+                    <small class="text-danger">{{ errors[0] }}</small>
+                  </validation-provider>
+                </b-form-group>
+
                 <!-- email -->
                 <b-form-group
                   label="Email"
@@ -118,7 +160,7 @@
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
-  
+
                 <!-- password -->
                 <b-form-group
                   label-for="register-password"
@@ -154,18 +196,18 @@
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
-  
+
                 <b-form-group>
                   <b-form-checkbox
                     id="register-privacy-policy"
-                    v-model="status"
+                    v-model="gdpr"
                     name="checkbox-1"
                   >
                     I agree to
                     <b-link>privacy policy & terms</b-link>
                   </b-form-checkbox>
                 </b-form-group>
-  
+
                 <b-button
                   variant="primary"
                   block
@@ -176,23 +218,23 @@
                 </b-button>
               </b-form>
             </validation-observer>
-  
+
             <p class="text-center mt-2">
               <span>Already have an account?</span>
-              <b-link :to="{name:'auth-login'}">
+              <b-link :to="{name:'login'}">
                 <span>&nbsp;Sign in instead</span>
               </b-link>
             </p>
-  
+
             <!-- divider -->
-  
+
           </b-col>
         </b-col>
       <!-- /Register-->
       </b-row>
     </div>
   </template>
-  
+
   <script>
   /* eslint-disable global-require */
   import { ValidationProvider, ValidationObserver } from 'vee-validate'
@@ -234,6 +276,12 @@
         lastname: '',
         userEmail: '',
         password: '',
+        gdpr: false,
+        companyName: '',
+        country: '',
+        ipAddress: '',
+        isoAlpha2Country: '',
+        companyAddress: '',
         sideImg: require('@/assets/images/pages/register-v2.svg'),
         // validation
         required,
@@ -257,7 +305,7 @@
       register() {
         this.$refs.registerForm.validate().then(success => {
           if (success) {
-            useJwt.clientToken()            
+            useJwt.clientToken()
               .then(res => {
                   let token = res.data.access_token
                   useJwt.register(token,{
@@ -270,13 +318,13 @@
                     companyName: "test",
                     companyRegistrationNumber: "test",
                     country: "test",
-                    gdpr: true,
+                    gdpr: this.gdpr,
                     identifier: "test",
                     ipAddress: "test",
                     isoAlpha2Country: "test"
                   })
                     .then(response => {
-                      
+
                       // useJwt.setToken(response.config.headers.Authorization)
                       // useJwt.setRefreshToken(response.config.headers.Authorization)
                       // localStorage.setItem('userData', JSON.stringify(response.data))
@@ -302,7 +350,7 @@
                             },
                         })
                     })
-  
+
               })
               .catch(error => {
                 // this.$refs.registerForm.setErrors(error)
@@ -322,8 +370,7 @@
   }
   /* eslint-disable global-require */
   </script>
-  
+
   <style lang="scss">
   @import '@core/scss/vue/pages/page-auth.scss';
   </style>
-  
