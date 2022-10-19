@@ -1,9 +1,20 @@
 import jwtDefaultConfig from './jwtDefaultConfig'
 import axios from 'axios'
 var qs = require('qs');
+
 export default class JwtService {
   // Will be used by this service for making API calls
-  axiosIns = null
+  axiosIns2 = axios.create({
+    // You can add your headers here
+    // ================================
+    baseURL: 'http://167.86.93.80:8881',
+    // timeout: 1000,
+    // headers: { 
+    //   'Content-Type': 'application/x-www-form-urlencoded', 
+    //   'Accept': 'application/json', 
+    //   'Authorization': 'Basic cmVnaXN0ZXItYXBwOmFjbWVzZWNyZXQ='
+    // }
+  })
 
   axiosIns1 = axios.create({
     // You can add your headers here
@@ -122,10 +133,10 @@ export default class JwtService {
   register(token,...args) {
     const headers = {
       'Content-Type': 'application/json', 
-      'Authorization': `Bearer ${token}`,
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
       'Accept': 'application/json'
     }
-    return this.axiosIns.post(this.jwtConfig.registerEndpoint, ...args, {
+    return this.axiosIns2.post(this.jwtConfig.registerEndpoint, ...args, {
       headers: headers
     })
   }
