@@ -1,6 +1,6 @@
 export default {
   // Endpoints
-  loginEndpoint: '/jwt/login',
+  loginEndpoint: '/userauth/oauth/token',
   clientToken: "/userauth/oauth/token",
   // registerEndpoint: '/jwt/register',
   registerEndpoint: '/account/api/user/create',

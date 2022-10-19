@@ -78,13 +78,14 @@
               <b-form-group>
                 <div class="d-flex justify-content-between">
                   <label for="login-password">Password</label>
-                  <b-link :to="{name:'auth-forgot-password-v2'}">
+                  <b-link :to="{name:'auth-forgot-password'}">
                     <small>Forgot Password?</small>
                   </b-link>
                 </div>
                 <validation-provider
                   #default="{ errors }"
                   name="Password"
+                  vid="password"
                   rules="required"
                 >
                   <b-input-group
@@ -98,7 +99,7 @@
                       class="form-control-merge"
                       :type="passwordFieldType"
                       name="login-password"
-                      placeholder="············"
+                      placeholder="Password"
                     />
                     <b-input-group-append is-text>
                       <feather-icon
@@ -141,41 +142,6 @@
               <span>&nbsp;Create an account</span>
             </b-link>
           </b-card-text>
-
-          <!-- divider -->
-          <div class="divider my-2">
-            <div class="divider-text">
-              or
-            </div>
-          </div>
-
-          <!-- social buttons -->
-          <div class="auth-footer-btn d-flex justify-content-center">
-            <b-button
-              variant="facebook"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="FacebookIcon" />
-            </b-button>
-            <b-button
-              variant="twitter"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="TwitterIcon" />
-            </b-button>
-            <b-button
-              variant="google"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="MailIcon" />
-            </b-button>
-            <b-button
-              variant="github"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="GithubIcon" />
-            </b-button>
-          </div>
         </b-col>
       </b-col>
     <!-- /Login-->
@@ -193,6 +159,7 @@ import {
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
+import useJwt from '@/auth/jwt/useJwt'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
@@ -243,14 +210,32 @@ export default {
     validationForm() {
       this.$refs.loginValidation.validate().then(success => {
         if (success) {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Form Submitted',
-              icon: 'EditIcon',
-              variant: 'success',
-            },
+          useJwt.login({
+            grant_type: "password",
+            username: this.userEmail,
+            password: this.password,
           })
+            .then(response => {
+              this.$toast({
+                  component: ToastificationContent,
+                  props: {
+                  title: `Password Token API hit successfully`,
+                  icon: 'EditIcon',
+                  variant: 'success',
+                  },
+              })
+              return this.$router.push('/')
+            })
+            .catch(error => {
+              this.$toast({
+                  component: ToastificationContent,
+                  props: {
+                  title: `${error.response.data.errorMessage}`,
+                  icon: 'EditIcon',
+                  variant: 'error',
+                  },
+              })
+            })
         }
       })
     },

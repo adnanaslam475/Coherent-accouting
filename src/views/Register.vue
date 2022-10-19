@@ -281,6 +281,14 @@
                       // useJwt.setRefreshToken(response.config.headers.Authorization)
                       // localStorage.setItem('userData', JSON.stringify(response.data))
                       // this.$ability.update(response.data)
+                      this.$toast({
+                          component: ToastificationContent,
+                          props: {
+                          title: `Client Token and Create User APIs hit successfully`,
+                          icon: 'EditIcon',
+                          variant: 'success',
+                          },
+                      })
                       return this.$router.push('/')
                     })
                     .catch(error => {

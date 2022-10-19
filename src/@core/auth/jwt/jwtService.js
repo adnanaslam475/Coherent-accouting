@@ -1,20 +1,10 @@
 import jwtDefaultConfig from './jwtDefaultConfig'
 import axios from 'axios'
 var qs = require('qs');
+var FormData = require('form-data');
 
 export default class JwtService {
   // Will be used by this service for making API calls
-  axiosIns2 = axios.create({
-    // You can add your headers here
-    // ================================
-    baseURL: 'http://167.86.93.80:8881',
-    // timeout: 1000,
-    // headers: { 
-    //   'Content-Type': 'application/x-www-form-urlencoded', 
-    //   'Accept': 'application/json', 
-    //   'Authorization': 'Basic cmVnaXN0ZXItYXBwOmFjbWVzZWNyZXQ='
-    // }
-  })
 
   axiosIns1 = axios.create({
     // You can add your headers here
@@ -26,6 +16,28 @@ export default class JwtService {
       'Accept': 'application/json', 
       'Authorization': 'Basic cmVnaXN0ZXItYXBwOmFjbWVzZWNyZXQ='
     }
+  })
+  axiosIns2 = axios.create({
+    // You can add your headers here
+    // ================================
+    baseURL: 'http://167.86.93.80:8881',
+    // timeout: 1000,
+    // headers: { 
+    //   'Content-Type': 'application/x-www-form-urlencoded', 
+    //   'Accept': 'application/json', 
+    //   'Authorization': 'Basic cmVnaXN0ZXItYXBwOmFjbWVzZWNyZXQ='
+    // }
+  })
+  axiosIns3 = axios.create({
+    // You can add your headers here
+    // ================================
+    baseURL: 'http://167.86.93.80:8899',
+    // timeout: 1000,
+    // headers: { 
+    //   'Content-Type': 'application/x-www-form-urlencoded', 
+    //   'Accept': 'application/json', 
+    //   'Authorization': 'Basic cmVnaXN0ZXItYXBwOmFjbWVzZWNyZXQ='
+    // }
   })
 
   // jwtConfig <= Will be used by this service
@@ -120,7 +132,21 @@ export default class JwtService {
   }
 
   login(...args) {
-    return this.axiosIns.post(this.jwtConfig.loginEndpoint, ...args)
+    let data = new FormData();
+    for ( var key in arguments[0] ) {
+      if (arguments[0].hasOwnProperty(key)) {
+        data.append(key, arguments[0][key]);
+      }
+    }
+
+    let headers = { 
+      'Content-Type': 'application/x-www-form-urlencoded', 
+      'Accept': 'application/json', 
+      'Authorization': 'Basic YWNtZTphY21lc2VjcmV0', 
+    }
+    return this.axiosIns3.post(this.jwtConfig.loginEndpoint, data, {
+      headers: headers
+    })
   }
 
   clientToken(){
@@ -131,7 +157,7 @@ export default class JwtService {
   }
 
   register(token,...args) {
-    const headers = {
+    let headers = {
       'Content-Type': 'application/json', 
       'Authorization': `${this.jwtConfig.tokenType} ${token}`,
       'Accept': 'application/json'
