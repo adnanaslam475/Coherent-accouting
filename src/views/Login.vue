@@ -230,7 +230,7 @@ export default {
               this.$toast({
                   component: ToastificationContent,
                   props: {
-                  title: `${error.response.data.errorMessage}`,
+                  title: `Incorrect Email or password`,
                   icon: 'EditIcon',
                   variant: 'error',
                   },

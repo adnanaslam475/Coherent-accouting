@@ -167,6 +167,24 @@ export default class JwtService {
     })
   }
 
+  resetPasswordRequest(token,...args) {
+    let headers = {
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`
+    }
+    return this.axiosIns2.post(this.jwtConfig.resetPasswordRequestEndpoint, ...args, {
+      headers: headers
+    })
+  }
+
+  resetPassword(token,...args) {
+    let headers = {
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`
+    }
+    return this.axiosIns2.post(this.jwtConfig.resetPasswordEndpoint, ...args, {
+      headers: headers
+    })
+  }
+
   refreshToken() {
     return this.axiosIns.post(this.jwtConfig.refreshEndpoint, {
       refreshToken: this.getRefreshToken(),

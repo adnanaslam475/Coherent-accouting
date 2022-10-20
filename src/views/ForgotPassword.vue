@@ -82,7 +82,7 @@
             </validation-observer>
   
             <p class="text-center mt-2">
-              <b-link :to="{name:'auth-login'}">
+              <b-link :to="{name:'login'}">
                 <feather-icon icon="ChevronLeftIcon" /> Back to login
               </b-link>
             </p>
@@ -102,6 +102,7 @@
   } from 'bootstrap-vue'
   import { required, email } from '@validations'
   import store from '@/store/index'
+  import useJwt from '@/auth/jwt/useJwt'
   import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
   
   export default {
@@ -143,15 +144,47 @@
       validationForm() {
         this.$refs.simpleRules.validate().then(success => {
           if (success) {
-            this.$toast({
-              component: ToastificationContent,
-              props: {
-                title: 'This is for UI purpose only.',
-                icon: 'EditIcon',
-                variant: 'success',
-              },
-            })
-            this.$router.push({ name: 'auth-reset-password-v1' })
+            useJwt.clientToken()            
+              .then(res => {
+                  let token = res.data.access_token
+                  useJwt.resetPasswordRequest(token,{
+                    email: this.userEmail,
+                  })
+                    .then(response => {
+                      this.$toast({
+                          component: ToastificationContent,
+                          props: {
+                          title: `Client Token and reset password email sent APIs hit successfully`,
+                          icon: 'EditIcon',
+                          variant: 'success',
+                          },
+                      })
+                      return this.$router.push({ name: 'reset-password-email-v1' })
+                    })
+                    .catch(error => {
+                         //   this.$refs.registerForm.setErrors(error)
+                        this.$toast({
+                            component: ToastificationContent,
+                            props: {
+                            title: `${error.response.data.errorMessage}`,
+                            icon: 'EditIcon',
+                            variant: 'error',
+                            },
+                        })
+                    })
+  
+              })
+              .catch(error => {
+                // this.$refs.registerForm.setErrors(error)
+                this.$toast({
+                    component: ToastificationContent,
+                    props: {
+                    title: `${error.errorMessage}`,
+                    icon: 'EditIcon',
+                    variant: 'error',
+                    },
+                })
+              })            
           }
         })
       },

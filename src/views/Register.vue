@@ -61,7 +61,7 @@
                 >
                   <validation-provider
                     #default="{ errors }"
-                    name="first name"
+                    name="firstname"
                     vid="firstname"
                     rules="required"
                   >
