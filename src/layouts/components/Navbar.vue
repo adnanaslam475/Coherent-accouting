@@ -22,6 +22,37 @@
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
+      <!-- For Multilingual -->
+      <b-nav-item-dropdown
+        id="dropdown-grouped"
+        variant="link"
+        class="dropdown-language"
+        right
+      >
+        <template #button-content>
+          <b-img
+            :src="currentLocale.img"
+            height="14px"
+            width="22px"
+            :alt="currentLocale.locale"
+          />
+          <span class="ml-50 text-body">{{ currentLocale.name }}</span>
+        </template>
+        <b-dropdown-item
+          v-for="localeObj in locales"
+          :key="localeObj.locale"
+          @click="$i18n.locale = localeObj.locale"
+        >
+          <b-img
+            :src="localeObj.img"
+            height="14px"
+            width="22px"
+            :alt="localeObj.locale"
+          />
+          <span class="ml-50">{{ localeObj.name }}</span>
+        </b-dropdown-item>
+      </b-nav-item-dropdown>
+      <!-- For Multilingual -->
       <b-nav-item-dropdown
         right
         toggle-class="d-flex align-items-center dropdown-user-link"
@@ -32,7 +63,7 @@
             <p class="user-name font-weight-bolder mb-0">
               John Doe
             </p>
-            <span class="user-status">Admin</span>
+            <span class="user-status">Admin | {{ $t('home') }}</span>
           </div>
           <b-avatar
             size="40"
@@ -97,7 +128,7 @@
 
 <script>
 import {
-  BLink, BNavbarNav, BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar,
+  BLink, BNavbarNav, BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar, BImg
 } from 'bootstrap-vue'
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
 
@@ -109,9 +140,35 @@ export default {
     BDropdownItem,
     BDropdownDivider,
     BAvatar,
+    BImg,
 
     // Navbar Components
     DarkToggler,
+  },
+  computed : {
+    currentLocale() {
+      return this.locales.find(l => l.locale === this.$i18n.locale)
+    }
+  },
+  setup() {
+    /* eslint-disable global-require */
+    const locales = [
+      {
+        locale: 'en',
+        img: require('@/assets/images/flags/en.png'),
+        name: 'English',
+      },
+      {
+        locale: 'bg',
+        img: require('@/assets/images/flags/bg.png'),
+        name: 'Bulgaria',
+      },
+    ]
+    /* eslint-disable global-require */
+
+    return {
+      locales,
+    }
   },
   props: {
     toggleVerticalMenuActive: {

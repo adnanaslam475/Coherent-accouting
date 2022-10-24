@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { i18n } from '../main'
 
 Vue.use(VueRouter)
 
@@ -93,6 +94,11 @@ const router = new VueRouter({
       redirect: 'error-404',
     },
   ],
+})
+
+router.beforeEach((to, from , next) => {
+  i18n.locale = localStorage.getItem('language') || 'en'
+  return next()
 })
 
 // ? For splash screen
