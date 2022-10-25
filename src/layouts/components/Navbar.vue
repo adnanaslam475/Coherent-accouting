@@ -41,7 +41,7 @@
         <b-dropdown-item
           v-for="localeObj in locales"
           :key="localeObj.locale"
-          @click="$i18n.locale = localeObj.locale"
+          @click="changeLanguage(localeObj)"
         >
           <b-img
             :src="localeObj.img"
@@ -144,6 +144,13 @@ export default {
 
     // Navbar Components
     DarkToggler,
+  },
+  methods:{
+      changeLanguage(obj){
+        console.log(obj);
+          localStorage.setItem('language',obj.locale)
+          this.$i18n.locale = obj.locale
+      }
   },
   computed : {
     currentLocale() {
