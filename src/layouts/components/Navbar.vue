@@ -147,7 +147,6 @@ export default {
   },
   methods:{
       changeLanguage(obj){
-        console.log(obj);
           localStorage.setItem('language',obj.locale)
           this.$i18n.locale = obj.locale
       }

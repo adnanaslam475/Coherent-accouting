@@ -93,6 +93,111 @@ const router = new VueRouter({
       path: '*',
       redirect: 'error-404',
     },
+    // Companies routes starting from here
+    {
+      path: '/companies',
+      name: 'companies',
+      component: () => import('@/views/company/Index.vue'),
+      meta: {
+        pageTitle: 'Companies',
+        breadcrumb: [
+          {
+            text: 'Companies',
+            active: true,
+          },
+        ],
+      }
+    },
+    // Invoice routes starting from here
+    {
+      path:'/invoices',
+      name: 'invoices',
+      component: () => import('@/views/invoice/Index.vue'),
+      meta: {
+        pageTitle: 'Invoices',
+        breadcrumb: [
+          {
+            text: 'Invoices',
+            active: true,
+          },
+        ],
+      }
+    },
+    // Videos routes starting from here
+    {
+      path:'/videos',
+      name: 'videos',
+      component: () => import('@/views/videos/Index.vue'),
+      meta: {
+        pageTitle: 'Videos',
+        breadcrumb: [
+          {
+            text: 'Videos',
+            active: true,
+          },
+        ],
+      }
+    },
+    // Tickets routes starting from here
+    {
+      path:'/tickets',
+      name: 'tickets',
+      component: () => import('@/views/tickets/Index.vue'),
+      meta: {
+        pageTitle: 'Tickets',
+        breadcrumb: [
+          {
+            text: 'Tickets',
+            active: true,
+          },
+        ],
+      }
+    },
+    // My Plans routes starting from here
+    {
+      path:'/my-plans',
+      name: 'my-plans',
+      component: () => import('@/views/Plans/Index.vue'),
+      meta: {
+        pageTitle: 'Plans',
+        breadcrumb: [
+          {
+            text: 'Plans',
+            active: true,
+          },
+        ],
+      }
+    },
+    // Settings routes starting from here
+    {
+      path:'/settings',
+      name: 'settings',
+      component: () => import('@/views/Settings/Index.vue'),
+      meta: {
+        pageTitle: 'Settings',
+        breadcrumb: [
+          {
+            text: 'Settings',
+            active: true,
+          },
+        ],
+      }
+    },
+    // Contacts routes starting from here
+    {
+      path:'/contacts',
+      name: 'contacts',
+      component: () => import('@/views/Contacts/Index.vue'),
+      meta: {
+        pageTitle: 'Contacts',
+        breadcrumb: [
+          {
+            text: 'Contacts',
+            active: true,
+          },
+        ],
+      }
+    },
   ],
 })
 
