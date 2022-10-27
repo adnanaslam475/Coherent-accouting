@@ -15,7 +15,7 @@
             {{$t('reset_password.title')}}
           </b-card-title>
           <b-card-text class="mb-2">
-            Your new password must be different from previously used passwords
+            {{ $t("reset_password.description") }}
           </b-card-text>
 
           <!-- form -->
@@ -103,14 +103,14 @@
                 type="submit"
                 variant="primary"
               >
-                Set New Password
+              {{ $t("reset_password.set_new_password") }}
               </b-button>
             </b-form>
           </validation-observer>
 
           <p class="text-center mt-2">
             <b-link :to="{name:'login'}">
-              <feather-icon icon="ChevronLeftIcon" /> Back to login
+              <feather-icon icon="ChevronLeftIcon" /> {{ $t("back_to_login") }}
             </b-link>
           </p>
 

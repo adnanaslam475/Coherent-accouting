@@ -9,20 +9,20 @@
             <vuexy-logo />
 
             <h2 class="brand-text text-primary ml-1">
-              Coherent Accounting
+              {{$t('app_logo_title')}}
             </h2>
           </b-link>
 
           <b-card-title class="mb-1">
-            Email Sent Successfully.
+            {{$t('reset_password_email.email_sent_successfully')}}
           </b-card-title>
           <b-card-text class="mb-2">
-            We have sent a reset password email at your entered registered email address. Please click on the 'RESET PASSWORD' on your email to proceed.
+            {{$t('reset_password_email.description')}}
           </b-card-text>
 
           <p class="text-center mt-2">
             <b-link :to="{name:'login'}">
-              <feather-icon icon="ChevronLeftIcon" /> Back to login
+              <feather-icon icon="ChevronLeftIcon" /> {{ $t("back_to_login") }}
             </b-link>
           </p>
 

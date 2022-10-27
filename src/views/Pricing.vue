@@ -9,14 +9,14 @@
       <!-- title text and switch button -->
       <div class="text-center">
         <h1 class="mt-5">
-          Pricing Plans
+          {{ $t("pricing.title") }}
         </h1>
         <p class="mb-2 pb-75">
-          All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs.
+          {{ $t("pricing.description") }}
         </p>
         <div class="d-flex align-items-center justify-content-center mb-5 pb-50">
           <h6 class="mr-1 mb-0">
-            Monthly
+            {{ $t("pricing.monthly") }}
           </h6>
           <b-form-checkbox
             id="priceSwitch"
@@ -28,7 +28,7 @@
             @input="tooglePlan"
           />
           <h6 class="ml-50 mb-0">
-            Annually
+            {{ $t("pricing.annually") }}
           </h6>
         </div>
       </div>
@@ -56,9 +56,9 @@
                   :src="require('@/assets/images/illustration/Pot1.svg')"
                 />
                 <!--/ img -->
-                <h3>Free</h3>
+                <h3>{{ $t("pricing.free") }}</h3>
                 <b-card-text>
-                    Free
+                  {{ $t("pricing.free") }}
                 </b-card-text>
 
                 <!-- annual plan -->
@@ -67,13 +67,13 @@
                        v-show="monthlyPlanShow">
                     <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
                     <span class="pricing-basic-value font-weight-bolder text-primary">00</span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{ $t("pricing.month") }}</sub>
                   </div>
                   <div class="plan-price mt-2"
                        v-show="!monthlyPlanShow">
                     <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
                     <span class="pricing-basic-value font-weight-bolder text-primary">00</span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/Year</sub>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{ $t("pricing.year") }}</sub>
                   </div>
                 </div>
                 <!--/ annual plan -->
@@ -82,7 +82,7 @@
                 <b-list-group class="list-group-circle text-left">
                   <b-list-group-item
                   >
-                    test
+                  {{ $t("pricing.test") }}
                   </b-list-group-item>
                 </b-list-group>
                 <!--/ plan benefit -->
@@ -94,7 +94,7 @@
                   class="mt-2"
                   variant="outline-success"
                 >
-                  Your current plan
+                {{ $t("pricing.plan") }}
                 </b-button>
               </b-card>
             </b-col>
@@ -110,7 +110,7 @@
                     variant="light-primary"
                     pill
                   >
-                    Popular
+                  {{ $t("pricing.popular") }}
                   </b-badge>
                 </div>
                 <!-- img -->
@@ -120,8 +120,8 @@
                   :src="require('@/assets/images/illustration/Pot2.svg')"
                 />
                 <!--/ img -->
-                <h3>test</h3>
-                <b-card-text>test</b-card-text>
+                <h3>{{ $t("test") }}</h3>
+                <b-card-text>{{ $t("test") }}</b-card-text>
 
                 <!-- annual plan -->
                 <div class="annual-plan">
@@ -129,13 +129,13 @@
                        v-show="monthlyPlanShow">
                     <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
                     <span class="pricing-basic-value font-weight-bolder text-primary">10</span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{ $t("pricing.month") }}</sub>
                   </div>
                   <div class="plan-price mt-2"
                        v-show="!monthlyPlanShow">
                     <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
                     <span class="pricing-basic-value font-weight-bolder text-primary">100</span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/Year</sub>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{ $t("pricing.year") }}</sub>
                   </div>
                 </div>
                 <!--/ annual plan -->
@@ -144,7 +144,7 @@
                 <b-list-group class="list-group-circle text-left">
                   <b-list-group-item
                   >
-                    test
+                  {{ $t("test") }}
                   </b-list-group-item>
                 </b-list-group>
                 <!--/ plan benefit -->
@@ -156,7 +156,7 @@
                   class="mt-2"
                   variant="primary"
                 >
-                  Upgrade
+                {{ $t("pricing.upgrade") }}
                 </b-button>
               </b-card>
             </b-col>
@@ -171,21 +171,21 @@
                   :src="require('@/assets/images/illustration/Pot3.svg')"
                 />
                 <!--/ img -->
-                <h3>test</h3>
-                <b-card-text>test</b-card-text>
+                <h3>{{ $t("test") }}</h3>
+                <b-card-text>{{ $t("test") }}</b-card-text>
 
                 <div class="annual-plan">
                   <div class="plan-price mt-2"
                        v-show="monthlyPlanShow">
                     <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
                     <span class="pricing-basic-value font-weight-bolder text-primary">15</span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{ $t("pricing.month") }}</sub>
                   </div>
                   <div class="plan-price mt-2"
                        v-show="!monthlyPlanShow">
                     <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
                     <span class="pricing-basic-value font-weight-bolder text-primary">150</span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/Year</sub>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{ $t("pricing.year") }}</sub>
                   </div>
                 </div>
 
@@ -194,7 +194,7 @@
                   class="list-group-circle text-left"
                 >
                   <b-list-group-item>
-                    test
+                    {{ $t("test") }}
                   </b-list-group-item>
                 </b-list-group>
                 <!--/ plan benefit -->
@@ -206,7 +206,7 @@
                   class="mt-2"
                   variant="outline-primary"
                 >
-                  Upgrade
+                {{ $t("pricing.upgrade") }}
                 </b-button>
               </b-card>
             </b-col>

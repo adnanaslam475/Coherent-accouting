@@ -49,7 +49,34 @@
     "login_link": "Back to login"
   },
   "reset_password": {
-    "title": "Reset Password \uD83D\uDD12"
+    "title": "Reset Password \uD83D\uDD12",
+    "description": "Your new password must be different from previously used passwords",
+    "set_new_password": "Set New Password"
+  },
+  "reset_password_email": {
+    "email_sent_successfully" : "Email Sent Successfully.",
+    "description": "We have sent a reset password email at your entered registered email address. Please click on the 'RESET PASSWORD' on your email to proceed."
+  },
+  "navbar": {
+    "login" : "Login",
+    "signup": "Sign up",
+    "about": "About",
+    "questions": "Questions",
+    "videos":"Videos",
+    "prices":"Prices",
+    "free_digital_invoices":"Free digital invoices"
+  },
+  "pricing":{
+    "title": "Pricing Plans",
+    "description": " All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs.",
+    "monthly": "Monthly",
+    "annually": "Annually",
+    "free": "Free",
+    "month": "month",
+    "year": "year",
+    "plan": "Your current plan",
+    "popular" : "Popular",
+    "upgrade": "Upgrade"
   },
   "home": "Home",
   "dashboard": "Dashboard",
@@ -58,5 +85,7 @@
   "tickets": "Tickets",
   "my-plans": "My Plans",
   "settings": "Settings",
-  "contacts": "Contacts"
+  "contacts": "Contacts",
+  "test": "test",
+  "back_to_login": "Back to login"
 }

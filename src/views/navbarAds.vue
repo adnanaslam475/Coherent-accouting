@@ -6,7 +6,9 @@
         <div class="d-flex align-items-center">
         <vuexy-logo />
 
-        <h2 class="brand-text text-primary ml-1 mb-0">Coherent Accounting</h2>
+        <h2 class="brand-text text-primary ml-1 mb-0">
+          {{ $t("app_logo_title") }}
+        </h2>
         </div>
     </b-navbar-brand>
 
@@ -14,13 +16,13 @@
 
     <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="navbar-desktop" type="dark">
-        <b-nav-item href="/login/advertisements">Login</b-nav-item>
-        <b-nav-item href="/register/advertisements">Sign up</b-nav-item>
-        <b-nav-item href="/about">About</b-nav-item>
-        <b-nav-item href="/questions">Questions</b-nav-item>
-        <b-nav-item href="#">Videos</b-nav-item>
-        <b-nav-item href="/pricing">Prices</b-nav-item>
-        <b-nav-item href="#">Free digital invoices</b-nav-item>
+        <b-nav-item href="/login/advertisements"> {{ $t("navbar.login") }}</b-nav-item>
+        <b-nav-item href="/register/advertisements">{{ $t("navbar.signup") }}</b-nav-item>
+        <b-nav-item href="/about">{{ $t("navbar.about") }}</b-nav-item>
+        <b-nav-item href="/questions">{{ $t("navbar.questions") }}</b-nav-item>
+        <b-nav-item href="#">{{ $t("navbar.videos") }}</b-nav-item>
+        <b-nav-item href="/pricing">{{ $t("navbar.prices") }}</b-nav-item>
+        <b-nav-item href="#">{{ $t("navbar.free_digital_invoices") }}</b-nav-item>
         </b-navbar-nav>
     </b-collapse>
     </b-navbar>

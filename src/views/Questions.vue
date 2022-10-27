@@ -18,9 +18,9 @@
         </b-avatar>
         <div>
           <h4 class="mb-0">
-            test
+            {{ $t("test") }}
           </h4>
-          <span>test</span>
+          <span>{{ $t("test") }}</span>
         </div>
       </div>
   
@@ -35,7 +35,7 @@
         <app-collapse-item
           title="test"
         >
-          test
+        {{ $t("test") }}
         </app-collapse-item>
   
       </app-collapse>
