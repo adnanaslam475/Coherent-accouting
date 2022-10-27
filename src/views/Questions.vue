@@ -1,7 +1,9 @@
 <template>
     <div>
-      <navbarAds />
-      <div class="d-flex align-items-center mt-2 px-1">
+        <b-row class="auth-inner m-0">
+            <navbarAds />
+        </b-row>
+      <div class="d-flex align-items-center mt-2 px-2">
         <b-avatar
           rounded
           size="42"
@@ -27,7 +29,7 @@
         id="faq-payment-qna"
         accordion
         type="margin"
-        class="mt-2 px-1"
+        class="mt-2 px-2"
       >
   
         <app-collapse-item
@@ -48,12 +50,16 @@
   import AppCollapseItem from '@core/components/app-collapse/AppCollapseItem.vue'
   import VuexyLogo from "@core/layouts/components/Logo.vue";
   import navbarAds from "./navbarAds.vue"
+  import {
+    BRow
+  } from 'bootstrap-vue'
   export default {
     components: {
       BAvatar,
       AppCollapseItem,
       AppCollapse,
-      navbarAds
+      navbarAds,
+      BRow
     },
     props: {
       options: {

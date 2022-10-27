@@ -1,5 +1,5 @@
 <template>
-<b-row class="auth-inner m-0">
+
     <b-col lg="12" sm="12" md="12" class="p-0">
     <b-navbar toggleable="lg" type="light" variant="light" style="padding: 2rem;">
     <b-navbar-brand href="#">
@@ -25,7 +25,6 @@
     </b-collapse>
     </b-navbar>
 </b-col>
-</b-row>
 </template>
 <script>
   import VuexyLogo from "@core/layouts/components/Logo.vue";
