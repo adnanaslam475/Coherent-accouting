@@ -1,17 +1,17 @@
 <template>
     <div class="auth-wrapper auth-v2">
       <b-row class="auth-inner m-0">
-  
+
         <!-- Brand logo-->
         <b-link class="brand-logo">
           <vuexy-logo />
-  
+
           <h2 class="brand-text text-primary ml-1">
-            Vuexy
+            {{$t('app_logo_title')}}
           </h2>
         </b-link>
         <!-- /Brand logo-->
-  
+
         <!-- Left Text-->
         <b-col
           lg="8"
@@ -26,7 +26,7 @@
           </div>
         </b-col>
         <!-- /Left Text-->
-  
+
         <!-- Forgot password-->
         <b-col
           lg="4"
@@ -39,12 +39,12 @@
             class="px-xl-2 mx-auto"
           >
             <b-card-title class="mb-1">
-              Forgot Password? 🔒
+              {{ $t('forget.title') }} 🔒
             </b-card-title>
             <b-card-text class="mb-2">
-              Enter your email and we'll send you instructions to reset your password
+              {{$t('forget.subtitle')}}
             </b-card-text>
-  
+
             <!-- form -->
             <validation-observer ref="simpleRules">
               <b-form
@@ -52,12 +52,12 @@
                 @submit.prevent="validationForm"
               >
                 <b-form-group
-                  label="Email"
+                  v-bind:label="$t('forget.lbl_email')"
                   label-for="forgot-password-email"
                 >
                   <validation-provider
                     #default="{ errors }"
-                    name="Email"
+                    v-bind:name="$t('forget.lbl_email')"
                     rules="required|email"
                   >
                     <b-form-input
@@ -65,25 +65,25 @@
                       v-model="userEmail"
                       :state="errors.length > 0 ? false:null"
                       name="forgot-password-email"
-                      placeholder="john@example.com"
+                      v-bind:placeholder="$t('forget.email_placeholder')"
                     />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
-  
+
                 <b-button
                   type="submit"
                   variant="primary"
                   block
                 >
-                  Send reset link
+                  {{$t("forget.lbl_btn_submit")}}
                 </b-button>
               </b-form>
             </validation-observer>
-  
+
             <p class="text-center mt-2">
               <b-link :to="{name:'login'}">
-                <feather-icon icon="ChevronLeftIcon" /> Back to login
+                <feather-icon icon="ChevronLeftIcon" /> {{$t('forget.login_link')}}
               </b-link>
             </p>
           </b-col>
@@ -92,7 +92,7 @@
       </b-row>
     </div>
   </template>
-  
+
   <script>
   /* eslint-disable global-require */
   import { ValidationProvider, ValidationObserver } from 'vee-validate'
@@ -104,7 +104,7 @@
   import store from '@/store/index'
   import useJwt from '@/auth/jwt/useJwt'
   import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-  
+
   export default {
     components: {
       VuexyLogo,
@@ -144,7 +144,7 @@
       validationForm() {
         this.$refs.simpleRules.validate().then(success => {
           if (success) {
-            useJwt.clientToken()            
+            useJwt.clientToken()
               .then(res => {
                   let token = res.data.access_token
                   useJwt.resetPasswordRequest(token,{
@@ -172,7 +172,7 @@
                             },
                         })
                     })
-  
+
               })
               .catch(error => {
                 // this.$refs.registerForm.setErrors(error)
@@ -184,15 +184,14 @@
                     variant: 'error',
                     },
                 })
-              })            
+              })
           }
         })
       },
     },
   }
   </script>
-  
+
   <style lang="scss">
   @import '@core/scss/vue/pages/page-auth.scss';
   </style>
-  

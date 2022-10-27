@@ -48,9 +48,33 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/login/advertisements',
+      name: 'login-advertisement',
+      component: () => import('@/views/Login-ads.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
       path: '/register',
       name: 'register',
       component: () => import('@/views/Register.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
+      path: '/register/advertisements',
+      name: 'register-advertisement',
+      component: () => import('@/views/Register-ads.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: () => import('@/views/About.vue'),
       meta: {
         layout: 'full',
       },
@@ -77,6 +101,14 @@ const router = new VueRouter({
       path: '/reset-password-email',
       name: 'reset-password-email-v1',
       component: () => import('@/views/ResetPasswordEmail-v1.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
+      path: '/pricing',
+      name: 'pricing',
+      component: () => import('@/views/Pricing.vue'),
       meta: {
         layout: 'full',
       },

@@ -2,8 +2,10 @@ export default {
   // Endpoints
   loginEndpoint: '/userauth/oauth/token',
   clientToken: "/userauth/oauth/token",
+  countryToken: "/account/api/countries",
   // registerEndpoint: '/jwt/register',
   registerEndpoint: '/account/api/user/create',
+  verifyToken:"/account/api/forgot-password",
   resetPasswordRequestEndpoint: '/account/api/forgot-password',
   resetPasswordEndpoint: '/account/api/save-forgot-password',
   refreshEndpoint: '/jwt/refresh-token',

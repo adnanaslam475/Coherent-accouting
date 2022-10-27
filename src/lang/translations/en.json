@@ -1,3 +1,55 @@
 {
-    "home": "Home"
+  "home": "Home",
+  "app_logo_title": "Coherent Accounting",
+  "lbl": {
+    "login": "Login",
+    "register": "Register",
+    "sign_up": "Sign Up",
+    "pricing": "Pricing",
+    "questions": "Questions",
+    "videos": "Videos",
+    "prices": "Prices",
+    "free_digital_invoices": "Free digital invoices"
+  },
+  "login": {
+    "title": "Welcome to Coherent Accounting! \uD83D\uDC4B",
+    "subtitle": "Please sign-in to your account and start the adventure",
+    "lbl_email": "Email",
+    "email_placeholder": "john@example.com",
+    "lbl_password": "Password",
+    "lnk_forget_password": "Forget Password?",
+    "remember": "Remember Me",
+    "pre_signup_link_txt": "New on our platform?",
+    "signup_link_txt": "Create an account",
+    "sign_in": "Sign in"
+  },
+  "register": {
+    "title": "Adventure starts here \uD83D\uDE80",
+    "subtitle": "Make your app management easy and fun!",
+    "lbl_f_name": "First Name",
+    "lbl_l_name": "Last Name",
+    "lbl_c_name": "Company name",
+    "lbl_c_address": "Company address",
+    "lbl_email": "Email",
+    "email_placeholder": "john@example.com",
+    "lbl_password": "Password",
+    "lbl_country": "Country",
+    "country_placeholder": "Please select your country",
+    "i_agree_to": "I agree to",
+    "lbl_privacy_term_link": "privacy policy & terms",
+    "lbl_submit": "Sign up",
+    "have_account": "Already have an account?",
+    "lbl_login_link": "Already have an account?"
+  },
+  "forget": {
+    "title": "Forgot Password?",
+    "subtitle": "Enter your email and we'll send you instructions to reset your password",
+    "lbl_email": "Email",
+    "email_placeholder": "john@example.com",
+    "lbl_btn_submit": "Send reset link",
+    "login_link": "Back to login"
+  },
+  "reset_password": {
+    "title": "Reset Password \uD83D\uDD12"
+  }
 }

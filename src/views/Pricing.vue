@@ -1,0 +1,432 @@
+<template>
+
+    <section
+      id="pricing-plan"
+    >
+    <b-row class="auth-inner m-0">
+        <b-col lg="12" sm="12" md="12" class="p-0">
+        <b-navbar toggleable="lg" type="light" variant="light">
+          <b-navbar-brand href="#">
+            <div class="d-flex align-item-center">
+              <vuexy-logo />
+
+              <h2 class="brand-text text-primary ml-1 mb-0">Coherent Accounting</h2>
+            </div>
+          </b-navbar-brand>
+
+          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+          <b-collapse id="nav-collapse" is-nav>
+            <b-navbar-nav class="navbar-desktop" type="dark">
+              <b-nav-item href="/login/advertisements">Login</b-nav-item>
+              <b-nav-item href="/register/advertisements">Sign up</b-nav-item>
+              <b-nav-item href="/about">About</b-nav-item>
+              <b-nav-item href="#">Questions</b-nav-item>
+              <b-nav-item href="#">Videos</b-nav-item>
+              <b-nav-item href="/pricing">Prices</b-nav-item>
+              <b-nav-item href="#">Free digital invoices</b-nav-item>
+            </b-navbar-nav>
+          </b-collapse>
+        </b-navbar>
+      </b-col>
+    </b-row>
+      <!-- title text and switch button -->
+      <div class="text-center">
+        <h1 class="mt-5">
+          Pricing Plans
+        </h1>
+        <p class="mb-2 pb-75">
+          All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs.
+        </p>
+        <div class="d-flex align-items-center justify-content-center mb-5 pb-50">
+          <h6 class="mr-1 mb-0">
+            Monthly
+          </h6>
+          <b-form-checkbox
+            id="priceSwitch"
+            v-model="status"
+            name="price-switch"
+            value="annually"
+            unchecked-value="monthly"
+            switch
+            @input="tooglePlan"
+          />
+          <h6 class="ml-50 mb-0">
+            Annually
+          </h6>
+        </div>
+      </div>
+      <!--/ title text and switch button -->
+
+      <!-- pricing plan cards -->
+      <b-row class="pricing-card">
+        <b-col
+          offset-sm-2
+          sm="10"
+          md="12"
+          offset-lg="2"
+          lg="10"
+          class="mx-auto"
+        >
+          <b-row>
+            <b-col md="4">
+              <b-card
+                align="center"
+              >
+                <!-- img -->
+                <b-img
+                  class="mb-2 mt-5"
+                  alt="basic svg img"
+                  :src="require('@/assets/images/illustration/Pot1.svg')"
+                />
+                <!--/ img -->
+                <h3>Free</h3>
+                <b-card-text>
+                    Free
+                </b-card-text>
+
+                <!-- annual plan -->
+                <div class="annual-plan">
+                  <div class="plan-price mt-2"
+                       v-show="monthlyPlanShow">
+                    <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
+                    <span class="pricing-basic-value font-weight-bolder text-primary">00</span>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                  </div>
+                  <div class="plan-price mt-2"
+                       v-show="!monthlyPlanShow">
+                    <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
+                    <span class="pricing-basic-value font-weight-bolder text-primary">00</span>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/Year</sub>
+                  </div>
+                </div>
+                <!--/ annual plan -->
+
+                <!-- plan benefit -->
+                <b-list-group class="list-group-circle text-left">
+                  <b-list-group-item
+                  >
+                    test
+                  </b-list-group-item>
+                </b-list-group>
+                <!--/ plan benefit -->
+
+                <!-- buttons -->
+                <b-button
+                  v-ripple.400="'rgba(40, 199, 111, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="outline-success"
+                >
+                  Your current plan
+                </b-button>
+              </b-card>
+            </b-col>
+            <b-col md="4">
+              <b-card
+                class="popular"
+                align="center"
+              >
+                <div
+                  class="pricing-badge text-right"
+                >
+                  <b-badge
+                    variant="light-primary"
+                    pill
+                  >
+                    Popular
+                  </b-badge>
+                </div>
+                <!-- img -->
+                <b-img
+                  class="mb-1"
+                  alt="svg img"
+                  :src="require('@/assets/images/illustration/Pot2.svg')"
+                />
+                <!--/ img -->
+                <h3>test</h3>
+                <b-card-text>test</b-card-text>
+
+                <!-- annual plan -->
+                <div class="annual-plan">
+                  <div class="plan-price mt-2"
+                       v-show="monthlyPlanShow">
+                    <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
+                    <span class="pricing-basic-value font-weight-bolder text-primary">10</span>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                  </div>
+                  <div class="plan-price mt-2"
+                       v-show="!monthlyPlanShow">
+                    <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
+                    <span class="pricing-basic-value font-weight-bolder text-primary">100</span>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/Year</sub>
+                  </div>
+                </div>
+                <!--/ annual plan -->
+
+                <!-- plan benefit -->
+                <b-list-group class="list-group-circle text-left">
+                  <b-list-group-item
+                  >
+                    test
+                  </b-list-group-item>
+                </b-list-group>
+                <!--/ plan benefit -->
+
+                <!-- buttons -->
+                <b-button
+                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="primary"
+                >
+                  Upgrade
+                </b-button>
+              </b-card>
+            </b-col>
+            <b-col md="4">
+              <b-card
+                align="center"
+              >
+                <!-- img -->
+                <b-img
+                  class="mb-2"
+                  alt="enterprise svg img"
+                  :src="require('@/assets/images/illustration/Pot3.svg')"
+                />
+                <!--/ img -->
+                <h3>test</h3>
+                <b-card-text>test</b-card-text>
+
+                <div class="annual-plan">
+                  <div class="plan-price mt-2"
+                       v-show="monthlyPlanShow">
+                    <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
+                    <span class="pricing-basic-value font-weight-bolder text-primary">15</span>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                  </div>
+                  <div class="plan-price mt-2"
+                       v-show="!monthlyPlanShow">
+                    <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
+                    <span class="pricing-basic-value font-weight-bolder text-primary">150</span>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/Year</sub>
+                  </div>
+                </div>
+
+                <!-- plan benefit -->
+                <b-list-group
+                  class="list-group-circle text-left"
+                >
+                  <b-list-group-item>
+                    test
+                  </b-list-group-item>
+                </b-list-group>
+                <!--/ plan benefit -->
+
+                <!-- buttons -->
+                <b-button
+                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="outline-primary"
+                >
+                  Upgrade
+                </b-button>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-col>
+      </b-row>
+      <!--/ pricing plan cards -->
+
+      <!-- pricing free trial -->
+      <div class="pricing-free-trial">
+        <b-row>
+          <b-col
+            lg="10"
+            offset-lg="3"
+            class="mx-auto"
+          >
+            <div class="pricing-trial-content d-flex justify-content-between">
+              <div class="text-center text-md-left mt-3">
+                <h3 class="text-primary">
+                  Still not convinced? Start with a 14-day FREE trial!
+                </h3>
+                <h5>You will get full access to with all the features for 14 days.</h5>
+                <b-button
+                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                  variant="primary"
+                  class="mt-2 mt-lg-3"
+                >
+                  Start 14-day FREE trial
+                </b-button>
+              </div>
+
+              <!-- images -->
+              <b-img
+                fluid
+                :src="require('../assets/images/illustration/pricing-Illustration.svg')"
+                class="pricing-trial-img"
+                alt="svg img"
+              />
+              <!--/ images -->
+            </div>
+          </b-col>
+        </b-row>
+      </div>
+      <!--/ pricing free trial -->
+
+      <!-- pricing faq -->
+      <div class="pricing-faq">
+        <h3 class="text-center">
+          FAQ's
+        </h3>
+        <p class="text-center">
+          Let us help answer the most common questions.
+        </p>
+        <b-row class="py-2">
+          <b-col
+            lg="10"
+            offset-lg="2"
+            class="mx-auto"
+          >
+            <app-collapse
+              accordion
+              type="margin">
+
+              <app-collapse-item title="Lorem Ipsum?">
+                Lorem Ipsum is simply a dummy text
+              </app-collapse-item>
+            </app-collapse>
+          </b-col>
+        </b-row>
+      </div>
+      <!--/ pricing faq -->
+    </section>
+  </template>
+
+  <script>
+  import { ValidationProvider, ValidationObserver } from "vee-validate";
+  import VuexyLogo from "@core/layouts/components/Logo.vue";
+import {
+  BRow,
+  BCol,
+  BLink,
+  BButton,
+  BForm,
+
+  BFormGroup,
+  BFormInput,
+  BInputGroup,
+  BInputGroupAppend,
+  BImg,
+  BCardTitle,
+  BCardText,
+  BDropdown,
+  BDropdownItem,
+  BFormSelect,
+  BNavbar,
+  BNavbarBrand,
+  BNavbarToggle,
+  BNavbarNav,
+  BNavForm,
+  BCollapse,
+  BNavItemDropdown,
+  BDropdownDivider,
+  BAvatar,
+  BNavItem,
+} from "bootstrap-vue";
+  import {
+    BFormCheckbox, BCard, BListGroup, BListGroupItem, BBadge,
+  } from 'bootstrap-vue'
+  import vSelect from "vue-select";
+  import AppCollapse from '@core/components/app-collapse/AppCollapse.vue'
+  import AppCollapseItem from '@core/components/app-collapse/AppCollapseItem.vue'
+  import Ripple from 'vue-ripple-directive'
+  /* eslint-disable global-require */
+  export default {
+    components: {
+
+      BButton,
+      BCardText,
+      BListGroup,
+      BListGroupItem,
+
+
+      BCard,
+      BBadge,
+
+      AppCollapseItem,
+      AppCollapse,
+      BRow,
+      VuexyLogo,
+
+    BImg,
+    BCol,
+    BLink,
+
+    BForm,
+
+    BCardTitle,
+    BFormCheckbox,
+    BFormGroup,
+    BDropdown,
+    BFormSelect,
+    BDropdownItem,
+    BFormInput,
+    BNavbar,
+    BNavbarBrand,
+    BNavbarToggle,
+    BCollapse,
+    BNavbarNav,
+    BNavItemDropdown,
+    BNavForm,
+    BDropdownDivider,
+    BAvatar,
+    BNavItem,
+    BInputGroup,
+    BInputGroupAppend,
+    // validations
+    ValidationProvider,
+    ValidationObserver,
+    vSelect,
+    },
+    directives: {
+      Ripple,
+    },
+    data() {
+      return {
+        status: 'monthly',
+        monthlyPlanShow: true,
+        pricing: {},
+        title: "test"
+      }
+    },
+    created() {
+    //   this.$http.get('/pricing/data').then(res => { this.pricing = res.data })
+    },
+    methods: {
+      tooglePlan() {
+        if (this.status === 'monthly') {
+          this.monthlyPlanShow = true
+        } else {
+          this.monthlyPlanShow = false
+        }
+      },
+    },
+  }
+  /* eslint-disable global-require */
+  </script>
+
+  <style lang="scss">
+  @import '@core/scss/vue/pages/page-pricing.scss';
+
+  .navbar-desktop a{
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    color: #6e6b7b !important;
+    padding-bottom: 0 !important;
+  }
+@import "@core/scss/vue/pages/page-auth.scss";
+@import "@core/scss/vue/libs/vue-select.scss";
+  </style>
