@@ -1,10 +1,17 @@
 {
-    "home": "У дома",
-    "app_logo_title": "Coherent Accounting",
-    "login": {
-        "title": "Welcome to Coherent Accounting! \uD83D\uDC4B",
-        "subtitle": "Please sign-in to your account and start the adventure",
-        "input_email": "Email",
-        "email_placeholder": "john@example.com"
-    }
+  "home": "У дома",
+  "app_logo_title": "Coherent Accounting",
+  "login": {
+    "title": "Welcome to Coherent Accounting! \uD83D\uDC4B",
+    "subtitle": "Please sign-in to your account and start the adventure",
+    "input_email": "Email",
+    "email_placeholder": "john@example.com"
+  },
+  "dashboard": "Dashboard",
+  "invoices": "Invoices",
+  "videos": "Videos",
+  "tickets": "Tickets",
+  "my-plans": "My Plans",
+  "settings": "Settings",
+  "contacts": "Contacts"
 }

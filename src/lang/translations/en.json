@@ -1,5 +1,4 @@
 {
-  "home": "Home",
   "app_logo_title": "Coherent Accounting",
   "lbl": {
     "login": "Login",
@@ -51,5 +50,13 @@
   },
   "reset_password": {
     "title": "Reset Password \uD83D\uDD12"
-  }
+  },
+  "home": "Home",
+  "dashboard": "Dashboard",
+  "invoices": "Invoices",
+  "videos": "Videos",
+  "tickets": "Tickets",
+  "my-plans": "My Plans",
+  "settings": "Settings",
+  "contacts": "Contacts"
 }
