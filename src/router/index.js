@@ -48,6 +48,14 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/questions',
+      name: 'questions',
+      component: () => import('@/views/Questions.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
       path: '/register',
       name: 'register',
       component: () => import('@/views/Register.vue'),
