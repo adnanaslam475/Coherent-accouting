@@ -23,6 +23,8 @@ import { useWindowSize, useCssVar } from '@vueuse/core'
 
 import store from '@/store'
 
+import axios from 'axios'
+
 const LayoutVertical = () => import('@/layouts/vertical/LayoutVertical.vue')
 const LayoutHorizontal = () => import('@/layouts/horizontal/LayoutHorizontal.vue')
 const LayoutFull = () => import('@/layouts/full/LayoutFull.vue')
@@ -97,5 +99,23 @@ export default {
       skinClasses,
     }
   },
+  created () {
+    let uri = 'http://167.86.93.80:8899/userauth/oauth/token'
+    let data = {
+        grant_type: 'password',
+        username: 'amazon_6011_@abv.bg',
+        password: '1234'
+    }
+		 axios.post(uri, {data}, {
+        auth: {
+          username: 'acme',
+          password: 'acmesecret'
+        }
+      }).then(response => {
+				console.log(response.data)
+			}).catch(error => {
+				console.log(error.response)
+			})
+  }
 }
 </script>

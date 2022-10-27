@@ -1,3 +1,10 @@
 {
-    "home": "Home"
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "invoices": "Invoices",
+    "videos": "Videos",
+    "tickets": "Tickets",
+    "my-plans": "My Plans",
+    "settings": "Settings",
+    "contacts": "Contacts"
 }
