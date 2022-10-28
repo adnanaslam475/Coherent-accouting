@@ -102,7 +102,13 @@
                 block
                 type="submit"
                 variant="primary"
+                :disabled="loading"
               >
+               <b-spinner
+                  v-if="loading"
+                  small
+                  variant="light"
+                />
               {{ $t("reset_password.set_new_password") }}
               </b-button>
             </b-form>
@@ -125,7 +131,7 @@
   import { ValidationProvider, ValidationObserver } from 'vee-validate'
   import VuexyLogo from '@core/layouts/components/Logo.vue'
   import {
-    BCard, BCardTitle, BCardText, BForm, BFormGroup, BInputGroup, BInputGroupAppend, BLink, BFormInput, BButton,
+    BCard, BCardTitle, BCardText, BForm, BFormGroup, BInputGroup, BInputGroupAppend, BLink, BFormInput, BButton, BSpinner
   } from 'bootstrap-vue'
   import { required } from '@validations'
   import useJwt from '@/auth/jwt/useJwt'
@@ -146,6 +152,7 @@
       BInputGroupAppend,
       ValidationProvider,
       ValidationObserver,
+      BSpinner
     },
     data() {
       return {
@@ -158,6 +165,7 @@
         // Toggle Password
         password1FieldType: 'password',
         password2FieldType: 'password',
+        loading: false
       }
     },
     computed: {
@@ -178,6 +186,7 @@
       validationForm() {
         this.$refs.simpleRules.validate().then(success => {
           if (success) {
+            this.loading = true
             useJwt.clientToken()
               .then(res => {
                   let token = res.data.access_token
@@ -187,6 +196,7 @@
                     token: window?.location?.search?.split('=')[1] ? window.location.search.split('=')[1] : ''
                   })
                     .then(response => {
+                      this.loading = false
                       this.$toast({
                           component: ToastificationContent,
                           props: {
@@ -198,6 +208,7 @@
                       return this.$router.push({ name: 'login' })
                     })
                     .catch(error => {
+                        this.loading = false
                          //   this.$refs.registerForm.setErrors(error)
                         this.$toast({
                             component: ToastificationContent,
@@ -212,6 +223,7 @@
               })
               .catch(error => {
                 // this.$refs.registerForm.setErrors(error)
+                this.loading = false
                 this.$toast({
                     component: ToastificationContent,
                     props: {

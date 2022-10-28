@@ -98,6 +98,28 @@
                 </b-form-group>
 
                 <b-form-group
+                  label="Account Type"
+                  label-for="register-accountType"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="accountType"
+                    vid="accountType"
+                    rules="required"
+                  >
+                    <b-form-select
+                      v-model="selected"
+                      :options="accountTypes"
+                      id="register-accountType"
+                      name="register-accountType"
+                      :state="errors.length > 0 ? false:null"
+                    >
+                    </b-form-select>
+                    <small class="text-danger">{{ errors[0] }}</small>
+                  </validation-provider>
+                </b-form-group>
+
+                <b-form-group
                   v-bind:label="$t('register.lbl_c_name')"
                   label-for="register-companyName"
                 >
@@ -337,8 +359,13 @@
         required,
         email,
         country: null,
-        selected: this.options,
-        options: []
+        selected: null,
+        options: [],
+        accountTypes: [
+          { value: null, text: 'Please select account type', disabled: true },
+          { value: 'COMPANY', text: 'COMPANY' },
+          { value: 'PERSON', text: 'PERSON' },
+        ]
       }
     },
     computed: {

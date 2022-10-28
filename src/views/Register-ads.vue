@@ -73,47 +73,92 @@
                 </validation-provider>
               </b-form-group>
 
-              <b-form-group
-                      v-bind:label="$t('register.lbl_c_name')"
-                      label-for="register-companyName"
-              >
-                <validation-provider
-                        #default="{ errors }"
-                        v-bind:name="$t('register.lbl_f_name')"
-                        vid="companyName"
-                        rules="required"
+              <!-- Company -->
+                <b-form-group
+                  :label="$t('register.lbl_c_accountType')"
+                  label-for="register-accountType"
                 >
-                  <b-form-input
-                          id="register-companyName"
-                          v-model="companyName"
-                          name="register-companyName"
-                          :state="errors.length > 0 ? false:null"
-                          v-bind:placeholder="$t('register.lbl_c_name')"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
+                  <validation-provider
+                    #default="{ errors }"
+                    name="accountType"
+                    vid="accountType"
+                    rules="required"
+                  >
+                    <b-form-select
+                      v-model="account"
+                      :options="accountType"
+                      id="register-accountType"
+                      name="register-accountType"
+                      :state="errors.length > 0 ? false:null"
+                    >
+                    </b-form-select>
+                    <small class="text-danger">{{ errors[0] }}</small>
+                  </validation-provider>
+                </b-form-group>
+                <div v-if="account === 'COMPANY'">
+                  <b-form-group
+                          v-bind:label="$t('register.lbl_c_name')"
+                          label-for="register-companyName"
+                  >
+                    <validation-provider
+                            #default="{ errors }"
+                            v-bind:name="$t('register.lbl_f_name')"
+                            vid="companyName"
+                            rules="required"
+                    >
+                      <b-form-input
+                              id="register-companyName"
+                              v-model="companyName"
+                              name="register-companyName"
+                              :state="errors.length > 0 ? false:null"
+                              v-bind:placeholder="$t('register.lbl_c_name')"
+                      />
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
+                  </b-form-group>
 
-              <b-form-group
-                      v-bind:label="$t('register.lbl_c_address')"
-                      label-for="register-companyAddress"
-              >
-                <validation-provider
-                        #default="{ errors }"
-                        v-bind:name="$t('register.lbl_c_address')"
-                        vid="companyAddress"
-                        rules="required"
-                >
-                  <b-form-input
-                          id="register-companyAddress"
-                          v-model="companyAddress"
-                          name="register-companyAddress"
-                          :state="errors.length > 0 ? false:null"
-                          v-bind:placeholder="$t('register.lbl_c_address')"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
+                  <b-form-group
+                          v-bind:label="$t('register.lbl_c_address')"
+                          label-for="register-companyAddress"
+                  >
+                    <validation-provider
+                            #default="{ errors }"
+                            v-bind:name="$t('register.lbl_c_address')"
+                            vid="companyAddress"
+                            rules="required"
+                    >
+                      <b-form-input
+                              id="register-companyAddress"
+                              v-model="companyAddress"
+                              name="register-companyAddress"
+                              :state="errors.length > 0 ? false:null"
+                              v-bind:placeholder="$t('register.lbl_c_address')"
+                      />
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
+                  </b-form-group>
+
+                  <b-form-group
+                          v-bind:label="$t('register.lbl_c_registrationNumber')"
+                          label-for="register-registrationNumber"
+                  >
+                    <validation-provider
+                            #default="{ errors }"
+                            name="registrationNumber"
+                            vid="registrationNumber"
+                            rules="required"
+                    >
+                      <b-form-input
+                              id="register-registrationNumber"
+                              v-model="registrationNumber"
+                              name="register-registrationNumber"
+                              :state="errors.length > 0 ? false:null"
+                              v-bind:placeholder="$t('register.lbl_c_registrationNumber')"
+                      />
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
+                  </b-form-group>
+                </div>
 
               <!-- email -->
               <b-form-group
@@ -234,9 +279,17 @@
                       variant="primary"
                       block
                       type="submit"
-                      :disabled="invalid"
-              >{{ $t('register.lbl_submit')}}
+                      :disabled="invalid || loading"
+              >
+              <b-spinner
+                v-if="loading"
+                small
+                variant="light"
+              />
+              {{ $t('register.lbl_submit')}}
               </b-button>
+
+
             </b-form>
           </validation-observer>
 
@@ -288,6 +341,7 @@
     BDropdownDivider,
     BAvatar,
     BNavItem,
+    BSpinner
   } from "bootstrap-vue";
   import { required, email } from "@validations";
   import { togglePasswordVisibility } from "@core/mixins/ui/forms";
@@ -329,7 +383,8 @@
       ValidationProvider,
       ValidationObserver,
       vSelect,
-      navbarAds
+      navbarAds,
+      BSpinner
     },
     mixins: [togglePasswordVisibility],
     data() {
@@ -345,13 +400,21 @@
         ipAddress: "",
         isoAlpha2Country: "",
         companyAddress: "",
+        registrationNumber: "",
         sideImg: require("@/assets/images/pages/register-v2.svg"),
         // validation
         required,
         email,
+        selected: null,
         country: null,
-        selected: this.options,
+        account: null,
         options: [],
+        accountType: [
+          { value: null, text: 'Please select account type', disabled: true },
+          { value: 'COMPANY', text: 'COMPANY' },
+          { value: 'PERSON', text: 'PERSON' },
+        ],
+        loading: false
       };
     },
     computed: {
@@ -371,6 +434,7 @@
       register() {
         this.$refs.registerForm.validate().then((success) => {
           if (success) {
+            this.loading = true
             useJwt
                     .clientToken()
                     .then((res) => {
@@ -381,10 +445,10 @@
                                 lastname: this.lastname,
                                 email: this.userEmail,
                                 password: this.password,
-                                accountType: "COMPANY",
+                                accountType: this.account,
                                 companyAddress: this.companyAddress,
                                 companyName: this.companyName,
-                                companyRegistrationNumber: "test",
+                                companyRegistrationNumber: this.registrationNumber,
                                 country: this.country?.value,
                                 gdpr: this.gdpr,
                                 identifier: "test",
@@ -392,6 +456,7 @@
                                 isoAlpha2Country: "test",
                               })
                               .then((response) => {
+                                this.loading = false
                                 // useJwt.setToken(response.config.headers.Authorization)
                                 // useJwt.setRefreshToken(response.config.headers.Authorization)
                                 // localStorage.setItem('userData', JSON.stringify(response.data))
@@ -410,6 +475,7 @@
 
                               .catch((error) => {
                                 //   this.$refs.registerForm.setErrors(error)
+                                this.loading = false
                                 this.$toast({
                                   component: ToastificationContent,
                                   props: {
@@ -422,6 +488,7 @@
                     })
                     .catch((error) => {
                       // this.$refs.registerForm.setErrors(error)
+                      this.loading = false
                       this.$toast({
                         component: ToastificationContent,
                         props: {
