@@ -1,68 +1,52 @@
 <template>
     <div>
-        <b-row class="auth-inner m-0">
-            <navbarAds />
-        </b-row>
-              <!-- search input -->
-      <section id="free-digital-invoices">
-        <b-card
-          no-body
-          class="knowledge-base-bg text-center"
-          :style="{backgroundImage: `url(${require('@/assets/images/banner/banner.png')})`}"
-        >
-          <b-card-body class="card-body">
-            <h2 class="text-primary">
-              {{ $t('free_digital_invoices.title')}}
-            </h2>
-          </b-card-body>
-        </b-card>
+      <b-row class="auth-inner m-0">
+          <navbarAds />
+      </b-row>
+      <!-- search input -->
+      <section id="about">
+        <div class="text-center">
+          <h1 class="text-primary text-center mt-5 mb-5">
+            {{ $t('free_digital_invoices.title')}}
+          </h1>
+        </div>
+    
       </section>
       <!--/ search input -->
-      <section id="freeDigitalInvoices-content">
   
-      <!-- collapse -->
-      <b-row class="kb-search-content-info match-height m-0">
-        <b-col
-            md="12"
-            sm="12"
-          >
-      <b-list-group class=" mt-2 px-2 ">      
-        <b-list-group-item             
+      <section id="about-content">
+  
+        <!-- content -->
+        <b-row class="kb-search-content-info match-height m-0">
+          <b-col
             v-for="item in freeDigitalInvoices"
-            :key="item.list"
-            class="d-flex"
-        >
-            <span class="mr-1">
-            <feather-icon
-                icon="CheckIcon"
-                size="16"
-            />
-            </span>
-            <span>{{ $t(`${item.list}`)}}</span>
-        </b-list-group-item>
-      </b-list-group>
-      </b-col>
-      </b-row>
-    </section>
-      <!--/ collapse -->
+            :key="item.title"
+            md="4"
+            sm="6"
+            class="kb-search-content mb-3"
+          >
+            <div
+              class="text-center cursor-pointer"
+            >
+              <feather-icon :icon="item.icon" size="64"/>
+              <h4 class="mt-1 mb-0">{{ $t(`${item.title}`)}} </h4>
+              <b-card-text class="mt-1">
+                {{ $t(`${item.list}`)}}
+              </b-card-text>
+            </div>
+          </b-col>
+        </b-row>
+      </section>
     </div>
   </template>
   
   <script>
-  import { BAvatar } from 'bootstrap-vue'
-  import AppCollapse from '@core/components/app-collapse/AppCollapse.vue'
-  import AppCollapseItem from '@core/components/app-collapse/AppCollapseItem.vue'
-  import VuexyLogo from "@core/layouts/components/Logo.vue";
-  import navbarAds from "./navbarAds.vue"
   import {
-    BRow, BCol, BCard, BCardBody, BForm, BInputGroup, BFormInput, BCardText, BInputGroupPrepend,BListGroup,BListGroupItem
+    BRow, BCol, BCard, BCardBody, BForm, BInputGroup, BFormInput, BCardText, BInputGroupPrepend,
   } from 'bootstrap-vue'
+  import navbarAds from "./navbarAds.vue"
   export default {
     components: {
-      BAvatar,
-      AppCollapseItem,
-      AppCollapse,
-      navbarAds,
       BRow,
       BCol,
       BCard,
@@ -72,32 +56,313 @@
       BInputGroup,
       BInputGroupPrepend,
       BFormInput,
-      navbarAds,
-      BListGroup,
-      BListGroupItem
-    },
-    props: {
-      options: {
-        type: Object,
-        default: () => {},
-      },
+      navbarAds
     },
     data() {
-        return{
-            freeDigitalInvoices: [
-                { list: `free_digital_invoices.label_fdi_1` },
-                { list: `free_digital_invoices.label_fdi_2` },
-                { list: `free_digital_invoices.label_fdi_3` },
-                { list: `free_digital_invoices.label_fdi_4` },
-                { list: `free_digital_invoices.label_fdi_5` },
-                { list: `free_digital_invoices.label_fdi_6` }
-            ]
-        }
+      return {
+          knowledgeBaseSearchQuery: '',
+          icons: [
+          'ActivityIcon',
+          'AirplayIcon',
+          'AlertCircleIcon',
+          'AlertOctagonIcon',
+          'AlertTriangleIcon',
+          'AlignCenterIcon',
+          'AlignJustifyIcon',
+          'AlignLeftIcon',
+          'AlignRightIcon',
+          'AnchorIcon',
+          'ApertureIcon',
+          'ArchiveIcon',
+          'ArrowDownCircleIcon',
+          'ArrowDownLeftIcon',
+          'ArrowDownRightIcon',
+          'ArrowDownIcon',
+          'ArrowLeftCircleIcon',
+          'ArrowLeftIcon',
+          'ArrowRightCircleIcon',
+          'ArrowRightIcon',
+          'ArrowUpCircleIcon',
+          'ArrowUpLeftIcon',
+          'ArrowUpRightIcon',
+          'ArrowUpIcon',
+          'AtSignIcon',
+          'AwardIcon',
+          'BarChart2Icon',
+          'BarChartIcon',
+          'BatteryChargingIcon',
+          'BatteryIcon',
+          'BellOffIcon',
+          'BellIcon',
+          'BluetoothIcon',
+          'BoldIcon',
+          'BookOpenIcon',
+          'BookIcon',
+          'BookmarkIcon',
+          'BoxIcon',
+          'BriefcaseIcon',
+          'CalendarIcon',
+          'CameraOffIcon',
+          'CameraIcon',
+          'CastIcon',
+          'CheckCircleIcon',
+          'CheckSquareIcon',
+          'CheckIcon',
+          'ChevronDownIcon',
+          'ChevronLeftIcon',
+          'ChevronRightIcon',
+          'ChevronUpIcon',
+          'ChevronsDownIcon',
+          'ChevronsLeftIcon',
+          'ChevronsRightIcon',
+          'ChevronsUpIcon',
+          'ChromeIcon',
+          'CircleIcon',
+          'ClipboardIcon',
+          'ClockIcon',
+          'CloudDrizzleIcon',
+          'CloudLightningIcon',
+          'CloudOffIcon',
+          'CloudRainIcon',
+          'CloudSnowIcon',
+          'CloudIcon',
+          'CodeIcon',
+          'CodepenIcon',
+          'CodesandboxIcon',
+          'CoffeeIcon',
+          'ColumnsIcon',
+          'CommandIcon',
+          'CompassIcon',
+          'CopyIcon',
+          'CornerDownLeftIcon',
+          'CornerDownRightIcon',
+          'CornerLeftDownIcon',
+          'CornerLeftUpIcon',
+          'CornerRightDownIcon',
+          'CornerRightUpIcon',
+          'CornerUpLeftIcon',
+          'CornerUpRightIcon',
+          'CpuIcon',
+          'CreditCardIcon',
+          'CropIcon',
+          'CrosshairIcon',
+          'DatabaseIcon',
+          'DeleteIcon',
+          'DiscIcon',
+          'DivideCircleIcon',
+          'DivideSquareIcon',
+          'DivideIcon',
+          'DollarSignIcon',
+          'DownloadCloudIcon',
+          'DownloadIcon',
+          'DribbbleIcon',
+          'DropletIcon',
+          'Edit2Icon',
+          'Edit3Icon',
+          'EditIcon',
+          'ExternalLinkIcon',
+          'EyeOffIcon',
+          'EyeIcon',
+          'FacebookIcon',
+          'FastForwardIcon',
+          'FeatherIcon',
+          'FigmaIcon',
+          'FileMinusIcon',
+          'FilePlusIcon',
+          'FileTextIcon',
+          'FileIcon',
+          'FilmIcon',
+          'FilterIcon',
+          'FlagIcon',
+          'FolderMinusIcon',
+          'FolderPlusIcon',
+          'FolderIcon',
+          'FramerIcon',
+          'FrownIcon',
+          'GiftIcon',
+          'GitBranchIcon',
+          'GitCommitIcon',
+          'GitMergeIcon',
+          'GitPullRequestIcon',
+          'GithubIcon',
+          'GitlabIcon',
+          'GlobeIcon',
+          'GridIcon',
+          'HardDriveIcon',
+          'HashIcon',
+          'HeadphonesIcon',
+          'HeartIcon',
+          'HelpCircleIcon',
+          'HexagonIcon',
+          'HomeIcon',
+          'ImageIcon',
+          'InboxIcon',
+          'InfoIcon',
+          'InstagramIcon',
+          'ItalicIcon',
+          'KeyIcon',
+          'LayersIcon',
+          'LayoutIcon',
+          'LifeBuoyIcon',
+          'Link2Icon',
+          'LinkIcon',
+          'LinkedinIcon',
+          'ListIcon',
+          'LoaderIcon',
+          'LockIcon',
+          'LogInIcon',
+          'LogOutIcon',
+          'MailIcon',
+          'MapPinIcon',
+          'MapIcon',
+          'Maximize2Icon',
+          'MaximizeIcon',
+          'MehIcon',
+          'MenuIcon',
+          'MessageCircleIcon',
+          'MessageSquareIcon',
+          'MicOffIcon',
+          'MicIcon',
+          'Minimize2Icon',
+          'MinimizeIcon',
+          'MinusCircleIcon',
+          'MinusSquareIcon',
+          'MinusIcon',
+          'MonitorIcon',
+          'MoonIcon',
+          'MoreHorizontalIcon',
+          'MoreVerticalIcon',
+          'MousePointerIcon',
+          'MoveIcon',
+          'MusicIcon',
+          'Navigation2Icon',
+          'NavigationIcon',
+          'OctagonIcon',
+          'PackageIcon',
+          'PaperclipIcon',
+          'PauseCircleIcon',
+          'PauseIcon',
+          'PenToolIcon',
+          'PercentIcon',
+          'PhoneCallIcon',
+          'PhoneForwardedIcon',
+          'PhoneIncomingIcon',
+          'PhoneMissedIcon',
+          'PhoneOffIcon',
+          'PhoneOutgoingIcon',
+          'PhoneIcon',
+          'PieChartIcon',
+          'PlayCircleIcon',
+          'PlayIcon',
+          'PlusCircleIcon',
+          'PlusSquareIcon',
+          'PlusIcon',
+          'PocketIcon',
+          'PowerIcon',
+          'PrinterIcon',
+          'RadioIcon',
+          'RefreshCcwIcon',
+          'RefreshCwIcon',
+          'RepeatIcon',
+          'RewindIcon',
+          'RotateCcwIcon',
+          'RotateCwIcon',
+          'RssIcon',
+          'SaveIcon',
+          'ScissorsIcon',
+          'SearchIcon',
+          'SendIcon',
+          'ServerIcon',
+          'SettingsIcon',
+          'Share2Icon',
+          'ShareIcon',
+          'ShieldOffIcon',
+          'ShieldIcon',
+          'ShoppingBagIcon',
+          'ShoppingCartIcon',
+          'ShuffleIcon',
+          'SidebarIcon',
+          'SkipBackIcon',
+          'SkipForwardIcon',
+          'SlackIcon',
+          'SlashIcon',
+          'SlidersIcon',
+          'SmartphoneIcon',
+          'SmileIcon',
+          'SpeakerIcon',
+          'SquareIcon',
+          'StarIcon',
+          'StopCircleIcon',
+          'SunIcon',
+          'SunriseIcon',
+          'SunsetIcon',
+          'TabletIcon',
+          'TagIcon',
+          'TargetIcon',
+          'TerminalIcon',
+          'ThermometerIcon',
+          'ThumbsDownIcon',
+          'ThumbsUpIcon',
+          'ToggleLeftIcon',
+          'ToggleRightIcon',
+          'ToolIcon',
+          'Trash2Icon',
+          'TrashIcon',
+          'TrelloIcon',
+          'TrendingDownIcon',
+          'TrendingUpIcon',
+          'TriangleIcon',
+          'TruckIcon',
+          'TvIcon',
+          'TwitchIcon',
+          'TwitterIcon',
+          'TypeIcon',
+          'UmbrellaIcon',
+          'UnderlineIcon',
+          'UnlockIcon',
+          'UploadCloudIcon',
+          'UploadIcon',
+          'UserCheckIcon',
+          'UserMinusIcon',
+          'UserPlusIcon',
+          'UserXIcon',
+          'UserIcon',
+          'UsersIcon',
+          'VideoOffIcon',
+          'VideoIcon',
+          'VoicemailIcon',
+          'Volume1Icon',
+          'Volume2Icon',
+          'VolumeXIcon',
+          'VolumeIcon',
+          'WatchIcon',
+          'WifiOffIcon',
+          'WifiIcon',
+          'WindIcon',
+          'XCircleIcon',
+          'XOctagonIcon',
+          'XSquareIcon',
+          'XIcon',
+          'YoutubeIcon',
+          'ZapOffIcon',
+          'ZapIcon',
+          'ZoomInIcon',
+          'ZoomOutIcon',
+        ],
+        freeDigitalInvoices: [
+            { title: `free_digital_invoices.title_abt_1`, list: `free_digital_invoices.label_fdi_1` , icon: "ActivityIcon" },
+            { title: `free_digital_invoices.title_abt_2`, list: `free_digital_invoices.label_fdi_2` , icon: "ApertureIcon" },
+            { title: `free_digital_invoices.title_abt_3`, list: `free_digital_invoices.label_fdi_3` , icon: "CommandIcon" },
+            { title: `free_digital_invoices.title_abt_4`, list: `free_digital_invoices.label_fdi_4` , icon: "LifeBuoyIcon" },
+            { title: `free_digital_invoices.title_abt_5`, list: `free_digital_invoices.label_fdi_5` , icon: "PackageIcon" },
+            { title: `free_digital_invoices.title_abt_6`, list: `free_digital_invoices.label_fdi_6` , icon: "ServerIcon" }
+        ]
+      }
     }
   }
-</script>
+  </script>
+  
   <style lang="scss">
-  @import "@core/scss/vue/pages/page-auth.scss";
   @import '@core/scss/vue/pages/page-knowledge-base.scss';
- </style>
+  </style>
   

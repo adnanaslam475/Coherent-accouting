@@ -5,17 +5,12 @@
       </b-row>
       <!-- search input -->
       <section id="about">
-        <b-card
-          no-body
-          class="knowledge-base-bg text-center"
-          :style="{backgroundImage: `url(${require('@/assets/images/banner/banner.png')})`}"
-        >
-          <b-card-body class="card-body">
-            <h2 class="text-primary">
-              {{ $t('about.title')}}
-            </h2>
-          </b-card-body>
-        </b-card>
+        <div class="text-center">
+          <h1 class="text-primary text-center mt-5 mb-5">
+            {{ $t('about.title')}}
+          </h1>
+        </div>
+    
       </section>
       <!--/ search input -->
   
@@ -28,7 +23,7 @@
             :key="item.title"
             md="4"
             sm="6"
-            class="kb-search-content"
+            class="kb-search-content mb-3"
           >
             <div
               class="text-center cursor-pointer"
