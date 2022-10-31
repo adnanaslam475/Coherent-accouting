@@ -462,14 +462,14 @@
                                 // localStorage.setItem('userData', JSON.stringify(response.data))
                                 // this.$ability.update(response.data)
                                 localStorage.setItem("userData", JSON.stringify(response));
-                                this.$toast({
-                                  component: ToastificationContent,
-                                  props: {
-                                    title: `Client Token and Create User APIs hit successfully`,
-                                    icon: "EditIcon",
-                                    variant: "success",
-                                  },
-                                });
+                                // this.$toast({
+                                //   component: ToastificationContent,
+                                //   props: {
+                                //     title: `Client Token and Create User APIs hit successfully`,
+                                //     icon: "EditIcon",
+                                //     variant: "success",
+                                //   },
+                                // });
                                 return this.$router.push("/");
                               })
 

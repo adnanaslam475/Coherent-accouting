@@ -6,17 +6,11 @@
     </b-row>
               <!-- search input -->
     <section id="videos">
-    <b-card
-        no-body
-        class="knowledge-base-bg text-center"
-        :style="{backgroundImage: `url(${require('@/assets/images/banner/banner.png')})`}"
-    >
-        <b-card-body class="card-body">
-        <h2 class="text-primary">
+        <div class="text-center">
+          <h1 class="text-primary text-center mt-5 mb-5">
             {{ $t('videos')}}
-        </h2>
-        </b-card-body>
-    </b-card>
+          </h1>
+        </div>
     </section>
     <!--/ search input -->
    

@@ -5,17 +5,12 @@
       </b-row>
       <!-- search input -->
       <section id="about">
-        <b-card
-          no-body
-          class="knowledge-base-bg text-center"
-          :style="{backgroundImage: `url(${require('@/assets/images/banner/banner.png')})`}"
-        >
-          <b-card-body class="card-body">
-            <h2 class="text-primary">
-              {{ $t('about.title')}}
-            </h2>
-          </b-card-body>
-        </b-card>
+        <div class="text-center">
+          <h1 class="text-primary text-center mt-5 mb-5">
+            {{ $t('about.title')}}
+          </h1>
+        </div>
+    
       </section>
       <!--/ search input -->
   
@@ -28,14 +23,15 @@
             :key="item.title"
             md="4"
             sm="6"
-            class="kb-search-content"
+            class="kb-search-content mb-3"
           >
             <div
               class="text-center cursor-pointer"
             >
               <feather-icon :icon="item.icon" size="64"/>
-              <h4 class="mt-1 mb-0">{{ $t(`${item.title}`)}} </h4>
-              <b-card-text class="mt-1">
+              <h4 v-if="$t(`${item.title}`)" class="mt-1 mb-0">{{ $t(`${item.title}`)}} </h4>
+              <h4 v-if="!$t(`${item.title}`)" class="mt-1 mb-0" style="visibility: hidden;">About </h4>
+              <b-card-text class="mt-1 break-spaces">
                 {{ $t(`${item.desc}`)}}
               </b-card-text>
             </div>
@@ -358,6 +354,9 @@
           { title: `about.label_abt_1` , desc: `about.desc_abt_1`, icon: "ActivityIcon"  },
           { title: `about.label_abt_2` , desc: `about.desc_abt_2`, icon: "ApertureIcon"  },
           { title: `about.label_abt_3` , desc: `about.desc_abt_3`, icon: "CompassIcon"  },
+          { title: `about.label_abt_4` , desc: `about.desc_abt_4`, icon: "LifeBuoyIcon"  },
+          { title: `about.label_abt_5` , desc: `about.desc_abt_5`, icon: "GlobeIcon"  },
+          { title: `about.label_abt_6` , desc: `about.desc_abt_6`, icon: "ZapIcon"  },
         ]
       }
     }
@@ -366,5 +365,8 @@
   
   <style lang="scss">
   @import '@core/scss/vue/pages/page-knowledge-base.scss';
+  .break-spaces{
+    white-space: break-spaces;
+  }
   </style>
   
