@@ -161,14 +161,14 @@
                   })
                     .then(response => {
                       this.loading = false
-                      this.$toast({
-                          component: ToastificationContent,
-                          props: {
-                          title: `Client Token and reset password email sent APIs hit successfully`,
-                          icon: 'EditIcon',
-                          variant: 'success',
-                          },
-                      })
+                      // this.$toast({
+                      //     component: ToastificationContent,
+                      //     props: {
+                      //     title: `Client Token and reset password email sent APIs hit successfully`,
+                      //     icon: 'EditIcon',
+                      //     variant: 'success',
+                      //     },
+                      // })
                       return this.$router.push({ name: 'reset-password-email-v1' })
                     })
                     .catch(error => {

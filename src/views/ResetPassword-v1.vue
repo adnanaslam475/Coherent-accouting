@@ -197,14 +197,14 @@
                   })
                     .then(response => {
                       this.loading = false
-                      this.$toast({
-                          component: ToastificationContent,
-                          props: {
-                          title: `resetPasswordApi hit successfully`,
-                          icon: 'EditIcon',
-                          variant: 'success',
-                          },
-                      })
+                      // this.$toast({
+                      //     component: ToastificationContent,
+                      //     props: {
+                      //     title: `resetPasswordApi hit successfully`,
+                      //     icon: 'EditIcon',
+                      //     variant: 'success',
+                      //     },
+                      // })
                       return this.$router.push({ name: 'login' })
                     })
                     .catch(error => {

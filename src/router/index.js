@@ -261,16 +261,14 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, _, next) => {
-  const isLoggedIn = isUserLoggedIn()
-    if (to.name == "/" || to.name == "home") {
-      if (!isLoggedIn) return next({ name: 'login' })
-
+    let isLoggedIn = isUserLoggedIn()
+    if (to.name == "/" || to.name == "home" || to.name == "invoices") {
       if (!isLoggedIn) {
-        const userData = getUserData()
-        next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
-      }
-      return next()
-
+        return next({ name: 'login' })
+      } 
+        
+      return next();
+      
     }
     // else if( to.name == "auth-reset-password-v1"){
 
