@@ -260,6 +260,7 @@ const router = new VueRouter({
   ],
 })
 
+<<<<<<< HEAD
 router.beforeEach((to, from, next) => {
   i18n.locale = localStorage.getItem('language') || 'en'
   return next()
@@ -278,6 +279,19 @@ router.beforeEach((to, from, next) => {
 
 //     }
 //     // else if( to.name == "auth-reset-password-v1"){
+=======
+router.beforeEach((to, _, next) => {
+    let isLoggedIn = isUserLoggedIn()
+    if (to.name == "/" || to.name == "home" || to.name == "invoices") {
+      if (!isLoggedIn) {
+        return next({ name: 'login' })
+      } 
+        
+      return next();
+      
+    }
+    // else if( to.name == "auth-reset-password-v1"){
+>>>>>>> 3056920d8ed95f47e55f856fe9e2e66450ab08fb
 
 //     //   let tokenUrl = window?.location?.search?.split('=')[1] ? window.location.search.split('=')[1] : ""
 

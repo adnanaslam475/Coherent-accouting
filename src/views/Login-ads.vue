@@ -1,7 +1,7 @@
 <template>
     <div class="auth-wrapper auth-v2">
       <b-row class="auth-inner m-0">
-        
+
         <navbarAds />
         <!-- Left Text-->
         <b-col
@@ -238,17 +238,18 @@
                 password: this.password,
               })
                 .then(response => {
+                  console.log("response",response)
                   this.loading = false
                   localStorage.setItem('userData', JSON.stringify(response))
-                  this.$toast({
-                      component: ToastificationContent,
-                      props: {
-                      title: `Password Token API hit successfully`,
-                      icon: 'EditIcon',
-                      variant: 'success',
-                      },
-                  })
-                  return this.$router.push('/')
+                  // this.$toast({
+                  //     component: ToastificationContent,
+                  //     props: {
+                  //     title: `Password Token API hit successfully`,
+                  //     icon: 'EditIcon',
+                  //     variant: 'success',
+                  //     },
+                  // })
+                  return this.$router.push({ name: "home" })
                 })
                 .catch(error => {
                   this.loading = false
