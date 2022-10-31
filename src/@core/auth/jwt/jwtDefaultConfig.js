@@ -11,6 +11,9 @@ export default {
   refreshEndpoint: '/jwt/refresh-token',
   logoutEndpoint: '/jwt/logout',
 
+
+  // Companies endpoints
+  getCompanies: '/api/company/list/:pageNumber/:pageSize',
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>
   tokenType: 'Bearer',

@@ -261,6 +261,11 @@ const router = new VueRouter({
   ],
 })
 
+router.beforeEach((to, from, next) => {
+  i18n.locale = localStorage.getItem('language') || 'en'
+  return next()
+})
+
 router.beforeEach((to, _, next) => {
   const isLoggedIn = isUserLoggedIn()
   console.log('isLoggedIn ', isLoggedIn)
