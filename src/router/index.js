@@ -260,68 +260,65 @@ const router = new VueRouter({
   ],
 })
 
-<<<<<<< HEAD
 router.beforeEach((to, from, next) => {
   i18n.locale = localStorage.getItem('language') || 'en'
   return next()
 })
 
-// router.beforeEach((to, _, next) => {
-//   const isLoggedIn = isUserLoggedIn()
-//     if (to.name == "/" || to.name == "home") {
-//       if (!isLoggedIn) return next({ name: 'login' })
-
-//       if (!isLoggedIn) {
-//         const userData = getUserData()
-//         next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
-//       }
-//       return next()
-
-//     }
-//     // else if( to.name == "auth-reset-password-v1"){
-=======
 router.beforeEach((to, _, next) => {
-    let isLoggedIn = isUserLoggedIn()
-    if (to.name == "/" || to.name == "home" || to.name == "invoices") {
+  const isLoggedIn = isUserLoggedIn()
+    if (to.name == "/" || to.name == "home") {
+      if (!isLoggedIn) return next({ name: 'login' })
+
       if (!isLoggedIn) {
-        return next({ name: 'login' })
-      } 
-        
-      return next();
-      
+        const userData = getUserData()
+        next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
+      }
+      return next()
+
     }
     // else if( to.name == "auth-reset-password-v1"){
->>>>>>> 3056920d8ed95f47e55f856fe9e2e66450ab08fb
-
-//     //   let tokenUrl = window?.location?.search?.split('=')[1] ? window.location.search.split('=')[1] : ""
-
-//     //   if(tokenUrl){
-//     //     useJwt.clientToken()
-//     //       .then(res => {
-//     //           let token = res.data.access_token
-//     //           useJwt.verifyToken(token,tokenUrl)
-//     //             .then(response => {
-//     //               console.log("response",response)
-
-//     //               return this.$router.push('/')
-//     //             })
-//     //             .catch(error => {
-
-//     //             })
-//     //       })
-//     //       .catch(error => {
-
-//     //       })
-//     //   } else {
-//     //     return next()
-//     //   }
-
-//     // }
-
-//     else{
-//       return next()
+// router.beforeEach((to, _, next) => {
+//     let isLoggedIn = isUserLoggedIn()
+//     if (to.name == "/" || to.name == "home" || to.name == "invoices") {
+//       if (!isLoggedIn) {
+//         return next({ name: 'login' })
+//       } 
+        
+//       return next();
+      
 //     }
-// })
+//     else if( to.name == "auth-reset-password-v1"){
+
+    //   let tokenUrl = window?.location?.search?.split('=')[1] ? window.location.search.split('=')[1] : ""
+
+    //   if(tokenUrl){
+    //     useJwt.clientToken()
+    //       .then(res => {
+    //           let token = res.data.access_token
+    //           useJwt.verifyToken(token,tokenUrl)
+    //             .then(response => {
+    //               console.log("response",response)
+
+    //               return this.$router.push('/')
+    //             })
+    //             .catch(error => {
+
+    //             })
+    //       })
+    //       .catch(error => {
+
+    //       })
+    //   } else {
+    //     return next()
+    //   }
+
+    // }
+
+    else{
+      return next()
+    }
+})
 
 // ? For splash screen
 // Remove afterEach hook if you are not using splash screen
