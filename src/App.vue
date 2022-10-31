@@ -1,11 +1,11 @@
 <template>
   <div
-    id="app"
-    class="h-100"
-    :class="[skinClasses]"
+      id="app"
+      class="h-100"
+      :class="[skinClasses]"
   >
     <component :is="layout">
-      <router-view />
+      <router-view/>
     </component>
 
   </div>
@@ -55,7 +55,9 @@ export default {
 
     // eslint-disable-next-line no-plusplus
     for (let i = 0, len = colors.length; i < len; i++) {
-      $themeColors[colors[i]] = useCssVar(`--${colors[i]}`, document.documentElement).value.trim()
+      $themeColors[colors[i]] = useCssVar(`--${colors[i]}`, document.documentElement)
+          .value
+          .trim()
     }
 
     // Set Theme Breakpoints
@@ -63,7 +65,9 @@ export default {
 
     // eslint-disable-next-line no-plusplus
     for (let i = 0, len = breakpoints.length; i < len; i++) {
-      $themeBreakpoints[breakpoints[i]] = Number(useCssVar(`--breakpoint-${breakpoints[i]}`, document.documentElement).value.slice(0, -2))
+      $themeBreakpoints[breakpoints[i]] = Number(useCssVar(`--breakpoint-${breakpoints[i]}`, document.documentElement)
+          .value
+          .slice(0, -2))
     }
 
     // Set RTL
@@ -71,7 +75,10 @@ export default {
     document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr')
   },
   setup() {
-    const { skin, skinClasses } = useAppConfig()
+    const {
+      skin,
+      skinClasses
+    } = useAppConfig()
 
     // If skin is dark when initialized => Add class to body
     if (skin.value === 'dark') document.body.classList.add('dark-layout')
@@ -99,23 +106,26 @@ export default {
       skinClasses,
     }
   },
-  created () {
-    let uri = 'http://167.86.93.80:8899/userauth/oauth/token'
-    let data = {
-        grant_type: 'password',
-        username: 'amazon_6011_@abv.bg',
-        password: '1234'
-    }
-		 axios.post(uri, {data}, {
-        auth: {
-          username: 'acme',
-          password: 'acmesecret'
-        }
-      }).then(response => {
-				console.log(response.data)
-			}).catch(error => {
-				console.log(error.response)
-			})
-  }
+  created() {
+    console.log('hello world')
+    const uri = 'http://167.86.93.80:8899/userauth/oauth/token'
+    // const data = {
+    //   grant_type: 'password',
+    //   username: 'amazon_6011_@abv.bg',
+    //   password: '1234'
+    // }
+    // eslint-disable-next-line no-mixed-spaces-and-tabs,no-tabs
+    axios.post(uri, {
+      grant_type: 'password',
+      username: 'amazon_6011_@abv.bg',
+      password: '1234',
+    })
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(error => {
+        console.log(error.response.data)
+      })
+  },
 }
 </script>

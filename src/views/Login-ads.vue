@@ -1,7 +1,7 @@
 <template>
     <div class="auth-wrapper auth-v2">
       <b-row class="auth-inner m-0">
-        
+
         <navbarAds />
         <!-- Left Text-->
         <b-col
@@ -240,6 +240,7 @@
                 .then(response => {
                   this.loading = false
                   localStorage.setItem('userData', JSON.stringify(response))
+                  localStorage.setItem('accessToken', response.data.access_token)
                   this.$toast({
                       component: ToastificationContent,
                       props: {

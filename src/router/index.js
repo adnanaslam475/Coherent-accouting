@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { isUserLoggedIn, getUserData, getHomeRouteForLoggedInUser } from '@/auth/utils'
-import { i18n } from '../main'
-import useJwt from '@/auth/jwt/useJwt'
+// import useJwt from '@/auth/jwt/useJwt'
+// import { i18n } from '../main'
+
 Vue.use(VueRouter)
 
 Vue.use(VueRouter)
@@ -165,11 +166,11 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
     // Invoice routes starting from here
     {
-      path:'/invoices',
+      path: '/invoices',
       name: 'invoices',
       component: () => import('@/views/invoice/Index.vue'),
       meta: {
@@ -180,11 +181,11 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
     // Videos routes starting from here
     {
-      path:'/videos',
+      path: '/videos',
       name: 'videos',
       component: () => import('@/views/videos/Index.vue'),
       meta: {
@@ -195,11 +196,11 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
     // Tickets routes starting from here
     {
-      path:'/tickets',
+      path: '/tickets',
       name: 'tickets',
       component: () => import('@/views/tickets/Index.vue'),
       meta: {
@@ -210,11 +211,11 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
     // My Plans routes starting from here
     {
-      path:'/my-plans',
+      path: '/my-plans',
       name: 'my-plans',
       component: () => import('@/views/Plans/Index.vue'),
       meta: {
@@ -225,11 +226,11 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
     // Settings routes starting from here
     {
-      path:'/settings',
+      path: '/settings',
       name: 'settings',
       component: () => import('@/views/Settings/Index.vue'),
       meta: {
@@ -240,11 +241,11 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
     // Contacts routes starting from here
     {
-      path:'/contacts',
+      path: '/contacts',
       name: 'contacts',
       component: () => import('@/views/Contacts/Index.vue'),
       meta: {
@@ -255,53 +256,51 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
   ],
 })
 
 router.beforeEach((to, _, next) => {
   const isLoggedIn = isUserLoggedIn()
-    if (to.name == "/" || to.name == "home") {
-      if (!isLoggedIn) return next({ name: 'login' })
+  console.log('isLoggedIn ', isLoggedIn)
+  if (to.name === '/' || to.name === 'home') {
+    if (!isLoggedIn) return next({ name: 'login' })
 
-      if (!isLoggedIn) {
-        const userData = getUserData()
-        next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
-      }
-      return next()
-
+    if (!isLoggedIn) {
+      const userData = getUserData()
+      next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
     }
-    // else if( to.name == "auth-reset-password-v1"){
+    return next()
+  }
+  // else if( to.name == "auth-reset-password-v1"){
 
-    //   let tokenUrl = window?.location?.search?.split('=')[1] ? window.location.search.split('=')[1] : ""
+  //   let tokenUrl = window?.location?.search?.split('=')[1] ? window.location.search.split('=')[1] : ""
 
-    //   if(tokenUrl){
-    //     useJwt.clientToken()
-    //       .then(res => {
-    //           let token = res.data.access_token
-    //           useJwt.verifyToken(token,tokenUrl)
-    //             .then(response => {
-    //               console.log("response",response)
+  //   if(tokenUrl){
+  //     useJwt.clientToken()
+  //       .then(res => {
+  //           let token = res.data.access_token
+  //           useJwt.verifyToken(token,tokenUrl)
+  //             .then(response => {
+  //               console.log("response",response)
 
-    //               return this.$router.push('/')
-    //             })
-    //             .catch(error => {
+  //               return this.$router.push('/')
+  //             })
+  //             .catch(error => {
 
-    //             })
-    //       })
-    //       .catch(error => {
+  //             })
+  //       })
+  //       .catch(error => {
 
-    //       })
-    //   } else {
-    //     return next()
-    //   }
+  //       })
+  //   } else {
+  //     return next()
+  //   }
 
-    // }
+  // }
 
-    else{
-      return next()
-    }
+  return next()
 })
 
 // ? For splash screen
