@@ -23,7 +23,7 @@ import { useWindowSize, useCssVar } from '@vueuse/core'
 
 import store from '@/store'
 
-import axios from 'axios'
+import useJwt from '@/auth/jwt/useJwt'
 
 const LayoutVertical = () => import('@/layouts/vertical/LayoutVertical.vue')
 const LayoutHorizontal = () => import('@/layouts/horizontal/LayoutHorizontal.vue')
@@ -100,22 +100,17 @@ export default {
     }
   },
   created () {
-    let uri = 'http://167.86.93.80:8899/userauth/oauth/token'
-    let data = {
-        grant_type: 'password',
+    if (!localStorage.getItem('user_token')) {
+      useJwt.login({
+        grant_type: "password",
         username: 'amazon_6011_@abv.bg',
         password: '1234'
-    }
-		 axios.post(uri, {data}, {
-        auth: {
-          username: 'acme',
-          password: 'acmesecret'
-        }
       }).then(response => {
-				console.log(response.data)
-			}).catch(error => {
-				console.log(error.response)
-			})
+        localStorage.setItem('user_token', response.data.access_token);
+      }).catch(error => {
+        // 
+      })
+    }
   }
 }
 </script>

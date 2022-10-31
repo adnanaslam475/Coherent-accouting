@@ -208,4 +208,14 @@ export default class JwtService {
       headers: headers
     })
   }
+
+  companies(token) {
+    let headers = {
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+    }
+
+    return this.axiosIns2.get(this.jwtConfig.getCompanies, {
+      headers: headers
+    })
+  }
 }
