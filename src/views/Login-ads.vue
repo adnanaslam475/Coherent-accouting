@@ -127,8 +127,14 @@
                   type="submit"
                   variant="primary"
                   block
-                  :disabled="invalid"
-                >{{ $t('login.sign_in')}}
+                  :disabled="invalid || loading"
+                >
+                <b-spinner
+                  v-if="loading"
+                  small
+                  variant="light"
+                />
+                {{ $t('login.sign_in')}}
                 </b-button>
               </b-form>
             </validation-observer>
@@ -158,7 +164,7 @@
   import { ValidationProvider, ValidationObserver } from 'vee-validate'
   import VuexyLogo from '@core/layouts/components/Logo.vue'
   import {
-    BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BFormCheckbox, BCardText, BCardTitle, BImg, BForm, BButton, BAlert, VBTooltip, BNavbar, BNavbarBrand, BNavbarToggle, BNavbarNav, BNavForm, BCollapse, BNavItemDropdown, BDropdownDivider, BAvatar, BNavItem
+    BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BFormCheckbox, BCardText, BCardTitle, BImg, BForm, BButton, BAlert, VBTooltip, BNavbar, BNavbarBrand, BNavbarToggle, BNavbarNav, BNavForm, BCollapse, BNavItemDropdown, BDropdownDivider, BAvatar, BNavItem, BSpinner
   } from 'bootstrap-vue'
   import useJwt from '@/auth/jwt/useJwt'
   import { required, email } from '@validations'
@@ -191,7 +197,8 @@
       VuexyLogo,
       ValidationProvider,
       ValidationObserver,
-      navbarAds
+      navbarAds,
+      BSpinner
     },
     mixins: [togglePasswordVisibility],
     data() {
@@ -204,6 +211,7 @@
         // validation rules
         required,
         email,
+        loading: false
       }
     },
     computed: {
@@ -223,12 +231,14 @@
       login() {
         this.$refs.loginForm.validate().then(success => {
           if (success) {
+              this.loading = true
               useJwt.login({
                 grant_type: "password",
                 username: this.userEmail,
                 password: this.password,
               })
                 .then(response => {
+                  this.loading = false
                   localStorage.setItem('userData', JSON.stringify(response))
                   this.$toast({
                       component: ToastificationContent,
@@ -241,6 +251,7 @@
                   return this.$router.push('/')
                 })
                 .catch(error => {
+                  this.loading = false
                   this.$toast({
                       component: ToastificationContent,
                       props: {

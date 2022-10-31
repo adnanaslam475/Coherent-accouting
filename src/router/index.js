@@ -43,25 +43,17 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/login',
-      name: 'login',
+      path: '/login/advertisements',
+      name: 'login-advertisements',
       component: () => import('@/views/Login.vue'),
       meta: {
         layout: 'full',
       },
     },
     {
-      path: '/login/advertisements',
-      name: 'login-advertisement',
+      path: '/login',
+      name: 'login',
       component: () => import('@/views/Login-ads.vue'),
-      meta: {
-        layout: 'full',
-      },
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: () => import('@/views/Register.vue'),
       meta: {
         layout: 'full',
       },
@@ -69,6 +61,14 @@ const router = new VueRouter({
     {
       path: '/register/advertisements',
       name: 'register-advertisement',
+      component: () => import('@/views/Register.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
+      path: '/register',
+      name: 'register',
       component: () => import('@/views/Register-ads.vue'),
       meta: {
         layout: 'full',
@@ -120,6 +120,22 @@ const router = new VueRouter({
       path: '/questions',
       name: 'questions',
       component: () => import('@/views/Questions.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
+      path: '/videos/advertisement',
+      name: 'videos-advertisement',
+      component: () => import('@/views/Videos.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
+      path: '/free-digital-invoices',
+      name: 'free-digital-invoices',
+      component: () => import('@/views/FreeDigitalInvoices.vue'),
       meta: {
         layout: 'full',
       },

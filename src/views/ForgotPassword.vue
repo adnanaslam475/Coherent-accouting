@@ -75,7 +75,13 @@
                   type="submit"
                   variant="primary"
                   block
+                  :disabled="loading"
                 >
+                  <b-spinner
+                    v-if="loading"
+                    small
+                    variant="light"
+                  />
                   {{$t("forget.lbl_btn_submit")}}
                 </b-button>
               </b-form>
@@ -98,7 +104,7 @@
   import { ValidationProvider, ValidationObserver } from 'vee-validate'
   import VuexyLogo from '@core/layouts/components/Logo.vue'
   import {
-    BRow, BCol, BLink, BCardTitle, BCardText, BImg, BForm, BFormGroup, BFormInput, BButton,
+    BRow, BCol, BLink, BCardTitle, BCardText, BImg, BForm, BFormGroup, BFormInput, BButton, BSpinner
   } from 'bootstrap-vue'
   import { required, email } from '@validations'
   import store from '@/store/index'
@@ -120,6 +126,7 @@
       BCardText,
       ValidationProvider,
       ValidationObserver,
+      BSpinner
     },
     data() {
       return {
@@ -128,6 +135,7 @@
         // validation
         required,
         email,
+        loading: false
       }
     },
     computed: {
@@ -144,6 +152,7 @@
       validationForm() {
         this.$refs.simpleRules.validate().then(success => {
           if (success) {
+            this.loading = true
             useJwt.clientToken()
               .then(res => {
                   let token = res.data.access_token
@@ -151,6 +160,7 @@
                     email: this.userEmail,
                   })
                     .then(response => {
+                      this.loading = false
                       this.$toast({
                           component: ToastificationContent,
                           props: {
@@ -163,6 +173,7 @@
                     })
                     .catch(error => {
                          //   this.$refs.registerForm.setErrors(error)
+                        this.loading = false
                         this.$toast({
                             component: ToastificationContent,
                             props: {
@@ -176,6 +187,7 @@
               })
               .catch(error => {
                 // this.$refs.registerForm.setErrors(error)
+                this.loading = false
                 this.$toast({
                     component: ToastificationContent,
                     props: {

@@ -4,7 +4,7 @@
             <navbarAds />
         </b-row>
               <!-- search input -->
-      <section id="questions">
+      <section id="free-digital-invoices">
         <b-card
           no-body
           class="knowledge-base-bg text-center"
@@ -12,38 +12,37 @@
         >
           <b-card-body class="card-body">
             <h2 class="text-primary">
-              {{ $t('questions.title')}}
+              {{ $t('free_digital_invoices.title')}}
             </h2>
           </b-card-body>
         </b-card>
       </section>
       <!--/ search input -->
-      <section id="questions-content">
+      <section id="freeDigitalInvoices-content">
   
       <!-- collapse -->
       <b-row class="kb-search-content-info match-height m-0">
         <b-col
-            v-for="item in questions"
-            :key="item.question"
             md="12"
             sm="12"
           >
-            <app-collapse
-                id="faq-payment-qna"
-                accordion
-                type="margin"
-                class="mt-2 px-2"
-            >
-        
-                <app-collapse-item
-                 :title="$t(`${item.question}`)"
-                >
-                {{ $t(`${item.answer}`)}}
-                </app-collapse-item>
-        
-            </app-collapse>
+      <b-list-group class=" mt-2 px-2 ">      
+        <b-list-group-item             
+            v-for="item in freeDigitalInvoices"
+            :key="item.list"
+            class="d-flex"
+        >
+            <span class="mr-1">
+            <feather-icon
+                icon="CheckIcon"
+                size="16"
+            />
+            </span>
+            <span>{{ $t(`${item.list}`)}}</span>
+        </b-list-group-item>
+      </b-list-group>
       </b-col>
-    </b-row>
+      </b-row>
     </section>
       <!--/ collapse -->
     </div>
@@ -56,7 +55,7 @@
   import VuexyLogo from "@core/layouts/components/Logo.vue";
   import navbarAds from "./navbarAds.vue"
   import {
-    BRow, BCol, BCard, BCardBody, BForm, BInputGroup, BFormInput, BCardText, BInputGroupPrepend,
+    BRow, BCol, BCard, BCardBody, BForm, BInputGroup, BFormInput, BCardText, BInputGroupPrepend,BListGroup,BListGroupItem
   } from 'bootstrap-vue'
   export default {
     components: {
@@ -73,7 +72,9 @@
       BInputGroup,
       BInputGroupPrepend,
       BFormInput,
-      navbarAds
+      navbarAds,
+      BListGroup,
+      BListGroupItem
     },
     props: {
       options: {
@@ -83,15 +84,13 @@
     },
     data() {
         return{
-            questions: [
-                { question: `questions.question_qst_1` , answer: `questions.answer_qst_1` },
-                { question: `questions.question_qst_2` , answer: `questions.answer_qst_2` },
-                { question: `questions.question_qst_3` , answer: `questions.answer_qst_3` },
-                { question: `questions.question_qst_4` , answer: `questions.answer_qst_4` },
-                { question: `questions.question_qst_5` , answer: `questions.answer_qst_5` },
-                { question: `questions.question_qst_6` , answer: `questions.answer_qst_6` },
-                { question: `questions.question_qst_7` , answer: `questions.answer_qst_7` },
-                { question: `questions.question_qst_8` , answer: `questions.answer_qst_8` },
+            freeDigitalInvoices: [
+                { list: `free_digital_invoices.label_fdi_1` },
+                { list: `free_digital_invoices.label_fdi_2` },
+                { list: `free_digital_invoices.label_fdi_3` },
+                { list: `free_digital_invoices.label_fdi_4` },
+                { list: `free_digital_invoices.label_fdi_5` },
+                { list: `free_digital_invoices.label_fdi_6` }
             ]
         }
     }
