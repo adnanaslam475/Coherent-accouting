@@ -265,49 +265,49 @@ router.beforeEach((to, from, next) => {
   return next()
 })
 
-// router.beforeEach((to, _, next) => {
-//   const isLoggedIn = isUserLoggedIn()
-//     if (to.name == "/" || to.name == "home") {
-//       if (!isLoggedIn) return next({ name: 'login' })
+router.beforeEach((to, _, next) => {
+  const isLoggedIn = isUserLoggedIn()
+    if (to.name == "/" || to.name == "home") {
+      if (!isLoggedIn) return next({ name: 'login' })
 
-//       if (!isLoggedIn) {
-//         const userData = getUserData()
-//         next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
-//       }
-//       return next()
+      if (!isLoggedIn) {
+        const userData = getUserData()
+        next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
+      }
+      return next()
 
-//     }
-//     // else if( to.name == "auth-reset-password-v1"){
+    }
+    // else if( to.name == "auth-reset-password-v1"){
 
-//     //   let tokenUrl = window?.location?.search?.split('=')[1] ? window.location.search.split('=')[1] : ""
+    //   let tokenUrl = window?.location?.search?.split('=')[1] ? window.location.search.split('=')[1] : ""
 
-//     //   if(tokenUrl){
-//     //     useJwt.clientToken()
-//     //       .then(res => {
-//     //           let token = res.data.access_token
-//     //           useJwt.verifyToken(token,tokenUrl)
-//     //             .then(response => {
-//     //               console.log("response",response)
+    //   if(tokenUrl){
+    //     useJwt.clientToken()
+    //       .then(res => {
+    //           let token = res.data.access_token
+    //           useJwt.verifyToken(token,tokenUrl)
+    //             .then(response => {
+    //               console.log("response",response)
 
-//     //               return this.$router.push('/')
-//     //             })
-//     //             .catch(error => {
+    //               return this.$router.push('/')
+    //             })
+    //             .catch(error => {
 
-//     //             })
-//     //       })
-//     //       .catch(error => {
+    //             })
+    //       })
+    //       .catch(error => {
 
-//     //       })
-//     //   } else {
-//     //     return next()
-//     //   }
+    //       })
+    //   } else {
+    //     return next()
+    //   }
 
-//     // }
+    // }
 
-//     else{
-//       return next()
-//     }
-// })
+    else{
+      return next()
+    }
+})
 
 // ? For splash screen
 // Remove afterEach hook if you are not using splash screen
