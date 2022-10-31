@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { isUserLoggedIn, getUserData, getHomeRouteForLoggedInUser } from '@/auth/utils'
-// import useJwt from '@/auth/jwt/useJwt'
-// import { i18n } from '../main'
+import useJwt from '@/auth/jwt/useJwt'
+import { i18n } from '../main'
 
 Vue.use(VueRouter)
 
