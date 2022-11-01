@@ -3,7 +3,7 @@
         <b-tabs v-model="companyTab">
             <b-tab>
             <template #title>
-                <feather-icon icon="FileTextIcon" />
+                <feather-icon icon="BriefcaseIcon" />
                 <span>Company Info</span>
             </template>
             <CompanyInfo :companyTab="companyTab" @state="update($event)"  />
