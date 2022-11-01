@@ -1,26 +1,21 @@
 <template>
     <div>
-      <b-row>
-        <b-button to="/company/create" variant="relief-primary" class="float-right mb-1">Add Company</b-button>
-      </b-row>
+      <b-button to="/company/create" variant="relief-primary" class="float-right mb-1">Add Company</b-button>
       <b-table
       :fields="fields"
       :items="items"
       responsive
       class="mb-0"
     >
-      <!-- A virtual composite column -->
-      <template #cell(action)>
-        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="default" class="btn-icon">
-          <feather-icon icon="MoreVerticalIcon" />
-        </b-button>
-      </template>
+    <template #cell(company_name)="data">
+      <b-link :to="{name: 'CompanyView', params: {id: data.item.id}}">{{ data.value }}</b-link>
+    </template>
     </b-table>
     </div>
 </template>
 <script>
 import BCardCode from '@core/components/b-card-code/BCardCode.vue'
-import { BTable, BProgress, BBadge, BButton } from 'bootstrap-vue'
+import { BTable, BProgress, BBadge, BButton, BLink } from 'bootstrap-vue'
 import useJwt from '@/auth/jwt/useJwt'
 
 export default {
@@ -30,6 +25,7 @@ export default {
     BProgress,
     BBadge,
     BButton,
+    BLink
   },
   data() {
     return {
@@ -48,6 +44,7 @@ export default {
       ],
       items: [
         {
+          id: '1234567',
           Country: 'BG',
           company_name: 'Accounting Software',
           Email: 'accounting@software.com',
@@ -56,6 +53,7 @@ export default {
           action: 'Edit/Delete'
         },
         {
+          id: '1234568',
           Country: 'EN',
           company_name: 'NodeJs Software',
           Email: 'accounting@software.com',
@@ -64,6 +62,7 @@ export default {
           action: 'Edit/Delete'
         },
         {
+          id: '1234569',
           Country: 'EN',
           company_name: 'Accounting Software',
           Email: 'accounting@software.com',
@@ -72,6 +71,7 @@ export default {
           action: 'Edit/Delete'
         },
         {
+          id: '1234570',
           Country: 'BG',
           company_name: 'Laravel Software',
           Email: 'laravel@software.com',
@@ -80,6 +80,7 @@ export default {
           action: 'Edit/Delete'
         },
         {
+          id: '1234571',
           Country: 'EN',
           company_name: 'VueJs Software',
           Email: 'vue@software.com',
@@ -90,12 +91,18 @@ export default {
       ],
     }
   },
+  methods: {
+    // 
+  },
   created() {
-    useJwt.companies().then(response => {
-      console.log(response)
-    }).catch(error => {
-      console.log(error)
-    })
+    // useJwt.clientToken().then(res => {
+    //   let token = res.data.access_token
+    //   useJwt.companies(token).then(response => {
+    //     console.log(response);
+    //   }).catch(error => {
+    //     // 
+    //   })
+    // })
   }
 }
 </script>

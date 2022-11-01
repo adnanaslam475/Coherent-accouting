@@ -44,6 +44,71 @@
                     <b-col>
                         <b-form-group
                             id="input-group-1"
+                            label="Company Address"
+                            label-for="company_address"
+                        >
+                            <b-form-input
+                                id="company_address"
+                                v-model="form.company_address"
+                                type="text"
+                                placeholder="Company Address"
+                                autocomplete="off"
+                                required
+                            ></b-form-input>
+                        </b-form-group>
+                    </b-col>
+                    <b-col>
+                        <b-form-group
+                            id="input-group-1"
+                            label="Country"
+                            label-for="country"
+                        >
+                            <b-form-input
+                                id="country"
+                                v-model="form.country"
+                                type="text"
+                                placeholder="Country"
+                                autocomplete="off"
+                                required
+                            ></b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-form-row>
+                <b-form-row>
+                    <b-col>
+                        <b-form-group
+                            id="input-group-1"
+                            label="Country"
+                            label-for="country"
+                        >
+                            <b-form-input
+                                id="country"
+                                v-model="form.country"
+                                type="text"
+                                placeholder="Country"
+                                autocomplete="off"
+                                required
+                            ></b-form-input>
+                        </b-form-group>
+                    </b-col>
+                    <b-col></b-col>
+                </b-form-row>
+                <b-form-row>
+                    <b-col></b-col>
+                    <b-col></b-col>
+                </b-form-row>
+                <b-form-row>
+                    <b-col></b-col>
+                    <b-col></b-col>
+                </b-form-row>
+                <b-form-row>
+                    <b-col></b-col>
+                    <b-col></b-col>
+                </b-form-row>
+                <b-form-row>
+                    <b-col>
+                        <b-form-group
+                            id="input-group-1"
                             label="Owner Name"
                             label-for="owner_name"
                         >
@@ -83,7 +148,9 @@
 </template>
 
 <script>
-import { BCard, BcardText, BButton, BForm, BFormGroup, BFormInput, BFormRow, BCol } from 'bootstrap-vue'
+
+import { BCard, BCardBody, BcardText, BButton, BForm, BFormGroup, BFormInput, BFormRow, BCol } from 'bootstrap-vue'
+import useJwt from '@/auth/jwt/useJwt'
 
 export default {
     components: {
@@ -94,22 +161,73 @@ export default {
         BFormGroup,
         BFormInput,
         BFormRow,
-        BCol
+        BCol,
+        BCardBody
     },
     data () {
         return {
             form: {
                 company_name: null,
                 company_email: null,
+                company_address: null,
+                country: null,
                 owner_name: null,
                 company_identification_number: null
-            }
+            },
+            options: [],
         }
     },
     methods: {
         saveCompany() {
             this.$router.push('/companies')
-        }
+        },
+        populateCountries(){
+        var optionsArr =  this
+        useJwt.clientToken()
+              .then(res => {
+                  let token = res.data.access_token
+                  useJwt.countries(token)
+                    .then(response => {
+                      response.data.map(function(value, key) {
+                        optionsArr.options.push({
+                          value: value.isoAlpha2Country,
+                          text: value.country,
+                          src: value.isoAlpha2Country.toLocaleLowerCase()
+                        })
+                      });
+                      this.$toast({
+                          component: ToastificationContent,
+                          props: {
+                          title: `Countries APIs hit successfully`,
+                          icon: 'EditIcon',
+                          variant: 'success',
+                          },
+                      })
+                    })
+                    .catch(error => {
+                         //   this.$refs.registerForm.setErrors(error)
+                        this.$toast({
+                            component: ToastificationContent,
+                            props: {
+                            title: `${error}`,
+                            icon: 'EditIcon',
+                            variant: 'error',
+                            },
+                        })
+                    })
+              })
+              .catch(error => {
+                // this.$refs.registerForm.setErrors(error)
+                this.$toast({
+                    component: ToastificationContent,
+                    props: {
+                    title: `${error.errorMessage}`,
+                    icon: 'EditIcon',
+                    variant: 'error',
+                    },
+                })
+              })
+      }
     },
     created() {
         // 

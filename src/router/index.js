@@ -185,6 +185,24 @@ const router = new VueRouter({
         ],
       }
     },
+    {
+      path: '/company/:id',
+      name: 'CompanyView',
+      component: () => import('@/views/company/Show.vue'),
+      meta: {
+        pageTitle: 'Companies',
+        breadcrumb: [
+          {
+            text: 'Companies',
+            to: '/companies'
+          },
+          {
+            text: 'View Company',
+            active: true,
+          },
+        ],
+      }
+    },
     // Invoice routes starting from here
     {
       path:'/invoices',
