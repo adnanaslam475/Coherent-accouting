@@ -167,6 +167,24 @@ const router = new VueRouter({
         ],
       }
     },
+    {
+      path: '/company/create',
+      name: 'CreateCompany',
+      component: () => import('@/views/company/Create.vue'),
+      meta: {
+        pageTitle: 'Companies',
+        breadcrumb: [
+          {
+            text: 'Companies',
+            to: '/companies'
+          },
+          {
+            text: 'Create Company',
+            active: true,
+          },
+        ],
+      }
+    },
     // Invoice routes starting from here
     {
       path:'/invoices',
