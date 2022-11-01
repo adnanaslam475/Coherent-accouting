@@ -167,6 +167,42 @@ const router = new VueRouter({
         ],
       }
     },
+    {
+      path: '/company/create',
+      name: 'CreateCompany',
+      component: () => import('@/views/company/Create.vue'),
+      meta: {
+        pageTitle: 'Companies',
+        breadcrumb: [
+          {
+            text: 'Companies',
+            to: '/companies'
+          },
+          {
+            text: 'Create Company',
+            active: true,
+          },
+        ],
+      }
+    },
+    {
+      path: '/company/:id',
+      name: 'CompanyView',
+      component: () => import('@/views/company/Show.vue'),
+      meta: {
+        pageTitle: 'Companies',
+        breadcrumb: [
+          {
+            text: 'Companies',
+            to: '/companies'
+          },
+          {
+            text: 'View Company',
+            active: true,
+          },
+        ],
+      }
+    },
     // Invoice routes starting from here
     {
       path:'/invoices',
@@ -260,17 +296,35 @@ const router = new VueRouter({
   ],
 })
 
+router.beforeEach((to, from, next) => {
+  i18n.locale = localStorage.getItem('language') || 'en'
+  return next()
+})
+
 router.beforeEach((to, _, next) => {
-    let isLoggedIn = isUserLoggedIn()
-    if (to.name == "/" || to.name == "home" || to.name == "invoices") {
+  const isLoggedIn = isUserLoggedIn()
+    if (to.name == "/" || to.name == "home") {
+      if (!isLoggedIn) return next({ name: 'login' })
+
       if (!isLoggedIn) {
-        return next({ name: 'login' })
-      } 
-        
-      return next();
-      
+        const userData = getUserData()
+        next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
+      }
+      return next()
+
     }
     // else if( to.name == "auth-reset-password-v1"){
+// router.beforeEach((to, _, next) => {
+//     let isLoggedIn = isUserLoggedIn()
+//     if (to.name == "/" || to.name == "home" || to.name == "invoices") {
+//       if (!isLoggedIn) {
+//         return next({ name: 'login' })
+//       } 
+        
+//       return next();
+      
+//     }
+//     else if( to.name == "auth-reset-password-v1"){
 
     //   let tokenUrl = window?.location?.search?.split('=')[1] ? window.location.search.split('=')[1] : ""
 
