@@ -9,7 +9,7 @@ export default class JwtService {
   axiosIns1 = axios.create({
     // You can add your headers here
     // ================================
-    baseURL: 'http://167.86.93.80:8899',
+    baseURL: 'http://167.86.93.80:8765',
     // timeout: 1000,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -20,7 +20,7 @@ export default class JwtService {
   axiosIns2 = axios.create({
     // You can add your headers here
     // ================================
-    baseURL: 'http://167.86.93.80:8881',
+    baseURL: 'http://167.86.93.80:8765',
     // timeout: 1000,
     // headers: {
     //   'Content-Type': 'application/x-www-form-urlencoded',
@@ -31,7 +31,7 @@ export default class JwtService {
   axiosIns3 = axios.create({
     // You can add your headers here
     // ================================
-    baseURL: 'http://167.86.93.80:8899',
+    baseURL: 'http://167.86.93.80:8765',
     // timeout: 1000,
     // headers: {
     //   'Content-Type': 'application/x-www-form-urlencoded',
