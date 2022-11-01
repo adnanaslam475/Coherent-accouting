@@ -26,7 +26,7 @@
           />
           <b-button
             variant="primary"
-            :to="{ name: 'apps-invoice-add'}"
+            @click="actionTab"
           >
             Add Record
           </b-button>
@@ -286,6 +286,15 @@ import useInvoicesList from './useInvoiceList'
 import invoiceStoreModule from '../invoiceStoreModule'
 
 export default {
+  props: ['invoiceTab'],
+  methods: {
+    state() {
+      return 1;
+    },
+    actionTab() {
+      this.$emit("state", this.state())
+    }
+  },
   components: {
     BCard,
     BRow,
@@ -301,7 +310,6 @@ export default {
     BDropdownItem,
     BPagination,
     BTooltip,
-
     vSelect,
   },
   setup() {
@@ -368,6 +376,7 @@ export default {
       resolveClientAvatarVariant,
     }
   },
+
 }
 </script>
 

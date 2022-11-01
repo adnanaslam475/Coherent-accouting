@@ -172,15 +172,15 @@ const router = new VueRouter({
       path:'/invoices',
       name: 'invoices',
       component: () => import('@/views/invoice/Index.vue'),
-      meta: {
-        pageTitle: 'Invoices',
-        breadcrumb: [
-          {
-            text: 'Invoices',
-            active: true,
-          },
-        ],
-      }
+      // meta: {
+      //   pageTitle: '',
+      //   breadcrumb: [
+      //     {
+      //       text: 'Invoices',
+      //       active: true,
+      //     },
+      //   ],
+      // }
     },
     // Videos routes starting from here
     {

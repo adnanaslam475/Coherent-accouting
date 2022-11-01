@@ -49,13 +49,10 @@ export default function useInvoicesList() {
 
   const fetchInvoices = (ctx, callback) => {
     store
-      .dispatch('app-invoice/fetchInvoices', {
-        q: searchQuery.value,
-        perPage: perPage.value,
-        page: currentPage.value,
-        sortBy: sortBy.value,
-        sortDesc: isSortDirDesc.value,
-        status: statusFilter.value,
+      .dispatch('app-invoice/fetchInvoices', currentPage.value,perPage.value, {
+        sortField: sortBy.value,
+        direction: isSortDirDesc.value,
+        verified: true
       })
       .then(response => {
         const { invoices, total } = response.data

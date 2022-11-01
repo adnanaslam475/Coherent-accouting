@@ -4,8 +4,9 @@
     no-body
     v-on="$listeners"
   >
-    <div class="card-header">
-      <!-- Title & SubTitle -->
+    <!-- Title & SubTitle -->
+    <!-- <div class="card-header">
+      
       <div>
         <b-card-title>{{ $attrs.title }}</b-card-title>
         <b-card-sub-title v-if="$attrs['sub-title']">
@@ -19,7 +20,7 @@
         :aria-controls="parentID"
         @click="code_visible = !code_visible"
       />
-    </div>
+    </div>  -->
 
     <template v-if="$attrs['no-body'] !== undefined">
       <slot />
