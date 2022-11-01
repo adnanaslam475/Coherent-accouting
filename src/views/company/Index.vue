@@ -7,9 +7,14 @@
       responsive
       class="mb-0"
     >
-    <template #cell(company_name)="data">
-      <b-link :to="{name: 'CompanyView', params: {id: data.item.id}}">{{ data.value }}</b-link>
-    </template>
+      <template #cell(company_name)="data">
+        <b-link :to="{name: 'CompanyView', params: {id: data.item.id}}">{{ data.value }}</b-link>
+      </template>
+      <template #cell(action)>
+        <b-button variant="outline-primary" class="btn-icon">
+          <feather-icon icon="MoreVerticalIcon" />
+        </b-button>
+      </template>
     </b-table>
     </div>
 </template>
