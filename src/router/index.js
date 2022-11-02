@@ -167,20 +167,56 @@ const router = new VueRouter({
         ],
       }
     },
+    {
+      path: '/company/create',
+      name: 'CreateCompany',
+      component: () => import('@/views/company/Create.vue'),
+      meta: {
+        pageTitle: 'Companies',
+        breadcrumb: [
+          {
+            text: 'Companies',
+            to: '/companies'
+          },
+          {
+            text: 'Create Company',
+            active: true,
+          },
+        ],
+      }
+    },
+    {
+      path: '/company/:id',
+      name: 'CompanyView',
+      component: () => import('@/views/company/Show.vue'),
+      meta: {
+        pageTitle: 'Companies',
+        breadcrumb: [
+          {
+            text: 'Companies',
+            to: '/companies'
+          },
+          {
+            text: 'View Company',
+            active: true,
+          },
+        ],
+      }
+    },
     // Invoice routes starting from here
     {
       path:'/invoices',
       name: 'invoices',
       component: () => import('@/views/invoice/Index.vue'),
-      meta: {
-        pageTitle: 'Invoices',
-        breadcrumb: [
-          {
-            text: 'Invoices',
-            active: true,
-          },
-        ],
-      }
+      // meta: {
+      //   pageTitle: '',
+      //   breadcrumb: [
+      //     {
+      //       text: 'Invoices',
+      //       active: true,
+      //     },
+      //   ],
+      // }
     },
     // Videos routes starting from here
     {

@@ -31,8 +31,8 @@
               <feather-icon :icon="item.icon" size="64"/>
               <h4 v-if="$t(`${item.title}`)" class="mt-1 mb-0">{{ $t(`${item.title}`)}} </h4>
               <!-- <h4 v-if="!$t(`${item.title}`)" class="mt-1 mb-0" style="visibility: hidden;">Free Digital Invoice </h4> -->
-              <b-card-text class="mt-1 break-spaces">
-                {{ $t(`${item.list}`)}}
+              <b-card-text class="mt-1 break-spaces text-justify">
+              {{ $t(`${item.list}`)}}
               </b-card-text>
             </div>
           </b-col>
@@ -366,7 +366,7 @@
   <style lang="scss">
   @import '@core/scss/vue/pages/page-knowledge-base.scss';
   .break-spaces{
-    white-space: break-spaces;
+    white-space: pre-line;
   }
   </style>
   

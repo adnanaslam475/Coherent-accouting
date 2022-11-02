@@ -968,7 +968,7 @@ mock.onGet(/\/apps\/invoice\/invoices\/\d+/).reply(config => {
 // ------------------------------------------------
 // GET: Return Clients
 // ------------------------------------------------
-mock.onGet('/apps/invoice/clients').reply(() => {
+mock.onGet('/account/api/user-invoice/list/1/20?sortField=id&direction=desc&verified=true').reply(() => {
   const clients = data.invoices.map(invoice => invoice.client)
   return [200, clients.slice(0, 5)]
 })
