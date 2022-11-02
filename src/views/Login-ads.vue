@@ -204,8 +204,8 @@
     data() {
       return {
         status: '',
-        password: 'admin',
-        userEmail: 'admin@demo.com',
+        password: '',
+        userEmail: '',
         sideImg: require('@/assets/images/pages/login-v2.svg'),
 
         // validation rules
@@ -238,9 +238,11 @@
                 password: this.password,
               })
                 .then(response => {
-                  console.log("response",response)
+                  
                   this.loading = false
                   localStorage.setItem('userData', JSON.stringify(response))
+                  useJwt.setToken(response.data.access_token)
+                  useJwt.setRefreshToken(response.data.refresh_token)
                   // this.$toast({
                   //     component: ToastificationContent,
                   //     props: {

@@ -1,4 +1,4 @@
-import axios from '@axios'
+import axios from 'axios'
 import useJwt from "@/auth/jwt/useJwt";
 export default {
   namespaced: true,
@@ -6,18 +6,22 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    fetchInvoices(ctx, page, perPageValue, queryParams) {
-      useJwt
-      .clientToken()
-      .then((res) => {
-        let token = res.data.access_token;
+    fetchInvoices(ctx, queryParams, pageNumber, perPageValue) {
+        let token = useJwt.getToken()
+        let axiosInvoice = axios.create({
+          baseURL: 'http://167.86.93.80:8765',
+        })
+        let config = {
+          headers: {'Authorization': "Bearer "+token},
+          params: {
+            direction: queryParams.direction,
+            sortField: queryParams.sortField,
+            verified: queryParams.verified
+          },
+        }
         return new Promise((resolve, reject) => {
-          axios
-            .get(`/account/api/user-invoice/list/${page}/${perPageValue?perPageValue:10}`, {
-              headers: {
-                'Authorization': token
-              }
-            }, { params: queryParams })
+          axiosInvoice
+            .get(`/account/api/user-invoice/list/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
             .then((response) =>{
               resolve(response)
             })
@@ -25,17 +29,6 @@ export default {
               reject(error)
             })
         })
-      })
-      .catch((error) => {
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: `${error.response.data.errorMessage}`,
-            icon: "EditIcon",
-            variant: "error",
-          },
-        });
-      });
     },
     fetchInvoice(ctx, { id }) {
       return new Promise((resolve, reject) => {

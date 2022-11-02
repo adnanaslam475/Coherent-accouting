@@ -306,10 +306,6 @@ router.beforeEach((to, _, next) => {
     if (to.name == "/" || to.name == "home") {
       if (!isLoggedIn) return next({ name: 'login' })
 
-      if (!isLoggedIn) {
-        const userData = getUserData()
-        next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
-      }
       return next()
 
     }

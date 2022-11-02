@@ -57,15 +57,9 @@ export default function useUsersList() {
   const fetchUsers = (ctx, callback) => {
     store
       .dispatch('app-user/fetchUsers', {
-        q: searchQuery.value,
-        perPage: perPage.value,
-        page: currentPage.value,
-        sortBy: sortBy.value,
-        sortDesc: isSortDirDesc.value,
-        role: roleFilter.value,
-        plan: planFilter.value,
-        status: statusFilter.value,
-      })
+        sortField: sortBy.value,
+        direction: isSortDirDesc.value,
+      }, currentPage.value, perPage.value)
       .then(response => {
         const { users, total } = response.data
 

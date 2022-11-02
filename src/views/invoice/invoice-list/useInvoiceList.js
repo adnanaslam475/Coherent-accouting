@@ -14,11 +14,18 @@ export default function useInvoicesList() {
   // Table Handlers
   const tableColumns = [
     { key: 'id', label: '#', sortable: true },
-    { key: 'invoiceStatus', sortable: true },
-    { key: 'client', sortable: true },
-    { key: 'total', sortable: true, formatter: val => `$${val}` },
-    { key: 'issuedDate', sortable: true },
-    { key: 'balance', sortable: true },
+    { key: 'invoiceNumber', sortable: true},
+    { key: 'recipientCompany', sortable: true},
+    { key: 'supplierCompany', sortable: true },
+    { key: 'totalAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
+    { key: 'vatAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
+    { key: 'vatPercent', sortable: true, formatter: val => `${val}%` },
+    { key: 'amountNonVat', sortable: true, formatter: val => `$${val?val:"0"}` },
+    { key: 'tradeDiscountAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
+    { key: 'tradeDiscountPercent', sortable: true, formatter: val => `${val}%` },
+    { key: 'documentType', sortable: true, formatter: val => `${val?val:""}` },
+    { key: 'dateIssued', sortable: true },
+    { key: 'currency', sortable: true },
     { key: 'actions' },
   ]
   const perPage = ref(10)
@@ -49,18 +56,19 @@ export default function useInvoicesList() {
 
   const fetchInvoices = (ctx, callback) => {
     store
-      .dispatch('app-invoice/fetchInvoices', currentPage.value,perPage.value, {
+      .dispatch('app-invoice/fetchInvoices', {
         sortField: sortBy.value,
         direction: isSortDirDesc.value,
         verified: true
-      })
+      }, currentPage.value, perPage.value)
       .then(response => {
-        const { invoices, total } = response.data
+        const { elements, totalElements } = response.data
 
-        callback(invoices)
-        totalInvoices.value = total
+        callback(elements)
+        totalInvoices.value = totalElements
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log("err",err)
         toast({
           component: ToastificationContent,
           props: {
