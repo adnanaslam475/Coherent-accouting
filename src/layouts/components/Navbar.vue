@@ -244,6 +244,7 @@ import {
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
+import axiosIns from '@/libs/axios'
 
 export default {
   components: {
@@ -271,6 +272,10 @@ export default {
     changeLanguage(obj) {
       localStorage.setItem('language', obj.locale)
       this.$i18n.locale = obj.locale
+    },
+    async getNotifications() {
+      const notifications = await axiosIns.get('account/api/notification/list/1/10?sortField=sentDate&direction=desc')
+      console.log(notifications)
     },
   },
   computed: {
@@ -357,6 +362,7 @@ export default {
     },
   },
   created() {
+    this.getNotifications()
   },
 }
 </script>

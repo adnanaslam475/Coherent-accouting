@@ -41,7 +41,7 @@ export default {
     fetchClients() {
       return new Promise((resolve, reject) => {
         axios
-          .get('/apps/invoice/clients')
+          .get('/account/api/user-invoice/list/1/20?sortField=id&direction=desc&verified=true')
           .then(response => resolve(response))
           .catch(error => reject(error))
       })
