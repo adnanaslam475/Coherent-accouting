@@ -15,16 +15,18 @@ export default function useInvoicesList() {
   const tableColumns = [
     { key: 'id', label: '#', sortable: true },
     { key: 'invoiceNumber', sortable: true},
+    { key: 'dateIssued', sortable: true },
+    { key: 'documentType', sortable: true, formatter: val => `${val?val:""}` },
     { key: 'recipientCompany', sortable: true},
     { key: 'supplierCompany', sortable: true },
-    { key: 'totalAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
-    { key: 'vatAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
-    { key: 'vatPercent', sortable: true, formatter: val => `${val}%` },
-    { key: 'amountNonVat', sortable: true, formatter: val => `$${val?val:"0"}` },
-    { key: 'tradeDiscountAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
-    { key: 'tradeDiscountPercent', sortable: true, formatter: val => `${val}%` },
-    { key: 'documentType', sortable: true, formatter: val => `${val?val:""}` },
-    { key: 'dateIssued', sortable: true },
+    { key: 'amountNonVat', sortable: true },
+    { key: 'totalAmount', sortable: true },
+    { key: 'vatAmount', sortable: true },
+    
+    // { key: 'vatPercent', sortable: true, formatter: val => `${val}%` },
+    // { key: 'tradeDiscountAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
+    // { key: 'tradeDiscountPercent', sortable: true, formatter: val => `${val}%` },
+    
     { key: 'currency', sortable: true },
     { key: 'actions' },
   ]
@@ -68,7 +70,6 @@ export default function useInvoicesList() {
         totalInvoices.value = totalElements
       })
       .catch((err) => {
-        console.log("err",err)
         toast({
           component: ToastificationContent,
           props: {

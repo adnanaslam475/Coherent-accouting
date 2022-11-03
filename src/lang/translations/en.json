@@ -59,6 +59,10 @@
     "email_sent_successfully" : "Email Sent Successfully.",
     "description": "We have sent a reset password email at your entered registered email address. Please click on the 'RESET PASSWORD' on your email to proceed."
   },
+  "verify_email": {
+    "email_sent_successfully" : "Verification Email Sent Successfully.",
+    "description": "We are happy you signed up for Coherent Accounting. To start exploring the Coherent Accounting, please confirm your email address."
+  },
   "navbar": {
     "login" : "Login",
     "signup": "Sign up",

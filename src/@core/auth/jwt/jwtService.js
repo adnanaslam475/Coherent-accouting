@@ -40,6 +40,10 @@ export default class JwtService {
     // }
   })
 
+  axiosIns4 = axios.create({
+    baseURL: 'https://api.ipify.org/?format=json',
+  })
+
   // jwtConfig <= Will be used by this service
   jwtConfig = { ...jwtDefaultConfig }
 
@@ -149,6 +153,9 @@ export default class JwtService {
     })
   }
 
+  getIpAddress(){
+    return this.axiosIns4.get()
+  }
   clientToken(){
     const data = qs.stringify({
       'grant_type': 'client_credentials'

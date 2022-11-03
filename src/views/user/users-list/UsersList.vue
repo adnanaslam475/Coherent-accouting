@@ -83,6 +83,15 @@
         :sort-desc.sync="isSortDirDesc"
       >
 
+      <!-- Column: Id -->
+        <template #cell(id)="data">
+        <span
+          class="font-weight-bold"
+        >
+          #{{ data.value }}
+        </span>
+      </template>
+
         <!-- Column: User -->
         <template #cell(user)="data">
           <b-media vertical-align="center">
@@ -90,8 +99,7 @@
               <b-avatar
                 size="32"
                 :src="data.item.avatar"
-                :text="avatarText(data.item.fullName)"
-                :variant="`light-${resolveUserRoleVariant(data.item.role)}`"
+                :text="avatarText(data.item.firstMiddleAndLastName)"
                 :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
               />
             </template>
@@ -101,32 +109,75 @@
             >
               {{ data.item.fullName }}
             </b-link>
-            <small class="text-muted">@{{ data.item.username }}</small>
+            <small class="text-muted">@{{ data.item.firstMiddleAndLastName }}</small>
           </b-media>
         </template>
 
-        <!-- Column: Role -->
-        <template #cell(role)="data">
-          <div class="text-nowrap">
-            <feather-icon
-              :icon="resolveUserRoleIcon(data.item.role)"
-              size="18"
-              class="mr-50"
-              :class="`text-${resolveUserRoleVariant(data.item.role)}`"
-            />
-            <span class="align-text-top text-capitalize">{{ data.item.role }}</span>
-          </div>
+        <template #cell(companyId)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.id }}</span>
         </template>
+        <template #cell(companyName)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyName }}</span>
+        </template>
+        <template #cell(companyCountry)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyCountry }}</span>
+        </template>
+        <template #cell(companyIsoAlpha2Country)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyIsoAlpha2Country }}</span>
+        </template>
+        <template #cell(companyAddress)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyAddress }}</span>
+        </template>
+        <template #cell(companyIdentificationNumber)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyIdentificationNumber }}</span>
+        </template>
+        <template #cell(companyPhone)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyPhone }}</span>
+        </template>
+        <template #cell(companyMail)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyMail }}</span>
+        </template>
+        <template #cell(companyBankAccount)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyBankAccount }}</span>
+        </template>
+        <template #cell(companyOwner)="data">
+            <span class="text-nowrap text-capitalize" :id="`company-row-${data.item.id}`">
+              {{ data.item.company.companyOwnerApi.companyOwnerName }}
+            </span>
+            <b-tooltip
+              :target="`company-row-${data.item.id}`"
+              placement="top"
+            >
+              <p class="mb-0" v-if="data.item.company.companyOwnerApi.companName">
+                Company Name: {{ data.item.company.companyOwnerApi.companName }}
+              </p>
+              <p class="mb-0" v-if="data.item.company.companyOwnerApi.companyEic">
+                Company Eic: {{ data.item.company.companyOwnerApi.companyEic }}
+              </p>
+              <p class="mb-0" v-if="data.item.company.companyOwnerApi.companyVatEic">
+                Company Vat Eic: {{ data.item.company.companyOwnerApi.companyVatEic }}
+              </p>
+              <p class="mb-0" v-if="data.item.company.companyOwnerApi.companyAddress">
+                Company Address: {{ data.item.company.companyOwnerApi.companyAddress }}
+              </p>
+              <p class="mb-0" v-if="data.item.company.companyOwnerApi.ownerEGN">
+                Owner EGN: {{ data.item.company.companyOwnerApi.ownerEGN }}
+              </p>
 
-        <!-- Column: Status -->
-        <template #cell(status)="data">
-          <b-badge
-            pill
-            :variant="`light-${resolveUserStatusVariant(data.item.status)}`"
-            class="text-capitalize"
-          >
-            {{ data.item.status }}
-          </b-badge>
+
+            </b-tooltip>
+        </template>
+        <template #cell(companyCurrency)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyCurrency }}</span>
+        </template>
+        <template #cell(companyVatAccepted)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyVatAccepted }}</span>
+        </template>
+        <template #cell(companyVatNumber)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyVatNumber }}</span>
+        </template>
+        <template #cell(companyFinancialStartOfYear)="data">
+            <span class="text-nowrap text-capitalize">{{ data.item.company.companyFinancialStartOfYear }}</span>
         </template>
 
         <!-- Column: Actions -->

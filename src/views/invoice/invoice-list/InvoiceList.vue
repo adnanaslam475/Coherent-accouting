@@ -92,7 +92,15 @@
         </b-link>
       </template>
 
+      <!-- Column: invoiceNumber -->
       <template #cell(invoiceNumber)="data">
+        <span class="text-nowrap">
+          {{ data.value }}
+        </span>
+      </template>
+
+      <!-- Column: Issued Date -->
+      <template #cell(dateIssued)="data">
         <span class="text-nowrap">
           {{ data.value }}
         </span>
@@ -108,12 +116,13 @@
           placement="top"
         >
           <p class="mb-0">
-            {{ data.item.recipientCompany.companyOwnerName }}
-          </p>
-          <p class="mb-0">
             Company Eic: {{ data.item.recipientCompany.companyEic }}
           </p>
           <p class="mb-0">
+            Company Owner Name: {{ data.item.recipientCompany.companyOwnerName }}
+          </p>
+
+          <!-- <p class="mb-0">
             Company Vat Eic: {{ data.item.recipientCompany.companyVatEic }}
           </p>
           <p class="mb-0">
@@ -121,26 +130,29 @@
           </p>
           <p class="mb-0">
             Owner EGN: {{ data.item.recipientCompany.ownerEGN }}
-          </p>
+          </p> -->
         </b-tooltip>
       </template>
 
       <!-- Column: supplierCompany -->
       <template #cell(supplierCompany)="data">
-        <b-media vertical-align="center"  :id="`supplierCompany-row-${data.item.id}`">
-          <span class="font-weight-bold d-block text-nowrap">
-            {{ data.item.supplierCompany.companName }}
-          </span>
-          <small class="text-muted">{{ data.item.supplierCompany.companyOwnerName }}</small>
-        </b-media>
+ 
+        <span class="text-nowrap"  :id="`supplierCompany-row-${data.item.id}`">
+          {{ data.item.supplierCompany.companName }}
+        </span>
         <b-tooltip
           :target="`supplierCompany-row-${data.item.id}`"
           placement="top"
         >
+        
           <p class="mb-0">
             Company Eic: {{ data.item.supplierCompany.companyEic }}
           </p>
           <p class="mb-0">
+            Company Owner Name: {{ data.item.supplierCompany.companyOwnerName }}
+          </p>
+
+          <!-- <p class="mb-0">
             Company Vat Eic: {{ data.item.supplierCompany.companyVatEic }}
           </p>
           <p class="mb-0">
@@ -148,14 +160,40 @@
           </p>
           <p class="mb-0">
             Owner EGN: {{ data.item.supplierCompany.ownerEGN }}
-          </p>
+          </p> -->
         </b-tooltip>
       </template>
 
-      <!-- Column: Issued Date -->
-      <template #cell(dateIssued)="data">
+      <!-- Column: amount non vat -->
+      <template #cell(amountNonVat)="data">
         <span class="text-nowrap">
-          {{ data.value }}
+           
+          <span v-if="data.item.currency == 'lv'">лв{{ data.value }}</span>
+          <span v-if="data.item.currency == 'usd'">${{ data.value }}</span>
+          <span v-if="data.item.currency == 'euro'">€{{ data.value }}</span>
+          
+        </span>
+      </template>
+
+      <!-- Column: totalAmount -->
+      <template #cell(totalAmount)="data">
+        <span class="text-nowrap">
+           
+          <span v-if="data.item.currency == 'lv'">лв{{ data.value }}</span>
+          <span v-if="data.item.currency == 'usd'">${{ data.value }}</span>
+          <span v-if="data.item.currency == 'euro'">€{{ data.value }}</span>
+          
+        </span>
+      </template>
+
+      <!-- Column: vatAmount -->
+      <template #cell(vatAmount)="data">
+        <span class="text-nowrap">
+           
+          <span v-if="data.item.currency == 'lv'">лв{{ data.value }}</span>
+          <span v-if="data.item.currency == 'usd'">${{ data.value }}</span>
+          <span v-if="data.item.currency == 'euro'">€{{ data.value }}</span>
+          
         </span>
       </template>
 

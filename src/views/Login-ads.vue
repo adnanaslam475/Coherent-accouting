@@ -243,22 +243,15 @@
                   localStorage.setItem('userData', JSON.stringify(response))
                   useJwt.setToken(response.data.access_token)
                   useJwt.setRefreshToken(response.data.refresh_token)
-                  // this.$toast({
-                  //     component: ToastificationContent,
-                  //     props: {
-                  //     title: `Password Token API hit successfully`,
-                  //     icon: 'EditIcon',
-                  //     variant: 'success',
-                  //     },
-                  // })
                   return this.$router.push({ name: "home" })
                 })
                 .catch(error => {
+                  console.log(error.response)
                   this.loading = false
                   this.$toast({
                       component: ToastificationContent,
                       props: {
-                      title: `Incorrect Email or password`,
+                      title: `${error?.response?.data?.error_description ? error?.response?.data?.error_description : "Incorrect Email or Password" }`,
                       icon: 'EditIcon',
                       variant: 'error',
                       },

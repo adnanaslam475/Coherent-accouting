@@ -412,7 +412,7 @@
         accountType: [
           { value: null, text: 'Please select account type', disabled: true },
           { value: 'COMPANY', text: 'COMPANY' },
-          { value: 'PERSON', text: 'PERSON' },
+          { value: 'PERSONAL', text: 'PERSON' },
         ],
         loading: false
       };
@@ -436,68 +436,60 @@
           if (success) {
             this.loading = true
             useJwt
-                    .clientToken()
-                    .then((res) => {
-                      let token = res.data.access_token;
-                      useJwt
-                              .register(token, {
-                                firstname: this.firstname,
-                                lastname: this.lastname,
-                                email: this.userEmail,
-                                password: this.password,
-                                accountType: this.account,
-                                companyAddress: this.companyAddress,
-                                companyName: this.companyName,
-                                companyRegistrationNumber: this.registrationNumber,
-                                country: this.country?.value,
-                                gdpr: this.gdpr,
-                                identifier: "test",
-                                ipAddress: "test",
-                                isoAlpha2Country: "test",
-                              })
-                              .then((response) => {
-                                this.loading = false
-                                // useJwt.setToken(response.config.headers.Authorization)
-                                // useJwt.setRefreshToken(response.config.headers.Authorization)
-                                // localStorage.setItem('userData', JSON.stringify(response.data))
-                                // this.$ability.update(response.data)
-                                localStorage.setItem("userData", JSON.stringify(response));
-                                // this.$toast({
-                                //   component: ToastificationContent,
-                                //   props: {
-                                //     title: `Client Token and Create User APIs hit successfully`,
-                                //     icon: "EditIcon",
-                                //     variant: "success",
-                                //   },
-                                // });
-                                return this.$router.push("/");
-                              })
-
-                              .catch((error) => {
-                                //   this.$refs.registerForm.setErrors(error)
-                                this.loading = false
-                                this.$toast({
-                                  component: ToastificationContent,
-                                  props: {
-                                    title: `${error.response.data.errorMessage}`,
-                                    icon: "EditIcon",
-                                    variant: "error",
-                                  },
-                                });
-                              });
-                    })
-                    .catch((error) => {
-                      // this.$refs.registerForm.setErrors(error)
-                      this.loading = false
-                      this.$toast({
-                        component: ToastificationContent,
-                        props: {
-                          title: `${error.errorMessage}`,
-                          icon: "EditIcon",
-                          variant: "error",
-                        },
+              .clientToken()
+              .then((res) => {
+                let token = res.data.access_token;
+                useJwt
+                  .getIpAddress()
+                  .then((res) => {
+                    let IpAddress = res?.data?.ip
+                    useJwt
+                      .register(token, {
+                        firstName: this.firstname,
+                        lastName: this.lastname,
+                        email: this.userEmail,
+                        password: this.password,
+                        accountType: this.account,
+                        companyAddress: this.account == "COMPANY" ? this.companyAddress : "",
+                        companyName: this.account == "COMPANY" ? this.companyName : "",
+                        companyRegistrationNumber: this.account == "COMPANY" ? this.registrationNumber : "",
+                        country: this.country?.text,
+                        gdpr: this.gdpr,
+                        identifier: "",
+                        ipAddress: IpAddress,
+                        isoAlpha2Country: this.country?.value,
+                      })
+                      .then((response) => {
+                        this.loading = false
+                        return this.$router.push({ name: "verify-email" })
+                      })
+                      .catch((error) => {
+                        this.loading = false
+                        this.$toast({
+                          component: ToastificationContent,
+                          props: {
+                            title: `${error.response.data.errorMessage}`,
+                            icon: "EditIcon",
+                            variant: "error",
+                          },
+                        });
                       });
-                    });
+                  })
+                  .catch((error) => {
+                    this.loading = false
+                  });        
+              })
+              .catch((error) => {
+                this.loading = false
+                this.$toast({
+                  component: ToastificationContent,
+                  props: {
+                    title: `${error.errorMessage}`,
+                    icon: "EditIcon",
+                    variant: "error",
+                  },
+                });
+              });
           }
         });
       },
@@ -527,17 +519,8 @@
                                 src: value.isoAlpha2Country.toLocaleLowerCase(),
                               });
                             });
-                            /*this.$toast({
-                              component: ToastificationContent,
-                              props: {
-                                title: `Countries APIs hit successfully`,
-                                icon: "EditIcon",
-                                variant: "success",
-                              },
-                            });*/
                           })
                           .catch((error) => {
-                            //   this.$refs.registerForm.setErrors(error)
                             this.$toast({
                               component: ToastificationContent,
                               props: {

@@ -214,7 +214,7 @@
 
         <b-dropdown-divider/>
 
-        <b-dropdown-item link-class="d-flex align-items-center">
+        <b-dropdown-item link-class="d-flex align-items-center" @click="logout">
           <feather-icon
               size="16"
               icon="LogOutIcon"
@@ -245,7 +245,7 @@ import DarkToggler from '@core/layouts/components/app-navbar/components/DarkTogg
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
 import axiosIns from '@/libs/axios'
-
+import useJwt from '@/auth/jwt/useJwt'
 export default {
   components: {
     BLink,
@@ -277,6 +277,18 @@ export default {
       const notifications = await axiosIns.get('account/api/notification/list/1/10?sortField=sentDate&direction=desc')
       console.log(notifications)
     },
+    logout() {
+      // Remove userData from localStorage
+      // ? You just removed token from localStorage. If you like, you can also make API call to backend to blacklist used token
+      localStorage.removeItem(useJwt.jwtConfig.storageTokenKeyName)
+      localStorage.removeItem(useJwt.jwtConfig.storageRefreshTokenKeyName)
+
+      // Remove userData from localStorage
+      localStorage.removeItem('userData')
+
+      // Redirect to login page
+      this.$router.push({ name: 'login' })
+    }
   },
   computed: {
     currentLocale() {

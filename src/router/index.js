@@ -109,6 +109,14 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/verify-email',
+      name: 'verify-email',
+      component: () => import('@/views/VerifyEmail.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
       path: '/pricing',
       name: 'pricing',
       component: () => import('@/views/Pricing.vue'),
