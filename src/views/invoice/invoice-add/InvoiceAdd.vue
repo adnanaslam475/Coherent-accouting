@@ -5,8 +5,8 @@
       <!-- Col: Left (Invoice Container) -->
       <b-col
         cols="12"
-        xl="9"
-        md="8"
+        xl="10"
+        md="10"
       >
         <b-form @submit.prevent>
           <b-card
@@ -14,63 +14,141 @@
             class="invoice-preview-card"
           >
             <!-- Header -->
-            <b-card-body class="invoice-padding pb-0">
+            <b-card-body class="invoice-padding pb-0 px-0">
 
-              <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
+              <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2">
 
                 <!-- Header: Left Content -->
-                <div>
-                  <!-- <div class="logo-wrapper">
-                    <logo />
-                    <h3 class="text-primary invoice-logo">
-                      Vuexy
-                    </h3>
-                  </div> -->
-                  <b-card-text class="mb-25">
-                    Office 149, 450 South Brand Brooklyn
-                  </b-card-text>
-                  <b-card-text class="mb-25">
-                    San Diego County, CA 91905, USA
-                  </b-card-text>
-                  <b-card-text class="mb-0">
-                    +1 (123) 456 7891, +44 (876) 543 2198
-                  </b-card-text>
+                <div class="mt-md-0 mt-2">
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1">
+                      Supplier Company Name:
+                    </span>
+                    <b-input-group class="input-group-merge invoice-edit-input-group">
+                      <b-form-input
+                        v-model="invoiceData.supplierCompany.companName"
+                      />
+                    </b-input-group>
+                  </div>
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1">
+                      Supplier Company Address:
+                    </span>
+                    <b-input-group class="input-group-merge invoice-edit-input-group">
+                      <b-form-input
+                       v-model="invoiceData.supplierCompany.companyAddress"
+                      />
+                    </b-input-group>
+                  </div>
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1">
+                      Supplier Company ID Number:
+                    </span>
+                    <b-input-group class="input-group-merge invoice-edit-input-group">
+                      <b-form-input
+                        v-model="invoiceData.supplierCompany.companyEic"
+                      />
+                    </b-input-group>
+                  </div>
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1">
+                      Supplier Company Owner:
+                    </span>
+                    <b-input-group class="input-group-merge invoice-edit-input-group">
+                      <b-form-input
+                        v-model="invoiceData.supplierCompany.companyOwnerName"
+                      />
+                    </b-input-group>
+                  </div>
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1">
+                      Supplier Company Vat No (if exists):
+                    </span>
+                    <b-input-group class="input-group-merge invoice-edit-input-group">
+                      <b-form-input
+                        v-model="invoiceData.supplierCompany.companyVatEic"
+                      />
+                    </b-input-group>
+                  </div>
                 </div>
 
                 <!-- Header: Right Content -->
                 <div class="invoice-number-date mt-md-0 mt-2">
-                  <div class="d-flex align-items-center justify-content-md-end mb-1">
+                  <div class="d-flex align-items-center mb-1">
                     <h4 class="invoice-title">
                       Invoice
                     </h4>
-                    <b-input-group class="input-group-merge invoice-edit-input-group disabled">
+                    <b-input-group class="input-group-merge invoice-edit-input-group">
                       <b-input-group-prepend is-text>
                         <feather-icon icon="HashIcon" />
                       </b-input-group-prepend>
                       <b-form-input
                         id="invoice-data-id"
-                        v-model="invoiceData.id"
-                        disabled
+                        v-model="invoiceData.invoiceNumber"
                       />
                     </b-input-group>
                   </div>
                   <div class="d-flex align-items-center mb-1">
-                    <span class="title">
+                    <span class="title mr-1">
                       Date:
                     </span>
                     <flat-pickr
-                      v-model="invoiceData.issuedDate"
+                      v-model="invoiceData.dateIssued"
                       class="form-control invoice-edit-input"
                     />
                   </div>
-                  <div class="d-flex align-items-center">
-                    <span class="title">
-                      Due Date:
+                </div>
+
+                <div class="mt-md-0 mt-2">
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1">
+                      Recipient Company Name:
                     </span>
-                    <flat-pickr
-                      v-model="invoiceData.dueDate"
-                      class="form-control invoice-edit-input"
-                    />
+                    <b-input-group class="input-group-merge invoice-edit-input-group">
+                      <b-form-input
+                        v-model="invoiceData.recipientCompany.companName"
+                      />
+                    </b-input-group>
+                  </div>
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1">
+                      Recipient Company Address:
+                    </span>
+                    <b-input-group class="input-group-merge invoice-edit-input-group">
+                      <b-form-input
+                        v-model="invoiceData.recipientCompany.companyAddress"
+                      />
+                    </b-input-group>
+                  </div>
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1">
+                      Recipient Company ID Number:
+                    </span>
+                    <b-input-group class="input-group-merge invoice-edit-input-group">
+                      <b-form-input
+                        v-model="invoiceData.recipientCompany.companyEic"
+                      />
+                    </b-input-group>
+                  </div>
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1">
+                      Recipient Company Owner:
+                    </span>
+                    <b-input-group class="input-group-merge invoice-edit-input-group">
+                      <b-form-input
+                        v-model="invoiceData.recipientCompany.companyOwnerName"
+                      />
+                    </b-input-group>
+                  </div>
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1">
+                      Recipient Company Vat No (if exists):
+                    </span>
+                    <b-input-group class="input-group-merge invoice-edit-input-group">
+                      <b-form-input
+                        companyOwnerName  v-model="invoiceData.recipientCompany.companyVatEic "
+                      />
+                    </b-input-group>
                   </div>
                 </div>
               </div>
@@ -78,117 +156,6 @@
 
             <!-- Spacer -->
             <hr class="invoice-spacing">
-
-            <!-- Invoice Client & Payment Details -->
-            <b-card-body
-              class="invoice-padding pt-0"
-            >
-              <b-row class="invoice-spacing">
-
-                <!-- Col: Invoice To -->
-                <b-col
-                  cols="12"
-                  xl="6"
-                  class="mb-lg-1"
-                >
-                  <h6 class="mb-2">
-                    Invoice To:
-                  </h6>
-
-                  <!-- Select Client -->
-                  <v-select
-                    v-model="invoiceData.client"
-                    :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                    :options="clients"
-                    label="company"
-                    input-id="invoice-data-client"
-                    :clearable="false"
-                  >
-                    <template #list-header>
-                      <li
-                        v-b-toggle.sidebar-invoice-add-new-customer
-                        class="add-new-client-header d-flex align-items-center my-50"
-                      >
-                        <feather-icon
-                          icon="PlusIcon"
-                          size="16"
-                        />
-                        <span class="align-middle ml-25">Add New Customer</span>
-                      </li>
-                    </template>
-                  </v-select>
-
-                  <!-- Selected Client -->
-                  <div
-                    v-if="invoiceData.client"
-                    class="mt-1"
-                  >
-                    <h6 class="mb-25">
-                      {{ invoiceData.client.name }}
-                    </h6>
-                    <b-card-text class="mb-25">
-                      {{ invoiceData.client.company }}
-                    </b-card-text>
-                    <b-card-text class="mb-25">
-                      {{ invoiceData.client.address }}, {{ invoiceData.client.country }}
-                    </b-card-text>
-                    <b-card-text class="mb-25">
-                      {{ invoiceData.client.contact }}
-                    </b-card-text>
-                    <b-card-text class="mb-0">
-                      {{ invoiceData.client.companyEmail }}
-                    </b-card-text>
-                  </div>
-                </b-col>
-
-                <!-- Col: Payment Details -->
-                <b-col
-                  xl="6"
-                  cols="12"
-                  class="mt-xl-0 mt-2 justify-content-end d-xl-flex d-block"
-                >
-                  <div>
-                    <h6 class="mb-2">
-                      Payment Details:
-                    </h6>
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td class="pr-1">
-                            Total Due:
-                          </td>
-                          <td><span class="font-weight-bold">$12,110.55</span></td>
-                        </tr>
-                        <tr>
-                          <td class="pr-1">
-                            Bank name:
-                          </td>
-                          <td>American Bank</td>
-                        </tr>
-                        <tr>
-                          <td class="pr-1">
-                            Country:
-                          </td>
-                          <td>United States</td>
-                        </tr>
-                        <tr>
-                          <td class="pr-1">
-                            IBAN:
-                          </td>
-                          <td>ETD95476213874685</td>
-                        </tr>
-                        <tr>
-                          <td class="pr-1">
-                            SWIFT code:
-                          </td>
-                          <td>BR91905</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </b-col>
-              </b-row>
-            </b-card-body>
 
             <!-- Items Section -->
             <b-card-body class="invoice-padding form-item-section">
@@ -198,7 +165,7 @@
                 :style="{height: trHeight}"
               >
                 <b-row
-                  v-for="(item, index) in invoiceData.items"
+                  v-for="(item, index) in invoiceData.transactions"
                   :key="index"
                   ref="row"
                   class="pb-2"
@@ -214,27 +181,39 @@
                         <!-- Single Item Form Headers -->
                         <b-col
                           cols="12"
-                          lg="5"
+                          lg="2"
                         >
-                          Item
-                        </b-col>
-                        <b-col
-                          cols="12"
-                          lg="3"
-                        >
-                          Cost
+                          Item name or Service
                         </b-col>
                         <b-col
                           cols="12"
                           lg="2"
                         >
-                          Qty
+                          Quantity
                         </b-col>
                         <b-col
                           cols="12"
                           lg="2"
                         >
-                          Price
+                          Measurement
+                        </b-col>
+                        <b-col
+                          cols="12"
+                          lg="2"
+                        >
+                          Single Price
+                        </b-col>
+                        <b-col
+                          cols="12"
+                          lg="2"
+                        >
+                          Currency
+                        </b-col>
+                        <b-col
+                          cols="12"
+                          lg="2"
+                        >
+                          Total Price
                         </b-col>
                       </b-row>
                       <div class="form-item-action-col" />
@@ -245,29 +224,26 @@
                     <div class="d-flex border rounded">
                       <b-row class="flex-grow-1 p-2">
                         <!-- Single Item Form Headers -->
+ 
                         <b-col
                           cols="12"
-                          lg="5"
+                          lg="2"
                         >
-                          <label class="d-inline d-lg-none">Item</label>
-                          <v-select
-                            v-model="item.itemTitle"
+                          <label class="d-inline d-lg-none">Item name or Service</label>
+                          <b-form-input
+                            v-model="item.serviceOrItemDescription"
                             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                            :options="itemsOptions"
-                            label="itemTitle"
-                            :clearable="false"
-                            class="mb-2 item-selector-title"
-                            placeholder="Select Item"
-                            @input="val => updateItemForm(index, val)"
+                            type="text"
+                            class="mb-2"
                           />
                         </b-col>
                         <b-col
                           cols="12"
-                          lg="3"
+                          lg="2"
                         >
-                          <label class="d-inline d-lg-none">Cost</label>
+                          <label class="d-inline d-lg-none">Quantity</label>
                           <b-form-input
-                            v-model="item.cost"
+                            v-model="item.quantity"
                             type="number"
                             class="mb-2"
                           />
@@ -276,9 +252,9 @@
                           cols="12"
                           lg="2"
                         >
-                          <label class="d-inline d-lg-none">Qty</label>
+                          <label class="d-inline d-lg-none">Measurement</label>
                           <b-form-input
-                            v-model="item.qty"
+                            v-model="item.measurement"
                             type="number"
                             class="mb-2"
                           />
@@ -287,26 +263,35 @@
                           cols="12"
                           lg="2"
                         >
-                          <label class="d-inline d-lg-none">Price</label>
-                          <p class="mb-1">
-                            ${{ item.cost * item.qty }}
-                          </p>
+                          <label class="d-inline d-lg-none">Single Price</label>
+                          <b-form-input
+                            v-model="item.singleAmountTransaction"
+                            type="number"
+                            class="mb-2"
+                          />
                         </b-col>
                         <b-col
                           cols="12"
-                          lg="5"
+                          lg="2"
                         >
-                          <label class="d-inline d-lg-none">Description</label>
-                          <b-form-textarea
-                            v-model="item.description"
-                            class="mb-2 mb-lg-0"
+                          <label class="d-inline d-lg-none">Currency</label>
+                          <b-form-input
+                            v-model="invoiceData.currency"
+                            type="number"
+                            class="mb-2"
                           />
                         </b-col>
-                        <b-col>
-                          <p class="mb-0">
-                            Discount: 0% 0% 0%
-                          </p>
+                        <b-col
+                          cols="12"
+                          lg="2"
+                        >
+                          <label class="d-inline d-lg-none">Total Price</label>
+                          <b-form-input
+                            :value="item.singleAmountTransaction * item.quantity"
+                            disabled
+                          />
                         </b-col>
+
                       </b-row>
                       <div class="d-flex flex-column justify-content-between border-left py-50 px-25">
                         <feather-icon
@@ -315,89 +300,6 @@
                           class="cursor-pointer"
                           @click="removeItem(index)"
                         />
-                        <feather-icon
-                          :id="`form-item-settings-icon-${index}`"
-                          size="16"
-                          icon="SettingsIcon"
-                          class="cursor-pointer"
-                        />
-
-                        <!-- Setting Item Form -->
-                        <b-popover
-                          :ref="`form-item-settings-popover-${index}`"
-                          :target="`form-item-settings-icon-${index}`"
-                          triggers="click"
-                          placement="lefttop"
-                        >
-                          <b-form @submit.prevent>
-                            <b-row>
-
-                              <!-- Field: Discount -->
-                              <b-col cols="12">
-                                <b-form-group
-                                  label="Discount(%)"
-                                  :label-for="`setting-item-${index}-discount`"
-                                >
-                                  <b-form-input
-                                    :id="`setting-item-${index}-discount`"
-                                    :value="null"
-                                    type="number"
-                                  />
-                                </b-form-group>
-                              </b-col>
-
-                              <!-- Field: Tax 1 -->
-                              <b-col cols="6">
-                                <b-form-group
-                                  label="Tax 1"
-                                  :label-for="`setting-item-${index}-tax-1`"
-                                >
-                                  <v-select
-                                    :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                                    :value="'10%'"
-                                    :options="['0%', '1%', '10%', '14%', '18%']"
-                                    :input-id="`setting-item-${index}-tax-1`"
-                                    :clearable="false"
-                                  />
-                                </b-form-group>
-                              </b-col>
-
-                              <!-- Field: Tax 2 -->
-                              <b-col cols="6">
-                                <b-form-group
-                                  label="Tax 2"
-                                  :label-for="`setting-item-${index}-tax-2`"
-                                >
-                                  <v-select
-                                    :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                                    :value="'10%'"
-                                    :options="['0%', '1%', '10%', '14%', '18%']"
-                                    :input-id="`setting-item-${index}-tax-2`"
-                                    :clearable="false"
-                                  />
-                                </b-form-group>
-                              </b-col>
-
-                              <b-col
-                                cols="12"
-                                class="d-flex justify-content-between mt-1"
-                              >
-                                <b-button
-                                  variant="outline-primary"
-                                  @click="() => {$refs[`form-item-settings-popover-${index}`][0].$emit('close')}"
-                                >
-                                  Apply
-                                </b-button>
-                                <b-button
-                                  variant="outline-secondary"
-                                  @click="() => {$refs[`form-item-settings-popover-${index}`][0].$emit('close')}"
-                                >
-                                  Cancel
-                                </b-button>
-                              </b-col>
-                            </b-row>
-                          </b-form>
-                        </b-popover>
                       </div>
                     </div>
                   </b-col>
@@ -425,15 +327,6 @@
                   order="2"
                   order-md="1"
                 >
-                  <label
-                    for="invoice-data-sales-person"
-                    class="text-nowrap mr-50"
-                  >Sales Person:</label>
-                  <b-form-input
-                    id="invoice-data-sales-person"
-                    v-model="invoiceData.salesPerson"
-                    placeholder="Edward Crowley"
-                  />
                 </b-col>
 
                 <!-- Col: Total -->
@@ -447,35 +340,59 @@
                   <div class="invoice-total-wrapper">
                     <div class="invoice-total-item">
                       <p class="invoice-total-title">
-                        Subtotal:
+                        Total price NonVat:
                       </p>
                       <p class="invoice-total-amount">
-                        $1800
+
+                        <b-form-input
+                          :value="amountNonVat(invoiceData.transactions) ? amountNonVat(invoiceData.transactions) : 0"
+                          disabled
+                        />
                       </p>
                     </div>
                     <div class="invoice-total-item">
                       <p class="invoice-total-title">
-                        Discount:
+                        VAT:
                       </p>
                       <p class="invoice-total-amount">
-                        $28
+                        <b-form-input
+                          v-model="invoiceData.vatAmount"
+                          type="number"
+                        />
                       </p>
                     </div>
                     <div class="invoice-total-item">
                       <p class="invoice-total-title">
-                        Tax:
+                        Discount Percent:
                       </p>
                       <p class="invoice-total-amount">
-                        21%
+                        <b-form-input
+                          v-model="invoiceData.vatPercent"
+                          type="number"
+                        />
+                      </p>
+                    </div>
+                    <div class="invoice-total-item">
+                      <p class="invoice-total-title">
+                        Discount Sum:
+                      </p>
+                      <p class="invoice-total-amount">
+                        <b-form-input
+                          :value="discountSum(invoiceData.transactions,invoiceData.vatAmount,invoiceData.vatPercent) ? discountSum(invoiceData.transactions,invoiceData.vatAmount,invoiceData.vatPercent) : 0"
+                          disabled
+                        />
                       </p>
                     </div>
                     <hr class="my-50">
                     <div class="invoice-total-item">
                       <p class="invoice-total-title">
-                        Total:
+                        Total Price:
                       </p>
                       <p class="invoice-total-amount">
-                        $1690
+                        <b-form-input
+                          :value="totalPrice(invoiceData.transactions,invoiceData.vatAmount,invoiceData.vatPercent) ? totalPrice(invoiceData.transactions,invoiceData.vatAmount,invoiceData.vatPercent) : 0"
+                          disabled
+                        />
                       </p>
                     </div>
                   </div>
@@ -498,24 +415,13 @@
       <!-- Right Col: Card -->
       <b-col
         cols="12"
-        md="4"
-        xl="3"
+        md="2"
+        xl="2"
         class="invoice-actions mt-md-0 mt-2"
       >
 
         <!-- Action Buttons -->
         <b-card>
-
-          <!-- Button: Send Invoice -->
-          <b-button
-            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-            variant="primary"
-            class="mb-75"
-            block
-            disabled
-          >
-            Send Invoice
-          </b-button>
 
           <!-- Button: DOwnload -->
           <b-button
@@ -536,54 +442,6 @@
             Save
           </b-button>
         </b-card>
-
-        <!-- Payment Method -->
-        <div class="mt-2">
-          <b-form-group
-            label="Accept Payment Via"
-            label-for="payment-method"
-          >
-            <v-select
-              v-model="invoiceData.paymentMethod"
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-              :options="paymentMethods"
-              input-id="payment-method"
-              class="payment-selector"
-              :clearable="false"
-            />
-          </b-form-group>
-
-          <!-- ? Below values are not adding invoiceData to keep invoiceData more generic and less confusing  -->
-
-          <!-- Payment Terms -->
-          <div class="d-flex justify-content-between align-items-center">
-            <label for="patymentTerms">Payment Terms</label>
-            <b-form-checkbox
-              id="patymentTerms"
-              :checked="true"
-              switch
-            />
-          </div>
-
-          <!-- Client Notes -->
-          <div class="d-flex justify-content-between align-items-center my-1">
-            <label for="clientNotes">Client Notes</label>
-            <b-form-checkbox
-              id="clientNotes"
-              :checked="true"
-              switch
-            />
-          </div>
-
-          <!-- Payment Stub -->
-          <div class="d-flex justify-content-between align-items-center">
-            <label for="paymentStub">Payment Stub</label>
-            <b-form-checkbox
-              id="paymentStub"
-              switch
-            />
-          </div>
-        </div>
       </b-col>
     </b-row>
     <invoice-sidebar-add-new-customer />
@@ -662,6 +520,25 @@ export default {
         this.trSetHeight(this.$refs.form.scrollHeight)
       })
     },
+    amountNonVat(item){
+          return item.reduce((acc, ele) => {
+            return acc + parseInt(ele.quantity * ele.singleAmountTransaction);
+          }, 0);
+    },
+    discountSum(item,vatAmount,vatPercent){
+      let amountNonVat = item.reduce((acc, ele) => {
+            return acc + parseInt(ele.quantity * ele.singleAmountTransaction);
+          }, 0);
+      return parseInt(vatPercent)/100 * (parseInt(amountNonVat) + (parseInt(vatAmount)/100 * parseInt(amountNonVat)))
+    },
+    totalPrice(item,vatAmount,vatPercent){
+      let amountNonVat = item.reduce((acc, ele) => {
+            return acc + parseInt(ele.quantity * ele.singleAmountTransaction);
+          }, 0);
+      let discountSum =  parseInt(vatPercent)/100 * (parseInt(amountNonVat) + (parseInt(vatAmount)/100 * parseInt(amountNonVat)))
+
+      return parseInt(amountNonVat) + parseInt(vatAmount)/100 * parseInt(amountNonVat) - discountSum
+    }
   },
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
@@ -674,23 +551,36 @@ export default {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
     })
 
-    const clients = ref([])
-    store.dispatch('app-invoice/fetchClients')
-      .then(response => { clients.value = response.data })
-
     const itemFormBlankItem = {
-      item: null,
-      cost: 0,
-      qty: 0,
-      description: '',
+      serviceOrItemDescription: '',
+      singleAmountTransaction: 0,
+      quantity: 0,
+      measurement: '',
+      totalAmount: ''
     }
 
     const invoiceData = ref({
-      id: 5037,
-      client: null,
-
+      invoiceNumber: "",
+      dateIssued: "",
+      supplierCompany: {
+		    companyOwnerName: "",
+		    companName: "",
+        companyEic: "",
+        companyVatEic: null,
+        companyAddress: ""
+	    },
+      recipientCompany: {
+		    companyOwnerName: "",
+		    companName: "",
+        companyEic: "",
+        companyVatEic: null,
+        companyAddress: ""
+	    },
+      currency: "",
+      vatAmount: "",
+      vatPercent: "",
       // ? Set single Item in form for adding data
-      items: [JSON.parse(JSON.stringify(itemFormBlankItem))],
+      transactions: [JSON.parse(JSON.stringify(itemFormBlankItem))],
 
       salesPerson: '',
       note: 'It was a pleasure working with you and your team. We hope you will keep us in mind for future freelance projects. Thank You!',
@@ -724,26 +614,12 @@ export default {
       },
     ]
 
-    const updateItemForm = (index, val) => {
-      const { cost, qty, description } = val
-      invoiceData.value.items[index].cost = cost
-      invoiceData.value.items[index].qty = qty
-      invoiceData.value.items[index].description = description
-    }
 
-    const paymentMethods = [
-      'Bank Account',
-      'PayPal',
-      'UPI Transfer',
-    ]
-
+    
     return {
       invoiceData,
-      clients,
       itemsOptions,
-      updateItemForm,
       itemFormBlankItem,
-      paymentMethods,
     }
   },
 }
@@ -801,5 +677,11 @@ background-color:$product-details-bg;
     }
 
   }
+}
+.gap-2{
+  grid-gap: 20px;
+}
+.invoice-add .invoice-total-wrapper{
+  max-width: 25rem !important;
 }
 </style>
