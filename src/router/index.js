@@ -109,6 +109,14 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/verify-email',
+      name: 'verify-email',
+      component: () => import('@/views/VerifyEmail.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
       path: '/pricing',
       name: 'pricing',
       component: () => import('@/views/Pricing.vue'),
@@ -306,10 +314,6 @@ router.beforeEach((to, _, next) => {
     if (to.name == "/" || to.name == "home") {
       if (!isLoggedIn) return next({ name: 'login' })
 
-      if (!isLoggedIn) {
-        const userData = getUserData()
-        next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
-      }
       return next()
 
     }

@@ -218,7 +218,7 @@
 
         <b-dropdown-divider/>
 
-        <b-dropdown-item link-class="d-flex align-items-center">
+        <b-dropdown-item link-class="d-flex align-items-center" @click="logout">
           <feather-icon
               size="16"
               icon="LogOutIcon"
@@ -248,10 +248,12 @@ import {
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
+// eslint-disable-next-line import/no-duplicates
 import axiosIns from '@/libs/axios'
-import { setAttribute } from 'echarts/lib/util/model'
-import { ref, watch } from '@vue/composition-api'
+import { ref } from '@vue/composition-api'
+// eslint-disable-next-line import/no-duplicates
 import axios from '@/libs/axios'
+import useJwt from '@/auth/jwt/useJwt'
 
 export default {
   components: {
@@ -267,6 +269,7 @@ export default {
     BMedia,
     VuePerfectScrollbar,
     BButton,
+    // eslint-disable-next-line vue/no-unused-components
     BFormCheckbox,
 
     // Navbar Components
@@ -292,10 +295,23 @@ export default {
       const messageIds = [id]
       const data = await axios.put('account/api/notification/mark-as-read', messageIds)
       if (data.status === 200) {
-        let index = this.notifications.findIndex(notification => notification.id === id)
+        const index = this.notifications.findIndex(notification => notification.id === id)
         this.notifications[index].read = true
+        // eslint-disable-next-line no-plusplus
         this.notificationCount--
       }
+    },
+    logout() {
+      // Remove userData from localStorage
+      // ? You just removed token from localStorage. If you like, you can also make API call to backend to blacklist used token
+      localStorage.removeItem(useJwt.jwtConfig.storageTokenKeyName)
+      localStorage.removeItem(useJwt.jwtConfig.storageRefreshTokenKeyName)
+
+      // Remove userData from localStorage
+      localStorage.removeItem('userData')
+
+      // Redirect to login page
+      this.$router.push({ name: 'login' })
     },
   },
   computed: {
