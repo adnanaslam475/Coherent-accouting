@@ -6,8 +6,8 @@
       <li class="nav-item">
         <b-link class="nav-link" @click="toggleVerticalMenuActive">
           <feather-icon
-            icon="MenuIcon"
-            size="21"
+              icon="MenuIcon"
+              size="21"
           />
         </b-link>
       </li>
@@ -15,7 +15,7 @@
 
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
-<!--      <dark-Toggler class="d-none d-lg-block"/>-->
+      <!--      <dark-Toggler class="d-none d-lg-block"/>-->
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
@@ -89,41 +89,6 @@
             class="scrollable-container media-list scroll-area"
             tagname="li"
         >
-          <!-- Account Notification -->
-<!--          <b-link
-              v-for="notification in notifications"
-              :key="notification.subtitle"
-          >
-            <b-media>
-              <template #aside>
-                <b-avatar
-                    size="32"
-                    :src="notification.avatar"
-                    :text="notification.avatar"
-                    :variant="notification.type"
-                />
-              </template>
-              <p class="media-heading">
-            <span class="font-weight-bolder">
-              {{ notification.title }}
-            </span>
-              </p>
-              <small class="notification-text">{{ notification.subtitle }}</small>
-            </b-media>
-          </b-link>-->
-
-          <!-- System Notification Toggler -->
-<!--          <div class="media d-flex align-items-center">-->
-<!--            <h6 class="font-weight-bolder mr-auto mb-0">-->
-<!--              System Notifications-->
-<!--            </h6>-->
-<!--            <b-form-checkbox-->
-<!--                :checked="true"-->
-<!--                switch-->
-<!--            />-->
-<!--          </div>-->
-
-          <!-- System Notifications -->
           <b-link
               v-for="notification in notifications"
               :key="notification.id"
@@ -136,7 +101,7 @@
                     :variant="notification.notificationSeverityType === 'INFO' ? 'success' :
                       notification.notificationSeverityType === 'WARNING' ? 'light-info' : 'light-danger'"
                 >
-                  <feather-icon icon="CheckIcon" />
+                  <feather-icon icon="CheckIcon"/>
                 </b-avatar>
               </template>
               <p class="media-heading">
@@ -150,11 +115,13 @@
         </vue-perfect-scrollbar>
 
         <!-- Cart Footer -->
-        <li class="dropdown-menu-footer"><b-button
-            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-            variant="primary"
-            block
-        >Read all notifications</b-button>
+        <li class="dropdown-menu-footer">
+          <b-button
+              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+              variant="primary"
+              block
+          >Read all notifications
+          </b-button>
         </li>
       </b-nav-item-dropdown>
 
@@ -174,7 +141,8 @@
               size="40"
               variant="light-primary"
               badge
-              :src="require('@/assets/images/avatars/13-small.png')"
+              src="JD"
+              text="JD"
               class="badge-minimal"
               badge-variant="success"
           />
