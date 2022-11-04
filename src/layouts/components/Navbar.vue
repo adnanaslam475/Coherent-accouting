@@ -15,10 +15,11 @@
 
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
-      <dark-Toggler class="d-none d-lg-block"/>
+<!--      <dark-Toggler class="d-none d-lg-block"/>-->
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
+      <dark-Toggler class="d-none d-lg-block"/>
       <!-- For Multilingual -->
       <b-nav-item-dropdown
           id="dropdown-grouped"
@@ -54,14 +55,16 @@
           class="dropdown-notification mr-25"
           menu-class="dropdown-menu-media"
           right
+          :key="notificationCount"
       >
         <template #button-content>
           <feather-icon
-              badge="6"
+              :badge="notificationCount"
               badge-classes="bg-danger"
               class="text-body"
               icon="BellIcon"
               size="21"
+              v-on:click="getNotifications()"
           />
         </template>
 
@@ -75,20 +78,19 @@
                 pill
                 variant="light-primary"
             >
-              6 New
+              {{ notificationCount }} New
             </b-badge>
           </div>
         </li>
 
         <!-- Notifications -->
         <vue-perfect-scrollbar
-            v-once
             :settings="perfectScrollbarSettings"
             class="scrollable-container media-list scroll-area"
             tagname="li"
         >
           <!-- Account Notification -->
-          <b-link
+<!--          <b-link
               v-for="notification in notifications"
               :key="notification.subtitle"
           >
@@ -108,39 +110,41 @@
               </p>
               <small class="notification-text">{{ notification.subtitle }}</small>
             </b-media>
-          </b-link>
+          </b-link>-->
 
           <!-- System Notification Toggler -->
-          <div class="media d-flex align-items-center">
-            <h6 class="font-weight-bolder mr-auto mb-0">
-              System Notifications
-            </h6>
-            <b-form-checkbox
-                :checked="true"
-                switch
-            />
-          </div>
+<!--          <div class="media d-flex align-items-center">-->
+<!--            <h6 class="font-weight-bolder mr-auto mb-0">-->
+<!--              System Notifications-->
+<!--            </h6>-->
+<!--            <b-form-checkbox-->
+<!--                :checked="true"-->
+<!--                switch-->
+<!--            />-->
+<!--          </div>-->
 
           <!-- System Notifications -->
           <b-link
-              v-for="notification in systemNotifications"
-              :key="notification.subtitle"
+              v-for="notification in notifications"
+              :key="notification.id"
+              v-on:click="markNotificationAsRead(notification.id)"
           >
-            <b-media>
+            <b-media :class="notification.read ? '' : 'unread'">
               <template #aside>
                 <b-avatar
                     size="32"
-                    :variant="notification.type"
+                    :variant="notification.notificationSeverityType === 'INFO' ? 'success' :
+                      notification.notificationSeverityType === 'WARNING' ? 'light-info' : 'light-danger'"
                 >
-                  <feather-icon :icon="notification.icon" />
+                  <feather-icon icon="CheckIcon" />
                 </b-avatar>
               </template>
               <p class="media-heading">
             <span class="font-weight-bolder">
-              {{ notification.title }}
+              {{ notification.subject }}
             </span>
               </p>
-              <small class="notification-text">{{ notification.subtitle }}</small>
+              <small class="notification-text">{{ notification.message }}</small>
             </b-media>
           </b-link>
         </vue-perfect-scrollbar>
@@ -239,12 +243,15 @@ import {
   BBadge,
   BMedia,
   BButton,
-  BFormCheckbox
+  BFormCheckbox,
 } from 'bootstrap-vue'
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
 import axiosIns from '@/libs/axios'
+import { setAttribute } from 'echarts/lib/util/model'
+import { ref, watch } from '@vue/composition-api'
+import axios from '@/libs/axios'
 
 export default {
   components: {
@@ -274,8 +281,21 @@ export default {
       this.$i18n.locale = obj.locale
     },
     async getNotifications() {
-      const notifications = await axiosIns.get('account/api/notification/list/1/10?sortField=sentDate&direction=desc')
-      console.log(notifications)
+      const noti = await axiosIns.get('account/api/notification/list/1/10?sortField=sentDate&direction=desc')
+      this.notifications = noti.data.elements
+    },
+    async getNotificationNotification() {
+      const dataCount = await axios.get('account/api/notification/get-message-count-not-read')
+      this.notificationCount = dataCount.data.unreadCount
+    },
+    async markNotificationAsRead(id) {
+      const messageIds = [id]
+      const data = await axios.put('account/api/notification/mark-as-read', messageIds)
+      if (data.status === 200) {
+        let index = this.notifications.findIndex(notification => notification.id === id)
+        this.notifications[index].read = true
+        this.notificationCount--
+      }
     },
   },
   computed: {
@@ -297,50 +317,9 @@ export default {
         name: 'Bulgaria',
       },
     ]
-    /* eslint-disable global-require */
-    /* eslint-disable global-require */
-    const notifications = [
-      {
-        title: 'Congratulation Sam 🎉',
-        avatar: require('@/assets/images/avatars/6-small.png'),
-        subtitle: 'Won the monthly best seller badge',
-        type: 'light-success',
-      },
-      {
-        title: 'New message received',
-        avatar: require('@/assets/images/avatars/9-small.png'),
-        subtitle: 'You have 10 unread messages',
-        type: 'light-info',
-      },
-      {
-        title: 'Revised Order 👋',
-        avatar: 'MD',
-        subtitle: 'MD Inc. order updated',
-        type: 'light-danger',
-      },
-    ]
-    /* eslint-disable global-require */
 
-    const systemNotifications = [
-      {
-        title: 'Server down',
-        subtitle: 'USA Server is down due to hight CPU usage',
-        type: 'light-danger',
-        icon: 'XIcon',
-      },
-      {
-        title: 'Sales report generated',
-        subtitle: 'Last month sales report generated',
-        type: 'light-success',
-        icon: 'CheckIcon',
-      },
-      {
-        title: 'High memory usage',
-        subtitle: 'BLR Server using high memory',
-        type: 'light-warning',
-        icon: 'AlertTriangleIcon',
-      },
-    ]
+    const notificationCount = 0
+    const notifications = ref([])
 
     const perfectScrollbarSettings = {
       maxScrollbarLength: 60,
@@ -349,8 +328,8 @@ export default {
 
     return {
       locales,
+      notificationCount,
       notifications,
-      systemNotifications,
       perfectScrollbarSettings,
     }
   },
@@ -362,6 +341,7 @@ export default {
     },
   },
   created() {
+    this.getNotificationNotification()
     this.getNotifications()
   },
 }
