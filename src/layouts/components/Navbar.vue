@@ -4,10 +4,13 @@
     <!-- Nav Menu Toggler -->
     <ul class="nav navbar-nav d-xl-none">
       <li class="nav-item">
-        <b-link class="nav-link" @click="toggleVerticalMenuActive">
+        <b-link
+          class="nav-link"
+          @click="toggleVerticalMenuActive"
+        >
           <feather-icon
-              icon="MenuIcon"
-              size="21"
+            icon="MenuIcon"
+            size="21"
           />
         </b-link>
       </li>
@@ -19,52 +22,51 @@
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
-      <dark-Toggler class="d-none d-lg-block"/>
+      <dark-Toggler class="d-none d-lg-block" />
       <!-- For Multilingual -->
       <b-nav-item-dropdown
-          id="dropdown-grouped"
-          variant="link"
-          class="dropdown-language"
-          right
+        id="dropdown-grouped"
+        variant="link"
+        class="dropdown-language"
+        right
       >
         <template #button-content>
           <b-img
-              :src="currentLocale.img"
-              height="14px"
-              width="22px"
-              :alt="currentLocale.locale"
+            :src="currentLocale.img"
+            height="14px"
+            width="22px"
+            :alt="currentLocale.locale"
           />
           <span class="ml-50 text-body">{{ currentLocale.name }}</span>
         </template>
         <b-dropdown-item
-            v-for="localeObj in locales"
-            :key="localeObj.locale"
-            @click="changeLanguage(localeObj)"
+          v-for="localeObj in locales"
+          :key="localeObj.locale"
+          @click="changeLanguage(localeObj)"
         >
           <b-img
-              :src="localeObj.img"
-              height="14px"
-              width="22px"
-              :alt="localeObj.locale"
+            :src="localeObj.img"
+            height="14px"
+            width="22px"
+            :alt="localeObj.locale"
           />
           <span class="ml-50">{{ localeObj.name }}</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
       <!-- For Multilingual -->
       <b-nav-item-dropdown
-          class="dropdown-notification mr-25"
-          menu-class="dropdown-menu-media"
-          right
-          :key="notificationCount"
+        class="dropdown-notification mr-25"
+        menu-class="dropdown-menu-media"
+        right
       >
         <template #button-content>
           <feather-icon
-              :badge="notificationCount"
-              badge-classes="bg-danger"
-              class="text-body"
-              icon="BellIcon"
-              size="21"
-              v-on:click="getNotifications()"
+            :badge="notificationCount"
+            badge-classes="bg-danger"
+            class="text-body"
+            icon="BellIcon"
+            size="21"
+            @click="getNotifications()"
           />
         </template>
 
@@ -75,8 +77,8 @@
               Notifications
             </h4>
             <b-badge
-                pill
-                variant="light-primary"
+              pill
+              variant="light-primary"
             >
               {{ notificationCount }} New
             </b-badge>
@@ -85,29 +87,34 @@
 
         <!-- Notifications -->
         <vue-perfect-scrollbar
-            :settings="perfectScrollbarSettings"
-            class="scrollable-container media-list scroll-area"
-            tagname="li"
+          :settings="perfectScrollbarSettings"
+          class="scrollable-container media-list scroll-area"
+          tagname="li"
+          @ps-scroll-y="handleScroll"
         >
           <b-link
-              v-for="notification in notifications"
-              :key="notification.id"
-              v-on:click="markNotificationAsRead(notification.id)"
+            v-for="notification in notifications"
+            :key="notification.id"
+            @click="markNotificationAsRead(notification.id)"
           >
             <b-media :class="notification.read ? '' : 'unread'">
               <template #aside>
                 <b-avatar
-                    size="32"
-                    :variant="notification.notificationSeverityType === 'INFO' ? 'success' :
-                      notification.notificationSeverityType === 'WARNING' ? 'light-info' : 'light-danger'"
+                  size="32"
+                  :variant="notification.notificationSeverityType === 'INFO' ? 'light-success' :
+                    notification.notificationSeverityType === 'WARNING' ? 'light-info' : 'light-danger'"
                 >
-                  <feather-icon icon="CheckIcon"/>
+                  <feather-icon
+                    :icon="
+                      notification.notificationSeverityType === 'INFO' ? 'CheckIcon' :
+                      notification.notificationSeverityType === 'WARNING' ? 'AlertTriangleIcon' : 'XIcon'"
+                  />
                 </b-avatar>
               </template>
               <p class="media-heading">
-            <span class="font-weight-bolder">
-              {{ notification.subject }}
-            </span>
+                <span class="font-weight-bolder">
+                  {{ notification.subject }}
+                </span>
               </p>
               <small class="notification-text">{{ notification.message }}</small>
             </b-media>
@@ -117,18 +124,20 @@
         <!-- Cart Footer -->
         <li class="dropdown-menu-footer">
           <b-button
-              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-              variant="primary"
-              block
+            :disabled="notificationCount === 0"
+            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+            variant="primary"
+            block
+            @click="markNotificationReadAll()"
           >Read all notifications
           </b-button>
         </li>
       </b-nav-item-dropdown>
 
       <b-nav-item-dropdown
-          right
-          toggle-class="d-flex align-items-center dropdown-user-link"
-          class="dropdown-user"
+        right
+        toggle-class="d-flex align-items-center dropdown-user-link"
+        class="dropdown-user"
       >
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
@@ -138,59 +147,62 @@
             <span class="user-status">Admin | {{ $t('home') }}</span>
           </div>
           <b-avatar
-              size="40"
-              variant="light-primary"
-              badge
-              src="JD"
-              text="JD"
-              class="badge-minimal"
-              badge-variant="success"
+            size="40"
+            variant="light-primary"
+            badge
+            src="JD"
+            text="JD"
+            class="badge-minimal"
+            badge-variant="success"
           />
         </template>
 
         <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
-              size="16"
-              icon="UserIcon"
-              class="mr-50"
+            size="16"
+            icon="UserIcon"
+            class="mr-50"
           />
           <span>Profile</span>
         </b-dropdown-item>
 
         <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
-              size="16"
-              icon="MailIcon"
-              class="mr-50"
+            size="16"
+            icon="MailIcon"
+            class="mr-50"
           />
           <span>Inbox</span>
         </b-dropdown-item>
 
         <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
-              size="16"
-              icon="CheckSquareIcon"
-              class="mr-50"
+            size="16"
+            icon="CheckSquareIcon"
+            class="mr-50"
           />
           <span>Task</span>
         </b-dropdown-item>
 
         <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
-              size="16"
-              icon="MessageSquareIcon"
-              class="mr-50"
+            size="16"
+            icon="MessageSquareIcon"
+            class="mr-50"
           />
           <span>Chat</span>
         </b-dropdown-item>
 
-        <b-dropdown-divider/>
+        <b-dropdown-divider />
 
-        <b-dropdown-item link-class="d-flex align-items-center" @click="logout">
+        <b-dropdown-item
+          link-class="d-flex align-items-center"
+          @click="logout"
+        >
           <feather-icon
-              size="16"
-              icon="LogOutIcon"
-              class="mr-50"
+            size="16"
+            icon="LogOutIcon"
+            class="mr-50"
           />
           <span>Logout</span>
         </b-dropdown-item>
@@ -246,27 +258,65 @@ export default {
   directives: {
     Ripple,
   },
+  props: {
+    toggleVerticalMenuActive: {
+      type: Function,
+      default: () => {
+      },
+    },
+  },
+  computed: {
+    currentLocale() {
+      return this.locales.find(l => l.locale === this.$i18n.locale)
+    },
+  },
+  created() {
+    this.getNotificationCount()
+    this.getNotifications()
+    window.addEventListener('scroll', this.handleScroll)
+  },
   methods: {
+    handleScroll() {
+      const container = this.$el.querySelector('.ps-container')
+      if (container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
+        this.page += 1
+        this.getNotifications()
+      }
+    },
     changeLanguage(obj) {
       localStorage.setItem('language', obj.locale)
       this.$i18n.locale = obj.locale
     },
     async getNotifications() {
-      const noti = await axiosIns.get('account/api/notification/list/1/10?sortField=sentDate&direction=desc')
-      this.notifications = noti.data.elements
+      const data = await axios.get(`account/api/notification/list/${this.page}/10?sortField=sentDate&direction=desc`)
+      if (this.page > 1) {
+        this.notifications.push(...data.data.elements)
+      } else {
+        this.notifications = data.data.elements
+      }
     },
-    async getNotificationNotification() {
+    async getNotificationCount() {
       const dataCount = await axios.get('account/api/notification/get-message-count-not-read')
       this.notificationCount = dataCount.data.unreadCount
     },
     async markNotificationAsRead(id) {
       const messageIds = [id]
-      const data = await axios.put('account/api/notification/mark-as-read', messageIds)
+      const index = this.notifications.findIndex(notification => notification.id === id)
+      if (this.notifications[index].read === false) {
+        const data = await axios.put('account/api/notification/mark-as-read', messageIds)
+        if (data.status === 200) {
+          this.notifications[index].read = true
+          // eslint-disable-next-line no-plusplus
+          this.notificationCount--
+        }
+
+      }
+    },
+    async markNotificationReadAll() {
+      const data = await axios.put('account/api/notification/mark-all-as-read')
       if (data.status === 200) {
-        const index = this.notifications.findIndex(notification => notification.id === id)
-        this.notifications[index].read = true
-        // eslint-disable-next-line no-plusplus
-        this.notificationCount--
+        await this.getNotifications()
+        await this.getNotificationCount()
       }
     },
     logout() {
@@ -280,11 +330,6 @@ export default {
 
       // Redirect to login page
       this.$router.push({ name: 'login' })
-    },
-  },
-  computed: {
-    currentLocale() {
-      return this.locales.find(l => l.locale === this.$i18n.locale)
     },
   },
   setup() {
@@ -303,30 +348,21 @@ export default {
     ]
 
     const notificationCount = 0
+    const page = 1
     const notifications = ref([])
 
     const perfectScrollbarSettings = {
-      maxScrollbarLength: 60,
+      maxScrollbarLength: 40,
       wheelPropagation: false,
     }
 
     return {
+      page,
       locales,
       notificationCount,
       notifications,
       perfectScrollbarSettings,
     }
-  },
-  props: {
-    toggleVerticalMenuActive: {
-      type: Function,
-      default: () => {
-      },
-    },
-  },
-  created() {
-    this.getNotificationNotification()
-    this.getNotifications()
   },
 }
 </script>
