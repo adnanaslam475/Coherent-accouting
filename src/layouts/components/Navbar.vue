@@ -4,7 +4,10 @@
     <!-- Nav Menu Toggler -->
     <ul class="nav navbar-nav d-xl-none">
       <li class="nav-item">
-        <b-link class="nav-link" @click="toggleVerticalMenuActive">
+        <b-link
+          class="nav-link"
+          @click="toggleVerticalMenuActive"
+        >
           <feather-icon
             icon="MenuIcon"
             size="21"
@@ -15,53 +18,55 @@
 
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
-      <dark-Toggler class="d-none d-lg-block"/>
+      <!--      <dark-Toggler class="d-none d-lg-block"/>-->
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
+      <dark-Toggler class="d-none d-lg-block" />
       <!-- For Multilingual -->
       <b-nav-item-dropdown
-          id="dropdown-grouped"
-          variant="link"
-          class="dropdown-language"
-          right
+        id="dropdown-grouped"
+        variant="link"
+        class="dropdown-language"
+        right
       >
         <template #button-content>
           <b-img
-              :src="currentLocale.img"
-              height="14px"
-              width="22px"
-              :alt="currentLocale.locale"
+            :src="currentLocale.img"
+            height="14px"
+            width="22px"
+            :alt="currentLocale.locale"
           />
           <span class="ml-50 text-body">{{ currentLocale.name }}</span>
         </template>
         <b-dropdown-item
-            v-for="localeObj in locales"
-            :key="localeObj.locale"
-            @click="changeLanguage(localeObj)"
+          v-for="localeObj in locales"
+          :key="localeObj.locale"
+          @click="changeLanguage(localeObj)"
         >
           <b-img
-              :src="localeObj.img"
-              height="14px"
-              width="22px"
-              :alt="localeObj.locale"
+            :src="localeObj.img"
+            height="14px"
+            width="22px"
+            :alt="localeObj.locale"
           />
           <span class="ml-50">{{ localeObj.name }}</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
       <!-- For Multilingual -->
       <b-nav-item-dropdown
-          class="dropdown-notification mr-25"
-          menu-class="dropdown-menu-media"
-          right
+        class="dropdown-notification mr-25"
+        menu-class="dropdown-menu-media"
+        right
       >
         <template #button-content>
           <feather-icon
-              badge="6"
-              badge-classes="bg-danger"
-              class="text-body"
-              icon="BellIcon"
-              size="21"
+            :badge="notificationCount"
+            badge-classes="bg-danger"
+            class="text-body"
+            icon="BellIcon"
+            size="21"
+            @click="getNotifications()"
           />
         </template>
 
@@ -72,92 +77,67 @@
               Notifications
             </h4>
             <b-badge
-                pill
-                variant="light-primary"
+              pill
+              variant="light-primary"
             >
-              6 New
+              {{ notificationCount }} New
             </b-badge>
           </div>
         </li>
 
         <!-- Notifications -->
         <vue-perfect-scrollbar
-            v-once
-            :settings="perfectScrollbarSettings"
-            class="scrollable-container media-list scroll-area"
-            tagname="li"
+          :settings="perfectScrollbarSettings"
+          class="scrollable-container media-list scroll-area"
+          tagname="li"
+          @ps-scroll-y="handleScroll"
         >
-          <!-- Account Notification -->
           <b-link
-              v-for="notification in notifications"
-              :key="notification.subtitle"
+            v-for="notification in notifications"
+            :key="notification.id"
+            @click="markNotificationAsRead(notification.id)"
           >
-            <b-media>
+            <b-media :class="notification.read ? '' : 'unread'">
               <template #aside>
                 <b-avatar
-                    size="32"
-                    :src="notification.avatar"
-                    :text="notification.avatar"
-                    :variant="notification.type"
-                />
-              </template>
-              <p class="media-heading">
-            <span class="font-weight-bolder">
-              {{ notification.title }}
-            </span>
-              </p>
-              <small class="notification-text">{{ notification.subtitle }}</small>
-            </b-media>
-          </b-link>
-
-          <!-- System Notification Toggler -->
-          <div class="media d-flex align-items-center">
-            <h6 class="font-weight-bolder mr-auto mb-0">
-              System Notifications
-            </h6>
-            <b-form-checkbox
-                :checked="true"
-                switch
-            />
-          </div>
-
-          <!-- System Notifications -->
-          <b-link
-              v-for="notification in systemNotifications"
-              :key="notification.subtitle"
-          >
-            <b-media>
-              <template #aside>
-                <b-avatar
-                    size="32"
-                    :variant="notification.type"
+                  size="32"
+                  :variant="notification.notificationSeverityType === 'INFO' ? 'light-success' :
+                    notification.notificationSeverityType === 'WARNING' ? 'light-info' : 'light-danger'"
                 >
-                  <feather-icon :icon="notification.icon" />
+                  <feather-icon
+                    :icon="
+                      notification.notificationSeverityType === 'INFO' ? 'CheckIcon' :
+                      notification.notificationSeverityType === 'WARNING' ? 'AlertTriangleIcon' : 'XIcon'"
+                  />
                 </b-avatar>
               </template>
               <p class="media-heading">
-            <span class="font-weight-bolder">
-              {{ notification.title }}
-            </span>
+                <span class="font-weight-bolder">
+                  {{ notification.subject }}
+                </span>
               </p>
-              <small class="notification-text">{{ notification.subtitle }}</small>
+              <small class="notification-text">{{ notification.message }}</small>
             </b-media>
           </b-link>
         </vue-perfect-scrollbar>
 
         <!-- Cart Footer -->
-        <li class="dropdown-menu-footer"><b-button
+        <li class="dropdown-menu-footer">
+          <b-button
+            :disabled="notificationCount === 0"
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
             variant="primary"
             block
-        >Read all notifications</b-button>
+            @click="markNotificationReadAll()"
+          >Read all notifications
+          </b-button>
         </li>
       </b-nav-item-dropdown>
 
       <b-nav-item-dropdown
-          right
-          toggle-class="d-flex align-items-center dropdown-user-link"
-          class="dropdown-user"
+        right
+        toggle-class="d-flex align-items-center dropdown-user-link"
+        class="dropdown-user"
       >
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
@@ -167,58 +147,62 @@
             <span class="user-status">Admin | {{ $t('home') }}</span>
           </div>
           <b-avatar
-              size="40"
-              variant="light-primary"
-              badge
-              :src="require('@/assets/images/avatars/13-small.png')"
-              class="badge-minimal"
-              badge-variant="success"
+            size="40"
+            variant="light-primary"
+            badge
+            src="JD"
+            text="JD"
+            class="badge-minimal"
+            badge-variant="success"
           />
         </template>
 
         <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
-              size="16"
-              icon="UserIcon"
-              class="mr-50"
+            size="16"
+            icon="UserIcon"
+            class="mr-50"
           />
           <span>Profile</span>
         </b-dropdown-item>
 
         <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
-              size="16"
-              icon="MailIcon"
-              class="mr-50"
+            size="16"
+            icon="MailIcon"
+            class="mr-50"
           />
           <span>Inbox</span>
         </b-dropdown-item>
 
         <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
-              size="16"
-              icon="CheckSquareIcon"
-              class="mr-50"
+            size="16"
+            icon="CheckSquareIcon"
+            class="mr-50"
           />
           <span>Task</span>
         </b-dropdown-item>
 
         <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
-              size="16"
-              icon="MessageSquareIcon"
-              class="mr-50"
+            size="16"
+            icon="MessageSquareIcon"
+            class="mr-50"
           />
           <span>Chat</span>
         </b-dropdown-item>
 
-        <b-dropdown-divider/>
+        <b-dropdown-divider />
 
-        <b-dropdown-item link-class="d-flex align-items-center" @click="logout">
+        <b-dropdown-item
+          link-class="d-flex align-items-center"
+          @click="logout"
+        >
           <feather-icon
-              size="16"
-              icon="LogOutIcon"
-              class="mr-50"
+            size="16"
+            icon="LogOutIcon"
+            class="mr-50"
           />
           <span>Logout</span>
         </b-dropdown-item>
@@ -239,13 +223,18 @@ import {
   BBadge,
   BMedia,
   BButton,
-  BFormCheckbox
+  BFormCheckbox,
 } from 'bootstrap-vue'
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
+// eslint-disable-next-line import/no-duplicates
 import axiosIns from '@/libs/axios'
+import { ref } from '@vue/composition-api'
+// eslint-disable-next-line import/no-duplicates
+import axios from '@/libs/axios'
 import useJwt from '@/auth/jwt/useJwt'
+
 export default {
   components: {
     BLink,
@@ -260,6 +249,7 @@ export default {
     BMedia,
     VuePerfectScrollbar,
     BButton,
+    // eslint-disable-next-line vue/no-unused-components
     BFormCheckbox,
 
     // Navbar Components
@@ -268,14 +258,66 @@ export default {
   directives: {
     Ripple,
   },
+  props: {
+    toggleVerticalMenuActive: {
+      type: Function,
+      default: () => {
+      },
+    },
+  },
+  computed: {
+    currentLocale() {
+      return this.locales.find(l => l.locale === this.$i18n.locale)
+    },
+  },
+  created() {
+    this.getNotificationCount()
+    this.getNotifications()
+    window.addEventListener('scroll', this.handleScroll)
+  },
   methods: {
+    handleScroll() {
+      const container = this.$el.querySelector('.ps-container')
+      if (container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
+        this.page += 1
+        this.getNotifications()
+      }
+    },
     changeLanguage(obj) {
       localStorage.setItem('language', obj.locale)
       this.$i18n.locale = obj.locale
     },
     async getNotifications() {
-      const notifications = await axiosIns.get('account/api/notification/list/1/10?sortField=sentDate&direction=desc')
-      console.log(notifications)
+      const data = await axios.get(`account/api/notification/list/${this.page}/10?sortField=sentDate&direction=desc`)
+      if (this.page > 1) {
+        this.notifications.push(...data.data.elements)
+      } else {
+        this.notifications = data.data.elements
+      }
+    },
+    async getNotificationCount() {
+      const dataCount = await axios.get('account/api/notification/get-message-count-not-read')
+      this.notificationCount = dataCount.data.unreadCount
+    },
+    async markNotificationAsRead(id) {
+      const messageIds = [id]
+      const index = this.notifications.findIndex(notification => notification.id === id)
+      if (this.notifications[index].read === false) {
+        const data = await axios.put('account/api/notification/mark-as-read', messageIds)
+        if (data.status === 200) {
+          this.notifications[index].read = true
+          // eslint-disable-next-line no-plusplus
+          this.notificationCount--
+        }
+
+      }
+    },
+    async markNotificationReadAll() {
+      const data = await axios.put('account/api/notification/mark-all-as-read')
+      if (data.status === 200) {
+        await this.getNotifications()
+        await this.getNotificationCount()
+      }
     },
     logout() {
       // Remove userData from localStorage
@@ -288,11 +330,6 @@ export default {
 
       // Redirect to login page
       this.$router.push({ name: 'login' })
-    }
-  },
-  computed: {
-    currentLocale() {
-      return this.locales.find(l => l.locale === this.$i18n.locale)
     },
   },
   setup() {
@@ -309,72 +346,23 @@ export default {
         name: 'Bulgaria',
       },
     ]
-    /* eslint-disable global-require */
-    /* eslint-disable global-require */
-    const notifications = [
-      {
-        title: 'Congratulation Sam 🎉',
-        avatar: require('@/assets/images/avatars/6-small.png'),
-        subtitle: 'Won the monthly best seller badge',
-        type: 'light-success',
-      },
-      {
-        title: 'New message received',
-        avatar: require('@/assets/images/avatars/9-small.png'),
-        subtitle: 'You have 10 unread messages',
-        type: 'light-info',
-      },
-      {
-        title: 'Revised Order 👋',
-        avatar: 'MD',
-        subtitle: 'MD Inc. order updated',
-        type: 'light-danger',
-      },
-    ]
-    /* eslint-disable global-require */
 
-    const systemNotifications = [
-      {
-        title: 'Server down',
-        subtitle: 'USA Server is down due to hight CPU usage',
-        type: 'light-danger',
-        icon: 'XIcon',
-      },
-      {
-        title: 'Sales report generated',
-        subtitle: 'Last month sales report generated',
-        type: 'light-success',
-        icon: 'CheckIcon',
-      },
-      {
-        title: 'High memory usage',
-        subtitle: 'BLR Server using high memory',
-        type: 'light-warning',
-        icon: 'AlertTriangleIcon',
-      },
-    ]
+    const notificationCount = 0
+    const page = 1
+    const notifications = ref([])
 
     const perfectScrollbarSettings = {
-      maxScrollbarLength: 60,
+      maxScrollbarLength: 40,
       wheelPropagation: false,
     }
 
     return {
+      page,
       locales,
+      notificationCount,
       notifications,
-      systemNotifications,
       perfectScrollbarSettings,
     }
-  },
-  props: {
-    toggleVerticalMenuActive: {
-      type: Function,
-      default: () => {
-      },
-    },
-  },
-  created() {
-    this.getNotifications()
   },
 }
 </script>
