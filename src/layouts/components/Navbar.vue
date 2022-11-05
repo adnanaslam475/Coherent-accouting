@@ -117,13 +117,13 @@
                 </span>
               </p>
               <small class="notification-text">{{ notification | limitDisplay(fullIndex) }}
-                <span
+                <a
                   v-if="fullIndex !== notification.id"
                   href="javascript:void(0)"
                   @click="fullIndex = notification.id"
                 >
                   read more
-                </span>
+                </a>
               </small>
             </b-media>
           </b-link>
