@@ -19,20 +19,7 @@ export default function useUsersList() {
     { key: 'identificationNumber', sortable: true, formatter: val => `${val?val:""}` },
     { key: 'vatIdentificationNumber', sortable: true, formatter: val => `${val?val:""}` },
     { key: 'address', sortable: true, formatter: val => `${val?val:""}` },
-    { key: 'companyId', sortable: true },
-    { key: 'companyName', sortable: true },
-    { key: 'companyCountry', sortable: true },
-    { key: 'companyIsoAlpha2Country', sortable: true },
-    { key: 'companyAddress', sortable: true },
-    { key: 'companyIdentificationNumber', sortable: true },
-    { key: 'companyPhone', sortable: true },
-    { key: 'companyMail', sortable: true },
-    { key: 'companyBankAccount', sortable: true },
-    { key: 'companyOwner', sortable: true },
-    { key: 'companyCurrency', sortable: true },
-    { key: 'companyVatAccepted', sortable: true },
-    { key: 'companyVatNumber', sortable: true },
-    { key: 'companyFinancialStartOfYear', sortable: true },
+    { key: 'idCardNumber', sortable: true },
     { key: 'actions' },
   ]
   const perPage = ref(10)
@@ -70,6 +57,7 @@ export default function useUsersList() {
         direction: isSortDirDesc.value,
       }, currentPage.value, perPage.value)
       .then(response => {
+        console.log("response",response)
         const { elements, totalElements } = response.data
 
         callback(elements)
