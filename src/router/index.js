@@ -273,9 +273,9 @@ const router = new VueRouter({
     },
     // Settings routes starting from here
     {
-      path:'/settings',
+      path: '/settings',
       name: 'settings',
-      component: () => import('@/views/Settings/Index.vue'),
+      component: () => import('@/views/pages/account-setting/AccountSetting.vue'),
       meta: {
         pageTitle: 'Settings',
         breadcrumb: [
@@ -323,10 +323,10 @@ router.beforeEach((to, _, next) => {
 //     if (to.name == "/" || to.name == "home" || to.name == "invoices") {
 //       if (!isLoggedIn) {
 //         return next({ name: 'login' })
-//       } 
-        
+//       }
+
 //       return next();
-      
+
 //     }
 //     else if( to.name == "auth-reset-password-v1"){
 

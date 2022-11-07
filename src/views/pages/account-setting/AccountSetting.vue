@@ -123,11 +123,59 @@ export default {
   },
   data() {
     return {
-      options: {},
+      options: {
+          general: {
+            // eslint-disable-next-line global-require
+            avatar: require('@/assets/images/portrait/small/avatar-s-11.jpg'),
+            username: 'johndoe',
+            fullName: 'John Doe',
+            email: 'granger007@hogward.com',
+            company: 'Crystal Technologies',
+          },
+          info: {
+            bio: '',
+            dob: null,
+            country: 'USA',
+            website: '',
+            phone: 6562542568,
+          },
+          social: {
+            socialLinks: {
+              twitter: 'https://www.twitter.com',
+              facebook: '',
+              google: '',
+              linkedIn: 'https://www.linkedin.com',
+              instagram: '',
+              quora: '',
+            },
+            connections: {
+              twitter: {
+                // eslint-disable-next-line global-require
+                profileImg: require('@/assets/images/avatars/11-small.png'),
+                id: 'johndoe',
+              },
+              google: {
+                // eslint-disable-next-line global-require
+                profileImg: require('@/assets/images/avatars/3-small.png'),
+                id: 'luraweber',
+              },
+              facebook: {},
+              github: {},
+            },
+          },
+          notification: {
+            commentOnArticle: true,
+            AnswerOnForm: true,
+            followMe: false,
+            newAnnouncements: true,
+            productUpdates: true,
+            blogDigest: false,
+          },
+      },
     }
   },
   beforeCreate() {
-    this.$http.get('/account-setting/data').then(res => { this.options = res.data })
+    // this.$http.get('/account-setting/data').then(res => { this.options = res.data })
   },
 }
 </script>
