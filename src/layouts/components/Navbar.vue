@@ -93,8 +93,8 @@
           @ps-scroll-y="handleScroll"
         >
           <b-link
-            v-for="notification in notifications"
-            :key="notification.id"
+            v-for="(notification, index) in notifications"
+            :key="index"
             @click="markNotificationAsRead(notification.id)"
           >
             <b-media :class="notification.read ? '' : 'unread'">
@@ -107,7 +107,7 @@
                   <feather-icon
                     :icon="
                       notification.notificationSeverityType === 'INFO' ? 'CheckIcon' :
-                      notification.notificationSeverityType === 'WARNING' ? 'AlertTriangleIcon' : 'XIcon'"
+                      notification.notificationSeverityType === 'WARNING' ? 'AlertTriangleIcon' : 'AlertTriangleIcon'"
                   />
                 </b-avatar>
               </template>
@@ -116,7 +116,15 @@
                   {{ notification.subject }}
                 </span>
               </p>
-              <small class="notification-text">{{ notification.message }}</small>
+              <small class="notification-text">{{ notification | limitDisplay(fullIndex) }}
+                <a
+                  v-if="fullIndex !== notification.id"
+                  href="javascript:void(0)"
+                  @click="fullIndex = notification.id"
+                >
+                  read more
+                </a>
+              </small>
             </b-media>
           </b-link>
         </vue-perfect-scrollbar>
@@ -124,8 +132,8 @@
         <!-- Cart Footer -->
         <li class="dropdown-menu-footer">
           <b-button
-            :disabled="notificationCount === 0"
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+            :disabled="notificationCount === 0"
             variant="primary"
             block
             @click="markNotificationReadAll()"
@@ -166,6 +174,15 @@
           <span>Profile</span>
         </b-dropdown-item>
 
+        <b-dropdown-item :to="{ name:'tickets' }" link-class="d-flex align-items-center">
+          <feather-icon
+            size="16"
+            icon="TagIcon"
+            class="mr-50"
+          />
+          <span>Tickets</span>
+        </b-dropdown-item>
+
         <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
             size="16"
@@ -192,9 +209,31 @@
           />
           <span>Chat</span>
         </b-dropdown-item>
-
         <b-dropdown-divider />
-
+        <b-dropdown-item :to="{ name:'settings' }" link-class="d-flex align-items-center">
+          <feather-icon
+            size="16"
+            icon="SettingsIcon"
+            class="mr-50"
+          />
+          <span>Settings</span>
+        </b-dropdown-item>
+        <b-dropdown-item :to="{name:'my-plans'}" link-class="d-flex align-items-center">
+          <feather-icon
+            size="16"
+            icon="CreditCardIcon"
+            class="mr-50"
+          />
+          <span>Pricing</span>
+        </b-dropdown-item>
+        <b-dropdown-item link-class="d-flex align-items-center">
+          <feather-icon
+            size="16"
+            icon="InfoIcon"
+            class="mr-50"
+          />
+          <span>FAQ</span>
+        </b-dropdown-item>
         <b-dropdown-item
           link-class="d-flex align-items-center"
           @click="logout"
@@ -228,10 +267,7 @@ import {
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
-// eslint-disable-next-line import/no-duplicates
-import axiosIns from '@/libs/axios'
 import { ref } from '@vue/composition-api'
-// eslint-disable-next-line import/no-duplicates
 import axios from '@/libs/axios'
 import useJwt from '@/auth/jwt/useJwt'
 
@@ -258,6 +294,14 @@ export default {
   directives: {
     Ripple,
   },
+  filters: {
+    limitDisplay(value, index) {
+      if (index !== value.id) {
+        return `${value.message.substring(0, 18)}...`
+      }
+      return value.message
+    },
+  },
   props: {
     toggleVerticalMenuActive: {
       type: Function,
@@ -276,6 +320,16 @@ export default {
     window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
+    toggleReadMore(id) {
+      this.notifications.map(notification => {
+        if (notification.id === id) {
+          // eslint-disable-next-line no-param-reassign
+          notification.message = notification.message.substring(0, 10)
+          return notification
+        }
+        return notification
+      })
+    },
     handleScroll() {
       const container = this.$el.querySelector('.ps-container')
       if (container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
@@ -309,7 +363,6 @@ export default {
           // eslint-disable-next-line no-plusplus
           this.notificationCount--
         }
-
       }
     },
     async markNotificationReadAll() {
@@ -348,6 +401,7 @@ export default {
     ]
 
     const notificationCount = 0
+    const fullIndex = 0
     const page = 1
     const notifications = ref([])
 
@@ -360,6 +414,7 @@ export default {
       page,
       locales,
       notificationCount,
+      fullIndex,
       notifications,
       perfectScrollbarSettings,
     }
