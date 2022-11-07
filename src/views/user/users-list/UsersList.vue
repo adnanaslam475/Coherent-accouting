@@ -9,15 +9,6 @@
       @refetch-data="refetchData"
     />
 
-    <!-- Filters -->
-    <users-list-filters
-      :role-filter.sync="roleFilter"
-      :plan-filter.sync="planFilter"
-      :status-filter.sync="statusFilter"
-      :role-options="roleOptions"
-      :plan-options="planOptions"
-      :status-options="statusOptions"
-    />
 
     <!-- Table Container Card -->
     <b-card
@@ -72,7 +63,7 @@
 
       <b-table
         ref="refUserListTable"
-        class="position-relative"
+        class="position-relative privatePersonList"
         :items="fetchUsers"
         responsive
         :fields="tableColumns"
@@ -113,8 +104,8 @@
           </b-media>
         </template>
 
-        <template #cell(idCardNumber)="data">
-          <span class="text-nowrap text-capitalize">{{ data.item.idcardNumber }}</span>
+        <template #cell(idcardNumber)="data">
+          <span class="text-nowrap text-capitalize">{{ data.value }}</span>
         </template>
 
         <!-- Column: Actions -->
@@ -340,4 +331,8 @@ export default {
 
 <style lang="scss">
 @import '@core/scss/vue/libs/vue-select.scss';
+.privatePersonList th{
+  position: relative;
+  vertical-align: middle !important;
+}
 </style>

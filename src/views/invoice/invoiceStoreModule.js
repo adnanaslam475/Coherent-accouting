@@ -11,10 +11,11 @@ export default {
         let axiosInvoice = axios.create({
           baseURL: 'http://167.86.93.80:8765',
         })
+
         let config = {
           headers: {'Authorization': "Bearer "+token},
           params: {
-            direction: queryParams.direction,
+            direction: queryParams.direction ? 'desc' : 'asc',
             sortField: queryParams.sortField,
             verified: queryParams.verified
           },
