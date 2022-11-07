@@ -174,6 +174,15 @@
           <span>Profile</span>
         </b-dropdown-item>
 
+        <b-dropdown-item :to="{ name:'tickets' }" link-class="d-flex align-items-center">
+          <feather-icon
+            size="16"
+            icon="TagIcon"
+            class="mr-50"
+          />
+          <span>Tickets</span>
+        </b-dropdown-item>
+
         <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
             size="16"
@@ -200,9 +209,31 @@
           />
           <span>Chat</span>
         </b-dropdown-item>
-
         <b-dropdown-divider />
-
+        <b-dropdown-item  :to="{ name:'settings' }" link-class="d-flex align-items-center">
+          <feather-icon
+            size="16"
+            icon="SettingsIcon"
+            class="mr-50"
+          />
+          <span>Settings</span>
+        </b-dropdown-item>
+        <b-dropdown-item link-class="d-flex align-items-center">
+          <feather-icon
+            size="16"
+            icon="CreditCardIcon"
+            class="mr-50"
+          />
+          <span>Pricing</span>
+        </b-dropdown-item>
+        <b-dropdown-item link-class="d-flex align-items-center">
+          <feather-icon
+            size="16"
+            icon="InfoIcon"
+            class="mr-50"
+          />
+          <span>FAQ</span>
+        </b-dropdown-item>
         <b-dropdown-item
           link-class="d-flex align-items-center"
           @click="logout"
