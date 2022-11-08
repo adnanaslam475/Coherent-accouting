@@ -19,7 +19,7 @@ export default function useUsersList() {
     { key: 'identificationNumber', sortable: true, formatter: val => `${val?val:""}` },
     { key: 'vatIdentificationNumber', sortable: true, formatter: val => `${val?val:""}` },
     { key: 'address', sortable: true, formatter: val => `${val?val:""}` },
-    { key: 'idCardNumber', sortable: true },
+    { key: 'idcardNumber', label: "ID Card Number", sortable: false },
     { key: 'actions' },
   ]
   const perPage = ref(10)

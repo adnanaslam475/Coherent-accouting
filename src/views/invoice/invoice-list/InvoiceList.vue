@@ -43,19 +43,7 @@
               class="d-inline-block mr-1"
               placeholder="Search..."
             />
-            <v-select
-              v-model="statusFilter"
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-              :options="statusOptions"
-              class="invoice-filter-select"
-              placeholder="Select Status"
-            >
-              <template #selected-option="{ label }">
-                <span class="text-truncate overflow-hidden">
-                  {{ label }}
-                </span>
-              </template>
-            </v-select>
+
           </div>
         </b-col>
       </b-row>
@@ -72,7 +60,7 @@
       show-empty
       empty-text="No matching records found"
       :sort-desc.sync="isSortDirDesc"
-      class="position-relative"
+      class="position-relative invoiceList"
     >
 
       <template #head(invoiceStatus)>
@@ -100,14 +88,14 @@
       </template>
 
       <!-- Column: Issued Date -->
-      <template #cell(dateIssued)="data">
+      <template #cell(invoiceDate)="data">
         <span class="text-nowrap">
-          {{ data.value }}
+          {{ data.item.dateIssued }}
         </span>
       </template>
 
       <!-- Column: recipientCompany -->
-      <template #cell(recipientCompany)="data">
+      <template #cell(recipientCompanyName)="data">
         <span class="text-nowrap"  :id="`recipientCompany-row-${data.item.id}`">
           {{ data.item.recipientCompany.companName }}
         </span>
@@ -135,7 +123,7 @@
       </template>
 
       <!-- Column: supplierCompany -->
-      <template #cell(supplierCompany)="data">
+      <template #cell(supplierCompanyName)="data">
  
         <span class="text-nowrap"  :id="`supplierCompany-row-${data.item.id}`">
           {{ data.item.supplierCompany.companName }}
@@ -198,11 +186,11 @@
       </template>
 
       <!-- Column: currency -->
-      <template #cell(currency)="data">
+      <!-- <template #cell(currency)="data">
         <span class="text-nowrap">
           {{ data.value }}
         </span>
-      </template>
+      </template> -->
 
       <!-- Column: Actions -->
       <template #cell(actions)="data">
@@ -445,4 +433,8 @@ export default {
 
 <style lang="scss">
 @import '@core/scss/vue/libs/vue-select.scss';
+.invoiceList th{
+  position: relative;
+  vertical-align: middle !important;
+}
 </style>
