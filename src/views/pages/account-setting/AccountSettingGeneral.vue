@@ -56,41 +56,178 @@
       <b-row>
         <b-col sm="6">
           <b-form-group
-            label="Username"
-            label-for="account-username"
+            label="First Name"
+            label-for="first-name"
           >
             <b-form-input
-              v-model="optionsLocal.username"
-              placeholder="Username"
-              name="username"
+              v-model="userDetail.firstName"
+              name="firstName"
+              placeholder="First Name"
             />
           </b-form-group>
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="Name"
-            label-for="account-name"
+            label="Last Name"
+            label-for="last-name"
           >
             <b-form-input
-              v-model="optionsLocal.fullName"
-              name="name"
-              placeholder="Name"
+              v-model="userDetail.lastName"
+              name="lastName"
+              placeholder="Last Name"
             />
           </b-form-group>
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="E-mail"
-            label-for="account-e-mail"
+            label="Account Type"
+            label-for="account-type"
           >
             <b-form-input
-              v-model="optionsLocal.email"
+              v-model="userDetail.accountType"
+              placeholder="Account Type"
+              name="accountType"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="company Address"
+            label-for="company-address"
+          >
+            <b-form-input
+              v-model="userDetail.companyAddress"
+              name="companyAddress"
+              placeholder="Company Address"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="company Name"
+            label-for="company-name"
+          >
+            <b-form-input
+              v-model="userDetail.companyName"
+              name="companyName"
+              placeholder="Company Name"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="Company Registration Number"
+            label-for="company-register-number"
+          >
+            <b-form-input
+              v-model="userDetail.companyRegistrationNumber"
+              name="companyRegistrationNumber"
+              placeholder="Company Registration Number"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="Country"
+            label-for="country"
+          >
+            <b-form-input
+              v-model="userDetail.country"
+              name="country"
+              placeholder="Country"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="email"
+            label-for="email"
+          >
+            <b-form-input
+              v-model="userDetail.email"
               name="email"
               placeholder="Email"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="First Name"
+            label-for="first-name"
+          >
+            <b-form-input
+              v-model="userDetail.firstName"
+              name="firstName"
+              placeholder="First Name"
             />
 
           </b-form-group>
         </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="GDPR"
+            label-for="gdpr"
+          >
+            <b-form-input
+              v-model="userDetail.gdpr"
+              name="gdpr"
+              placeholder="gdpr"
+            />
+
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="Identifier"
+            label-for="identifier"
+          >
+            <b-form-input
+              v-model="userDetail.identifier"
+              name="identifier"
+              placeholder="Identifier"
+            />
+
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="Ip Address"
+            label-for="ip-address"
+          >
+            <b-form-input
+              v-model="userDetail.ipAddress"
+              name="ipAddress"
+              placeholder="Ip Address"
+            />
+
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="ISO Country"
+            label-for="iso-alpha-2-country"
+          >
+            <b-form-input
+              v-model="userDetail.isoAlpha2Country"
+              name="text"
+              placeholder="ISO Country"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="Identifier"
+            label-for="identifier"
+          >
+            <b-form-input
+              v-model="userDetail.identifier"
+              name="identifier"
+              placeholder="Identifier"
+            />
+
+          </b-form-group>
+        </b-col>
+
         <b-col sm="6">
           <b-form-group
             label="Company"
@@ -156,6 +293,7 @@ import {
 import Ripple from 'vue-ripple-directive'
 import { useInputImageRenderer } from '@core/comp-functions/forms/form-utils'
 import { ref } from '@vue/composition-api'
+import axios from '@/libs/axios'
 
 export default {
   components: {
@@ -194,18 +332,28 @@ export default {
     resetForm() {
       this.optionsLocal = JSON.parse(JSON.stringify(this.generalData))
     },
+    async getUserDetail() {
+      const data = await axios.get('account/api/user/who-am-i')
+      this.userDetail = data.data
+      console.log(data.data)
+    },
   },
   setup() {
     const refInputEl = ref(null)
     const previewEl = ref(null)
+    const userDetail = ref({})
 
     const { inputImageRenderer } = useInputImageRenderer(refInputEl, previewEl)
 
     return {
+      userDetail,
       refInputEl,
       previewEl,
       inputImageRenderer,
     }
+  },
+  created() {
+    this.getUserDetail()
   },
 }
 </script>
