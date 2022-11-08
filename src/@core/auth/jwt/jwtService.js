@@ -207,6 +207,19 @@ export default class JwtService {
     })
   }
 
+  //add invoice
+
+  addInvoice(token,...args) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.post(this.jwtConfig.invoiceAddEndpoint, ...args, {
+      headers: headers
+    }) 
+  }
+
   verifyToken(token,UrlToken){
     let headers = {
       'Authorization': `${this.jwtConfig.tokenType} ${token}`,

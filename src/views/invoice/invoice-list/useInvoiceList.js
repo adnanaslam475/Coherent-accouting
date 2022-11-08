@@ -61,8 +61,10 @@ export default function useInvoicesList() {
       .dispatch('app-invoice/fetchInvoices', {
         sortField: sortBy.value,
         direction: isSortDirDesc.value,
-        verified: true
-      }, currentPage.value, perPage.value)
+        verified: true,
+        currentPage : currentPage.value,
+        perPage: perPage.value
+      })
       .then(response => {
         const { elements, totalElements } = response.data
 

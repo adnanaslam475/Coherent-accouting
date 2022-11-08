@@ -98,7 +98,7 @@
               :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
               class="font-weight-bold d-block text-nowrap"
             >
-              {{ data.item.fullName }}
+              {{ data.item.firstMiddleAndLastName }}
             </b-link>
             <small>{{ data.item.firstMiddleAndLastName }}</small>
           </b-media>
