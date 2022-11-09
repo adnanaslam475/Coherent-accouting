@@ -92,25 +92,25 @@
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="company Address"
-            label-for="company-address"
+              label="Company Name"
+              label-for="account-company"
           >
             <b-form-input
-              v-model="userDetail.companyAddress"
-              name="companyAddress"
-              placeholder="Company Address"
+                v-model="optionsLocal.company"
+                name="company"
+                placeholder="Company name"
             />
           </b-form-group>
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="company Name"
-            label-for="company-name"
+              label="Company Address"
+              label-for="company-address"
           >
             <b-form-input
-              v-model="userDetail.companyName"
-              name="companyName"
-              placeholder="Company Name"
+                v-model="userDetail.companyAddress"
+                name="companyAddress"
+                placeholder="Company Address"
             />
           </b-form-group>
         </b-col>
@@ -128,18 +128,6 @@
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="Country"
-            label-for="country"
-          >
-            <b-form-input
-              v-model="userDetail.country"
-              name="country"
-              placeholder="Country"
-            />
-          </b-form-group>
-        </b-col>
-        <b-col sm="6">
-          <b-form-group
             label="email"
             label-for="email"
           >
@@ -152,95 +140,43 @@
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="First Name"
-            label-for="first-name"
+            label="Country"
+            label-for="register-country"
           >
-            <b-form-input
-              v-model="userDetail.firstName"
-              name="firstName"
-              placeholder="First Name"
-            />
-
+            <validation-provider
+              #default="{ errors }"
+              name="country"
+              vid="country"
+            >
+              <v-select
+                id="register-country"
+                v-model="userDetail.country"
+                :options="countries"
+                :filter-by="(option, label, search)=> {
+                  return (option.text || '').toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1
+                }"
+                :label="$t('register.lbl_country')"
+                name="country"
+                :placeholder="$t('register.country_placeholder')"
+                :value="$store.state.selected"
+                :state="errors.length > 0 ? false:null"
+              >
+                <template #selected-option="option">
+                  <div style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
+                    <img :src="getImg(option.src)">
+                    {{ option.text }}
+                  </div>
+                </template>
+                <template v-slot:option="option">
+                  <span style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
+                    <img :src="getImg(option.src)">  {{ option.text }}
+                  </span>
+                </template>
+              </v-select>
+              <small class="text-danger">{{ errors[0] }}</small>
+            </validation-provider>
           </b-form-group>
         </b-col>
-        <b-col sm="6">
-          <b-form-group
-            label="GDPR"
-            label-for="gdpr"
-          >
-            <b-form-input
-              v-model="userDetail.gdpr"
-              name="gdpr"
-              placeholder="gdpr"
-            />
-
-          </b-form-group>
-        </b-col>
-        <b-col sm="6">
-          <b-form-group
-            label="Identifier"
-            label-for="identifier"
-          >
-            <b-form-input
-              v-model="userDetail.identifier"
-              name="identifier"
-              placeholder="Identifier"
-            />
-
-          </b-form-group>
-        </b-col>
-        <b-col sm="6">
-          <b-form-group
-            label="Ip Address"
-            label-for="ip-address"
-          >
-            <b-form-input
-              v-model="userDetail.ipAddress"
-              name="ipAddress"
-              placeholder="Ip Address"
-            />
-
-          </b-form-group>
-        </b-col>
-        <b-col sm="6">
-          <b-form-group
-            label="ISO Country"
-            label-for="iso-alpha-2-country"
-          >
-            <b-form-input
-              v-model="userDetail.isoAlpha2Country"
-              name="text"
-              placeholder="ISO Country"
-            />
-          </b-form-group>
-        </b-col>
-        <b-col sm="6">
-          <b-form-group
-            label="Identifier"
-            label-for="identifier"
-          >
-            <b-form-input
-              v-model="userDetail.identifier"
-              name="identifier"
-              placeholder="Identifier"
-            />
-
-          </b-form-group>
-        </b-col>
-
-        <b-col sm="6">
-          <b-form-group
-            label="Company"
-            label-for="account-company"
-          >
-            <b-form-input
-              v-model="optionsLocal.company"
-              name="company"
-              placeholder="Company name"
-            />
-          </b-form-group>
-        </b-col>
-
         <!-- alert -->
         <b-col
           cols="12"
@@ -288,12 +224,30 @@
 
 <script>
 import {
-  BFormFile, BButton, BForm, BFormGroup, BFormInput, BRow, BCol, BAlert, BCard, BCardText, BMedia, BMediaAside, BMediaBody, BLink, BImg,
+  BAlert,
+  BButton,
+  BCard,
+  BCardText,
+  BCol,
+  BForm,
+  BFormFile,
+  BFormGroup,
+  BFormInput,
+  BImg,
+  BLink,
+  BMedia,
+  BMediaAside,
+  BMediaBody,
+  BRow,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import { useInputImageRenderer } from '@core/comp-functions/forms/form-utils'
 import { ref } from '@vue/composition-api'
 import axios from '@/libs/axios'
+import useJwt from '@/auth/jwt/useJwt'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import vSelect from 'vue-select'
 
 export default {
   components: {
@@ -312,6 +266,10 @@ export default {
     BMediaAside,
     BMediaBody,
     BLink,
+    ValidationProvider,
+    // eslint-disable-next-line vue/no-unused-components
+    ValidationObserver,
+    vSelect,
   },
   directives: {
     Ripple,
@@ -328,32 +286,87 @@ export default {
       profileFile: null,
     }
   },
+  created() {
+    this.getUserDetail()
+    this.populateCountries()
+  },
   methods: {
+    getImg(img) {
+      // eslint-disable-next-line import/no-unresolved,global-require,no-shadow
+      const defaultPath = require('../../../assets/flags/aw.png')
+      // eslint-disable-next-line global-require,import/no-dynamic-require
+      const path = require(`../../../assets/flags/${img}.png`)
+      try {
+        return path
+      } catch (e) {
+        return defaultPath
+      }
+    },
     resetForm() {
       this.optionsLocal = JSON.parse(JSON.stringify(this.generalData))
     },
     async getUserDetail() {
       const data = await axios.get('account/api/user/who-am-i')
       this.userDetail = data.data
-      console.log(data.data)
     },
+    populateCountries() {
+      useJwt
+        .clientToken()
+        .then(res => {
+          const token = res.data.access_token
+          useJwt
+            .countries(token)
+            .then(response => {
+              // eslint-disable-next-line array-callback-return
+              response.data.map((value, key) => {
+                this.countries.push({
+                  Country: value.isoAlpha2Country,
+                  value: value.isoAlpha2Country,
+                  text: value.country,
+                  src: value.isoAlpha2Country.toLocaleLowerCase(),
+                })
+              })
+            })
+            .catch(error => {
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `${error}`,
+                  icon: 'EditIcon',
+                  variant: 'error',
+                },
+              })
+            })
+        })
+        .catch(error => {
+          // this.$refs.registerForm.setErrors(error)
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.errorMessage}`,
+              icon: 'EditIcon',
+              variant: 'error',
+            },
+          })
+        })
+    },
+
   },
   setup() {
     const refInputEl = ref(null)
     const previewEl = ref(null)
     const userDetail = ref({})
+    const countries = ref([])
 
     const { inputImageRenderer } = useInputImageRenderer(refInputEl, previewEl)
 
     return {
+      countries,
       userDetail,
       refInputEl,
       previewEl,
       inputImageRenderer,
     }
-  },
-  created() {
-    this.getUserDetail()
   },
 }
 </script>
