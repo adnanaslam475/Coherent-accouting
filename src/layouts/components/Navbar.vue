@@ -88,7 +88,7 @@
         <!-- Notifications -->
         <vue-perfect-scrollbar
           :settings="perfectScrollbarSettings"
-          class="scrollable-container media-list scroll-area"
+          class="scrollable-container media-list scroll-area notification-scroll"
           tagname="li"
           @ps-scroll-y="handleScroll"
         >
@@ -331,8 +331,8 @@ export default {
       })
     },
     handleScroll() {
-      const container = this.$el.querySelector('.ps-container')
-      if (container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
+      const container = this.$el.querySelector('.notification-scroll')
+      if (container.scrollTop > 0 && container.clientHeight > 0 && container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
         this.page += 1
         this.getNotifications()
       }
