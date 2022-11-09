@@ -7,7 +7,11 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    fetchUsers(ctx, queryParams, pageNumber, perPageValue) {
+    fetchUsers(ctx, queryParams) {
+
+      let pageNumber = queryParams.currentPage
+      let perPageValue = queryParams.perPage
+      
       let token = useJwt.getToken()
       let axiosUser = axios.create({
         baseURL: 'http://167.86.93.80:8765',

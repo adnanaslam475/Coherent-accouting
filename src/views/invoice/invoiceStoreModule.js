@@ -6,7 +6,10 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    fetchInvoices(ctx, queryParams, pageNumber, perPageValue) {
+    fetchInvoices(ctx, queryParams) {
+        let pageNumber = queryParams.currentPage
+        let perPageValue = queryParams.perPage
+        
         let token = useJwt.getToken()
         let axiosInvoice = axios.create({
           baseURL: 'http://167.86.93.80:8765',

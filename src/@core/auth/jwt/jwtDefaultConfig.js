@@ -10,7 +10,7 @@ export default {
   resetPasswordEndpoint: '/account/api/save-forgot-password',
   refreshEndpoint: '/jwt/refresh-token',
   logoutEndpoint: '/jwt/logout',
-
+  invoiceAddEndpoint: '/account/api/user-invoice/create',
 
   getCompanies: '/api/company/list/1/10',
   // This will be prefixed in authorization header with token

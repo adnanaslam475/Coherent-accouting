@@ -55,9 +55,10 @@ export default function useUsersList() {
       .dispatch('app-user/fetchUsers', {
         sortField: sortBy.value,
         direction: isSortDirDesc.value,
-      }, currentPage.value, perPage.value)
+        currentPage: currentPage.value, 
+        perPage: perPage.value
+      })
       .then(response => {
-        console.log("response",response)
         const { elements, totalElements } = response.data
 
         callback(elements)

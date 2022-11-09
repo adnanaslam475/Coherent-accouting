@@ -1,3 +1,5 @@
+
+
 <template>
     <div>
       <b-button to="/company/create" variant="relief-primary" class="float-right mb-1">Add Company</b-button>
@@ -7,21 +9,93 @@
       responsive
       class="mb-0"
     >
-      <template #cell(company_name)="data">
+
+    <template #cell(Country)="data">
+              <div>
+                <!-- {{data.item.companyCountry}} -->
+                <img
+              :src="getImage(data.item.companyCountry)"
+              style="width: 53px; height: 37px; margin-left: 10px"
+            />
+              </div>
+            </template>
+              
+            <template #cell(company_name)="data">
+              <div>{{data.item.companyName}}</div>
+            </template>
+
+            <template #cell(Email)="data">
+              <div>{{data.item.companyMail}}</div>
+            </template>
+
+            <template #cell(owner_name)="data">
+              <div>{{data.item.companyOwnerApi.companyOwnerName}}</div>
+            </template>
+
+            <template #cell(company_identification_number)="data">
+              <div>{{data.item.companyIdentificationNumber}}</div>
+            </template>
+
+
+      <!-- <template #cell(company_name)="data">
         <b-link :to="{name: 'CompanyView', params: {id: data.item.id}}">{{ data.value }}</b-link>
-      </template>
-      <template #cell(action)>
-        <b-button variant="outline-primary" class="btn-icon">
-          <feather-icon icon="MoreVerticalIcon" />
-        </b-button>
+      </template> -->
+      <template #cell(action)="data">
+       
+        <!-- <b-button variant="outline-primary" class="btn-icon"> -->
+         
+           <!-- Dropdown -->
+           <b-dropdown
+            variant="link"
+            toggle-class="p-0"
+            no-caret
+            :right="$store.state.appConfig.isRTL"
+          >
+
+            <template #button-content>
+              <feather-icon
+                icon="MoreVerticalIcon"
+                size="16"
+                class="align-middle text-body"
+              />
+            </template>
+            <b-dropdown-item>
+              <feather-icon icon="DownloadIcon" />
+              <span class="align-middle ml-50">Download</span>
+            </b-dropdown-item>
+            <b-dropdown-item >
+              <feather-icon icon="EditIcon" />
+              <span class="align-middle ml-50">Edit</span>
+            </b-dropdown-item>
+            <b-dropdown-item>
+              <feather-icon icon="TrashIcon" />
+              <span class="align-middle ml-50">Delete</span>
+            </b-dropdown-item>
+            <b-dropdown-item>
+              <feather-icon icon="CopyIcon" />
+              <span class="align-middle ml-50">Duplicate</span>
+            </b-dropdown-item>
+          </b-dropdown>
+          
+
+        <!-- </b-button> -->
       </template>
     </b-table>
     </div>
-</template>
+</template> 
 <script>
 import BCardCode from '@core/components/b-card-code/BCardCode.vue'
-import { BTable, BProgress, BBadge, BButton, BLink } from 'bootstrap-vue'
+// import {  BBadge, BButton, BLink, } from 'bootstrap-vue'
+
+import {
+  BCard, BRow, BCol, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
+  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip, BProgress,
+} from 'bootstrap-vue'
+
 import useJwt from '@/auth/jwt/useJwt'
+import axios from '@/libs/axios'
+// import store from '@/store'
+
 
 export default {
   components: {
@@ -30,7 +104,21 @@ export default {
     BProgress,
     BBadge,
     BButton,
-    BLink
+    BLink,
+    BCard,
+    BRow,
+    BCol,
+    BFormInput,
+    BButton,
+    BTable,
+    BMedia,
+    BAvatar,
+   
+   
+    BDropdown,
+    BDropdownItem,
+    BPagination,
+    BTooltip,
   },
   data() {
     return {
@@ -47,59 +135,96 @@ export default {
         // A virtual column made up from two fields
         { key: 'action', label: 'Action' },
       ],
-      items: [
-        {
-          id: '1234567',
-          Country: 'BG',
-          company_name: 'Accounting Software',
-          Email: 'accounting@software.com',
-          owner_name: 'Ivan Ivonov',
-          company_identification_number: 'CVS1234567NHY',
-          action: 'Edit/Delete'
-        },
-        {
-          id: '1234568',
-          Country: 'EN',
-          company_name: 'NodeJs Software',
-          Email: 'accounting@software.com',
-          owner_name: 'Ivan Ivonov',
-          company_identification_number: 'CVS1234567NHY',
-          action: 'Edit/Delete'
-        },
-        {
-          id: '1234569',
-          Country: 'EN',
-          company_name: 'Accounting Software',
-          Email: 'accounting@software.com',
-          owner_name: 'Ivan Ivonov',
-          company_identification_number: 'CVS1234JH7NHY',
-          action: 'Edit/Delete'
-        },
-        {
-          id: '1234570',
-          Country: 'BG',
-          company_name: 'Laravel Software',
-          Email: 'laravel@software.com',
-          owner_name: 'Ivan Ivonov',
-          company_identification_number: 'CVS1254567NHY',
-          action: 'Edit/Delete'
-        },
-        {
-          id: '1234571',
-          Country: 'EN',
-          company_name: 'VueJs Software',
-          Email: 'vue@software.com',
-          owner_name: 'Ivan Ivonov',
-          company_identification_number: 'CVS12877NHY',
-          action: 'Edit/Delete'
-        }
-      ],
+      items:[],
+      // items: [
+      //   {
+      //     id: '1234567',
+      //     Country: 'BG',
+      //     company_name: 'Accounting Software',
+      //     Email: 'accounting@software.com',
+      //     owner_name: 'Ivan Ivonov',
+      //     company_identification_number: 'CVS1234567NHY',
+      //     action: 'Edit/Delete'
+      //   },
+      //   {
+      //     id: '1234568',
+      //     Country: 'EN',
+      //     company_name: 'NodeJs Software',
+      //     Email: 'accounting@software.com',
+      //     owner_name: 'Ivan Ivonov',
+      //     company_identification_number: 'CVS1234567NHY',
+      //     action: 'Edit/Delete'
+      //   },
+      //   {
+      //     id: '1234569',
+      //     Country: 'EN',
+      //     company_name: 'Accounting Software',
+      //     Email: 'accounting@software.com',
+      //     owner_name: 'Ivan Ivonov',
+      //     company_identification_number: 'CVS1234JH7NHY',
+      //     action: 'Edit/Delete'
+      //   },
+      //   {
+      //     id: '1234570',
+      //     Country: 'BG',
+      //     company_name: 'Laravel Software',
+      //     Email: 'laravel@software.com',
+      //     owner_name: 'Ivan Ivonov',
+      //     company_identification_number: 'CVS1254567NHY',
+      //     action: 'Edit/Delete'
+      //   },
+      //   {
+      //     id: '1234571',
+      //     Country: 'EN',
+      //     company_name: 'VueJs Software',
+      //     Email: 'vue@software.com',
+      //     owner_name: 'Ivan Ivonov',
+      //     company_identification_number: 'CVS12877NHY',
+      //     action: 'Edit/Delete'
+      //   }
+      // ],
     }
   },
   methods: {
-    // 
+    getImage(img) {
+      var countryImage = "https://countryflagsapi.com/png/" + img;
+      return countryImage;
+    },
+    // getting the list of all companies
+    async getAllCompanies(){
+      // axios.get("/account/api/company/list/1/10?direction=desc&sortField=id", {
+      //   headers: {
+      //     Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      //     'Access-Control-Allow-Credentials' : true,
+      //     'Access-Control-Allow-Origin': "http://localhost:8080"
+      //   },
+      // })
+      //   .then((response) => response.json())
+      //   .then((responseJson) => {
+      //     if(responseJson.success){
+      //       this.items = responseJson.success.elements;
+      //       console.log(this.items);
+      //     }
+      //   })
+      //   .catch();
+
+
+      const data = await axios.get(`/account/api/company/list/1/10?direction=desc&sortField=id`,{
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          'Access-Control-Allow-Credentials' : true,
+          'Access-Control-Allow-Origin': "http://localhost:8080"
+    },
+      });
+
+      if(data.data.elements != ""){
+        this.items= data.data.elements;
+        console.log(this.items);
+      }
+    }
   },
   created() {
+    this.getAllCompanies();
     // useJwt.clientToken().then(res => {
     //   let token = res.data.access_token
     //   useJwt.companies(token).then(response => {
