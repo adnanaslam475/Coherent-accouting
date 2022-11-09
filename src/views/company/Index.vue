@@ -1,101 +1,173 @@
 
 
 <template>
-    <div>
-      <b-button to="/company/create" variant="relief-primary" class="float-right mb-1">Add Company</b-button>
-      <b-table
-      :fields="fields"
-      :items="items"
-      responsive
-      class="mb-0"
+  <div>
+    <b-button
+      to="/company/create"
+      variant="relief-primary"
+      class="float-right mb-1"
+      >Add Company</b-button
     >
+    <b-table :fields="fields" :items="items" responsive class="mb-0">
+      <template #cell(Country)="data">
+        <div>
+          <!-- {{data.item.companyCountry}} -->
+          <img
+            :src="getImage(data.item.companyCountry)"
+            style="width: 30px; height: 20px; margin-left: 10px"
+          />
+        </div>
+      </template>
 
-    <template #cell(Country)="data">
-              <div>
-                <!-- {{data.item.companyCountry}} -->
-                <img
-              :src="getImage(data.item.companyCountry)"
-              style="width: 53px; height: 37px; margin-left: 10px"
-            />
-              </div>
-            </template>
-              
-            <template #cell(company_name)="data">
-              <div>{{data.item.companyName}}</div>
-            </template>
+      <template #cell(company_name)="data">
+        <span
+          style="
+            margin-right: 8px;
+            padding: 5px;
+            border-radius: 50%;
+            background-color: #7367f0;
+            color: white;
+          "
+          >{{ data.item.companyIsoAlpha2Country }}</span
+        >
+        <b-link :to="{ name: 'CompanyView', params: { id: data.item.id } }"
+          >{{ data.item.companyName }}
+        </b-link>
 
-            <template #cell(Email)="data">
-              <div>{{data.item.companyMail}}</div>
-            </template>
+        <!-- <div>{{data.item.companyName}}</div> -->
+      </template>
 
-            <template #cell(owner_name)="data">
-              <div>{{data.item.companyOwnerApi.companyOwnerName}}</div>
-            </template>
+      <template #cell(Email)="data">
+        <div>{{ data.item.companyMail }}</div>
+      </template>
 
-            <template #cell(company_identification_number)="data">
-              <div>{{data.item.companyIdentificationNumber}}</div>
-            </template>
+      <template #cell(owner_name)="data">
+        <div>{{ data.item.companyOwnerApi.companyOwnerName }}</div>
+      </template>
 
+      <template #cell(company_identification_number)="data">
+        <b-link :to="{ name: 'CompanyView', params: { id: data.item.id } }">{{
+          data.item.companyIdentificationNumber
+        }}</b-link>
 
-      <!-- <template #cell(company_name)="data">
-        <b-link :to="{name: 'CompanyView', params: {id: data.item.id}}">{{ data.value }}</b-link>
-      </template> -->
-      <template #cell(action)="data">
-       
+        <!-- <div>{{data.item.companyIdentificationNumber}}</div> -->
+      </template>
+
+      <template style="text-align: center !important" #cell(action)="data">
         <!-- <b-button variant="outline-primary" class="btn-icon"> -->
-         
-           <!-- Dropdown -->
-           <b-dropdown
-            variant="link"
-            toggle-class="p-0"
-            no-caret
-            :right="$store.state.appConfig.isRTL"
-          >
 
-            <template #button-content>
-              <feather-icon
-                icon="MoreVerticalIcon"
-                size="16"
-                class="align-middle text-body"
-              />
-            </template>
-            <b-dropdown-item>
-              <feather-icon icon="DownloadIcon" />
-              <span class="align-middle ml-50">Download</span>
-            </b-dropdown-item>
-            <b-dropdown-item >
-              <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
-            </b-dropdown-item>
-            <b-dropdown-item>
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
-            </b-dropdown-item>
-            <b-dropdown-item>
-              <feather-icon icon="CopyIcon" />
-              <span class="align-middle ml-50">Duplicate</span>
-            </b-dropdown-item>
-          </b-dropdown>
-          
+        <!-- Dropdown -->
+        <b-dropdown
+          variant="link"
+          toggle-class="p-0"
+          no-caret
+          :right="$store.state.appConfig.isRTL"
+        >
+          <template #button-content>
+            <feather-icon
+              icon="MoreVerticalIcon"
+              size="16"
+              class="align-middle text-body ml-1"
+            />
+          </template>
+          <b-dropdown-item>
+            <feather-icon icon="DownloadIcon" />
+            <span class="align-middle ml-50">Download</span>
+          </b-dropdown-item>
+          <b-dropdown-item>
+            <feather-icon icon="EditIcon" />
+            <span class="align-middle ml-50">Edit</span>
+          </b-dropdown-item>
+          <b-dropdown-item>
+            <feather-icon icon="TrashIcon" />
+            <span class="align-middle ml-50">Delete</span>
+          </b-dropdown-item>
+          <b-dropdown-item>
+            <feather-icon icon="CopyIcon" />
+            <span class="align-middle ml-50">Duplicate</span>
+          </b-dropdown-item>
+        </b-dropdown>
 
         <!-- </b-button> -->
       </template>
     </b-table>
+
+    <div class="mx-2 mb-2 mt-2">
+      <b-row>
+        <b-col
+          cols="12"
+          sm="6"
+          class="
+            d-flex
+            align-items-center
+            justify-content-center justify-content-sm-start
+          "
+        >
+          <!-- <span class="text-muted"
+            >Showing {{ currentPage + 9 - 9 }} to {{ currentPage + 9 }} of
+            {{ this.totalRecords }} entries</span
+          > -->
+        </b-col>
+        <!-- Pagination -->
+        <b-col
+          cols="12"
+          sm="6"
+          class="
+            d-flex
+            align-items-center
+            justify-content-center justify-content-sm-end
+          "
+        >
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="totalRecords"
+            :per-page="perPage"
+            first-number
+            last-number
+            class="mb-0 mt-1 mt-sm-0"
+            prev-class="prev-item"
+            next-class="next-item"
+            prev-text
+            @input="getNewRecord"
+          >
+            <template #prev-text>
+              <feather-icon icon="ChevronLeftIcon" size="18" />
+            </template>
+            <template #next-text>
+              <feather-icon icon="ChevronRightIcon" size="18" />
+            </template>
+          </b-pagination>
+        </b-col>
+      </b-row>
     </div>
+  </div>
 </template> 
 <script>
-import BCardCode from '@core/components/b-card-code/BCardCode.vue'
+import BCardCode from "@core/components/b-card-code/BCardCode.vue";
 // import {  BBadge, BButton, BLink, } from 'bootstrap-vue'
 
 import {
-  BCard, BRow, BCol, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
-  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip, BProgress,
-} from 'bootstrap-vue'
+  BCard,
+  BRow,
+  BCol,
+  BFormInput,
+  BButton,
+  BTable,
+  BMedia,
+  BAvatar,
+  BLink,
+  BBadge,
+  BDropdown,
+  BDropdownItem,
+  BPagination,
+  BTooltip,
+  BProgress,
+} from "bootstrap-vue";
 
-import useJwt from '@/auth/jwt/useJwt'
-import axios from '@/libs/axios'
+import useJwt from "@/auth/jwt/useJwt";
+import axios from "@/libs/axios";
+
 // import store from '@/store'
-
 
 export default {
   components: {
@@ -113,29 +185,33 @@ export default {
     BTable,
     BMedia,
     BAvatar,
-   
-   
     BDropdown,
     BDropdownItem,
     BPagination,
     BTooltip,
   },
+
   data() {
     return {
       fields: [
         // A virtual column that doesn't exist in items
-        'Country',
+        "Country",
         // A column that needs custom formatting
-        { key: 'company_name', label: 'Company Name' },
-        'Email',
+        { key: "company_name", label: "Company Name" },
+        "Email",
         // A regular column
-        { key: 'owner_name', label: 'Owner Name' },
+        { key: "owner_name", label: "Owner Name" },
         // A regular column
-        { key: 'company_identification_number', label: 'Company Identification Number' },
+        { key: "company_identification_number", label: "Company ID" },
         // A virtual column made up from two fields
-        { key: 'action', label: 'Action' },
+        { key: "action", label: "Action" },
       ],
-      items:[],
+      items: [],
+      currentPage: 1,
+      perPage: "10",
+      totalRecords: "",
+      totalPages: "",
+
       // items: [
       //   {
       //     id: '1234567',
@@ -183,15 +259,39 @@ export default {
       //     action: 'Edit/Delete'
       //   }
       // ],
-    }
+    };
   },
   methods: {
-    getImage(img) {
-      var countryImage = "https://countryflagsapi.com/png/" + img;
+    getImage(country) {
+      // alert(img);
+      var countryImage = "https://countryflagsapi.com/png/" + country;
       return countryImage;
     },
+
     // getting the list of all companies
-    async getAllCompanies(){
+    async getAllCompanies() {
+      const data = await axios.get(
+        "/account/api/company/list/" +
+          this.currentPage +
+          "/" +
+          this.perPage +
+          "?direction=desc&sortField=id",
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "http://localhost:8080",
+          },
+        }
+      );
+
+      if (data.data.elements != "") {
+        this.items = data.data.elements;
+        this.totalRecords = data.data.totalElements;
+        this.totalPages = Math.ceil(this.totalRecords / this.perPage);
+        console.log(this.totalPages);
+      }
+
       // axios.get("/account/api/company/list/1/10?direction=desc&sortField=id", {
       //   headers: {
       //     Authorization: "Bearer " + localStorage.getItem("accessToken"),
@@ -207,35 +307,101 @@ export default {
       //     }
       //   })
       //   .catch();
-
-
-      const data = await axios.get(`/account/api/company/list/1/10?direction=desc&sortField=id`,{
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          'Access-Control-Allow-Credentials' : true,
-          'Access-Control-Allow-Origin': "http://localhost:8080"
+  
     },
-      });
 
-      if(data.data.elements != ""){
-        this.items= data.data.elements;
-        console.log(this.items);
+     //
+    async getNewRecord(cP) {
+      // alert(cP);
+      const data = await axios.get(
+        "/account/api/company/list/" +
+          cP +
+          "/" +
+          this.perPage +
+          "?direction=desc&sortField=id",
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "http://localhost:8080",
+          },
+        }
+      );
+
+      if (data.data.elements != "") {
+        this.items = data.data.elements;
       }
-    }
+    },
   },
   created() {
+    console.log();
     this.getAllCompanies();
     // useJwt.clientToken().then(res => {
     //   let token = res.data.access_token
     //   useJwt.companies(token).then(response => {
     //     console.log(response);
     //   }).catch(error => {
-    //     // 
+    //     //
     //   })
     // })
-  }
-}
+  },
+
+  //   setup(){
+  //     const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
+
+  // // Register module
+  // if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.registerModule(INVOICE_APP_STORE_MODULE_NAME, companyStoreModule)
+
+  // // UnRegister on leave
+  // onUnmounted(() => {
+  //   if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
+  // })
+
+  //     const{
+  //       fetchCompanies,
+  //     // tableColumns,
+  //     perPage,
+  //     currentPage,
+  //     totalCompanies,
+  //     dataMeta,
+  //     perPageOptions,
+  //     searchQuery,
+  //     sortBy,
+  //     isSortDirDesc,
+  //     refCompanyListTable,
+
+  //     statusFilter,
+
+  //     // resolveInvoiceStatusVariantAndIcon,
+  //     // resolveClientAvatarVariant,
+
+  //     refetchData,
+  //     } = useCompanyList()
+
+  //     return {
+  //     fetchCompanies,
+  //     // tableColumns,
+  //     perPage,
+  //     currentPage,
+  //     totalCompanies,
+  //     dataMeta,
+  //     perPageOptions,
+  //     searchQuery,
+  //     sortBy,
+  //     isSortDirDesc,
+  //     refCompanyListTable,
+
+  //     statusFilter,
+
+  //     // resolveInvoiceStatusVariantAndIcon,
+  //     // resolveClientAvatarVariant,
+
+  //     refetchData,
+  //   }
+
+  //   },
+};
 </script>
 <style lang="">
-    /*  */
+/*  */
 </style>

@@ -35,6 +35,14 @@
 
             <b-tab>
             <template #title>
+                <feather-icon icon="FlagIcon" />
+                <span>Vat Reports</span>
+            </template>
+            <YearlyReport />
+            </b-tab>
+
+            <b-tab>
+            <template #title>
                 <feather-icon icon="FileIcon" />
                 <span>Not Verified Invoices</span>
             </template>
