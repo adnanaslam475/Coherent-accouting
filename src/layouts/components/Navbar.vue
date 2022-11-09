@@ -66,7 +66,6 @@
             class="text-body"
             icon="BellIcon"
             size="21"
-            @click="getNotifications()"
           />
         </template>
 
@@ -114,6 +113,15 @@
               <p class="media-heading">
                 <span class="font-weight-bolder">
                   {{ notification.subject }}
+                  <b-link>
+                    <feather-icon
+                      :badge="notificationCount"
+                      badge-classes="bg-danger"
+                      class="text-body"
+                      icon="Trash2Icon"
+                      size="21"
+                    />
+                  </b-link>
                 </span>
               </p>
               <small class="notification-text">{{ notification | limitDisplay(fullIndex) }}
@@ -150,7 +158,7 @@
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
             <p class="user-name font-weight-bolder mb-0">
-              John Doe
+              {{ userDetail.firstName }} {{ userDetail.lastName }}
             </p>
             <span class="user-status">Admin | {{ $t('home') }}</span>
           </div>
@@ -158,8 +166,8 @@
             size="40"
             variant="light-primary"
             badge
-            src="JD"
-            text="JD"
+            :src="userDetail.firstName[0] + userDetail.lastName[0]"
+            :text="userDetail.firstName[0] + userDetail.lastName[0]"
             class="badge-minimal"
             badge-variant="success"
           />
@@ -252,17 +260,17 @@
 
 <script>
 import {
+  BAvatar,
+  BBadge,
+  BButton,
+  BDropdownDivider,
+  BDropdownItem,
+  BFormCheckbox,
+  BImg,
   BLink,
+  BMedia,
   BNavbarNav,
   BNavItemDropdown,
-  BDropdownItem,
-  BDropdownDivider,
-  BAvatar,
-  BImg,
-  BBadge,
-  BMedia,
-  BButton,
-  BFormCheckbox,
 } from 'bootstrap-vue'
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
@@ -315,6 +323,7 @@ export default {
     },
   },
   created() {
+    this.getUserDetail()
     this.getNotificationCount()
     this.getNotifications()
     window.addEventListener('scroll', this.handleScroll)
@@ -372,6 +381,10 @@ export default {
         await this.getNotificationCount()
       }
     },
+    async getUserDetail() {
+      const data = await axios.get('account/api/user/who-am-i')
+      this.userDetail = data.data
+    },
     logout() {
       // Remove userData from localStorage
       // ? You just removed token from localStorage. If you like, you can also make API call to backend to blacklist used token
@@ -404,6 +417,7 @@ export default {
     const fullIndex = 0
     const page = 1
     const notifications = ref([])
+    const userDetail = ref({})
 
     const perfectScrollbarSettings = {
       maxScrollbarLength: 40,
@@ -411,6 +425,7 @@ export default {
     }
 
     return {
+      userDetail,
       page,
       locales,
       notificationCount,

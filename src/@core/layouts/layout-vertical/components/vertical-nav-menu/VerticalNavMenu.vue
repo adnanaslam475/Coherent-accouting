@@ -128,7 +128,7 @@ export default {
       wheelPropagation: false,
     }
 
-    const collapseTogglerIconFeather = computed(() => (collapseTogglerIcon.value === 'unpinned' ? 'CircleIcon' : 'DiscIcon'))
+    const collapseTogglerIconFeather = computed(() => (collapseTogglerIcon.value === 'unpinned' ? 'AlignLeftIcon' : 'AlignJustifyIcon'))
 
     // App Name
     const { appName, appLogoImage } = $themeConfig.app
