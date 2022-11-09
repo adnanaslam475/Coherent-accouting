@@ -700,12 +700,11 @@ export default {
     })
 
     const invoiceData = ref(null)
-    const paymentDetails = ref({})
+    
 
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
-        invoiceData.value = response.data.invoice
-        paymentDetails.value = response.data.paymentDetails
+        invoiceData.value = response.data
 
         // ? We are adding some extra data in response for data purpose
         // * Your response will contain this extra data
@@ -716,8 +715,7 @@ export default {
           qty: 2,
           description: 'Designed UI kit & app pages.',
         }]
-        invoiceData.value.note = 'It was a pleasure working with you and your team. We hope you will keep us in mind for future freelance projects. Thank You!'
-        invoiceData.value.paymentMethod = 'Bank Account'
+
       })
       .catch(error => {
         if (error.response.status === 404) {
