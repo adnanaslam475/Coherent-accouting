@@ -6,7 +6,10 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    fetchInvoices(ctx, queryParams, pageNumber, perPageValue) {
+    fetchInvoices(ctx, queryParams) {
+        let pageNumber = queryParams.currentPage
+        let perPageValue = queryParams.perPage
+        
         let token = useJwt.getToken()
         let axiosInvoice = axios.create({
           baseURL: 'http://167.86.93.80:8765',
@@ -32,9 +35,16 @@ export default {
         })
     },
     fetchInvoice(ctx, { id }) {
+      let token = useJwt.getToken()
+      let axiosInvoice = axios.create({
+        baseURL: 'http://167.86.93.80:8765',
+      })
+      let config = {
+        headers: {'Authorization': "Bearer "+token},
+      }
       return new Promise((resolve, reject) => {
-        axios
-          .get(`/apps/invoice/invoices/${id}`)
+        axiosInvoice
+          .get(`/account/api/user-invoice/${id}`,config)
           .then(response => resolve(response))
           .catch(error => reject(error))
       })
