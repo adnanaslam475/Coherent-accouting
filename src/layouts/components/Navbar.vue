@@ -110,20 +110,23 @@
                   />
                 </b-avatar>
               </template>
-              <p class="media-heading">
-                <span class="font-weight-bolder">
-                  {{ notification.subject }}
-                  <b-link>
-                    <feather-icon
-                      :badge="notificationCount"
-                      badge-classes="bg-danger"
-                      class="text-body"
-                      icon="Trash2Icon"
-                      size="21"
-                    />
-                  </b-link>
-                </span>
-              </p>
+              <b-row class="justify-content-between">
+                <p class="media-heading ml-1">
+                  <span class="font-weight-bolder">
+                    {{ notification.subject }}
+                  </span>
+                </p>
+                <b-link class="icon-trash-notifications">
+                  <feather-icon
+                    :badge="notificationCount"
+                    badge-classes="bg-danger"
+                    class="text-body"
+                    icon="Trash2Icon"
+                    size="21"
+                    @click="deleteNotification(notification.id)"
+                  />
+                </b-link>
+              </b-row>
               <small class="notification-text">{{ notification | limitDisplay(fullIndex) }}
                 <a
                   v-if="fullIndex !== notification.id"
@@ -151,6 +154,7 @@
       </b-nav-item-dropdown>
 
       <b-nav-item-dropdown
+        v-if="Object.keys(userDetail).length > 0"
         right
         toggle-class="d-flex align-items-center dropdown-user-link"
         class="dropdown-user"
@@ -182,7 +186,10 @@
           <span>Profile</span>
         </b-dropdown-item>
 
-        <b-dropdown-item :to="{ name:'tickets' }" link-class="d-flex align-items-center">
+        <b-dropdown-item
+          :to="{ name:'tickets' }"
+          link-class="d-flex align-items-center"
+        >
           <feather-icon
             size="16"
             icon="TagIcon"
@@ -218,7 +225,10 @@
           <span>Chat</span>
         </b-dropdown-item>
         <b-dropdown-divider />
-        <b-dropdown-item :to="{ name:'settings' }" link-class="d-flex align-items-center">
+        <b-dropdown-item
+          :to="{ name:'settings' }"
+          link-class="d-flex align-items-center"
+        >
           <feather-icon
             size="16"
             icon="SettingsIcon"
@@ -226,7 +236,10 @@
           />
           <span>Settings</span>
         </b-dropdown-item>
-        <b-dropdown-item :to="{name:'my-plans'}" link-class="d-flex align-items-center">
+        <b-dropdown-item
+          :to="{name:'my-plans'}"
+          link-class="d-flex align-items-center"
+        >
           <feather-icon
             size="16"
             icon="CreditCardIcon"
@@ -271,6 +284,7 @@ import {
   BMedia,
   BNavbarNav,
   BNavItemDropdown,
+  BRow,
 } from 'bootstrap-vue'
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
@@ -288,7 +302,7 @@ export default {
     BDropdownDivider,
     BAvatar,
     BImg,
-
+    BRow,
     BBadge,
     BMedia,
     VuePerfectScrollbar,
@@ -396,6 +410,17 @@ export default {
 
       // Redirect to login page
       this.$router.push({ name: 'login' })
+    },
+    async deleteNotification(notificationId) {
+      const noti = {}
+      console.log(notificationId)
+      noti.notificationId = notificationId
+      const data = await axios.delete(`account/api/notification/${notificationId}`)
+      console.log(data)
+      if (data.status === 204) {
+        // eslint-disable-next-line radix
+        this.notifications = this.notifications.filter(notification => parseInt(notification.id) !== parseInt(notificationId))
+      }
     },
   },
   setup() {
