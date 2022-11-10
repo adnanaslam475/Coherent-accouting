@@ -858,7 +858,7 @@ export default {
       transactions: [JSON.parse(JSON.stringify(itemFormBlankItem))],
 
       documentType: "INVOICE",
-      isVerified: true
+      verified: true
     });
 
     const vatAmount = (item, vatPercent)=> {
