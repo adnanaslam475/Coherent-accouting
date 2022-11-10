@@ -4,7 +4,7 @@
             <b-tab>
             <template #title>
                 <feather-icon icon="BriefcaseIcon" />
-                <span>Company Info</span>
+                <span style="font-size: 13px">Company Info</span>
             </template>
             <CompanyInfo :companyTab="companyTab" @state="update($event)"  />
             </b-tab>
@@ -12,7 +12,7 @@
             <b-tab>
             <template #title>
                 <feather-icon icon="FileTextIcon" />
-                <span>Invoices</span>
+                <span style="font-size: 13px">Invoices</span>
             </template>
             <Invoice  />
             </b-tab>
@@ -20,7 +20,7 @@
             <b-tab>
             <template #title>
                 <feather-icon icon="DollarSignIcon" />
-                <span>Create Invoice</span>
+                <span style="font-size: 13px">Create Invoice</span>
             </template>
             <VATMonthReport />
             </b-tab>
@@ -28,7 +28,15 @@
             <b-tab>
             <template #title>
                 <feather-icon icon="FlagIcon" />
-                <span>Yearly Reports</span>
+                <span style="font-size: 13px">Yearly Reports</span>
+            </template>
+            <YearlyReport />
+            </b-tab>
+
+            <b-tab>
+            <template #title>
+                <feather-icon icon="FlagIcon" />
+                <span style="font-size: 13px">Vat Reports</span>
             </template>
             <YearlyReport />
             </b-tab>
@@ -36,7 +44,7 @@
             <b-tab>
             <template #title>
                 <feather-icon icon="FileIcon" />
-                <span>Not Verified Invoices</span>
+                <span style="font-size: 13px">Not Verified Invoices</span>
             </template>
             <NotVerifiedInvoice />
             </b-tab>
@@ -44,7 +52,7 @@
             <b-tab>
             <template #title>
                 <feather-icon icon="FolderIcon" />
-                <span>Documents</span>
+                <span style="font-size: 13px">Documents</span>
             </template>
             <Document />
             </b-tab>
@@ -52,7 +60,7 @@
             <b-tab>
             <template #title>
                 <feather-icon icon="UserIcon" />
-                <span>Private Persons</span>
+                <span style="font-size: 13px">Private Persons</span>
             </template>
             <Document />
             </b-tab>
@@ -107,4 +115,7 @@ export default {
 
 <style lang="scss">
     // 
+    .nav-tabs .nav-link{
+        padding: 0.61rem 0.78rem;
+    }
 </style>
