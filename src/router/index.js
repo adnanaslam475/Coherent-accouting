@@ -211,6 +211,28 @@ const router = new VueRouter({
         ],
       }
     },
+    {
+      path: '/company/edit/:id',
+      name: 'EditCompany',
+      component: () => import('@/views/company/EditCompany.vue'),
+      meta: {
+        pageTitle: 'Companies',
+        breadcrumb: [
+          {
+            text: 'Companies',
+            to: '/companies'
+          },
+          {
+            text: 'Edit Company',
+            active: true,
+          },
+        ],
+      }
+    },
+    
+
+
+    //
     // Invoice routes starting from here
     {
       path:'/invoices',
