@@ -12,26 +12,48 @@
       <template #cell(Country)="data">
         <div>
           <!-- {{data.item.companyCountry}} -->
+          <!-- :src="getImage(data.item.companyCountry)" -->
           <img
-            :src="getImage(data.item.companyCountry)"
+            :src='"@/assets/flags/" + data.item.companyIsoAlpha2Country.toLowerCase() + ".png"'
             style="width: 30px; height: 20px; margin-left: 10px"
           />
         </div>
       </template>
 
       <template #cell(company_name)="data">
-        <span
+        <div v-if="data.item.companyName.indexOf(' ') > 0"
           style="
             margin-right: 8px;
-            padding: 5px;
+           
+            padding-top: 4px;
             border-radius: 50%;
             background-color: #7367f0;
             color: white;
+            width: 32px;
+    height: 28px;
+    display: inline-flex;
+    justify-content: center;
           "
-          >{{ data.item.companyIsoAlpha2Country }}</span
+          > <span>{{ data.item.companyName.substr(0,1)}}{{ data.item.companyName.substr(data.item.companyName.indexOf(" ")+1,1)}}</span></div
+        >
+        <div v-else
+          style="
+            margin-right: 8px;
+           
+            padding-top: 4px;
+            border-radius: 50%;
+            background-color: #7367f0;
+            color: white;
+            width: 32px;
+    height: 28px;
+    display: inline-flex;
+    justify-content: center;
+          "
+          > <span>{{ data.item.companyName.substr(0,1)}}{{ data.item.companyName.substr(1,1).toUpperCase()}}</span></div
         >
         <b-link :to="{ name: 'CompanyView', params: { id: data.item.id } }"
           >{{ data.item.companyName }}
+          
         </b-link>
 
         <!-- <div>{{data.item.companyName}}</div> -->
@@ -262,11 +284,10 @@ export default {
     };
   },
   methods: {
-    getImage(country) {
-      // alert(img);
-      var countryImage = "https://countryflagsapi.com/png/" + country;
-      return countryImage;
-    },
+    // getImage(country) {
+    //   var countryImage = "https://countryflagsapi.com/svg/" + country;
+    //   return countryImage;
+    // },
 
     // getting the list of all companies
     async getAllCompanies() {
@@ -289,7 +310,7 @@ export default {
         this.items = data.data.elements;
         this.totalRecords = data.data.totalElements;
         this.totalPages = Math.ceil(this.totalRecords / this.perPage);
-        console.log(this.totalPages);
+        // console.log(this.totalPages);
       }
 
       // axios.get("/account/api/company/list/1/10?direction=desc&sortField=id", {
@@ -346,60 +367,6 @@ export default {
     // })
   },
 
-  //   setup(){
-  //     const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
-
-  // // Register module
-  // if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.registerModule(INVOICE_APP_STORE_MODULE_NAME, companyStoreModule)
-
-  // // UnRegister on leave
-  // onUnmounted(() => {
-  //   if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
-  // })
-
-  //     const{
-  //       fetchCompanies,
-  //     // tableColumns,
-  //     perPage,
-  //     currentPage,
-  //     totalCompanies,
-  //     dataMeta,
-  //     perPageOptions,
-  //     searchQuery,
-  //     sortBy,
-  //     isSortDirDesc,
-  //     refCompanyListTable,
-
-  //     statusFilter,
-
-  //     // resolveInvoiceStatusVariantAndIcon,
-  //     // resolveClientAvatarVariant,
-
-  //     refetchData,
-  //     } = useCompanyList()
-
-  //     return {
-  //     fetchCompanies,
-  //     // tableColumns,
-  //     perPage,
-  //     currentPage,
-  //     totalCompanies,
-  //     dataMeta,
-  //     perPageOptions,
-  //     searchQuery,
-  //     sortBy,
-  //     isSortDirDesc,
-  //     refCompanyListTable,
-
-  //     statusFilter,
-
-  //     // resolveInvoiceStatusVariantAndIcon,
-  //     // resolveClientAvatarVariant,
-
-  //     refetchData,
-  //   }
-
-  //   },
 };
 </script>
 <style lang="">

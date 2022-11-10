@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-12">
+      <div class="col-md-7 col-lg-8 col-xl-9 col-12">
         <div class="card">
           <!----><!---->
           <div class="card-body">
@@ -19,12 +19,33 @@
                   <span
                     class="b-avatar badge-light-danger rounded"
                     style="width: 104px; height: 104px"
-                    ><span class="b-avatar-img"
-                      ><img
+                    ><span class="b-avatar-img">
+                      <!-- <span style="font-size: 4rem">{{ this.companyRecord.companyName.substr(0,1)}}{{ this.companyRecord.companyName.substr(this.companyRecord.companyName.indexOf(" ")+1,1)}}</span> -->
+
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="104px"
+                        height="104px"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        stroke="currentColor"
+                        stroke-width="1"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-user"
+                      >
+                        <path
+                          d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+                        ></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg> 
+                    </span>
+                     
+
+                      <!-- <img
                         src="/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/1.9cba4a79.png"
-                        alt="avatar" /></span
-                    ><!----></span
-                  >
+                        alt="avatar" /> --> </span>
+                  
                   <div class="d-flex flex-column ml-1">
                     <div class="mb-1">
                       <h4 class="mb-0">{{ this.companyRecord.companyName }}</h4>
@@ -33,13 +54,13 @@
                       }}</span>
                     </div>
                     <div class="d-flex flex-wrap">
-                      <a
+                      <!-- <a
                         href="/demo/vuexy-vuejs-admin-dashboard-template/demo-1/apps/users/edit/21"
                         class="btn btn-primary"
                         target="_self"
-                      >
-                        Edit </a
-                      ><button
+                      > --> <b-link :to="{ name: 'EditCompany', params: { id: this.companyRecord.id } }"  class="btn btn-primary">Edit </b-link>
+                        
+                      <button
                         type="button"
                         class="btn ml-1 btn-outline-danger"
                       >
@@ -109,6 +130,7 @@
                 <table class="mt-2 mt-xl-0 w-100">
                   <tr>
                     <th class="pb-50">
+
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="14px"
@@ -155,7 +177,6 @@
                     <td class="pb-50 text-capitalize">admin</td>
                   </tr>
                   <tr>
-
                     <th class="pb-50">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +200,6 @@
                     <td class="pb-50">
                       {{ this.companyRecord.companyCountry }}
                     </td>
-                   
                   </tr>
                   <tr>
                     <th>
@@ -202,10 +222,9 @@
                       <span class="font-weight-bold">Contact</span>
                     </th>
                     <td>{{ this.companyRecord.companyPhone }}</td>
-                    
                   </tr>
                   <tr>
-                    <th >
+                    <th>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="14px"
@@ -224,14 +243,11 @@
                           d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
                         ></path>
                       </svg>
-                      <span class="font-weight-bold" >Address</span>
+                      <span class="font-weight-bold">Address</span>
                     </th>
                     <td>{{ this.companyRecord.companyAddress }}</td>
-                   
                   </tr>
-                  <tr>
-                    
-                  </tr>
+                  <tr></tr>
                 </table>
               </div>
             </div>
@@ -245,8 +261,45 @@
 
 <script>
 import axios from "@/libs/axios";
+import {
+  BCard,
+  BRow,
+  BCol,
+  BFormInput,
+  BButton,
+  BTable,
+  BMedia,
+  BAvatar,
+  BLink,
+  BBadge,
+  BDropdown,
+  BDropdownItem,
+  BPagination,
+  BTooltip,
+  BProgress,
+} from "bootstrap-vue";
 
 export default {
+  components: {
+    
+    BTable,
+    BProgress,
+    BBadge,
+    BButton,
+    BLink,
+    BCard,
+    BRow,
+    BCol,
+    BFormInput,
+    BButton,
+    BTable,
+    BMedia,
+    BAvatar,
+    BDropdown,
+    BDropdownItem,
+    BPagination,
+    BTooltip,
+  },
   data() {
     return {
       companyID: "",
@@ -278,3 +331,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.rounded {
+    border-radius: 0.6rem !important;
+}
+</style>
