@@ -227,6 +227,16 @@ const router = new VueRouter({
       name: 'apps-invoice-edit',
       component: () => import('@/views/invoice/invoice-edit/InvoiceEdit.vue'),
     },
+    {
+      path: '/users/view/:id',
+      name: 'apps-users-view',
+      component: () => import('@/views/user/users-view/UsersView.vue'),
+    },
+    {
+      path: '/users/edit/:id',
+      name: 'apps-users-edit',
+      component: () => import('@/views/user/users-edit/UsersEdit.vue'),
+    },
     // Videos routes starting from here
     {
       path:'/videos',
@@ -312,7 +322,15 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, _, next) => {
   const isLoggedIn = isUserLoggedIn()
-    if (to.name == "/" || to.name == "home" || to.name=="invoices" || to.name=="apps-invoice-preview" || to.name== "apps-invoice-edit" ) {
+    if (
+      to.name == "/" || 
+      to.name == "home" || 
+      to.name == "invoices" || 
+      to.name == "apps-invoice-preview" || 
+      to.name == "apps-invoice-edit" ||
+      to.name == "apps-users-view" ||
+      to.name == "apps-users-edit"
+    ) {
       if (!isLoggedIn) return next({ name: 'login' })
 
       return next()

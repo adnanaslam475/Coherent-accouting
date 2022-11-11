@@ -12,6 +12,7 @@ export default {
   logoutEndpoint: '/jwt/logout',
   invoiceAddEndpoint: '/account/api/user-invoice/create',
   invoiceEditEndpoint: '/account/api/user-invoice',
+  invoiceDeleteEndpoint: '/account/api/user-invoice',
 
   getCompanies: '/api/company/list/1/10',
   // This will be prefixed in authorization header with token

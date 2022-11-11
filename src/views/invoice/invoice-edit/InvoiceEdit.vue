@@ -823,7 +823,6 @@ export default {
                       variant: "success",
                     },
                   });
-                  location.reload();
                 })
                 .catch((error) => {
                   this.loading = false

@@ -21,7 +21,7 @@
             <feather-icon icon="UsersIcon" />
             <span>Private Persons</span>
           </template>
-          <privatePersos />
+          <privatePerson />
         </b-tab>
       </b-tabs>
   
@@ -37,7 +37,7 @@
   import { codeIcon } from './code'
   import ListInvoices from './invoice-list/InvoiceList.vue'
   import AddInvoice from './invoice-add/InvoiceAdd.vue'
-  import privatePersos from '../user/users-list/UsersList.vue'
+  import privatePerson from '../user/users-list/UsersList.vue'
   export default {
     components: {
       BCardCode,
@@ -46,7 +46,7 @@
       BTab,
       ListInvoices,
       AddInvoice,
-      privatePersos
+      privatePerson
     },
     data() {
       return {
