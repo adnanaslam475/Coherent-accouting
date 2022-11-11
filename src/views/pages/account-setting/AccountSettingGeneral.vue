@@ -52,7 +52,7 @@
     <!--/ media -->
 
     <!-- form -->
-    <b-form class="mt-2">
+    <b-form @submit.prevent="updateUser()" class="mt-2">
       <b-row>
         <b-col sm="6">
           <b-form-group
@@ -83,38 +83,39 @@
             label="Account Type"
             label-for="account-type"
           >
-            <b-form-input
+            <b-form-select
               v-model="userDetail.accountType"
-              placeholder="Account Type"
+              :options="$store.state.ProfileSettings.userAccountTypes"
               name="accountType"
             />
           </b-form-group>
         </b-col>
-        <b-col sm="6">
+
+        <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
           <b-form-group
-              label="Company Name"
-              label-for="account-company"
+            label="Company Name"
+            label-for="account-company"
           >
             <b-form-input
-                v-model="optionsLocal.company"
-                name="company"
-                placeholder="Company name"
+              v-model="optionsLocal.company"
+              name="company"
+              placeholder="Company name"
             />
           </b-form-group>
         </b-col>
-        <b-col sm="6">
+        <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
           <b-form-group
-              label="Company Address"
-              label-for="company-address"
+            label="Company Address"
+            label-for="company-address"
           >
             <b-form-input
-                v-model="userDetail.companyAddress"
-                name="companyAddress"
-                placeholder="Company Address"
+              v-model="userDetail.companyAddress"
+              name="companyAddress"
+              placeholder="Company Address"
             />
           </b-form-group>
         </b-col>
-        <b-col sm="6">
+        <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
           <b-form-group
             label="Company Registration Number"
             label-for="company-register-number"
@@ -135,6 +136,21 @@
               v-model="userDetail.email"
               name="email"
               placeholder="Email"
+              disabled="disabled"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+            label="password"
+            label-for="password"
+          >
+            <b-form-input
+              type="password"
+              v-model="userDetail.password"
+              name="password"
+              placeholder="Password"
+              required
             />
           </b-form-group>
         </b-col>
@@ -150,7 +166,6 @@
             >
               <v-select
                 id="register-country"
-                v-model="userDetail.country"
                 :options="countries"
                 :filter-by="(option, label, search)=> {
                   return (option.text || '').toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1
@@ -202,6 +217,7 @@
         <b-col cols="12">
           <b-button
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+            type="submit"
             variant="primary"
             class="mt-2 mr-1"
           >
@@ -239,6 +255,7 @@ import {
   BMediaAside,
   BMediaBody,
   BRow,
+  BFormSelect,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import { useInputImageRenderer } from '@core/comp-functions/forms/form-utils'
@@ -248,6 +265,7 @@ import useJwt from '@/auth/jwt/useJwt'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import vSelect from 'vue-select'
+import ProfileSettings from '@/store/profile-settings'
 
 export default {
   components: {
@@ -265,6 +283,7 @@ export default {
     BMedia,
     BMediaAside,
     BMediaBody,
+    BFormSelect,
     BLink,
     ValidationProvider,
     // eslint-disable-next-line vue/no-unused-components
@@ -289,6 +308,12 @@ export default {
   created() {
     this.getUserDetail()
     this.populateCountries()
+    // console.log(JSON.parse(localStorage.getItem('userData')).data)
+  },
+  watch: {
+    'userDetail.accountType': function (newV, oldV) {
+      console.log(newV, oldV)
+    },
   },
   methods: {
     getImg(img) {
@@ -308,6 +333,11 @@ export default {
     async getUserDetail() {
       const data = await axios.get('account/api/user/who-am-i')
       this.userDetail = data.data
+      await this.getUserInfo()
+    },
+    async getUserInfo() {
+      const data = await axios.get(`account/api/user/${this.userDetail.email}`)
+      console.log('getUserInfo ', data.data)
     },
     populateCountries() {
       useJwt
@@ -350,12 +380,18 @@ export default {
           })
         })
     },
-
+    updateUser() {
+      const data = axios.put(`account/api/user/update/${this.userDetail.email}`, this.userDetail)
+      console.log(data)
+      // /api/user/update/{username}
+    },
   },
   setup() {
     const refInputEl = ref(null)
     const previewEl = ref(null)
-    const userDetail = ref({})
+    const userDetail = ref({
+      accountType: '',
+    })
     const countries = ref([])
 
     const { inputImageRenderer } = useInputImageRenderer(refInputEl, previewEl)
