@@ -5,12 +5,23 @@
     <b-media no-body>
       <b-media-aside>
         <b-link>
-          <b-img
-            ref="previewEl"
-            rounded
-            :src="optionsLocal.avatar"
-            height="80"
+<!--          <b-img-->
+<!--            ref="previewEl"-->
+<!--            rounded-->
+<!--            :src="optionsLocal.avatar"-->
+<!--            height="80"-->
+<!--          />-->
+          <feather-icon
+            v-if="userDetail.accountType === 'PERSONAL'"
+            icon="UserIcon"
+            size="80"
           />
+          <feather-icon
+            v-if="userDetail.accountType === 'COMPANY'"
+            icon="HomeIcon"
+            size="80"
+          />
+
         </b-link>
         <!--/ avatar -->
       </b-media-aside>
@@ -42,6 +53,7 @@
           variant="outline-secondary"
           size="sm"
           class="mb-75 mr-75"
+          @click="getUserDetail()"
         >
           Reset
         </b-button>
@@ -80,101 +92,101 @@
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="Account Type"
-            label-for="account-type"
+              label="Account Type"
+              label-for="account-type"
           >
             <b-form-select
-              v-model="userDetail.accountType"
-              :options="$store.state.ProfileSettings.userAccountTypes"
-              name="accountType"
+                v-model="userDetail.accountType"
+                :options="$store.state.ProfileSettings.userAccountTypes"
+                name="accountType"
             />
           </b-form-group>
         </b-col>
 
         <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
           <b-form-group
-            label="Company Name"
-            label-for="account-company"
+              label="Company Name"
+              label-for="account-company"
           >
             <b-form-input
-              v-model="optionsLocal.company"
-              name="company"
-              placeholder="Company name"
+                v-model="optionsLocal.company"
+                name="company"
+                placeholder="Company name"
             />
           </b-form-group>
         </b-col>
         <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
           <b-form-group
-            label="Company Address"
-            label-for="company-address"
+              label="Company Address"
+              label-for="company-address"
           >
             <b-form-input
-              v-model="userDetail.companyAddress"
-              name="companyAddress"
-              placeholder="Company Address"
+                v-model="userDetail.companyAddress"
+                name="companyAddress"
+                placeholder="Company Address"
             />
           </b-form-group>
         </b-col>
         <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
           <b-form-group
-            label="Company Registration Number"
-            label-for="company-register-number"
+              label="Company Registration Number"
+              label-for="company-register-number"
           >
             <b-form-input
-              v-model="userDetail.companyRegistrationNumber"
-              name="companyRegistrationNumber"
-              placeholder="Company Registration Number"
+                v-model="userDetail.companyRegistrationNumber"
+                name="companyRegistrationNumber"
+                placeholder="Company Registration Number"
             />
           </b-form-group>
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="email"
-            label-for="email"
+              label="email"
+              label-for="email"
           >
             <b-form-input
-              v-model="userDetail.email"
-              name="email"
-              placeholder="Email"
-              disabled="disabled"
+                v-model="userDetail.email"
+                name="email"
+                placeholder="Email"
+                disabled="disabled"
             />
           </b-form-group>
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="password"
-            label-for="password"
+              label="password"
+              label-for="password"
           >
             <b-form-input
-              type="password"
-              v-model="userDetail.password"
-              name="password"
-              placeholder="Password"
-              required
+                type="password"
+                v-model="userDetail.password"
+                name="password"
+                placeholder="Password"
+                required
             />
           </b-form-group>
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="Country"
-            label-for="register-country"
+              label="Country"
+              label-for="register-country"
           >
             <validation-provider
-              #default="{ errors }"
-              name="country"
-              vid="country"
+                #default="{ errors }"
+                name="country"
+                vid="country"
             >
               <v-select
-                id="register-country"
-                :options="countries"
-                :filter-by="(option, label, search)=> {
+                  id="register-country"
+                  :options="countries"
+                  :filter-by="(option, label, search)=> {
                   return (option.text || '').toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1
                 }"
-                :label="$t('register.lbl_country')"
-                name="country"
-                :placeholder="$t('register.country_placeholder')"
-                :value="$store.state.selected"
-                :state="errors.length > 0 ? false:null"
+                  :label="$t('register.lbl_country')"
+                  name="country"
+                  :placeholder="$t('register.country_placeholder')"
+                  :value="$store.state.selected"
+                  :state="errors.length > 0 ? false:null"
               >
                 <template #selected-option="option">
                   <div style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
@@ -194,13 +206,13 @@
         </b-col>
         <!-- alert -->
         <b-col
-          cols="12"
-          class="mt-75"
+            cols="12"
+            class="mt-75"
         >
           <b-alert
-            show
-            variant="warning"
-            class="mb-50"
+              show
+              variant="warning"
+              class="mb-50"
           >
             <h4 class="alert-heading">
               Your email is not confirmed. Please check your inbox.
@@ -216,19 +228,19 @@
 
         <b-col cols="12">
           <b-button
-            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-            type="submit"
-            variant="primary"
-            class="mt-2 mr-1"
+              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+              type="submit"
+              variant="primary"
+              class="mt-2 mr-1"
           >
             Save changes
           </b-button>
           <b-button
-            v-ripple.400="'rgba(186, 191, 199, 0.15)'"
-            variant="outline-secondary"
-            type="reset"
-            class="mt-2"
-            @click.prevent="resetForm"
+              v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+              variant="outline-secondary"
+              type="reset"
+              class="mt-2"
+              @click="getUserDetail()"
           >
             Reset
           </b-button>
@@ -265,7 +277,6 @@ import useJwt from '@/auth/jwt/useJwt'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import vSelect from 'vue-select'
-import ProfileSettings from '@/store/profile-settings'
 
 export default {
   components: {
@@ -296,7 +307,8 @@ export default {
   props: {
     generalData: {
       type: Object,
-      default: () => {},
+      default: () => {
+      },
     },
   },
   data() {
@@ -310,11 +322,11 @@ export default {
     this.populateCountries()
     // console.log(JSON.parse(localStorage.getItem('userData')).data)
   },
-  watch: {
-    'userDetail.accountType': function (newV, oldV) {
-      console.log(newV, oldV)
-    },
-  },
+  // watch: {
+  //   'userDetail.accountType': function (newV, oldV) {
+  //     console.log(newV, oldV)
+  //   },
+  // },
   methods: {
     getImg(img) {
       // eslint-disable-next-line import/no-unresolved,global-require,no-shadow
@@ -333,7 +345,7 @@ export default {
     async getUserDetail() {
       const data = await axios.get('account/api/user/who-am-i')
       this.userDetail = data.data
-      await this.getUserInfo()
+      // await this.getUserInfo()
     },
     async getUserInfo() {
       const data = await axios.get(`account/api/user/${this.userDetail.email}`)
@@ -380,9 +392,13 @@ export default {
           })
         })
     },
-    updateUser() {
-      const data = axios.put(`account/api/user/update/${this.userDetail.email}`, this.userDetail)
-      console.log(data)
+    async updateUser() {
+      const data = await axios.put(`account/api/user/update/${this.userDetail.email}`, this.userDetail)
+      if (data.status === 200) {
+        this.$bvToast.toast('Settings Updated Successfully', {
+          title: 'Success',
+        })
+      }
       // /api/user/update/{username}
     },
   },
