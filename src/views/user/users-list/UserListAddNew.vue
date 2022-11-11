@@ -38,20 +38,52 @@
           @submit.prevent="handleSubmit(onSubmit)"
           @reset.prevent="resetForm"
         >
+          
+
+        <validation-provider
+            #default="validationContext"
+            name="Id"
+            rules="required"
+          >
+            <b-form-group
+              label="Id"
+              label-for="id"
+            >
+  
+                <b-input-group
+                  class="input-group-merge"
+                >
+                  <b-input-group-prepend is-text>
+                    <feather-icon icon="HashIcon" />
+                  </b-input-group-prepend>
+
+                  <b-form-input
+                    id="id"
+                    v-model="userData.id"
+                    :state="getValidationState(validationContext)"
+                    trim
+                  />
+                </b-input-group>
+
+              <b-form-invalid-feedback>
+                {{ validationContext.errors[0] }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </validation-provider>
 
           <!-- Full Name -->
           <validation-provider
             #default="validationContext"
-            name="Full Name"
+            name="firstMiddleAndLastName"
             rules="required"
           >
             <b-form-group
-              label="Full Name"
-              label-for="full-name"
+              label="FirstMiddleAndLastName"
+              label-for="firstMiddleAndLastName"
             >
               <b-form-input
-                id="full-name"
-                v-model="userData.fullName"
+                id="FirstMiddleAndLastName"
+                v-model="userData.firstMiddleAndLastName"
                 autofocus
                 :state="getValidationState(validationContext)"
                 trim
@@ -64,19 +96,18 @@
             </b-form-group>
           </validation-provider>
 
-          <!-- Username -->
           <validation-provider
             #default="validationContext"
-            name="Username"
-            rules="required|alpha-num"
+            name="Address"
+            rules="required"
           >
             <b-form-group
-              label="Username"
-              label-for="username"
+              label="Address"
+              label-for="address"
             >
               <b-form-input
-                id="username"
-                v-model="userData.username"
+                id="address"
+                v-model="userData.address"
                 :state="getValidationState(validationContext)"
                 trim
               />
@@ -87,19 +118,18 @@
             </b-form-group>
           </validation-provider>
 
-          <!-- Email -->
           <validation-provider
             #default="validationContext"
-            name="Email"
-            rules="required|email"
+            name="IdCardNumber"
+            rules="required"
           >
             <b-form-group
-              label="Email"
-              label-for="email"
+              label="IdCardNumber"
+              label-for="idcardNumber"
             >
               <b-form-input
-                id="email"
-                v-model="userData.email"
+                id="idcardNumber"
+                v-model="userData.idcardNumber"
                 :state="getValidationState(validationContext)"
                 trim
               />
@@ -110,19 +140,18 @@
             </b-form-group>
           </validation-provider>
 
-          <!-- Company -->
           <validation-provider
             #default="validationContext"
-            name="Contact"
+            name="IdentificationNumber"
             rules="required"
           >
             <b-form-group
-              label="Contact"
-              label-for="contact"
+              label="IdentificationNumber"
+              label-for="identificationNumber"
             >
               <b-form-input
-                id="contact"
-                v-model="userData.contact"
+                id="identificationNumber"
+                v-model="userData.identificationNumber"
                 :state="getValidationState(validationContext)"
                 trim
               />
@@ -133,98 +162,23 @@
             </b-form-group>
           </validation-provider>
 
-          <!-- Company -->
           <validation-provider
             #default="validationContext"
-            name="Company"
+            name="VatIdentificationNumber"
             rules="required"
           >
             <b-form-group
-              label="Company"
-              label-for="company"
+              label="VatIdentificationNumber"
+              label-for="vatIdentificationNumber"
             >
               <b-form-input
-                id="company"
-                v-model="userData.company"
+                id="vatIdentificationNumber"
+                v-model="userData.vatIdentificationNumber"
                 :state="getValidationState(validationContext)"
                 trim
               />
 
               <b-form-invalid-feedback>
-                {{ validationContext.errors[0] }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </validation-provider>
-
-          <!-- Country -->
-          <validation-provider
-            #default="validationContext"
-            name="Country"
-            rules="required"
-          >
-            <b-form-group
-              label="Country"
-              label-for="country"
-              :state="getValidationState(validationContext)"
-            >
-              <v-select
-                v-model="userData.country"
-                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                :options="countries"
-                :clearable="false"
-                input-id="country"
-              />
-              <b-form-invalid-feedback :state="getValidationState(validationContext)">
-                {{ validationContext.errors[0] }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </validation-provider>
-
-          <!-- User Role -->
-          <validation-provider
-            #default="validationContext"
-            name="User Role"
-            rules="required"
-          >
-            <b-form-group
-              label="User Role"
-              label-for="user-role"
-              :state="getValidationState(validationContext)"
-            >
-              <v-select
-                v-model="userData.role"
-                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                :options="roleOptions"
-                :reduce="val => val.value"
-                :clearable="false"
-                input-id="user-role"
-              />
-              <b-form-invalid-feedback :state="getValidationState(validationContext)">
-                {{ validationContext.errors[0] }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </validation-provider>
-
-          <!-- Plan -->
-          <validation-provider
-            #default="validationContext"
-            name="Plan"
-            rules="required"
-          >
-            <b-form-group
-              label="Plan"
-              label-for="plan"
-              :state="getValidationState(validationContext)"
-            >
-              <v-select
-                v-model="userData.currentPlan"
-                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                :options="planOptions"
-                :reduce="val => val.value"
-                :clearable="false"
-                input-id="plan"
-              />
-              <b-form-invalid-feedback :state="getValidationState(validationContext)">
                 {{ validationContext.errors[0] }}
               </b-form-invalid-feedback>
             </b-form-group>
@@ -258,7 +212,7 @@
 
 <script>
 import {
-  BSidebar, BForm, BFormGroup, BFormInput, BFormInvalidFeedback, BButton,
+  BSidebar, BForm, BFormGroup, BFormInput, BFormInvalidFeedback, BButton, BInputGroup, BInputGroupPrepend
 } from 'bootstrap-vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { ref } from '@vue/composition-api'
@@ -278,6 +232,8 @@ export default {
     BFormInvalidFeedback,
     BButton,
     vSelect,
+    BInputGroup, 
+    BInputGroupPrepend,
 
     // Form Validation
     ValidationProvider,
@@ -314,14 +270,12 @@ export default {
   },
   setup(props, { emit }) {
     const blankUserData = {
-      fullName: '',
-      username: '',
-      email: '',
-      role: null,
-      currentPlan: null,
-      company: '',
-      country: '',
-      contact: '',
+      address: '',
+      firstMiddleAndLastName: '',
+      id: '',
+      idcardNumber: '',
+      identificationNumber: '',
+      vatIdentificationNumber: '',
     }
 
     const userData = ref(JSON.parse(JSON.stringify(blankUserData)))
