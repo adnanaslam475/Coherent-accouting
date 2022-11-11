@@ -211,42 +211,21 @@ const router = new VueRouter({
         ],
       }
     },
-    {
-      path: '/company/edit/:id',
-      name: 'EditCompany',
-      component: () => import('@/views/company/EditCompany.vue'),
-      meta: {
-        pageTitle: 'Companies',
-        breadcrumb: [
-          {
-            text: 'Companies',
-            to: '/companies'
-          },
-          {
-            text: 'Edit Company',
-            active: true,
-          },
-        ],
-      }
-    },
-    
-
-
-    //
     // Invoice routes starting from here
     {
       path:'/invoices',
       name: 'invoices',
       component: () => import('@/views/invoice/Index.vue'),
-      // meta: {
-      //   pageTitle: '',
-      //   breadcrumb: [
-      //     {
-      //       text: 'Invoices',
-      //       active: true,
-      //     },
-      //   ],
-      // }
+    },
+    {
+      path: '/invoice/preview/:id',
+      name: 'apps-invoice-preview',
+      component: () => import('@/views/invoice/invoice-preview/InvoicePreview.vue'),
+    },
+    {
+      path: '/invoice/edit/:id',
+      name: 'apps-invoice-edit',
+      component: () => import('@/views/invoice/invoice-edit/InvoiceEdit.vue'),
     },
     // Videos routes starting from here
     {
@@ -333,7 +312,7 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, _, next) => {
   const isLoggedIn = isUserLoggedIn()
-    if (to.name == "/" || to.name == "home") {
+    if (to.name == "/" || to.name == "home" || to.name=="invoices" || to.name=="apps-invoice-preview" || to.name== "apps-invoice-edit" ) {
       if (!isLoggedIn) return next({ name: 'login' })
 
       return next()
