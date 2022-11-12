@@ -31,17 +31,31 @@ export default {
       })
     },
     fetchUser(ctx, { id }) {
+      let token = useJwt.getToken()
+      let axiosUser = axios.create({
+        baseURL: 'http://167.86.93.80:8765',
+      })
+      let config = {
+        headers: {'Authorization': "Bearer "+token},
+      }
       return new Promise((resolve, reject) => {
-        axios
-          .get(`/apps/user/users/${id}`)
+        axiosUser
+          .get(`/account/api/user-person/${id}`,config)
           .then(response => resolve(response))
           .catch(error => reject(error))
       })
     },
     addUser(ctx, userData) {
+      let token = useJwt.getToken()
+      let axiosUser = axios.create({
+        baseURL: 'http://167.86.93.80:8765',
+      })
+      let config = {
+        headers: {'Authorization': "Bearer "+token},
+      }
       return new Promise((resolve, reject) => {
-        axios
-          .post('/apps/user/users', { user: userData })
+        axiosUser
+          .post(`/account/api/user-person/create`, userData, config )
           .then(response => resolve(response))
           .catch(error => reject(error))
       })

@@ -82,9 +82,14 @@
 
       <!-- Column: invoiceNumber -->
       <template #cell(invoiceNumber)="data">
-        <span class="text-nowrap">
-          {{ data.value }}
-        </span>
+        <b-link
+          :to="{ name: 'apps-invoice-preview', params: { id: data.item.id }}"
+          class="font-weight-bold"
+        >
+          <span class="text-nowrap">
+            {{ data.value }}
+          </span>
+        </b-link>
       </template>
 
       <!-- Column: Issued Date -->
@@ -92,6 +97,17 @@
         <span class="text-nowrap">
           {{ data.item.dateIssued }}
         </span>
+      </template>
+
+      <template #cell(documentType)="data">
+        <b-link
+          :to="{ name: 'apps-invoice-preview', params: { id: data.item.id }}"
+          class="font-weight-bold"
+        >
+          <span class="text-nowrap">
+            {{ data.value }}
+          </span>
+        </b-link>
       </template>
 
       <!-- Column: recipientCompany -->
@@ -196,27 +212,17 @@
       <template #cell(actions)="data">
 
         <div class="text-nowrap">
-          <feather-icon
-            :id="`invoice-row-${data.item.id}-send-icon`"
-            icon="SendIcon"
-            class="cursor-pointer"
-            size="16"
-          />
-          <b-tooltip
-            title="Send Invoice"
-            class="cursor-pointer"
-            :target="`invoice-row-${data.item.id}-send-icon`"
-          />
 
           <feather-icon
             :id="`invoice-row-${data.item.id}-preview-icon`"
             icon="EyeIcon"
             size="16"
-            class="mx-1"
+            class="mx-1 cursor-pointer"
             @click="$router.push({ name: 'apps-invoice-preview', params: { id: data.item.id }})"
           />
           <b-tooltip
             title="Preview Invoice"
+            class="cursor-pointer"
             :target="`invoice-row-${data.item.id}-preview-icon`"
           />
 
@@ -235,7 +241,7 @@
                 class="align-middle text-body"
               />
             </template>
-            <b-dropdown-item>
+            <b-dropdown-item @click="generatePDF(data.item.id)">
               <feather-icon icon="DownloadIcon" />
               <span class="align-middle ml-50">Download</span>
             </b-dropdown-item>
@@ -243,18 +249,240 @@
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
-            <b-dropdown-item>
+            <b-dropdown-item @click="invoiceDelete(data.item.id,refetchData)">
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
             </b-dropdown-item>
-            <b-dropdown-item>
-              <feather-icon icon="CopyIcon" />
-              <span class="align-middle ml-50">Duplicate</span>
-            </b-dropdown-item>
           </b-dropdown>
+          <vue-html2pdf
+            :show-layout="false"
+            :float-layout="true"
+            :enable-download="true"
+            :preview-modal="false"
+            :paginate-elements-by-height="1100"
+            filename="invoice"
+            :pdf-quality="2"
+            :manual-pagination="false"
+            pdf-format="a4"
+            :pdf-margin="10"
+            pdf-orientation="portrait"
+            pdf-content-width="800px"
+            @progress="onProgress($event)"
+            :ref="`invoicePdf${data.item.id}`"
+          >
+            <section slot="pdf-content">
+              <b-card
+                no-body
+                class="invoice-preview-card h-100"
+              >
+                <!-- Header -->
+                <b-card-body class="invoice-padding pb-0">
+
+                  <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-preview-list">
+                    <!-- Header: Left Content -->
+                    <div class="mt-md-0 mt-2">
+        
+                      <div class="invoice-date-wrapper">
+                          <p class="invoice-date-title">
+                            Supplier Company Name:
+                          </p>
+                          <p class="invoice-date">
+                            {{ data.item.supplierCompany.companName }}
+                          </p>
+                        </div>
+                        <div class="invoice-date-wrapper">
+                          <p class="invoice-date-title">
+                            Supplier Company Address:
+                          </p>
+                          <p class="invoice-date">
+                            {{ data.item.supplierCompany.companyAddress }}
+                          </p>
+                        </div>
+                        <div class="invoice-date-wrapper">
+                          <p class="invoice-date-title">
+                            Supplier Company ID Number:
+                          </p>
+                          <p class="invoice-date">
+                            {{ data.item.supplierCompany.companyEic }}
+                          </p>
+                        </div>
+                        <div class="invoice-date-wrapper">
+                          <p class="invoice-date-title">
+                            Supplier Company Owner:
+                          </p>
+                          <p class="invoice-date">
+                            {{ data.item.supplierCompany.companyOwnerName }}
+                          </p>
+                        </div>
+                        <div class="invoice-date-wrapper">
+                          <p class="invoice-date-title">
+                            Supplier Company Vat No (if exists):
+                          </p>
+                          <p class="invoice-date">
+                            {{ data.item.supplierCompany.companyVatEic }}
+                          </p>
+                        </div>
+                    </div>
+                    <div class="mt-md-0 mt-2">
+                        <h4 class="invoice-title">
+                          Invoice
+                          <span class="invoice-number">#{{ data.item.id }}</span>
+                        </h4>
+                        <div class="invoice-date-wrapper">
+                          <p class="invoice-date-title">
+                            Date Issued:
+                          </p>
+                          <p class="invoice-date">
+                            {{ data.item.dateIssued }}
+                          </p>
+                        </div>
+                        <div class="invoice-date-wrapper">
+                          <p class="invoice-date-title">
+                            Invoice Number:
+                          </p>
+                          <p class="invoice-date">
+                            {{ data.item.invoiceNumber }}
+                          </p>
+                        </div>
+                      </div>
+                      <!-- Header: Right Content -->
+                      <div class="mt-md-0 mt-2">
+                        <div class="invoice-date-wrapper">
+                            <p class="invoice-date-title">
+                              Recipient Company Name:
+                            </p>
+                            <p class="invoice-date">
+                              {{ data.item.recipientCompany.companName }}
+                            </p>
+                          </div>
+                          <div class="invoice-date-wrapper">
+                            <p class="invoice-date-title">
+                              Supplier Company Address:
+                            </p>
+                            <p class="invoice-date">
+                              {{ data.item.recipientCompany.companyAddress }}
+                            </p>
+                          </div>
+                          <div class="invoice-date-wrapper">
+                            <p class="invoice-date-title">
+                              Supplier Company ID Number:
+                            </p>
+                            <p class="invoice-date">
+                              {{ data.item.recipientCompany.companyEic }}
+                            </p>
+                          </div>
+                          <div class="invoice-date-wrapper">
+                            <p class="invoice-date-title">
+                              Supplier Company Owner:
+                            </p>
+                            <p class="invoice-date">
+                              {{ data.item.recipientCompany.companyOwnerName }}
+                            </p>
+                          </div>
+                          <div class="invoice-date-wrapper">
+                            <p class="invoice-date-title">
+                              Supplier Company Vat No (if exists):
+                            </p>
+                            <p class="invoice-date">
+                              {{ data.item.recipientCompany.companyVatEic }}
+                            </p>
+                          </div>
+                      </div>
+
+                  </div>
+                </b-card-body>
+
+                <!-- Spacer -->
+                <hr class="invoice-spacing">
+
+                <!-- Invoice Description: Table -->
+                <b-table-lite
+                  responsive
+                  :items="data.item.transactions"
+                  :fields="['serviceOrItemDescription', 'quantity', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"            
+                >
+                  <template #cell(singleAmountTransaction)="data">
+                    <b-card-text class="font-weight-bold mb-25">
+                      лв{{ data.item.singleAmountTransaction }}
+                    </b-card-text>
+                  </template>
+                  <template #cell(transactionTotalAmountNonVat)="data">
+                    <b-card-text class="font-weight-bold mb-25">
+                      лв{{ data.item.transactionTotalAmountNonVat }}
+                    </b-card-text>
+                  </template>
+                </b-table-lite>
+
+                <!-- Invoice Description: Total -->
+                <b-card-body class="invoice-padding pb-0">
+                  <b-row class="invoiceStat">
+                    <!-- Col: Total -->
+                    <b-col
+                      cols="12"
+                      md="6"
+                      class="mt-md-6 d-flex justify-content-left"
+                      order="1"
+                      order-md="2"
+                    >
+                      <div class="invoice-total-wrapper">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            Total price NonVat:
+                          </p>
+                          <p class="invoice-total-amount">
+                            лв{{data.item.amountNonVat}}
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            VAT:
+                          </p>
+                          <p class="invoice-total-amount">
+                            {{data.item.vatPercent}}%
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            VAT Amount:
+                          </p>
+                          <p class="invoice-total-amount">
+                            лв{{data.item.vatAmount}}
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            Discount Percent:
+                          </p>
+                          <p class="invoice-total-amount">
+                            {{data.item.tradeDiscountPercent}}%
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            Discount Sum:
+                          </p>
+                          <p class="invoice-total-amount">
+                            лв{{data.item.tradeDiscountAmount}}
+                          </p>
+                        </div>
+                        <hr class="my-50">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            Total Price:
+                          </p>
+                          <p class="invoice-total-amount">
+                            лв{{data.item.totalAmount}}
+                          </p>
+                        </div>
+                      </div>
+                    </b-col>
+                  </b-row>
+                </b-card-body>
+              </b-card>
+            </section>
+          </vue-html2pdf>
         </div>
       </template>
-
     </b-table>
     <div class="mx-2 mb-2">
       <b-row>
@@ -300,6 +528,8 @@
         </b-col>
 
       </b-row>
+
+      
     </div>
   </b-card>
 
@@ -307,16 +537,18 @@
 
 <script>
 import {
-  BCard, BRow, BCol, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
-  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip,
+  BCard, BRow, BCol,BCardBody, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
+  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip,BTableLite,BCardText,BAlert,VBToggle
 } from 'bootstrap-vue'
 import { avatarText } from '@core/utils/filter'
 import vSelect from 'vue-select'
 import { onUnmounted } from '@vue/composition-api'
 import store from '@/store'
 import useInvoicesList from './useInvoiceList'
-
+import VueHtml2pdf from "vue-html2pdf";
 import invoiceStoreModule from '../invoiceStoreModule'
+import useJwt from "@/auth/jwt/useJwt";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 export default {
   props: ['invoiceTab'],
@@ -326,7 +558,41 @@ export default {
     },
     actionTab() {
       this.$emit("state", this.state())
+    },
+    onProgress(event) {
+      console.log(`Processed: ${event} / 100`);
+    },
+    generatePDF(itemID) {
+      this.$refs['invoicePdf'+itemID].generatePdf();
+    },
+    invoiceDelete(id, refetchData) {
+      let token = useJwt.getToken()
+      useJwt
+        .DeleteInvoice(token,id)
+        .then((response) => {
+          
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Invoice Deleted Successfully`,
+              icon: "DeleteIcon",
+              variant: "success",
+            },
+          });
+          refetchData()
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "DeleteIcon",
+              variant: "error",
+            },
+          });
+        });
     }
+
   },
   components: {
     BCard,
@@ -344,6 +610,12 @@ export default {
     BPagination,
     BTooltip,
     vSelect,
+    BCardBody,
+    BTableLite,
+    BCardText,
+    BAlert,
+    VBToggle,
+    VueHtml2pdf
   },
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
@@ -384,6 +656,8 @@ export default {
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
     } = useInvoicesList()
+
+  
 
     return {
       fetchInvoices,
@@ -436,5 +710,28 @@ export default {
 .invoiceList th{
   position: relative;
   vertical-align: middle !important;
+}
+.gap-2 {
+  grid-gap: 26px;
+}
+.invoice-add .invoice-total-wrapper {
+  max-width: 25rem !important;
+}
+.invoice-preview-list .invoice-date-wrapper{
+  display: flex;
+  grid-gap: 10px;
+  justify-content: flex-start;
+}
+
+.invoice-preview-list .invoice-date-wrapper.invoice-middle-content{
+  min-width: max-content;
+}
+.invoiceStat .invoice-total-item{
+  display: flex;
+  grid-gap: 20px;
+  justify-content: space-between;
+}
+.invoice-preview-list .invoice-date-title,.invoiceStat .invoice-total-item .invoice-total-title{
+  font-weight: bold !important;
 }
 </style>

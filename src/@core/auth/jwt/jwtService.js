@@ -220,6 +220,28 @@ export default class JwtService {
     }) 
   }
 
+  EditInvoice(token,id,...args) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.put(`${this.jwtConfig.invoiceEditEndpoint}/${id}`, ...args, {
+      headers: headers
+    }) 
+  }
+
+  DeleteInvoice(token,id) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.delete(`${this.jwtConfig.invoiceDeleteEndpoint}/${id}`,{
+      headers: headers
+    }) 
+  }
+
   verifyToken(token,UrlToken){
     let headers = {
       'Authorization': `${this.jwtConfig.tokenType} ${token}`,

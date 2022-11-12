@@ -5,12 +5,23 @@
     <b-media no-body>
       <b-media-aside>
         <b-link>
-          <b-img
-            ref="previewEl"
-            rounded
-            :src="optionsLocal.avatar"
-            height="80"
+<!--          <b-img-->
+<!--            ref="previewEl"-->
+<!--            rounded-->
+<!--            :src="optionsLocal.avatar"-->
+<!--            height="80"-->
+<!--          />-->
+          <feather-icon
+            v-if="userDetail.accountType === 'PERSONAL'"
+            icon="UserIcon"
+            size="80"
           />
+          <feather-icon
+            v-if="userDetail.accountType === 'COMPANY'"
+            icon="HomeIcon"
+            size="80"
+          />
+
         </b-link>
         <!--/ avatar -->
       </b-media-aside>
@@ -42,6 +53,7 @@
           variant="outline-secondary"
           size="sm"
           class="mb-75 mr-75"
+          @click="getUserDetail()"
         >
           Reset
         </b-button>
@@ -52,7 +64,7 @@
     <!--/ media -->
 
     <!-- form -->
-    <b-form class="mt-2">
+    <b-form @submit.prevent="updateUser()" class="mt-2">
       <b-row>
         <b-col sm="6">
           <b-form-group
@@ -80,17 +92,18 @@
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="Account Type"
-            label-for="account-type"
+              label="Account Type"
+              label-for="account-type"
           >
-            <b-form-input
-              v-model="userDetail.accountType"
-              placeholder="Account Type"
-              name="accountType"
+            <b-form-select
+                v-model="userDetail.accountType"
+                :options="$store.state.ProfileSettings.userAccountTypes"
+                name="accountType"
             />
           </b-form-group>
         </b-col>
-        <b-col sm="6">
+
+        <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
           <b-form-group
               label="Company Name"
               label-for="account-company"
@@ -102,7 +115,7 @@
             />
           </b-form-group>
         </b-col>
-        <b-col sm="6">
+        <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
           <b-form-group
               label="Company Address"
               label-for="company-address"
@@ -114,52 +127,66 @@
             />
           </b-form-group>
         </b-col>
-        <b-col sm="6">
+        <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
           <b-form-group
-            label="Company Registration Number"
-            label-for="company-register-number"
+              label="Company Registration Number"
+              label-for="company-register-number"
           >
             <b-form-input
-              v-model="userDetail.companyRegistrationNumber"
-              name="companyRegistrationNumber"
-              placeholder="Company Registration Number"
+                v-model="userDetail.companyRegistrationNumber"
+                name="companyRegistrationNumber"
+                placeholder="Company Registration Number"
             />
           </b-form-group>
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="email"
-            label-for="email"
+              label="email"
+              label-for="email"
           >
             <b-form-input
-              v-model="userDetail.email"
-              name="email"
-              placeholder="Email"
+                v-model="userDetail.email"
+                name="email"
+                placeholder="Email"
+                disabled="disabled"
             />
           </b-form-group>
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="Country"
-            label-for="register-country"
+              label="password"
+              label-for="password"
+          >
+            <b-form-input
+                type="password"
+                v-model="userDetail.password"
+                name="password"
+                placeholder="Password"
+                required
+            />
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+              label="Country"
+              label-for="register-country"
           >
             <validation-provider
-              #default="{ errors }"
-              name="country"
-              vid="country"
+                #default="{ errors }"
+                name="country"
+                vid="country"
             >
               <v-select
-                id="register-country"
-                v-model="userDetail.country"
-                :options="countries"
-                :filter-by="(option, label, search)=> {
+                  id="register-country"
+                  :options="countries"
+                  :filter-by="(option, label, search)=> {
                   return (option.text || '').toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1
                 }"
-                :label="$t('register.lbl_country')"
-                name="country"
-                :placeholder="$t('register.country_placeholder')"
-                :value="$store.state.selected"
-                :state="errors.length > 0 ? false:null"
+                  :label="$t('register.lbl_country')"
+                  name="country"
+                  :placeholder="$t('register.country_placeholder')"
+                  :value="$store.state.selected"
+                  :state="errors.length > 0 ? false:null"
               >
                 <template #selected-option="option">
                   <div style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
@@ -179,13 +206,13 @@
         </b-col>
         <!-- alert -->
         <b-col
-          cols="12"
-          class="mt-75"
+            cols="12"
+            class="mt-75"
         >
           <b-alert
-            show
-            variant="warning"
-            class="mb-50"
+              show
+              variant="warning"
+              class="mb-50"
           >
             <h4 class="alert-heading">
               Your email is not confirmed. Please check your inbox.
@@ -201,18 +228,19 @@
 
         <b-col cols="12">
           <b-button
-            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-            variant="primary"
-            class="mt-2 mr-1"
+              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+              type="submit"
+              variant="primary"
+              class="mt-2 mr-1"
           >
             Save changes
           </b-button>
           <b-button
-            v-ripple.400="'rgba(186, 191, 199, 0.15)'"
-            variant="outline-secondary"
-            type="reset"
-            class="mt-2"
-            @click.prevent="resetForm"
+              v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+              variant="outline-secondary"
+              type="reset"
+              class="mt-2"
+              @click="getUserDetail()"
           >
             Reset
           </b-button>
@@ -239,6 +267,7 @@ import {
   BMediaAside,
   BMediaBody,
   BRow,
+  BFormSelect,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import { useInputImageRenderer } from '@core/comp-functions/forms/form-utils'
@@ -265,6 +294,7 @@ export default {
     BMedia,
     BMediaAside,
     BMediaBody,
+    BFormSelect,
     BLink,
     ValidationProvider,
     // eslint-disable-next-line vue/no-unused-components
@@ -277,7 +307,8 @@ export default {
   props: {
     generalData: {
       type: Object,
-      default: () => {},
+      default: () => {
+      },
     },
   },
   data() {
@@ -289,7 +320,13 @@ export default {
   created() {
     this.getUserDetail()
     this.populateCountries()
+    // console.log(JSON.parse(localStorage.getItem('userData')).data)
   },
+  // watch: {
+  //   'userDetail.accountType': function (newV, oldV) {
+  //     console.log(newV, oldV)
+  //   },
+  // },
   methods: {
     getImg(img) {
       // eslint-disable-next-line import/no-unresolved,global-require,no-shadow
@@ -308,6 +345,11 @@ export default {
     async getUserDetail() {
       const data = await axios.get('account/api/user/who-am-i')
       this.userDetail = data.data
+      // await this.getUserInfo()
+    },
+    async getUserInfo() {
+      const data = await axios.get(`account/api/user/${this.userDetail.email}`)
+      console.log('getUserInfo ', data.data)
     },
     populateCountries() {
       useJwt
@@ -350,12 +392,22 @@ export default {
           })
         })
     },
-
+    async updateUser() {
+      const data = await axios.put(`account/api/user/update/${this.userDetail.email}`, this.userDetail)
+      if (data.status === 200) {
+        this.$bvToast.toast('Settings Updated Successfully', {
+          title: 'Success',
+        })
+      }
+      // /api/user/update/{username}
+    },
   },
   setup() {
     const refInputEl = ref(null)
     const previewEl = ref(null)
-    const userDetail = ref({})
+    const userDetail = ref({
+      accountType: '',
+    })
     const countries = ref([])
 
     const { inputImageRenderer } = useInputImageRenderer(refInputEl, previewEl)

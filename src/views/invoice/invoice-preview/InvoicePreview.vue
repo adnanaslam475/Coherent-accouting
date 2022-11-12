@@ -39,30 +39,9 @@
           <!-- Header -->
           <b-card-body class="invoice-padding pb-0">
 
-            <div class="d-flex justify-content-between flex-column invoice-spacing mt-0 gap-2">
+            <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2">
 
-              <div class="mt-md-0 mt-2">
-                <h4 class="invoice-title">
-                  Invoice
-                  <span class="invoice-number">#{{ invoiceData.id }}</span>
-                </h4>
-                <div class="invoice-date-wrapper">
-                  <p class="invoice-date-title">
-                    Date Issued:
-                  </p>
-                  <p class="invoice-date">
-                    {{ invoiceData.dateIssued }}
-                  </p>
-                </div>
-                <div class="invoice-date-wrapper">
-                  <p class="invoice-date-title">
-                    Invoice Number:
-                  </p>
-                  <p class="invoice-date">
-                    {{ invoiceData.invoiceNumber }}
-                  </p>
-                </div>
-              </div>
+
               <!-- Header: Left Content -->
               <div class="mt-md-0 mt-2">
   
@@ -109,6 +88,29 @@
               </div>
 
               <div class="mt-md-0 mt-2">
+                <h4 class="invoice-title">
+                  Invoice
+                  <span class="invoice-number">#{{ invoiceData.id }}</span>
+                </h4>
+                <div class="invoice-date-wrapper invoice-middle-content">
+                  <p class="invoice-date-title">
+                    Date Issued:
+                  </p>
+                  <p class="invoice-date">
+                    {{ invoiceData.dateIssued }}
+                  </p>
+                </div>
+                <div class="invoice-date-wrapper invoice-middle-content">
+                  <p class="invoice-date-title">
+                    Invoice Number:
+                  </p>
+                  <p class="invoice-date">
+                    {{ invoiceData.invoiceNumber }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-md-0 mt-2 invoice-data-wrapper-right">
                 <div class="invoice-date-wrapper">
                     <p class="invoice-date-title">
                       Recipient Company Name:
@@ -300,30 +302,7 @@
                 <!-- Header -->
                 <b-card-body class="invoice-padding pb-0">
 
-                  <div class="d-flex justify-content-between flex-column invoice-spacing mt-0 gap-2 invoice-preview-list">
-
-                    <div class="mt-md-0 mt-2">
-                      <h4 class="invoice-title">
-                        Invoice
-                        <span class="invoice-number">#{{ invoiceData.id }}</span>
-                      </h4>
-                      <div class="invoice-date-wrapper">
-                        <p class="invoice-date-title">
-                          Date Issued:
-                        </p>
-                        <p class="invoice-date">
-                          {{ invoiceData.dateIssued }}
-                        </p>
-                      </div>
-                      <div class="invoice-date-wrapper">
-                        <p class="invoice-date-title">
-                          Invoice Number:
-                        </p>
-                        <p class="invoice-date">
-                          {{ invoiceData.invoiceNumber }}
-                        </p>
-                      </div>
-                    </div>
+                  <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-preview-list">
                     <!-- Header: Left Content -->
                     <div class="mt-md-0 mt-2">
         
@@ -367,6 +346,29 @@
                             {{ invoiceData.supplierCompany.companyVatEic }}
                           </p>
                         </div>
+                    </div>
+
+                    <div class="mt-md-0 mt-2">
+                      <h4 class="invoice-title">
+                        Invoice
+                        <span class="invoice-number">#{{ invoiceData.id }}</span>
+                      </h4>
+                      <div class="invoice-date-wrapper">
+                        <p class="invoice-date-title">
+                          Date Issued:
+                        </p>
+                        <p class="invoice-date">
+                          {{ invoiceData.dateIssued }}
+                        </p>
+                      </div>
+                      <div class="invoice-date-wrapper">
+                        <p class="invoice-date-title">
+                          Invoice Number:
+                        </p>
+                        <p class="invoice-date">
+                          {{ invoiceData.invoiceNumber }}
+                        </p>
+                      </div>
                     </div>
                     <!-- Header: Right Content -->
                     <div class="mt-md-0 mt-2">
@@ -500,10 +502,6 @@
                     </b-col>
                   </b-row>
                 </b-card-body>
-
-                <!-- Spacer -->
-                <hr class="invoice-spacing">
-
               </b-card>
             </section>
           </vue-html2pdf>
@@ -687,7 +685,7 @@ export default {
   }
 }
 .gap-2 {
-  grid-gap: 20px;
+  grid-gap: 26px;
 }
 .invoice-add .invoice-total-wrapper {
   max-width: 25rem !important;
@@ -695,6 +693,11 @@ export default {
 .invoice-preview-list .invoice-date-wrapper{
   display: flex;
   grid-gap: 10px;
+  justify-content: flex-start;
+}
+
+.invoice-preview-list .invoice-date-wrapper.invoice-middle-content{
+  min-width: max-content;
 }
 .invoiceStat .invoice-total-item{
   display: flex;
