@@ -25,6 +25,13 @@ axiosIns.interceptors.request.use(
     }
     return config
   },
+  error => {
+    console.log(error)
+    if (error.response.status === 401) {
+      console.log(error)
+    }
+    return Promise.reject(error)
+  },
 )
 
 Vue.prototype.$http = axiosIns

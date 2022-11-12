@@ -169,61 +169,75 @@
         <b-col sm="6">
           <b-form-group
               label="Country"
+              label-for="country"
+          >
+            <v-select
+                v-model="userDetail.country"
+                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                :options="countries"
+                :clearable="false"
+                input-id="country"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-group
+              label="Country"
               label-for="register-country"
           >
-            <validation-provider
-                #default="{ errors }"
-                name="country"
-                vid="country"
-            >
-              <v-select
-                  id="register-country"
-                  :options="countries"
-                  :filter-by="(option, label, search)=> {
-                  return (option.text || '').toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1
-                }"
-                  :label="$t('register.lbl_country')"
-                  name="country"
-                  :placeholder="$t('register.country_placeholder')"
-                  :value="$store.state.selected"
-                  :state="errors.length > 0 ? false:null"
-              >
-                <template #selected-option="option">
-                  <div style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
-                    <img :src="getImg(option.src)">
-                    {{ option.text }}
-                  </div>
-                </template>
-                <template v-slot:option="option">
-                  <span style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
-                    <img :src="getImg(option.src)">  {{ option.text }}
-                  </span>
-                </template>
-              </v-select>
-              <small class="text-danger">{{ errors[0] }}</small>
-            </validation-provider>
+<!--            <validation-provider-->
+<!--                #default="{ errors }"-->
+<!--                name="country"-->
+<!--                vid="country"-->
+<!--            >-->
+<!--              <v-select-->
+<!--                  id="register-country"-->
+<!--                  :options="countries"-->
+<!--                  :filter-by="(option, label, search)=> {-->
+<!--                  return (option.text || '').toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1-->
+<!--                }"-->
+<!--                  :label="$t('register.lbl_country')"-->
+<!--                  name="country"-->
+<!--                  :placeholder="$t('register.country_placeholder')"-->
+<!--                  :value="$store.state.selected"-->
+<!--                  :state="errors.length > 0 ? false:null"-->
+<!--              >-->
+<!--                <template #selected-option="option">-->
+<!--                  <div style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">-->
+<!--                    <img :src="getImg(option.src)">-->
+<!--                    {{ option.text }}-->
+<!--                  </div>-->
+<!--                </template>-->
+<!--                <template v-slot:option="option">-->
+<!--                  <span style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">-->
+<!--                    <img :src="getImg(option.src)">  {{ option.text }}-->
+<!--                  </span>-->
+<!--                </template>-->
+<!--              </v-select>-->
+<!--              <small class="text-danger">{{ errors[0] }}</small>-->
+<!--            </validation-provider>-->
           </b-form-group>
         </b-col>
         <!-- alert -->
-        <b-col
-            cols="12"
-            class="mt-75"
-        >
-          <b-alert
-              show
-              variant="warning"
-              class="mb-50"
-          >
-            <h4 class="alert-heading">
-              Your email is not confirmed. Please check your inbox.
-            </h4>
-            <div class="alert-body">
-              <b-link class="alert-link">
-                Resend confirmation
-              </b-link>
-            </div>
-          </b-alert>
-        </b-col>
+<!--        <b-col-->
+<!--            cols="12"-->
+<!--            class="mt-75"-->
+<!--        >-->
+<!--          <b-alert-->
+<!--              show-->
+<!--              variant="warning"-->
+<!--              class="mb-50"-->
+<!--          >-->
+<!--            <h4 class="alert-heading">-->
+<!--              Your email is not confirmed. Please check your inbox.-->
+<!--            </h4>-->
+<!--            <div class="alert-body">-->
+<!--              <b-link class="alert-link">-->
+<!--                Resend confirmation-->
+<!--              </b-link>-->
+<!--            </div>-->
+<!--          </b-alert>-->
+<!--        </b-col>-->
         <!--/ alert -->
 
         <b-col cols="12">
@@ -277,17 +291,20 @@ import useJwt from '@/auth/jwt/useJwt'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import vSelect from 'vue-select'
+import countries from '@/@fake-db/data/other/countries'
 
 export default {
   components: {
     BButton,
     BForm,
+    // eslint-disable-next-line vue/no-unused-components
     BImg,
     BFormFile,
     BFormGroup,
     BFormInput,
     BRow,
     BCol,
+    // eslint-disable-next-line vue/no-unused-components
     BAlert,
     BCard,
     BCardText,
@@ -319,7 +336,7 @@ export default {
   },
   created() {
     this.getUserDetail()
-    this.populateCountries()
+    // this.populateCountries()
     // console.log(JSON.parse(localStorage.getItem('userData')).data)
   },
   // watch: {
@@ -393,13 +410,22 @@ export default {
         })
     },
     async updateUser() {
+      if (this.userDetail.accountType === 'PERSONAL') {
+        this.userDetail.company = ''
+        this.userDetail.companyAddress = ''
+        this.userDetail.companyRegistrationNumber = ''
+      }
       const data = await axios.put(`account/api/user/update/${this.userDetail.email}`, this.userDetail)
       if (data.status === 200) {
-        this.$bvToast.toast('Settings Updated Successfully', {
-          title: 'Success',
-        })
+        this.makeToast('success', 'Success', 'Settings Updated Successfully')
       }
-      // /api/user/update/{username}
+    },
+    makeToast(variant = null, title = null, message = null) {
+      this.$bvToast.toast(message, {
+        title,
+        variant,
+        solid: false,
+      })
     },
   },
   setup() {
@@ -408,7 +434,6 @@ export default {
     const userDetail = ref({
       accountType: '',
     })
-    const countries = ref([])
 
     const { inputImageRenderer } = useInputImageRenderer(refInputEl, previewEl)
 
@@ -422,3 +447,6 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+@import '@core/scss/vue/libs/vue-select.scss';
+</style>
