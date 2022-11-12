@@ -38,14 +38,14 @@
                           d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
                         ></path>
                         <circle cx="12" cy="7" r="4"></circle>
-                      </svg> 
+                      </svg>
                     </span>
-                     
 
-                      <!-- <img
+                    <!-- <img
                         src="/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/1.9cba4a79.png"
-                        alt="avatar" /> --> </span>
-                  
+                        alt="avatar" /> -->
+                  </span>
+
                   <div class="d-flex flex-column ml-1">
                     <div class="mb-1">
                       <h4 class="mb-0">{{ this.companyRecord.companyName }}</h4>
@@ -58,11 +58,20 @@
                         href="/demo/vuexy-vuejs-admin-dashboard-template/demo-1/apps/users/edit/21"
                         class="btn btn-primary"
                         target="_self"
-                      > --> <b-link :to="{ name: 'EditCompany', params: { id: this.companyRecord.id } }"  class="btn btn-primary">Edit </b-link>
-                        
+                      > -->
+                      <b-link
+                        :to="{
+                          name: 'EditCompany',
+                          params: { id: this.companyRecord.id },
+                        }"
+                        class="btn btn-primary"
+                        >Edit
+                      </b-link>
+
                       <button
                         type="button"
                         class="btn ml-1 btn-outline-danger"
+                        @click="deleteCompany"
                       >
                         Delete
                       </button>
@@ -130,7 +139,6 @@
                 <table class="mt-2 mt-xl-0 w-100">
                   <tr>
                     <th class="pb-50">
-
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="14px"
@@ -151,7 +159,7 @@
                       <span class="font-weight-bold">Owner Name</span>
                     </th>
                     <td class="pb-50">
-                      {{ this.companyRecord.companyOwnerApi.companyOwnerName }}
+                      {{ this.companyRecord.companyOwnerApi.companyOwnerName}}
                     </td>
                   </tr>
                   <tr>
@@ -261,6 +269,8 @@
 
 <script>
 import axios from "@/libs/axios";
+import Swal from "sweetalert2";
+
 import {
   BCard,
   BRow,
@@ -281,7 +291,6 @@ import {
 
 export default {
   components: {
-    
     BTable,
     BProgress,
     BBadge,
@@ -309,6 +318,39 @@ export default {
 
   //
   methods: {
+    //delete a certain company
+    async deleteCompany() {
+      var config = {
+        method: "delete",
+        url: "/account/api/company/" + this.companyID,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+      };
+
+      await axios(config)
+        .then(function (response) {
+          
+          console.log(JSON.stringify(response.data));
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Company Deleted!",
+            showConfirmButton: false,
+            timer: 1400,
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        setTimeout(() => {
+        this.$router.go(-1);
+      }, 1410);
+    },
+    //
     async getCompanyInfo() {
       const data = await axios.get(`/account/api/company/` + this.companyID, {
         headers: {
@@ -334,6 +376,14 @@ export default {
 
 <style scoped>
 .rounded {
-    border-radius: 0.6rem !important;
+  border-radius: 0.6rem !important;
+}
+
+.card {
+  margin-bottom: 0rem;
+}
+.card-body {
+  padding-top: 1.1rem;
+  padding-bottom: 0.8rem;
 }
 </style>

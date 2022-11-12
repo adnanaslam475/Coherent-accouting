@@ -2,12 +2,59 @@
 
 <template>
   <div>
-    <b-button
-      to="/company/create"
-      variant="relief-primary"
-      class="float-right mb-1"
-      >Add Company</b-button
-    >
+    <div class="row">
+      <!-- <input data-v-9a6e255c="" type="text" placeholder="Search..." class="d-inline-block mr-1 form-control col-4" style="margin-left: 15px" /> -->
+      <div
+        
+        
+        class="input-group col-4 abc"
+      >
+        <!----><input
+          data-v-15eba8c6=""
+          type="text"
+          placeholder="Search Product"
+          class="search-product form-control "
+          id="__BVID__3198"
+          v-model="searchQuery"
+          @keyup="searchCompanies()"
+        />
+        <div data-v-15eba8c6="" class="input-group-append">       
+          <div data-v-15eba8c6="" class="input-group-text" style="height: 38px; cursor:pointer" > 
+            <!-- #7367f0 -->
+            <svg
+              data-v-15eba8c6=""
+              xmlns="http://www.w3.org/2000/svg"
+              width="14px"
+              height="14px"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-muted feather feather-search"
+            >
+              <circle data-v-15eba8c6="" cx="11" cy="11" r="8"></circle>
+              <line
+                data-v-15eba8c6=""
+                x1="21"
+                y1="21"
+                x2="16.65"
+                y2="16.65"
+              ></line>
+            </svg>
+          </div>
+        </div>
+        <!---->
+      </div>
+      <b-button
+        to="/company/create"
+        variant="relief-primary"
+        class="float-right mb-1 col-2 ml-auto"
+        style="margin-right: 15px"
+        >Add Company</b-button
+      >
+    </div>
     <b-table :fields="fields" :items="items" responsive class="mb-0">
       <template #cell(Country)="data">
         <div>
@@ -21,39 +68,52 @@
       </template>
 
       <template #cell(company_name)="data">
-        <div v-if="data.item.companyName.indexOf(' ') > 0"
+        <div
+          v-if="data.item.companyName.indexOf(' ') > 0"
           style="
             margin-right: 8px;
-           
             padding-top: 4px;
             border-radius: 50%;
             background-color: #7367f0;
             color: white;
             width: 32px;
-    height: 28px;
-    display: inline-flex;
-    justify-content: center;
+            height: 28px;
+            display: inline-flex;
+            justify-content: center;
           "
-          > <span>{{ data.item.companyName.substr(0,1)}}{{ data.item.companyName.substr(data.item.companyName.indexOf(" ")+1,1)}}</span></div
         >
-        <div v-else
+          <span
+            >{{ data.item.companyName.substr(0, 1)
+            }}{{
+              data.item.companyName.substr(
+                data.item.companyName.indexOf(" ") + 1,
+                1
+              )
+            }}</span
+          >
+        </div>
+        <div
+          v-else
           style="
             margin-right: 8px;
-           
+
             padding-top: 4px;
             border-radius: 50%;
             background-color: #7367f0;
             color: white;
             width: 32px;
-    height: 28px;
-    display: inline-flex;
-    justify-content: center;
+            height: 28px;
+            display: inline-flex;
+            justify-content: center;
           "
-          > <span>{{ data.item.companyName.substr(0,1)}}{{ data.item.companyName.substr(1,1).toUpperCase()}}</span></div
         >
+          <span
+            >{{ data.item.companyName.substr(0, 1)
+            }}{{ data.item.companyName.substr(1, 1).toUpperCase() }}</span
+          >
+        </div>
         <b-link :to="{ name: 'CompanyView', params: { id: data.item.id } }"
           >{{ data.item.companyName }}
-          
         </b-link>
 
         <!-- <div>{{data.item.companyName}}</div> -->
@@ -96,13 +156,22 @@
             <feather-icon icon="DownloadIcon" />
             <span class="align-middle ml-50">Download</span>
           </b-dropdown-item>
-          <b-dropdown-item>
+          <b-dropdown-item
+            :to="{
+              name: 'EditCompany',
+              params: { id: data.item.id },
+            }"
+          >
             <feather-icon icon="EditIcon" />
             <span class="align-middle ml-50">Edit</span>
           </b-dropdown-item>
           <b-dropdown-item>
             <feather-icon icon="TrashIcon" />
-            <span class="align-middle ml-50">Delete</span>
+            <span
+              class="align-middle ml-50"
+              @click="deleteCompany(data.item.id)"
+              >Delete</span
+            >
           </b-dropdown-item>
           <b-dropdown-item>
             <feather-icon icon="CopyIcon" />
@@ -166,6 +235,8 @@
 </template> 
 <script>
 import BCardCode from "@core/components/b-card-code/BCardCode.vue";
+import Swal from "sweetalert2";
+
 // import {  BBadge, BButton, BLink, } from 'bootstrap-vue'
 
 import {
@@ -233,6 +304,7 @@ export default {
       perPage: "10",
       totalRecords: "",
       totalPages: "",
+      searchQuery:"",
 
       // items: [
       //   {
@@ -284,10 +356,76 @@ export default {
     };
   },
   methods: {
+
+     // getting the list of all companies
+     async searchCompanies() {
+      const data = await axios.get(
+        "/account/api/company/search/" +
+          this.currentPage +
+          "/" +
+          this.perPage +
+          "?direction=desc&queryString="+this.searchQuery +"&sortField=id",
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "http://localhost:8080",
+          },
+        }
+      );
+
+      if (data.data.elements != "") {
+        this.items = data.data.elements;
+        this.totalRecords = data.data.totalElements;
+        this.totalPages = Math.ceil(this.totalRecords / this.perPage);
+        // console.log(this.totalPages);
+      }
+      else{
+        this.items = [];
+        this.totalRecords = "";
+        this.totalPages = "";
+      }
+ 
+    },
+
     // getImage(country) {
     //   var countryImage = "https://countryflagsapi.com/svg/" + country;
     //   return countryImage;
     // },
+
+    //
+    async deleteCompany(companyID) {
+      var config = {
+        method: "delete",
+        url: "/account/api/company/" + companyID,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+      };
+
+      await axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          // console.log(companyID);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Company Deleted!",
+            showConfirmButton: false,
+            timer: 1400,
+          });
+         
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        setTimeout(() => {
+       this.getAllCompanies();
+      }, 1400);
+    },
 
     // getting the list of all companies
     async getAllCompanies() {
@@ -328,10 +466,9 @@ export default {
       //     }
       //   })
       //   .catch();
-  
     },
 
-     //
+    //
     async getNewRecord(cP) {
       // alert(cP);
       const data = await axios.get(
@@ -366,9 +503,13 @@ export default {
     //   })
     // })
   },
-
 };
 </script>
-<style lang="">
+<style scoped>
 /*  */
-</style>
+.input-group{
+  box-shadow: none !important;
+}
+
+</style>>
+
