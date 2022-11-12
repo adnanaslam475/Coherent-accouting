@@ -109,8 +109,8 @@
               label-for="account-company"
           >
             <b-form-input
-                v-model="optionsLocal.company"
-                name="company"
+                v-model="userDetail.companyName"
+                name="companyName"
                 placeholder="Company name"
             />
           </b-form-group>
@@ -127,19 +127,7 @@
             />
           </b-form-group>
         </b-col>
-        <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
-          <b-form-group
-              label="Company Registration Number"
-              label-for="company-register-number"
-          >
-            <b-form-input
-                v-model="userDetail.companyRegistrationNumber"
-                name="companyRegistrationNumber"
-                placeholder="Company Registration Number"
-            />
-          </b-form-group>
-        </b-col>
-        <b-col sm="6">
+		<b-col sm="6">
           <b-form-group
               label="email"
               label-for="email"
@@ -149,6 +137,18 @@
                 name="email"
                 placeholder="Email"
                 disabled="disabled"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
+          <b-form-group
+              label="Company Registration Number"
+              label-for="company-register-number"
+          >
+            <b-form-input
+                v-model="userDetail.companyRegistrationNumber"
+                name="companyRegistrationNumber"
+                placeholder="Company Registration Number"
             />
           </b-form-group>
         </b-col>
@@ -181,10 +181,10 @@
           </b-form-group>
         </b-col>
         <b-col sm="6">
-          <b-form-group
-              label="Country"
-              label-for="register-country"
-          >
+<!--          <b-form-group
+<!--               label="Country"
+<!--              label-for="register-country"
+<!-- 
 <!--            <validation-provider-->
 <!--                #default="{ errors }"-->
 <!--                name="country"-->
@@ -414,6 +414,7 @@ export default {
         this.userDetail.company = ''
         this.userDetail.companyAddress = ''
         this.userDetail.companyRegistrationNumber = ''
+		this.userDetail.companyName = ''
       }
       const data = await axios.put(`account/api/user/update/${this.userDetail.email}`, this.userDetail)
       if (data.status === 200) {
