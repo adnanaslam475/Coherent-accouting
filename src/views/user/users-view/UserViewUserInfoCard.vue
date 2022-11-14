@@ -33,6 +33,7 @@
               <b-button
                 variant="outline-danger"
                 class="ml-1"
+                @click="UserDelete(userData.id)"
               >
                 Delete
               </b-button>
@@ -131,6 +132,8 @@ import {
 } from 'bootstrap-vue'
 import { avatarText } from '@core/utils/filter'
 import useUsersList from '../users-list/useUsersList'
+import useJwt from "@/auth/jwt/useJwt";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 export default {
   components: {
@@ -141,6 +144,35 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  methods: {
+    UserDelete(id) {
+      let token = useJwt.getToken()
+      useJwt
+        .DeleteUser(token,id)
+        .then((response) => {
+          
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `User Deleted Successfully`,
+              icon: "DeleteIcon",
+              variant: "success",
+            },
+          });
+          return this.$router.push({ name: "invoices" })
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "DeleteIcon",
+              variant: "error",
+            },
+          });
+        });
+    }
   },
   setup() {
     const { resolveUserRoleVariant } = useUsersList()

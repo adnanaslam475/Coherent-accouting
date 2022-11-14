@@ -16,7 +16,7 @@ export default function useUsersList() {
   const tableColumns = [
     { key: 'id', label: '#', sortable: true },
     { key: 'user', sortable: true },
-    { key: 'identificationNumber', sortable: true, formatter: val => `${val?val:""}` },
+    { key: 'identificationNumber', sortable: true },
     { key: 'vatIdentificationNumber', sortable: true, formatter: val => `${val?val:""}` },
     { key: 'address', sortable: true, formatter: val => `${val?val:""}` },
     { key: 'idcardNumber', label: "ID Card Number", sortable: false },
