@@ -198,32 +198,32 @@
           <span>Tickets</span>
         </b-dropdown-item>
 
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="MailIcon"
-            class="mr-50"
-          />
-          <span>Inbox</span>
-        </b-dropdown-item>
+<!--        <b-dropdown-item link-class="d-flex align-items-center">-->
+<!--          <feather-icon-->
+<!--            size="16"-->
+<!--            icon="MailIcon"-->
+<!--            class="mr-50"-->
+<!--          />-->
+<!--          <span>Inbox</span>-->
+<!--        </b-dropdown-item>-->
 
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="CheckSquareIcon"
-            class="mr-50"
-          />
-          <span>Task</span>
-        </b-dropdown-item>
+<!--        <b-dropdown-item link-class="d-flex align-items-center">-->
+<!--          <feather-icon-->
+<!--            size="16"-->
+<!--            icon="CheckSquareIcon"-->
+<!--            class="mr-50"-->
+<!--          />-->
+<!--          <span>Task</span>-->
+<!--        </b-dropdown-item>-->
 
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="MessageSquareIcon"
-            class="mr-50"
-          />
-          <span>Chat</span>
-        </b-dropdown-item>
+<!--        <b-dropdown-item link-class="d-flex align-items-center">-->
+<!--          <feather-icon-->
+<!--            size="16"-->
+<!--            icon="MessageSquareIcon"-->
+<!--            class="mr-50"-->
+<!--          />-->
+<!--          <span>Chat</span>-->
+<!--        </b-dropdown-item>-->
         <b-dropdown-divider />
         <b-dropdown-item
           :to="{ name:'settings' }"
@@ -236,25 +236,25 @@
           />
           <span>Settings</span>
         </b-dropdown-item>
-        <b-dropdown-item
-          :to="{name:'my-plans'}"
-          link-class="d-flex align-items-center"
-        >
-          <feather-icon
-            size="16"
-            icon="CreditCardIcon"
-            class="mr-50"
-          />
-          <span>Pricing</span>
-        </b-dropdown-item>
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="InfoIcon"
-            class="mr-50"
-          />
-          <span>FAQ</span>
-        </b-dropdown-item>
+<!--        <b-dropdown-item-->
+<!--          :to="{name:'my-plans'}"-->
+<!--          link-class="d-flex align-items-center"-->
+<!--        >-->
+<!--          <feather-icon-->
+<!--            size="16"-->
+<!--            icon="CreditCardIcon"-->
+<!--            class="mr-50"-->
+<!--          />-->
+<!--          <span>Pricing</span>-->
+<!--        </b-dropdown-item>-->
+<!--        <b-dropdown-item link-class="d-flex align-items-center">-->
+<!--          <feather-icon-->
+<!--            size="16"-->
+<!--            icon="InfoIcon"-->
+<!--            class="mr-50"-->
+<!--          />-->
+<!--          <span>FAQ</span>-->
+<!--        </b-dropdown-item>-->
         <b-dropdown-item
           link-class="d-flex align-items-center"
           @click="logout"
