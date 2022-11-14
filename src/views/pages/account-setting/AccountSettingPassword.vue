@@ -271,13 +271,15 @@ export default {
           .then(response => {
             if (response.status === 200) {
               this.makeToast('success', 'Success', 'Password Updated Successfully')
+            } else {
+              this.makeToast('danger', response.data.errorCode, response.data.errorMessage)
             }
           })
           .catch(error => {
-            console.log(error)
+            this.makeToast('danger', error.data.errorCode, error.data.errorMessage)
           })
       } catch (error) {
-        console.log(error.response)
+        console.log('error ', error)
       }
     },
     makeToast(variant = null, title = null, message = null) {
