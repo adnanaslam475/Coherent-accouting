@@ -113,7 +113,13 @@
       <!-- Column: recipientCompany -->
       <template #cell(recipientCompanyName)="data">
         <span class="text-nowrap"  :id="`recipientCompany-row-${data.item.id}`">
-          {{ data.item.recipientCompany.companName }}
+          <b-badge
+            pill
+            :variant="`light-success`"
+            class="text-capitalize"
+          >
+            {{ data.item.recipientCompany.companName }}
+          </b-badge>
         </span>
         <b-tooltip
           :target="`recipientCompany-row-${data.item.id}`"
@@ -142,7 +148,13 @@
       <template #cell(supplierCompanyName)="data">
  
         <span class="text-nowrap"  :id="`supplierCompany-row-${data.item.id}`">
-          {{ data.item.supplierCompany.companName }}
+          <b-badge
+            pill
+            :variant="`light-success`"
+            class="text-capitalize"
+          >
+            {{ data.item.supplierCompany.companName }}
+          </b-badge>
         </span>
         <b-tooltip
           :target="`supplierCompany-row-${data.item.id}`"
@@ -272,129 +284,153 @@
           >
             <section slot="pdf-content">
               <b-card
-                no-body
-                class="invoice-preview-card h-100"
+                  no-body
+                  class="invoice-preview-card pdf-view invoice-preview-list"
               >
-                <!-- Header -->
-                <b-card-body class="invoice-padding pb-0">
-
-                  <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-preview-list">
-                    <!-- Header: Left Content -->
-                    <div class="mt-md-0 mt-2">
-        
-                      <div class="invoice-date-wrapper">
-                          <p class="invoice-date-title">
-                            Supplier Company Name:
-                          </p>
-                          <p class="invoice-date">
-                            {{ data.item.supplierCompany.companName }}
-                          </p>
-                        </div>
-                        <div class="invoice-date-wrapper">
-                          <p class="invoice-date-title">
-                            Supplier Company Address:
-                          </p>
-                          <p class="invoice-date">
-                            {{ data.item.supplierCompany.companyAddress }}
-                          </p>
-                        </div>
-                        <div class="invoice-date-wrapper">
-                          <p class="invoice-date-title">
-                            Supplier Company ID Number:
-                          </p>
-                          <p class="invoice-date">
-                            {{ data.item.supplierCompany.companyEic }}
-                          </p>
-                        </div>
-                        <div class="invoice-date-wrapper">
-                          <p class="invoice-date-title">
-                            Supplier Company Owner:
-                          </p>
-                          <p class="invoice-date">
-                            {{ data.item.supplierCompany.companyOwnerName }}
-                          </p>
-                        </div>
-                        <div class="invoice-date-wrapper">
-                          <p class="invoice-date-title">
-                            Supplier Company Vat No (if exists):
-                          </p>
-                          <p class="invoice-date">
-                            {{ data.item.supplierCompany.companyVatEic }}
-                          </p>
-                        </div>
+              <b-card-body class="invoice-padding pb-0">
+              <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0" style="grid-gap:10px">
+                <!-- Header: Left Content -->
+                <div class="mt-md-0 mt-2 flex-1">
+                  <b-card
+                    no-body
+                    class="invoice-preview"
+                  > 
+                    <b-card-header class="justify-content-center">
+                        <h4 class="m-0">Supplier</h4>
+                    </b-card-header>
+                    
+                    <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Company Name:
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.supplierCompany.companName }}
+                      </p>
                     </div>
-                    <div class="mt-md-0 mt-2">
-                        <h4 class="invoice-title">
-                          Invoice
-                          <span class="invoice-number">#{{ data.item.id }}</span>
-                        </h4>
-                        <div class="invoice-date-wrapper">
-                          <p class="invoice-date-title">
-                            Date Issued:
-                          </p>
-                          <p class="invoice-date">
-                            {{ data.item.dateIssued }}
-                          </p>
-                        </div>
-                        <div class="invoice-date-wrapper">
-                          <p class="invoice-date-title">
-                            Invoice Number:
-                          </p>
-                          <p class="invoice-date">
-                            {{ data.item.invoiceNumber }}
-                          </p>
-                        </div>
-                      </div>
-                      <!-- Header: Right Content -->
-                      <div class="mt-md-0 mt-2">
-                        <div class="invoice-date-wrapper">
-                            <p class="invoice-date-title">
-                              Recipient Company Name:
-                            </p>
-                            <p class="invoice-date">
-                              {{ data.item.recipientCompany.companName }}
-                            </p>
-                          </div>
-                          <div class="invoice-date-wrapper">
-                            <p class="invoice-date-title">
-                              Supplier Company Address:
-                            </p>
-                            <p class="invoice-date">
-                              {{ data.item.recipientCompany.companyAddress }}
-                            </p>
-                          </div>
-                          <div class="invoice-date-wrapper">
-                            <p class="invoice-date-title">
-                              Supplier Company ID Number:
-                            </p>
-                            <p class="invoice-date">
-                              {{ data.item.recipientCompany.companyEic }}
-                            </p>
-                          </div>
-                          <div class="invoice-date-wrapper">
-                            <p class="invoice-date-title">
-                              Supplier Company Owner:
-                            </p>
-                            <p class="invoice-date">
-                              {{ data.item.recipientCompany.companyOwnerName }}
-                            </p>
-                          </div>
-                          <div class="invoice-date-wrapper">
-                            <p class="invoice-date-title">
-                              Supplier Company Vat No (if exists):
-                            </p>
-                            <p class="invoice-date">
-                              {{ data.item.recipientCompany.companyVatEic }}
-                            </p>
-                          </div>
-                      </div>
+                    <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Company Address:
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.supplierCompany.companyAddress }}
+                      </p>
+                    </div>
+                    <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Company ID Number:
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.supplierCompany.companyEic }}
+                      </p>
+                    </div>
+                    <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Company Owner:
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.supplierCompany.companyOwnerName }}
+                      </p>
+                    </div>
+                    <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Company Vat No (if exists):
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.supplierCompany.companyVatEic }}
+                      </p>
+                    </div>
+                    
+                  </b-card>
+                </div>
 
-                  </div>
-                </b-card-body>
+                <div class="mt-md-0 mt-2">
+                  <b-card
+                    no-body
+                    class="invoice-preview"
+                  >
+                    <b-card-header class="justify-content-center"> 
+                  <h4 class="invoice-title m-0">
+                    Invoice
+                    <span class="invoice-number">#{{ data.item.id }}</span>
+                  </h4>
+                </b-card-header>
 
-                <!-- Spacer -->
-                <hr class="invoice-spacing">
+                  <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Date Issued:
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.dateIssued}}
+                      </p>
+                    </div>
+                  <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Invoice Number:
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.invoiceNumber }}
+                      </p>
+                    </div>
+                
+                  </b-card>
+                </div>
 
+                <div class="mt-md-0 mt-2 invoice-data-wrapper-right flex-1">
+                  <b-card
+                    no-body
+                    class="invoice-preview"
+                  > 
+                    <b-card-header class="justify-content-center">
+                        <h4 class="m-0">Recipient</h4>
+                    </b-card-header>
+                   
+                    <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Company Name:
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.recipientCompany.companName }}
+                      </p>
+                    </div>
+                    <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Company Address:
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.recipientCompany.companyAddress }}
+                      </p>
+                    </div>
+                    <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Company ID Number:
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.recipientCompany.companyEic }}
+                      </p>
+                    </div>
+                    <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Company Owner:
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.recipientCompany.companyOwnerName }}
+                      </p>
+                    </div>
+                    <div class="row m-0">
+                      <p class="invoice-date-title col-6 p-0 pr-1">
+                        Company Vat No (if exists):
+                      </p>
+                      <p class="invoice-date col-6 p-0">
+                        {{ data.item.recipientCompany.companyVatEic }}
+                      </p>
+                    </div>
+                   
+                    </b-card>
+                </div>
+              </div>
+            </b-card-body>
+         
+              
                 <!-- Invoice Description: Table -->
                 <b-table-lite
                   responsive
@@ -416,11 +452,22 @@
                 <!-- Invoice Description: Total -->
                 <b-card-body class="invoice-padding pb-0">
                   <b-row class="invoiceStat">
+
+                    <!-- Col: Sales Persion -->
+                    <b-col
+                      cols="12"
+                      md="6"
+                      class="mt-md-0 mt-3"
+                      order="2"
+                      order-md="1"
+                    >
+                    </b-col>
+
                     <!-- Col: Total -->
                     <b-col
                       cols="12"
                       md="6"
-                      class="mt-md-6 d-flex justify-content-left"
+                      class="mt-md-6 d-flex justify-content-end"
                       order="1"
                       order-md="2"
                     >
@@ -538,7 +585,7 @@
 <script>
 import {
   BCard, BRow, BCol,BCardBody, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
-  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip,BTableLite,BCardText,BAlert,VBToggle
+  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip,BTableLite,BCardText,BAlert,VBToggle,BCardHeader
 } from 'bootstrap-vue'
 import { avatarText } from '@core/utils/filter'
 import vSelect from 'vue-select'
@@ -615,7 +662,8 @@ export default {
     BCardText,
     BAlert,
     VBToggle,
-    VueHtml2pdf
+    VueHtml2pdf,
+    BCardHeader
   },
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
@@ -733,5 +781,11 @@ export default {
 }
 .invoice-preview-list .invoice-date-title,.invoiceStat .invoice-total-item .invoice-total-title{
   font-weight: bold !important;
+}
+.invoice-preview-list .invoice-date{
+  font-weight: 400 !important;
+}
+.flex-1{
+  flex: 1;
 }
 </style>

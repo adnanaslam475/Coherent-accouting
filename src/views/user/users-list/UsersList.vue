@@ -79,7 +79,12 @@
         <span
           class="font-weight-bold"
         >
-          #{{ data.value }}
+          <b-link
+            :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+            class="font-weight-bold d-block text-nowrap"
+          >
+            #{{ data.value }}
+          </b-link>
         </span>
       </template>
 
@@ -102,6 +107,15 @@
             </b-link>
             <small>{{ data.item.firstMiddleAndLastName }}</small>
           </b-media>
+        </template>
+
+        <template #cell(identificationNumber)="data">
+          <b-link
+            :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+            class="font-weight-bold d-block text-nowrap"
+          >
+            <span class="text-nowrap text-capitalize">{{ data.value }}</span>
+          </b-link>
         </template>
 
         <template #cell(idcardNumber)="data">
@@ -133,7 +147,7 @@
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
 
-            <b-dropdown-item>
+            <b-dropdown-item @click="UserDelete(data.item.id,refetchData)">
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
             </b-dropdown-item>
@@ -203,6 +217,8 @@ import UsersListFilters from './UsersListFilters.vue'
 import useUsersList from './useUsersList'
 import userStoreModule from '../userStoreModule'
 import UserListAddNew from './UserListAddNew.vue'
+import useJwt from "@/auth/jwt/useJwt";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 export default {
   components: {
@@ -224,6 +240,35 @@ export default {
     BPagination,
 
     vSelect,
+  },
+  methods: {
+    UserDelete(id, refetchData) {
+      let token = useJwt.getToken()
+      useJwt
+        .DeleteUser(token,id)
+        .then((response) => {
+          
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `User Deleted Successfully`,
+              icon: "DeleteIcon",
+              variant: "success",
+            },
+          });
+          refetchData()
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "DeleteIcon",
+              variant: "error",
+            },
+          });
+        });
+    }
   },
   setup() {
     const USER_APP_STORE_MODULE_NAME = 'app-user'

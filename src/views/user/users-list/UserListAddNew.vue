@@ -39,38 +39,6 @@
           @reset.prevent="resetForm"
         >
           
-
-        <validation-provider
-            #default="validationContext"
-            name="Id"
-            rules="required"
-          >
-            <b-form-group
-              label="Id"
-              label-for="id"
-            >
-  
-                <b-input-group
-                  class="input-group-merge"
-                >
-                  <b-input-group-prepend is-text>
-                    <feather-icon icon="HashIcon" />
-                  </b-input-group-prepend>
-
-                  <b-form-input
-                    id="id"
-                    v-model="userData.id"
-                    :state="getValidationState(validationContext)"
-                    trim
-                  />
-                </b-input-group>
-
-              <b-form-invalid-feedback>
-                {{ validationContext.errors[0] }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </validation-provider>
-
           <!-- Full Name -->
           <validation-provider
             #default="validationContext"
@@ -78,7 +46,7 @@
             rules="required"
           >
             <b-form-group
-              label="FirstMiddleAndLastName"
+              label="Full Name"
               label-for="firstMiddleAndLastName"
             >
               <b-form-input
@@ -124,7 +92,7 @@
             rules="required"
           >
             <b-form-group
-              label="IdCardNumber"
+              label="Id Card Number"
               label-for="idcardNumber"
             >
               <b-form-input
@@ -146,7 +114,7 @@
             rules="required"
           >
             <b-form-group
-              label="IdentificationNumber"
+              label="Identification Number"
               label-for="identificationNumber"
             >
               <b-form-input
@@ -168,7 +136,7 @@
             rules="required"
           >
             <b-form-group
-              label="VatIdentificationNumber"
+              label="Vat Identification Number"
               label-for="vatIdentificationNumber"
             >
               <b-form-input
@@ -272,7 +240,6 @@ export default {
     const blankUserData = {
       address: '',
       firstMiddleAndLastName: '',
-      id: '',
       idcardNumber: '',
       identificationNumber: '',
       vatIdentificationNumber: '',
