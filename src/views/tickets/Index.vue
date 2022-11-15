@@ -45,10 +45,6 @@
           sm="6"
           class="d-flex align-items-center justify-content-center justify-content-sm-start"
         >
-          <!-- <span class="text-muted"
-            >Showing {{ currentPage + 9 - 9 }} to {{ currentPage + 9 }} of
-            {{ this.totalRecords }} entries</span
-          > -->
         </b-col>
         <!-- Pagination -->
         <b-col
@@ -68,7 +64,6 @@
             prev-text
             @input="getAllTickets"
           >
-            <!--              @input="getNewRecord"-->
             <template #prev-text>
               <feather-icon
                 icon="ChevronLeftIcon"
@@ -92,6 +87,7 @@
       ok-title="Submit"
       cancel-variant="outline-secondary"
       @ok="handleOk"
+      @close="resetModal"
     >
       <b-card-text>
         <b-form @submit.prevent="createTicket()">
@@ -185,9 +181,7 @@ export default {
   },
   data() {
     return {
-      ticket: {
-        title: 'hellow',
-      },
+      ticket: {},
       fields: [
         {
           key: 'title',
