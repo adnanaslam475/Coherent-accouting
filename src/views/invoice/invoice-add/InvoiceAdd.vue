@@ -8,6 +8,26 @@
             <b-card no-body class="invoice-preview-card">
               <!-- Header -->
               <b-card-body class="invoice-padding pb-0 px-0">
+
+                <div class="accountType">
+                  <b-form-radio
+                    v-model="AccountTypeOption"
+                    plain
+                    name="accountTypeoptions"
+                    value="company"
+                  >
+                    <h5>COMPANY</h5>
+                  </b-form-radio>
+                  <b-form-radio
+                    v-model="AccountTypeOption"
+                    plain
+                    name="accountTypeoptions"
+                    value="person"
+                  >
+                    <h5>PERSON</h5>
+                  </b-form-radio>
+      
+                </div>
                 <div
                   class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2"
                 >
@@ -16,7 +36,7 @@
                     <div class="d-flex align-items-center mb-1">
                       <span class="title mr-1"> Supplier Company Name: </span>
                       <b-input-group
-                        class="input-group-merge invoice-edit-input-group"
+                        class="input-group invoice-edit-input-group"
                       >
                         <validation-provider
                           #default="{ errors }"
@@ -36,7 +56,7 @@
                       </span>
 
                       <b-input-group
-                        class="input-group-merge invoice-edit-input-group"
+                        class="input-group invoice-edit-input-group"
                       >
                         <validation-provider
                           #default="{ errors }"
@@ -55,7 +75,7 @@
                         Supplier Company ID Number:
                       </span>
                       <b-input-group
-                        class="input-group-merge invoice-edit-input-group"
+                        class="input-group invoice-edit-input-group"
                       >
                         <validation-provider
                           #default="{ errors }"
@@ -72,7 +92,7 @@
                     <div class="d-flex align-items-center mb-1">
                       <span class="title mr-1"> Supplier Company Owner: </span>
                       <b-input-group
-                        class="input-group-merge invoice-edit-input-group"
+                        class="input-group invoice-edit-input-group"
                       >
                         <validation-provider
                           #default="{ errors }"
@@ -93,7 +113,7 @@
                         Supplier Company Vat No (if exists):
                       </span>
                       <b-input-group
-                        class="input-group-merge invoice-edit-input-group"
+                        class="input-group invoice-edit-input-group"
                       >
                         <b-form-input
                           v-model="invoiceData.supplierCompany.companyVatEic"
@@ -145,9 +165,11 @@
 
                   <div class="mt-md-0 mt-2">
                     <div class="d-flex align-items-center mb-1">
-                      <span class="title mr-1"> Recipient Company Name: </span>
+                      <span v-if="AccountTypeOption=='company'" class="title mr-1">Recipient Company Name:</span> 
+                      <span v-if="AccountTypeOption=='person'" class="title mr-1">Person Name:</span>         
                       <b-input-group
-                        class="input-group-merge invoice-edit-input-group"
+                        v-if="AccountTypeOption=='company'"
+                        class="input-group invoice-edit-input-group"
                       >
                         <validation-provider
                           #default="{ errors }"
@@ -155,43 +177,55 @@
                           rules="required"
                         >
                           <b-form-input
-                            v-model="invoiceData.recipientCompany.companName"
+                            :v-model="AccountTypeOption=='company' ? invoiceData.recipientCompany.companName : ''"
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </b-input-group>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
-                      <span class="title mr-1">
-                        Recipient Company Address:
-                      </span>
                       <b-input-group
-                        class="input-group-merge invoice-edit-input-group"
+                        v-if="AccountTypeOption=='person'"
+                        class="input-group invoice-edit-input-group"
                       >
                         <validation-provider
                           #default="{ errors }"
-                          name="recipientCompanyAddress"
+                          name="personName"
                           rules="required"
                         >
                           <b-form-input
-                            v-model="
-                              invoiceData.recipientCompany.companyAddress
-                            "
+                            :v-model="AccountTypeOption=='person' ? invoiceData.recipientCompany.companyOwnerName : ''"
+                          />
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
+                      </b-input-group>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-1">
+                      <span class="title mr-1" v-if="AccountTypeOption=='company'">Recipient Company Address:</span>
+                      <span class="title mr-1" v-if="AccountTypeOption=='person'">Person Address:</span>  
+                      <b-input-group
+                        class="input-group invoice-edit-input-group"
+                      >
+                        <validation-provider
+                          #default="{ errors }"
+                          :name="AccountTypeOption=='company' ? 'recipientCompanyAddress' : 'personAddress'"
+                          rules="required"
+                        >
+                          <b-form-input
+                            v-model="invoiceData.recipientCompany.companyAddress"
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </b-input-group>
                     </div>
                     <div class="d-flex align-items-center mb-1">
-                      <span class="title mr-1">
-                        Recipient Company ID Number:
-                      </span>
+                      <span class="title mr-1" v-if="AccountTypeOption=='company'">Recipient Company ID Number:</span>
+                      <span class="title mr-1" v-if="AccountTypeOption=='person'">Person ID Number:</span>  
                       <b-input-group
-                        class="input-group-merge invoice-edit-input-group"
+                        class="input-group invoice-edit-input-group"
                       >
                         <validation-provider
                           #default="{ errors }"
-                          name="recipientCompanyIdNumber"
+                          :name="AccountTypeOption=='company' ? 'recipientCompanyIdNumber' : 'personIdNumber'"
                           rules="required"
                         >
                           <b-form-input
@@ -201,35 +235,33 @@
                         </validation-provider>
                       </b-input-group>
                     </div>
-                    <div class="d-flex align-items-center mb-1">
+                    <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
                       <span class="title mr-1"> Recipient Company Owner: </span>
                       <b-input-group
-                        class="input-group-merge invoice-edit-input-group"
+                        class="input-group invoice-edit-input-group"
                       >
                         <validation-provider
                           #default="{ errors }"
                           name="recipientCompanyOwner"
-                          rules="required"
+                          :rules="AccountTypeOption=='company' ? 'required' : ''"
                         >
                           <b-form-input
-                            v-model="
-                              invoiceData.recipientCompany.companyOwnerName
-                            "
+                            :v-model="AccountTypeOption == 'company' ? invoiceData.recipientCompany.companyOwnerName : ''"
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </b-input-group>
                     </div>
-                    <div class="d-flex align-items-center mb-1">
+                    <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
                       <span class="title mr-1">
                         Recipient Company Vat No (if exists):
                       </span>
                       <b-input-group
-                        class="input-group-merge invoice-edit-input-group"
+                        class="input-group invoice-edit-input-group"
                       >
                         <b-form-input
                           companyOwnerName
-                          v-model="invoiceData.recipientCompany.companyVatEic"
+                          :v-model="AccountTypeOption=='company' ? invoiceData.recipientCompany.companyVatEic : ''"
                         />
                       </b-input-group>
                     </div>
@@ -695,6 +727,7 @@ import {
   BPopover,
   VBToggle,
   BSpinner,
+  BFormRadio
 } from "bootstrap-vue";
 import vSelect from "vue-select";
 import flatPickr from "vue-flatpickr-component";
@@ -726,10 +759,12 @@ export default {
     BSpinner,
     ValidationProvider,
     ValidationObserver,
+    BFormRadio
   },
   data() {
     return {
       loading: false,
+      AccountTypeOption: "company"
     };
   },
   directives: {
@@ -792,7 +827,7 @@ export default {
                       variant: "success",
                     },
                   });
-                  location.reload();
+                  // location.reload();
                 })
                 .catch((error) => {
                   this.loading = false
@@ -975,4 +1010,11 @@ export default {
 .invoice-add .invoice-total-wrapper {
   max-width: 25rem !important;
 }
+.accountType{
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+  margin-bottom: 2rem;
+}
+
 </style>

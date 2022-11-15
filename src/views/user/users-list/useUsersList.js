@@ -15,7 +15,7 @@ export default function useUsersList() {
   // Table Handlers
   const tableColumns = [
     { key: 'id', label: '#', sortable: true },
-    { key: 'user', sortable: true },
+    { key: 'firstMiddleAndLastName', label: "user", sortable: true },
     { key: 'identificationNumber', sortable: true },
     { key: 'vatIdentificationNumber', sortable: true, formatter: val => `${val?val:""}` },
     { key: 'address', sortable: true, formatter: val => `${val?val:""}` },
@@ -56,7 +56,8 @@ export default function useUsersList() {
         sortField: sortBy.value,
         direction: isSortDirDesc.value,
         currentPage: currentPage.value, 
-        perPage: perPage.value
+        perPage: perPage.value,
+        q: searchQuery.value
       })
       .then(response => {
         const { elements, totalElements } = response.data

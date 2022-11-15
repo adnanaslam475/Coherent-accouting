@@ -63,7 +63,9 @@ export default function useInvoicesList() {
         direction: isSortDirDesc.value,
         verified: true,
         currentPage : currentPage.value,
-        perPage: perPage.value
+        perPage: perPage.value,
+        q: searchQuery.value
+
       })
       .then(response => {
         const { elements, totalElements } = response.data
