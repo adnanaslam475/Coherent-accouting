@@ -173,7 +173,7 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
     {
       path: '/company/create',
@@ -184,14 +184,14 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Companies',
-            to: '/companies'
+            to: '/companies',
           },
           {
             text: 'Create Company',
             active: true,
           },
         ],
-      }
+      },
     },
     {
       path: '/company/:id',
@@ -202,18 +202,18 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Companies',
-            to: '/companies'
+            to: '/companies',
           },
           {
             text: 'View Company',
             active: true,
           },
         ],
-      }
+      },
     },
     // Invoice routes starting from here
     {
-      path:'/invoices',
+      path: '/invoices',
       name: 'invoices',
       component: () => import('@/views/invoice/Index.vue'),
     },
