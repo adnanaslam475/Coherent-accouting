@@ -28,8 +28,6 @@
               </validation-provider>
             </b-form-group>
           </b-col>
-
-
           <!--          <b-col md="6">-->
           <!--            <b-form-group-->
           <!--                label="Old Password"-->
