@@ -30,8 +30,8 @@
               class="align-middle text-body ml-1"
             />
           </template>
-          <b-dropdown-item @click="editTicket(data.item, data.item.id)">
-            <feather-icon icon="EditIcon" />
+          <b-dropdown-item @click="editTicket(data.item)">
+            <feather-icon icon="EditIcon"/>
             <span class="align-middle ml-50">Edit</span>
           </b-dropdown-item>
         </b-dropdown>
@@ -86,41 +86,125 @@
       title="Add New Ticket"
       ok-title="Submit"
       cancel-variant="outline-secondary"
-      @ok="handleOk"
+      @ok="validationCreateTicket"
       @close="resetModal"
+      @show="resetModal"
     >
       <b-card-text>
-        <b-form @submit.prevent="createTicket()">
-          <b-row>
-            <b-col sm="12">
-              <b-form-group
-                label="Title"
-                label-for="title"
-              >
-                <b-form-input
-                  v-model="ticket.title"
-                  name="title"
-                  placeholder="Title"
-                />
-              </b-form-group>
-            </b-col>
-            <b-col sm="12">
-              <b-form-group
-                label="Description"
-                label-for="last-name"
-              >
-
-                <b-form-textarea
-                  id="textarea-default"
-                  v-model="ticket.ticketContent"
-                  placeholder="Textarea"
-                  rows="3"
-                />
-              </b-form-group>
-            </b-col>
-          </b-row>
-        </b-form>
+        <validation-observer ref="simpleRules">
+          <b-form @submit.prevent="validationCreateTicket()">
+            <b-row>
+              <b-col sm="12">
+                <b-form-group
+                  label="Title"
+                  label-for="title"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="Title"
+                    vid="Title"
+                    rules="required"
+                  >
+                    <b-form-input
+                      v-model="ticket.title"
+                      :state="errors.length > 0 ? false:null"
+                      name="title"
+                      placeholder="Title"
+                    />
+                    <small class="text-danger">{{ errors[0] }}</small>
+                  </validation-provider>
+                </b-form-group>
+              </b-col>
+              <b-col sm="12">
+                <b-form-group
+                  label="Description"
+                  label-for="last-name"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="Description"
+                    vid="Description"
+                    rules="required"
+                  >
+                    <b-form-textarea
+                      id="textarea-default"
+                      v-model="ticket.ticketContent"
+                      placeholder="Textarea"
+                      rows="3"
+                    />
+                    <small class="text-danger">{{ errors[0] }}</small>
+                  </validation-provider>
+                </b-form-group>
+              </b-col>
+            </b-row>
+          </b-form>
+        </validation-observer>
       </b-card-text>
+      <template #modal-footer>
+        <button v-b-modal.modal-close_visit class="btn btn-outline-primary">Close</button>
+        <button @click="validationCreateTicket()" v-b-modal.modal-close_visit class="btn btn-primary">Submit</button>
+      </template>
+    </b-modal>
+    <b-modal
+      id="ticket-update-modal"
+      title="Update Ticket"
+      ok-title="Update"
+      cancel-variant="outline-secondary"
+      @ok="validationUpdateTicket"
+    >
+      <b-card-text>
+        <validation-observer ref="simpleRules">
+          <b-form @submit.prevent="validationUpdateTicket()">
+            <b-row>
+              <b-col sm="12">
+                <b-form-group
+                  label="Title"
+                  label-for="title"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="Title"
+                    vid="Title"
+                    rules="required"
+                  >
+                    <b-form-input
+                      v-model="ticket.title"
+                      name="title"
+                      placeholder="Title"
+                    />
+                    <small class="text-danger">{{ errors[0] }}</small>
+                  </validation-provider>
+                </b-form-group>
+              </b-col>
+              <b-col sm="12">
+                <b-form-group
+                  label="Description"
+                  label-for="last-name"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="Description"
+                    vid="Description"
+                    rules="required"
+                  >
+                    <b-form-textarea
+                      id="textarea-default"
+                      v-model="ticket.ticketContent"
+                      placeholder="Textarea"
+                      rows="3"
+                    />
+                    <small class="text-danger">{{ errors[0] }}</small>
+                  </validation-provider>
+                </b-form-group>
+              </b-col>
+            </b-row>
+          </b-form>
+        </validation-observer>
+      </b-card-text>
+      <template #modal-footer>
+        <button v-b-modal.modal-close_visit class="btn btn-outline-primary">Close</button>
+        <button @click="validationUpdateTicket()" v-b-modal.modal-close_visit class="btn btn-primary">Update</button>
+      </template>
     </b-modal>
   </b-card>
 </template>
@@ -149,33 +233,37 @@ import {
 import axios from '@/libs/axios'
 // eslint-disable-next-line import/extensions
 import BCardCode from '@core/components/b-card-code/BCardCode'
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
-import { required } from '@validations'
+import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
+import { required, min } from 'vee-validate/dist/rules'
+
+extend('required', required)
+extend('min', min)
+
 
 export default {
   components: {
     BFormTextarea,
     BForm,
     BFormGroup,
+    BCard,
+    BRow,
+    BCol,
+    BFormInput,
+    BDropdown,
+    BDropdownItem,
+    BPagination,
+    BCardText,
+    BButton,
+    BTable,
+    BMedia,
+    BAvatar,
+    BTooltip,
     BCardCode,
     BTable,
     BProgress,
     BBadge,
     BButton,
     BLink,
-    BCard,
-    BRow,
-    BCol,
-    BFormInput,
-    BButton,
-    BTable,
-    BMedia,
-    BAvatar,
-    BDropdown,
-    BDropdownItem,
-    BPagination,
-    BTooltip,
-    BCardText,
     ValidationProvider,
     ValidationObserver,
   },
@@ -194,6 +282,7 @@ export default {
         {
           key: 'creationDate',
           label: 'Created Date',
+          tdClass: 'width-25',
         },
         {
           key: 'answer',
@@ -238,9 +327,18 @@ export default {
         this.makeToast('success', 'Success', 'Ticket Created Successfully')
       }
     },
+    async updateTicket() {
+      const data = await axios.put(`/account/api/ticket/update-ticket/${this.ticket.id}`, this.ticket)
+      if (data.status === 200) {
+        await this.getAllTickets()
+        this.resetModal()
+        this.makeToast('success', 'Success', 'Ticket Updated Successfully')
+      }
+    },
     resetModal() {
       this.ticket = {}
       this.$bvModal.hide('ticket-create-modal')
+      this.$bvModal.hide('ticket-update-modal')
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
@@ -258,15 +356,34 @@ export default {
         solid: false,
       })
     },
-    editTicket(ticket, id) {
-      this.ticket.title = ticket.title
-      this.ticket.ticketContent = ticket.ticketContent
-      console.log(ticket, id)
-      this.$bvModal.show('ticket-create-modal')
+    editTicket(ticket) {
+      this.ticket = ticket
+      this.$bvModal.show('ticket-update-modal')
     },
+    validationCreateTicket() {
+      this.$refs.simpleRules.validate()
+        .then(success => {
+          if (success) {
+            // eslint-disable-next-line
+            this.createTicket()
+          }
+        })
+    },
+    validationUpdateTicket() {
+      this.$refs.simpleRules.validate()
+        .then(success => {
+          if (success) {
+            // eslint-disable-next-line
+            this.updateTicket()
+          }
+        })
+    },
+
   },
 }
 </script>
-<style lang="">
-/*  */
+<style scoped>
+.width-25 {
+  width: 25px;
+}
 </style>
