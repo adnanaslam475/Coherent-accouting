@@ -91,5 +91,7 @@ export default {
 </script>
 
 <style>
-
+span.b-avatar-text span{
+  color: #ffc0cb!important;
+}
 </style>

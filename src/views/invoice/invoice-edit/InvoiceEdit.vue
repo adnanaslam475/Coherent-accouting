@@ -38,7 +38,7 @@
               <!-- Header -->
               <b-card-body class="invoice-padding pb-0">
 
-                <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2">
+                <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input">
 
                     <!-- Header: Left Content -->
                     <div class="mt-md-0 mt-2">
@@ -134,7 +134,7 @@
                     <!-- Header: Right Content -->
                     <div class="invoice-number-date mt-md-0 mt-2">
                       <div class="d-flex align-items-center mb-1">
-                        <h4 class="invoice-title">Invoice</h4>
+                        <h4 class="title mr-1">Invoice</h4>
                         <validation-provider
                           #default="{ errors }"
                           name="invoiceNumber"
@@ -681,6 +681,7 @@
                 variant="outline-primary"
                 class="mb-75"
                 block
+                :to="{ name: 'apps-invoice-preview', params: { id: invoiceData.id }}"
               >
                 Preview
               </b-button>
@@ -980,5 +981,13 @@ background-color:$product-details-bg;
 }
 .invoice-add .invoice-total-wrapper {
   max-width: 25rem !important;
+}
+.invoice-add-input span.title.mr-1 {
+  width: 12rem !important;
+  min-width: 12rem !important;
+}
+.invoice-add-input .invoice-number-date .title.mr-1 {
+  width: 5rem !important;
+  min-width: 5rem !important;
 }
 </style>

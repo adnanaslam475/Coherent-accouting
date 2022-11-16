@@ -1,7 +1,7 @@
 <template>
   <section class="invoice-add-wrapper">
     <validation-observer ref="invoiceForm" #default="{ invalid }">
-      <b-form @submit.prevent="invoiceAdd(invoiceData)">
+      <b-form @submit.prevent="invoiceAdd(invoiceData,AccountTypeOption)">
         <b-row class="invoice-add">
           <!-- Col: Left (Invoice Container) -->
           <b-col cols="12" xl="10" md="10">
@@ -29,7 +29,7 @@
       
                 </div>
                 <div
-                  class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2"
+                  class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input"
                 >
                   <!-- Header: Left Content -->
                   <div class="mt-md-0 mt-2">
@@ -125,7 +125,7 @@
                   <!-- Header: Right Content -->
                   <div class="invoice-number-date mt-md-0 mt-2">
                     <div class="d-flex align-items-center mb-1">
-                      <h4 class="invoice-title">Invoice</h4>
+                      <h4 class="title mr-1">Invoice</h4>
                       <validation-provider
                         #default="{ errors }"
                         name="invoiceNumber"
@@ -168,31 +168,20 @@
                       <span v-if="AccountTypeOption=='company'" class="title mr-1">Recipient Company Name:</span> 
                       <span v-if="AccountTypeOption=='person'" class="title mr-1">Person Name:</span>         
                       <b-input-group
-                        v-if="AccountTypeOption=='company'"
                         class="input-group invoice-edit-input-group"
                       >
                         <validation-provider
                           #default="{ errors }"
-                          name="recipientCompanyName"
+                          :name="AccountTypeOption == 'company' ? 'recipientCompanyName' : 'personName'"
                           rules="required"
                         >
                           <b-form-input
-                            :v-model="AccountTypeOption=='company' ? invoiceData.recipientCompany.companName : ''"
+                            v-if="AccountTypeOption == 'company'"
+                            v-model="invoiceData.recipientCompany.companName"
                           />
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </b-input-group>
-                      <b-input-group
-                        v-if="AccountTypeOption=='person'"
-                        class="input-group invoice-edit-input-group"
-                      >
-                        <validation-provider
-                          #default="{ errors }"
-                          name="personName"
-                          rules="required"
-                        >
                           <b-form-input
-                            :v-model="AccountTypeOption=='person' ? invoiceData.recipientCompany.companyOwnerName : ''"
+                            v-if="AccountTypeOption == 'person'"
+                            v-model="invoiceData.recipientCompany.companyOwnerName"
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
@@ -246,7 +235,7 @@
                           :rules="AccountTypeOption=='company' ? 'required' : ''"
                         >
                           <b-form-input
-                            :v-model="AccountTypeOption == 'company' ? invoiceData.recipientCompany.companyOwnerName : ''"
+                            v-model="invoiceData.recipientCompany.companyOwnerName"
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
@@ -261,7 +250,7 @@
                       >
                         <b-form-input
                           companyOwnerName
-                          :v-model="AccountTypeOption=='company' ? invoiceData.recipientCompany.companyVatEic : ''"
+                          v-model="invoiceData.recipientCompany.companyVatEic"
                         />
                       </b-input-group>
                     </div>
@@ -678,7 +667,10 @@
                 variant="outline-primary"
                 class="mb-75"
                 block
+                type="submit"
+                :disabled="invalid || loading"
               >
+                <b-spinner v-if="loading" small variant="light" />
                 Preview
               </b-button>
 
@@ -763,8 +755,7 @@ export default {
   },
   data() {
     return {
-      loading: false,
-      AccountTypeOption: "company"
+      loading: false
     };
   },
   directives: {
@@ -805,7 +796,13 @@ export default {
         this.trSetHeight(this.$refs.form.scrollHeight);
       });
     },
-    invoiceAdd(invoiceData) {
+    invoiceAdd(invoiceData,AccountTypeOption) {
+
+      if(AccountTypeOption == 'person'){
+         invoiceData.recipientCompany.companName = ''
+         invoiceData.recipientCompany.companyVatEic = ''
+      }
+      
       invoiceData.transactions.map(item =>{
         item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
         return item
@@ -818,7 +815,6 @@ export default {
                 .addInvoice(token, invoiceData)
                 .then((response) => {
                   this.loading = false
-                  
                   this.$toast({
                     component: ToastificationContent,
                     props: {
@@ -827,7 +823,7 @@ export default {
                       variant: "success",
                     },
                   });
-                  // location.reload();
+                  this.$router.push({ name: 'apps-invoice-preview', params: { id: response.data.id }})
                 })
                 .catch((error) => {
                   this.loading = false
@@ -856,7 +852,7 @@ export default {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
-
+    var AccountTypeOption = "company"
     const itemFormBlankItem = {
       serviceOrItemDescription: "",
       singleAmountTransaction: 0.00,
@@ -941,6 +937,7 @@ export default {
     }
  
     return {
+      AccountTypeOption,
       invoiceData,
       itemFormBlankItem,
       vatAmount,
@@ -1016,5 +1013,12 @@ export default {
   justify-content: end;
   margin-bottom: 2rem;
 }
-
+.invoice-add-input span.title.mr-1 {
+  width: 12rem !important;
+  min-width: 12rem !important;
+}
+.invoice-add-input .invoice-number-date .title.mr-1 {
+  width: 5rem !important;
+  min-width: 5rem !important;
+}
 </style>
