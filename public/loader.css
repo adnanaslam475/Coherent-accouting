@@ -82,3 +82,8 @@ body {
     opacity: 1;
   }
 }
+.button-position-right {
+  right: 0px;
+  top: 0;
+  position: absolute;
+}

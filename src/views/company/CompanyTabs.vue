@@ -13,8 +13,11 @@
             margin-right: -21px;
             margin-left: -21px;
           "
-        ></div>
-        <CompanyInfo :companyTab="companyTab" @state="update($event)" />
+        />
+        <CompanyInfo
+          :company-tab="companyTab"
+          @state="update($event)"
+        />
       </b-tab>
 
       <b-tab>
@@ -137,16 +140,16 @@
 </template>
 
 <script>
-import BCardCode from "@core/components/b-card-code";
-import CompanyInfo from "./CompanyInfo/CompanyInfo.vue";
-import Invoice from "./Invoice/Invoice.vue";
-import VATMonthReport from "./VATMonthReports/VATMonthReport.vue";
-import YearlyReport from "./YearlyReports/YearlyReport.vue";
-import NotVerifiedInvoice from "./Invoice/NotVerifiedInvoice.vue";
-import Document from "./Documents/Document.vue";
-import PrivatePersons from "./PrivatePersons/PrivatePerson.vue";
-import { codeIcon } from "./code";
-import { BTabs, BTab, BCardText } from "bootstrap-vue";
+import BCardCode from '@core/components/b-card-code'
+import { BTabs, BTab, BCardText } from 'bootstrap-vue'
+import CompanyInfo from './CompanyInfo/CompanyInfo.vue'
+import Invoice from './Invoice/Invoice.vue'
+import VATMonthReport from './VATMonthReports/VATMonthReport.vue'
+import YearlyReport from './YearlyReports/YearlyReport.vue'
+import NotVerifiedInvoice from './Invoice/NotVerifiedInvoice.vue'
+import Document from './Documents/Document.vue'
+import PrivatePersons from './PrivatePersons/PrivatePerson.vue'
+import { codeIcon } from './code'
 
 export default {
   components: {
@@ -157,23 +160,23 @@ export default {
     YearlyReport,
     NotVerifiedInvoice,
     Document,
-    PrivatePersons,
     BTabs,
     BTab,
+    PrivatePersons,
     BCardText,
   },
   data() {
     return {
       codeIcon,
       companyTab: 0,
-    };
+    }
   },
   methods: {
     update(value) {
-      this.companyTab = value;
+      this.companyTab = value
     },
   },
-};
+}
 </script>
 
 <style lang="scss">
