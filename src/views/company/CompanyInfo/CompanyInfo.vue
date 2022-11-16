@@ -62,7 +62,7 @@
                       <b-link
                         :to="{
                           name: 'EditCompany',
-                          params: { id: this.companyRecord.id },
+                          params: { id:  this.companyID },
                         }"
                         class="btn btn-primary"
                         >Edit
@@ -159,7 +159,8 @@
                       <span class="font-weight-bold">Owner Name</span>
                     </th>
                     <td class="pb-50">
-                      {{ this.companyRecord.companyOwnerApi.companyOwnerName}}
+                      <!-- {{ this.companyRecord.companyOwnerApi.companyOwnerName }} -->
+                      {{this.companyOwnerName}}
                     </td>
                   </tr>
                   <tr>
@@ -313,6 +314,7 @@ export default {
     return {
       companyID: "",
       companyRecord: [],
+      companyOwnerName: ""
     };
   },
 
@@ -362,6 +364,8 @@ export default {
 
       if (data.data != "") {
         this.companyRecord = data.data;
+        this.companyOwnerName = data.data.companyOwnerApi.companyOwnerName;
+        console.log(this.companyOwnerName);
       }
     },
   },
