@@ -152,10 +152,10 @@
               class="align-middle text-body ml-1"
             />
           </template>
-          <b-dropdown-item>
+          <!-- <b-dropdown-item>
             <feather-icon icon="DownloadIcon" />
             <span class="align-middle ml-50">Download</span>
-          </b-dropdown-item>
+          </b-dropdown-item> -->
           <b-dropdown-item
             :to="{
               name: 'EditCompany',
@@ -173,10 +173,10 @@
               >Delete</span
             >
           </b-dropdown-item>
-          <b-dropdown-item>
+          <!-- <b-dropdown-item>
             <feather-icon icon="CopyIcon" />
             <span class="align-middle ml-50">Duplicate</span>
-          </b-dropdown-item>
+          </b-dropdown-item> -->
         </b-dropdown>
 
         <!-- </b-button> -->

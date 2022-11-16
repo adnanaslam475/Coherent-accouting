@@ -36,11 +36,11 @@
         <Invoice />
       </b-tab>
 
-      <b-tab>
+      <!-- <b-tab>
         <template #title>
           <feather-icon icon="DollarSignIcon" />
           <span style="font-size: 13px">Create Invoice</span>
-        </template>
+        </template> -->
         <!-- <div
           style="
             height: 30px;
@@ -49,8 +49,8 @@
             margin-left: -21px;
           "
         ></div> -->
-        <VATMonthReport />
-      </b-tab>
+        <!-- <VATMonthReport />
+      </b-tab> -->
 
       <b-tab>
         <template #title>

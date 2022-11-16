@@ -89,7 +89,7 @@
       </template>
 
         <!-- Column: User -->
-        <template #cell(user)="data">
+        <template #cell(firstMiddleAndLastName)="data">
           <b-media vertical-align="center">
             <template #aside>
               <b-avatar
@@ -100,26 +100,38 @@
               />
             </template>
             <b-link
-              :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-              class="font-weight-bold d-block text-nowrap"
-            >
-              {{ data.item.firstMiddleAndLastName }}
-            </b-link>
-            <small>{{ data.item.firstMiddleAndLastName }}</small>
+            :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+            class="font-weight-bold d-block text-nowrap"
+          >
+                {{ data.item.firstMiddleAndLastName }}
+              </b-link>
+              <b-badge
+                  pill
+                  :variant="`light-success`"
+                  class="text-capitalize"
+                >
+                <small>{{ data.item.firstMiddleAndLastName }}</small>
+              </b-badge>
+            
+      
+            
           </b-media>
         </template>
 
         <template #cell(identificationNumber)="data">
-          <b-link
-            :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-            class="font-weight-bold d-block text-nowrap"
-          >
-            <span class="text-nowrap text-capitalize">{{ data.value }}</span>
-          </b-link>
+
+               <b-badge
+                :href="{ name: 'apps-users-view', params: { id: data.item.id } }"
+                variant="primary"
+                class="text-capitalize"
+              >
+              <span class="text-nowrap text-capitalize">{{ data.value }}</span>
+            </b-badge>
+          
         </template>
 
         <template #cell(idcardNumber)="data">
-          <span class="text-nowrap text-capitalize">{{ data.value }}</span>
+            <span class="text-nowrap text-capitalize">{{ data.value }}</span>
         </template>
 
         <!-- Column: Actions -->

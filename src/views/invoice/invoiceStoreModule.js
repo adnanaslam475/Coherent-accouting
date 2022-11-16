@@ -15,24 +15,50 @@ export default {
           baseURL: 'http://167.86.93.80:8765',
         })
 
-        let config = {
-          headers: {'Authorization': "Bearer "+token},
-          params: {
-            direction: queryParams.direction ? 'desc' : 'asc',
-            sortField: queryParams.sortField,
-            verified: queryParams.verified
-          },
+        if(queryParams.q){
+
+          let config = {
+            headers: {'Authorization': "Bearer "+token},
+            params: {
+              direction: queryParams.direction ? 'desc' : 'asc',
+              sortField: queryParams.sortField,
+              verified: queryParams.verified,
+              searchTerm: queryParams.q
+            },
+          }
+          return new Promise((resolve, reject) => {
+            axiosInvoice
+              .get(`/account/api/user-invoice/search/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
+              .then((response) =>{
+                resolve(response)
+              })
+              .catch((error) =>{
+                reject(error)
+              })
+          })
+
+        } else{
+
+          let config = {
+            headers: {'Authorization': "Bearer "+token},
+            params: {
+              direction: queryParams.direction ? 'desc' : 'asc',
+              sortField: queryParams.sortField,
+              verified: queryParams.verified
+            },
+          }
+          return new Promise((resolve, reject) => {
+            axiosInvoice
+              .get(`/account/api/user-invoice/list/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
+              .then((response) =>{
+                resolve(response)
+              })
+              .catch((error) =>{
+                reject(error)
+              })
+          })
+
         }
-        return new Promise((resolve, reject) => {
-          axiosInvoice
-            .get(`/account/api/user-invoice/list/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
-            .then((response) =>{
-              resolve(response)
-            })
-            .catch((error) =>{
-              reject(error)
-            })
-        })
     },
     fetchInvoice(ctx, { id }) {
       let token = useJwt.getToken()
