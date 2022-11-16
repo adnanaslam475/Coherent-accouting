@@ -76,23 +76,7 @@
                   <table class="mt-2 mt-xl-0 w-100">
                     <tr v-if="Object.keys(companyRecord).length > 0">
                       <th class="pb-50">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="14px"
-                            height="14px"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="mr-75 feather feather-user"
-                        >
-                          <path
-                              d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-                          ></path>
-                          <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
+                        <feather-icon icon="UserIcon" class="mr-75" />
                         <span class="font-weight-bold">Owner Name</span>
                       </th>
                       <td v-if="Object.keys(companyRecord.companyOwnerApi).length > 0" class="pb-50">
@@ -352,19 +336,19 @@ export default {
       }
 
       await axios(config)
-          .then(response => {
-            console.log(JSON.stringify(response.data))
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Company Deleted!',
-              showConfirmButton: false,
-              timer: 1400,
-            })
+        .then(response => {
+          console.log(JSON.stringify(response.data))
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Company Deleted!',
+            showConfirmButton: false,
+            timer: 1400,
           })
-          .catch(error => {
-            console.log(error)
-          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
       setTimeout(() => {
         this.$router.go(-1)
       }, 1410)
@@ -384,13 +368,13 @@ export default {
     },
     async getStatistics() {
       axios(`/account/api/company/statistics-items-count/${this.$route.params.id}`)
-          .then(response => {
-            this.statisticItems = response.data
-            console.log(response.data)
-          })
-          .catch(error => {
-            console.log(error)
-          })
+        .then(response => {
+          this.statisticItems = response.data
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
   },
   created() {

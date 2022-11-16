@@ -14,8 +14,6 @@
               Report Timeline
             </b-card-title>
           </b-card-header>
-
-          <!-- timeline -->
           <b-card-body>
             <app-timeline>
               <app-timeline-item v-for="(graph, index) in monthlyReportGraph" :key="index" :variant="variants[(variants.length % index)]">
@@ -23,75 +21,44 @@
                   <h6>{{ graph.count }} Reports have been created</h6>
                   <small class="timeline-item-time text-nowrap text-muted ml-1">{{ graph.date }}</small>
                 </div>
-<!--                <p>{{ data.timeline.step1.subtitle }}</p>-->
-<!--                <b-media no-body>-->
-<!--                  <b-media-aside class="mr-1">-->
-<!--                    <b-img-->
-<!--                      :src="data.timeline.step1.img"-->
-<!--                      height="23"-->
-<!--                      :alt="data.timeline.step1.fileName "-->
-<!--                    />-->
-<!--                  </b-media-aside>-->
-<!--                  <b-media-body class="my-auto">-->
-<!--                    <h6 class="media-body mb-0">-->
-<!--                      {{ data.timeline.step1.fileName }}-->
-<!--                    </h6>-->
-<!--                  </b-media-body>-->
-<!--                </b-media>-->
               </app-timeline-item>
-
-<!--              <app-timeline-item variant="warning">-->
-<!--                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">-->
-<!--                  <h6>{{ data.timeline.step2.title }}</h6>-->
-<!--                  <small class="timeline-item-time text-nowrap text-muted ml-1">{{ data.timeline.step2.duration }}</small>-->
-<!--                </div>-->
-<!--                <p>{{ data.timeline.step2.subtitle }}</p>-->
-<!--                <b-media no-body>-->
-<!--                  <b-media-aside class="mr-50">-->
-<!--                    <b-avatar-->
-<!--                      :src="data.timeline.step2.avatar"-->
-<!--                      size="38"-->
-<!--                    />-->
-<!--                  </b-media-aside>-->
-<!--                  <b-media-body class="my-auto">-->
-<!--                    <h6 class="mb-0">-->
-<!--                      {{ data.timeline.step2.avatarName }}-->
-<!--                    </h6>-->
-<!--                    <p class="mb-0">-->
-<!--                      {{ data.timeline.step2.occupation }}-->
-<!--                    </p>-->
-<!--                  </b-media-body>-->
-<!--                </b-media>-->
-<!--              </app-timeline-item>-->
-
-<!--              <app-timeline-item variant="info">-->
-<!--                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">-->
-<!--                  <h6>{{ data.timeline.step3.title }}</h6>-->
-<!--                  <small class="timeline-item-time text-nowrap text-muted ml-1">{{ data.timeline.step3.duration }}</small>-->
-<!--                </div>-->
-<!--                <p>{{ data.timeline.step3.subtitle }}</p>-->
-<!--                <b-avatar-group size="35px">-->
-<!--                  <b-avatar-->
-<!--                    v-for="avatar in data.timeline.step3.avatars"-->
-<!--                    :key="avatar.userImg"-->
-<!--                    v-b-tooltip.hover.top="'Tooltip!'"-->
-<!--                    :src="avatar.userImg"-->
-<!--                    class="pull-up"-->
-<!--                  />-->
-<!--                </b-avatar-group>-->
-<!--              </app-timeline-item>-->
-
-<!--              <app-timeline-item-->
-<!--                :title="data.timeline.step4.title"-->
-<!--                :subtitle="data.timeline.step4.subtitle"-->
-<!--                :time="data.timeline.step4.duration"-->
-<!--                variant="danger"-->
-<!--              />-->
             </app-timeline>
-            <!--/ timeline -->
           </b-card-body>
         </b-card>
+      </b-col>
+      <b-col cols="6">
+        <b-card no-body>
+          <b-card-header>
+            <div>
+              <b-card-sub-title class="mb-25">
+                Balance
+              </b-card-sub-title>
+              <b-card-title>$74,123</b-card-title>
+            </div>
+            <!-- datepicker -->
+            <div class="d-flex align-items-center">
+              <feather-icon
+                icon="CalendarIcon"
+                size="16"
+              />
+              <flat-pickr
+                v-model="rangePicker"
+                :config="{ mode: 'range'}"
+                class="form-control flat-picker bg-transparent border-0 shadow-none"
+                placeholder="YYYY-MM-DD"
+              />
+            </div>
+          </b-card-header>
 
+          <!-- chart -->
+          <b-card-body>
+            <chartjs-component-horizontal-bar-chart
+              :height="400"
+              :data="chartjsData.horizontalBarChart.data"
+              :options="chartjsData.horizontalBarChart.options"
+            />
+          </b-card-body>
+        </b-card>
       </b-col>
 
     </b-row>
@@ -117,8 +84,11 @@ import {
 import AppTimeline from '@core/components/app-timeline/AppTimeline.vue'
 import AppTimelineItem from '@core/components/app-timeline/AppTimelineItem.vue'
 
-import CompanyTabs from './CompanyTabs.vue'
 import axios from '@/libs/axios'
+import ChartjsComponentHorizontalBarChart from '@/views/charts-and-maps/charts/chartjs/charts-components/ChartjsComponentHorizontalBarChart'
+import CompanyTabs from './CompanyTabs.vue'
+import chartjs from '@/views/charts-and-maps/charts/chartjs/Chartjs'
+import chartjsData from '@/views/charts-and-maps/charts/chartjs/chartjsData'
 
 export default {
   name: 'CompanyView',
@@ -138,12 +108,15 @@ export default {
     CompanyTabs,
     AppTimeline,
     AppTimelineItem,
+    ChartjsComponentHorizontalBarChart,
   },
   directives: {
     'b-tooltip': VBTooltip,
   },
   data() {
     return {
+      chartjsData,
+      rangePicker: ['2019-05-01', '2019-05-10'],
       variants: ['primary', 'danger', 'info', 'warning'],
       monthlyReportGraph: [],
       data: {
