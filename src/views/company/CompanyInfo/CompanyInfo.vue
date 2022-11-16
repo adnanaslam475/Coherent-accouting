@@ -1,10 +1,10 @@
 <template>
   <b-row>
-    <b-col class="mb-1" cols="8">
+    <b-col class="mb-1" cols="9">
       <div class="card">
         <div class="card-body">
           <div class="row">
-            <div class="d-flex justify-content-between flex-column col-4">
+            <div class="d-flex justify-content-between flex-column col-6">
               <div class="d-flex justify-content-start">
                 <span
                     class="b-avatar badge-light-danger rounded"
@@ -58,7 +58,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-8">
+            <div class="col-6">
               <b-row>
                 <b-col cols="12">
                   <table class="mt-2 mt-xl-0 w-100">
@@ -173,7 +173,7 @@
         </div>
       </div>
     </b-col>
-    <b-col class="mb-1" cols="4">
+    <b-col class="mb-1" cols="3">
       <b-card class="ml-2">
         <b-col cols="12">
           <table class="mt-2 mt-xl-0 w-100">
