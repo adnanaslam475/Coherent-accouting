@@ -14,37 +14,10 @@
                   flex-column
                   col-xl-6 col-21
                 "
+                style="padding-left: 3px"
               >
                 <div class="d-flex justify-content-start">
-                  <span
-                    class="b-avatar badge-light-danger rounded"
-                    style="width: 104px; height: 104px"
-                    ><span class="b-avatar-img">
-                      <!-- <span style="font-size: 4rem">{{ this.companyRecord.companyName.substr(0,1)}}{{ this.companyRecord.companyName.substr(this.companyRecord.companyName.indexOf(" ")+1,1)}}</span> -->
-
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="104px"
-                        height="104px"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        stroke="currentColor"
-                        stroke-width="1"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="feather feather-user"
-                      >
-                        <path
-                          d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-                        ></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                      </svg>
-                    </span>
-
-                    <!-- <img
-                        src="/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/1.9cba4a79.png"
-                        alt="avatar" /> -->
-                  </span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" viewBox="0 0 24 24" fill="none" stroke="#7367f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-text-top feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
 
                   <div class="d-flex flex-column ml-1">
                     <div class="mb-1">
