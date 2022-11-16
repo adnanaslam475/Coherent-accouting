@@ -190,8 +190,11 @@ import Ripple from 'vue-ripple-directive'
 import vSelect from 'vue-select'
 import countries from '@/@fake-db/data/other/countries'
 import store from '@/store'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import { useToast } from 'vue-toastification/composition'
 
 export default {
+
   components: {
     BSidebar,
     BForm,
@@ -244,6 +247,7 @@ export default {
       identificationNumber: '',
       vatIdentificationNumber: '',
     }
+    const toast = useToast() 
 
     const userData = ref(JSON.parse(JSON.stringify(blankUserData)))
     const resetuserData = () => {
@@ -255,6 +259,16 @@ export default {
         .then(() => {
           emit('refetch-data')
           emit('update:is-add-new-user-sidebar-active', false)
+        })
+        .catch((error) => {
+            toast({
+              component: ToastificationContent,
+              props: {
+                title: `${error.response.data.errorMessage}`,
+                icon: 'AlertTriangleIcon',
+                variant: 'danger',
+              },
+            })
         })
     }
 
@@ -271,6 +285,7 @@ export default {
       refFormObserver,
       getValidationState,
       resetForm,
+      toast
     }
   },
 }

@@ -1,6 +1,6 @@
 <template>
     <b-card-code>
-      <b-tabs class="invoice-tabs-view" v-model="invoiceTab">
+      <b-tabs class="invoice-tabs-view position-relative overflow-hidden" v-model="invoiceTab">
         <b-tab>
           <template #title>
             <feather-icon icon="BookOpenIcon" />
@@ -9,7 +9,7 @@
           <ListInvoices :invoiceTab="invoiceTab" @state="update($event)"  />
 
         </b-tab>
-        <b-tab>
+        <b-tab :style="`display: block !important; position: ${invoiceTab !=1 ? 'absolute' : 'relative' }; visibility: ${invoiceTab !=1 ? 'hidden' : 'visible' }; `">
           <template #title>
             <feather-icon icon="PenToolIcon" />
             <span>Create Invoice</span>
@@ -51,7 +51,7 @@
     data() {
       return {
         codeIcon,
-        invoiceTab: 1,
+        invoiceTab: 0,
       }
     },
     methods: {

@@ -120,8 +120,8 @@
 
         <template #cell(identificationNumber)="data">
 
-               <b-badge
-                :href="{ name: 'apps-users-view', params: { id: data.item.id } }"
+            <b-badge
+                :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
                 variant="primary"
                 class="text-capitalize"
               >
@@ -391,5 +391,8 @@ export default {
 .privatePersonList th{
   position: relative;
   vertical-align: middle !important;
+}
+span.b-avatar-text span{
+  color: #ffc0cb!important;
 }
 </style>
