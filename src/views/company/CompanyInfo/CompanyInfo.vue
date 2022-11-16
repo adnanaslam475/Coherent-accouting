@@ -1,59 +1,47 @@
 <template>
-  <div class="row">
-    <div class="col-12">
+  <b-row>
+    <b-col class="mb-1" cols="8">
       <div class="card">
-        <!----><!---->
         <div class="card-body">
-          <!----><!---->
           <div class="row">
-            <div class="d-flex justify-content-between flex-column col-3">
+            <div class="d-flex justify-content-between flex-column col-4">
               <div class="d-flex justify-content-start">
-                  <span
-                      class="b-avatar badge-light-danger rounded"
-                      style="width: 104px; height: 104px"
-                  ><span class="b-avatar-img">
-                      <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="104px"
-                          height="104px"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          stroke="currentColor"
-                          stroke-width="1"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="feather feather-user"
-                      >
-                        <path
-                            d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-                        ></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                      </svg>
-                    </span>
-
-                    <!-- <img
-                        src="/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/1.9cba4a79.png"
-                        alt="avatar" /> -->
+                <span
+                    class="b-avatar badge-light-danger rounded"
+                    style="width: 104px; height: 104px"
+                >
+                  <span class="b-avatar-img">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="104px"
+                        height="104px"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        stroke="currentColor"
+                        stroke-width="1"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-user"
+                    >
+                      <path
+                          d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+                      ></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
                   </span>
+                </span>
 
                 <div class="d-flex flex-column ml-1">
                   <div class="mb-1">
                     <h4 class="mb-0">{{ companyRecord.companyName }}</h4>
-                    <span class="card-text">{{
-                        companyRecord.companyMail
-                      }}</span>
+                    <span class="card-text">{{ companyRecord.companyMail }}</span>
                   </div>
                   <div class="d-flex flex-wrap">
-                    <!-- <a
-                      href="/demo/vuexy-vuejs-admin-dashboard-template/demo-1/apps/users/edit/21"
-                      class="btn btn-primary"
-                      target="_self"
-                    > -->
                     <b-link
                         :to="{
                           name: 'EditCompany',
                           params: { id: companyRecord.id },
-                          params: { id:  this.companyID },
+                          params: { id: companyID },
                         }"
                         class="btn btn-primary"
                     >Edit
@@ -70,13 +58,13 @@
                 </div>
               </div>
             </div>
-            <div class="col-9">
+            <div class="col-8">
               <b-row>
-                <b-col cols="7">
+                <b-col cols="12">
                   <table class="mt-2 mt-xl-0 w-100">
                     <tr v-if="Object.keys(companyRecord).length > 0">
                       <th class="pb-50">
-                        <feather-icon icon="UserIcon" class="mr-75" />
+                        <feather-icon icon="UserIcon" class="mr-75"/>
                         <span class="font-weight-bold">Owner Name</span>
                       </th>
                       <td v-if="Object.keys(companyRecord.companyOwnerApi).length > 0" class="pb-50">
@@ -179,110 +167,161 @@
                     <tr></tr>
                   </table>
                 </b-col>
-                <b-col cols="3">
-                  <table class="mt-2 mt-xl-0 w-100">
-                    <tr>
-                      <th class="pb-50">
-                        <feather-icon icon="AlignJustifyIcon" class="mr-50"/>
-                        <span class="font-weight-bold">Total Assets</span>
-                      </th>
-                      <td class="pb-50">
-                        {{ statisticItems.totalAssets }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th class="pb-50">
-                        <feather-icon icon="FileTextIcon" class="mr-50"/>
-                        <span class="font-weight-bold">Total Invoices</span>
-                      </th>
-                      <td class="pb-50">
-                        {{ statisticItems.totalInvoices }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th class="pb-50">
-                        <feather-icon icon="AlertCircleIcon" class="mr-50"/>
-                        <span class="font-weight-bold">Total NotVerified Invoices</span>
-                      </th>
-                      <td class="pb-50">
-                        {{ statisticItems.totalNotVerifiedInvoices }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th class="pb-50">
-                        <feather-icon icon="AlertTriangleIcon" class="mr-50"/>
-                        <span class="font-weight-bold">Total Private Person</span>
-                      </th>
-                      <td class="pb-50">
-                        {{ statisticItems.totalPrivatePerson }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th class="pb-50">
-                        <feather-icon icon="ListIcon" class="mr-50"/>
-                        <span class="font-weight-bold">Total Vat Reports</span>
-                      </th>
-                      <td class="pb-50">
-                        {{ statisticItems.totalVatReports }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th class="pb-50">
-                        <feather-icon icon="ListIcon" class="mr-50"/>
-                        <span class="font-weight-bold">Total Yearly Reports</span>
-                      </th>
-                      <td class="pb-50">
-                        {{ statisticItems.totalYearlyReports }}
-                      </td>
-                    </tr>
-                  </table>
-                </b-col>
-                <div class="button-position-right">
-                  <b-dropdown
-                      id="dropdown-4"
-                      v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                      text="Create"
-                      variant="outline-primary"
-                  >
-                    <b-dropdown-item>Create Invoice</b-dropdown-item>
-                    <b-dropdown-item>Create Vat Report</b-dropdown-item>
-                    <b-dropdown-item>Create Private Person</b-dropdown-item>
-                    <b-dropdown-item>Create Vat Report</b-dropdown-item>
-                    <b-dropdown-item>Create Yearly Report</b-dropdown-item>
-                  </b-dropdown>
-
-                </div>
               </b-row>
             </div>
           </div>
-          <!----><!---->
         </div>
       </div>
-    </div>
-  </div>
+    </b-col>
+    <b-col class="mb-1" cols="4">
+      <b-card class="ml-2">
+        <b-col cols="12">
+          <table class="mt-2 mt-xl-0 w-100">
+            <tr>
+              <th class="pb-50">
+                <feather-icon icon="AlignJustifyIcon" class="mr-50" />
+                <span class="font-weight-bold">Total Assets</span>
+              </th>
+              <td class="pb-50">
+                {{ statisticItems.totalAssets }}
+              </td>
+            </tr>
+            <tr>
+              <th class="pb-50">
+                <feather-icon icon="FileTextIcon" class="mr-50" />
+                <span class="font-weight-bold">Total Invoices</span>
+              </th>
+              <td class="pb-50">
+                {{ statisticItems.totalInvoices }}
+              </td>
+            </tr>
+            <tr>
+              <th class="pb-50">
+                <feather-icon icon="AlertCircleIcon" class="mr-50"/>
+                <span class="font-weight-bold">Total NotVerified Invoices</span>
+              </th>
+              <td class="pb-50">
+                {{ statisticItems.totalNotVerifiedInvoices }}
+              </td>
+            </tr>
+            <tr>
+              <th class="pb-50">
+                <feather-icon icon="AlertTriangleIcon" class="mr-50"/>
+                <span class="font-weight-bold">Total Private Person</span>
+              </th>
+              <td class="pb-50">
+                {{ statisticItems.totalPrivatePerson }}
+              </td>
+            </tr>
+            <tr>
+              <th class="pb-50">
+                <feather-icon icon="ListIcon" class="mr-50"/>
+                <span class="font-weight-bold">Total Vat Reports</span>
+              </th>
+              <td class="pb-50">
+                {{ statisticItems.totalVatReports }}
+              </td>
+            </tr>
+            <tr>
+              <th class="pb-50">
+                <feather-icon icon="ListIcon" class="mr-50"/>
+                <span class="font-weight-bold">Total Yearly Reports</span>
+              </th>
+              <td class="pb-50">
+                {{ statisticItems.totalYearlyReports }}
+              </td>
+            </tr>
+          </table>
+        </b-col>
+        <div class="button-position-right">
+          <b-dropdown
+              id="dropdown-4"
+              v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+              text="Create"
+              variant="outline-primary"
+          >
+            <b-dropdown-item>Create Invoice</b-dropdown-item>
+            <b-dropdown-item>Create Vat Report</b-dropdown-item>
+            <b-dropdown-item>Create Private Person</b-dropdown-item>
+            <b-dropdown-item>Create Vat Report</b-dropdown-item>
+            <b-dropdown-item>Create Yearly Report</b-dropdown-item>
+          </b-dropdown>
+
+        </div>
+      </b-card>
+    </b-col>
+    <b-col class="mb-1" cols="6">
+      <b-card>
+        <b-card-header>
+          <b-card-title class="ml-25">
+            Report Timeline
+          </b-card-title>
+        </b-card-header>
+        <b-card-body>
+          <app-timeline>
+            <app-timeline-item
+                v-for="(graph, index) in monthlyReportGraph"
+                :key="index"
+                :variant="variants[(variants.length % index)]"
+            >
+              <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                <h6>{{ graph.count }} Reports have been created</h6>
+                <small class="timeline-item-time text-nowrap text-muted ml-1">{{ graph.date }}</small>
+              </div>
+            </app-timeline-item>
+          </app-timeline>
+        </b-card-body>
+      </b-card>
+    </b-col>
+    <b-col class="mb-1" cols="6">
+      <ApexBarChart
+           class="mb-1"
+          chart-type="daily"
+      />
+      <ApexBarChart
+           class="mb-1"
+          chart-type="monthly"
+      />
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 import axios from '@/libs/axios'
 import Swal from 'sweetalert2'
 import Ripple from 'vue-ripple-directive'
+import AppTimeline from '@core/components/app-timeline/AppTimeline.vue'
+import AppTimelineItem from '@core/components/app-timeline/AppTimelineItem.vue'
+import ApexBarChart from '@/views/company/ApexBarChart'
+
+const chartColors = {
+  primaryColorShade: '#836AF9',
+  yellowColor: '#ffe800',
+  successColorShade: '#28dac6',
+  warningColorShade: '#ffe802',
+  warningLightColor: '#FDAC34',
+  infoColorShade: '#299AFF',
+  greyColor: '#4F5D70',
+  blueColor: '#2c9aff',
+  blueLightColor: '#84D0FF',
+  greyLightColor: '#EDF1F4',
+  tooltipShadow: 'rgba(0, 0, 0, 0.25)',
+  lineChartPrimary: '#666ee8',
+  lineChartDanger: '#ff4961',
+  labelColor: '#6e6b7b',
+  grid_line_color: 'rgba(200, 200, 200, 0.2)',
+}
 
 import {
   BCard,
   BRow,
   BCol,
-  BFormInput,
-  BButton,
-  BTable,
-  BMedia,
-  BAvatar,
   BLink,
-  BBadge,
   BDropdown,
   BDropdownItem,
-  BPagination,
-  BTooltip,
-  BProgress,
+  BCardTitle,
+  BCardBody,
+  BCardHeader, VBTooltip,
 } from 'bootstrap-vue'
 
 export default {
@@ -290,23 +329,19 @@ export default {
     BLink,
     BRow,
     BCol,
+    BCard,
     BDropdown,
     BDropdownItem,
-    BCard,
-    BMedia,
-    BAvatar,
-    BTable,
-    BProgress,
-    BBadge,
-    BButton,
-    BFormInput,
-    BButton,
-    BTable,
-    BPagination,
-    BTooltip,
+    BCardTitle,
+    BCardBody,
+    BCardHeader,
+    AppTimeline,
+    AppTimelineItem,
+    ApexBarChart,
   },
   directives: {
     Ripple,
+    'b-tooltip': VBTooltip,
   },
   data() {
     return {
@@ -320,9 +355,25 @@ export default {
         totalVatReports: 0,
         totalYearlyReports: 0,
       },
+      variants: ['primary', 'danger', 'info', 'warning'],
+      monthlyReportGraph: [],
+      dailyInvoices: [],
+      rangePicker: [],
     }
   },
+  created() {
+    this.companyID = this.$route.params.id
+    this.getCompanyInfo()
+    this.getStatistics()
+    this.getMonthReportGraph()
+  },
   methods: {
+    getMonthReportGraph() {
+      axios.get(`/account/api/company/reports-month-graph/${this.$route.params.id}`)
+        .then(response => {
+          this.monthlyReportGraph = response.data
+        })
+    },
     async deleteCompany() {
       const config = {
         method: 'delete',
@@ -337,7 +388,6 @@ export default {
 
       await axios(config)
         .then(response => {
-          console.log(JSON.stringify(response.data))
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -370,17 +420,11 @@ export default {
       axios(`/account/api/company/statistics-items-count/${this.$route.params.id}`)
         .then(response => {
           this.statisticItems = response.data
-          console.log(response.data)
         })
         .catch(error => {
           console.log(error)
         })
     },
-  },
-  created() {
-    this.companyID = this.$route.params.id
-    this.getCompanyInfo()
-    this.getStatistics()
   },
 }
 </script>
