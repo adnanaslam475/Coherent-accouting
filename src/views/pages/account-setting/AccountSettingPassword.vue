@@ -28,31 +28,29 @@
               </validation-provider>
             </b-form-group>
           </b-col>
-
-
-<!--          <b-col md="6">-->
-<!--            <b-form-group-->
-<!--                label="Old Password"-->
-<!--                label-for="account-old-password"-->
-<!--            >-->
-<!--              <b-input-group class="input-group-merge">-->
-<!--                <b-form-input-->
-<!--                    id="account-old-password"-->
-<!--                    v-model="passwordValueOld"-->
-<!--                    name="old-password"-->
-<!--                    :type="passwordFieldTypeOld"-->
-<!--                    placeholder="Old Password"-->
-<!--                />-->
-<!--                <b-input-group-append is-text>-->
-<!--                  <feather-icon-->
-<!--                      :icon="passwordToggleIconOld"-->
-<!--                      class="cursor-pointer"-->
-<!--                      @click="togglePasswordOld"-->
-<!--                  />-->
-<!--                </b-input-group-append>-->
-<!--              </b-input-group>-->
-<!--            </b-form-group>-->
-<!--          </b-col>-->
+          <!--          <b-col md="6">-->
+          <!--            <b-form-group-->
+          <!--                label="Old Password"-->
+          <!--                label-for="account-old-password"-->
+          <!--            >-->
+          <!--              <b-input-group class="input-group-merge">-->
+          <!--                <b-form-input-->
+          <!--                    id="account-old-password"-->
+          <!--                    v-model="passwordValueOld"-->
+          <!--                    name="old-password"-->
+          <!--                    :type="passwordFieldTypeOld"-->
+          <!--                    placeholder="Old Password"-->
+          <!--                />-->
+          <!--                <b-input-group-append is-text>-->
+          <!--                  <feather-icon-->
+          <!--                      :icon="passwordToggleIconOld"-->
+          <!--                      class="cursor-pointer"-->
+          <!--                      @click="togglePasswordOld"-->
+          <!--                  />-->
+          <!--                </b-input-group-append>-->
+          <!--              </b-input-group>-->
+          <!--            </b-form-group>-->
+          <!--          </b-col>-->
           <!--/ old password -->
         </b-row>
         <b-row>
@@ -206,7 +204,9 @@ export default {
     BRow,
     BCol,
     BCard,
+    // eslint-disable-next-line vue/no-unused-components
     BInputGroup,
+    // eslint-disable-next-line vue/no-unused-components
     BInputGroupAppend,
   },
   directives: {
@@ -233,14 +233,12 @@ export default {
       return this.passwordFieldTypeRetype === 'password' ? 'EyeIcon' : 'EyeOffIcon'
     },
   },
-  watch: {
-    newPasswordValue(newV, oldV) {
-      console.log(newV, oldV)
-    },
-    RetypePassword(newV, oldV) {
-      console.log(newV, oldV)
-    },
-  },
+  // watch: {
+  //   newPasswordValue(newV, oldV) {
+  //   },
+  //   RetypePassword(newV, oldV) {
+  //   },
+  // },
   methods: {
     togglePasswordOld() {
       this.passwordFieldTypeOld = this.passwordFieldTypeOld === 'password' ? 'text' : 'password'
@@ -265,12 +263,29 @@ export default {
         oldPassword: this.passwordValueOld,
         newPassword: this.newPasswordValue,
       }
-      const data = await axios.post('/account/api/user/change-password', credentials)
-      if (data.status === 200) {
-        this.$bvToast.toast('Password Updated Successfully', {
-          title: 'Success',
-        })
+      try {
+        await axios.post('/account/api/user/change-password', credentials)
+          // eslint-disable-next-line func-names
+          .then(response => {
+            if (response.status === 200) {
+              this.makeToast('success', 'Success', 'Password Updated Successfully')
+            } else {
+              this.makeToast('danger', response.data.errorCode, response.data.errorMessage)
+            }
+          })
+          .catch(error => {
+            this.makeToast('danger', error.data.errorCode, error.data.errorMessage)
+          })
+      } catch (error) {
+        console.log('error ', error)
       }
+    },
+    makeToast(variant = null, title = null, message = null) {
+      this.$bvToast.toast(message, {
+        title,
+        variant,
+        solid: false,
+      })
     },
   },
 }

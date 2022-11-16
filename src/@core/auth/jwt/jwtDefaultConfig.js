@@ -13,6 +13,8 @@ export default {
   invoiceAddEndpoint: '/account/api/user-invoice/create',
   invoiceEditEndpoint: '/account/api/user-invoice',
   invoiceDeleteEndpoint: '/account/api/user-invoice',
+  UserEditEndpoint: '/account/api/user-person',
+  UserDeleteEndpoint: '/account/api/user-person',
 
   getCompanies: '/api/company/list/1/10',
   // This will be prefixed in authorization header with token

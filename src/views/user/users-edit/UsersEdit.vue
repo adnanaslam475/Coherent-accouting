@@ -21,67 +21,31 @@
       </div>
     </b-alert>
 
-    <b-tabs
-      v-if="userData"
-      pills
-    >
-
-      <!-- Tab: Account -->
-      <b-tab active>
-        <template #title>
-          <feather-icon
-            icon="UserIcon"
-            size="16"
-            class="mr-0 mr-sm-50"
-          />
-          <span class="d-none d-sm-inline">Account</span>
-        </template>
-        <user-edit-tab-account
-          :user-data="userData"
-          class="mt-2 pt-75"
-        />
-      </b-tab>
-
-      <!-- Tab: Information -->
-      <b-tab>
-        <template #title>
-          <feather-icon
-            icon="InfoIcon"
-            size="16"
-            class="mr-0 mr-sm-50"
-          />
-          <span class="d-none d-sm-inline">Information</span>
-        </template>
-        <user-edit-tab-information class="mt-2 pt-75" />
-      </b-tab>
-
-      <!-- Tab: Social -->
-      <b-tab>
-        <template #title>
-          <feather-icon
-            icon="Share2Icon"
-            size="16"
-            class="mr-0 mr-sm-50"
-          />
-          <span class="d-none d-sm-inline">Social</span>
-        </template>
-        <user-edit-tab-social class="mt-2 pt-75" />
-      </b-tab>
-    </b-tabs>
+    <template v-if="userData">
+      <!-- First Row -->
+      <b-row>
+        <b-col
+          cols="12"
+          xl="12"
+          lg="12"
+          md="12"
+        >
+          <user-edit-tab-information class="mt-2 pt-75" :user-data="userData" />
+        </b-col>
+      </b-row>
+    </template>
   </component>
 </template>
 
 <script>
 import {
-  BTab, BTabs, BCard, BAlert, BLink,
+  BTab, BTabs, BCard, BAlert, BLink, BRow, BCol
 } from 'bootstrap-vue'
 import { ref, onUnmounted } from '@vue/composition-api'
 import router from '@/router'
 import store from '@/store'
 import userStoreModule from '../userStoreModule'
-import UserEditTabAccount from './UserEditTabAccount.vue'
 import UserEditTabInformation from './UserEditTabInformation.vue'
-import UserEditTabSocial from './UserEditTabSocial.vue'
 
 export default {
   components: {
@@ -90,10 +54,9 @@ export default {
     BCard,
     BAlert,
     BLink,
-
-    UserEditTabAccount,
+    BRow, 
+    BCol,
     UserEditTabInformation,
-    UserEditTabSocial,
   },
   setup() {
     const userData = ref(null)

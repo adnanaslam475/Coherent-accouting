@@ -1,6 +1,6 @@
 <template>
     <b-card-code>
-      <b-tabs v-model="invoiceTab">
+      <b-tabs class="invoice-tabs-view" v-model="invoiceTab">
         <b-tab>
           <template #title>
             <feather-icon icon="BookOpenIcon" />
@@ -61,4 +61,9 @@
     }
   }
   </script>
+  <style>
+  .invoice-tabs-view ul.nav-tabs{
+    justify-content: center;
+  }
+  </style>
   

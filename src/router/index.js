@@ -250,11 +250,11 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
     // Tickets routes starting from here
     {
-      path:'/tickets',
+      path: '/tickets',
       name: 'tickets',
       component: () => import('@/views/tickets/Index.vue'),
       meta: {
