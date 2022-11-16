@@ -1,34 +1,42 @@
 <template>
-    <div>
-        <b-row>
-            <b-col lg="12" md="12" sm="12">
-                <CompanyTabs />
-            </b-col>
-        </b-row>
-    </div>
+  <div>
+    <b-row>
+      <b-col cols="12">
+        <CompanyTabs />
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
 
-import { BRow, BCol } from 'bootstrap-vue'
+import {
+  BRow,
+  BCol,
+  VBTooltip,
+} from 'bootstrap-vue'
 
 import CompanyTabs from './CompanyTabs.vue'
 
 export default {
-    name: 'CompanyView',
-    components: {
-        BRow,
-        BCol,
-        CompanyTabs
-    },
-    data () {
-        return {
-            // 
-        }
+  name: 'CompanyView',
+  components: {
+    BRow,
+    BCol,
+    CompanyTabs,
+  },
+  directives: {
+    'b-tooltip': VBTooltip,
+  },
+  data() {
+    return {
     }
+  },
+  created() {},
+  methods: {},
 }
 </script>
 
 <style>
-    /*  */
+/*  */
 </style>
