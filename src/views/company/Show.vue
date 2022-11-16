@@ -18,7 +18,7 @@
           <!-- timeline -->
           <b-card-body>
             <app-timeline>
-              <app-timeline-item v-for="(graph, index) in monthlyReportGraph" :variant="variants[(variants % index)]">
+              <app-timeline-item v-for="(graph, index) in monthlyReportGraph" :key="index" :variant="variants[(variants % index)]">
                 <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
                   <h6>{{ graph.count }} Reports have been created</h6>
                   <small class="timeline-item-time text-nowrap text-muted ml-1">{{ graph.date }}</small>
