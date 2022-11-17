@@ -15,6 +15,8 @@ export default {
   invoiceDeleteEndpoint: '/account/api/user-invoice',
   UserEditEndpoint: '/account/api/user-person',
   UserDeleteEndpoint: '/account/api/user-person',
+  SearchCompanyEndpoint: '/index/api/search-companies/search-by-name',
+  
 
   getCompanies: '/api/company/list/1/10',
   // This will be prefixed in authorization header with token

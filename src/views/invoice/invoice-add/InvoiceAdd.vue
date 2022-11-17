@@ -45,7 +45,19 @@
                         >
                           <b-form-input
                             v-model="invoiceData.supplierCompany.companName"
+                            @input="SearchCompanyName(invoiceData.supplierCompany.companName)"
+                            list="my-company_name"
+                            autocomplete="off"
                           />
+                          <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
+                            <b-list-group-item
+                              v-for="data in datalist"
+                              :key="data.eic"
+                              @click= autoCompletefn(data)                        
+                            >
+                              {{ data.company_name }}
+                            </b-list-group-item>
+                          </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </b-input-group>
@@ -691,6 +703,7 @@
       </b-form>
     </validation-observer>
     <invoice-sidebar-add-new-customer />
+
   </section>
 </template>
 
@@ -719,7 +732,9 @@ import {
   BPopover,
   VBToggle,
   BSpinner,
-  BFormRadio
+  BFormRadio,
+  BListGroup, 
+  BListGroupItem
 } from "bootstrap-vue";
 import vSelect from "vue-select";
 import flatPickr from "vue-flatpickr-component";
@@ -751,11 +766,13 @@ export default {
     BSpinner,
     ValidationProvider,
     ValidationObserver,
-    BFormRadio
+    BFormRadio,
+    BListGroup, 
+    BListGroupItem
   },
   data() {
     return {
-      loading: false
+      loading: false,
     };
   },
   directives: {
@@ -799,7 +816,7 @@ export default {
     invoiceAdd(invoiceData,AccountTypeOption) {
 
       if(AccountTypeOption == 'person'){
-         invoiceData.recipientCompany.companName = ''
+         invoiceData.recipientCompany.companName = invoiceData.recipientCompany.companyOwnerName
          invoiceData.recipientCompany.companyVatEic = ''
       }
       
@@ -812,33 +829,33 @@ export default {
           this.loading = true;
           let token = useJwt.getToken()
           useJwt
-                .addInvoice(token, invoiceData)
-                .then((response) => {
-                  this.loading = false
-                  this.$toast({
-                    component: ToastificationContent,
-                    props: {
-                      title: `Invoice Create Successfully`,
-                      icon: "EditIcon",
-                      variant: "success",
-                    },
-                  });
-                  this.$router.push({ name: 'apps-invoice-preview', params: { id: response.data.id }})
-                })
-                .catch((error) => {
-                  this.loading = false
-                  this.$toast({
-                    component: ToastificationContent,
-                    props: {
-                      title: `${error.response.data.errorMessage}`,
-                      icon: "EditIcon",
-                      variant: "error",
-                    },
-                  });
-                });
+            .addInvoice(token, invoiceData)
+            .then((response) => {
+              this.loading = false
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `Invoice Create Successfully`,
+                  icon: "EditIcon",
+                  variant: "success",
+                },
+              });
+              this.$router.push({ name: 'apps-invoice-preview', params: { id: response.data.id }})
+            })
+            .catch((error) => {
+              this.loading = false
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `${error.response.data.errorMessage}`,
+                  icon: "EditIcon",
+                  variant: "error",
+                },
+              });
+            });
         }
       });
-    },
+    }
   },
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
@@ -852,7 +869,9 @@ export default {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
+    
     var AccountTypeOption = "company"
+    
     const itemFormBlankItem = {
       serviceOrItemDescription: "",
       singleAmountTransaction: 0.00,
@@ -860,6 +879,7 @@ export default {
       measurement: "",
       transactionTotalAmountNonVat: ""
     };
+
     var invoiceData = ref({
       invoiceNumber: "",
       dateIssued: "",
@@ -908,6 +928,7 @@ export default {
       invoiceData.value.amountNonVat = parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
       return parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
     }
+
     const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent)=> {
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
@@ -919,6 +940,7 @@ export default {
       invoiceData.value.tradeDiscountAmount = parseFloat(totaltradeDiscountAmount).toFixed(2);
       return parseFloat(totaltradeDiscountAmount).toFixed(2);
     }
+
     const totalPrice = (item, vatPercent, tradeDiscountPercent)=> {
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
@@ -935,7 +957,41 @@ export default {
       invoiceData.value.totalAmount = parseFloat(totalPrice).toFixed(2);
       return parseFloat(totalPrice).toFixed(2);
     }
- 
+
+    var datalist = ref([])
+    var showSuggestions = ref(false)
+    
+    const SearchCompanyName = (companyName)=>{   
+      if(companyName.length > 0){
+        let token = useJwt.getToken()
+        useJwt
+          .SearchCompanyName(token, { companyName })
+          .then((response) => {
+            if(response?.data != undefined || response?.data.length != 0 ){
+              showSuggestions.value = true
+            }
+            else{
+              showSuggestions.value = false
+            }
+            datalist.value = response?.data
+          })
+          .catch((error) => {
+            console.log("error",error)
+          });
+      } else{
+        showSuggestions.value  = false
+      }
+    }
+
+    const autoCompletefn = (item) =>{
+      showSuggestions.value  = false
+      invoiceData.value.supplierCompany.companName = item.company_name
+      invoiceData.value.supplierCompany.companyAddress = item.address
+      invoiceData.value.supplierCompany.companyEic = item.eic
+      datalist.value = []
+    }
+
+    
     return {
       AccountTypeOption,
       invoiceData,
@@ -943,7 +999,11 @@ export default {
       vatAmount,
       totalPrice,
       amountNonVat,
-      tradeDiscountAmount
+      tradeDiscountAmount,
+      datalist,
+      showSuggestions,
+      SearchCompanyName,
+      autoCompletefn
     };
   },
 };
@@ -1021,4 +1081,24 @@ export default {
   width: 5rem !important;
   min-width: 5rem !important;
 }
+.input-suggesstions{
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+  border: 1px solid rgba(87, 100, 111, 0.3);
+  border-radius: 0 !important;
+}
+.dark-layout .input-suggesstions{
+  border-color: #3b4253;
+}
+.input-suggesstions .list-group-item{
+  border-bottom: 0 !important;
+  border-radius: 0 !important; 
+  background-color: #f8f8f8 !important;
+  cursor: pointer;
+}
+.dark-layout .input-suggesstions .list-group-item{
+  background-color: #161d31 !important;
+}
+
 </style>
