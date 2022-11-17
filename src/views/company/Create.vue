@@ -1,14 +1,12 @@
 <template>
   <div>
-    <b-card title="" class="mb-2 w-100">
-      <b-card-body>
-        <!-- @on-complete="onComplete" -->
+  
         <form-wizard
           color="#7367F0"
           :title="null"
           :subtitle="null"
           shape="square"
-          finish-button-text="Submit"
+          finish-button-text="Create"
           back-button-text="Previous"
           class="mb-3"
           @on-complete="saveCompany()"
@@ -208,7 +206,7 @@
                     <validation-provider
                       #default="{ errors }"
                       v-bind:name="$t('owner egn')"
-                      rules="required|digits:10"
+                      rules="required|positive"
                     >
                       <b-form-input
                         id="owner_name"
@@ -439,23 +437,9 @@
             </validation-observer>
           </tab-content>
         </form-wizard>
-        <!-- <b-form @submit="saveCompany()"> -->
-
-        <!-- <b-form-row>
-          <b-col></b-col>
-          <b-col
-            ><b-button
-              @click="saveCompany()"
-              variant="relief-primary"
-              class="float-right mb-2"
-              >Save</b-button
-            ></b-col
-          >
-        </b-form-row> -->
-
-        <!-- </b-form> -->
-      </b-card-body>
-    </b-card>
+        
+      <!-- </b-card-body>
+    </b-card> -->
   </div>
 </template>
 
@@ -478,18 +462,27 @@ import useJwt from "@/auth/jwt/useJwt";
 import axios from "@/libs/axios";
 import Swal from "sweetalert2";
 import vSelect from "vue-select";
-import "@core/scss/vue/libs/vue-select.scss";
+// import "@core/scss/vue/libs/vue-select.scss";
 import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { required } from "@validations";
+import { positive } from "@validations";
 import flatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 import { extend } from "vee-validate";
+// import '@core/scss/vue/libs/vue-wizard.scss';
+
+
 
 extend("required", {
   ...required,
   message: "This field is mandatory",
+});
+
+extend("positive", {
+  ...positive,
+  message: "This field must be numeric only",
 });
 
 export default {
@@ -839,8 +832,37 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
 /*  */
+
+@import '@core/scss/vue/libs/vue-wizard.scss';
+@import '@core/scss/vue/libs/vue-select.scss'; 
+
+.vue-form-wizard .wizard-card-footer .wizard-footer-left .wizard-btn::before {
+    content: "<";
+}
+
+.vue-form-wizard .wizard-card-footer .wizard-footer-right .wizard-btn:after{
+  content: ">";
+    font-family: feather!important;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    font-size: 1rem;
+    position: relative;
+}
+
+.vue-form-wizard .wizard-navigation .wizard-nav li:not(:first-child) a:before {
+  content: ">";
+
+}
+
+.vs__open-indicator {
+    fill: rgba(60,60,60,.5);
+}
 
 
 </style>
