@@ -10,25 +10,27 @@
                   class="b-avatar badge-light-danger rounded"
                   style="width: 104px; height: 104px"
                 >
-                  <span class="b-avatar-img">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="104px"
-                      height="104px"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      stroke="currentColor"
-                      stroke-width="1"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="feather feather-user"
-                    >
-                      <path
-                        d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-                      ></path>
-                      <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                  </span>
+                  <feather-icon icon="UserIcon" size="80" />
+
+<!--                  <span class="b-avatar-img">-->
+<!--                    <svg-->
+<!--                      xmlns="http://www.w3.org/2000/svg"-->
+<!--                      width="104px"-->
+<!--                      height="104px"-->
+<!--                      viewBox="0 0 24 24"-->
+<!--                      fill="currentColor"-->
+<!--                      stroke="currentColor"-->
+<!--                      stroke-width="1"-->
+<!--                      stroke-linecap="round"-->
+<!--                      stroke-linejoin="round"-->
+<!--                      class="feather feather-user"-->
+<!--                    >-->
+<!--                      <path-->
+<!--                        d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"-->
+<!--                      ></path>-->
+<!--                      <circle cx="12" cy="7" r="4"></circle>-->
+<!--                    </svg>-->
+<!--                  </span>-->
                 </span>
 
                 <div class="d-flex flex-column ml-1">
@@ -250,12 +252,20 @@
         </div>
       </b-card>
     </b-col>
-    <b-col class="mb-1" cols="6">
-      <b-card>
+    <b-col v-if="monthlyReportGraph.length > 0" class="mb-1" cols="6">
+      <b-card no-body>
         <b-card-header>
-          <b-card-title class="ml-25">
+          <b-card-title>
             Report Timeline
           </b-card-title>
+          <div class="d-flex align-items-center">
+            <feather-icon
+              @click="getMonthReportGraph()"
+              icon="RefreshCcwIcon"
+              size="16"
+            />
+          </div>
+
         </b-card-header>
         <b-card-body>
           <app-timeline>
@@ -275,14 +285,14 @@
     </b-col>
     <b-col class="mb-1" cols="6">
       <ApexBarChart
-          class="mb-1"
-          chart-type="daily"
-          title="Invoices Per Day"
+        class="mb-1"
+        chart-type="daily"
+        title="Invoices Per Day"
       />
       <ApexBarChart
-          class="mb-1"
-          chart-type="monthly"
-          title="Invoices Per Month"
+        class="mb-1"
+        chart-type="monthly"
+        title="Invoices Per Month"
       />
     </b-col>
   </b-row>

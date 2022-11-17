@@ -1,5 +1,5 @@
 <template>
-  <b-card no-body>
+  <b-card v-if="barChart.chartOptions.xaxis.categories.length > 0" no-body>
     <b-card-header>
       <div>
         <b-card-title>
@@ -10,6 +10,26 @@
 <!--          $74,382.72-->
 <!--        </b-card-title>-->
       </div>
+
+      <div class="d-flex align-items-center">
+        <feather-icon
+            class="mr-2"
+            @click="getData()"
+            icon="RefreshCcwIcon"
+            size="16"
+        />
+        <feather-icon
+            icon="CalendarIcon"
+            size="16"
+        />
+        <flat-pickr
+            v-model="rangePicker"
+            :config="{ mode: 'range'}"
+            class="form-control flat-picker bg-transparent border-0 shadow-none"
+            placeholder="YYYY-MM-DD"
+        />
+      </div>
+
     </b-card-header>
     <b-card-body>
       <vue-apex-charts
@@ -24,7 +44,13 @@
 </template>
 
 <script>
-import { BCard, BCardBody, BCardHeader, BCardSubTitle, BCardTitle } from 'bootstrap-vue'
+import {
+  BCard,
+  BCardBody,
+  BCardHeader,
+  BCardSubTitle,
+  BCardTitle,
+} from 'bootstrap-vue'
 import VueApexCharts from 'vue-apexcharts'
 import flatPickr from 'vue-flatpickr-component'
 import { $themeColors } from '@themeConfig'
@@ -35,10 +61,9 @@ export default {
     VueApexCharts,
     BCard,
     BCardHeader,
-    flatPickr,
     BCardBody,
-    BCardSubTitle,
     BCardTitle,
+    flatPickr,
   },
   // eslint-disable-next-line vue/require-prop-types
   props: ['chartType', 'title'],
@@ -82,24 +107,27 @@ export default {
           },
         },
       },
-
       rangePicker: ['2019-05-01', '2019-05-10'],
     }
   },
   created() {
-    if (this.chartType === 'monthly') {
-      this.getInvoicesMonth()
-    }
-    if (this.chartType === 'daily') {
-      this.getInvoicesDay()
-    }
+    this.getData()
   },
   methods: {
+    getData() {
+      if (this.chartType === 'monthly') {
+        this.getInvoicesMonth()
+      }
+      if (this.chartType === 'daily') {
+        this.getInvoicesDay()
+      }
+    },
     getInvoicesMonth() {
       axios.get(`/account/api/company/invoices-month-graph/${this.$route.params.id}`)
         .then(response => {
           this.barChart.series[0].data = response.data.map(invoice => invoice.count)
           this.barChart.chartOptions.xaxis.categories = response.data.map(invoice => invoice.date)
+          this.rangePicker = [this.barChart.chartOptions.xaxis.categories[this.barChart.chartOptions.xaxis.categories.length - 1], this.barChart.chartOptions.xaxis.categories[0]]
         })
     },
     getInvoicesDay() {
@@ -107,6 +135,7 @@ export default {
         .then(response => {
           this.barChart.series[0].data = response.data.map(invoice => invoice.count)
           this.barChart.chartOptions.xaxis.categories = response.data.map(invoice => invoice.date)
+          this.rangePicker = [this.barChart.chartOptions.xaxis.categories[this.barChart.chartOptions.xaxis.categories.length - 1], this.barChart.chartOptions.xaxis.categories[0]]
         })
     },
   },
