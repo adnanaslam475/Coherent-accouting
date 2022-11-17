@@ -985,9 +985,16 @@ export default {
 
     const autoCompletefn = (item) =>{
       showSuggestions.value  = false
-      invoiceData.value.supplierCompany.companName = item.company_name
-      invoiceData.value.supplierCompany.companyAddress = item.address
-      invoiceData.value.supplierCompany.companyEic = item.eic
+      if(item.company_name){
+        invoiceData.value.supplierCompany.companName = item.company_name
+      }
+      if(item.address){
+        invoiceData.value.supplierCompany.companyAddress = item.address
+      }
+      if(item.eic){
+        invoiceData.value.supplierCompany.companyEic = item.eic
+      }
+      
       datalist.value = []
     }
 
