@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import { isUserLoggedIn, getUserData, getHomeRouteForLoggedInUser } from '@/auth/utils'
 import { i18n } from '../main'
 import useJwt from '@/auth/jwt/useJwt'
+
 Vue.use(VueRouter)
 
 Vue.use(VueRouter)
@@ -11,7 +12,10 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   scrollBehavior() {
-    return { x: 0, y: 0 }
+    return {
+      x: 0,
+      y: 0
+    }
   },
   routes: [
     {
@@ -173,7 +177,7 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
     {
       path: '/company/create',
@@ -184,14 +188,14 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Companies',
-            to: '/companies'
+            to: '/companies',
           },
           {
             text: 'Create Company',
             active: true,
           },
         ],
-      }
+      },
     },
     {
       path: '/company/:id',
@@ -202,18 +206,18 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Companies',
-            to: '/companies'
+            to: '/companies',
           },
           {
             text: 'View Company',
             active: true,
           },
         ],
-      }
+      },
     },
     // Invoice routes starting from here
     {
-      path:'/invoices',
+      path: '/invoices',
       name: 'invoices',
       component: () => import('@/views/invoice/Index.vue'),
     },
@@ -239,7 +243,7 @@ const router = new VueRouter({
     },
     // Videos routes starting from here
     {
-      path:'/videos',
+      path: '/videos',
       name: 'videos',
       component: () => import('@/views/videos/Index.vue'),
       meta: {
@@ -265,11 +269,11 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
     // My Plans routes starting from here
     {
-      path:'/my-plans',
+      path: '/my-plans',
       name: 'my-plans',
       component: () => import('@/views/Plans/Index.vue'),
       meta: {
@@ -295,11 +299,11 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
     // Contacts routes starting from here
     {
-      path:'/contacts',
+      path: '/contacts',
       name: 'contacts',
       component: () => import('@/views/Contacts/Index.vue'),
       meta: {
@@ -310,7 +314,7 @@ const router = new VueRouter({
             active: true,
           },
         ],
-      }
+      },
     },
   ],
 })
@@ -322,20 +326,20 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, _, next) => {
   const isLoggedIn = isUserLoggedIn()
-    if (
-      to.name == "/" || 
-      to.name == "home" || 
-      to.name == "invoices" || 
-      to.name == "apps-invoice-preview" || 
-      to.name == "apps-invoice-edit" ||
-      to.name == "apps-users-view" ||
-      to.name == "apps-users-edit"
-    ) {
-      if (!isLoggedIn) return next({ name: 'login' })
+  if (
+    to.name === '/'
+    || to.name === 'home'
+    || to.name === 'invoices'
+    || to.name === 'apps-invoice-preview'
+    || to.name === 'apps-invoice-edit'
+    || to.name === 'apps-users-view'
+    || to.name === 'apps-users-edit'
+  ) {
+    if (!isLoggedIn) return next({ name: 'login' })
 
-      return next()
+    return next()
 
-    }
+  }
     // else if( to.name == "auth-reset-password-v1"){
 // router.beforeEach((to, _, next) => {
 //     let isLoggedIn = isUserLoggedIn()
@@ -372,11 +376,11 @@ router.beforeEach((to, _, next) => {
     //     return next()
     //   }
 
-    // }
+  // }
 
-    else{
-      return next()
-    }
+  else {
+    return next()
+  }
 })
 
 // ? For splash screen

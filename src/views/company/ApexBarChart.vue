@@ -2,12 +2,13 @@
   <b-card no-body>
     <b-card-header>
       <div>
-        <b-card-sub-title class="mb-25">
-<!--          Balance-->
-        </b-card-sub-title>
-        <b-card-title class="font-weight-bolder">
-<!--          $74,382.72-->
+        <b-card-title>
+          {{title}}
+          <!--          Balance-->
         </b-card-title>
+<!--        <b-card-title class="font-weight-bolder">-->
+<!--          $74,382.72-->
+<!--        </b-card-title>-->
       </div>
     </b-card-header>
     <b-card-body>
@@ -40,7 +41,7 @@ export default {
     BCardTitle,
   },
   // eslint-disable-next-line vue/require-prop-types
-  props: ['chartType'],
+  props: ['chartType', 'title'],
   data() {
     return {
       barChart: {
