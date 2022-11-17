@@ -88,7 +88,7 @@
               data.item.companyName.substr(
                 data.item.companyName.indexOf(" ") + 1,
                 1
-              )
+              ).toUpperCase()
             }}</span
           >
         </div>
@@ -96,7 +96,6 @@
           v-else
           style="
             margin-right: 8px;
-
             padding-top: 4px;
             border-radius: 50%;
             background-color: #7367f0;

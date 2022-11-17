@@ -1,147 +1,84 @@
 <template>
-  <b-card-code>
-    <b-tabs v-model="companyTab">
-      <b-tab>
-        <template #title>
-          <feather-icon icon="BriefcaseIcon" />
-          <span style="font-size: 13px">Company Info</span>
-        </template>
-        <div
-          style="
+  <b-col>
+    <b-card>
+      <b-tabs v-model="companyTab">
+        <b-tab>
+          <template #title>
+            <feather-icon icon="BriefcaseIcon"/>
+            <span style="font-size: 13px">Company Info</span>
+          </template>
+          <div
+              style="
             height: 30px;
             background-color: #f6f6f6;
             margin-right: -21px;
             margin-left: -21px;
           "
-        />
-        <CompanyInfo
-          :company-tab="companyTab"
-          @state="update($event)"
-        />
-      </b-tab>
+          />
+          <CompanyInfo
+              :company-tab="companyTab"
+              @state="update($event)"
+          />
+        </b-tab>
 
-      <b-tab>
-        <template #title>
-          <feather-icon icon="FileTextIcon" />
-          <span style="font-size: 13px">Invoices</span>
-        </template>
-        <!-- <div
-          style="
-            height: 30px;
-            background-color: #f6f6f6;
-            margin-right: -21px;
-            margin-left: -21px;
-          "
-        ></div> -->
-        <Invoice />
-      </b-tab>
+        <b-tab>
+          <template #title>
+            <feather-icon icon="FileTextIcon"/>
+            <span style="font-size: 13px">Invoices</span>
+          </template>
+          <Invoice/>
+        </b-tab>
+        <b-tab>
+          <template #title>
+            <feather-icon icon="FlagIcon"/>
+            <span style="font-size: 13px">Yearly Reports</span>
+          </template>
+          <YearlyReport/>
+        </b-tab>
 
-      <!-- <b-tab>
-        <template #title>
-          <feather-icon icon="DollarSignIcon" />
-          <span style="font-size: 13px">Create Invoice</span>
-        </template> -->
-        <!-- <div
-          style="
-            height: 30px;
-            background-color: #f6f6f6;
-            margin-right: -21px;
-            margin-left: -21px;
-          "
-        ></div> -->
-        <!-- <VATMonthReport />
-      </b-tab> -->
+        <b-tab>
+          <template #title>
+            <feather-icon icon="FlagIcon"/>
+            <span style="font-size: 13px">Vat Reports</span>
+          </template>
+          <YearlyReport/>
+        </b-tab>
 
-      <b-tab>
-        <template #title>
-          <feather-icon icon="FlagIcon" />
-          <span style="font-size: 13px">Yearly Reports</span>
-        </template>
-        <!-- <div
-          style="
-            height: 30px;
-            background-color: #f6f6f6;
-            margin-right: -21px;
-            margin-left: -21px;
-          "
-        ></div> -->
-        <YearlyReport />
-      </b-tab>
+        <b-tab>
+          <template #title>
+            <feather-icon icon="FileIcon"/>
+            <span style="font-size: 13px">Not Verified Invoices</span>
+          </template>
+          <NotVerifiedInvoice/>
+        </b-tab>
 
-      <b-tab>
-        <template #title>
-          <feather-icon icon="FlagIcon" />
-          <span style="font-size: 13px">Vat Reports</span>
-        </template>
-        <!-- <div
-          style="
-            height: 30px;
-            background-color: #f6f6f6;
-            margin-right: -21px;
-            margin-left: -21px;
-          "
-        ></div> -->
-        <YearlyReport />
-      </b-tab>
+        <b-tab>
+          <template #title>
+            <feather-icon icon="FolderIcon"/>
+            <span style="font-size: 13px">Documents</span>
+          </template>
+          <Document/>
+        </b-tab>
 
-      <b-tab>
-        <template #title>
-          <feather-icon icon="FileIcon" />
-          <span style="font-size: 13px">Not Verified Invoices</span>
-        </template>
-        <!-- <div
-          style="
-            height: 30px;
-            background-color: #f6f6f6;
-            margin-right: -21px;
-            margin-left: -21px;
-          "
-        ></div> -->
-        <NotVerifiedInvoice />
-      </b-tab>
+        <b-tab>
+          <template #title>
+            <feather-icon icon="UserIcon"/>
+            <span style="font-size: 13px">Private Persons</span>
+          </template>
+          <Document/>
+        </b-tab>
+      </b-tabs>
 
-      <b-tab>
-        <template #title>
-          <feather-icon icon="FolderIcon" />
-          <span style="font-size: 13px">Documents</span>
-        </template>
-        <!-- <div
-          style="
-            height: 30px;
-            background-color: #f6f6f6;
-            margin-right: -21px;
-            margin-left: -21px;
-          "
-        ></div> -->
-        <Document />
-      </b-tab>
-
-      <b-tab>
-        <template #title>
-          <feather-icon icon="UserIcon" />
-          <span style="font-size: 13px">Private Persons</span>
-        </template>
-        <!-- <div
-          style="
-            height: 30px;
-            background-color: #f6f6f6;
-            margin-right: -21px;
-            margin-left: -21px;
-          "
-        ></div> -->
-        <Document />
-      </b-tab>
-    </b-tabs>
-
-    <template #code>
-      {{ codeIcon }}
-    </template>
-  </b-card-code>
+      <template #code>
+        {{ codeIcon }}
+      </template>
+    </b-card>
+  </b-col>
 </template>
 
 <script>
 import BCardCode from '@core/components/b-card-code'
-import { BTabs, BTab, BCardText } from 'bootstrap-vue'
+import { BTabs, BTab, BCardText, BCol, BCard } from 'bootstrap-vue'
 import CompanyInfo from './CompanyInfo/CompanyInfo.vue'
 import Invoice from './Invoice/Invoice.vue'
 import VATMonthReport from './VATMonthReports/VATMonthReport.vue'
@@ -153,6 +90,7 @@ import { codeIcon } from './code'
 
 export default {
   components: {
+    BCol,
     BCardCode,
     CompanyInfo,
     Invoice,
@@ -164,6 +102,7 @@ export default {
     BTab,
     PrivatePersons,
     BCardText,
+    BCard,
   },
   data() {
     return {
