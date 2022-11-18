@@ -48,6 +48,8 @@
                             @input="SearchCompanyName(invoiceData.supplierCompany.companName)"
                             list="my-company_name"
                             autocomplete="off"
+                            @blur="hideSuggestion()"
+                            @focus="ShowSuggestion(datalist)"
                           />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item
@@ -77,6 +79,7 @@
                         >
                           <b-form-input
                             v-model="invoiceData.supplierCompany.companyAddress"
+                            autocomplete="off"
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
@@ -93,10 +96,25 @@
                           #default="{ errors }"
                           name="supplierCompanyIdNumber"
                           rules="required"
+                          
                         >
                           <b-form-input
                             v-model="invoiceData.supplierCompany.companyEic"
+                            @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)"
+                            list="my-company_name"
+                            autocomplete="off"
+                            @blur="hideSuggestionEic()"
+                            @focus="ShowSuggestionEic(datalistEic)"
                           />
+                          <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
+                            <b-list-group-item
+                              v-for="data in datalistEic"
+                              :key="data.eic"
+                              @click= autoCompletefnEic(data)                        
+                            >
+                              {{ data.eic }}
+                            </b-list-group-item>
+                          </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </b-input-group>
@@ -115,23 +133,37 @@
                             v-model="
                               invoiceData.supplierCompany.companyOwnerName
                             "
+                            autocomplete="off"
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </b-input-group>
                     </div>
-                    <div class="d-flex align-items-center mb-1">
+                    <div v-if="supplierVat[0] == 'true'" class="d-flex align-items-center mb-1">
                       <span class="title mr-1">
-                        Supplier Company Vat No (if exists):
+                        Supplier Company Vat No:
                       </span>
                       <b-input-group
                         class="input-group invoice-edit-input-group"
                       >
                         <b-form-input
                           v-model="invoiceData.supplierCompany.companyVatEic"
+                          autocomplete="off"
                         />
                       </b-input-group>
                     </div>
+                    <div class="d-flex align-items-center mb-1">
+                      <b-form-checkbox
+                          v-model="supplierVat"
+                          value="true"
+                          plain
+                        >
+                        </b-form-checkbox>
+                        <span class="title mr-1">
+                          Vat
+                        </span>
+                    </div>
+
                   </div>
 
                   <!-- Header: Right Content -->
@@ -190,7 +222,21 @@
                           <b-form-input
                             v-if="AccountTypeOption == 'company'"
                             v-model="invoiceData.recipientCompany.companName"
+                            @input="SearchCompanyNameRecipient(invoiceData.recipientCompany.companName)"
+                            list="my-company_name"
+                            autocomplete="off"
+                            @blur="hideSuggestionRecipient()"
+                            @focus="ShowSuggestionRecipient(datalistRecipient)"
                           />
+                          <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions">
+                            <b-list-group-item
+                              v-for="data in datalistRecipient"
+                              :key="data.eic"
+                              @click= autoCompletefnRecipient(data)                        
+                            >
+                              {{ data.company_name }}
+                            </b-list-group-item>
+                          </b-list-group>
                           <b-form-input
                             v-if="AccountTypeOption == 'person'"
                             v-model="invoiceData.recipientCompany.companyOwnerName"
@@ -213,6 +259,7 @@
                         >
                           <b-form-input
                             v-model="invoiceData.recipientCompany.companyAddress"
+                            autocomplete="off"
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
@@ -231,7 +278,21 @@
                         >
                           <b-form-input
                             v-model="invoiceData.recipientCompany.companyEic"
+                            @input="SearchCompanyEicRecipient(invoiceData.recipientCompany.companyEic)"
+                            list="my-company_name"
+                            autocomplete="off"
+                            @blur="hideSuggestionEicRecipient()"
+                            @focus="ShowSuggestionEicRecipient(datalistEicRecipient)"
                           />
+                          <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name" class="input-suggesstions">
+                            <b-list-group-item
+                              v-for="data in datalistEicRecipient"
+                              :key="data.eic"
+                              @click= autoCompletefnEicRecipient(data)                        
+                            >
+                              {{ data.eic }}
+                            </b-list-group-item>
+                          </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </b-input-group>
@@ -248,23 +309,35 @@
                         >
                           <b-form-input
                             v-model="invoiceData.recipientCompany.companyOwnerName"
+                            autocomplete="off"
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </b-input-group>
                     </div>
-                    <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
+                    <div v-if="AccountTypeOption=='company' && recipientVat[0] == 'true'" class="d-flex align-items-center mb-1">
                       <span class="title mr-1">
-                        Recipient Company Vat No (if exists):
+                        Recipient Company Vat No:
                       </span>
                       <b-input-group
                         class="input-group invoice-edit-input-group"
                       >
                         <b-form-input
-                          companyOwnerName
                           v-model="invoiceData.recipientCompany.companyVatEic"
+                          autocomplete="off"
                         />
                       </b-input-group>
+                    </div>
+                    <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
+                      <b-form-checkbox
+                          v-model="recipientVat"
+                          value="true"
+                          plain
+                        >
+                        </b-form-checkbox>
+                        <span class="title mr-1">
+                          Vat
+                        </span>
                     </div>
                   </div>
                 </div>
@@ -284,17 +357,18 @@
                     v-for="(item, index) in invoiceData.transactions"
                     :key="index"
                     ref="row"
-                    class="pb-2"
+                    class="pb-2 m-0"
                   >
                     <!-- Item Form -->
                     <!-- ? This will be in loop => So consider below markup for single item -->
-                    <b-col cols="12">
+                    <b-col cols="12" class="p-0">
                       <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                       <div class="d-none d-lg-flex">
-                        <b-row class="flex-grow-1 px-1">
+                        <b-row class="flex-grow-1 px-1 invoice-add-transections">
                           <!-- Single Item Form Headers -->
+                          <b-col cols="12" lg="1"> No. </b-col>
                           <b-col cols="12" lg="2"> Item name or Service </b-col>
-                          <b-col cols="12" lg="2"> Quantity </b-col>
+                          <b-col cols="12" lg="1"> Qty </b-col>
                           <b-col cols="12" lg="2"> Measurement </b-col>
                           <b-col cols="12" lg="2"> Single Price </b-col>
                           <b-col cols="12" lg="2"> Currency </b-col>
@@ -306,8 +380,21 @@
                       <!-- Form Input Fields OR content inside bordered area  -->
                       <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                       <div class="d-flex border rounded">
-                        <b-row class="flex-grow-1 p-2">
+                        <b-row class="flex-grow-1 py-2 px-1 invoice-add-transections">
                           <!-- Single Item Form Headers -->
+                          <b-col cols="12" lg="1">
+                            <label class="d-inline d-lg-none"
+                              >No.</label
+                            >
+                            
+                            <b-form-input
+                              :value="index+1"
+                              type="text"
+                              class="mb-2"
+                              disabled
+                            />
+                             
+                          </b-col>
 
                           <b-col cols="12" lg="2">
                             <label class="d-inline d-lg-none"
@@ -329,8 +416,8 @@
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </b-col>
-                          <b-col cols="12" lg="2">
-                            <label class="d-inline d-lg-none">Quantity</label>
+                          <b-col cols="12" lg="1">
+                            <label class="d-inline d-lg-none">Qty</label>
                             <validation-provider
                               #default="{ errors }"
                               name="transectionQuantity"
@@ -773,6 +860,8 @@ export default {
   data() {
     return {
       loading: false,
+      supplierVat: [],
+      recipientVat: []
     };
   },
   directives: {
@@ -983,8 +1072,7 @@ export default {
       }
     }
 
-    const autoCompletefn = (item) =>{
-      showSuggestions.value  = false
+    const autoCompletefn = (item) =>{      
       if(item.company_name){
         invoiceData.value.supplierCompany.companName = item.company_name
       }
@@ -994,11 +1082,207 @@ export default {
       if(item.eic){
         invoiceData.value.supplierCompany.companyEic = item.eic
       }
-      
+      if( item.managers && item.managers[0]){
+        invoiceData.value.supplierCompany.companyOwnerName = item.managers[0]
+      }
+      showSuggestions.value  = false
       datalist.value = []
     }
 
+    const hideSuggestion = () => {
+      setTimeout(() => {
+        if(showSuggestions.value){
+         showSuggestions.value = false
+        }
+      }, 100);
+    }
+
+    const ShowSuggestion = (items) => {
+      if(items != undefined || items.length != 0 ){
+        showSuggestions.value = true
+      }
+      else{
+        showSuggestions.value = false
+      }
+    }
+
+    var datalistEic = ref([])
+    var showSuggestionsEic = ref(false)
     
+    const SearchCompanyEic = (companyEic)=>{   
+      if(companyEic){
+        let token = useJwt.getToken()
+        useJwt
+          .SearchCompanyEic(token, companyEic)
+          .then((response) => {
+            if(response?.data != undefined || response?.data.length != 0 ){
+              showSuggestionsEic.value = true
+            }
+            else{
+              showSuggestionsEic.value = false
+            }
+            datalistEic.value = response?.data
+          })
+          .catch((error) => {
+            console.log("error",error)
+          });
+      } else{
+        showSuggestionsEic.value  = false
+      }
+    }
+
+    const autoCompletefnEic = (item) =>{      
+      if(item.company_name){
+        invoiceData.value.supplierCompany.companName = item.company_name
+      }
+      if(item.address){
+        invoiceData.value.supplierCompany.companyAddress = item.address
+      }
+      if(item.eic){
+        invoiceData.value.supplierCompany.companyEic = item.eic
+      }
+      if( item.managers && item.managers[0]){
+        invoiceData.value.supplierCompany.companyOwnerName = item.managers[0]
+      }
+      showSuggestionsEic.value  = false
+      datalistEic.value = []
+    }
+
+    const hideSuggestionEic = () => {
+      setTimeout(() => {
+        if(showSuggestionsEic.value){
+          showSuggestionsEic.value = false
+        }
+      }, 100);
+    }
+
+    const ShowSuggestionEic = (items) => {
+      if(items != undefined || items.length != 0 ){
+        showSuggestionsEic.value = true
+      }
+      else{
+        showSuggestionsEic.value = false
+      }
+    }
+    
+    var datalistRecipient = ref([])
+    var showSuggestionsRecipient = ref(false)
+    
+    const SearchCompanyNameRecipient = (companyName)=>{   
+      if(companyName.length > 0){
+        let token = useJwt.getToken()
+        useJwt
+          .SearchCompanyName(token, { companyName })
+          .then((response) => {
+            if(response?.data != undefined || response?.data.length != 0 ){
+              showSuggestionsRecipient.value = true
+            }
+            else{
+              showSuggestionsRecipient.value = false
+            }
+            datalistRecipient.value = response?.data
+          })
+          .catch((error) => {
+            console.log("error",error)
+          });
+      } else{
+        showSuggestionsRecipient.value  = false
+      }
+    }
+
+    const autoCompletefnRecipient = (item) =>{      
+      if(item.company_name){
+        invoiceData.value.recipientCompany.companName = item.company_name
+      }
+      if(item.address){
+        invoiceData.value.recipientCompany.companyAddress = item.address
+      }
+      if(item.eic){
+        invoiceData.value.recipientCompany.companyEic = item.eic
+      }
+      if( item.managers && item.managers[0]){
+        invoiceData.value.recipientCompany.companyOwnerName = item.managers[0]
+      }
+      showSuggestionsRecipient.value  = false
+      datalistRecipient.value = []
+    }
+
+    const hideSuggestionRecipient = () => {
+      setTimeout(() => {
+        if(showSuggestionsRecipient.value){
+         showSuggestionsRecipient.value = false
+        }
+      }, 100);
+    }
+
+    const ShowSuggestionRecipient = (items) => {
+      if(items != undefined || items.length != 0 ){
+        showSuggestionsRecipient.value = true
+      }
+      else{
+        showSuggestionsRecipient.value = false
+      }
+    }
+
+    var datalistEicRecipient = ref([])
+    var showSuggestionsEicRecipient = ref(false)
+    
+    const SearchCompanyEicRecipient = (companyEic)=>{   
+      if(companyEic){
+        let token = useJwt.getToken()
+        useJwt
+          .SearchCompanyEic(token, companyEic)
+          .then((response) => {
+            if(response?.data != undefined || response?.data.length != 0 ){
+              showSuggestionsEicRecipient.value = true
+            }
+            else{
+              showSuggestionsEicRecipient.value = false
+            }
+            datalistEicRecipient.value = response?.data
+          })
+          .catch((error) => {
+            console.log("error",error)
+          });
+      } else{
+        showSuggestionsEicRecipient.value  = false
+      }
+    }
+
+    const autoCompletefnEicRecipient = (item) =>{      
+      if(item.company_name){
+        invoiceData.value.recipientCompany.companName = item.company_name
+      }
+      if(item.address){
+        invoiceData.value.recipientCompany.companyAddress = item.address
+      }
+      if(item.eic){
+        invoiceData.value.recipientCompany.companyEic = item.eic
+      }
+      if( item.managers && item.managers[0]){
+        invoiceData.value.recipientCompany.companyOwnerName = item.managers[0]
+      }
+      showSuggestionsEicRecipient.value  = false
+      datalistEicRecipient.value = []
+    }
+
+    const hideSuggestionEicRecipient = () => {
+      setTimeout(() => {
+        if(showSuggestionsEicRecipient.value){
+          showSuggestionsEicRecipient.value = false
+        }
+      }, 100);
+    }
+
+    const ShowSuggestionEicRecipient = (items) => {
+      if(items != undefined || items.length != 0 ){
+        showSuggestionsEicRecipient.value = true
+      }
+      else{
+        showSuggestionsEicRecipient.value = false
+      }
+    }
+
     return {
       AccountTypeOption,
       invoiceData,
@@ -1010,7 +1294,28 @@ export default {
       datalist,
       showSuggestions,
       SearchCompanyName,
-      autoCompletefn
+      autoCompletefn,
+      hideSuggestion,
+      ShowSuggestion,
+      datalistEic,
+      showSuggestionsEic,
+      SearchCompanyEic,
+      autoCompletefnEic,
+      hideSuggestionEic,
+      ShowSuggestionEic,
+      datalistRecipient,
+      showSuggestionsRecipient,
+      SearchCompanyNameRecipient,
+      autoCompletefnRecipient,
+      hideSuggestionRecipient,
+      ShowSuggestionRecipient,
+      datalistEicRecipient,
+      showSuggestionsEicRecipient,
+      SearchCompanyEicRecipient,
+      autoCompletefnEicRecipient,
+      hideSuggestionEicRecipient,
+      ShowSuggestionEicRecipient
+
     };
   },
 };
@@ -1094,6 +1399,8 @@ export default {
   width: 100%;
   border: 1px solid rgba(87, 100, 111, 0.3);
   border-radius: 0 !important;
+  max-height: 15rem;
+  overflow: auto;
 }
 .dark-layout .input-suggesstions{
   border-color: #3b4253;
@@ -1106,6 +1413,10 @@ export default {
 }
 .dark-layout .input-suggesstions .list-group-item{
   background-color: #161d31 !important;
+}
+.invoice-add-transections .col-12{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 </style>

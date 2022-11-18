@@ -89,7 +89,6 @@
           <validation-provider
             #default="validationContext"
             name="IdCardNumber"
-            rules="required"
           >
             <b-form-group
               label="Id Card Number"
