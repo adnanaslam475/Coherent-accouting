@@ -6,7 +6,7 @@
       <!-- User Info: Left col -->
       <b-col
         cols="21"
-        xl="6"
+        xl="4"
         class="d-flex justify-content-between flex-column"
       >
         <!-- User Avatar & Action Buttons -->
@@ -45,9 +45,9 @@
       <!-- Right Col: Table -->
       <b-col
         cols="12"
-        xl="6"
+        xl="4"
       >
-        <table class="mt-2 mt-xl-0 w-100">
+        <table class="mt-2 mt-xl-0 user-preview-detail">
           <tr>
             <th class="pb-50">
               <feather-icon
@@ -122,6 +122,11 @@
           </tr>
         </table>
       </b-col>
+      <b-col
+        cols="12"
+        xl="4"
+      >
+      </b-col>
     </b-row>
   </b-card>
 </template>
@@ -185,5 +190,7 @@ export default {
 </script>
 
 <style>
-
+.user-preview-detail th{
+  padding-right: 2rem;
+}
 </style>

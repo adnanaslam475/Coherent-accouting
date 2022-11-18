@@ -21,27 +21,21 @@ export default class JwtService {
     // You can add your headers here
     // ================================
     baseURL: 'http://167.86.93.80:8765',
-    // timeout: 1000,
-    // headers: {
-    //   'Content-Type': 'application/x-www-form-urlencoded',
-    //   'Accept': 'application/json',
-    //   'Authorization': 'Basic cmVnaXN0ZXItYXBwOmFjbWVzZWNyZXQ='
-    // }
+
   })
   axiosIns3 = axios.create({
     // You can add your headers here
     // ================================
     baseURL: 'http://167.86.93.80:8765',
-    // timeout: 1000,
-    // headers: {
-    //   'Content-Type': 'application/x-www-form-urlencoded',
-    //   'Accept': 'application/json',
-    //   'Authorization': 'Basic cmVnaXN0ZXItYXBwOmFjbWVzZWNyZXQ='
-    // }
+
   })
 
   axiosIns4 = axios.create({
     baseURL: 'https://api.ipify.org/?format=json',
+  })
+
+  axiosIns5 = axios.create({
+    baseURL: 'http://167.86.93.80:8898',
   })
 
   // jwtConfig <= Will be used by this service
@@ -260,6 +254,17 @@ export default class JwtService {
       'Accept': 'application/json'
     }
     return this.axiosIns2.delete(`${this.jwtConfig.UserDeleteEndpoint}/${id}`,{
+      headers: headers
+    }) 
+  }
+
+  SearchCompanyName(token, ...args){
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.post(this.jwtConfig.SearchCompanyEndpoint, ...args, {
       headers: headers
     }) 
   }

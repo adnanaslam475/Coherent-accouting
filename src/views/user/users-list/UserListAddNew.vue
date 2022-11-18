@@ -133,7 +133,6 @@
           <validation-provider
             #default="validationContext"
             name="VatIdentificationNumber"
-            rules="required"
           >
             <b-form-group
               label="Vat Identification Number"
