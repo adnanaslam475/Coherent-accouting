@@ -11,26 +11,6 @@
                   style="width: 104px; height: 104px"
                 >
                   <feather-icon icon="UserIcon" size="80" />
-
-<!--                  <span class="b-avatar-img">-->
-<!--                    <svg-->
-<!--                      xmlns="http://www.w3.org/2000/svg"-->
-<!--                      width="104px"-->
-<!--                      height="104px"-->
-<!--                      viewBox="0 0 24 24"-->
-<!--                      fill="currentColor"-->
-<!--                      stroke="currentColor"-->
-<!--                      stroke-width="1"-->
-<!--                      stroke-linecap="round"-->
-<!--                      stroke-linejoin="round"-->
-<!--                      class="feather feather-user"-->
-<!--                    >-->
-<!--                      <path-->
-<!--                        d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"-->
-<!--                      ></path>-->
-<!--                      <circle cx="12" cy="7" r="4"></circle>-->
-<!--                    </svg>-->
-<!--                  </span>-->
                 </span>
 
                 <div class="d-flex flex-column ml-1">
@@ -253,7 +233,7 @@
       </b-card>
     </b-col>
     <b-col v-if="monthlyReportGraph.length > 0" class="mb-1" cols="6">
-      <b-card no-body>
+      <b-card class="mb-2" no-body>
         <b-card-header>
           <b-card-title>
             Report Timeline
@@ -282,6 +262,8 @@
           </app-timeline>
         </b-card-body>
       </b-card>
+      <InvoicesTab />
+
     </b-col>
     <b-col class="mb-1" cols="6">
       <ApexBarChart
@@ -304,6 +286,7 @@ import Swal from 'sweetalert2'
 import Ripple from 'vue-ripple-directive'
 import AppTimeline from '@core/components/app-timeline/AppTimeline.vue'
 import AppTimelineItem from '@core/components/app-timeline/AppTimelineItem.vue'
+import InvoicesTab from '@/views/invoice/InvoicesTab'
 // eslint-disable-next-line import/extensions
 import ApexBarChart from '@/views/company/ApexBarChart'
 
@@ -350,10 +333,11 @@ export default {
     BCardTitle,
     BCardBody,
     BCardHeader,
+    BButton,
+    InvoicesTab,
     AppTimeline,
     AppTimelineItem,
     ApexBarChart,
-    BButton,
   },
   directives: {
     Ripple,

@@ -13,13 +13,11 @@ import { BRow, BCol } from 'bootstrap-vue'
 
 import InvoicesTab from './InvoicesTab.vue'
 
-
 export default {
   components: {
     BRow,
     BCol,
-
-    InvoicesTab
+    InvoicesTab,
   },
 }
 </script>
