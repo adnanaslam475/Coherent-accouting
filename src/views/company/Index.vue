@@ -55,7 +55,7 @@
         >Add Company</b-button
       >
     </div>
-    <b-table :fields="fields" :items="items" responsive class="mb-0">
+    <b-table :fields="fields" :items="items" responsive class="mb-0"  :sort-by.sync="sortBy"  :sort-desc.sync="sortDesc" @sort-changed="checkStatus">
       <template #cell(Country)="data">
         <div>
           <!-- {{data.item.companyCountry}} -->
@@ -67,7 +67,8 @@
         </div>
       </template>
 
-      <template #cell(company_name)="data">
+
+      <template #cell(companyName)="data">
         <div
           v-if="data.item.companyName.indexOf(' ') > 0"
           style="
@@ -118,15 +119,15 @@
         <!-- <div>{{data.item.companyName}}</div> -->
       </template>
 
-      <template #cell(Email)="data">
+      <template #cell(companyMail)="data">
         <div>{{ data.item.companyMail }}</div>
       </template>
 
-      <template #cell(owner_name)="data">
+      <template #cell(companyOwnerFirstName)="data">
         <div>{{ data.item.companyOwnerApi.companyOwnerName }}</div>
       </template>
 
-      <template #cell(company_identification_number)="data">
+      <template #cell(companyIdentificationNumber)="data">
         <b-link :to="{ name: 'CompanyView', params: { id: data.item.id } }">{{
           data.item.companyIdentificationNumber
         }}</b-link>
@@ -285,16 +286,20 @@ export default {
 
   data() {
     return {
+      direction:"asc",
+      sortField: "companyName",
+      sortBy : 'companyName',
+      sortDesc: false,
       fields: [
         // A virtual column that doesn't exist in items
         "Country",
         // A column that needs custom formatting
-        { key: "company_name", label: "Company Name" },
-        "Email",
+        { key: "companyName", label: "Company Name", sortable: true},
+        {key: "companyMail", label: "Email", sortable: true},
         // A regular column
-        { key: "owner_name", label: "Owner Name" },
+        { key: "companyOwnerFirstName", label: "Owner Name", sortable: true },
         // A regular column
-        { key: "company_identification_number", label: "Company ID" },
+        { key: "companyIdentificationNumber", label: "Company ID", sortable: true },
         // A virtual column made up from two fields
         { key: "action", label: "Action" },
       ],
@@ -304,6 +309,7 @@ export default {
       totalRecords: "",
       totalPages: "",
       searchQuery:"",
+     
 
       // items: [
       //   {
@@ -355,6 +361,17 @@ export default {
     };
   },
   methods: {
+    checkStatus(ctx){
+      if(ctx.sortDesc === false){
+        this.direction = "asc";
+      }
+      else{
+        this.direction = "desc";
+      }
+      this.sortField = ctx.sortBy;
+     this.getAllCompanies();
+     
+    },
 
      // getting the list of all companies
      async searchCompanies() {
@@ -363,7 +380,7 @@ export default {
           this.currentPage +
           "/" +
           this.perPage +
-          "?direction=desc&queryString="+this.searchQuery +"&sortField=id",
+          "?direction="+this.direction+"&queryString="+this.searchQuery +"&sortField="+this.sortField,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
@@ -433,7 +450,7 @@ export default {
           this.currentPage +
           "/" +
           this.perPage +
-          "?direction=desc&sortField=id",
+          "?direction="+this.direction+"&sortField="+this.sortField,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
