@@ -44,6 +44,7 @@
                         id="company_name"
                         v-model="form.company_name"
                         :state="errors.length > 0 ? false : null"
+                        placeholder="Company Name"
                       />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
@@ -65,6 +66,7 @@
                         id="company_identification_number"
                         v-model="form.company_identification_number"
                         :state="errors.length > 0 ? false : null"
+                        placeholder="Company Identification Number"
                       />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
@@ -88,6 +90,7 @@
                         id="company_address"
                         v-model="form.company_address"
                         :state="errors.length > 0 ? false : null"
+                        placeholder="Company Address"
                       />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
@@ -191,6 +194,7 @@
                         id="owner_name"
                         v-model="form.owner_name"
                         :state="errors.length > 0 ? false : null"
+                        placeholder="Owner Name"
                       />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
@@ -205,13 +209,15 @@
                   >
                     <validation-provider
                       #default="{ errors }"
-                      v-bind:name="$t('owner egn')"
-                      rules="required|positive"
+                      v-bind:name="$t('owner_egn')"
+                      rules="required|digits:10"
                     >
                       <b-form-input
-                        id="owner_name"
+                        id="owner_egn"
                         v-model="form.owner_egn"
                         :state="errors.length > 0 ? false : null"
+                        placeholder="Owner EGN"
+
                       />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
@@ -231,9 +237,10 @@
                       rules="required"
                     >
                       <b-form-input
-                        id="owner_name"
+                        id="vat_number"
                         v-model="form.vat_no"
                         :state="errors.length > 0 ? false : null"
+                        placeholder="Company Vat Number"
                       />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
@@ -305,12 +312,19 @@
                     autocomplete="off"
                     required
                   ></b-form-input> -->
-
+                  <validation-provider
+                      #default="{ errors }"
+                      v-bind:name="$t('company_currency')"
+                      rules="required"
+                    >
                     <v-select
                       v-model="form.company_currency"
                       :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
                       :options="currencies"
                       :value="$store.state.selected"
+                      id="company_currency"
+                      :state="errors.length > 0 ? false : null"
+                      v-bind:placeholder="$t('Please select currency')"
                     >
                       <template #selected-option="option">
                         <div
@@ -340,6 +354,8 @@
                         </span>
                       </template>
                     </v-select>
+                    <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
                   </b-form-group>
                 </b-col>
               </b-form-row>
@@ -367,6 +383,7 @@
                         id="company_phone"
                         v-model="form.phone_no"
                         :state="errors.length > 0 ? false : null"
+                        placeholder="Company Phone Number"
                       />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
@@ -396,6 +413,7 @@
                         id="company_email"
                         v-model="form.company_email"
                         :state="errors.length > 0 ? false : null"
+                        placeholder="Company Email"
                       />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
@@ -427,6 +445,7 @@
                         v-model="form.fin_year"
                         :state="errors.length > 0 ? false : null"
                         placeholder="Select date"
+                        style="background-color: white !important;"
                       />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
@@ -467,7 +486,7 @@ import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { required } from "@validations";
-import { positive } from "@validations";
+import { digits } from "@validations";
 import flatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 import { extend } from "vee-validate";
@@ -480,9 +499,9 @@ extend("required", {
   message: "This field is mandatory",
 });
 
-extend("positive", {
-  ...positive,
-  message: "This field must be numeric only",
+extend("digits", {
+  ...digits,
+  message: "This field must be numeric and exactly contain 10 digits",
 });
 
 export default {
@@ -732,6 +751,7 @@ export default {
     },
     //create a company
     async saveCompany() {
+      let self = this;
       if(this.isVatCheck === false){
         this.form.vat_no = "";
       }
@@ -787,10 +807,9 @@ export default {
         data: data,
       };
 
-      const data1 = await axios(config);
-
-      if (data1.data != "") {
-        Swal.fire({
+      const data1 = await axios(config).then(function (response) {
+  console.log(JSON.stringify(response.data));
+  Swal.fire({
             position: "center",
             icon: "success",
             title: "Company Created!",
@@ -798,10 +817,25 @@ export default {
             timer: 1700,
           });
            setTimeout(() => {
-         this.$router.go(-1);
+         self.$router.go(-1);
       }, 1740);
+})
+.catch(function (error) {
+  console.log(error);
+  Swal.fire({
+            position: "center",
+            icon: "error",
+            title: 'Oops...',
+            text: "Something went wrong!",
+           
+            showConfirmButton: false,
+            timer: 1700,
+          });
+          setTimeout(() => {
+        self.$router.go();
+      }, 1740);
+});
 
-      }
 
     },
     //
