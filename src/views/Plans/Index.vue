@@ -5,24 +5,24 @@
   >
     <!-- title text and switch button -->
     <div class="text-center">
-      <h1 class="mt-5">
+      <h1>
         Pricing Plans
       </h1>
-      <p class="mb-2 pb-75">
+      <p class="mb-1 pb-75">
         All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs.
       </p>
-      <div class="d-flex align-items-center justify-content-center mb-5 pb-50">
+      <div class="d-flex align-items-center justify-content-center mb-1 pb-50">
         <h6 class="mr-1 mb-0">
           Monthly
         </h6>
         <b-form-checkbox
-            id="priceSwitch"
-            v-model="status"
-            name="price-switch"
-            value="annually"
-            unchecked-value="monthly"
-            switch
-            @input="tooglePlan"
+          id="priceSwitch"
+          v-model="status"
+          name="price-switch"
+          value="annually"
+          unchecked-value="monthly"
+          switch
+          @input="tooglePlan"
         />
         <h6 class="ml-50 mb-0">
           Annually
@@ -34,183 +34,196 @@
     <!-- pricing plan cards -->
     <b-row class="pricing-card">
       <b-col
-          offset-sm-2
-          sm="10"
-          md="12"
-          offset-lg="2"
-          lg="10"
-          class="mx-auto"
+        offset-sm-2
+        sm="10"
+        md="12"
+        offset-lg="2"
+        lg="10"
+        class="mx-auto d-flex align-items-center justify-content-center"
       >
-        <b-row>
-          <b-col md="4">
-            <b-card
-                align="center"
-            >
-              <!-- img -->
-              <b-img
-                  v-if="hotAirBallon"
-                  :src="hotAirBallon"
-                  class="mb-2 mt-1 w-25"
-                  alt="basic svg img"
-              />
-              <!--/ img -->
-              <h3>{{ pricing.basicPlan.title }}</h3>
-              <b-card-text>
-                {{ pricing.basicPlan.subtitle }}
-              </b-card-text>
+        <b-col cols="10">
+          <b-row>
+            <b-col md="4">
+              <b-card
+                  align="center"
+                  class="pb-1"
+              >
+                <!-- img -->
+                <b-img
+                    v-if="hotAirBallon"
+                    :src="hotAirBallon"
+                    class="mb-2 mt-1 w-25"
+                    alt="basic svg img"
+                />
+                <!--/ img -->
+                <h3>{{ pricing.basicPlan.title }}</h3>
+                <b-card-text>
+                  {{ pricing.basicPlan.subtitle }}
+                </b-card-text>
 
-              <!-- annual plan -->
-              <div class="annual-plan">
-                <div class="plan-price mt-2">
-                  <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
-                  <span class="pricing-basic-value font-weight-bolder text-primary">{{ monthlyPlanShow ? pricing.basicPlan.monthlyPrice:pricing.basicPlan.yearlyPlan.perMonth }}</span>
-                  <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                <!-- annual plan -->
+                <div class="annual-plan">
+                  <div class="plan-price mt-2">
+                    <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
+                    <span class="pricing-basic-value font-weight-bolder text-primary"
+                    >{{
+                        monthlyPlanShow ? pricing.basicPlan.monthlyPrice : pricing.basicPlan.yearlyPlan.perMonth
+                      }}</span>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                  </div>
+                  <small
+                      v-show="!monthlyPlanShow"
+                      class="annual-pricing text-muted"
+                  >USD {{ pricing.basicPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
-                <small
-                    v-show="!monthlyPlanShow"
-                    class="annual-pricing text-muted"
-                >USD {{ pricing.basicPlan.yearlyPlan.totalAnual }} / year</small>
-              </div>
-              <!--/ annual plan -->
+                <!--/ annual plan -->
 
-              <!-- plan benefit -->
-              <b-list-group class="list-group-circle text-left">
-                <b-list-group-item
-                    v-for="(data,index) in pricing.basicPlan.planBenefits"
+                <!-- plan benefit -->
+                <b-list-group class="list-group-circle text-left">
+                  <b-list-group-item
+                      v-for="(data,index) in pricing.basicPlan.planBenefits"
+                      :key="index"
+                  >
+                    {{ data }}
+                  </b-list-group-item>
+                </b-list-group>
+                <!--/ plan benefit -->
+
+                <!-- buttons -->
+                <b-button
+                    v-ripple.400="'rgba(40, 199, 111, 0.15)'"
+                    block
+                    class="mt-2"
+                    variant="outline-success"
+                >
+                  Your current plan
+                </b-button>
+              </b-card>
+            </b-col>
+            <b-col md="4">
+              <b-card
+                  class="pb-1 popular"
+                  align="center"
+              >
+                <div
+                    v-show="pricing.standardPlan.popular"
+                    class="pricing-badge text-right"
+                >
+                  <b-badge
+                      variant="light-primary"
+                      pill
+                  >
+                    Popular
+                  </b-badge>
+                </div>
+                <!-- img -->
+                <b-img
+                    v-if="aeroplanImage"
+                    :src="aeroplanImage"
+                    class="mb-1 w-25"
+                    alt="svg img"
+                />
+                <!--/ img -->
+                <h3>{{ pricing.standardPlan.title }}</h3>
+                <b-card-text>{{ pricing.standardPlan.subtitle }}</b-card-text>
+
+                <!-- annual plan -->
+                <div class="annual-plan">
+                  <div class="plan-price mt-2">
+                    <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
+                    <span class="pricing-basic-value font-weight-bolder text-primary"
+                    >{{
+                        monthlyPlanShow ? pricing.standardPlan.monthlyPrice : pricing.standardPlan.yearlyPlan.perMonth
+                      }}</span>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                  </div>
+                  <small
+                      v-show="!monthlyPlanShow"
+                      class="annual-pricing text-muted"
+                  >USD {{ pricing.standardPlan.yearlyPlan.totalAnual }} / year</small>
+                </div>
+                <!--/ annual plan -->
+
+                <!-- plan benefit -->
+                <b-list-group class="list-group-circle text-left">
+                  <b-list-group-item
+                      v-for="(data,index) in pricing.standardPlan.planBenefits"
+                      :key="index"
+                  >
+                    {{ data }}
+                  </b-list-group-item>
+                </b-list-group>
+                <!--/ plan benefit -->
+
+                <!-- buttons -->
+                <b-button
+                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                    block
+                    class="mt-2"
+                    variant="primary"
+                >
+                  Upgrade
+                </b-button>
+              </b-card>
+            </b-col>
+            <b-col md="4">
+              <b-card
+                  align="center"
+                  class="pb-1"
+              >
+                <!-- img -->
+                <b-img
+                    v-if="roketImage"
+                    :src="roketImage"
+                    class="mb-2 w-25"
+                    alt="enterprise svg img"
+                />
+                <!--/ img -->
+                <h3>{{ pricing.enterprisePlan.title }}</h3>
+                <b-card-text>{{ pricing.enterprisePlan.subtitle }}</b-card-text>
+
+                <!-- annual plan -->
+                <div class="annual-plan">
+                  <div class="plan-price mt-2">
+                    <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
+                    <span class="pricing-basic-value font-weight-bolder text-primary"
+                    >{{
+                        monthlyPlanShow ? pricing.enterprisePlan.monthlyPrice : pricing.enterprisePlan.yearlyPlan.perMonth
+                      }}</span>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                  </div>
+                  <small
+                      v-show="!monthlyPlanShow"
+                      class="annual-pricing text-muted"
+                  >USD {{ pricing.enterprisePlan.yearlyPlan.totalAnual }} / year</small>
+                </div>
+                <!--/ annual plan -->
+
+                <!-- plan benefit -->
+                <b-list-group
+                    v-for="(data,index) in pricing.enterprisePlan.planBenefits"
                     :key="index"
+                    class="list-group-circle text-left"
                 >
-                  {{ data }}
-                </b-list-group-item>
-              </b-list-group>
-              <!--/ plan benefit -->
+                  <b-list-group-item>
+                    {{ data }}
+                  </b-list-group-item>
+                </b-list-group>
+                <!--/ plan benefit -->
 
-              <!-- buttons -->
-              <b-button
-                  v-ripple.400="'rgba(40, 199, 111, 0.15)'"
-                  block
-                  class="mt-2"
-                  variant="outline-success"
-              >
-                Your current plan
-              </b-button>
-            </b-card>
-          </b-col>
-          <b-col md="4">
-            <b-card
-                class="popular"
-                align="center"
-            >
-              <div
-                  v-show="pricing.standardPlan.popular"
-                  class="pricing-badge text-right"
-              >
-                <b-badge
-                    variant="light-primary"
-                    pill
+                <!-- buttons -->
+                <b-button
+                    v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                    block
+                    class="mt-2"
+                    variant="outline-primary"
                 >
-                  Popular
-                </b-badge>
-              </div>
-              <!-- img -->
-              <b-img
-                  v-if="aeroplanImage"
-                  :src="aeroplanImage"
-                  class="mb-1 w-25"
-                  alt="svg img"
-              />
-              <!--/ img -->
-              <h3>{{ pricing.standardPlan.title }}</h3>
-              <b-card-text>{{ pricing.standardPlan.subtitle }}</b-card-text>
-
-              <!-- annual plan -->
-              <div class="annual-plan">
-                <div class="plan-price mt-2">
-                  <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
-                  <span class="pricing-basic-value font-weight-bolder text-primary">{{ monthlyPlanShow ? pricing.standardPlan.monthlyPrice:pricing.standardPlan.yearlyPlan.perMonth }}</span>
-                  <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
-                </div>
-                <small
-                    v-show="!monthlyPlanShow"
-                    class="annual-pricing text-muted"
-                >USD {{ pricing.standardPlan.yearlyPlan.totalAnual }} / year</small>
-              </div>
-              <!--/ annual plan -->
-
-              <!-- plan benefit -->
-              <b-list-group class="list-group-circle text-left">
-                <b-list-group-item
-                    v-for="(data,index) in pricing.standardPlan.planBenefits"
-                    :key="index"
-                >
-                  {{ data }}
-                </b-list-group-item>
-              </b-list-group>
-              <!--/ plan benefit -->
-
-              <!-- buttons -->
-              <b-button
-                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                  block
-                  class="mt-2"
-                  variant="primary"
-              >
-                Upgrade
-              </b-button>
-            </b-card>
-          </b-col>
-          <b-col md="4">
-            <b-card
-                align="center"
-            >
-              <!-- img -->
-              <b-img
-                  v-if="roketImage"
-                  :src="roketImage"
-                  class="mb-2 w-25"
-                  alt="enterprise svg img"
-              />
-              <!--/ img -->
-              <h3>{{ pricing.enterprisePlan.title }}</h3>
-              <b-card-text>{{ pricing.enterprisePlan.subtitle }}</b-card-text>
-
-              <!-- annual plan -->
-              <div class="annual-plan">
-                <div class="plan-price mt-2">
-                  <sup class="font-medium-1 font-weight-bold text-primary">$</sup>
-                  <span class="pricing-basic-value font-weight-bolder text-primary">{{ monthlyPlanShow ? pricing.enterprisePlan.monthlyPrice:pricing.enterprisePlan.yearlyPlan.perMonth }}</span>
-                  <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
-                </div>
-                <small
-                    v-show="!monthlyPlanShow"
-                    class="annual-pricing text-muted"
-                >USD {{ pricing.enterprisePlan.yearlyPlan.totalAnual }} / year</small>
-              </div>
-              <!--/ annual plan -->
-
-              <!-- plan benefit -->
-              <b-list-group
-                  v-for="(data,index) in pricing.enterprisePlan.planBenefits"
-                  :key="index"
-                  class="list-group-circle text-left"
-              >
-                <b-list-group-item>
-                  {{ data }}
-                </b-list-group-item>
-              </b-list-group>
-              <!--/ plan benefit -->
-
-              <!-- buttons -->
-              <b-button
-                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                  block
-                  class="mt-2"
-                  variant="outline-primary"
-              >
-                Upgrade
-              </b-button>
-            </b-card>
-          </b-col>
-        </b-row>
+                  Upgrade
+                </b-button>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-col>
       </b-col>
     </b-row>
     <!--/ pricing plan cards -->
@@ -253,35 +266,35 @@
     <!--/ pricing free trial -->
 
     <!-- pricing faq -->
-    <div class="pricing-faq">
-      <h3 class="text-center">
-        FAQ's
-      </h3>
-      <p class="text-center">
-        Let us help answer the most common questions.
-      </p>
-      <b-row class="py-2">
-        <b-col
-            lg="10"
-            offset-lg="2"
-            class="mx-auto"
-        >
-          <app-collapse
-              accordion
-              type="margin"
-          >
+<!--    <div class="pricing-faq">-->
+<!--      <h3 class="text-center">-->
+<!--        FAQ's-->
+<!--      </h3>-->
+<!--      <p class="text-center">-->
+<!--        Let us help answer the most common questions.-->
+<!--      </p>-->
+<!--      <b-row class="py-2">-->
+<!--        <b-col-->
+<!--            lg="10"-->
+<!--            offset-lg="2"-->
+<!--            class="mx-auto"-->
+<!--        >-->
+<!--          <app-collapse-->
+<!--              accordion-->
+<!--              type="margin"-->
+<!--          >-->
 
-            <app-collapse-item
-                v-for="(data,index) in pricing.qandA"
-                :key="index"
-                :title="data.question"
-            >
-              {{ data.ans }}
-            </app-collapse-item>
-          </app-collapse>
-        </b-col>
-      </b-row>
-    </div>
+<!--            <app-collapse-item-->
+<!--                v-for="(data,index) in pricing.qandA"-->
+<!--                :key="index"-->
+<!--                :title="data.question"-->
+<!--            >-->
+<!--              {{ data.ans }}-->
+<!--            </app-collapse-item>-->
+<!--          </app-collapse>-->
+<!--        </b-col>-->
+<!--      </b-row>-->
+<!--    </div>-->
     <!--/ pricing faq -->
   </section>
 </template>
@@ -324,17 +337,18 @@ export default {
           title: 'Basic',
           img: require('@/assets/images/illustration/Pot1.svg'),
           subtitle: 'A simple start for everyone',
-          monthlyPrice: 0,
+          monthlyPrice: 45,
           yearlyPlan: {
-            perMonth: 0,
-            totalAnual: 0,
+            perMonth: 45,
+            totalAnual: 39,
           },
           planBenefits: [
-            '100 responses a month',
-            'Unlimited forms and surveys',
-            'Unlimited fields',
-            'Basic form creation tools',
-            'Up to 2 subdomains',
+            '40 Companies',
+            'Unlimited ORC Invoices',
+            'Unlimited Space',
+            'Unlimited Digital Invoices',
+            '1 click Monthly Vat Reports (incl. txt and excel)',
+            'Yearly Reports (excel)',
           ],
           popular: false,
         },
@@ -342,17 +356,18 @@ export default {
           title: 'Standard',
           img: require('@/assets/images/illustration/Pot2.svg'),
           subtitle: 'For small to medium businesses',
-          monthlyPrice: 49,
+          monthlyPrice: 59,
           yearlyPlan: {
-            perMonth: 40,
-            totalAnual: 480,
+            perMonth: 59,
+            totalAnual: 49,
           },
           planBenefits: [
-            'Unlimited responses',
-            'Unlimited forms and surveys',
-            'Instagram profile page',
-            'Google Docs integration',
-            'Custom “Thank you” page',
+            '150 Companies',
+            'Unlimited ORC Invoices',
+            'Unlimited Space',
+            'Unlimited Digital Invoices',
+            '1 click Monthly Vat Reports (incl. txt and excel)',
+            'Yearly Reports (excel)',
           ],
           popular: true,
         },
@@ -360,17 +375,37 @@ export default {
           title: 'Enterprise',
           img: require('@/assets/images/illustration/Pot3.svg'),
           subtitle: 'Solution for big organizations',
-          monthlyPrice: 99,
+          monthlyPrice: 84,
           yearlyPlan: {
-            perMonth: 80,
-            totalAnual: 960,
+            perMonth: 84,
+            totalAnual: 69,
           },
           planBenefits: [
-            'PayPal payments',
-            'Logic Jumps',
-            'File upload with 5GB storage',
-            'Custom domain support',
-            'Stripe integration',
+            '60 Companies',
+            'Unlimited ORC Invoices',
+            'Unlimited Space',
+            'Unlimited Digital Invoices',
+            '1 click Monthly Vat Reports (incl. txt and excel)',
+            'Yearly Reports (excel)',
+          ],
+          popular: false,
+        },
+        platinumPlan: {
+          title: 'Platinum',
+          img: require('@/assets/images/illustration/Pot3.svg'),
+          subtitle: 'Solution for big organizations',
+          monthlyPrice: 129,
+          yearlyPlan: {
+            perMonth: 129,
+            totalAnual: 149,
+          },
+          planBenefits: [
+            '250 Companies',
+            'Unlimited ORC Invoices',
+            'Unlimited Space',
+            'Unlimited Digital Invoices',
+            '1 click Monthly Vat Reports (incl. txt and excel)',
+            'Yearly Reports (excel)',
           ],
           popular: false,
         },
@@ -401,7 +436,7 @@ export default {
   },
   methods: {
     tooglePlan() {
-      this.monthlyPlanShow = this.status === 'monthly';
+      this.monthlyPlanShow = this.status === 'monthly'
     },
   },
 }
