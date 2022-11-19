@@ -51,7 +51,7 @@
     data() {
       return {
         codeIcon,
-        invoiceTab: 0,
+        invoiceTab: this.$route.params.id ? this.$route.params.id : 0,
       }
     },
     methods: {

@@ -269,6 +269,17 @@ export default class JwtService {
     }) 
   }
 
+  SearchCompanyEic(token, eic){
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.get(`${this.jwtConfig.SearchEicEndpoint}/${eic}`, {
+      headers: headers
+    }) 
+  }
+
   verifyToken(token,UrlToken){
     let headers = {
       'Authorization': `${this.jwtConfig.tokenType} ${token}`,

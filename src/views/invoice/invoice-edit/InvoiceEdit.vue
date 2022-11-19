@@ -119,7 +119,7 @@
                       </div>
                       <div class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
-                          Supplier Company Vat No (if exists):
+                          Supplier Company Vat No:
                         </span>
                         <b-input-group
                           class="input-group-merge invoice-edit-input-group"
@@ -252,7 +252,7 @@
                       </div>
                       <div class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
-                          Recipient Company Vat No (if exists):
+                          Recipient Company Vat No:
                         </span>
                         <b-input-group
                           class="input-group-merge invoice-edit-input-group"
@@ -272,183 +272,197 @@
 
               <!-- Invoice Client & Payment Details -->
               <b-card-body class="invoice-padding form-item-section">
-                  <div
-                    ref="form"
-                    class="repeater-form"
-                    :style="{ height: trHeight }"
+                <div
+                  ref="form"
+                  class="repeater-form"
+                  :style="{ height: trHeight }"
+                >
+                  <b-row
+                    v-for="(item, index) in invoiceData.transactions"
+                    :key="index"
+                    ref="row"
+                    class="pb-2 m-0"
                   >
-                    <b-row
-                      v-for="(item, index) in invoiceData.transactions"
-                      :key="index"
-                      ref="row"
-                      class="pb-2"
-                    >
-                      <!-- Item Form -->
-                      <!-- ? This will be in loop => So consider below markup for single item -->
-                      <b-col cols="12">
-                        <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
-                        <div class="d-none d-lg-flex">
-                          <b-row class="flex-grow-1 px-1">
-                            <!-- Single Item Form Headers -->
-                            <b-col cols="12" lg="2"> Item name or Service </b-col>
-                            <b-col cols="12" lg="2"> Quantity </b-col>
-                            <b-col cols="12" lg="2"> Measurement </b-col>
-                            <b-col cols="12" lg="2"> Single Price </b-col>
-                            <b-col cols="12" lg="2"> Currency </b-col>
-                            <b-col cols="12" lg="2"> Total Price </b-col>
-                          </b-row>
-                          <div class="form-item-action-col" />
-                        </div>
+                    <!-- Item Form -->
+                    <!-- ? This will be in loop => So consider below markup for single item -->
+                    <b-col cols="12" class="p-0">
+                      <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
+                      <div class="d-none d-lg-flex">
+                        <b-row class="flex-grow-1 px-1 invoice-add-transections">
+                          <!-- Single Item Form Headers -->
+                          <b-col cols="12" lg="1"> No. </b-col>
+                          <b-col cols="12" lg="2"> Item name or Service </b-col>
+                          <b-col cols="12" lg="1"> Qty </b-col>
+                          <b-col cols="12" lg="2"> Measurement </b-col>
+                          <b-col cols="12" lg="2"> Single Price </b-col>
+                          <b-col cols="12" lg="2"> Currency </b-col>
+                          <b-col cols="12" lg="2"> Total Price </b-col>
+                        </b-row>
+                        <div class="form-item-action-col" />
+                      </div>
 
-                        <!-- Form Input Fields OR content inside bordered area  -->
-                        <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
-                        <div class="d-flex border rounded">
-                          <b-row class="flex-grow-1 p-2">
-                            <!-- Single Item Form Headers -->
+                      <!-- Form Input Fields OR content inside bordered area  -->
+                      <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
+                      <div class="d-flex border rounded">
+                        <b-row class="flex-grow-1 py-2 px-1 invoice-add-transections">
+                          <!-- Single Item Form Headers -->
+                          <b-col cols="12" lg="1">
+                            <label class="d-inline d-lg-none"
+                              >No.</label
+                            >
+                            
+                            <b-form-input
+                              :value="index+1"
+                              type="text"
+                              class="mb-2"
+                              disabled
+                            />
+                             
+                          </b-col>
 
-                            <b-col cols="12" lg="2">
-                              <label class="d-inline d-lg-none"
-                                >Item name or Service</label
+                          <b-col cols="12" lg="2">
+                            <label class="d-inline d-lg-none"
+                              >Item name or Service</label
+                            >
+                            <validation-provider
+                              #default="{ errors }"
+                              name="transectionServiceOrItemDescription"
+                              rules="required"
+                            >
+                              <b-form-input
+                                v-model="item.serviceOrItemDescription"
+                                :dir="
+                                  $store.state.appConfig.isRTL ? 'rtl' : 'ltr'
+                                "
+                                type="text"
+                                class="mb-2"
+                              />
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </b-col>
+                          <b-col cols="12" lg="1">
+                            <label class="d-inline d-lg-none">Qty</label>
+                            <validation-provider
+                              #default="{ errors }"
+                              name="transectionQuantity"
+                              rules="required"
+                            >
+                              <b-form-input
+                                v-model="item.quantity"
+                                type="number"
+                                class="mb-2"
+                              />
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </b-col>
+                          <b-col cols="12" lg="2">
+                            <label class="d-inline d-lg-none"
+                              >Measurement</label
+                            >
+                            <validation-provider
+                              #default="{ errors }"
+                              name="transectionMeasurement"
+                              rules="required"
+                            >
+                              <b-form-input
+                                v-model="item.measurement"
+                                type="text"
+                                class="mb-2"
+                              />
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </b-col>
+                          <b-col cols="12" lg="2">
+                            <label class="d-inline d-lg-none"
+                              >Single Price</label
+                            >
+                            <validation-provider
+                              #default="{ errors }"
+                              name="transectionSingleAmountTransaction"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
                               >
-                              <validation-provider
-                                #default="{ errors }"
-                                name="transectionServiceOrItemDescription"
-                                 
-                              >
+                                <b-input-group-prepend is-text class="mb-2">
+                                  <span>лв</span>
+                                </b-input-group-prepend>
+
                                 <b-form-input
-                                  v-model="item.serviceOrItemDescription"
-                                  :dir="
-                                    $store.state.appConfig.isRTL ? 'rtl' : 'ltr'
-                                  "
-                                  type="text"
-                                  class="mb-2"
-                                />
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
-                            </b-col>
-                            <b-col cols="12" lg="2">
-                              <label class="d-inline d-lg-none">Quantity</label>
-                              <validation-provider
-                                #default="{ errors }"
-                                name="transectionQuantity"
-                                 
-                              >
-                                <b-form-input
-                                  v-model="item.quantity"
+                                  v-model="item.singleAmountTransaction"
                                   type="number"
                                   class="mb-2"
+                                  step="0.01"
+                                  placeholder="0.00"
                                 />
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
-                            </b-col>
-                            <b-col cols="12" lg="2">
-                              <label class="d-inline d-lg-none"
-                                >Measurement</label
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </b-col>
+                          <b-col cols="12" lg="2">
+                            <label class="d-inline d-lg-none">Currency</label>
+                            <validation-provider
+                              #default="{ errors }"
+                              name="transectionCurrency"
+                              rules="required"
+                            >
+                              <b-form-input
+                                v-model="invoiceData.currency"
+                                type="text"
+                                class="mb-2"
+                                placeholder="lv"
+                              />
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </b-col>
+                          <b-col cols="12" lg="2">
+                            <label class="d-inline d-lg-none"
+                              >Total Price</label
+                            >
+                            <validation-provider
+                              #default="{ errors }"
+                              name="transectionTotal"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
                               >
-                              <validation-provider
-                                #default="{ errors }"
-                                name="transectionMeasurement"
-                                 
-                              >
+                                <b-input-group-prepend is-text class="mb-2">
+                                  <span>лв</span>
+                                </b-input-group-prepend>
+
                                 <b-form-input
-                                  v-model="item.measurement"
-                                  type="text"
+                                  :value="(item.singleAmountTransaction * item.quantity).toFixed(2)"
+                                  disabled
                                   class="mb-2"
                                 />
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
-                            </b-col>
-                            <b-col cols="12" lg="2">
-                              <label class="d-inline d-lg-none"
-                                >Single Price</label
-                              >
-                              <validation-provider
-                                #default="{ errors }"
-                                name="transectionSingleAmountTransaction"
-                                 
-                              >
-                                <b-input-group
-                                  class="input-group-merge invoice-edit-input-group"
-                                >
-                                  <b-input-group-prepend is-text class="mb-2">
-                                    <span>лв</span>
-                                  </b-input-group-prepend>
-
-                                  <b-form-input
-                                    v-model="item.singleAmountTransaction"
-                                    type="number"
-                                    class="mb-2"
-                                    step="0.01"
-                                    placeholder="0.00"
-                                  />
-                                </b-input-group>
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
-                            </b-col>
-                            <b-col cols="12" lg="2">
-                              <label class="d-inline d-lg-none">Currency</label>
-                              <validation-provider
-                                #default="{ errors }"
-                                name="transectionCurrency"
-                                 
-                              >
-                                <b-form-input
-                                  v-model="invoiceData.currency"
-                                  type="text"
-                                  class="mb-2"
-                                  placeholder="lv"
-                                />
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
-                            </b-col>
-                            <b-col cols="12" lg="2">
-                              <label class="d-inline d-lg-none"
-                                >Total Price</label
-                              >
-                              <validation-provider
-                                #default="{ errors }"
-                                name="transectionTotal"
-                                 
-                              >
-                                <b-input-group
-                                  class="input-group-merge invoice-edit-input-group"
-                                >
-                                  <b-input-group-prepend is-text class="mb-2">
-                                    <span>лв</span>
-                                  </b-input-group-prepend>
-
-                                  <b-form-input
-                                    :value="(item.singleAmountTransaction * item.quantity).toFixed(2)"
-                                    disabled
-                                    class="mb-2"
-                                  />
-                                </b-input-group>
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
-                            </b-col>
-                          </b-row>
-                          <div
-                            class="d-flex flex-column justify-content-between border-left py-50 px-25"
-                          >
-                            <feather-icon
-                              size="16"
-                              icon="XIcon"
-                              class="cursor-pointer"
-                              @click="removeItem(index)"
-                            />
-                          </div>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </b-col>
+                        </b-row>
+                        <div
+                          class="d-flex flex-column justify-content-between border-left py-50 px-25"
+                        >
+                          <feather-icon
+                            size="16"
+                            icon="XIcon"
+                            class="cursor-pointer"
+                            @click="removeItem(index)"
+                          />
                         </div>
-                      </b-col>
-                    </b-row>
-                  </div>
-                  <b-button
-                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                    size="sm"
-                    variant="primary"
-                    @click="addNewItemInItemForm"
-                  >
-                    Add Item
-                  </b-button>
+                      </div>
+                    </b-col>
+                  </b-row>
+                </div>
+                <b-button
+                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                  size="sm"
+                  variant="primary"
+                  @click="addNewItemInItemForm"
+                >
+                  Add Item
+                </b-button>
               </b-card-body>
 
               <b-card-body class="invoice-padding pb-0">
@@ -824,6 +838,12 @@ export default {
                       variant: "success",
                     },
                   });
+                  return this.$router.push({
+                      name: "invoices", 
+                      params: { 
+                        id: 0 
+                      }
+                    })
                 })
                 .catch((error) => {
                   this.loading = false
@@ -989,5 +1009,9 @@ background-color:$product-details-bg;
 .invoice-add-input .invoice-number-date .title.mr-1 {
   width: 5rem !important;
   min-width: 5rem !important;
+}
+.invoice-add-transections .col-12{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 </style>
