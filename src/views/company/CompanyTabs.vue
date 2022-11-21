@@ -77,8 +77,13 @@
 </template>
 
 <script>
-import BCardCode from '@core/components/b-card-code'
-import { BTabs, BTab, BCardText, BCol, BCard } from 'bootstrap-vue'
+import {
+  BTabs,
+  BTab,
+  BCardText,
+  BCol,
+  BCard,
+} from 'bootstrap-vue'
 import CompanyInfo from './CompanyInfo/CompanyInfo.vue'
 import Invoice from './Invoice/Invoice.vue'
 import VATMonthReport from './VATMonthReports/VATMonthReport.vue'
@@ -91,7 +96,6 @@ import { codeIcon } from './code'
 export default {
   components: {
     BCol,
-    BCardCode,
     CompanyInfo,
     Invoice,
     VATMonthReport,

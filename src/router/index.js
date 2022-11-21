@@ -300,9 +300,10 @@ const router = new VueRouter({
           {
             text: 'Plans',
             active: true,
+            resource: 'Auth',
           },
         ],
-      }
+      },
     },
     // Settings routes starting from here
     {
@@ -352,6 +353,7 @@ router.beforeEach((to, _, next) => {
     || to.name === 'apps-invoice-edit'
     || to.name === 'apps-users-view'
     || to.name === 'apps-users-edit'
+    || to.name === 'my-plans'
   ) {
     if (!isLoggedIn) return next({ name: 'login' })
 
