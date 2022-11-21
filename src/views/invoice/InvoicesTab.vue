@@ -55,20 +55,11 @@
             this.invoiceTab = value;
         }
     }
-  },
-  created() {
-    // eslint-disable-next-line radix
-    this.invoiceTab = this.$route.params.id ? parseInt(this.$route.params.id) : 0
-  },
-  methods: {
-    update(value) {
-      this.invoiceTab = value
-    },
-  },
-}
-</script>
-<style>
-.invoice-tabs-view ul.nav-tabs {
-  justify-content: center;
-}
-</style>
+  }
+  </script>
+  <style>
+  .invoice-tabs-view ul.nav-tabs{
+    justify-content: center;
+  }
+  </style>
+  
