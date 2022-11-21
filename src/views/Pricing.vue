@@ -357,13 +357,14 @@
                 Still not convinced? Start with a 14-day FREE trial!
               </h3>
               <h5>You will get full access to with all the features for 14 days.</h5>
-              <b-button
+              <b-link
+                  to="/my-plans"
                   v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                   variant="primary"
-                  class="mt-2 mt-lg-3"
+                  class="btn btn-primary mt-2 mt-lg-3"
               >
                 Start 14-day FREE trial
-              </b-button>
+              </b-link>
             </div>
 
             <!-- images -->
