@@ -123,22 +123,25 @@
           responsive
           :items="invoiceData.transactions"
           :fields="[
+            'no.',
             'serviceOrItemDescription',
-            'quantity',
+            'qty',
             'measurement',
             'singleAmountTransaction',
             'transactionTotalAmountNonVat',
           ]"
         >
+          <template #cell(no.)="data">
+                {{ data.item.index }}
+          </template>
+          <template #cell(qty)="data">
+              {{ data.item.quantity }}
+          </template>
           <template #cell(singleAmountTransaction)="data">
-            <b-card-text class="font-weight-bold mb-25">
               лв. {{ data.item.singleAmountTransaction }}
-            </b-card-text>
           </template>
           <template #cell(transactionTotalAmountNonVat)="data">
-            <b-card-text class="font-weight-bold mb-25">
               лв. {{ data.item.transactionTotalAmountNonVat }}
-            </b-card-text>
           </template>
         </b-table-lite>
 

@@ -5,352 +5,415 @@
         <b-row class="invoice-add">
           <!-- Col: Left (Invoice Container) -->
           <b-col cols="12" xl="10" md="10">
-            <b-card no-body class="invoice-preview-card">
-              <!-- Header -->
-              <b-card-body class="invoice-padding pb-0 px-0">
+            
+            <b-card
+              no-body
+              class="invoice-add"
+            >            
+              <b-card-body class="invoice-body"> 
+                <div class="invoice-number-date mt-md-0 mt-2">
+                  <div class="d-flex align-items-center mb-1">
+                    <h4 class="title mr-1">Invoice</h4>
+                    <validation-provider
+                      #default="{ errors }"
+                      name="invoiceNumber"
+                      vid="Invoice"
+                      rules="required"
+                    >
+                      <b-input-group
+                        class="input-group-merge invoice-edit-input-group invoice-input-top"
+                      >
+                        <b-input-group-prepend is-text>
+                          <feather-icon icon="HashIcon" />
+                        </b-input-group-prepend>
 
-                <div class="accountType">
-                  <b-form-radio
-                    v-model="AccountTypeOption"
-                    plain
-                    name="accountTypeoptions"
-                    value="company"
-                  >
-                    <h5>COMPANY</h5>
-                  </b-form-radio>
-                  <b-form-radio
-                    v-model="AccountTypeOption"
-                    plain
-                    name="accountTypeoptions"
-                    value="person"
-                  >
-                    <h5>PERSON</h5>
-                  </b-form-radio>
-      
-                </div>
-                <div
-                  class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input"
-                >
-                  <!-- Header: Left Content -->
-                  <div class="mt-md-0 mt-2">
-                    <div class="d-flex align-items-center mb-1">
-                      <span class="title mr-1"> Supplier Company Name: </span>
-                      <b-input-group
-                        class="input-group invoice-edit-input-group"
-                      >
-                        <validation-provider
-                          #default="{ errors }"
-                          name="supplierCompanyName"
-                          rules="required"
-                        >
-                          <b-form-input
-                            v-model="invoiceData.supplierCompany.companName"
-                            @input="SearchCompanyName(invoiceData.supplierCompany.companName)"
-                            list="my-company_name"
-                            autocomplete="off"
-                            @blur="hideSuggestion()"
-                            @focus="ShowSuggestion(datalist)"
-                          />
-                          <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
-                            <b-list-group-item
-                              v-for="data in datalist"
-                              :key="data.eic"
-                              @click= autoCompletefn(data)                        
-                            >
-                              {{ data.company_name }}
-                            </b-list-group-item>
-                          </b-list-group>
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </b-input-group>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
-                      <span class="title mr-1">
-                        Supplier Company Address:
-                      </span>
-
-                      <b-input-group
-                        class="input-group invoice-edit-input-group"
-                      >
-                        <validation-provider
-                          #default="{ errors }"
-                          name="supplierCompanyAddress"
-                          rules="required"
-                        >
-                          <b-form-input
-                            v-model="invoiceData.supplierCompany.companyAddress"
-                            autocomplete="off"
-                          />
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </b-input-group>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
-                      <span class="title mr-1">
-                        Supplier Company ID Number:
-                      </span>
-                      <b-input-group
-                        class="input-group invoice-edit-input-group"
-                      >
-                        <validation-provider
-                          #default="{ errors }"
-                          name="supplierCompanyIdNumber"
-                          rules="required"
-                          
-                        >
-                          <b-form-input
-                            v-model="invoiceData.supplierCompany.companyEic"
-                            @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)"
-                            list="my-company_name"
-                            autocomplete="off"
-                            @blur="hideSuggestionEic()"
-                            @focus="ShowSuggestionEic(datalistEic)"
-                          />
-                          <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
-                            <b-list-group-item
-                              v-for="data in datalistEic"
-                              :key="data.eic"
-                              @click= autoCompletefnEic(data)                        
-                            >
-                              {{ data.eic }}
-                            </b-list-group-item>
-                          </b-list-group>
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </b-input-group>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
-                      <span class="title mr-1"> Supplier Company Owner: </span>
-                      <b-input-group
-                        class="input-group invoice-edit-input-group"
-                      >
-                        <validation-provider
-                          #default="{ errors }"
-                          name="supplierCompanyOwner"
-                          rules="required"
-                        >
-                          <b-form-input
-                            v-model="
-                              invoiceData.supplierCompany.companyOwnerName
-                            "
-                            autocomplete="off"
-                          />
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </b-input-group>
-                    </div>
-                    <div v-if="supplierVat[0] == 'true'" class="d-flex align-items-center mb-1">
-                      <span class="title mr-1">
-                        Supplier Company Vat No:
-                      </span>
-                      <b-input-group
-                        class="input-group invoice-edit-input-group"
-                      >
                         <b-form-input
-                          v-model="invoiceData.supplierCompany.companyVatEic"
-                          autocomplete="off"
+                          id="invoice-data-id"
+                          v-model="invoiceData.invoiceNumber"
                         />
                       </b-input-group>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
-                      <b-form-checkbox
-                          v-model="supplierVat"
-                          value="true"
-                          plain
-                        >
-                        </b-form-checkbox>
-                        <span class="title mr-1">
-                          Vat
-                        </span>
-                    </div>
-
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
                   </div>
-
-                  <!-- Header: Right Content -->
-                  <div class="invoice-number-date mt-md-0 mt-2">
-                    <div class="d-flex align-items-center mb-1">
-                      <h4 class="title mr-1">Invoice</h4>
-                      <validation-provider
-                        #default="{ errors }"
-                        name="invoiceNumber"
-                        vid="Invoice"
-                        rules="required"
-                      >
-                        <b-input-group
-                          class="input-group-merge invoice-edit-input-group"
-                        >
-                          <b-input-group-prepend is-text>
-                            <feather-icon icon="HashIcon" />
-                          </b-input-group-prepend>
-
-                          <b-form-input
-                            id="invoice-data-id"
-                            v-model="invoiceData.invoiceNumber"
-                          />
-                        </b-input-group>
-                        <small class="text-danger">{{ errors[0] }}</small>
-                      </validation-provider>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
-                      <span class="title mr-1"> Date: </span>
-                      <validation-provider
-                        #default="{ errors }"
-                        name="dateIssued"
-                        rules="required"
-                      >
-                        <flat-pickr
-                          v-model="invoiceData.dateIssued"
-                          class="form-control invoice-edit-input"
-                        />
-                        <small class="text-danger">{{ errors[0] }}</small>
-                      </validation-provider>
-                    </div>
-                  </div>
-
-                  <div class="mt-md-0 mt-2">
-                    <div class="d-flex align-items-center mb-1">
-                      <span v-if="AccountTypeOption=='company'" class="title mr-1">Recipient Company Name:</span> 
-                      <span v-if="AccountTypeOption=='person'" class="title mr-1">Person Name:</span>         
-                      <b-input-group
-                        class="input-group invoice-edit-input-group"
-                      >
-                        <validation-provider
-                          #default="{ errors }"
-                          :name="AccountTypeOption == 'company' ? 'recipientCompanyName' : 'personName'"
-                          rules="required"
-                        >
-                          <b-form-input
-                            v-if="AccountTypeOption == 'company'"
-                            v-model="invoiceData.recipientCompany.companName"
-                            @input="SearchCompanyNameRecipient(invoiceData.recipientCompany.companName)"
-                            list="my-company_name"
-                            autocomplete="off"
-                            @blur="hideSuggestionRecipient()"
-                            @focus="ShowSuggestionRecipient(datalistRecipient)"
-                          />
-                          <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions">
-                            <b-list-group-item
-                              v-for="data in datalistRecipient"
-                              :key="data.eic"
-                              @click= autoCompletefnRecipient(data)                        
-                            >
-                              {{ data.company_name }}
-                            </b-list-group-item>
-                          </b-list-group>
-                          <b-form-input
-                            v-if="AccountTypeOption == 'person'"
-                            v-model="invoiceData.recipientCompany.companyOwnerName"
-                          />
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </b-input-group>
-                    </div>
-
-                    <div class="d-flex align-items-center mb-1">
-                      <span class="title mr-1" v-if="AccountTypeOption=='company'">Recipient Company Address:</span>
-                      <span class="title mr-1" v-if="AccountTypeOption=='person'">Person Address:</span>  
-                      <b-input-group
-                        class="input-group invoice-edit-input-group"
-                      >
-                        <validation-provider
-                          #default="{ errors }"
-                          :name="AccountTypeOption=='company' ? 'recipientCompanyAddress' : 'personAddress'"
-                          rules="required"
-                        >
-                          <b-form-input
-                            v-model="invoiceData.recipientCompany.companyAddress"
-                            autocomplete="off"
-                          />
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </b-input-group>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
-                      <span class="title mr-1" v-if="AccountTypeOption=='company'">Recipient Company ID Number:</span>
-                      <span class="title mr-1" v-if="AccountTypeOption=='person'">Person ID Number:</span>  
-                      <b-input-group
-                        class="input-group invoice-edit-input-group"
-                      >
-                        <validation-provider
-                          #default="{ errors }"
-                          :name="AccountTypeOption=='company' ? 'recipientCompanyIdNumber' : 'personIdNumber'"
-                          rules="required"
-                        >
-                          <b-form-input
-                            v-model="invoiceData.recipientCompany.companyEic"
-                            @input="SearchCompanyEicRecipient(invoiceData.recipientCompany.companyEic)"
-                            list="my-company_name"
-                            autocomplete="off"
-                            @blur="hideSuggestionEicRecipient()"
-                            @focus="ShowSuggestionEicRecipient(datalistEicRecipient)"
-                          />
-                          <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name" class="input-suggesstions">
-                            <b-list-group-item
-                              v-for="data in datalistEicRecipient"
-                              :key="data.eic"
-                              @click= autoCompletefnEicRecipient(data)                        
-                            >
-                              {{ data.eic }}
-                            </b-list-group-item>
-                          </b-list-group>
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </b-input-group>
-                    </div>
-                    <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
-                      <span class="title mr-1"> Recipient Company Owner: </span>
-                      <b-input-group
-                        class="input-group invoice-edit-input-group"
-                      >
-                        <validation-provider
-                          #default="{ errors }"
-                          name="recipientCompanyOwner"
-                          :rules="AccountTypeOption=='company' ? 'required' : ''"
-                        >
-                          <b-form-input
-                            v-model="invoiceData.recipientCompany.companyOwnerName"
-                            autocomplete="off"
-                          />
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </b-input-group>
-                    </div>
-                    <div v-if="AccountTypeOption=='company' && recipientVat[0] == 'true'" class="d-flex align-items-center mb-1">
-                      <span class="title mr-1">
-                        Recipient Company Vat No:
-                      </span>
-                      <b-input-group
-                        class="input-group invoice-edit-input-group"
-                      >
-                        <b-form-input
-                          v-model="invoiceData.recipientCompany.companyVatEic"
-                          autocomplete="off"
-                        />
-                      </b-input-group>
-                    </div>
-                    <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
-                      <b-form-checkbox
-                          v-model="recipientVat"
-                          value="true"
-                          plain
-                        >
-                        </b-form-checkbox>
-                        <span class="title mr-1">
-                          Vat
-                        </span>
-                    </div>
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1"> Date: </span>
+                    <validation-provider
+                      #default="{ errors }"
+                      name="dateIssued"
+                      rules="required"
+                    >
+                      <flat-pickr
+                        v-model="invoiceData.dateIssued"
+                        class="form-control invoice-edit-input invoice-input-top"
+                      />
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
                   </div>
                 </div>
               </b-card-body>
+            </b-card>
+             
+            <div>
+              <div class="accountType">
+                <b-form-radio
+                  v-model="AccountTypeOption"
+                  plain
+                  name="accountTypeoptions"
+                  value="company"
+                >
+                  <h5>COMPANY</h5>
+                </b-form-radio>
+                <b-form-radio
+                  v-model="AccountTypeOption"
+                  plain
+                  name="accountTypeoptions"
+                  value="person"
+                >
+                  <h5>PERSON</h5>
+                </b-form-radio>
+              </div>
+            
+              <div
+                class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input invoice-input-middle"
+              >
+                <div class="mt-md-0 mt-2 flex-1">
+                  <b-card
+                    no-body
+                    class="invoice-add invoice-card"
+                  >
+                    <b-card-header class="justify-content-center invoice-header mb-1">
+                        <h5 
+                          class="m-0" 
+                        >
+                          Supplier
+                        </h5>
+                    </b-card-header> 
+                    <b-card-body class="invoice-body">
+                      <div
+                          class="d-flex justify-content-end border-left py-50 px-25 clear-all"
+                        >
+                          <feather-icon
+                            size="16"
+                            icon="XIcon"
+                            class="cursor-pointer"
+                            @click="clearAll('supplier')"
+                          />
+                      </div>
+                      <div class="d-flex align-items-center mb-1">
+                        <span class="title mr-1">Company Name: </span>
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            name="supplierCompanyName"
+                            rules="required"
+                          >
+                            <b-form-input
+                              v-model="invoiceData.supplierCompany.companName"
+                              @input="SearchCompanyName(invoiceData.supplierCompany.companName)"
+                              list="my-company_name"
+                              autocomplete="off"
+                              @blur="hideSuggestion()"
+                              @focus="ShowSuggestion(datalist)"
+                            />
+                            <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
+                              <b-list-group-item
+                                v-for="data in datalist"
+                                :key="data.eic"
+                                @click= autoCompletefn(data)                        
+                              >
+                                {{ data.company_name }}
+                              </b-list-group-item>
+                            </b-list-group>
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                      <div class="d-flex align-items-center mb-1">
+                        <span class="title mr-1">
+                          Company Address:
+                        </span>
 
-              <!-- Spacer -->
-              <hr class="invoice-spacing" />
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            name="supplierCompanyAddress"
+                            rules="required"
+                          >
+                            <b-form-input
+                              v-model="invoiceData.supplierCompany.companyAddress"
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                      <div class="d-flex align-items-center mb-1">
+                        <span class="title mr-1">
+                          Company ID Number:
+                        </span>
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            name="supplierCompanyIdNumber"
+                            rules="required"
+                            
+                          >
+                            <b-form-input
+                              v-model="invoiceData.supplierCompany.companyEic"
+                              @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)"
+                              list="my-company_name"
+                              autocomplete="off"
+                              @blur="hideSuggestionEic()"
+                              @focus="ShowSuggestionEic(datalistEic)"
+                            />
+                            <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
+                              <b-list-group-item
+                                v-for="data in datalistEic"
+                                :key="data.eic"
+                                @click= autoCompletefnEic(data)                        
+                              >
+                                {{ data.eic }}
+                              </b-list-group-item>
+                            </b-list-group>
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                      <div class="d-flex align-items-center mb-1">
+                        <span class="title mr-1">Company Owner: </span>
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            name="supplierCompanyOwner"
+                            rules="required"
+                          >
+                            <b-form-input
+                              v-model="
+                                invoiceData.supplierCompany.companyOwnerName
+                              "
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                      <div v-if="supplierVat[0] == 'true'" class="d-flex align-items-center mb-1">
+                        <span class="title mr-1">
+                          Company Vat No:
+                        </span>
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <b-form-input
+                            v-model="invoiceData.supplierCompany.companyVatEic"
+                            autocomplete="off"
+                          />
+                        </b-input-group>
+                      </div>
+                      <div class="d-flex align-items-center mb-1">
+                        <b-form-checkbox
+                            v-model="supplierVat"
+                            value="true"
+                            plain
+                          >
+                          </b-form-checkbox>
+                          <span class="title mr-1">
+                            Vat
+                          </span>
+                      </div>
+                    </b-card-body>
+                  </b-card>
+                </div>
 
+                <div class="mt-md-0 mt-2 flex-1">
+                  <b-card
+                    no-body
+                    class="invoice-add invoice-card"
+                  >
+                    <b-card-header class="justify-content-center invoice-header mb-1">
+                        <h5 
+                          class="m-0" 
+                        >
+                          Recipient
+                        </h5>
+                    </b-card-header> 
+                    <b-card-body class="invoice-body">
+                      <div
+                          class="d-flex justify-content-end border-left py-50 px-25 clear-all"
+                        >
+                          <feather-icon
+                            size="16"
+                            icon="XIcon"
+                            class="cursor-pointer"
+                            @click="clearAll('recipient')"
+                          />
+                      </div>
+                      <div class="d-flex align-items-center mb-1">
+                        <span v-if="AccountTypeOption=='company'" class="title mr-1">Company Name:</span> 
+                        <span v-if="AccountTypeOption=='person'" class="title mr-1">Person Name:</span>         
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            :name="AccountTypeOption == 'company' ? 'recipientCompanyName' : 'personName'"
+                            rules="required"
+                          >
+                            <b-form-input
+                              v-if="AccountTypeOption == 'company'"
+                              v-model="invoiceData.recipientCompany.companName"
+                              @input="SearchCompanyNameRecipient(invoiceData.recipientCompany.companName)"
+                              list="my-company_name"
+                              autocomplete="off"
+                              @blur="hideSuggestionRecipient()"
+                              @focus="ShowSuggestionRecipient(datalistRecipient)"
+                            />
+                            <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions">
+                              <b-list-group-item
+                                v-for="data in datalistRecipient"
+                                :key="data.eic"
+                                @click= autoCompletefnRecipient(data)                        
+                              >
+                                {{ data.company_name }}
+                              </b-list-group-item>
+                            </b-list-group>
+                            <b-form-input
+                              v-if="AccountTypeOption == 'person'"
+                              v-model="invoiceData.recipientCompany.companyOwnerName"
+                              @input="SearchCompanyPerson(invoiceData.recipientCompany.companyOwnerName)"
+                              list="my-company_name"
+                              autocomplete="off"
+                              @blur="hideSuggestionPerson()"
+                              @focus="ShowSuggestionPerson(datalistPerson)"
+                            />
+                            <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions">
+                              <b-list-group-item
+                                v-for="data in datalistPerson"
+                                :key="data.eic"
+                                @click= autoCompletefnPerson(data)                        
+                              >
+                                {{ data.firstMiddleAndLastName }}
+                              </b-list-group-item>
+                            </b-list-group>
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                      <div class="d-flex align-items-center mb-1">
+                        <span class="title mr-1" v-if="AccountTypeOption=='company'">Company Address:</span>
+                        <span class="title mr-1" v-if="AccountTypeOption=='person'">Person Address:</span>  
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            :name="AccountTypeOption=='company' ? 'recipientCompanyAddress' : 'personAddress'"
+                            rules="required"
+                          >
+                            <b-form-input
+                              v-model="invoiceData.recipientCompany.companyAddress"
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                      <div class="d-flex align-items-center mb-1">
+                        <span class="title mr-1" v-if="AccountTypeOption=='company'">Company ID Number:</span>
+                        <span class="title mr-1" v-if="AccountTypeOption=='person'">Person ID Number:</span>  
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            :name="AccountTypeOption=='company' ? 'recipientCompanyIdNumber' : 'personIdNumber'"
+                            rules="required"
+                          >
+                            <b-form-input
+                              v-model="invoiceData.recipientCompany.companyEic"
+                              @input="SearchCompanyEicRecipient(invoiceData.recipientCompany.companyEic)"
+                              list="my-company_name"
+                              autocomplete="off"
+                              @blur="hideSuggestionEicRecipient()"
+                              @focus="ShowSuggestionEicRecipient(datalistEicRecipient)"
+                            />
+                            <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name" class="input-suggesstions">
+                              <b-list-group-item
+                                v-for="data in datalistEicRecipient"
+                                :key="data.eic"
+                                @click= autoCompletefnEicRecipient(data)                        
+                              >
+                                {{ data.eic }}
+                              </b-list-group-item>
+                            </b-list-group>
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                      <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
+                        <span class="title mr-1">Company Owner: </span>
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            name="recipientCompanyOwner"
+                            :rules="AccountTypeOption=='company' ? 'required' : ''"
+                          >
+                            <b-form-input
+                              v-model="invoiceData.recipientCompany.companyOwnerName"
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                      <div v-if="AccountTypeOption=='company' && recipientVat[0] == 'true'" class="d-flex align-items-center mb-1">
+                        <span class="title mr-1">
+                          Company Vat No:
+                        </span>
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <b-form-input
+                            v-model="invoiceData.recipientCompany.companyVatEic"
+                            autocomplete="off"
+                          />
+                        </b-input-group>
+                      </div>
+                      <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
+                        <b-form-checkbox
+                            v-model="recipientVat"
+                            value="true"
+                            plain
+                          >
+                          </b-form-checkbox>
+                          <span class="title mr-1">
+                            Vat
+                          </span>
+                      </div>
+                    </b-card-body>
+                  </b-card>
+
+                </div>
+              </div>
+            </div>
+
+            <b-card no-body class="invoice-add-card">
+           
               <!-- Items Section -->
-              <b-card-body class="invoice-padding form-item-section">
+              <b-card-body class="invoice-padding form-item-section px-0">
                 <div
                   ref="form"
-                  class="repeater-form"
+                  class="repeater-form h-auto"
                   :style="{ height: trHeight }"
                 >
                   <b-row
@@ -751,8 +814,6 @@
 
               <!-- Spacer -->
               <hr class="invoice-spacing" />
-
-
             </b-card>
           </b-col>
 
@@ -784,6 +845,15 @@
                 <b-spinner v-if="loading" small variant="light" />
                 Save
               </b-button>
+              <b-button
+                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                variant="outline-primary"
+                block
+                type="button"
+                @click="clearForm"
+              >
+                Clear
+              </b-button>
             </b-card>
           </b-col>
         </b-row>
@@ -805,6 +875,7 @@ import {
   BRow,
   BCol,
   BCard,
+  BCardHeader,
   BCardBody,
   BButton,
   BCardText,
@@ -834,6 +905,7 @@ export default {
     BRow,
     BCol,
     BCard,
+    BCardHeader,
     BCardBody,
     BButton,
     BCardText,
@@ -1047,6 +1119,39 @@ export default {
       return parseFloat(totalPrice).toFixed(2);
     }
 
+    const clearForm = ()=>{
+      invoiceData.value = {
+        invoiceNumber: "",
+        dateIssued: "",
+        supplierCompany: {
+          companyOwnerName: "",
+          companName: "",
+          companyEic: "",
+          companyVatEic: "",
+          companyAddress: "",
+        },
+        recipientCompany: {
+          companyOwnerName: "",
+          companName: "",
+          companyEic: "",
+          companyVatEic: "",
+          companyAddress: "",
+        },
+        currency: "",
+        amountNonVat: "",
+        vatAmount:"",
+        vatPercent: 20,
+        tradeDiscountPercent: 0,
+        tradeDiscountAmount: "",
+        totalAmount: "",
+
+        // ? Set single Item in form for adding data
+        transactions: invoiceData.value.transactions,
+
+        documentType: "INVOICE",
+        verified: true
+      }
+    }
     var datalist = ref([])
     var showSuggestions = ref(false)
     
@@ -1283,6 +1388,87 @@ export default {
       }
     }
 
+    var datalistPerson = ref([])
+    var showSuggestionsPerson = ref(false)
+    
+    const SearchCompanyPerson = (companyPerson)=>{   
+      if(companyPerson){
+        let token = useJwt.getToken()
+        useJwt
+          .SearchCompanyPerson(token, {         
+            direction: 'desc',
+            sortField: 'id',
+            searchTerm: companyPerson
+          })
+          .then((response) => {
+            if(response?.data != undefined || response?.data.length != 0 ){
+              showSuggestionsPerson.value = true
+            }
+            else{
+              showSuggestionsPerson.value = false
+            }
+            datalistPerson.value = response?.data?.elements
+          })
+          .catch((error) => {
+            console.log("error",error)
+          });
+      } else{
+        showSuggestionsPerson.value  = false
+      }
+    }
+
+    const autoCompletefnPerson = (item) =>{      
+      if(item.company_name){
+        invoiceData.value.recipientCompany.companName = item.company_name
+      }
+      if(item.address){
+        invoiceData.value.recipientCompany.companyAddress = item.address
+      }
+      if(item.identificationNumber){
+        invoiceData.value.recipientCompany.companyEic = item.identificationNumber
+      }
+      showSuggestionsPerson.value  = false
+      datalistPerson.value = []
+    }
+
+    const hideSuggestionPerson = () => {
+      setTimeout(() => {
+        if(showSuggestionsPerson.value){
+          showSuggestionsPerson.value = false
+        }
+      }, 100);
+    }
+
+    const ShowSuggestionPerson = (items) => {
+      if(items != undefined || items.length != 0 ){
+        showSuggestionsPerson.value = true
+      }
+      else{
+        showSuggestionsPerson.value = false
+      }
+    }
+
+    const clearAll = (type)=>{
+      if(type == 'supplier'){
+        invoiceData.value.supplierCompany =  {
+          companyOwnerName: "",
+          companName: "",
+          companyEic: "",
+          companyVatEic: "",
+          companyAddress: "",
+        }
+     
+      } else if(type == 'recipient'){
+        invoiceData.value.recipientCompany = {
+          companyOwnerName: "",
+          companName: "",
+          companyEic: "",
+          companyVatEic: "",
+          companyAddress: "",
+        }
+      }
+    }
+
     return {
       AccountTypeOption,
       invoiceData,
@@ -1314,8 +1500,15 @@ export default {
       SearchCompanyEicRecipient,
       autoCompletefnEicRecipient,
       hideSuggestionEicRecipient,
-      ShowSuggestionEicRecipient
-
+      ShowSuggestionEicRecipient,
+      datalistPerson,
+      showSuggestionsPerson,
+      SearchCompanyPerson,
+      autoCompletefnPerson,
+      hideSuggestionPerson,
+      ShowSuggestionPerson,
+      clearForm,
+      clearAll
     };
   },
 };
@@ -1419,4 +1612,37 @@ export default {
   padding-right: 0.5rem;
 }
 
+.card.invoice-card{
+  border: 1px solid #ebe9f1;
+  border-radius: 20px;
+  overflow: hidden;
+  height: calc(100% - 2rem );
+}
+.dark-layout .card.invoice-card{
+  border-color: #3b4253!important;
+}
+.card-header.invoice-header{
+    background-color: #7367f0 !important;
+    padding: 0.75rem;
+    border: 0;
+    border-radius: 0;
+}
+.card-header.invoice-header h5{
+  color: #fff !important;
+}
+.flex-1{
+  flex: 1;
+}
+.invoice-input-top{
+  width: 16rem; 
+  max-width: 100%;
+}
+.invoice-input-middle .input-group.invoice-edit-input-group span{
+  width: 100%;
+}
+.clear-all{
+  top: -0.7rem;
+  position: relative;
+  right: -1rem;
+}
 </style>

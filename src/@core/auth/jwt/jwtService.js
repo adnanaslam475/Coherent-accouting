@@ -280,6 +280,17 @@ export default class JwtService {
     }) 
   }
 
+  SearchCompanyPerson(token, params){
+
+    let config = {
+      headers: {
+        'Authorization': `${this.jwtConfig.tokenType} ${token}`
+      },
+      params: params,
+    }
+    return this.axiosIns2.get(this.jwtConfig.SearchEicPerson, config) 
+  }
+
   verifyToken(token,UrlToken){
     let headers = {
       'Authorization': `${this.jwtConfig.tokenType} ${token}`,

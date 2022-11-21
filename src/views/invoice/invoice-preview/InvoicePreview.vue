@@ -108,7 +108,7 @@
             </b-card>
           </div>
 
-          <div class="mt-md-0 mt-2 invoice-data-wrapper-right flex-1">
+          <div class="mt-md-0 mt-2 flex-1">
             <b-card
               no-body
               class="invoice-preview invoice-card"
@@ -186,17 +186,19 @@
           <b-table-lite
             responsive
             :items="invoiceData.transactions"
-            :fields="['serviceOrItemDescription', 'quantity', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"            
+            :fields="['no.','serviceOrItemDescription', 'qty', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"            
           >
+            <template #cell(no.)="data">
+                {{ data.item.index }}
+            </template>
+            <template #cell(qty)="data">
+                {{ data.item.quantity }}
+            </template>
             <template #cell(singleAmountTransaction)="data">
-              <b-card-text class="font-weight-bold mb-25">
                 лв. {{ data.item.singleAmountTransaction }}
-              </b-card-text>
             </template>
             <template #cell(transactionTotalAmountNonVat)="data">
-              <b-card-text class="font-weight-bold mb-25">
                 лв. {{ data.item.transactionTotalAmountNonVat }}
-              </b-card-text>
             </template>
           </b-table-lite>
 
@@ -426,6 +428,10 @@ export default {
 
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
+        response.data.transactions.map((item,index)=>{
+          item.index = index + 1
+          return item
+        })
         invoiceData.value = response.data
       })
       .catch(error => {

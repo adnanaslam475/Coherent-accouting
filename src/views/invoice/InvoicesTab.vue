@@ -1,5 +1,5 @@
 <template>
-    <b-card-code>
+    <div>
       <b-tabs class="invoice-tabs-view position-relative overflow-hidden" v-model="invoiceTab">
         <b-tab>
           <template #title>
@@ -24,11 +24,7 @@
           <privatePerson />
         </b-tab>
       </b-tabs>
-  
-      <template #code>
-        {{ codeIcon }}
-      </template>
-    </b-card-code>
+    </div>
   </template>
   
   <script>
