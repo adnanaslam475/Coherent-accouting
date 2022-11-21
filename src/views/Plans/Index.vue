@@ -34,15 +34,15 @@
     <!-- pricing plan cards -->
     <b-row class="pricing-card">
       <b-col
-        offset-sm-2
-        sm="10"
-        md="12"
-        offset-lg="2"
-        lg="10"
-        class="mx-auto d-flex align-items-center justify-content-center"
+          offset-sm-2
+          sm="10"
+          md="12"
+          offset-lg="2"
+          lg="10"
+          class="mx-auto d-flex align-items-center justify-content-center"
       >
         <b-col cols="10">
-          <b-row>
+          <b-row class="mx-auto d-flex align-items-center justify-content-center">
             <b-col md="4">
               <b-card
                   align="center"
@@ -106,7 +106,7 @@
                   align="center"
               >
                 <div
-                    v-show="pricing.standardPlan.popular"
+                    v-show="pricing.beginnerPlan.popular"
                     class="pricing-badge text-right"
                 >
                   <b-badge
@@ -118,14 +118,14 @@
                 </div>
                 <!-- img -->
                 <b-img
-                    v-if="aeroplanImage"
-                    :src="aeroplanImage"
+                    v-if="helicolptorImage"
+                    :src="helicolptorImage"
                     class="mb-1 w-25"
                     alt="svg img"
                 />
                 <!--/ img -->
-                <h3>{{ pricing.standardPlan.title }}</h3>
-                <b-card-text>{{ pricing.standardPlan.subtitle }}</b-card-text>
+                <h3>{{ pricing.beginnerPlan.title }}</h3>
+                <b-card-text>{{ pricing.beginnerPlan.subtitle }}</b-card-text>
 
                 <!-- annual plan -->
                 <div class="annual-plan">
@@ -133,21 +133,21 @@
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
                     <span class="pricing-basic-value font-weight-bolder text-primary"
                     >{{
-                        monthlyPlanShow ? pricing.standardPlan.monthlyPrice : pricing.standardPlan.yearlyPlan.perMonth
+                        monthlyPlanShow ? pricing.beginnerPlan.monthlyPrice : pricing.beginnerPlan.yearlyPlan.perMonth
                       }}</span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
                       v-show="!monthlyPlanShow"
                       class="annual-pricing text-muted"
-                  >USD {{ pricing.standardPlan.yearlyPlan.totalAnual }} / year</small>
+                  >USD {{ pricing.beginnerPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
                 <!-- plan benefit -->
                 <b-list-group class="list-group-circle text-left">
                   <b-list-group-item
-                      v-for="(data,index) in pricing.standardPlan.planBenefits"
+                      v-for="(data,index) in pricing.beginnerPlan.planBenefits"
                       :key="index"
                   >
                     {{ data }}
@@ -173,14 +173,14 @@
               >
                 <!-- img -->
                 <b-img
-                    v-if="roketImage"
-                    :src="roketImage"
+                    v-if="aeroplanImage"
+                    :src="aeroplanImage"
                     class="mb-2 w-25"
                     alt="enterprise svg img"
                 />
                 <!--/ img -->
-                <h3>{{ pricing.enterprisePlan.title }}</h3>
-                <b-card-text>{{ pricing.enterprisePlan.subtitle }}</b-card-text>
+                <h3>{{ pricing.starterPlan.title }}</h3>
+                <b-card-text>{{ pricing.starterPlan.subtitle }}</b-card-text>
 
                 <!-- annual plan -->
                 <div class="annual-plan">
@@ -188,20 +188,132 @@
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
                     <span class="pricing-basic-value font-weight-bolder text-primary"
                     >{{
-                        monthlyPlanShow ? pricing.enterprisePlan.monthlyPrice : pricing.enterprisePlan.yearlyPlan.perMonth
+                        monthlyPlanShow ? pricing.starterPlan.monthlyPrice : pricing.starterPlan.yearlyPlan.perMonth
                       }}</span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
                       v-show="!monthlyPlanShow"
                       class="annual-pricing text-muted"
-                  >USD {{ pricing.enterprisePlan.yearlyPlan.totalAnual }} / year</small>
+                  >USD {{ pricing.starterPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
                 <!-- plan benefit -->
                 <b-list-group
-                    v-for="(data,index) in pricing.enterprisePlan.planBenefits"
+                    v-for="(data,index) in pricing.starterPlan.planBenefits"
+                    :key="index"
+                    class="list-group-circle text-left"
+                >
+                  <b-list-group-item>
+                    {{ data }}
+                  </b-list-group-item>
+                </b-list-group>
+                <!--/ plan benefit -->
+
+                <!-- buttons -->
+                <b-button
+                    v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                    block
+                    class="mt-2"
+                    variant="outline-primary"
+                >
+                  Upgrade
+                </b-button>
+              </b-card>
+            </b-col>
+            <b-col md="4">
+              <b-card
+                  align="center"
+                  class="pb-1"
+              >
+                <!-- img -->
+                <b-img
+                    v-if="aeroplanJetImage"
+                    :src="aeroplanJetImage"
+                    class="mb-2 w-25"
+                    alt="enterprise svg img"
+                />
+                <!--/ img -->
+                <h3>{{ pricing.primaryPlan.title }}</h3>
+                <b-card-text>{{ pricing.primaryPlan.subtitle }}</b-card-text>
+
+                <!-- annual plan -->
+                <div class="annual-plan">
+                  <div class="plan-price mt-2">
+                    <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
+                    <span class="pricing-basic-value font-weight-bolder text-primary"
+                    >{{
+                        monthlyPlanShow ? pricing.primaryPlan.monthlyPrice : pricing.primaryPlan.yearlyPlan.perMonth
+                      }}</span>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                  </div>
+                  <small
+                      v-show="!monthlyPlanShow"
+                      class="annual-pricing text-muted"
+                  >USD {{ pricing.primaryPlan.yearlyPlan.totalAnual }} / year</small>
+                </div>
+                <!--/ annual plan -->
+
+                <!-- plan benefit -->
+                <b-list-group
+                    v-for="(data,index) in pricing.primaryPlan.planBenefits"
+                    :key="index"
+                    class="list-group-circle text-left"
+                >
+                  <b-list-group-item>
+                    {{ data }}
+                  </b-list-group-item>
+                </b-list-group>
+                <!--/ plan benefit -->
+
+                <!-- buttons -->
+                <b-button
+                    v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                    block
+                    class="mt-2"
+                    variant="outline-primary"
+                >
+                  Upgrade
+                </b-button>
+              </b-card>
+            </b-col>
+            <b-col md="4">
+              <b-card
+                  align="center"
+                  class="pb-1"
+              >
+                <!-- img -->
+                <b-img
+                    v-if="roketImage"
+                    :src="roketImage"
+                    class="mb-2 w-25"
+                    alt="enterprise svg img"
+                />
+                <!--/ img -->
+                <h3>{{ pricing.platinumPlan.title }}</h3>
+                <b-card-text>{{ pricing.platinumPlan.subtitle }}</b-card-text>
+
+                <!-- annual plan -->
+                <div class="annual-plan">
+                  <div class="plan-price mt-2">
+                    <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
+                    <span class="pricing-basic-value font-weight-bolder text-primary"
+                    >{{
+                        monthlyPlanShow ? pricing.platinumPlan.monthlyPrice : pricing.platinumPlan.yearlyPlan.perMonth
+                      }}</span>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                  </div>
+                  <small
+                      v-show="!monthlyPlanShow"
+                      class="annual-pricing text-muted"
+                  >USD {{ pricing.platinumPlan.yearlyPlan.totalAnual }} / year</small>
+                </div>
+                <!--/ annual plan -->
+
+                <!-- plan benefit -->
+                <b-list-group
+                    v-for="(data,index) in pricing.platinumPlan.planBenefits"
                     :key="index"
                     class="list-group-circle text-left"
                 >
@@ -229,40 +341,40 @@
     <!--/ pricing plan cards -->
 
     <!-- pricing free trial -->
-    <div class="pricing-free-trial">
-      <b-row>
-        <b-col
-            lg="10"
-            offset-lg="3"
-            class="mx-auto"
-        >
-          <div class="pricing-trial-content d-flex justify-content-between">
-            <div class="text-center text-md-left mt-3">
-              <h3 class="text-primary">
-                Still not convinced? Start with a 14-day FREE trial!
-              </h3>
-              <h5>You will get full access to with all the features for 14 days.</h5>
-              <b-button
-                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                  variant="primary"
-                  class="mt-2 mt-lg-3"
-              >
-                Start 14-day FREE trial
-              </b-button>
-            </div>
+<!--    <div class="pricing-free-trial">-->
+<!--      <b-row>-->
+<!--        <b-col-->
+<!--            lg="10"-->
+<!--            offset-lg="3"-->
+<!--            class="mx-auto"-->
+<!--        >-->
+<!--          <div class="pricing-trial-content d-flex justify-content-between">-->
+<!--            <div class="text-center text-md-left mt-3">-->
+<!--              <h3 class="text-primary">-->
+<!--                Still not convinced? Start with a 14-day FREE trial!-->
+<!--              </h3>-->
+<!--              <h5>You will get full access to with all the features for 14 days.</h5>-->
+<!--              <b-button-->
+<!--                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"-->
+<!--                  variant="primary"-->
+<!--                  class="mt-2 mt-lg-3"-->
+<!--              >-->
+<!--                Start 14-day FREE trial-->
+<!--              </b-button>-->
+<!--            </div>-->
 
-            <!-- images -->
-            <b-img
-                fluid
-                :src="require('@/assets/images/illustration/pricing-Illustration.svg')"
-                class="pricing-trial-img"
-                alt="svg img"
-            />
-            <!--/ images -->
-          </div>
-        </b-col>
-      </b-row>
-    </div>
+<!--            &lt;!&ndash; images &ndash;&gt;-->
+<!--            <b-img-->
+<!--                fluid-->
+<!--                :src="require('@/assets/images/illustration/pricing-Illustration.svg')"-->
+<!--                class="pricing-trial-img"-->
+<!--                alt="svg img"-->
+<!--            />-->
+<!--            &lt;!&ndash;/ images &ndash;&gt;-->
+<!--          </div>-->
+<!--        </b-col>-->
+<!--      </b-row>-->
+<!--    </div>-->
     <!--/ pricing free trial -->
 
     <!-- pricing faq -->
@@ -303,8 +415,6 @@
 import {
   BFormCheckbox, BRow, BCol, BCard, BImg, BCardText, BListGroup, BListGroupItem, BButton, BBadge,
 } from 'bootstrap-vue'
-import AppCollapse from '@core/components/app-collapse/AppCollapse.vue'
-import AppCollapseItem from '@core/components/app-collapse/AppCollapseItem.vue'
 import Ripple from 'vue-ripple-directive'
 /* eslint-disable global-require */
 export default {
@@ -319,8 +429,6 @@ export default {
     BCard,
     BBadge,
     BImg,
-    AppCollapseItem,
-    AppCollapse,
   },
   directives: {
     Ripple,
@@ -330,6 +438,8 @@ export default {
       hotAirBallon: '',
       roketImage: '',
       aeroplanImage: '',
+      helicolptorImage: '',
+      aeroplanJetImage: '',
       status: 'monthly',
       monthlyPlanShow: true,
       pricing: {
@@ -339,8 +449,8 @@ export default {
           subtitle: 'A simple start for everyone',
           monthlyPrice: 45,
           yearlyPlan: {
-            perMonth: 45,
-            totalAnual: 39,
+            perMonth: 39,
+            totalAnual: 39 * 12,
           },
           planBenefits: [
             '40 Companies',
@@ -352,17 +462,17 @@ export default {
           ],
           popular: false,
         },
-        standardPlan: {
-          title: 'Standard',
+        beginnerPlan: {
+          title: 'Beginner',
           img: require('@/assets/images/illustration/Pot2.svg'),
           subtitle: 'For small to medium businesses',
           monthlyPrice: 59,
           yearlyPlan: {
-            perMonth: 59,
-            totalAnual: 49,
+            perMonth: 49,
+            totalAnual: 49 * 12,
           },
           planBenefits: [
-            '150 Companies',
+            '60 Companies',
             'Unlimited ORC Invoices',
             'Unlimited Space',
             'Unlimited Digital Invoices',
@@ -371,17 +481,36 @@ export default {
           ],
           popular: true,
         },
-        enterprisePlan: {
-          title: 'Enterprise',
+        starterPlan: {
+          title: 'Starter',
           img: require('@/assets/images/illustration/Pot3.svg'),
           subtitle: 'Solution for big organizations',
           monthlyPrice: 84,
           yearlyPlan: {
-            perMonth: 84,
-            totalAnual: 69,
+            perMonth: 69,
+            totalAnual: 69 * 12,
           },
           planBenefits: [
-            '60 Companies',
+            '100 Companies',
+            'Unlimited ORC Invoices',
+            'Unlimited Space',
+            'Unlimited Digital Invoices',
+            '1 click Monthly Vat Reports (incl. txt and excel)',
+            'Yearly Reports (excel)',
+          ],
+          popular: false,
+        },
+        primaryPlan: {
+          title: 'Enterprise',
+          img: require('@/assets/images/illustration/Pot3.svg'),
+          subtitle: 'Solution for big organizations',
+          monthlyPrice: 116,
+          yearlyPlan: {
+            perMonth: 95,
+            totalAnual: 95 * 12,
+          },
+          planBenefits: [
+            '150 Companies',
             'Unlimited ORC Invoices',
             'Unlimited Space',
             'Unlimited Digital Invoices',
@@ -396,8 +525,8 @@ export default {
           subtitle: 'Solution for big organizations',
           monthlyPrice: 129,
           yearlyPlan: {
-            perMonth: 129,
-            totalAnual: 149,
+            perMonth: 149,
+            totalAnual: 149 * 12,
           },
           planBenefits: [
             '250 Companies',
@@ -433,6 +562,8 @@ export default {
     this.hotAirBallon = require('@/assets/images/illustration/hot-air-balloon.svg')
     this.aeroplanImage = require('@/assets/images/illustration/aeroplane-transport-svgrepo-com.svg')
     this.roketImage = require('@/assets/images/illustration/rocket-svgrepo-com.svg')
+    this.aeroplanJetImage = require('@/assets/images/illustration/aeroplane-plane-svgrepo-com.svg')
+    this.helicolptorImage = require('@/assets/images/illustration/helicoptor.svg')
   },
   methods: {
     tooglePlan() {
