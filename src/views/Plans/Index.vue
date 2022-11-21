@@ -454,7 +454,7 @@ export default {
           },
           planBenefits: [
             '40 Companies',
-            'Unlimited ORC Invoices',
+            'Unlimited OCR Invoices',
             'Unlimited Space',
             'Unlimited Digital Invoices',
             '1 click Monthly Vat Reports (incl. txt and excel)',
@@ -473,7 +473,7 @@ export default {
           },
           planBenefits: [
             '60 Companies',
-            'Unlimited ORC Invoices',
+            'Unlimited OCR Invoices',
             'Unlimited Space',
             'Unlimited Digital Invoices',
             '1 click Monthly Vat Reports (incl. txt and excel)',
@@ -492,7 +492,7 @@ export default {
           },
           planBenefits: [
             '100 Companies',
-            'Unlimited ORC Invoices',
+            'Unlimited OCR Invoices',
             'Unlimited Space',
             'Unlimited Digital Invoices',
             '1 click Monthly Vat Reports (incl. txt and excel)',
@@ -511,7 +511,7 @@ export default {
           },
           planBenefits: [
             '150 Companies',
-            'Unlimited ORC Invoices',
+            'Unlimited OCR Invoices',
             'Unlimited Space',
             'Unlimited Digital Invoices',
             '1 click Monthly Vat Reports (incl. txt and excel)',
@@ -530,7 +530,7 @@ export default {
           },
           planBenefits: [
             '250 Companies',
-            'Unlimited ORC Invoices',
+            'Unlimited OCR Invoices',
             'Unlimited Space',
             'Unlimited Digital Invoices',
             '1 click Monthly Vat Reports (incl. txt and excel)',
