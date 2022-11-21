@@ -1418,8 +1418,8 @@ export default {
     }
 
     const autoCompletefnPerson = (item) =>{      
-      if(item.company_name){
-        invoiceData.value.recipientCompany.companName = item.company_name
+      if(item.firstMiddleAndLastName){
+        invoiceData.value.recipientCompany.companyOwnerName = item.firstMiddleAndLastName
       }
       if(item.address){
         invoiceData.value.recipientCompany.companyAddress = item.address
