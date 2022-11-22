@@ -16,6 +16,8 @@ export default {
   UserEditEndpoint: '/account/api/user-person',
   UserDeleteEndpoint: '/account/api/user-person',
   SearchCompanyEndpoint: '/index/api/search-companies/search-by-name',
+  SearchEicEndpoint: '/index/api/search-companies',
+  SearchEicPerson: '/account/api/user-person/search/1/100',
   
 
   getCompanies: '/api/company/list/1/10',

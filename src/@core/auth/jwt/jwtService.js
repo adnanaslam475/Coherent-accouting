@@ -269,6 +269,28 @@ export default class JwtService {
     }) 
   }
 
+  SearchCompanyEic(token, eic){
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.get(`${this.jwtConfig.SearchEicEndpoint}/${eic}`, {
+      headers: headers
+    }) 
+  }
+
+  SearchCompanyPerson(token, params){
+
+    let config = {
+      headers: {
+        'Authorization': `${this.jwtConfig.tokenType} ${token}`
+      },
+      params: params,
+    }
+    return this.axiosIns2.get(this.jwtConfig.SearchEicPerson, config) 
+  }
+
   verifyToken(token,UrlToken){
     let headers = {
       'Authorization': `${this.jwtConfig.tokenType} ${token}`,

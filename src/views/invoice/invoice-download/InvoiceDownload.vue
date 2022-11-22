@@ -51,7 +51,7 @@
                 v-if="invoiceData.supplierCompany.companyVatEic"
                 class="invoice-date-wrapper"
               >
-                <p class="invoice-date-title">Company Vat No (if exists):</p>
+                <p class="invoice-date-title">Company Vat No:</p>
                 <p class="invoice-date">
                   {{ invoiceData.supplierCompany.companyVatEic }}
                 </p>
@@ -94,7 +94,7 @@
                 v-if="invoiceData.recipientCompany.companyVatEic"
                 class="invoice-date-wrapper"
               >
-                <p class="invoice-date-title">Company Vat No (if exists):</p>
+                <p class="invoice-date-title">Company Vat No:</p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyVatEic }}
                 </p>
@@ -123,22 +123,25 @@
           responsive
           :items="invoiceData.transactions"
           :fields="[
+            'no.',
             'serviceOrItemDescription',
-            'quantity',
+            'qty',
             'measurement',
             'singleAmountTransaction',
             'transactionTotalAmountNonVat',
           ]"
         >
+          <template #cell(no.)="data">
+                {{ data.item.index }}
+          </template>
+          <template #cell(qty)="data">
+              {{ data.item.quantity }}
+          </template>
           <template #cell(singleAmountTransaction)="data">
-            <b-card-text class="font-weight-bold mb-25">
-              лв{{ data.item.singleAmountTransaction }}
-            </b-card-text>
+              лв. {{ data.item.singleAmountTransaction }}
           </template>
           <template #cell(transactionTotalAmountNonVat)="data">
-            <b-card-text class="font-weight-bold mb-25">
-              лв{{ data.item.transactionTotalAmountNonVat }}
-            </b-card-text>
+              лв. {{ data.item.transactionTotalAmountNonVat }}
           </template>
         </b-table-lite>
 
@@ -161,38 +164,38 @@
                 <div class="invoice-total-item">
                   <p class="invoice-total-title">Total price NonVat:</p>
                   <p class="invoice-total-amount">
-                    лв{{ invoiceData.amountNonVat }}
+                    лв. {{ invoiceData.amountNonVat }}
                   </p>
                 </div>
                 <div class="invoice-total-item">
                   <p class="invoice-total-title">VAT:</p>
                   <p class="invoice-total-amount">
-                    {{ invoiceData.vatPercent }}%
+                    {{ invoiceData.vatPercent }} %
                   </p>
                 </div>
                 <div class="invoice-total-item">
                   <p class="invoice-total-title">VAT Amount:</p>
                   <p class="invoice-total-amount">
-                    лв{{ invoiceData.vatAmount }}
+                    лв. {{ invoiceData.vatAmount }}
                   </p>
                 </div>
                 <div class="invoice-total-item">
                   <p class="invoice-total-title">Discount Percent:</p>
                   <p class="invoice-total-amount">
-                    {{ invoiceData.tradeDiscountPercent }}%
+                    {{ invoiceData.tradeDiscountPercent }} %
                   </p>
                 </div>
                 <div class="invoice-total-item">
                   <p class="invoice-total-title">Discount Sum:</p>
                   <p class="invoice-total-amount">
-                    лв{{ invoiceData.tradeDiscountAmount }}
+                    лв. {{ invoiceData.tradeDiscountAmount }}
                   </p>
                 </div>
                 <hr class="my-50" />
                 <div class="invoice-total-item">
                   <p class="invoice-total-title">Total Price:</p>
                   <p class="invoice-total-amount">
-                    лв{{ invoiceData.totalAmount }}
+                    лв. {{ invoiceData.totalAmount }}
                   </p>
                 </div>
               </div>

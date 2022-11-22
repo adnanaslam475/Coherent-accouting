@@ -200,6 +200,12 @@ export default {
                 variant: "success",
               },
             });
+            return this.$router.push({
+              name: "invoices", 
+              params: { 
+                id: 2 
+              }
+            })
           })
           .catch((error) => {
             this.$toast({

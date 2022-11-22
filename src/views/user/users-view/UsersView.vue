@@ -33,7 +33,7 @@
           <user-view-user-info-card :user-data="userData" />
         </b-col>
       </b-row>
-      <invoice-list />
+      <invoice-list @state="update($event)" />
     </template>
 
   </div>
@@ -87,6 +87,18 @@ export default {
       userData,
     }
   },
+  methods: {
+      update(value) {
+          if(value == 1){
+            return this.$router.push({
+              name: "invoices", 
+              params: { 
+                id: 1 
+              }
+            })
+          }
+      }
+  }
 }
 </script>
 
