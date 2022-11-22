@@ -750,8 +750,6 @@ export default {
     BCardTitle,
     BCardBody,
     BCardHeader,
-    BButton,
-    InvoicesTab,
     AppTimeline,
     AppTimelineItem,
     ApexBarChart,

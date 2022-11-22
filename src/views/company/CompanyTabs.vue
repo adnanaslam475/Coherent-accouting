@@ -1,6 +1,5 @@
 <template>
   <b-col>
-    <b-card>
       <b-tabs v-model="companyTab">
         <b-tab>
           <template #title>
@@ -72,7 +71,6 @@
       <template #code>
         {{ codeIcon }}
       </template>
-    </b-card>
   </b-col>
 </template>
 
@@ -114,16 +112,6 @@ export default {
       companyTab: 0,
     }
   },
-  methods: {
-    update(value) {
-      this.companyTab = value
-    },
-    data() {
-      return {
-        codeIcon,
-        companyTab: 0,
-      }
-    },
     methods: {
       update(value) {
         this.companyTab = value
