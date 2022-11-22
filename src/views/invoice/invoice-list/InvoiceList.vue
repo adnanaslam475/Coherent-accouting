@@ -183,33 +183,24 @@
       <!-- Column: amount non vat -->
       <template #cell(amountNonVat)="data">
         <span class="text-nowrap">
-           
-          <span v-if="data.item.currency == 'lv'">лв. {{ data.value }}</span>
-          <span v-if="data.item.currency == 'usd'">${{ data.value }}</span>
-          <span v-if="data.item.currency == 'euro'">€{{ data.value }}</span>
-          
+          <span v-if="data.item.currency == 'lv' || data.item.currency == 'лв' || data.item.currency == 'лв.'">лв. {{ data.value }}</span>
+          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
 
       <!-- Column: totalAmount -->
       <template #cell(totalAmount)="data">
         <span class="text-nowrap">
-           
-          <span v-if="data.item.currency == 'lv'">лв. {{ data.value }}</span>
-          <span v-if="data.item.currency == 'usd'">$ {{ data.value }}</span>
-          <span v-if="data.item.currency == 'euro'">€ {{ data.value }}</span>
-          
+          <span v-if="data.item.currency == 'lv' || data.item.currency == 'лв' || data.item.currency == 'лв.'">лв. {{ data.value }}</span>
+          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
 
       <!-- Column: vatAmount -->
       <template #cell(vatAmount)="data">
         <span class="text-nowrap">
-           
-          <span v-if="data.item.currency == 'lv'">лв. {{ data.value }}</span>
-          <span v-if="data.item.currency == 'usd'">${{ data.value }}</span>
-          <span v-if="data.item.currency == 'euro'">€{{ data.value }}</span>
-          
+          <span v-if="data.item.currency == 'lv' || data.item.currency == 'лв' || data.item.currency == 'лв.'">лв. {{ data.value }}</span>
+          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
 

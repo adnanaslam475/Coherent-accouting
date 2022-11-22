@@ -31,6 +31,7 @@
         cols="12"
         xl="10"
         md="10"
+        class="w-100-print"
       >
    
         <b-card
@@ -66,7 +67,7 @@
               <b-card-body class="invoice-body">
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Company Name:
+                    Name:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companName }}
@@ -74,7 +75,7 @@
                 </div>
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Company Address:
+                    Address:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyAddress }}
@@ -82,7 +83,7 @@
                 </div>
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Company ID Number:
+                    ID Number:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyEic }}
@@ -90,7 +91,7 @@
                 </div>
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Company Owner:
+                    Owner:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyOwnerName }}
@@ -98,7 +99,7 @@
                 </div>
                 <div v-if="invoiceData.supplierCompany.companyVatEic" class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Company Vat No:
+                    Vat No:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyVatEic }}
@@ -119,7 +120,7 @@
               <b-card-body class="invoice-body">
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Company Name:
+                  Name:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companName }}
@@ -127,7 +128,7 @@
               </div>
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Company Address:
+                  Address:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyAddress }}
@@ -135,7 +136,7 @@
               </div>
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Company ID Number:
+                  ID Number:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyEic }}
@@ -143,7 +144,7 @@
               </div>
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Company Owner:
+                  Owner:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyOwnerName }}
@@ -151,7 +152,7 @@
               </div>
               <div v-if="invoiceData.recipientCompany.companyVatEic" class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Company Vat No:
+                  Vat No:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyVatEic }}
@@ -194,11 +195,13 @@
             <template #cell(qty)="data">
                 {{ data.item.quantity }}
             </template>
-            <template #cell(singleAmountTransaction)="data">
-                лв. {{ data.item.singleAmountTransaction }}
+            <template #cell(singleAmountTransaction)="data"> 
+                <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.singleAmountTransaction }}</span>
+                <span v-else>{{ invoiceData.currency }} {{ data.item.singleAmountTransaction }}</span>
             </template>
             <template #cell(transactionTotalAmountNonVat)="data">
-                лв. {{ data.item.transactionTotalAmountNonVat }}
+                <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.transactionTotalAmountNonVat }}</span>
+                <span v-else>{{ invoiceData.currency }} {{ data.item.transactionTotalAmountNonVat }}</span>
             </template>
           </b-table-lite>
 
@@ -230,7 +233,8 @@
                       Total price NonVat:
                     </p>
                     <p class="invoice-total-amount">
-                      лв. {{invoiceData.amountNonVat}}
+                      <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.amountNonVat}}</span>
+                      <span v-else>{{ invoiceData.currency }} {{invoiceData.amountNonVat}}</span>
                     </p>
                   </div>
                   <div class="invoice-total-item">
@@ -246,7 +250,8 @@
                       VAT Amount:
                     </p>
                     <p class="invoice-total-amount">
-                      лв. {{invoiceData.vatAmount}}
+                      <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.vatAmount}}</span>
+                      <span v-else>{{ invoiceData.currency }} {{invoiceData.vatAmount}}</span>
                     </p>
                   </div>
                   <div class="invoice-total-item">
@@ -262,7 +267,8 @@
                       Discount Sum:
                     </p>
                     <p class="invoice-total-amount">
-                      лв. {{invoiceData.tradeDiscountAmount}}
+                      <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.tradeDiscountAmount}}</span>
+                      <span v-else>{{ invoiceData.currency }} {{invoiceData.tradeDiscountAmount}}</span>
                     </p>
                   </div>
                   <hr class="my-50">
@@ -271,7 +277,8 @@
                       Total Price:
                     </p>
                     <p class="invoice-total-amount">
-                      лв. {{invoiceData.totalAmount}}
+                      <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.totalAmount}}</span>
+                      <span v-else>{{ invoiceData.currency }} {{invoiceData.totalAmount}}</span>
                     </p>
                   </div>
                 </div>
@@ -287,7 +294,7 @@
         cols="12"
         md="2"
         xl="2"
-        class="invoice-actions"
+        class="invoice-actions hide-from-print"
       >
         <b-card>
           <!-- Button: DOwnload -->
@@ -526,6 +533,16 @@ export default {
       display: none;
     }
   }
+}
+
+@media print {
+  .w-100-print{
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+  .hide-from-print {
+       display : none;
+    }
 }
 .gap-2 {
   grid-gap: 25px;
