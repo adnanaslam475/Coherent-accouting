@@ -1,5 +1,5 @@
 <template>
-  <b-card v-if="barChart.chartOptions.xaxis.categories.length > 0" no-body>
+  <b-card no-body>
     <b-card-header>
       <div>
         <b-card-title>
@@ -17,6 +17,7 @@
             @click="getData()"
             icon="RefreshCcwIcon"
             size="16"
+            style="cursor: pointer"
         />
         <feather-icon
             icon="CalendarIcon"
@@ -31,7 +32,7 @@
       </div>
 
     </b-card-header>
-    <b-card-body>
+    <b-card-body  v-if="barChart.chartOptions.xaxis.categories.length > 0">
       <vue-apex-charts
         v-if="barChart.chartOptions.xaxis.categories.length > 0"
         type="bar"
@@ -53,6 +54,8 @@ import {
 } from 'bootstrap-vue'
 import VueApexCharts from 'vue-apexcharts'
 import flatPickr from 'vue-flatpickr-component'
+import "flatpickr/dist/flatpickr.css";
+
 import { $themeColors } from '@themeConfig'
 import axios from '@/libs/axios'
 
@@ -115,6 +118,9 @@ export default {
   },
   methods: {
     getData() {
+      this.barChart.series[0].data = [];
+      this.barChart.chartOptions.xaxis.categories = [];
+      // this.rangePicker = [];
       if (this.chartType === 'monthly') {
         this.getInvoicesMonth()
       }

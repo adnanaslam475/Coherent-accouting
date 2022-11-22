@@ -1,6 +1,5 @@
 <template>
   <b-col>
-    <b-card>
       <b-tabs v-model="companyTab">
         <b-tab>
           <template #title>
@@ -72,7 +71,6 @@
       <template #code>
         {{ codeIcon }}
       </template>
-    </b-card>
   </b-col>
 </template>
 
@@ -114,22 +112,26 @@ export default {
       companyTab: 0,
     }
   },
-  methods: {
-    update(value) {
-      this.companyTab = value
+    methods: {
+      update(value) {
+        this.companyTab = value
+      },
     },
-  },
-}
-</script>
-
-<style lang="scss">
-//
-.nav-tabs .nav-link {
-  padding: 0.47rem 0.78rem;
-  padding-top: 0.36rem;
-}
-
-.card-body {
-  padding-bottom: 0rem;
-}
-</style>
+  }
+  </script>
+  
+  <style lang="scss">
+  //
+  .nav-tabs .nav-link {
+    padding: 0.47rem 0.78rem;
+    padding-top: 0.36rem;
+  }
+  
+  .card-body {
+    padding-bottom: 0rem;
+  }
+  #main-card-body .card-body{
+    padding: 0px;
+  }
+  </style>
+  

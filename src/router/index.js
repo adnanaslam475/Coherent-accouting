@@ -233,6 +233,12 @@ const router = new VueRouter({
         ],
       }
     },
+    // Company Invoices 
+    {
+      path: '/companyInvoice/preview/:id',
+      name: 'company-invoice-preview',
+      component: () => import('@/views/company/CompanyInvoice/CompanyInvoice.vue'),
+    },
     // Invoice routes starting from here
     {
       path: '/invoices',

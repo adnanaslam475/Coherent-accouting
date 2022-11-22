@@ -45,8 +45,18 @@
                         v-model="form.company_name"
                         :state="errors.length > 0 ? false : null"
                         placeholder="Company Name"
+                        @input="SearchCompanyName(form.company_name)"
                       />
                       <small class="text-danger">{{ errors[0] }}</small>
+                      <b-list-group v-if="showSuggestions === true" id="my-company_name" class="input-suggesstions">
+                            <b-list-group-item
+                              v-for="data in datalist"
+                              :key="data.eic"
+                              @click= autoCompletefn(data)                        
+                            >
+                              {{ data.company_name }}
+                            </b-list-group-item>
+                          </b-list-group>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
@@ -476,6 +486,8 @@ import {
   BCol,
   BFormSelect,
   BFormCheckbox,
+  BListGroup, 
+    BListGroupItem
 } from "bootstrap-vue";
 import useJwt from "@/auth/jwt/useJwt";
 import axios from "@/libs/axios";
@@ -524,9 +536,13 @@ export default {
     ValidationProvider,
     ValidationObserver,
     flatPickr,
+    BListGroup, 
+    BListGroupItem
   },
   data() {
     return {
+      showSuggestions: false,
+      datalist:[],
       form: {
         company_name: null,
         company_identification_number: null,
@@ -715,6 +731,57 @@ export default {
     };
   },
   methods: {
+    autoCompletefn(item){
+      this.showSuggestions  = false
+      if(item.company_name){
+        this.form.company_name = item.company_name;
+      }
+      if(item.address){
+        this.form.company_address = item.address;
+      }    
+      this.datalist.value = []
+
+    },
+    async SearchCompanyName(val){
+      // console.log(val);
+      let self = this;
+      var data = JSON.stringify({
+        companyName: val
+      });
+
+      var config = {
+        method: "post",
+        url: "/index/api/search-companies/search-by-name",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+        data: data,
+      };
+
+      const data1 = await axios(config).then(function (response) {
+        console.log(response.data);
+        console.log(response.data.length);
+        if(response.data != undefined || response.data.length != 0){
+              self.showSuggestions = true
+              console.log(self.showSuggestions);
+
+            }
+            else{
+              self.showSuggestions = false
+              console.log(self.showSuggestions);
+            }
+            self.datalist = response.data
+      })
+      .catch(function (error) {
+      });
+
+      
+
+    },
+
      //validation check for account details
     validationFormTab2() {
       return new Promise((resolve, reject) => {
@@ -896,6 +963,31 @@ export default {
 
 .vs__open-indicator {
     fill: rgba(60,60,60,.5);
+}
+
+.input-suggesstions{
+  position: absolute;
+  z-index: 99;
+  width: 98.5%;
+  border: 1px solid rgba(87, 100, 111, 0.3);
+  border-radius: 0 !important;
+}
+.dark-layout .input-suggesstions{
+  border-color: #3b4253;
+}
+.input-suggesstions .list-group-item{
+  border-bottom: 0 !important;
+  border-radius: 0 !important; 
+  background-color: #f8f8f8 !important;
+  cursor: pointer;
+}
+
+.input-suggesstions .list-group-item :hover{
+  background-color: lightgrey !important;
+
+}
+.dark-layout .input-suggesstions .list-group-item{
+  background-color: #161d31 !important;
 }
 
 
