@@ -25,7 +25,7 @@
             <feather-icon icon="FileTextIcon"/>
             <span style="font-size: 13px">Invoices</span>
           </template>
-          <Invoice/>
+          <Invoice :invoiceTab="invoiceTab" @state="updateInvoiceTab($event)" />
         </b-tab>
         <b-tab>
           <template #title>
@@ -64,7 +64,7 @@
             <feather-icon icon="UserIcon"/>
             <span style="font-size: 13px">Private Persons</span>
           </template>
-          <Document/>
+          <PrivatePersons />
         </b-tab>
       </b-tabs>
 
@@ -83,12 +83,12 @@ import {
   BCard,
 } from 'bootstrap-vue'
 import CompanyInfo from './CompanyInfo/CompanyInfo.vue'
-import Invoice from './Invoice/Invoice.vue'
+import Invoice from './Invoice/invoice-list/InvoiceList.vue'
 import VATMonthReport from './VATMonthReports/VATMonthReport.vue'
 import YearlyReport from './YearlyReports/YearlyReport.vue'
-import NotVerifiedInvoice from './Invoice/NotVerifiedInvoice.vue'
+import NotVerifiedInvoice from './Invoice/invoice-list-notVerified/InvoiceList.vue'
 import Document from './Documents/Document.vue'
-import PrivatePersons from './PrivatePersons/PrivatePerson.vue'
+import PrivatePersons from './user/users-list/UsersList.vue'
 import { codeIcon } from './code'
 
 export default {
@@ -110,12 +110,23 @@ export default {
     return {
       codeIcon,
       companyTab: 0,
+      invoiceTab: 0,
     }
   },
     methods: {
       update(value) {
         this.companyTab = value
-      },
+      },   
+      updateInvoiceTab(value) {
+        if(value == 1){
+            // return this.$router.push({
+            //   name: "invoices", 
+            //   params: { 
+            //     id: 1 
+            //   }
+            // })
+          }
+      }
     },
   }
   </script>
