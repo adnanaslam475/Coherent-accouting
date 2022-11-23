@@ -13,7 +13,7 @@
         <!-- Per Page -->
         <b-col
           cols="12"
-          md="6"
+          md="8"
           class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
         >
           <label>Entries</label>
@@ -24,18 +24,12 @@
             :clearable="false"
             class="per-page-selector d-inline-block ml-50 mr-1"
           />
-          <b-button
-            variant="primary"
-            @click="actionTab"
-          >
-            Add Record
-          </b-button>
         </b-col>
 
         <!-- Search -->
         <b-col
           cols="12"
-          md="6"
+          md="4"
         >
           <div class="d-flex align-items-center justify-content-end">
             <b-form-input
@@ -346,6 +340,7 @@ import invoiceStoreModule from '../invoiceStoreModule'
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
+import router from '@/router'
 export default {
   props: ['invoiceTab'],
   methods: {
@@ -416,6 +411,7 @@ export default {
     InvoiceDownload
   },
   setup() {
+    
     const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
 
     // Register module
@@ -446,7 +442,7 @@ export default {
       sortBy,
       isSortDirDesc,
       refInvoiceListTable,
-
+      companyId,
       statusFilter,
 
       refetchData,
@@ -455,8 +451,8 @@ export default {
       resolveClientAvatarVariant,
     } = useInvoicesList()
 
-  
-
+    companyId.value = router.currentRoute.params.id
+    
     return {
       fetchInvoices,
       tableColumns,
@@ -466,6 +462,7 @@ export default {
       dataMeta,
       perPageOptions,
       searchQuery,
+      companyId,
       sortBy,
       isSortDirDesc,
       refInvoiceListTable,
