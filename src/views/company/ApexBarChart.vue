@@ -1,17 +1,15 @@
 <template>
-  <b-card no-body>
+  <div>
+  <!-- Daily -->
+  <b-card no-body  :id="'card'+chartType"  v-if="(chartType=== 'daily') && (dailyChartData.length) > 0" style="padding: 0px 10px">
     <b-card-header>
-      <div>
+      <div class="col-6">
         <b-card-title>
           {{title}}
-          <!--          Balance-->
         </b-card-title>
-<!--        <b-card-title class="font-weight-bolder">-->
-<!--          $74,382.72-->
-<!--        </b-card-title>-->
       </div>
 
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center col-6" style="padding-right: 0px">
         <feather-icon
             class="mr-2"
             @click="getData()"
@@ -28,10 +26,20 @@
             :config="{ mode: 'range'}"
             class="form-control flat-picker bg-transparent border-0 shadow-none"
             placeholder="YYYY-MM-DD"
+            style="width: 250px;"
         />
+        <feather-icon
+                icon="ChevronDownIcon"
+                size="22"
+               
+                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                v-b-toggle="'collapse-'+chartType"
+                variant="outline-primary"
+                style=""
+              />
       </div>
-
     </b-card-header>
+    <b-collapse :id="'collapse-'+chartType" class="mt-2" visible>
     <b-card-body  v-if="barChart.chartOptions.xaxis.categories.length > 0">
       <vue-apex-charts
         v-if="barChart.chartOptions.xaxis.categories.length > 0"
@@ -41,7 +49,63 @@
         :series="barChart.series"
       />
     </b-card-body>
+    </b-collapse>
   </b-card>
+
+   <!-- Monthly -->
+  <b-card no-body  :id="'card'+chartType"  v-if="(chartType=== 'monthly') && (monthlyChartData.length > 0)" style="padding: 0px 10px">
+    <b-card-header>
+      <div class="col-6">
+        <b-card-title>
+          {{title}}
+        </b-card-title>
+      </div>
+
+      <div class="d-flex align-items-center col-6" style="padding-right: 0px">
+        <feather-icon
+            class="mr-2"
+            @click="getData()"
+            icon="RefreshCcwIcon"
+            size="16"
+            style="cursor: pointer"
+        />
+        <feather-icon
+            icon="CalendarIcon"
+            size="16"
+        />
+        <flat-pickr
+            v-model="rangePicker"
+            :config="{ mode: 'range'}"
+            class="form-control flat-picker bg-transparent border-0 shadow-none"
+            placeholder="YYYY-MM-DD"
+            style="width: 250px;"
+        />
+        <feather-icon
+                icon="ChevronDownIcon"
+                size="22"
+               
+                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                v-b-toggle="'collapse-'+chartType"
+                variant="outline-primary"
+                style=""
+              />
+      </div>
+    </b-card-header>
+    <b-collapse :id="'collapse-'+chartType" class="mt-2" visible>
+    <b-card-body  v-if="barChart.chartOptions.xaxis.categories.length > 0">
+      <vue-apex-charts
+        v-if="barChart.chartOptions.xaxis.categories.length > 0"
+        type="bar"
+        height="350"
+        :options="barChart.chartOptions"
+        :series="barChart.series"
+      />
+    </b-card-body>
+    </b-collapse>
+  </b-card>
+  </div>
+
+  
 </template>
 
 <script>
@@ -51,13 +115,16 @@ import {
   BCardHeader,
   BCardSubTitle,
   BCardTitle,
+  BCollapse,
+  VBToggle,
+  VBTooltip,
 } from 'bootstrap-vue'
 import VueApexCharts from 'vue-apexcharts'
 import flatPickr from 'vue-flatpickr-component'
 import "flatpickr/dist/flatpickr.css";
-
 import { $themeColors } from '@themeConfig'
 import axios from '@/libs/axios'
+import Ripple from "vue-ripple-directive";
 
 export default {
   components: {
@@ -66,12 +133,17 @@ export default {
     BCardHeader,
     BCardBody,
     BCardTitle,
+    BCollapse,
+    VBToggle,
+    VBTooltip,
     flatPickr,
   },
   // eslint-disable-next-line vue/require-prop-types
   props: ['chartType', 'title'],
   data() {
     return {
+      dailyChartData: [],
+      monthlyChartData : [],
       barChart: {
         series: [
           {
@@ -113,6 +185,11 @@ export default {
       rangePicker: ['2019-05-01', '2019-05-10'],
     }
   },
+  directives: {
+    Ripple,
+    "b-tooltip": VBTooltip,
+    "b-toggle": VBToggle,
+  },
   created() {
     this.getData()
   },
@@ -120,7 +197,6 @@ export default {
     getData() {
       this.barChart.series[0].data = [];
       this.barChart.chartOptions.xaxis.categories = [];
-      // this.rangePicker = [];
       if (this.chartType === 'monthly') {
         this.getInvoicesMonth()
       }
@@ -131,6 +207,7 @@ export default {
     getInvoicesMonth() {
       axios.get(`/account/api/company/invoices-month-graph/${this.$route.params.id}`)
         .then(response => {
+          this.monthlyChartData = response.data;
           this.barChart.series[0].data = response.data.map(invoice => invoice.count)
           this.barChart.chartOptions.xaxis.categories = response.data.map(invoice => invoice.date)
           this.rangePicker = [this.barChart.chartOptions.xaxis.categories[this.barChart.chartOptions.xaxis.categories.length - 1], this.barChart.chartOptions.xaxis.categories[0]]
@@ -139,6 +216,7 @@ export default {
     getInvoicesDay() {
       axios.get(`/account/api/company/invoices-day-graph/${this.$route.params.id}`)
         .then(response => {
+          this.dailyChartData = response.data;
           this.barChart.series[0].data = response.data.map(invoice => invoice.count)
           this.barChart.chartOptions.xaxis.categories = response.data.map(invoice => invoice.date)
           this.rangePicker = [this.barChart.chartOptions.xaxis.categories[this.barChart.chartOptions.xaxis.categories.length - 1], this.barChart.chartOptions.xaxis.categories[0]]

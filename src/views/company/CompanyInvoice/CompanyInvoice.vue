@@ -365,8 +365,8 @@
       </b-col>
     </b-row>
 
-    <invoice-sidebar-send-invoice />
-    <invoice-sidebar-add-payment />
+    <company-invoice-sidebar-send-invoice />
+    <company-invoice-sidebar-add-payment />
   </section>
 </template>
 
@@ -379,7 +379,7 @@ import {
 } from 'bootstrap-vue'
 import Logo from '@core/layouts/components/Logo.vue'
 import Ripple from 'vue-ripple-directive'
-import CompanyInvoiceStoreModule from './CompanyInvoiceStoreModule'
+import CompanyInvoiceStoreModule from './CompanyInvoiceStoreModule.js'
 import CompanyInvoiceSidebarSendInvoice from './CompanyInvoiceSidebarSendInvoice'
 import CompanyInvoiceSidebarAddPayment from './CompanyInvoiceSidebarAddPayment'
 import CompanyInvoiceDownload from './CompanyInvoiceDownload'

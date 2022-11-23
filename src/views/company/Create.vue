@@ -52,7 +52,7 @@
                             <b-list-group-item
                               v-for="data in datalist"
                               :key="data.eic"
-                              @click= autoCompletefn(data)                        
+                              @click= autoCompletefn(data,1)                        
                             >
                               {{ data.company_name }}
                             </b-list-group-item>
@@ -77,8 +77,18 @@
                         v-model="form.company_identification_number"
                         :state="errors.length > 0 ? false : null"
                         placeholder="Company Identification Number"
+                        @input="SearchCompanyID(form.company_identification_number)"
                       />
                       <small class="text-danger">{{ errors[0] }}</small>
+                      <b-list-group v-if="showIDSuggestions === true" id="my-company_id" class="input-suggesstions">
+                            <b-list-group-item
+                              v-for="data in datalistID"
+                              :key="data.eic"
+                              @click= autoCompletefn(data,2)                        
+                            >
+                              {{ data.eic }}
+                            </b-list-group-item>
+                          </b-list-group>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
@@ -118,11 +128,11 @@
                       v-bind:name="$t('country')"
                       rules="required"
                     >
-                      <v-select
-                        v-model="form.country"
+                    <v-select
+                        v-model="getCompanyCountry"
                         :options="getCountries"
                         :filterBy="
-                          (option, label, search) => {
+                          (option, search) => {
                             return (
                               (option.country || '')
                                 .toLocaleLowerCase()
@@ -135,8 +145,10 @@
                         name="country"
                         v-bind:placeholder="$t('Please select your country')"
                         :value="$store.state.selected"
+                        v-on:input="updateCountryStatus()"
                       >
-                        <template #selected-option="option">
+                      
+                        <template #selected-option="option" v-if="isCountrySelected === false">
                           <div
                             style="
                               display: flex;
@@ -145,12 +157,26 @@
                               grid-gap: 8px;
                             "
                           >
-                          <!-- <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"' style="width: 30px; height: 20px"/> -->  
+                          <img :src='"@/assets/flags/" + getCompanyISO.toLowerCase() + ".png"' style="width: 30px; height: 20px"/>
+                            {{ getCompanyCountry }}
+                          </div>
+                        </template>
+
+                        <template #selected-option="option" v-else>
+                          <div
+                            style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: left;
+                              grid-gap: 8px;
+                            "
+                          >
                           <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"' style="width: 30px; height: 20px"/>
 
                             {{ option.country }}
                           </div>
                         </template>
+
                         <template v-slot:option="option">
                           <span
                             style="
@@ -187,14 +213,6 @@
                     label="Owner Name"
                     label-for="owner_name"
                   >
-                    <!-- <b-form-input
-                    id="owner_name"
-                    v-model="form.owner_name"
-                    type="text"
-                    placeholder="Owner Name"
-                    autocomplete="off"
-                    required
-                  ></b-form-input> -->
                     <validation-provider
                       #default="{ errors }"
                       v-bind:name="$t('owner_name')"
@@ -314,14 +332,6 @@
                     label="Company Currency"
                     label-for="company_currency"
                   >
-                    <!-- <b-form-input
-                    id="company_currency"
-                    v-model="form.company_currency"
-                    type="text"
-                    placeholder="Company Currency"
-                    autocomplete="off"
-                    required
-                  ></b-form-input> -->
                   <validation-provider
                       #default="{ errors }"
                       v-bind:name="$t('company_currency')"
@@ -358,7 +368,6 @@
                             grid-gap: 8px;
                           "
                         >
-                          <!-- <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"' style="width: 30px; height: 20px"/> -->
                           {{ option.value }} - {{ option.name }} 
                          
                         </span>
@@ -376,14 +385,6 @@
                     label="Company Phone Number"
                     label-for="company_phone"
                   >
-                    <!-- <b-form-input
-                      id="company_phone"
-                      v-model="form.phone_no"
-                      type="text"
-                      placeholder="Company Phone #"
-                      autocomplete="off"
-                      required
-                    ></b-form-input> -->
                     <validation-provider
                       #default="{ errors }"
                       v-bind:name="$t('company_phone')"
@@ -406,14 +407,6 @@
                     label="Company Email"
                     label-for="company_email"
                   >
-                    <!-- <b-form-input
-                    id="company_email"
-                    v-model="form.company_email"
-                    type="email"
-                    placeholder="Company Email"
-                    autocomplete="off"
-                    required
-                  ></b-form-input> -->
                     <validation-provider
                       #default="{ errors }"
                       v-bind:name="$t('company email')"
@@ -437,13 +430,6 @@
                     label="Company Financial Star of Year"
                     label-for="company_fin_year"
                   >
-                    <!-- <flat-pickr
-                    v-model="form.fin_year"
-                    class="form-control"
-                    placeholder="Select date"
-                    name="date"
-                  />  -->
-
                     <validation-provider
                       #default="{ errors }"
                       v-bind:name="$t('company_fin_year')"
@@ -493,7 +479,6 @@ import useJwt from "@/auth/jwt/useJwt";
 import axios from "@/libs/axios";
 import Swal from "sweetalert2";
 import vSelect from "vue-select";
-// import "@core/scss/vue/libs/vue-select.scss";
 import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
@@ -502,9 +487,6 @@ import { digits } from "@validations";
 import flatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 import { extend } from "vee-validate";
-// import '@core/scss/vue/libs/vue-wizard.scss';
-
-
 
 extend("required", {
   ...required,
@@ -541,6 +523,13 @@ export default {
   },
   data() {
     return {
+      companyCountrySelected : "",
+      companyCountryISOSelected : "",
+      getCompanyISO: '',
+      getCompanyCountry: '',
+      isCountrySelected: false,
+      showIDSuggestions: false,
+      datalistID:[],
       showSuggestions: false,
       datalist:[],
       form: {
@@ -731,24 +720,76 @@ export default {
     };
   },
   methods: {
-    autoCompletefn(item){
-      this.showSuggestions  = false
-      if(item.company_name){
-        this.form.company_name = item.company_name;
-      }
-      if(item.address){
-        this.form.company_address = item.address;
-      }    
-      this.datalist.value = []
-
+    // 
+    updateCountryStatus(){
+      this.isCountrySelected = true;
     },
+    // Searching a company by companyIdentificationNumber
+    async SearchCompanyID(val){
+      let self = this;
+      var config = {
+        method: "get",
+        url: "/index/api/search-companies/"+val,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+      };
+      if(val != ''){
+        const data1 = await axios(config).then(function (response) {
+        // console.log(response.data);
+        if(response.data != undefined || response.data.length != 0){
+              self.showIDSuggestions = true;
+            }
+            else{
+              self.showIDSuggestions = false;
+            }
+            self.datalistID = response.data
+      })
+      .catch(function (error) {
+      });
+    }
+    },
+
+    //function to auto-fill some input fields
+    autoCompletefn(item,val){
+      if(val===1){
+      this.showSuggestions  = false;
+      this.datalist.value = []
+      }
+      if(val===2){
+        this.showIDSuggestions  = false;
+        this.datalistID.value = []
+      }
+        this.form.company_name = item.company_name;
+        this.form.company_address = item.address; 
+        this.form.company_identification_number  = item.eic;
+        if(item.managers.length > 0){
+        this.form.owner_name = item.managers[0];
+        }
+        else{
+          this.form.owner_name = '';
+        }
+        
+        this.autofillCountry = true;
+        if(this.autofillCountry === true){
+          this.getCompanyISO = item.country;
+          for (let i=0; i< this.getCountries.length ; i++){
+            if(this.getCountries[i].isoAlpha2Country === item.country){
+              this.getCompanyCountry = this.getCountries[i].country;
+
+            }
+          }
+        }
+    },
+    // Searching a company by companyName
     async SearchCompanyName(val){
-      // console.log(val);
       let self = this;
       var data = JSON.stringify({
         companyName: val
       });
-
       var config = {
         method: "post",
         url: "/index/api/search-companies/search-by-name",
@@ -762,24 +803,17 @@ export default {
       };
 
       const data1 = await axios(config).then(function (response) {
-        console.log(response.data);
-        console.log(response.data.length);
+        // console.log(response.data);
         if(response.data != undefined || response.data.length != 0){
-              self.showSuggestions = true
-              console.log(self.showSuggestions);
-
+              self.showSuggestions = true;
             }
             else{
-              self.showSuggestions = false
-              console.log(self.showSuggestions);
+              self.showSuggestions = false;
             }
             self.datalist = response.data
       })
       .catch(function (error) {
       });
-
-      
-
     },
 
      //validation check for account details
@@ -806,7 +840,7 @@ export default {
         });
       });
     },
-
+    // 
     vatHandled(){
       // this.isVatCheck = !this.isVatCheck; 
       if(this.isVatCheck === true){
@@ -819,6 +853,15 @@ export default {
     //create a company
     async saveCompany() {
       let self = this;
+      if(this.isCountrySelected === true){
+        this.companyCountrySelected = this.getCompanyCountry.country;
+        this.companyCountryISOSelected = this.getCompanyCountry.isoAlpha2Country;
+        this.getCompanyCountry =  this.companyCountrySelected;
+        this.getCompanyISO =  this.companyCountryISOSelected;
+      }
+      else{
+
+      }
       if(this.isVatCheck === false){
         this.form.vat_no = "";
       }
@@ -844,8 +887,8 @@ export default {
         // });
 
         companyName: this.form.company_name,
-        companyCountry: this.form.country.country,
-        companyIsoAlpha2Country: this.form.country.isoAlpha2Country,
+        companyCountry:this.getCompanyCountry,
+        companyIsoAlpha2Country:  this.getCompanyISO ,
         companyOwnerApi: {
           companyOwnerName: this.form.owner_name,
           ownerEGN: this.form.owner_egn,
@@ -902,8 +945,6 @@ export default {
         self.$router.go();
       }, 1740);
 });
-
-
     },
     //
     async populateCountries() {
@@ -926,9 +967,7 @@ export default {
     },
   },
   created() {
-    
     this.populateCountries();
-    //
   },
 };
 </script>

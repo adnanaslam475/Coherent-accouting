@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-md-7 col-lg-8 col-xl-8 col-12">
+      <div class="col-md-7 col-lg-9 col-xl-9 col-12">
+        <!-- Company Details -->
         <div class="card">
           <!----><!---->
           <div class="card-body">
@@ -24,7 +25,8 @@
 
                       <div class="d-flex flex-column ml-1">
                         <div class="mb-1">
-                          <h4 class="mb-0">{{ companyRecord.companyName }}</h4>
+                          <h4 class="mb-0" v-if="companyNameLength >= 43">{{ companyRecord.companyName.substr(0,44) }}</h4>
+                          <h4 class="mb-0" v-else>{{ companyRecord.companyName }}</h4>
                           <span class="card-text">{{
                             companyRecord.companyMail
                           }}</span>
@@ -209,7 +211,8 @@
           <!----><!---->
         </div>
       </div>
-      <div class="col-md-5 col-lg-4 col-xl-4 col-12">
+      <!-- Summary -->
+      <div class="col-md-5 col-lg-3 col-xl-3 col-12">
         <b-card class="border-primary ml-0 body-0" id="inner-card-body">
           <table class="mt-2 mt-xl-0 w-100">
             <tr>
@@ -288,18 +291,10 @@
     </div>
 
     <b-row class="mt-2">
-      <b-col class="mb-1" cols="8">
-        <!-- <div class="card"> -->
-        <!-- <div class="card-body"> -->
 
-        <!-- </div> -->
-        <!-- </div> -->
-      </b-col>
-
-      <!-- Report time-line card -->
-      <b-col class="mb-1 ml-0" cols="4"> </b-col>
       <b-col class="mb-1" cols="6">
-        <b-card no-body style="padding: 0px 10px" class="mb-2">
+         <!-- Report time-line card -->
+        <b-card no-body style="padding: 8px 10px" class="mb-2"  v-if="monthlyReportGraphDisplay.length > 0" >
           <b-card-header>
             <b-card-title> Report Timeline </b-card-title>
             <div class="d-flex align-items-center">
@@ -318,7 +313,7 @@
                 variant="outline-primary"
                 style="margin-right: -10px"
               />
-            </div>
+            </div>   
           </b-card-header>
           <b-collapse id="collapse-1" class="mt-2" visible>
             <b-card-body
@@ -351,21 +346,23 @@
           </b-collapse>
         </b-card>
 
-        <!-- Company Invoices -->
+        <!-- Company Invoices card -->
         <b-card
           no-body
-          style="
-            padding: 5px 10px;
-            height: auto;
-            max-height: 49.3rem;
-            overflow-y: scroll;
-          "
+          style="padding: 8px 10px; margin-top: 29px"
           class="mb-2"
+          v-if="companyInvoicesDisplay.length > 0" 
         >
           <b-card-header>
             <b-card-title>Company Invoices</b-card-title>
             <div class="d-flex align-items-center">
-            
+              <feather-icon
+           
+            @click="getCompanyInvoices()"
+            icon="RefreshCcwIcon"
+            size="16"
+            style="cursor: pointer"
+        />  
               <feather-icon
                 icon="ChevronDownIcon"
                 size="22"
@@ -378,24 +375,21 @@
             </div>
           </b-card-header>
           <b-collapse id="collapse-2" class="mt-2" visible>
-          <b-card-body style="padding: 0px 15px">
+          <b-card-body style="padding: 0px 15px; height: auto;
+    max-height: 46.7rem;
+    overflow-y: scroll;"
+     v-if="companyInvoices.length > 0">
             <b-table
               :items="companyInvoices"
               responsive
               :fields="tableColumns"
               primary-key="id"
-              show-empty
-              empty-text="No matching records found"
               class="position-relative invoiceList"
               :sort-by.sync="sortBy"  
               :sort-desc.sync="sortDesc" 
               @sort-changed="checkStatus"
             >
-              <!-- <template #head(invoiceStatus)>
-                <feather-icon icon="TrendingUpIcon" class="mx-auto" />
-              </template> -->
 
-              <!-- Column: Id -->
               <template #cell(id)="data">
                 <b-link
                   :to="{
@@ -470,15 +464,6 @@
                     {{ data.item.recipientCompany.companyOwnerName }}
                   </p>
 
-                  <!-- <p class="mb-0">
-              Company Vat Eic: {{ data.item.recipientCompany.companyVatEic }}
-            </p>
-            <p class="mb-0">
-              Company Address: {{ data.item.recipientCompany.companyAddress }}
-            </p>
-            <p class="mb-0">
-              Owner EGN: {{ data.item.recipientCompany.ownerEGN }}
-            </p> -->
                 </b-tooltip>
               </template>
 
@@ -508,15 +493,6 @@
                     {{ data.item.supplierCompany.companyOwnerName }}
                   </p>
 
-                  <!-- <p class="mb-0">
-              Company Vat Eic: {{ data.item.supplierCompany.companyVatEic }}
-            </p>
-            <p class="mb-0">
-              Company Address: {{ data.item.supplierCompany.companyAddress }}
-            </p>
-            <p class="mb-0">
-              Owner EGN: {{ data.item.supplierCompany.ownerEGN }}
-            </p> -->
                 </b-tooltip>
               </template>
 
@@ -574,13 +550,6 @@
                   >
                 </span>
               </template>
-
-              <!-- Column: currency -->
-              <!-- <template #cell(currency)="data">
-          <span class="text-nowrap">
-            {{ data.value }}
-          </span>
-        </template> -->
 
               <!-- Column: Actions -->
               <template #cell(actions)="data">
@@ -696,11 +665,7 @@ import AppTimelineItem from "@core/components/app-timeline/AppTimelineItem.vue";
 import ApexBarChart from "@/views/company/ApexBarChart";
 import VueHtml2pdf from "vue-html2pdf";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
-
 import InvoiceDownload from '../../invoice/invoice-download/InvoiceDownload.vue'
-
-
-
 
 const chartColors = {
   primaryColorShade: "#836AF9",
@@ -769,6 +734,7 @@ export default {
   },
   data() {
     return {
+      companyNameLength: '',
       sortBy : 'id',
       sortDesc: false,
       tableColumns: [
@@ -792,6 +758,7 @@ export default {
         { key: "actions" },
       ],
       companyInvoices: [],
+      companyInvoicesDisplay: [],
       pageNumber: 1,
       perPageInvoices: 30,
       invoiceDirection: "asc",
@@ -808,6 +775,7 @@ export default {
       },
       variants: ["primary", "danger", "info", "warning"],
       monthlyReportGraph: [],
+      monthlyReportGraphDisplay: [],
       dailyInvoices: [],
       rangePicker: [],
     };
@@ -820,6 +788,7 @@ export default {
     this.getCompanyInvoices();
   },
   methods: {
+    // delete a single company invoice
     async deleteCompanyInvoice(invoiceID) {
       let self = this;
       var config = {
@@ -835,16 +804,7 @@ export default {
 
       await axios(config)
         .then(function (response) {
-          console.log(JSON.stringify(response.data));
-          // console.log(companyID);
-          // Swal.fire({
-          //   position: "center",
-          //   icon: "success",
-          //   title: "Company Invoice Deleted!",
-          //   showConfirmButton: false,
-          //   timer: 1400,
-          // });
-         
+          // console.log(JSON.stringify(response.data));
           self.$toast({
             component: ToastificationContent,
             props: {
@@ -865,6 +825,7 @@ export default {
     onProgress(event) {
       console.log(`Processed: ${event} / 100`);
     },
+    //
     generatePDF(itemID) {
       this.$refs['invoicePdf'+itemID].generatePdf();
     },
@@ -888,6 +849,7 @@ export default {
     //company invoices data
     async getCompanyInvoices() {
       let self = this;
+      self.companyInvoices=[];
       const data = await axios
         .get(
           "/account/api/invoice/list/" +
@@ -912,16 +874,13 @@ export default {
         .then(function (response) {
           // console.log(JSON.stringify(response.data));
           self.companyInvoices = response.data.elements;
-          console.log(self.companyInvoices);
+          self.companyInvoicesDisplay = response.data.elements;
+
         })
         .catch(function (error) {
           console.log(error);
         });
 
-      // if (data.data.elements != "") {
-      //   this.comapnyInvoices = data.data.elements;
-      //   console.log(this.companyInvoices);
-      // }
     },
     getMonthReportGraph() {
       axios
@@ -930,8 +889,11 @@ export default {
         )
         .then((response) => {
           this.monthlyReportGraph = response.data;
+          this.monthlyReportGraphDisplay = response.data;
+
         });
     },
+    // delete the company
     async deleteCompany() {
       const config = {
         method: "delete",
@@ -954,12 +916,13 @@ export default {
           });
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
       setTimeout(() => {
         this.$router.go(-1);
       }, 1410);
     },
+    //function to edit the record of company
     async editCompany() {
       await this.$router.push({
         name: "EditCompany",
@@ -977,6 +940,8 @@ export default {
       });
       if (data.status === 200) {
         this.companyRecord = data.data;
+        this.companyNameLength = this.companyRecord.companyName.length;
+
       }
     },
     async getStatistics() {
