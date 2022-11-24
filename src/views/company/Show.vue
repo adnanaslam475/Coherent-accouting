@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row>
-      <b-col cols="12">
+      <b-col cols="12" style="padding-left:0px; padding-right: 0px">
         <CompanyTabs />
       </b-col>
     </b-row>
