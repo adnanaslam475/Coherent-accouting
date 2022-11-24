@@ -28,7 +28,7 @@ export default {
           }
           return new Promise((resolve, reject) => {
             axiosInvoice
-              .get(`/account/api/user-invoice/search/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
+              .get(`/account/api/invoice/search/${companyId}/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
               .then((response) =>{
                 resolve(response)
               })
@@ -70,7 +70,7 @@ export default {
       }
       return new Promise((resolve, reject) => {
         axiosInvoice
-          .get(`/account/api/user-invoice/${id}`,config)
+          .get(`/account/api/invoice/${id}`,config)
           .then(response => resolve(response))
           .catch(error => reject(error))
       })

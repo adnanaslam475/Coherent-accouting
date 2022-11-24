@@ -225,6 +225,28 @@ export default class JwtService {
     }) 
   }
 
+  addCompanyInvoice(token,id,...args) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.post(`${this.jwtConfig.CompanyInvoiceAddEndpoint}/${id}`, ...args, {
+      headers: headers
+    }) 
+  }
+
+  EditCompanyInvoice(token,id,companyId,...args) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.put(`${this.jwtConfig.companyInvoiceEditEndpoint}/${id}/${companyId}`, ...args, {
+      headers: headers
+    }) 
+  }
+
   DeleteInvoice(token,id) {
     let headers = {
       'Content-Type': 'application/json',
@@ -232,6 +254,17 @@ export default class JwtService {
       'Accept': 'application/json'
     }
     return this.axiosIns2.delete(`${this.jwtConfig.invoiceDeleteEndpoint}/${id}`,{
+      headers: headers
+    }) 
+  }
+
+  DeleteCompanyInvoice(token,id) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.delete(`${this.jwtConfig.companyInvoiceDeleteEndpoint}/${id}`,{
       headers: headers
     }) 
   }

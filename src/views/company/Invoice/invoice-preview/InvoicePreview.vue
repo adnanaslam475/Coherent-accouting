@@ -366,16 +366,13 @@
             variant="outline-secondary"
             class="mb-75"
             block
-            :to="{ name: 'apps-invoice-edit', params: { id: $route.params.id } }"
+            :to="{ name: 'company-invoice-edit', params: { id: $route.params.id, companyId: $route.params.companyId  } }"
           >
             Edit
           </b-button>
         </b-card>
       </b-col>
     </b-row>
-
-    <invoice-sidebar-send-invoice />
-    <invoice-sidebar-add-payment />
   </section>
 </template>
 
@@ -389,8 +386,6 @@ import {
 import Logo from '@core/layouts/components/Logo.vue'
 import Ripple from 'vue-ripple-directive'
 import invoiceStoreModule from '../invoiceStoreModule'
-import InvoiceSidebarSendInvoice from '../InvoiceSidebarSendInvoice.vue'
-import InvoiceSidebarAddPayment from '../InvoiceSidebarAddPayment.vue'
 import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
 import VueHtml2pdf from "vue-html2pdf";
 export default {
@@ -410,8 +405,6 @@ export default {
     BLink,
     VueHtml2pdf,
     Logo,
-    InvoiceSidebarAddPayment,
-    InvoiceSidebarSendInvoice,
     BCardHeader,
     InvoiceDownload
   },

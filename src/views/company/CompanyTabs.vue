@@ -109,7 +109,7 @@ export default {
   data() {
     return {
       codeIcon,
-      companyTab: 0,
+      companyTab: this.$route.params.InvoiceId ? this.$route.params.InvoiceId : 0,
       invoiceTab: 0,
     }
   },
@@ -118,14 +118,7 @@ export default {
         this.companyTab = value
       },   
       updateInvoiceTab(value) {
-        if(value == 1){
-            // return this.$router.push({
-            //   name: "invoices", 
-            //   params: { 
-            //     id: 1 
-            //   }
-            // })
-          }
+        this.invoiceTab = value
       }
     },
   }

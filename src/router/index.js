@@ -234,11 +234,29 @@ const router = new VueRouter({
       }
     },
     // Company Invoices 
+    // {
+    //   path: '/companyInvoice/preview/:id',
+    //   name: 'company-invoice-preview',
+    //   component: () => import('@/views/company/CompanyInvoice/CompanyInvoice.vue'),
+    // },
+    
+    //Company invoices add/edit/preview
     {
-      path: '/companyInvoice/preview/:id',
+      path: '/company/:companyId/invoice/preview/:id',
       name: 'company-invoice-preview',
-      component: () => import('@/views/company/CompanyInvoice/CompanyInvoice.vue'),
+      component: () => import('@/views/company/Invoice/invoice-preview/InvoicePreview.vue'),
     },
+    {
+      path: '/company/:companyId/invoice/add',
+      name: 'company-invoice-add',
+      component: () => import('@/views/company/Invoice/invoice-add/InvoiceAdd.vue'),
+    },
+    {
+      path: '/company/:companyId/invoice/edit/:id',
+      name: 'company-invoice-edit',
+      component: () => import('@/views/company/Invoice/invoice-edit/InvoiceEdit.vue'),
+    },
+
     // Invoice routes starting from here
     {
       path: '/invoices',
@@ -360,6 +378,9 @@ router.beforeEach((to, _, next) => {
     || to.name === 'apps-users-view'
     || to.name === 'apps-users-edit'
     || to.name === 'my-plans'
+    || to.name === 'company-invoice-previews'
+    || to.name === 'company-invoice-add'
+    || to.name === 'company-invoice-edit'
   ) {
     if (!isLoggedIn) return next({ name: 'login' })
 

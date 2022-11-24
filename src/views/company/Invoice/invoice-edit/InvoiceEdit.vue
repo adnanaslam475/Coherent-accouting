@@ -61,22 +61,33 @@
              
             <div>
               <div class="accountType">
-                <b-form-radio
-                  v-model="AccountTypeOption"
-                  plain
-                  name="accountTypeoptions"
-                  value="company"
-                >
-                  <h5>COMPANY</h5>
-                </b-form-radio>
-                <b-form-radio
-                  v-model="AccountTypeOption"
-                  plain
-                  name="accountTypeoptions"
-                  value="person"
-                >
-                  <h5>PERSON</h5>
-                </b-form-radio>
+                <div class="ml-1">              
+                  <b-form-checkbox
+                      :class="`${VerifiedInvisible ?  'invisible': 'visible' }`"
+                      v-model="invoiceData.verified"
+                      plain
+                    >
+                    <h5>Verified</h5>
+                  </b-form-checkbox>
+                </div>
+                <div class="d-flex align-items-center mr-1" style="gap: 10px;">
+                  <b-form-radio
+                    v-model="AccountTypeOption"
+                    plain
+                    name="accountTypeoptions"
+                    value="company"
+                  >
+                    <h5>COMPANY</h5>
+                  </b-form-radio>
+                  <b-form-radio
+                    v-model="AccountTypeOption"
+                    plain
+                    name="accountTypeoptions"
+                    value="person"
+                  >
+                    <h5>PERSON</h5>
+                  </b-form-radio>
+                </div>
               </div>
             
               <div
@@ -432,31 +443,56 @@
                 </div>
               </div>
             </div>
-
-            <b-card
-              no-body
-              class="invoice-preview date-issued"
-            >
-              <b-card-header class="justify-content-end"> 
-                <div class="mt-md-0 mt-2">
-                  <div class="d-flex align-items-center mb-0">
-                    <span class="title mr-1"> Date: </span>
-                    <validation-provider
-                      #default="{ errors }"
-                      name="dateIssued"
-                       
-                    >
-                      <flat-pickr
-                        v-model="invoiceData.dateIssued"
-                        class="form-control invoice-edit-input invoice-input-top"
-                      />
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
+            <div class="d-flex justify-content-between">
+              <b-card
+                no-body
+                class="invoice-preview date-issued invisible"
+              >
+                <b-card-header class="justify-content-end"> 
+                  <div class="mt-md-0 mt-2">
+                    <div class="d-flex align-items-center mb-0">
+                      <validation-provider
+                        #default="{ errors }"
+                        name="dateIssued"
+                        
+                      >
+                        <b-form-checkbox
+                            v-model="invoiceData.verified"
+                            plain
+                          >
+                        </b-form-checkbox>
+                        
+                        <small class="text-danger">{{ errors[0] }}</small>
+                      </validation-provider>
+                      <span class="title"> Verified </span>
+                    </div>
                   </div>
-                </div>
-              </b-card-header>
-            </b-card>
-
+                </b-card-header>
+              </b-card>
+              <b-card
+                no-body
+                class="invoice-preview date-issued"
+              >
+                <b-card-header class="justify-content-end"> 
+                  <div class="mt-md-0 mt-2">
+                    <div class="d-flex align-items-center mb-0">
+                      <span class="title mr-1"> Date: </span>
+                      <validation-provider
+                        #default="{ errors }"
+                        name="dateIssued"
+                        
+                      >
+                        <flat-pickr
+                          v-model="invoiceData.dateIssued"
+                          class="form-control invoice-edit-input invoice-input-top"
+                        />
+                        <small class="text-danger">{{ errors[0] }}</small>
+                      </validation-provider>
+                    </div>
+                  </div>
+                </b-card-header>
+              </b-card>
+            </div>
             <b-card no-body class="invoice-add-card">
            
               <!-- Items Section -->
@@ -885,7 +921,7 @@
                 variant="outline-primary"
                 class="mb-75"
                 block
-                :to="{ name: 'apps-invoice-preview', params: { id: invoiceData.id }}"
+                :to="{ name: 'company-invoice-preview', params: { id: invoiceData.id, companyId: $route.params.companyId  }}"
               >
                 Preview
               </b-button>
@@ -915,8 +951,6 @@
         </b-row>
       </b-form>
     </validation-observer>
-    <invoice-sidebar-send-invoice />
-    <invoice-sidebar-add-payment />
   </section>
 </template>
 
@@ -934,8 +968,6 @@ import {
 import vSelect from 'vue-select'
 import flatPickr from 'vue-flatpickr-component'
 import invoiceStoreModule from '../invoiceStoreModule'
-import InvoiceSidebarSendInvoice from '../InvoiceSidebarSendInvoice.vue'
-import InvoiceSidebarAddPayment from '../InvoiceSidebarAddPayment.vue'
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 export default {
@@ -962,8 +994,6 @@ export default {
     flatPickr,
     vSelect,
     Logo,
-    InvoiceSidebarSendInvoice,
-    InvoiceSidebarAddPayment,
     ValidationProvider, 
     ValidationObserver,
     BSpinner,
@@ -1027,13 +1057,13 @@ export default {
         item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
         return item
       })
-      invoiceData.verified = true
+      
       this.$refs.invoiceEditForm.validate().then((success) => {
         if (success) {
           this.loading = true;
           let token = useJwt.getToken()
           useJwt
-                .EditInvoice(token, router.currentRoute.params.id, invoiceData)
+                .EditCompanyInvoice(token, router.currentRoute.params.id, router.currentRoute.params.companyId, invoiceData)
                 .then((response) => {
                   this.loading = false
                   
@@ -1046,9 +1076,10 @@ export default {
                     },
                   });
                   return this.$router.push({
-                      name: "invoices", 
+                      name: "CompanyView", 
                       params: { 
-                        id: 0 
+                        id: router.currentRoute.params.companyId,
+                        InvoiceId: 1
                       }
                     })
                 })
@@ -1092,12 +1123,12 @@ export default {
       { value: '$', text: '$' },
       { value: '€', text: '€' },
     ]
-
+    const VerifiedInvisible = ref(null)
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
         response.data.currency = response.data.currency == 'lv' ? "лв." : response.data.currency 
         invoiceData.value = response.data
-
+        VerifiedInvisible.value = invoiceData.value.verified
         // ? We are adding some extra data in response for data purpose
         // * Your response will contain this extra data
         // ? [Purpose is to make it more API friendly and less static as possible]
@@ -1185,7 +1216,7 @@ export default {
         transactions: invoiceData.value.transactions,
 
         documentType: "INVOICE",
-        verified: true
+        verified: invoiceData.value.verified
       }
     }
     var datalist = ref([])
@@ -1568,6 +1599,7 @@ export default {
     return {
       AccountTypeOption,
       invoiceData,
+      VerifiedInvisible,
       currencyOptions,
       itemFormBlankItem,
       vatAmount,
@@ -1668,7 +1700,7 @@ background-color:$product-details-bg;
 .accountType{
   display: flex;
   gap: 10px;
-  justify-content: end;
+  justify-content: space-between;
   margin-bottom: 2rem;
 }
 .invoice-add-input span.title.mr-1 {

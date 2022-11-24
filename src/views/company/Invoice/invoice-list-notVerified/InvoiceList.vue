@@ -67,7 +67,7 @@
       <!-- Column: Id -->
       <template #cell(id)="data">
         <b-link
-          :to="{ name: 'apps-invoice-preview', params: { id: data.item.id }}"
+          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }}"
           class="font-weight-bold"
         >
           #{{ data.value }}
@@ -77,7 +77,7 @@
       <!-- Column: invoiceNumber -->
       <template #cell(invoiceNumber)="data">
         <b-link
-          :to="{ name: 'apps-invoice-preview', params: { id: data.item.id }}"
+          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }}"
           class="font-weight-bold"
         >
           <span class="text-nowrap">
@@ -95,7 +95,7 @@
 
       <template #cell(documentType)="data">
         <b-link
-          :to="{ name: 'apps-invoice-preview', params: { id: data.item.id }}"
+          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }}"
           class="font-weight-bold"
         >
           <span class="text-nowrap">
@@ -215,7 +215,7 @@
             icon="EyeIcon"
             size="16"
             class="mx-1 cursor-pointer"
-            @click="$router.push({ name: 'apps-invoice-preview', params: { id: data.item.id }})"
+            @click="$router.push({ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }})"
           />
           <b-tooltip
             title="Preview Invoice"
@@ -242,7 +242,7 @@
               <feather-icon icon="DownloadIcon" />
               <span class="align-middle ml-50">Download</span>
             </b-dropdown-item>
-            <b-dropdown-item :to="{ name: 'apps-invoice-edit', params: { id: data.item.id } }">
+            <b-dropdown-item :to="{ name: 'company-invoice-edit', params: { id: data.item.id, companyId: companyId  }}">
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
@@ -359,7 +359,7 @@ export default {
     invoiceDelete(id, refetchData) {
       let token = useJwt.getToken()
       useJwt
-        .DeleteInvoice(token,id)
+        .DeleteCompanyInvoice(token,id)
         .then((response) => {
           
           this.$toast({

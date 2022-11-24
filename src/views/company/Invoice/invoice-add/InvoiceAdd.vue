@@ -930,6 +930,7 @@ import invoiceStoreModule from "../invoiceStoreModule";
 import InvoiceSidebarAddNewCustomer from "../InvoiceSidebarAddNewCustomer.vue";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import router from '@/router'
 export default {
   components: {
     BRow,
@@ -1021,7 +1022,7 @@ export default {
           this.loading = true;
           let token = useJwt.getToken()
           useJwt
-            .addInvoice(token, invoiceData)
+            .addCompanyInvoice(token, router.currentRoute.params.companyId, invoiceData)
             .then((response) => {
               this.loading = false
               this.$toast({
@@ -1032,7 +1033,7 @@ export default {
                   variant: "success",
                 },
               });
-              this.$router.push({ name: 'apps-invoice-preview', params: { id: response.data.id }})
+              this.$router.push({ name: 'company-invoice-preview', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
             })
             .catch((error) => {
               this.loading = false

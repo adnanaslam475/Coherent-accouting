@@ -28,7 +28,7 @@ export default {
         }
         return new Promise((resolve, reject) => {
           axiosUser
-            .get(`/account/api/user-person/search/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
+            .get(`/account/api/person/search/${companyId}/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
             .then(response => resolve(response))
             .catch(error => reject(error))
         })
