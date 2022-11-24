@@ -1,36 +1,36 @@
 <template>
   <div>
   <!-- Daily -->
-  <b-card no-body  :id="'card'+chartType"  v-if="(chartType=== 'daily') && (dailyChartData.length) > 0" style="padding: 0px 10px">
-    <b-card-header>
-      <div class="col-6">
+  <b-card no-body  :id="'card'+chartType"  v-if="(chartType=== 'daily') && (dailyChartData.length) > 0" style="padding: 0px">
+    <b-card-header style="padding: 1.0rem">
         <b-card-title>
           {{title}}
         </b-card-title>
-      </div>
 
-      <div class="d-flex align-items-center col-6" style="padding-right: 0px">
+      <div class="d-flex align-items-center" style="padding-right: 0px; padding-left: 0px">
         <feather-icon
             class="mr-2"
             @click="getData()"
             icon="RefreshCcwIcon"
-            size="16"
+            size="17"
             style="cursor: pointer"
         />
         <feather-icon
             icon="CalendarIcon"
-            size="16"
+            size="17"
         />
         <flat-pickr
             v-model="rangePicker"
             :config="{ mode: 'range'}"
             class="form-control flat-picker bg-transparent border-0 shadow-none"
             placeholder="YYYY-MM-DD"
-            style="width: 250px;"
+            style="width: 200px;
+    padding-left: 1.5rem;
+    padding-right: 0.5rem;"
         />
         <feather-icon
                 icon="ChevronDownIcon"
-                size="22"
+                size="24"
                
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 v-b-toggle="'collapse-'+chartType"
@@ -39,8 +39,8 @@
               />
       </div>
     </b-card-header>
-    <b-collapse :id="'collapse-'+chartType" class="mt-2" visible>
-    <b-card-body  v-if="barChart.chartOptions.xaxis.categories.length > 0">
+    <b-collapse :id="'collapse-'+chartType" class="" visible>
+    <b-card-body  v-if="barChart.chartOptions.xaxis.categories.length > 0" style="padding-top: 0.5rem">
       <vue-apex-charts
         v-if="barChart.chartOptions.xaxis.categories.length > 0"
         type="bar"
@@ -53,36 +53,36 @@
   </b-card>
 
    <!-- Monthly -->
-  <b-card no-body  :id="'card'+chartType"  v-if="(chartType=== 'monthly') && (monthlyChartData.length > 0)" style="padding: 0px 10px">
-    <b-card-header>
-      <div class="col-6">
+  <b-card no-body  :id="'card'+chartType"  v-if="(chartType=== 'monthly') && (monthlyChartData.length > 0)" style="padding: 0px">
+    <b-card-header style="padding: 1.0rem">
         <b-card-title>
           {{title}}
         </b-card-title>
-      </div>
 
-      <div class="d-flex align-items-center col-6" style="padding-right: 0px">
+      <div class="d-flex align-items-center " style="padding-right: 0px; padding-left: 0px">
         <feather-icon
             class="mr-2"
             @click="getData()"
             icon="RefreshCcwIcon"
-            size="16"
+            size="17"
             style="cursor: pointer"
         />
         <feather-icon
             icon="CalendarIcon"
-            size="16"
+            size="17"
         />
         <flat-pickr
             v-model="rangePicker"
             :config="{ mode: 'range'}"
             class="form-control flat-picker bg-transparent border-0 shadow-none"
             placeholder="YYYY-MM-DD"
-            style="width: 250px;"
+            style="width: 200px;
+    padding-left: 1.5rem;
+    padding-right: 0.5rem;"
         />
         <feather-icon
                 icon="ChevronDownIcon"
-                size="22"
+                size="24"
                
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 v-b-toggle="'collapse-'+chartType"
@@ -91,8 +91,8 @@
               />
       </div>
     </b-card-header>
-    <b-collapse :id="'collapse-'+chartType" class="mt-2" visible>
-    <b-card-body  v-if="barChart.chartOptions.xaxis.categories.length > 0">
+    <b-collapse :id="'collapse-'+chartType" class="" visible>
+    <b-card-body  v-if="barChart.chartOptions.xaxis.categories.length > 0"  style="padding-top: 0.5rem">
       <vue-apex-charts
         v-if="barChart.chartOptions.xaxis.categories.length > 0"
         type="bar"

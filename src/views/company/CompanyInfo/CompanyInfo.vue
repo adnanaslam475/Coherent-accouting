@@ -3,14 +3,14 @@
     <div class="row">
       <div class="col-md-7 col-lg-9 col-xl-9 col-12">
         <!-- Company Details -->
-        <div class="card">
+        <div class="card border-primary">
           <!----><!---->
-          <div class="card-body">
+          <div class="card-body" style="padding: 0px">
             <!----><!---->
-            <div class="row" style="padding: 15px 0px 20px 15px">
-              <div class="d-flex justify-content-between flex-column col-5">
+            <div class="row" style="padding: 15px 0px 18px 15px">
+              <div class="d-flex justify-content-between flex-column col-5" style="padding-left: 0.5rem; padding-right:0.5rem">
                 <div class="card" style="margin-right: 10px">
-                  <div class="card-body">
+                  <div class="card-body" style="padding: 0px">
                     <div class="d-flex justify-content-start">
                       <span
                         class="b-avatar rounded"
@@ -290,23 +290,23 @@
       </div>
     </div>
 
-    <b-row class="mt-2">
+    <b-row class="" style="margin-top: 2.5rem">
 
       <b-col class="mb-1" cols="6">
          <!-- Report time-line card -->
-        <b-card no-body style="padding: 8px 10px" class="mb-2"  v-if="monthlyReportGraphDisplay.length > 0" >
-          <b-card-header>
+        <b-card no-body style="padding: 0px" class="mb-2"  v-if="monthlyReportGraphDisplay.length > 0" >
+          <b-card-header  style="padding: 1.5rem 1.5rem 1.52rem 1rem">
             <b-card-title> Report Timeline </b-card-title>
             <div class="d-flex align-items-center">
               <feather-icon
                 @click="refreshMonthReportGraph()"
                 icon="RefreshCcwIcon"
-                size="16"
+                size="17"
                 style="cursor: pointer"
               />
               <feather-icon
                 icon="ChevronDownIcon"
-                size="22"
+                size="24"
                 class="ml-2"
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 v-b-toggle.collapse-1
@@ -315,7 +315,7 @@
               />
             </div>   
           </b-card-header>
-          <b-collapse id="collapse-1" class="mt-2" visible>
+          <b-collapse id="collapse-1" class="mt-1" visible>
             <b-card-body
               style="padding: 0px 15px"
               v-if="monthlyReportGraph.length > 0"
@@ -349,23 +349,23 @@
         <!-- Company Invoices card -->
         <b-card
           no-body
-          style="padding: 8px 10px; margin-top: 29px"
+          style="padding: 0px; margin-top: 29px"
           class="mb-2"
           v-if="companyInvoicesDisplay.length > 0" 
         >
-          <b-card-header>
+          <b-card-header style="padding: 1.5rem 1.5rem 1.51rem 1rem">
             <b-card-title>Company Invoices</b-card-title>
             <div class="d-flex align-items-center">
               <feather-icon
            
             @click="getCompanyInvoices()"
             icon="RefreshCcwIcon"
-            size="16"
+            size="17"
             style="cursor: pointer"
         />  
               <feather-icon
                 icon="ChevronDownIcon"
-                size="22"
+                size="24"
                 class="ml-2"
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 v-b-toggle.collapse-2
@@ -374,9 +374,9 @@
               />
             </div>
           </b-card-header>
-          <b-collapse id="collapse-2" class="mt-2" visible>
+          <b-collapse id="collapse-2" class="mt-1" visible>
           <b-card-body style="padding: 0px 15px; height: auto;
-    max-height: 46.7rem;
+    max-height: 45.7rem;
     overflow-y: scroll;"
      v-if="companyInvoices.length > 0">
             <b-table
@@ -969,8 +969,8 @@ export default {
 }
 
 .card-body {
-  padding-top: 1.1rem;
-  padding-bottom: 0.8rem;
+  /* padding-top: 1.1rem !important;
+  padding-bottom: 0.8rem !important; */
 }
 
 #inner-card-body .card-body {

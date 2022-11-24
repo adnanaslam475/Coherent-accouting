@@ -1,6 +1,6 @@
 <template>
   <b-col>
-      <b-tabs v-model="companyTab">
+      <b-tabs v-model="companyTab" class="testing-nav">
         <b-tab>
           <template #title>
             <feather-icon icon="BriefcaseIcon"/>
@@ -8,7 +8,7 @@
           </template>
           <div
               style="
-            height: 30px;
+            height: 20px;
             background-color: #f6f6f6;
             margin-right: -21px;
             margin-left: -21px;
@@ -132,10 +132,15 @@ export default {
   </script>
   
   <style lang="scss">
+
+.testing-nav .nav-tabs{
+  background-color: white;
+}
   //
-  .nav-tabs .nav-link {
-    padding: 0.47rem 0.78rem;
-    padding-top: 1rem;
+  .testing-nav .nav-tabs .nav-item .nav-link {
+    padding: 0.47rem 0.78rem !important;
+    padding-top: 1rem !important;
+    margin-bottom: 1rem;
   }
   
   .card-body {
