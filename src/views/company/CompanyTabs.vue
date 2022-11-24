@@ -6,14 +6,6 @@
             <feather-icon icon="BriefcaseIcon"/>
             <span style="font-size: 13px">Company Info</span>
           </template>
-          <div
-              style="
-            height: 30px;
-            background-color: #f6f6f6;
-            margin-right: -21px;
-            margin-left: -21px;
-          "
-          />
           <CompanyInfo
               :company-tab="companyTab"
               @state="update($event)"
