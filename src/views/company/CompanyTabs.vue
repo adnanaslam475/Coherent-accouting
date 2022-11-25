@@ -17,7 +17,7 @@
           <feather-icon icon="FileTextIcon"/>
           <span style="font-size: 13px">Invoices</span>
         </template>
-        <Invoice :invoiceTab="invoiceTab" @state="updateInvoiceTab($event)"/>
+        <Invoice :invoiceTab="invoiceTab" @state="updateInvoiceTab($event)" />
       </b-tab>
       <b-tab>
         <template #title>
@@ -56,9 +56,10 @@
           <feather-icon icon="UserIcon"/>
           <span style="font-size: 13px">Private Persons</span>
         </template>
-        <PrivatePersons/>
+        <PrivatePersons />
       </b-tab>
     </b-tabs>
+
     <template #code>
       {{ codeIcon }}
     </template>
@@ -116,7 +117,7 @@ export default {
     },
     updateVatReportsTab(value) {
       this.vatReportsTab = value
-    },
+    }
   },
 }
 </script>
@@ -130,8 +131,7 @@ export default {
 .card-body {
   padding-bottom: 0rem;
 }
-
-#main-card-body .card-body {
+#main-card-body .card-body{
   padding: 0px;
 }
 </style>
