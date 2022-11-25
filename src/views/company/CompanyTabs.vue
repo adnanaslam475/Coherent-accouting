@@ -1,20 +1,11 @@
 <template>
   <b-col>
-<<<<<<< HEAD
     <b-tabs v-model="companyTab">
       <b-tab>
         <template #title>
           <feather-icon icon="BriefcaseIcon"/>
           <span style="font-size: 13px">Company Info</span>
         </template>
-        <div
-            style="
-            height: 30px;
-            background-color: #f6f6f6;
-            margin-right: -21px;
-            margin-left: -21px;
-          "
-        />
         <CompanyInfo
             :company-tab="companyTab"
             @state="update($event)"
@@ -26,7 +17,7 @@
           <feather-icon icon="FileTextIcon"/>
           <span style="font-size: 13px">Invoices</span>
         </template>
-        <Invoice/>
+        <Invoice :invoiceTab="invoiceTab" @state="updateInvoiceTab($event)"/>
       </b-tab>
       <b-tab>
         <template #title>
@@ -41,44 +32,8 @@
           <feather-icon icon="FlagIcon"/>
           <span style="font-size: 13px">Vat Reports</span>
         </template>
-        <YearlyReport/>
+        <VatReports :vatReportsTab="vatReportsTab" @state="updateVatReportsTab($event)"/>
       </b-tab>
-=======
-      <b-tabs v-model="companyTab">
-        <b-tab>
-          <template #title>
-            <feather-icon icon="BriefcaseIcon"/>
-            <span style="font-size: 13px">Company Info</span>
-          </template>
-          <CompanyInfo
-              :company-tab="companyTab"
-              @state="update($event)"
-          />
-        </b-tab>
-
-        <b-tab>
-          <template #title>
-            <feather-icon icon="FileTextIcon"/>
-            <span style="font-size: 13px">Invoices</span>
-          </template>
-          <Invoice :invoiceTab="invoiceTab" @state="updateInvoiceTab($event)" />
-        </b-tab>
-        <b-tab>
-          <template #title>
-            <feather-icon icon="FlagIcon"/>
-            <span style="font-size: 13px">Yearly Reports</span>
-          </template>
-          <YearlyReport/>
-        </b-tab>
-
-        <b-tab>
-          <template #title>
-            <feather-icon icon="FlagIcon"/>
-            <span style="font-size: 13px">Vat Reports</span>
-          </template>
-          <VatReports :vatReportsTab="vatReportsTab" @state="updateVatReportsTab($event)"/>
-        </b-tab>
->>>>>>> 438bcbc62ec1b1c4c114c0101eda53b9119ebf0f
 
       <b-tab>
         <template #title>
@@ -96,7 +51,6 @@
         <Document/>
       </b-tab>
 
-<<<<<<< HEAD
       <b-tab>
         <template #title>
           <feather-icon icon="UserIcon"/>
@@ -105,17 +59,6 @@
         <PrivatePersons/>
       </b-tab>
     </b-tabs>
-=======
-        <b-tab>
-          <template #title>
-            <feather-icon icon="UserIcon"/>
-            <span style="font-size: 13px">Private Persons</span>
-          </template>
-          <PrivatePersons />
-        </b-tab>
-      </b-tabs>
->>>>>>> 438bcbc62ec1b1c4c114c0101eda53b9119ebf0f
-
     <template #code>
       {{ codeIcon }}
     </template>
@@ -164,22 +107,15 @@ export default {
       vatReportsTab: 0,
     }
   },
-<<<<<<< HEAD
   methods: {
     update(value) {
       this.companyTab = value
-=======
-    methods: {
-      update(value) {
-        this.companyTab = value
-      },   
-      updateInvoiceTab(value) {
-        this.invoiceTab = value
-      },
-      updateVatReportsTab(value) {
-        this.vatReportsTab = value
-      }
->>>>>>> 438bcbc62ec1b1c4c114c0101eda53b9119ebf0f
+    },
+    updateInvoiceTab(value) {
+      this.invoiceTab = value
+    },
+    updateVatReportsTab(value) {
+      this.vatReportsTab = value
     },
   },
 }
@@ -188,8 +124,7 @@ export default {
 <style lang="scss">
 //
 .nav-tabs .nav-link {
-  padding: 0.47rem 0.78rem;
-  padding-top: 0.36rem;
+  padding: 0.36rem 0.78rem 0.47rem;
 }
 
 .card-body {
@@ -200,4 +135,3 @@ export default {
   padding: 0px;
 }
 </style>
-  
