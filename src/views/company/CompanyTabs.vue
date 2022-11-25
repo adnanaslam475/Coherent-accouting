@@ -32,7 +32,7 @@
             <feather-icon icon="FlagIcon"/>
             <span style="font-size: 13px">Vat Reports</span>
           </template>
-          <YearlyReport/>
+          <VatReports :vatReportsTab="vatReportsTab" @state="updateVatReportsTab($event)"/>
         </b-tab>
 
         <b-tab>
@@ -76,6 +76,7 @@ import {
 } from 'bootstrap-vue'
 import CompanyInfo from './CompanyInfo/CompanyInfo.vue'
 import Invoice from './Invoice/invoice-list/InvoiceList.vue'
+import VatReports from './VatReports/vat-reports-list/VatReportsList.vue'
 import VATMonthReport from './VATMonthReports/VATMonthReport.vue'
 import YearlyReport from './YearlyReports/YearlyReport.vue'
 import NotVerifiedInvoice from './Invoice/invoice-list-notVerified/InvoiceList.vue'
@@ -88,6 +89,7 @@ export default {
     BCol,
     CompanyInfo,
     Invoice,
+    VatReports,
     VATMonthReport,
     YearlyReport,
     NotVerifiedInvoice,
@@ -103,6 +105,7 @@ export default {
       codeIcon,
       companyTab: this.$route.params.InvoiceId ? this.$route.params.InvoiceId : 0,
       invoiceTab: 0,
+      vatReportsTab: 0,
     }
   },
     methods: {
@@ -111,6 +114,9 @@ export default {
       },   
       updateInvoiceTab(value) {
         this.invoiceTab = value
+      },
+      updateVatReportsTab(value) {
+        this.vatReportsTab = value
       }
     },
   }
