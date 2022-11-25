@@ -1,5 +1,6 @@
 <template>
   <b-col>
+<<<<<<< HEAD
     <b-tabs v-model="companyTab">
       <b-tab>
         <template #title>
@@ -42,6 +43,42 @@
         </template>
         <YearlyReport/>
       </b-tab>
+=======
+      <b-tabs v-model="companyTab">
+        <b-tab>
+          <template #title>
+            <feather-icon icon="BriefcaseIcon"/>
+            <span style="font-size: 13px">Company Info</span>
+          </template>
+          <CompanyInfo
+              :company-tab="companyTab"
+              @state="update($event)"
+          />
+        </b-tab>
+
+        <b-tab>
+          <template #title>
+            <feather-icon icon="FileTextIcon"/>
+            <span style="font-size: 13px">Invoices</span>
+          </template>
+          <Invoice :invoiceTab="invoiceTab" @state="updateInvoiceTab($event)" />
+        </b-tab>
+        <b-tab>
+          <template #title>
+            <feather-icon icon="FlagIcon"/>
+            <span style="font-size: 13px">Yearly Reports</span>
+          </template>
+          <YearlyReport/>
+        </b-tab>
+
+        <b-tab>
+          <template #title>
+            <feather-icon icon="FlagIcon"/>
+            <span style="font-size: 13px">Vat Reports</span>
+          </template>
+          <VatReports :vatReportsTab="vatReportsTab" @state="updateVatReportsTab($event)"/>
+        </b-tab>
+>>>>>>> 438bcbc62ec1b1c4c114c0101eda53b9119ebf0f
 
       <b-tab>
         <template #title>
@@ -59,6 +96,7 @@
         <Document/>
       </b-tab>
 
+<<<<<<< HEAD
       <b-tab>
         <template #title>
           <feather-icon icon="UserIcon"/>
@@ -67,6 +105,16 @@
         <PrivatePersons/>
       </b-tab>
     </b-tabs>
+=======
+        <b-tab>
+          <template #title>
+            <feather-icon icon="UserIcon"/>
+            <span style="font-size: 13px">Private Persons</span>
+          </template>
+          <PrivatePersons />
+        </b-tab>
+      </b-tabs>
+>>>>>>> 438bcbc62ec1b1c4c114c0101eda53b9119ebf0f
 
     <template #code>
       {{ codeIcon }}
@@ -83,12 +131,13 @@ import {
   BCard,
 } from 'bootstrap-vue'
 import CompanyInfo from './CompanyInfo/CompanyInfo.vue'
-import Invoice from './Invoice/Invoice.vue'
+import Invoice from './Invoice/invoice-list/InvoiceList.vue'
+import VatReports from './VatReports/vat-reports-list/VatReportsList.vue'
 import VATMonthReport from './VATMonthReports/VATMonthReport.vue'
 import YearlyReport from './YearlyReports/YearlyReport.vue'
-import NotVerifiedInvoice from './Invoice/NotVerifiedInvoice.vue'
+import NotVerifiedInvoice from './Invoice/invoice-list-notVerified/InvoiceList.vue'
 import Document from './Documents/Document.vue'
-import PrivatePersons from './PrivatePersons/PrivatePerson.vue'
+import PrivatePersons from './user/users-list/UsersList.vue'
 import { codeIcon } from './code'
 
 export default {
@@ -96,6 +145,7 @@ export default {
     BCol,
     CompanyInfo,
     Invoice,
+    VatReports,
     VATMonthReport,
     YearlyReport,
     NotVerifiedInvoice,
@@ -109,12 +159,27 @@ export default {
   data() {
     return {
       codeIcon,
-      companyTab: 0,
+      companyTab: this.$route.params.InvoiceId ? this.$route.params.InvoiceId : 0,
+      invoiceTab: 0,
+      vatReportsTab: 0,
     }
   },
+<<<<<<< HEAD
   methods: {
     update(value) {
       this.companyTab = value
+=======
+    methods: {
+      update(value) {
+        this.companyTab = value
+      },   
+      updateInvoiceTab(value) {
+        this.invoiceTab = value
+      },
+      updateVatReportsTab(value) {
+        this.vatReportsTab = value
+      }
+>>>>>>> 438bcbc62ec1b1c4c114c0101eda53b9119ebf0f
     },
   },
 }

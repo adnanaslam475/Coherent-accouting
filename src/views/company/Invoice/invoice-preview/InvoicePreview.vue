@@ -31,6 +31,7 @@
         cols="12"
         xl="10"
         md="10"
+        class="w-100-print"
       >
    
         <b-card
@@ -66,7 +67,7 @@
               <b-card-body class="invoice-body">
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Company Name:
+                    Name:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companName }}
@@ -74,7 +75,7 @@
                 </div>
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Company Address:
+                    Address:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyAddress }}
@@ -82,7 +83,7 @@
                 </div>
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Company ID Number:
+                    ID Number:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyEic }}
@@ -90,7 +91,7 @@
                 </div>
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Company Owner:
+                    Owner:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyOwnerName }}
@@ -98,7 +99,7 @@
                 </div>
                 <div v-if="invoiceData.supplierCompany.companyVatEic" class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Company Vat No (if exists):
+                    Vat No:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyVatEic }}
@@ -108,7 +109,7 @@
             </b-card>
           </div>
 
-          <div class="mt-md-0 mt-2 invoice-data-wrapper-right flex-1">
+          <div class="mt-md-0 mt-2 flex-1">
             <b-card
               no-body
               class="invoice-preview invoice-card"
@@ -119,7 +120,7 @@
               <b-card-body class="invoice-body">
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Company Name:
+                  Name:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companName }}
@@ -127,7 +128,7 @@
               </div>
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Company Address:
+                  Address:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyAddress }}
@@ -135,7 +136,7 @@
               </div>
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Company ID Number:
+                  ID Number:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyEic }}
@@ -143,7 +144,7 @@
               </div>
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Company Owner:
+                  Owner:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyOwnerName }}
@@ -151,7 +152,7 @@
               </div>
               <div v-if="invoiceData.recipientCompany.companyVatEic" class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Company Vat No (if exists):
+                  Vat No:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyVatEic }}
@@ -186,17 +187,21 @@
           <b-table-lite
             responsive
             :items="invoiceData.transactions"
-            :fields="['serviceOrItemDescription', 'quantity', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"            
+            :fields="['no.','serviceOrItemDescription', 'qty', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"            
           >
-            <template #cell(singleAmountTransaction)="data">
-              <b-card-text class="font-weight-bold mb-25">
-                лв{{ data.item.singleAmountTransaction }}
-              </b-card-text>
+            <template #cell(no.)="data">
+                {{ data.item.index }}
+            </template>
+            <template #cell(qty)="data">
+                {{ data.item.quantity }}
+            </template>
+            <template #cell(singleAmountTransaction)="data"> 
+                <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.singleAmountTransaction }}</span>
+                <span v-else>{{ invoiceData.currency }} {{ data.item.singleAmountTransaction }}</span>
             </template>
             <template #cell(transactionTotalAmountNonVat)="data">
-              <b-card-text class="font-weight-bold mb-25">
-                лв{{ data.item.transactionTotalAmountNonVat }}
-              </b-card-text>
+                <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.transactionTotalAmountNonVat }}</span>
+                <span v-else>{{ invoiceData.currency }} {{ data.item.transactionTotalAmountNonVat }}</span>
             </template>
           </b-table-lite>
 
@@ -228,7 +233,8 @@
                       Total price NonVat:
                     </p>
                     <p class="invoice-total-amount">
-                      лв{{invoiceData.amountNonVat}}
+                      <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.amountNonVat}}</span>
+                      <span v-else>{{ invoiceData.currency }} {{invoiceData.amountNonVat}}</span>
                     </p>
                   </div>
                   <div class="invoice-total-item">
@@ -236,7 +242,7 @@
                       VAT:
                     </p>
                     <p class="invoice-total-amount">
-                      {{invoiceData.vatPercent}}%
+                      {{invoiceData.vatPercent}} %
                     </p>
                   </div>
                   <div class="invoice-total-item">
@@ -244,7 +250,8 @@
                       VAT Amount:
                     </p>
                     <p class="invoice-total-amount">
-                      лв{{invoiceData.vatAmount}}
+                      <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.vatAmount}}</span>
+                      <span v-else>{{ invoiceData.currency }} {{invoiceData.vatAmount}}</span>
                     </p>
                   </div>
                   <div class="invoice-total-item">
@@ -252,7 +259,7 @@
                       Discount Percent:
                     </p>
                     <p class="invoice-total-amount">
-                      {{invoiceData.tradeDiscountPercent}}%
+                      {{invoiceData.tradeDiscountPercent}} %
                     </p>
                   </div>
                   <div class="invoice-total-item">
@@ -260,7 +267,8 @@
                       Discount Sum:
                     </p>
                     <p class="invoice-total-amount">
-                      лв{{invoiceData.tradeDiscountAmount}}
+                      <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.tradeDiscountAmount}}</span>
+                      <span v-else>{{ invoiceData.currency }} {{invoiceData.tradeDiscountAmount}}</span>
                     </p>
                   </div>
                   <hr class="my-50">
@@ -269,7 +277,8 @@
                       Total Price:
                     </p>
                     <p class="invoice-total-amount">
-                      лв{{invoiceData.totalAmount}}
+                      <span v-if="invoiceData.currency == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.totalAmount}}</span>
+                      <span v-else>{{ invoiceData.currency }} {{invoiceData.totalAmount}}</span>
                     </p>
                   </div>
                 </div>
@@ -285,7 +294,7 @@
         cols="12"
         md="2"
         xl="2"
-        class="invoice-actions"
+        class="invoice-actions hide-from-print"
       >
         <b-card>
           <!-- Button: DOwnload -->
@@ -357,16 +366,13 @@
             variant="outline-secondary"
             class="mb-75"
             block
-            :to="{ name: 'apps-invoice-edit', params: { id: $route.params.id } }"
+            :to="{ name: 'company-invoice-edit', params: { id: $route.params.id, companyId: $route.params.companyId  } }"
           >
             Edit
           </b-button>
         </b-card>
       </b-col>
     </b-row>
-
-    <company-invoice-sidebar-send-invoice />
-    <company-invoice-sidebar-add-payment />
   </section>
 </template>
 
@@ -379,14 +385,9 @@ import {
 } from 'bootstrap-vue'
 import Logo from '@core/layouts/components/Logo.vue'
 import Ripple from 'vue-ripple-directive'
-import CompanyInvoiceStoreModule from './CompanyInvoiceStoreModule.js'
-import CompanyInvoiceSidebarSendInvoice from './CompanyInvoiceSidebarSendInvoice'
-import CompanyInvoiceSidebarAddPayment from './CompanyInvoiceSidebarAddPayment'
-import CompanyInvoiceDownload from './CompanyInvoiceDownload'
+import invoiceStoreModule from '../invoiceStoreModule'
+import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
 import VueHtml2pdf from "vue-html2pdf";
-import InvoiceDownload from '../../invoice/invoice-download/InvoiceDownload'
-
-
 export default {
   directives: {
     Ripple,
@@ -404,12 +405,8 @@ export default {
     BLink,
     VueHtml2pdf,
     Logo,
-    CompanyInvoiceSidebarAddPayment,
-    CompanyInvoiceSidebarSendInvoice,
     BCardHeader,
-    CompanyInvoiceDownload,
     InvoiceDownload
-
   },
   setup() {
     const invoiceData = ref(null)
@@ -419,18 +416,22 @@ export default {
     // ? Your real data will contain this information
   
 
-    const INVOICE_APP_STORE_MODULE_NAME = 'company-invoice'
+    const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
 
     // Register module
-    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.registerModule(INVOICE_APP_STORE_MODULE_NAME, CompanyInvoiceStoreModule)
+    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule)
 
     // UnRegister on leave
     onUnmounted(() => {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
     })
 
-    store.dispatch('company-invoice/fetchCompanyInvoice', { id: router.currentRoute.params.id })
+    store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
+        response.data.transactions.map((item,index)=>{
+          item.index = index + 1
+          return item
+        })
         invoiceData.value = response.data
       })
       .catch(error => {
@@ -525,6 +526,16 @@ export default {
       display: none;
     }
   }
+}
+
+@media print {
+  .w-100-print{
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+  .hide-from-print {
+       display : none;
+    }
 }
 .gap-2 {
   grid-gap: 25px;

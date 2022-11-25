@@ -19,6 +19,9 @@ export default {
   SearchEicEndpoint: '/index/api/search-companies',
   SearchEicPerson: '/account/api/user-person/search/1/100',
   
+  CompanyInvoiceAddEndpoint: '/account/api/invoice/create',
+  companyInvoiceEditEndpoint: '/account/api/invoice',
+  companyInvoiceDeleteEndpoint: '/account/api/invoice',
 
   getCompanies: '/api/company/list/1/10',
   // This will be prefixed in authorization header with token
