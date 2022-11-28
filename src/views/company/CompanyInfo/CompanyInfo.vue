@@ -63,7 +63,7 @@
                         <div class="ml-1">
                           <h6 class="mb-0">Owner Name</h6>
                           <small>{{
-                            companyRecord.companyOwnerApi.companyOwnerName
+                            companyOwnerName
                           }}</small>
                         </div>
                       </div>
@@ -78,9 +78,9 @@
                           <h6 class="mb-0">Owner EGN</h6>
                           <small
                             v-if="
-                              companyRecord.companyOwnerApi.ownerEGN != null
+                              companyOwnerEGN != null
                             "
-                            >{{ companyRecord.companyOwnerApi.ownerEGN }}</small
+                            >{{ companyOwnerEGN }}</small
                           >
                           <small v-else>NIL</small>
                         </div>
@@ -765,6 +765,8 @@ export default {
       invoiceSortField: "id",
       companyID: "",
       companyRecord: {},
+      companyOwnerName: "",
+      companyOwnerEGN:"",
       statisticItems: {
         totalAssets: 0,
         totalInvoices: 0,
@@ -941,6 +943,9 @@ export default {
       if (data.status === 200) {
         this.companyRecord = data.data;
         this.companyNameLength = this.companyRecord.companyName.length;
+        this.companyOwnerName = this.companyRecord.companyOwnerApi.companyOwnerName;
+        this.companyOwnerEGN = this.companyRecord.companyOwnerApi.ownerEGN;
+
 
       }
     },
