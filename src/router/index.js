@@ -256,7 +256,17 @@ const router = new VueRouter({
       name: 'company-invoice-edit',
       component: () => import('@/views/company/Invoice/invoice-edit/InvoiceEdit.vue'),
     },
-
+    // company private person edit/preview
+    {
+      path: '/company/:companyId/users/view/:id',
+      name: 'comopany-users-view',
+      component: () => import('@/views/company/user/users-view/UsersView.vue'),
+    },
+    {
+      path: '/company/:companyId/users/edit/:id',
+      name: 'company-users-edit',
+      component: () => import('@/views/company/user/users-edit/UsersEdit.vue'),
+    },
     // Invoice routes starting from here
     {
       path: '/invoices',

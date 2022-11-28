@@ -22,6 +22,8 @@ export default {
   CompanyInvoiceAddEndpoint: '/account/api/invoice/create',
   companyInvoiceEditEndpoint: '/account/api/invoice',
   companyInvoiceDeleteEndpoint: '/account/api/invoice',
+  UserCompanyDeleteEndpoint: '/account/api/person',
+  UserCompanyEditEndpoint: '/account/api/person',
 
   getCompanies: '/api/company/list/1/10',
   // This will be prefixed in authorization header with token

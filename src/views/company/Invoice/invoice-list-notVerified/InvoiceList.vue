@@ -104,6 +104,23 @@
         </b-link>
       </template>
 
+      <template #cell(transactionType)="data">
+        <b-link
+          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }}"
+          class="font-weight-bold"
+        >
+          <span class="text-nowrap"  :id="`transactionType-row-${data.item.id}`">
+            <b-badge
+              pill
+              :variant="`${ data.value == 'EXPENSE' ? 'light-danger' : 'light-success'}`"
+              class="text-capitalize"
+            >
+              {{ data.value }}
+            </b-badge>
+          </span>
+        </b-link>
+      </template>
+
       <!-- Column: recipientCompany -->
       <template #cell(recipientCompanyName)="data">
         <span class="text-nowrap"  :id="`recipientCompany-row-${data.item.id}`">

@@ -291,6 +291,28 @@ export default class JwtService {
     }) 
   }
 
+  EditCompanyUser(token,id,companyId,...args) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.put(`${this.jwtConfig.UserCompanyEditEndpoint}/${id}/${companyId}`, ...args, {
+      headers: headers
+    }) 
+  }
+
+  DeleteCompanyUser(token,id) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.delete(`${this.jwtConfig.UserCompanyDeleteEndpoint}/${id}`,{
+      headers: headers
+    }) 
+  }
+
   SearchCompanyName(token, ...args){
     let headers = {
       'Content-Type': 'application/json',

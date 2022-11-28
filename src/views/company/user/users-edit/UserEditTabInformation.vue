@@ -189,7 +189,7 @@ export default {
     userEdit(userData){
       let token = useJwt.getToken()
       useJwt
-          .EditUser(token, router.currentRoute.params.id, userData)
+          .EditCompanyUser(token, router.currentRoute.params.id, router.currentRoute.params.companyId, userData)
           .then((response) => {
             
             this.$toast({
@@ -201,9 +201,10 @@ export default {
               },
             });
             return this.$router.push({
-              name: "invoices", 
+              name: "CompanyView", 
               params: { 
-                id: 2 
+                id: router.currentRoute.params.companyId,
+                InvoiceId: 6
               }
             })
           })

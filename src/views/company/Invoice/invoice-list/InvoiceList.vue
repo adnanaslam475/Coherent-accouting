@@ -28,7 +28,7 @@
             variant="primary"
             class="mr-1"
             @click="actionTab"
-            :to="{ name: 'company-invoice-add', params: { companyId: $route.params.id  }}"
+            :to="{ name: 'company-invoice-add', params: { companyId: $route.params.companyId ? $route.params.companyId : $route.params.id   }}"
           >
             Add Record
           </b-button>
@@ -120,6 +120,23 @@
         >
           <span class="text-nowrap">
             {{ data.value }}
+          </span>
+        </b-link>
+      </template>
+
+      <template #cell(transactionType)="data">
+        <b-link
+          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }}"
+          class="font-weight-bold"
+        >
+          <span class="text-nowrap"  :id="`transactionType-row-${data.item.id}`">
+            <b-badge
+              pill
+              :variant="`${ data.value == 'EXPENSE' ? 'light-danger' : 'light-success'}`"
+              class="text-capitalize"
+            >
+              {{ data.value }}
+            </b-badge>
           </span>
         </b-link>
       </template>
@@ -471,7 +488,7 @@ export default {
       resolveClientAvatarVariant,
     } = useInvoicesList()
 
-    companyId.value = router.currentRoute.params.id
+    companyId.value = router.currentRoute.params.companyId ? router.currentRoute.params.companyId : router.currentRoute.params.id
     
     return {
       fetchInvoices,

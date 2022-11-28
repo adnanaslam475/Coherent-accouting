@@ -49,7 +49,7 @@ import {
 
 import userStoreModule from '../userStoreModule'
 import UserViewUserInfoCard from './UserViewUserInfoCard.vue'
-import InvoiceList from '@/views/invoice/invoice-list/InvoiceList.vue'
+import InvoiceList from '../../Invoice/invoice-list/InvoiceList.vue'
 
 export default {
   components: {
@@ -87,16 +87,14 @@ export default {
       userData,
     }
   },
+  data(){
+    return {
+      value: 0
+    }
+  },
   methods: {
       update(value) {
-          if(value == 1){
-            return this.$router.push({
-              name: "invoices", 
-              params: { 
-                id: 1 
-              }
-            })
-          }
+        this.value = value
       }
   }
 }
