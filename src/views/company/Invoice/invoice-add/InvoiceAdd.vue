@@ -1105,6 +1105,8 @@ export default {
       verified: true
     });
 
+    invoiceData.value = router.currentRoute.params.invoiceData ? router.currentRoute.params.invoiceData : invoiceData.value
+    invoiceData.value.currency = invoiceData.value.currency.toLowerCase().trim() == 'lv' ? "лв." : invoiceData.value.currency
     
     const currencyOptions =  [
       { value: 'лв.', text: 'лв.' },
@@ -1130,6 +1132,7 @@ export default {
     }
 
     const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent)=> {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
@@ -1142,6 +1145,7 @@ export default {
     }
 
     const totalPrice = (item, vatPercent, tradeDiscountPercent)=> {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
@@ -1434,7 +1438,7 @@ export default {
       if(companyPerson){
         let token = useJwt.getToken()
         useJwt
-          .SearchCompanyPerson(token, {         
+          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {         
             direction: 'desc',
             sortField: 'id',
             searchTerm: companyPerson
@@ -1494,7 +1498,7 @@ export default {
       if(companyPersonIdNumber){
         let token = useJwt.getToken()
         useJwt
-          .SearchCompanyPerson(token, {         
+          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {         
             direction: 'desc',
             sortField: 'id',
             searchTerm: companyPersonIdNumber

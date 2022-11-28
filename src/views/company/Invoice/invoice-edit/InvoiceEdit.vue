@@ -1126,7 +1126,7 @@ export default {
     const VerifiedInvisible = ref(null)
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
-        response.data.currency = response.data.currency == 'lv' ? "лв." : response.data.currency 
+        response.data.currency = response.data.currency.toLowerCase().trim() == 'lv' ? "лв." : response.data.currency 
         invoiceData.value = response.data
         VerifiedInvisible.value = invoiceData.value.verified
         // ? We are adding some extra data in response for data purpose
@@ -1142,6 +1142,13 @@ export default {
         }
       })
 
+    const amountNonVat = (item)=> {
+      let totalAmountNonVat = item.reduce((acc, ele) => {
+        return acc + parseFloat(ele.quantity) * parseFloat(ele.singleAmountTransaction);
+      }, 0);
+      invoiceData.value.amountNonVat = parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
+      return parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
+    }
     const vatAmount = (item, vatPercent)=> {
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
@@ -1150,15 +1157,8 @@ export default {
       invoiceData.value.vatAmount = parseFloat(totalVatAmount).toFixed(2);
       return parseFloat(totalVatAmount).toFixed(2);
     }
-
-    const amountNonVat = (item)=> {
-      let totalAmountNonVat = item.reduce((acc, ele) => {
-        return acc + parseFloat(ele.quantity) * parseFloat(ele.singleAmountTransaction);
-      }, 0);
-      invoiceData.value.amountNonVat = parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
-      return parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
-    }
     const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent)=> {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
@@ -1170,6 +1170,7 @@ export default {
       return parseFloat(totaltradeDiscountAmount).toFixed(2);
     }
     const totalPrice = (item, vatPercent, tradeDiscountPercent)=> {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
@@ -1462,7 +1463,7 @@ export default {
       if(companyPerson){
         let token = useJwt.getToken()
         useJwt
-          .SearchCompanyPerson(token, {         
+          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {         
             direction: 'desc',
             sortField: 'id',
             searchTerm: companyPerson
@@ -1522,7 +1523,7 @@ export default {
       if(companyPersonIdNumber){
         let token = useJwt.getToken()
         useJwt
-          .SearchCompanyPerson(token, {         
+          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {         
             direction: 'desc',
             sortField: 'id',
             searchTerm: companyPersonIdNumber

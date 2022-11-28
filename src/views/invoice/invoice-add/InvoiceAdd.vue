@@ -1129,6 +1129,7 @@ export default {
     }
 
     const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent)=> {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
@@ -1141,6 +1142,7 @@ export default {
     }
 
     const totalPrice = (item, vatPercent, tradeDiscountPercent)=> {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);

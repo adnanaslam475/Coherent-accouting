@@ -128,9 +128,9 @@ export default {
   padding: 0.36rem 0.78rem 0.47rem;
 }
 
-.card-body {
-  padding-bottom: 0rem;
-}
+// .card-body {
+//   padding-bottom: 0rem;
+// }
 #main-card-body .card-body{
   padding: 0px;
 }
