@@ -190,7 +190,7 @@ import countries from '@/@fake-db/data/other/countries'
 import store from '@/store'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import { useToast } from 'vue-toastification/composition'
-
+import router from '@/router'
 export default {
 
   components: {
@@ -238,6 +238,7 @@ export default {
     }
   },
   setup(props, { emit }) {
+
     const blankUserData = {
       address: '',
       firstMiddleAndLastName: '',
@@ -253,7 +254,10 @@ export default {
     }
 
     const onSubmit = () => {
-      store.dispatch('app-user/addUser', userData.value)
+      store.dispatch('app-user/addUser', {
+        id : router.currentRoute.params.id, 
+        userData: userData.value
+      })
         .then(() => {
           emit('refetch-data')
           emit('update:is-add-new-user-sidebar-active', false)

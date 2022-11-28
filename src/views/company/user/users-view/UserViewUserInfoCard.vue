@@ -25,7 +25,7 @@
             </div>
             <div class="d-flex flex-wrap">
               <b-button
-                :to="{ name: 'apps-users-edit', params: { id: userData.id } }"
+                :to="{ name: 'company-users-edit', params: { id: $route.params.id, companyId: $route.params.companyId  } }"
                 variant="primary"
               >
                 Edit
@@ -139,7 +139,7 @@ import { avatarText } from '@core/utils/filter'
 import useUsersList from '../users-list/useUsersList'
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
-
+import router from '@/router'
 export default {
   components: {
     BCard, BButton, BRow, BCol, BAvatar,
@@ -154,7 +154,7 @@ export default {
     UserDelete(id) {
       let token = useJwt.getToken()
       useJwt
-        .DeleteUser(token,id)
+        .DeleteCompanyUser(token,id)
         .then((response) => {
           
           this.$toast({
@@ -166,9 +166,10 @@ export default {
             },
           });
           return this.$router.push({
-              name: "invoices", 
+              name: "CompanyView", 
               params: { 
-                id: 2 
+                id: router.currentRoute.params.companyId,
+                InvoiceId: 6
               }
             })
         })

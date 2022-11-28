@@ -59,12 +59,12 @@ export default {
       }
       return new Promise((resolve, reject) => {
         axiosUser
-          .get(`/account/api/user-person/${id}`,config)
+          .get(`/account/api/person/${id}`,config)
           .then(response => resolve(response))
           .catch(error => reject(error))
       })
     },
-    addUser(ctx, userData) {
+    addUser(ctx, queryParams) {
       let token = useJwt.getToken()
       let axiosUser = axios.create({
         baseURL: 'http://167.86.93.80:8765',
@@ -74,7 +74,7 @@ export default {
       }
       return new Promise((resolve, reject) => {
         axiosUser
-          .post(`/account/api/user-person/create`, userData, config )
+          .post(`/account/api/person/create/${queryParams.id}`, queryParams.userData, config )
           .then(response => resolve(response))
           .catch(error => reject(error))
       })
