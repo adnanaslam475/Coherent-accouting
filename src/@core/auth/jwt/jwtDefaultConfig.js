@@ -25,6 +25,9 @@ export default {
   UserCompanyDeleteEndpoint: '/account/api/person',
   UserCompanyEditEndpoint: '/account/api/person',
 
+  searchEicPersonCompanies: '/account/api/person/search',
+  fileInvoiceEndpoint: '/index/api/invoice/ocr',
+
   getCompanies: '/api/company/list/1/10',
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>

@@ -1095,7 +1095,7 @@ export default {
 
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
-        response.data.currency = response.data.currency == 'lv' ? "лв." : response.data.currency 
+        response.data.currency = response.data.currency.toLowerCase().trim() == 'lv' ? "лв." : response.data.currency 
         invoiceData.value = response.data
 
         // ? We are adding some extra data in response for data purpose
@@ -1128,6 +1128,7 @@ export default {
       return parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
     }
     const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent)=> {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
@@ -1139,6 +1140,7 @@ export default {
       return parseFloat(totaltradeDiscountAmount).toFixed(2);
     }
     const totalPrice = (item, vatPercent, tradeDiscountPercent)=> {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);

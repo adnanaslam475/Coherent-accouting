@@ -81,15 +81,19 @@ $invoice-card-body-padding: 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 10px;
       .invoice-total-title {
         margin-bottom: 0.35rem;
+        width: 45%;
       }
       .invoice-total-amount {
         margin-bottom: 0.35rem;
         font-weight: 600;
+        width: 55%;
       }
     }
   }
+
 
   @media (min-width: 768px) {
     .invoice-title {

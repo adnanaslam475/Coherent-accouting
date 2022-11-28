@@ -346,6 +346,17 @@ export default class JwtService {
     return this.axiosIns2.get(this.jwtConfig.SearchEicPerson, config) 
   }
 
+  SearchCompaniesPerson(token, companyId, params){
+
+    let config = {
+      headers: {
+        'Authorization': `${this.jwtConfig.tokenType} ${token}`
+      },
+      params: params,
+    }
+    return this.axiosIns2.get(`${this.jwtConfig.searchEicPersonCompanies}/${companyId}/1/100`, config) 
+  }
+
   verifyToken(token,UrlToken){
     let headers = {
       'Authorization': `${this.jwtConfig.tokenType} ${token}`,
@@ -363,5 +374,15 @@ export default class JwtService {
     return this.axiosIns2.get(`${this.jwtConfig.getCompanies}`, {
       headers: headers
     })
+  }
+
+  addFileInvoice(token,CompanyId,file){
+    let headers = {
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Content-Type' : 'multipart/form-data'
+    }
+    return this.axiosIns2.post(`${this.jwtConfig.fileInvoiceEndpoint}/${CompanyId}`, file, {
+      headers: headers
+    }) 
   }
 }
