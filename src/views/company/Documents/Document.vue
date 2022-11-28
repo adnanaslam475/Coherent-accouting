@@ -41,7 +41,6 @@
                 name="file"
                 label-idle="Drop files here..."
                 :allow-multiple="false"
-                accepted-file-types="pdf, image/jpeg, image/jpg, excel, word, txt ,zip "
                 :files="myFiles"
                 :server="server"
             />
@@ -63,6 +62,38 @@
           </b-col>
         </b-row>
       </b-form>
+      <b-form v-if="showEditForm" @submit.prevent="updateBinary">
+        <b-row>
+          <b-col
+              class="pb-2"
+              cols="12"
+          >
+            <b-input-group class="input-group-merge">
+              <b-form-textarea
+                  v-model="asset.notes"
+                  required
+                  placeholder="Add notes about binary file"
+                  rows="5"
+              />
+            </b-input-group>
+          </b-col>
+          <b-col
+              cols="12"
+              class="d-flex justify-content-end align-items-center mb-1"
+          >
+            <b-col cols="2">
+              <b-button
+                  small
+                  type="submit"
+                  variant="primary"
+                  block
+              >
+                Update
+              </b-button>
+            </b-col>
+          </b-col>
+        </b-row>
+      </b-form>
       <b-row>
         <b-col cols="12">
           <b-table
@@ -75,6 +106,7 @@
             <template #cell(Media)="data">
               <div>
                 <b-img
+                    class="hover-img"
                     blank-color="#ccc"
                     @click="showImageDetail(data.index)"
                     :src="images[data.index]"
@@ -87,6 +119,9 @@
             <template style="text-align: center !important" #cell(action)="data">
               <!-- <b-button variant="outline-primary" class="btn-icon"> -->
 
+              <feather-icon
+                  icon="EyeIcon"
+              />
               <!-- Dropdown -->
               <b-dropdown
                   variant="link"
@@ -101,15 +136,23 @@
                       class="align-middle text-body ml-1"
                   />
                 </template>
-                <b-dropdown-item>
+                <b-dropdown-item
+                    @click="editRecord(data)"
+                >
                   <feather-icon icon="EditIcon" />
                   <span class="align-middle ml-50">Edit</span>
                 </b-dropdown-item>
-                <b-dropdown-item>
+                <b-dropdown-item
+                    @click="deleteAsset(data.item.binaryId)"
+                >
                   <feather-icon icon="TrashIcon" />
                   <span class="align-middle ml-50">Delete</span>
                 </b-dropdown-item>
-              </b-dropdown>
+                <b-dropdown-item :download="JSON.parse(data.item.binaryId).binaryId" :href="images[data.index]">
+                    <feather-icon icon="DownloadIcon" />
+                    <span class="align-middle ml-50">Download</span>
+                </b-dropdown-item>
+                </b-dropdown>
 
               <!-- </b-button> -->
             </template>
@@ -156,10 +199,10 @@
     <b-modal
         id="modal-center-media"
         title="Download Image"
-        ok-only
-        ok-title="Download"
+        hide-footer
     >
       <b-img
+          class="w-100"
           :src="imageD"
       ></b-img>
     </b-modal>
@@ -194,6 +237,7 @@ import {
   BModal,
   BDropdown,
   BDropdownItem,
+  BLink,
 } from 'bootstrap-vue'
 
 // Create component
@@ -220,11 +264,14 @@ export default {
     BModal,
     BDropdown,
     BDropdownItem,
+    BLink,
   },
   data() {
     const self = this
     return {
+      asset: {},
       showForm: false,
+      showEditForm: false,
       sortDesc: false,
       sortBy: 'id',
       currentPage: 1,
@@ -272,11 +319,11 @@ export default {
       },
       fields: [
         'Media',
-        {
-          key: 'binaryId',
-          label: 'Binary Id',
-          sortable: true,
-        },
+        // {
+        //   key: 'binaryId',
+        //   label: 'Binary Id',
+        //   sortable: true,
+        // },
         {
           key: 'notes',
           label: 'Notes',
@@ -305,7 +352,6 @@ export default {
       this.getAssets()
     },
     async getAssets() {
-      // http://167.86.93.80:8881/account/api/asset/list/1/1/20?sortField=id&direction=desc&type=ASSET
       const response = await axios.get(`/account/api/asset/list/${router.currentRoute.params.id}/${this.currentPage}/${this.perPage}?sortField=id&direction=desc&type=ASSET`)
       this.items = response.data.elements
       this.totalRecords = response.data.totalElements
@@ -322,31 +368,93 @@ export default {
       postData.binaryId = this.binary.binaryId
       postData.notes = this.notes
       postData.type = 'ASSET'
-      const response = await axios.post('/account/api/asset/create', postData)
-      if (response.status === 201) {
-        this.notes = ''
-        this.showForm = false
-        await this.getAssets()
-      }
+      await axios.post('/account/api/asset/create', postData)
+          .then(async response => {
+            if (response.status === 201) {
+              this.notes = ''
+              this.showForm = false
+              this.makeToast('success', 'Created', 'Asset Created Successfully')
+              await this.getAssets()
+            }
+          })
+          .catch(error => {
+            this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
+          })
+    },
+    async updateBinary() {
+      const assetApi = {}
+      console.log(this.asset)
+      assetApi.binaryId = JSON.parse(this.asset.binaryId).binaryId
+      assetApi.notes = this.asset.notes
+      assetApi.type = 'ASSET'
+      await axios.put(`/account/api/asset/update/${this.asset.id}`, assetApi)
+          // eslint-disable-next-line func-names
+          .then(async function (response) {
+            if (response.status === 200) {
+              this.notes = ''
+              this.asset = {}
+              this.showEditForm = false
+              this.makeToast('success', 'Updated', 'Asset Updated Successfully')
+              await this.getAssets()
+            }
+          })
+          .catch(error => {
+            this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
+          })
     },
     // eslint-disable-next-line consistent-return
-    async getImage(data, index) {
+    async getImage(data) {
       const self = this
-      const response = await axios.get(`${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${router.currentRoute.params.id}`, { responseType: 'blob' })
-      if (response.status === 200) {
-        const reader = new FileReader()
-        reader.readAsDataURL(response.data)
-        // eslint-disable-next-line func-names
-        reader.onload = function () {
-          self.images.push(reader.result)
-        }
-      } else {
-        self.images.push('')
-      }
+      await axios.get(`${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${router.currentRoute.params.id}`, { responseType: 'blob' })
+          .then(response => {
+            if (response.status === 200) {
+              const reader = new FileReader()
+              reader.readAsDataURL(response.data)
+              // eslint-disable-next-line func-names
+              reader.onload = function () {
+                self.images.push(reader.result)
+              }
+            } else {
+              self.images.push('')
+            }
+          })
+          .catch(error => {
+            this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
+          })
     },
     showImageDetail(index) {
       this.imageD = this.images[index]
       this.$bvModal.show('modal-center-media')
+    },
+    async deleteAsset(data) {
+      const rec = JSON.parse(data)
+      try {
+        await axios.delete(`/account/api/asset/${rec.binaryId}`)
+            .then(async response => {
+              if (response.status === 204) {
+                await this.getAssets()
+                this.makeToast('success', 'Deleted', 'Asset Deleted Successfully')
+              }
+            })
+            .catch(error => {
+              this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
+            })
+      } catch (error) {
+        console.log('error ', error)
+      }
+    },
+    makeToast(variant = null, title = null, message = null) {
+      this.$bvToast.toast(message, {
+        title,
+        variant,
+        solid: false,
+      })
+    },
+    async editRecord(data) {
+      this.showEditForm = true
+      this.asset = data.item
+      this.myFiles.push(this.images[data.index])
+      console.log(this.images, data)
     },
   },
 }
