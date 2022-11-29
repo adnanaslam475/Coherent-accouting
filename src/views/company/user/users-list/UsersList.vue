@@ -80,7 +80,7 @@
           class="font-weight-bold"
         >
           <b-link
-            :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+            :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }"
             class="font-weight-bold d-block text-nowrap"
           >
             #{{ data.value }}
@@ -96,11 +96,11 @@
                 size="32"
                 :src="data.item.avatar"
                 :text="avatarText(data.item.firstMiddleAndLastName)"
-                :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+                :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }"
               />
             </template>
             <b-link
-            :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+            :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }"
             class="font-weight-bold d-block text-nowrap"
           >
                 {{ data.item.firstMiddleAndLastName }}
@@ -121,7 +121,7 @@
         <template #cell(identificationNumber)="data">
 
             <b-badge
-                :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+                :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }"
                 variant="primary"
                 class="text-capitalize"
               >
@@ -149,12 +149,12 @@
                 class="align-middle text-body"
               />
             </template>
-            <b-dropdown-item :to="{ name: 'apps-users-view', params: { id: data.item.id } }">
+            <b-dropdown-item :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }">
               <feather-icon icon="FileTextIcon" />
               <span class="align-middle ml-50">Details</span>
             </b-dropdown-item>
 
-            <b-dropdown-item :to="{ name: 'apps-users-edit', params: { id: data.item.id } }">
+            <b-dropdown-item :to="{ name: 'company-users-edit', params: { id: data.item.id, companyId: companyId  } }">
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
@@ -257,7 +257,7 @@ export default {
     UserDelete(id, refetchData) {
       let token = useJwt.getToken()
       useJwt
-        .DeleteUser(token,id)
+        .DeleteCompanyUser(token,id)
         .then((response) => {
           
           this.$toast({

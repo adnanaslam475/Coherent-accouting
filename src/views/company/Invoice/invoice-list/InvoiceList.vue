@@ -13,7 +13,7 @@
         <!-- Per Page -->
         <b-col
           cols="12"
-          md="8"
+          md="9"
           class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
         >
           <label>Entries</label>
@@ -28,14 +28,22 @@
             variant="primary"
             class="mr-1"
             @click="actionTab"
-            :to="{ name: 'company-invoice-add', params: { companyId: $route.params.id  }}"
+            :to="{ name: 'company-invoice-add', params: { companyId: $route.params.companyId ? $route.params.companyId : $route.params.id   }}"
           >
             Add Record
           </b-button>
           <b-button
             variant="primary"
-            class="mr-1"
+            class="mr-1 position-relative"
           >
+            <b-form-file
+              class="file-input"
+              v-model="file"
+              placeholder="Choose a file or drop it here..."
+              drop-placeholder="Drop file here..."
+              @input="addfile(companyId)"
+            />
+            <b-spinner v-if="fileLoading" small variant="light" />
             Add From File
           </b-button>
           <b-button
@@ -44,12 +52,13 @@
           >
             Add Multiple Files
           </b-button>
+
         </b-col>
 
         <!-- Search -->
         <b-col
           cols="12"
-          md="4"
+          md="3"
         >
           <div class="d-flex align-items-center justify-content-end">
             <b-form-input
@@ -120,6 +129,23 @@
         >
           <span class="text-nowrap">
             {{ data.value }}
+          </span>
+        </b-link>
+      </template>
+
+      <template #cell(transactionType)="data">
+        <b-link
+          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }}"
+          class="font-weight-bold"
+        >
+          <span class="text-nowrap"  :id="`transactionType-row-${data.item.id}`">
+            <b-badge
+              pill
+              :variant="`${ data.value == 'EXPENSE' ? 'light-danger' : 'light-success'}`"
+              class="text-capitalize"
+            >
+              {{ data.value }}
+            </b-badge>
           </span>
         </b-link>
       </template>
@@ -348,7 +374,7 @@
 <script>
 import {
   BCard, BRow, BCol,BCardBody, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
-  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip,BTableLite,BCardText,BAlert,VBToggle,BCardHeader
+  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip,BTableLite,BCardText,BAlert,VBToggle,BCardHeader,BFormFile,BSpinner
 } from 'bootstrap-vue'
 import { avatarText } from '@core/utils/filter'
 import vSelect from 'vue-select'
@@ -363,6 +389,12 @@ import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
 import router from '@/router'
 export default {
   props: ['invoiceTab'],
+  data(){
+    return{
+      file: null,
+      fileLoading: false,
+    }
+  },
   methods: {
     state() {
       return 1;
@@ -402,6 +434,34 @@ export default {
             },
           });
         });
+    },
+    addfile(companyId){
+      this.fileLoading = true
+      let token = useJwt.getToken()
+      let formData = new FormData()
+      formData.append('file',this.file)
+      useJwt
+        .addFileInvoice(token,companyId,formData)
+        .then((response) => {
+          this.fileLoading = false
+          return this.$router.push({
+            name: "company-invoice-add", 
+            params: { 
+              companyId: companyId,
+              invoiceData : response.data
+            }
+          })
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "DeleteIcon",
+              variant: "error",
+            },
+          });
+        });
     }
 
   },
@@ -428,7 +488,9 @@ export default {
     VBToggle,
     VueHtml2pdf,
     BCardHeader,
-    InvoiceDownload
+    InvoiceDownload,
+    BFormFile,
+    BSpinner
   },
   setup() {
     
@@ -471,7 +533,7 @@ export default {
       resolveClientAvatarVariant,
     } = useInvoicesList()
 
-    companyId.value = router.currentRoute.params.id
+    companyId.value = router.currentRoute.params.companyId ? router.currentRoute.params.companyId : router.currentRoute.params.id
     
     return {
       fetchInvoices,
@@ -495,7 +557,7 @@ export default {
 
       avatarText,
       resolveInvoiceStatusVariantAndIcon,
-      resolveClientAvatarVariant,
+      resolveClientAvatarVariant
     }
   },
 
@@ -614,5 +676,14 @@ export default {
 }
 .invoice-pdf .gap-2{
   gap: 15px;
+}
+.file-input{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
 }
 </style>

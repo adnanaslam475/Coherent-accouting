@@ -22,6 +22,11 @@ export default {
   CompanyInvoiceAddEndpoint: '/account/api/invoice/create',
   companyInvoiceEditEndpoint: '/account/api/invoice',
   companyInvoiceDeleteEndpoint: '/account/api/invoice',
+  UserCompanyDeleteEndpoint: '/account/api/person',
+  UserCompanyEditEndpoint: '/account/api/person',
+
+  searchEicPersonCompanies: '/account/api/person/search',
+  fileInvoiceEndpoint: '/index/api/invoice/ocr',
 
   // Vat-Reports
   VatReportAddEndPoint: '/account/api/report/create',
