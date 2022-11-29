@@ -39,8 +39,6 @@
             <b-form-file
               class="file-input"
               v-model="file"
-              placeholder="Choose a file or drop it here..."
-              drop-placeholder="Drop file here..."
               @input="addfile(companyId)"
             />
             <b-spinner v-if="fileLoading" small variant="light" />
@@ -48,8 +46,15 @@
           </b-button>
           <b-button
             variant="primary"
-            class="mr-1"
+            class="mr-1 position-relative"
           >
+            <b-form-file
+              ref="imageUploader"
+              class="file-input"
+              multiple
+              @change="addMultiplefile"
+            />
+            <b-spinner v-if="multiplefileLoading" small variant="light" />
             Add Multiple Files
           </b-button>
 
@@ -393,6 +398,8 @@ export default {
     return{
       file: null,
       fileLoading: false,
+      multiplefile: null,
+      multiplefileLoading: false
     }
   },
   methods: {
@@ -440,6 +447,7 @@ export default {
       let token = useJwt.getToken()
       let formData = new FormData()
       formData.append('file',this.file)
+      this.file = null
       useJwt
         .addFileInvoice(token,companyId,formData)
         .then((response) => {
@@ -453,6 +461,43 @@ export default {
           })
         })
         .catch((error) => {
+          this.fileLoading = false
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "DeleteIcon",
+              variant: "error",
+            },
+          });
+        });
+    },
+    addMultiplefile(event){
+      this.multiplefile = event.target.files
+      this.multiplefileLoading = true
+      let companyID = router.currentRoute.params.companyId ? router.currentRoute.params.companyId : router.currentRoute.params.id
+      let token = useJwt.getToken()
+      let formData = new FormData()
+      for( var i = 0; i < this.multiplefile.length; i++ ){
+        formData.append(`files`,this.multiplefile[i]);
+      }
+      
+      useJwt
+        .addMultipleFileInvoice(token,companyID,formData)
+        .then((response) => {
+          this.multiplefileLoading = false
+          event.target.value = ''
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `You will see your invoices in "Not verified invoices" tab of the company`,
+              icon: "EditIcon",
+              variant: "success",
+            },
+          });
+        })
+        .catch((error) => {
+          this.multiplefileLoading = false
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -685,5 +730,8 @@ export default {
   height: 100%;
   margin: 0;
   opacity: 0;
+}
+.file-input label{
+  cursor: pointer;
 }
 </style>
