@@ -2,17 +2,17 @@
   <div>
     <b-card>
       <b-col
-          v-if="!showForm"
-          cols="12"
-          class="d-flex justify-content-end align-items-center mb-1"
+        v-if="!showForm"
+        cols="12"
+        class="d-flex justify-content-end align-items-center mb-1"
       >
         <b-col cols="2">
           <b-button
-              @click="showForm = true"
-              small
-              type="button"
-              variant="primary"
-              block
+            @click="showForm = true"
+            small
+            type="button"
+            variant="primary"
+            block
           >
             Add Asset
           </b-button>
@@ -22,39 +22,39 @@
       <b-form v-if="showForm" @submit.prevent="createBinary">
         <b-row>
           <b-col
-              class="pb-2"
-              cols="12"
+            class="pb-2"
+            cols="12"
           >
             <b-input-group class="input-group-merge">
               <b-form-textarea
-                  v-model="notes"
-                  required
-                  placeholder="Add notes about binary file"
-                  rows="5"
+                v-model="notes"
+                required
+                placeholder="Add notes about binary file"
+                rows="5"
               />
             </b-input-group>
           </b-col>
           <b-col cols="12">
             <file-pond
-                ref="pond"
-                required
-                name="file"
-                label-idle="Drop files here..."
-                :allow-multiple="false"
-                :files="myFiles"
-                :server="server"
+              ref="pond"
+              required
+              name="file"
+              label-idle="Drop files here..."
+              :allow-multiple="false"
+              :files="myFiles"
+              :server="server"
             />
           </b-col>
           <b-col
-              cols="12"
-              class="d-flex justify-content-end align-items-center mb-1"
+            cols="12"
+            class="d-flex justify-content-end align-items-center mb-1"
           >
             <b-col cols="2">
               <b-button
-                  small
-                  type="submit"
-                  variant="primary"
-                  block
+                small
+                type="submit"
+                variant="primary"
+                block
               >
                 Create
               </b-button>
@@ -65,28 +65,28 @@
       <b-form v-if="showEditForm" @submit.prevent="updateBinary">
         <b-row>
           <b-col
-              class="pb-2"
-              cols="12"
+            class="pb-2"
+            cols="12"
           >
             <b-input-group class="input-group-merge">
               <b-form-textarea
-                  v-model="asset.notes"
-                  required
-                  placeholder="Add notes about binary file"
-                  rows="5"
+                v-model="asset.notes"
+                required
+                placeholder="Add notes about binary file"
+                rows="5"
               />
             </b-input-group>
           </b-col>
           <b-col
-              cols="12"
-              class="d-flex justify-content-end align-items-center mb-1"
+            cols="12"
+            class="d-flex justify-content-end align-items-center mb-1"
           >
             <b-col cols="2">
               <b-button
-                  small
-                  type="submit"
-                  variant="primary"
-                  block
+                small
+                type="submit"
+                variant="primary"
+                block
               >
                 Update
               </b-button>
@@ -97,99 +97,98 @@
       <b-row>
         <b-col cols="12">
           <b-table
-              :fields="fields"
-              :items="items"
-              responsive
-              class="mb-0"
-              @sort-changed="checkStatus"
+            :fields="fields"
+            :items="items"
+            responsive
+            class="mb-0"
+            @sort-changed="checkStatus"
           >
             <template #cell(Media)="data">
               <div>
                 <b-img
-                    class="hover-img"
-                    blank-color="#ccc"
-                    @click="showImageDetail(data.index)"
-                    :src="images[data.index]"
-                    :alt="images[data.index]"
-                    rounded
-                    width="62px"
+                  class="hover-img"
+                  blank-color="#ccc"
+                  @click="showImageDetail(data.index)"
+                  :src="images[data.index]"
+                  :alt="images[data.index]"
+                  rounded
+                  width="62px"
                 />
               </div>
             </template>
             <template style="text-align: center !important" #cell(action)="data">
-              <!-- <b-button variant="outline-primary" class="btn-icon"> -->
-
-              <feather-icon
+              <b-link
+                @click="showImageDetail(data.index)"
+              >
+                <feather-icon
                   icon="EyeIcon"
-              />
+                />
+              </b-link>
               <!-- Dropdown -->
               <b-dropdown
-                  variant="link"
-                  toggle-class="p-0"
-                  no-caret
-                  :right="$store.state.appConfig.isRTL"
+                variant="link"
+                toggle-class="p-0"
+                no-caret
+                :right="$store.state.appConfig.isRTL"
               >
                 <template #button-content>
                   <feather-icon
-                      icon="MoreVerticalIcon"
-                      size="16"
-                      class="align-middle text-body ml-1"
+                    icon="MoreVerticalIcon"
+                    size="16"
+                    class="align-middle text-body ml-1"
                   />
                 </template>
                 <b-dropdown-item
-                    @click="editRecord(data)"
+                  @click="editRecord(data)"
                 >
                   <feather-icon icon="EditIcon" />
                   <span class="align-middle ml-50">Edit</span>
                 </b-dropdown-item>
                 <b-dropdown-item
-                    @click="deleteAsset(data.item.binaryId)"
+                  @click="deleteAsset(data.item.binaryId)"
                 >
                   <feather-icon icon="TrashIcon" />
                   <span class="align-middle ml-50">Delete</span>
                 </b-dropdown-item>
                 <b-dropdown-item :download="JSON.parse(data.item.binaryId).binaryId" :href="images[data.index]">
-                    <feather-icon icon="DownloadIcon" />
-                    <span class="align-middle ml-50">Download</span>
+                  <feather-icon icon="DownloadIcon" />
+                  <span class="align-middle ml-50">Download</span>
                 </b-dropdown-item>
-                </b-dropdown>
-
-              <!-- </b-button> -->
+              </b-dropdown>
             </template>
-
           </b-table>
         </b-col>
         <b-col
-            cols="12"
-            sm="6"
-            class="
-            d-flex
-            align-items-center
-            justify-content-center justify-content-sm-end
+          cols="12"
+          sm="6"
+          class="
+          d-flex
+          align-items-center
+          justify-content-center justify-content-sm-end
           "
         >
           <b-pagination
-              v-model="currentPage"
-              :total-rows="totalRecords"
-              :per-page="perPage"
-              first-number
-              last-number
-              class="mb-0 mt-1 mt-sm-0"
-              prev-class="prev-item"
-              next-class="next-item"
-              prev-text
-              @input="getAssets"
+            v-model="currentPage"
+            :total-rows="totalRecords"
+            :per-page="perPage"
+            first-number
+            last-number
+            class="mb-0 mt-1 mt-sm-0"
+            prev-class="prev-item"
+            next-class="next-item"
+            prev-text
+            @input="getAssets"
           >
             <template #prev-text>
               <feather-icon
-                  icon="ChevronLeftIcon"
-                  size="18"
+                icon="ChevronLeftIcon"
+                size="18"
               />
             </template>
             <template #next-text>
               <feather-icon
-                  icon="ChevronRightIcon"
-                  size="18"
+                icon="ChevronRightIcon"
+                size="18"
               />
             </template>
           </b-pagination>
@@ -197,14 +196,21 @@
       </b-row>
     </b-card>
     <b-modal
-        id="modal-center-media"
-        title="Download Image"
-        hide-footer
+      id="modal-center-media"
+      title="Download Image"
+      hide-footer
     >
       <b-img
-          class="w-100"
-          :src="imageD"
+        class="w-100"
+        :src="imageD"
       ></b-img>
+      <b-link class="download-icon" :download="imageD" :href="imageD">
+        <feather-icon
+            icon="DownloadIcon"
+            size="30"
+            class="text-danger"
+        />
+      </b-link>
     </b-modal>
   </div>
 </template>

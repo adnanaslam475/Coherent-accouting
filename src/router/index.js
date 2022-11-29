@@ -256,6 +256,21 @@ const router = new VueRouter({
       name: 'company-invoice-edit',
       component: () => import('@/views/company/Invoice/invoice-edit/InvoiceEdit.vue'),
     },
+
+    // Company Vat Reports
+    {
+      path: '/company/:companyId/vat-report/add',
+      name: 'company-vat-report-add',
+      component: () => import('@/views/company/VatReports/vat-reports-add/VatReportAdd.vue'),
+    },
+
+    {
+      path: '/company/:companyId/vat-report/edit/:id',
+      name: 'company-vat-report-edit',
+      component: () => import('@/views/company/VatReports/vat-report-edit/vatReportEdit.vue'),
+    },
+
+
     // company private person edit/preview
     {
       path: '/company/:companyId/users/view/:id',
