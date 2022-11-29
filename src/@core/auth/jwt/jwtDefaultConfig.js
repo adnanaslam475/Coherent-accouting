@@ -23,6 +23,11 @@ export default {
   companyInvoiceEditEndpoint: '/account/api/invoice',
   companyInvoiceDeleteEndpoint: '/account/api/invoice',
 
+  // Vat-Reports
+  VatReportAddEndPoint: '/account/api/report/create',
+  VatReportEditEndPoint: '/account/api/report/update',
+  VatReportDeleteEndPoint: '/account/api/report',
+
   getCompanies: '/api/company/list/1/10',
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>
