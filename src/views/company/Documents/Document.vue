@@ -110,22 +110,13 @@
             @sort-changed="checkStatus"
           >
             <template #cell(Media)="data">
-              <div :key="images.length">
-                <p>{{!!images[data.item.id]}}</p>
+              <div>
+                <p class="d-none">{{images[data.item.id]}}</p>
                 <b-img
-                  v-if="images[data.item.id].type === 'image/jpeg'"
+                  :key="images.length + '-' + !!images[data.item.id]"
                   class="hover-img"
                   blank-color="#ccc"
-                  :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require('@/assets/images/icons/pdf.png')"
-                  rounded
-                  width="62px"
-                  @click="showImageDetail(data.item.id)"
-                />
-                <b-img
-                  v-else
-                  class="hover-img"
-                  blank-color="#ccc"
-                  :src="require('@/assets/images/icons/pdf.png')"
+                  :src="!!images[data.item.id] ? images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require('@/assets/images/icons/pdf.png') : ''"
                   rounded
                   width="62px"
                   @click="showImageDetail(data.item.id)"
@@ -169,10 +160,9 @@
                   <feather-icon icon="TrashIcon" />
                   <span class="align-middle ml-50">Delete</span>
                 </b-dropdown-item>
-                <b-dropdown-item
-                  v-if="images[data.index]"
+                <b-dropdownresponse.data.elementsv-if="images[data.item.id]"
                   :download="JSON.parse(data.item.binaryId).binaryId"
-                  :href="images[data.index].image"
+                  :href="images[data.item.id].image"
                 >
                   <feather-icon icon="DownloadIcon" />
                   <span class="align-middle ml-50">Download</span>
@@ -385,13 +375,21 @@ export default {
       this.getAssets()
     },
     async getAssets() {
+      const self = this
       const response = await axios.get(`/account/api/asset/list/${router.currentRoute.params.id}/${this.currentPage}/${this.perPage}?sortField=id&direction=desc&type=ASSET`)
+      // eslint-disable-next-line no-restricted-syntax
+      for (const item of response.data.elements) {
+        self.images[item.id] = {
+          image: '',
+          type: '',
+          id: item.id,
+        }
+        // eslint-disable-next-line no-await-in-loop
+        await this.getImage(JSON.parse(item.binaryId), item.id)
+      }
       this.items = response.data.elements
       this.totalRecords = response.data.totalElements
       this.totalPages = Math.ceil(this.totalRecords / this.perPage)
-      this.items.forEach(item => {
-        this.getImage(JSON.parse(item.binaryId), item.id)
-      })
     },
     onResponse(r) {
       this.binary = JSON.parse(r)
@@ -416,7 +414,6 @@ export default {
     },
     async updateBinary() {
       const assetApi = {}
-      console.log(this.asset)
       assetApi.binaryId = JSON.parse(this.asset.binaryId).binaryId
       assetApi.notes = this.asset.notes
       assetApi.type = 'ASSET'
@@ -476,7 +473,6 @@ export default {
     },
     async deleteAsset(data) {
       const rec = JSON.parse(data)
-      console.log(rec.binaryId)
       try {
         await axios.delete(`/account/api/asset/${rec.binaryId}`)
           .then(async response => {
