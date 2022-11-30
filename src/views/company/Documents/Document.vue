@@ -215,7 +215,7 @@
     >
       <b-img
         class="w-100"
-        :src="imageD.image"
+        :src="imageD.type === 'image/jpeg' ? imageD.image : require('@/assets/images/icons/pdf.png')"
       />
       <b-link
         class="btn btn-outline-danger download-icon"
