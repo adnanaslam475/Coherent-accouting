@@ -111,12 +111,14 @@
           >
             <template #cell(Media)="data">
               <div>
-                <p class="d-none">{{images[data.item.id]}}</p>
+<!--                :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type])"-->
+<!--                :src="!!images[data.item.id] ? images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type]) : ''"-->
+
                 <b-img
                   :key="images.length + '-' + !!images[data.item.id]"
                   class="hover-img"
                   blank-color="#ccc"
-                  :src="!!images[data.item.id] ? images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require('@/assets/images/icons/pdf.png') : ''"
+                  :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : filesImages[images[data.item.id].type]"
                   rounded
                   width="62px"
                   @click="showImageDetail(data.item.id)"
@@ -160,7 +162,8 @@
                   <feather-icon icon="TrashIcon" />
                   <span class="align-middle ml-50">Delete</span>
                 </b-dropdown-item>
-                <b-dropdownresponse.data.elementsv-if="images[data.item.id]"
+                <b-dropdown-item
+                  v-if="images[data.item.id]"
                   :download="JSON.parse(data.item.binaryId).binaryId"
                   :href="images[data.item.id].image"
                 >
@@ -292,6 +295,18 @@ export default {
   data() {
     const self = this
     return {
+      filesImages: {
+        // eslint-disable-next-line global-require
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': require('@/assets/images/icons/doc.png'),
+        // eslint-disable-next-line global-require
+        'application/pdf': require('@/assets/images/icons/pdf.png'),
+        // eslint-disable-next-line global-require
+        'text/plain': require('@/assets/images/icons/txt.png'),
+        // eslint-disable-next-line global-require
+        'application/vnd.rar': require('@/assets/images/icons/unknown.png'),
+        // eslint-disable-next-line global-require
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': require('@/assets/images/icons/xls.png'),
+      },
       asset: {},
       showForm: false,
       showEditForm: false,
@@ -437,7 +452,7 @@ export default {
       const self = this
       await axios.get(`${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${router.currentRoute.params.id}`, { responseType: 'blob' })
         .then(response => {
-          console.log(response.headers['content-type'], response.data.type)
+          console.log(response.data.type)
           if (response.status === 200) {
             const reader = new FileReader()
             reader.readAsDataURL(response.data)
