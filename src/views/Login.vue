@@ -233,7 +233,7 @@
               password: this.password,
             })
                     .then(response => {
-                      localStorage.setItem('userData', JSON.stringify(response))
+                      localStorage.setItem('userData', JSON.stringify(response.data))
                       this.$toast({
                         component: ToastificationContent,
                         props: {

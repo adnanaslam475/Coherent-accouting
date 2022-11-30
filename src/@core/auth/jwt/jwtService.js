@@ -401,13 +401,13 @@ export default class JwtService {
   }
 
   addFileInvoice(token,CompanyId,file){
-    let headers = {
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Content-Type' : 'multipart/form-data'
+    let config = {
+      headers: {
+        'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+        'Content-Type' : 'multipart/form-data'
+      }
     }
-    return this.axiosIns2.post(`${this.jwtConfig.fileInvoiceEndpoint}/${CompanyId}`, file, {
-      headers: headers
-    }) 
+    return this.axiosIns2.post(`${this.jwtConfig.fileInvoiceEndpoint}/${CompanyId}`,file,config) 
   }
   addMultipleFileInvoice(token,CompanyId,files){
     let headers = {

@@ -205,7 +205,7 @@
 // congratulation medal card
 .congratulation-medal {
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 37px;
 }
 
@@ -415,6 +415,9 @@
 .card-statistics {
   .card-header {
     padding-left: 2.4rem;
+  }
+  .statistics-body.dashboard-stats{
+    padding-bottom: 0 !important;
   }
   .statistics-body {
     padding: 2rem 2.4rem 2.8rem !important;
