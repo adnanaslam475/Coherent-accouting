@@ -269,6 +269,30 @@ export default class JwtService {
     }) 
   }
 
+  //Add Vat-Report
+  addCompanyVatReport(token,id,...args) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.post(`${this.jwtConfig.VatReportAddEndPoint}/${id}`, ...args, {
+      headers: headers
+    }) 
+  }
+
+  //Edit Vat-Report
+  editCompanyVatReport(token,id,...args) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.put(`${this.jwtConfig.VatReportEditEndPoint}/${id}`, ...args, {
+      headers: headers
+    }) 
+  }
+
   EditUser(token,id,...args) {
     let headers = {
       'Content-Type': 'application/json',
@@ -384,5 +408,14 @@ export default class JwtService {
     return this.axiosIns2.post(`${this.jwtConfig.fileInvoiceEndpoint}/${CompanyId}`, file, {
       headers: headers
     }) 
+  }
+  addMultipleFileInvoice(token,CompanyId,files){
+    let headers = {
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Content-Type' : 'multipart/form-data'
+    }
+    return this.axiosIns2.post(`${this.jwtConfig.multipleFileInvoiceEndpoint}/${CompanyId}`, files, {
+      headers: headers
+    })   
   }
 }

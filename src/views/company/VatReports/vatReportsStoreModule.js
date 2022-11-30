@@ -62,5 +62,22 @@ export default {
 
       }
     },
+
+     //fetching a single vat-report
+     fetchSingleVatReport(ctx, { id }) {
+      let token = useJwt.getToken()
+      let  axiosVatReports = axios.create({
+        baseURL: 'http://167.86.93.80:8765',
+      })
+      let config = {
+        headers: {'Authorization': "Bearer "+token},
+      }
+      return new Promise((resolve, reject) => {
+        axiosVatReports
+          .get(`/account/api/report/${id}`,config)
+          .then(response => resolve(response))
+          .catch(error => reject(error))
+      })
+    },
   }
 }

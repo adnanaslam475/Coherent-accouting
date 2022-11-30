@@ -396,8 +396,13 @@ export default {
       }
     },
     async getUserDetail() {
-      const data = await axios.get('account/api/user/who-am-i')
-      this.userDetail = data.data
+      try {
+        const data = await axios.get('account/api/user/who-am-i')
+        this.userDetail = data.data
+      } catch (error) {
+        console.error(error);
+        this.logout()
+      }
     },
     logout() {
       // Remove userData from localStorage

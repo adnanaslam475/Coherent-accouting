@@ -27,6 +27,12 @@ export default {
 
   searchEicPersonCompanies: '/account/api/person/search',
   fileInvoiceEndpoint: '/index/api/invoice/ocr',
+  multipleFileInvoiceEndpoint: '/index/api/multiple/invoice/ocr',
+
+  // Vat-Reports
+  VatReportAddEndPoint: '/account/api/report/create',
+  VatReportEditEndPoint: '/account/api/report/update',
+  VatReportDeleteEndPoint: '/account/api/report',
 
   getCompanies: '/api/company/list/1/10',
   // This will be prefixed in authorization header with token
