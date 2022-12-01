@@ -141,10 +141,10 @@
                 >
                   <b-button
                     v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                    variant="primary"
+                    variant="success"
                     @click="updateBinary"
                   >
-                    <feather-icon icon="ArrowUpIcon" />
+                    <feather-icon icon="CheckCircleIcon" />
                   </b-button>
                 </b-col>
               </b-row>
@@ -245,11 +245,11 @@
     >
       <b-img
         class="w-100"
-        :src="imageD.type === 'image/jpeg' ? imageD.image : require('@/assets/images/icons/pdf.png')"
+        :src="imageD.type === 'image/jpeg' ? imageD.image : filesImages[imageD.type]"
       />
       <b-link
-        class="btn btn-outline-danger download-icon"
-        :download="imageD.image"
+        class="btn btn-primary download-icon"
+        :download="imageD.name"
         :href="imageD.image"
       >
         <feather-icon
@@ -490,6 +490,7 @@ export default {
             reader.onload = function () {
               self.images[id] = {
                 image: reader.result,
+                name: id,
                 type: response.data.type,
               }
               // self.images.push({
@@ -501,12 +502,14 @@ export default {
             self.images[id] = {
               image: '',
               type: '',
+              name: id,
             }
           }
         })
         .catch(error => {
           self.images[id] = {
             image: '',
+            name: id,
             type: '',
           }
           this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
