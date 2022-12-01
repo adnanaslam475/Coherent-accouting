@@ -936,7 +936,7 @@ export default {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `Vat Report updated Successfully`,
+              title: `Vat Updated Successfully`,
               icon: "EditIcon",
               variant: "success",
             },

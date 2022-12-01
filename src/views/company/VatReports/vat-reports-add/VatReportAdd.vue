@@ -41,7 +41,6 @@
                       Входящ No................../....................... г.
                     </p></b-col
                   >
-                  <!-- <b-col cols="2" xl="2" md="2"></b-col> -->
                 </b-row>
                 <!--  -->
                 <b-row class="mt-0">
@@ -61,14 +60,30 @@
                       v-bind:name="$t('input_01')"
                       rules="required"
                     >
-                      <b-form-input
+                      <!-- <b-form-input
                         id="input_01"
                         v-model="form.taxPeriod"
                         name="input_01"
                         :state="errors.length > 0 ? false : null"
-                      />
-                      <!-- <small><b>мм / гггг</b></small> -->
-                      <small class="text-danger">{{ errors[0] }}</small>
+                      /> -->
+                      <vue-monthly-picker
+                        id="input_01"
+                        v-model="form.taxPeriod"
+                        name="input_01"
+                        style="
+                          background-color: #fff;
+                          background-clip: padding-box;
+                          height: 40px;
+                          border: 1px solid #dbdbdb;
+                          border-radius: 0.357rem;
+                        "
+                        dateFormat="Y-MM"
+                        :monthLabels="monthLabels"
+                        :class="errors.length > 0 ? 'is-invalid' : null"
+                      >
+                      </vue-monthly-picker>
+                      <small><b>мм / гггг</b></small>
+                      <small class="text-danger ml-1">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-col>
                   <b-col cols="3" xl="3" md="3"></b-col>
@@ -134,7 +149,18 @@
                   <b-col cols="3" xl="3" md="3"></b-col>
                   <b-col cols="6" xl="6" md="6"> <p>ИН:</p></b-col>
                   <b-col cols="3" xl="3" md="3">
-                    <b-form-input id="input-04" v-model="form.input04" />
+                    <validation-provider
+                      #default="{ errors }"
+                      v-bind:name="$t('eic')"
+                      rules="required"
+                    >
+                      <b-form-input
+                        id="eic"
+                        v-model="form.eic"
+                        :state="errors.length > 0 ? false : null"
+                      />
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
                   </b-col>
                 </b-row>
               </b-col>
@@ -1119,10 +1145,18 @@
                   #default="{ errors }"
                   v-bind:name="$t('dateCreated')"
                   rules="required"
-                  ><b-form-input
+                >
+                  <!-- <b-form-input
                     id="dateCreated"
                     v-model="form.dateCreated"
                     :state="errors.length > 0 ? false : null"
+                  /> -->
+                  <flat-pickr
+                    id="dateCreated"
+                    v-model="form.dateCreated"
+                    :state="errors.length > 0 ? false : null"
+                    class="form-control"
+                    style="background-color: white !important"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -1132,10 +1166,10 @@
               </b-col>
             </b-row>
 
-            <b-row class="mt-2 mb-2 text-end">
+            <b-row class="mt-2 mb-0 text-end">
               <b-col cols="11" md="11" xl="11"></b-col>
               <b-col cols="1" md="1" xl="1"
-                ><b-button variant="primary" @click="addVatReport" >
+                ><b-button variant="primary" @click="addVatReport">
                   Add
                 </b-button></b-col
               >
@@ -1165,6 +1199,9 @@ import ToastificationContent from "@core/components/toastification/Toastificatio
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { required } from "@validations";
 import { extend } from "vee-validate";
+import flatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
+import VueMonthlyPicker from "vue-monthly-picker";
 
 extend("required", {
   ...required,
@@ -1180,6 +1217,18 @@ export default {
 
     // adding a vat report
     addVatReport() {
+      let finalTaxPeriod;
+
+      let tPeriod = this.form.taxPeriod._i;
+      let year = tPeriod.substring(0, 4);
+      let month = tPeriod.substring(5, tPeriod.length);
+
+      if (month.length === 1) {
+        finalTaxPeriod = year + "-0" + month;
+      } else {
+        finalTaxPeriod = year + "-" + month;
+      }
+      // console.log("Final result" + finalTaxPeriod);
       this.$refs.addVatReportRules.validate().then((success) => {
         if (success) {
           var data = JSON.stringify({
@@ -1214,11 +1263,11 @@ export default {
             cell81: this.form.inputColumn81,
             cell82: this.form.inputColumn82,
             dateCreated: this.form.dateCreated,
-            eic: "",
+            eic: this.form.eic,
             id: 0,
             nameAndAddress: this.form.nameAndAddress,
-            period: this.form.taxPeriod,
-            responsiblePerson: "",
+            period: finalTaxPeriod,
+            responsiblePerson: this.form.responsiblePerson,
             vatNumber: this.form.vatNumber,
           });
           // console.log(data);
@@ -1233,19 +1282,22 @@ export default {
               this.$toast({
                 component: ToastificationContent,
                 props: {
-                  title: `Vat Report Created Successfully`,
+                  title: `Vat Created Successfully`,
                   icon: "EditIcon",
                   variant: "success",
                 },
               });
-              this.$router.push({ name: 'CompanyView', params: { id: router.currentRoute.params.companyId }})
+              this.$router.push({
+                name: "CompanyView",
+                params: { id: router.currentRoute.params.companyId },
+              });
             })
             .catch((error) => {
               this.loading = false;
               this.$toast({
                 component: ToastificationContent,
                 props: {
-                  title: `${error.response.data.errorMessage}`,
+                  title: `Something Went Wrong`,
                   icon: "EditIcon",
                   variant: "error",
                 },
@@ -1257,6 +1309,7 @@ export default {
   },
   data() {
     return {
+      substr: "",
       form: {
         responsiblePerson: "",
         taxPeriod: "",
@@ -1294,6 +1347,21 @@ export default {
         inputColumn81: "",
         dateCreated: "",
       },
+
+      monthLabels: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
     };
   },
   components: {
@@ -1307,7 +1375,8 @@ export default {
     ValidationProvider,
     ValidationObserver,
     BCardHeader,
-
+    flatPickr,
+    VueMonthlyPicker,
   },
 };
 </script>
@@ -1315,6 +1384,16 @@ export default {
 <style lang="scss">
 small {
   font-size: 0.8rem;
+}
 
+.vue-monthly-picker .input {
+  height: 2.7rem !important;
+  webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.is-invalid {
+  border-color: #ea5455 !important;
 }
 </style>
