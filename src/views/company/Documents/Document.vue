@@ -130,7 +130,7 @@
                   cols="10"
                 >
                   <b-form-input
-                    :id="data.item.id"
+                    :id="'notes' + data.item.id"
                     v-model="data.item.notes"
                     type="text"
                     name="notes"
