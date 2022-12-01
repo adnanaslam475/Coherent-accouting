@@ -117,7 +117,7 @@
                   :key="images.length + '-' + !!images[data.item.id]"
                   class="hover-img"
                   blank-color="#ccc"
-                  :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : filesImages[images[data.item.id].type]"
+                  :src="images[data.item.id].type === 'image/jpeg' || images[data.item.id].type === 'image/png' ? images[data.item.id].image : filesImages[images[data.item.id].type]"
                   rounded
                   width="62px"
                   @click="showImageDetail(data.item.id)"
@@ -130,7 +130,7 @@
                   cols="10"
                 >
                   <b-form-input
-                    :id="'notes' + data.item.id"
+                    :id="'notes-' + data.item.id"
                     v-model="data.item.notes"
                     type="text"
                     name="notes"
@@ -157,7 +157,7 @@
               style="text-align: center !important"
             >
               <b-link
-                @click="showImageDetail(data.index)"
+                @click="showImageDetail(data.item.id)"
               >
                 <feather-icon
                   icon="EyeIcon"
@@ -245,7 +245,7 @@
     >
       <b-img
         class="w-100"
-        :src="imageD.type === 'image/jpeg' ? imageD.image : filesImages[imageD.type]"
+        :src="imageD.type === 'image/jpeg' || imageD.type === 'image/png' ? imageD.image : filesImages[imageD.type]"
       />
       <b-link
         class="btn btn-primary download-icon"
