@@ -65,7 +65,7 @@
           </b-row>
 
           <!--  -->
-          <b-row class="pb-2" style="border-bottom: 2px solid darkgrey">
+          <b-row class="pb-2" style="border-bottom: 1px solid lightgrey">
             <b-col cols="12" xl="6" md="6" class="mt-2">
               <b-row
                 ><b-col cols="8" xl="8" md="8" class="mt-1"
@@ -121,7 +121,7 @@
           </b-row>
 
           <!--  input column 01 and 20-->
-          <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+          <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
             <b-col cols="4" xl="4" md="4" class=""
               ><p>
                 Общ размер на данъчните основи за облагане с ДДС (сума от кл. 11
@@ -280,7 +280,7 @@
           </b-row>
 
           <!-- input columns 13 and 24 -->
-          <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+          <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
             <b-col cols="4" xl="4" md="4" class=""
               ><p>Данъчна основа на облагаемите доставки със ставка 9%</p>
             </b-col>
@@ -440,7 +440,7 @@
           </b-row>
 
           <!-- input column 19 -->
-          <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+          <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
             <b-col cols="4" xl="4" md="4" class=""
               ><p>
                 - Данъчна основа на освободените доставки и освободените ВОП
@@ -603,7 +603,7 @@
           </b-row>
 
           <!--  input column 33 and 40-->
-          <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+          <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
             <b-col cols="4" xl="4" md="4" class=""
               ><p>- коефициент по чл. 73, ал. 5 ЗДДС</p>
             </b-col>
@@ -647,7 +647,7 @@
           </b-row>
 
           <!-- input column 50 and 60 -->
-          <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+          <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
             <b-col cols="4" xl="4" md="4" class=""
               ><p>ДДС за внасяне (кл.20 - кл.40) >= 0</p>
             </b-col>
@@ -691,7 +691,7 @@
           </b-row>
 
           <!-- input column 70 and 71 -->
-          <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+          <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
             <b-col cols="4" xl="4" md="4" class=""
               ><p>
                 Данък за внасяне от кл. 50, приспаднат по реда на чл. 92, ал. 1
@@ -807,7 +807,7 @@
             <b-col cols="12" xl="12" md="12"> <p>Долуподписаният:</p></b-col>
           </b-row>
 
-          <b-row class="mt pb-2" style="border-bottom: 2px solid darkgrey">
+          <b-row class="mt pb-2" style="border-bottom: 1px solid lightgrey">
             <b-col cols="4" xl="4" md="4" class=""
               ><b-form-input
                 id="responsible-person"
@@ -862,9 +862,9 @@
             </b-col>
           </b-row>
 
-          <b-row class="mt-2 text-end">
-            <b-col col="10" md="11" xl="10"></b-col>
-            <b-col col="2" md="2" xl="2"
+          <b-row class="mt-2 mb-2 text-end">
+            <b-col cols="10" md="11" xl="10"></b-col>
+            <b-col cols="2" md="2" xl="2"
               ><b-button
                 variant="primary"
                 style="margin-left: 100px"
@@ -941,7 +941,8 @@ export default {
               variant: "success",
             },
           });
-        //   this.$router.push({ name: 'company-invoice-preview', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+          this.$router.push({ name: 'CompanyView', params: { id: router.currentRoute.params.companyId }})
+
         })
         .catch((error) => {
           this.loading = false;
@@ -973,7 +974,43 @@ export default {
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
 
-    const vatReportData = ref(null);
+    const vatReportData = ref({
+      responsiblePerson: "",
+        taxPeriod: "",
+        nameAndAddress: "",
+        vatNumber: "",
+        input04: "",
+        inputColumn01: "",
+        inputColumn11: "",
+        inputColumn12: "",
+        inputColumn13: "",
+        inputColumn14: "",
+        inputColumn15: "",
+        inputColumn16: "",
+        inputColumn17: "",
+        inputColumn18: "",
+        inputColumn19: "",
+        inputColumn20: "",
+        inputColumn21: "",
+        inputColumn22: "",
+        inputColumn23: "",
+        inputColumn24: "",
+        inputColumn25: "",
+        inputColumn26: "",
+        inputColumn30: "",
+        inputColumn31: "",
+        inputColumn32: "",
+        inputColumn33: "",
+        inputColumn40: "",
+        inputColumn41: "",
+        inputColumn42: "",
+        inputColumn50: "",
+        inputColumn60: "",
+        inputColumn70: "",
+        inputColumn80: "",
+        inputColumn81: "",
+        dateCreated: "",
+    });
     store
       .dispatch("vat-reports/fetchSingleVatReport", {
         id: router.currentRoute.params.id,

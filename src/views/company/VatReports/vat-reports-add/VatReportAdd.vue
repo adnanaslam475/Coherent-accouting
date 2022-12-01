@@ -78,7 +78,7 @@
             </b-row>
 
             <!--  -->
-            <b-row class="pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="12" xl="6" md="6" class="mt-2">
                 <b-row
                   ><b-col cols="8" xl="8" md="8" class="mt-1"
@@ -153,7 +153,7 @@
             </b-row>
 
             <!--  input column 01 and 20-->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>
                   Общ размер на данъчните основи за облагане с ДДС (сума от кл.
@@ -366,7 +366,7 @@
             </b-row>
 
             <!-- input columns 13 and 24 -->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>Данъчна основа на облагаемите доставки със ставка 9%</p>
               </b-col>
@@ -576,7 +576,7 @@
             </b-row>
 
             <!-- input column 19 -->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>
                   - Данъчна основа на освободените доставки и освободените ВОП
@@ -789,7 +789,7 @@
             </b-row>
 
             <!--  input column 33 and 40-->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>- коефициент по чл. 73, ал. 5 ЗДДС</p>
               </b-col>
@@ -847,7 +847,7 @@
             </b-row>
 
             <!-- input column 50 and 60 -->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>ДДС за внасяне (кл.20 - кл.40) >= 0</p>
               </b-col>
@@ -907,7 +907,7 @@
             </b-row>
 
             <!-- input column 70 and 71 -->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>
                   Данък за внасяне от кл. 50, приспаднат по реда на чл. 92, ал.
@@ -1059,7 +1059,8 @@
               <b-col cols="12" xl="12" md="12"> <p>Долуподписаният:</p></b-col>
             </b-row>
 
-            <b-row class="mt pb-2" style="border-bottom: 2px solid darkgrey">
+            <!-- responsible person -->
+            <b-row class="mt pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><validation-provider
                   #default="{ errors }"
@@ -1108,6 +1109,7 @@
               >
             </b-row>
 
+            <!-- dateCreated -->
             <b-row class="">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>Дата на съставяне:</p>
@@ -1130,10 +1132,10 @@
               </b-col>
             </b-row>
 
-            <b-row class="mt-2 text-end">
-              <b-col col="11" md="11" xl="11"></b-col>
-              <b-col col="1" md="1" xl="1"
-                ><b-button variant="primary" @click="addVatReport">
+            <b-row class="mt-2 mb-2 text-end">
+              <b-col cols="11" md="11" xl="11"></b-col>
+              <b-col cols="1" md="1" xl="1"
+                ><b-button variant="primary" @click="addVatReport" >
                   Add
                 </b-button></b-col
               >
@@ -1155,23 +1157,8 @@ import {
   BCardBody,
   BFormInput,
   BButton,
-  BTable,
-  BMedia,
-  BAvatar,
-  BLink,
-  BBadge,
-  BDropdown,
-  BDropdownItem,
-  BPagination,
-  BTooltip,
-  BTableLite,
-  BCardText,
-  BAlert,
-  VBToggle,
   BCardHeader,
 } from "bootstrap-vue";
-
-import { onUnmounted } from "@vue/composition-api";
 import store from "@/store";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
@@ -1186,13 +1173,12 @@ extend("required", {
 
 import router from "@/router";
 export default {
-  props: ["invoiceTab"],
   methods: {
     state() {
       return 1;
     },
 
-    //
+    // adding a vat report
     addVatReport() {
       this.$refs.addVatReportRules.validate().then((success) => {
         if (success) {
@@ -1228,7 +1214,7 @@ export default {
             cell81: this.form.inputColumn81,
             cell82: this.form.inputColumn82,
             dateCreated: this.form.dateCreated,
-            ei: "",
+            eic: "",
             id: 0,
             nameAndAddress: this.form.nameAndAddress,
             period: this.form.taxPeriod,
@@ -1247,12 +1233,12 @@ export default {
               this.$toast({
                 component: ToastificationContent,
                 props: {
-                  title: `Invoice Create Successfully`,
+                  title: `Vat Report Created Successfully`,
                   icon: "EditIcon",
                   variant: "success",
                 },
               });
-              // this.$router.push({ name: 'company-invoice-preview', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+              this.$router.push({ name: 'CompanyView', params: { id: router.currentRoute.params.companyId }})
             })
             .catch((error) => {
               this.loading = false;
@@ -1317,20 +1303,7 @@ export default {
     BCol,
     BFormInput,
     BButton,
-    BTable,
-    BMedia,
-    BAvatar,
-    BLink,
-    BBadge,
-    BDropdown,
-    BDropdownItem,
-    BPagination,
-    BTooltip,
     BCardBody,
-    BTableLite,
-    BCardText,
-    BAlert,
-    VBToggle,
     ValidationProvider,
     ValidationObserver,
     BCardHeader,
@@ -1340,4 +1313,8 @@ export default {
 </script>
 
 <style lang="scss">
+small {
+  font-size: 0.8rem;
+
+}
 </style>
