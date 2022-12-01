@@ -8,18 +8,21 @@
       >
         <b-col cols="2">
           <b-button
-            @click="showForm = true"
             small
             type="button"
             variant="primary"
             block
+            @click="showForm = true"
           >
             Add Asset
           </b-button>
         </b-col>
       </b-col>
 
-      <b-form v-if="showForm" @submit.prevent="createBinary">
+      <b-form
+        v-if="showForm"
+        @submit.prevent="createBinary"
+      >
         <b-row>
           <b-col
             class="pb-2"
@@ -28,7 +31,6 @@
             <b-input-group class="input-group-merge">
               <b-form-textarea
                 v-model="notes"
-                required
                 placeholder="Add notes about binary file"
                 rows="5"
               />
@@ -62,7 +64,10 @@
           </b-col>
         </b-row>
       </b-form>
-      <b-form v-if="showEditForm" @submit.prevent="updateBinary">
+      <b-form
+        v-if="showEditForm"
+        @submit.prevent="updateBinary"
+      >
         <b-row>
           <b-col
             class="pb-2"
@@ -105,18 +110,52 @@
           >
             <template #cell(Media)="data">
               <div>
+                <!--                :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type])"-->
+                <!--                :src="!!images[data.item.id] ? images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type]) : ''"-->
+
                 <b-img
+                  :key="images.length + '-' + !!images[data.item.id]"
                   class="hover-img"
                   blank-color="#ccc"
-                  @click="showImageDetail(data.index)"
-                  :src="images[data.index]"
-                  :alt="images[data.index]"
+                  :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : filesImages[images[data.item.id].type]"
                   rounded
                   width="62px"
+                  @click="showImageDetail(data.item.id)"
                 />
               </div>
             </template>
-            <template style="text-align: center !important" #cell(action)="data">
+            <template #cell(Notes)="data">
+              <b-row v-if="asset.id === data.item.id">
+                <b-col
+                  cols="10"
+                >
+                  <b-form-input
+                    :id="data.item.id"
+                    v-model="data.item.notes"
+                    type="text"
+                    name="notes"
+                  />
+                </b-col>
+                <b-col
+                  cols="2"
+                >
+                  <b-button
+                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                    variant="primary"
+                    @click="updateBinary"
+                  >
+                    <feather-icon icon="ArrowUpIcon" />
+                  </b-button>
+                </b-col>
+              </b-row>
+              <p v-else>
+                {{ data.item.notes }}
+              </p>
+            </template>
+            <template
+              #cell(action)="data"
+              style="text-align: center !important"
+            >
               <b-link
                 @click="showImageDetail(data.index)"
               >
@@ -150,7 +189,11 @@
                   <feather-icon icon="TrashIcon" />
                   <span class="align-middle ml-50">Delete</span>
                 </b-dropdown-item>
-                <b-dropdown-item :download="JSON.parse(data.item.binaryId).binaryId" :href="images[data.index]">
+                <b-dropdown-item
+                  v-if="images[data.item.id]"
+                  :download="JSON.parse(data.item.binaryId).binaryId"
+                  :href="images[data.item.id].image"
+                >
                   <feather-icon icon="DownloadIcon" />
                   <span class="align-middle ml-50">Download</span>
                 </b-dropdown-item>
@@ -202,13 +245,17 @@
     >
       <b-img
         class="w-100"
-        :src="imageD"
-      ></b-img>
-      <b-link class="download-icon" :download="imageD" :href="imageD">
+        :src="imageD.type === 'image/jpeg' ? imageD.image : require('@/assets/images/icons/pdf.png')"
+      />
+      <b-link
+        class="btn btn-outline-danger download-icon"
+        :download="imageD.image"
+        :href="imageD.image"
+      >
         <feather-icon
-            icon="DownloadIcon"
-            size="30"
-            class="text-danger"
+          icon="DownloadIcon"
+          size="30"
+          class="text-danger"
         />
       </b-link>
     </b-modal>
@@ -224,6 +271,7 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css
 // Import image preview and file type validation plugins
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import Ripple from 'vue-ripple-directive'
 
 import axios from '@/libs/axios'
 import router from '@/router'
@@ -248,8 +296,8 @@ import {
 
 // Create component
 const FilePond = vueFilePond(
-    FilePondPluginFileValidateType,
-    FilePondPluginImagePreview,
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview,
 )
 
 export default {
@@ -272,9 +320,24 @@ export default {
     BDropdownItem,
     BLink,
   },
+  directives: {
+    Ripple,
+  },
   data() {
     const self = this
     return {
+      filesImages: {
+        // eslint-disable-next-line global-require
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': require('@/assets/images/icons/doc.png'),
+        // eslint-disable-next-line global-require
+        'application/pdf': require('@/assets/images/icons/pdf.png'),
+        // eslint-disable-next-line global-require
+        'text/plain': require('@/assets/images/icons/txt.png'),
+        // eslint-disable-next-line global-require
+        'application/vnd.rar': require('@/assets/images/icons/unknown.png'),
+        // eslint-disable-next-line global-require
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': require('@/assets/images/icons/xls.png'),
+      },
       asset: {},
       showForm: false,
       showEditForm: false,
@@ -330,11 +393,12 @@ export default {
         //   label: 'Binary Id',
         //   sortable: true,
         // },
-        {
-          key: 'notes',
-          label: 'Notes',
-          sortable: true,
-        },
+        'Notes',
+        // {
+        //   key: 'notes',
+        //   label: 'Notes',
+        //   sortable: true,
+        // },
         {
           key: 'action',
           label: 'Action',
@@ -358,13 +422,21 @@ export default {
       this.getAssets()
     },
     async getAssets() {
+      const self = this
       const response = await axios.get(`/account/api/asset/list/${router.currentRoute.params.id}/${this.currentPage}/${this.perPage}?sortField=id&direction=desc&type=ASSET`)
+      // eslint-disable-next-line no-restricted-syntax
+      for (const item of response.data.elements) {
+        self.images[item.id] = {
+          image: '',
+          type: '',
+          id: item.id,
+        }
+        // eslint-disable-next-line no-await-in-loop
+        await this.getImage(JSON.parse(item.binaryId), item.id)
+      }
       this.items = response.data.elements
       this.totalRecords = response.data.totalElements
       this.totalPages = Math.ceil(this.totalRecords / this.perPage)
-      this.items.forEach((item, index) => {
-        this.getImage(JSON.parse(item.binaryId), index)
-      })
     },
     onResponse(r) {
       this.binary = JSON.parse(r)
@@ -375,58 +447,70 @@ export default {
       postData.notes = this.notes
       postData.type = 'ASSET'
       await axios.post('/account/api/asset/create', postData)
-          .then(async response => {
-            if (response.status === 201) {
-              this.notes = ''
-              this.showForm = false
-              this.makeToast('success', 'Created', 'Asset Created Successfully')
-              await this.getAssets()
-            }
-          })
-          .catch(error => {
-            this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
-          })
+        .then(async response => {
+          if (response.status === 201) {
+            this.notes = ''
+            this.showForm = false
+            this.makeToast('success', 'Created', 'Asset Created Successfully')
+            await this.getAssets()
+          }
+        })
+        .catch(error => {
+          this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
+        })
     },
     async updateBinary() {
       const assetApi = {}
-      console.log(this.asset)
       assetApi.binaryId = JSON.parse(this.asset.binaryId).binaryId
       assetApi.notes = this.asset.notes
       assetApi.type = 'ASSET'
-      await axios.put(`/account/api/asset/update/${this.asset.id}`, assetApi)
-          // eslint-disable-next-line func-names
-          .then(async function (response) {
-            if (response.status === 200) {
-              this.notes = ''
-              this.asset = {}
-              this.showEditForm = false
-              this.makeToast('success', 'Updated', 'Asset Updated Successfully')
-              await this.getAssets()
-            }
-          })
-          .catch(error => {
-            this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
-          })
+      const response = await axios.put(`/account/api/asset/update/${this.asset.id}`, assetApi)
+      // eslint-disable-next-line func-names
+      if (response.status === 200) {
+        this.notes = ''
+        this.asset = {}
+        this.showEditForm = false
+        this.makeToast('success', 'Updated', 'Asset Updated Successfully')
+        await this.getAssets()
+      }
+      // .catch(error => {
+      //   console.log(error.response)
+      //   this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
+      // })
     },
     // eslint-disable-next-line consistent-return
-    async getImage(data) {
+    async getImage(data, id) {
       const self = this
       await axios.get(`${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${router.currentRoute.params.id}`, { responseType: 'blob' })
-          .then(response => {
-            if (response.status === 200) {
-              const reader = new FileReader()
-              reader.readAsDataURL(response.data)
-              // eslint-disable-next-line func-names
-              reader.onload = function () {
-                self.images.push(reader.result)
+        .then(response => {
+          if (response.status === 200) {
+            const reader = new FileReader()
+            reader.readAsDataURL(response.data)
+            // eslint-disable-next-line func-names
+            reader.onload = function () {
+              self.images[id] = {
+                image: reader.result,
+                type: response.data.type,
               }
-            } else {
-              self.images.push('')
+              // self.images.push({
+              //   image: reader.result,
+              //   type: response.data.type,
+              // })
             }
-          })
-          .catch(error => {
-            this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
-          })
+          } else {
+            self.images[id] = {
+              image: '',
+              type: '',
+            }
+          }
+        })
+        .catch(error => {
+          self.images[id] = {
+            image: '',
+            type: '',
+          }
+          this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
+        })
     },
     showImageDetail(index) {
       this.imageD = this.images[index]
@@ -436,15 +520,15 @@ export default {
       const rec = JSON.parse(data)
       try {
         await axios.delete(`/account/api/asset/${rec.binaryId}`)
-            .then(async response => {
-              if (response.status === 204) {
-                await this.getAssets()
-                this.makeToast('success', 'Deleted', 'Asset Deleted Successfully')
-              }
-            })
-            .catch(error => {
-              this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
-            })
+          .then(async response => {
+            if (response.status === 204) {
+              await this.getAssets()
+              this.makeToast('success', 'Deleted', 'Asset Deleted Successfully')
+            }
+          })
+          .catch(error => {
+            this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
+          })
       } catch (error) {
         console.log('error ', error)
       }
@@ -457,10 +541,8 @@ export default {
       })
     },
     async editRecord(data) {
-      this.showEditForm = true
+      // this.showEditForm = true
       this.asset = data.item
-      this.myFiles.push(this.images[data.index])
-      console.log(this.images, data)
     },
   },
 }

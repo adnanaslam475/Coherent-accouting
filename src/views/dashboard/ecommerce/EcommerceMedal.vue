@@ -3,23 +3,20 @@
     v-if="data"
     class="card-congratulation-medal"
   >
-    <h5>Congratulations 🎉 {{ data.name }}!</h5>
-    <b-card-text class="font-small-3">
-      You have won gold medal
-    </b-card-text>
-    <h3 class="mb-75 mt-2 pt-50">
-      <b-link>${{ kFormatter(data.saleToday) }}</b-link>
-    </h3>
+    <h5 class="text-lg text-no-wrap font-weight-semibold">Hello {{ data }}! 🎉</h5>
+
     <b-button
       v-ripple.400="'rgba(255, 255, 255, 0.15)'"
       variant="primary"
+      class="mt-1"
+      :to="{ name: 'CreateCompany'}"
     >
-      View Sales
+      Create Company
     </b-button>
     <b-img
-      :src="require('@/assets/images/illustration/badge.svg')"
+      :src="require('@/assets/images/congo-illustration.png')"
       class="congratulation-medal"
-      alt="Medal Pic"
+      alt="User Pic"
     />
   </b-card>
 </template>
@@ -44,8 +41,8 @@ export default {
   },
   props: {
     data: {
-      type: Object,
-      default: () => {},
+      type: String,
+      default: "",
     },
   },
   methods: {

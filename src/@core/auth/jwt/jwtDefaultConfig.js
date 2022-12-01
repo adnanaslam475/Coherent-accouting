@@ -27,6 +27,7 @@ export default {
 
   searchEicPersonCompanies: '/account/api/person/search',
   fileInvoiceEndpoint: '/index/api/invoice/ocr',
+  multipleFileInvoiceEndpoint: '/index/api/multiple/invoice/ocr',
 
   // Vat-Reports
   VatReportAddEndPoint: '/account/api/report/create',
