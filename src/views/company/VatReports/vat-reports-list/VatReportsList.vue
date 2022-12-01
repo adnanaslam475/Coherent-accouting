@@ -122,18 +122,20 @@
     </template>
 
     <!-- Column: Actions -->
-    <template #cell(actions)="data">
+    <template #cell(actions)="data"> 
       <div class="text-nowrap">
         <feather-icon
-          :id="`invoice-row-${data.item.id}-preview-icon`"
+          :id="`report-row-${data.item.id}-preview-icon`"
           icon="EyeIcon"
           size="16"
           class="mx-1 cursor-pointer"
+          @click="$router.push({ name: 'company-vat-report-preview', params: { id: data.item.id, companyId: companyID  }})"
+
         />
         <b-tooltip
           title="Preview Report"
           class="cursor-pointer"
-          :target="`invoice-row-${data.item.id}-preview-icon`"
+          :target="`report-row-${data.item.id}-preview-icon`"
         />
 
         <!-- Dropdown -->
@@ -159,7 +161,7 @@
             <feather-icon icon="EditIcon" />
             <span class="align-middle ml-50">Edit</span>
           </b-dropdown-item>
-          <b-dropdown-item >
+          <b-dropdown-item @click="vatReportDelete(data.item.id,refetchData)">
             <feather-icon icon="TrashIcon" />
             <span class="align-middle ml-50">Delete</span>
           </b-dropdown-item>
@@ -201,6 +203,7 @@ import useVatReportsList from "./useVatReportsList";
 import VueHtml2pdf from "vue-html2pdf";
 import vatReportsStoreModule from "../vatReportsStoreModule";
 import useJwt from "@/auth/jwt/useJwt";
+
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import router from "@/router";
 //   import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
@@ -213,39 +216,35 @@ export default {
     actionTab() {
       this.$emit("state", this.state());
     },
-    //   onProgress(event) {
-    //     console.log(`Processed: ${event} / 100`);
-    //   },
-    //   generatePDF(itemID) {
-    //     this.$refs['invoicePdf'+itemID].generatePdf();
-    //   },
-    //   invoiceDelete(id, refetchData) {
-    //     let token = useJwt.getToken()
-    //     useJwt
-    //       .DeleteInvoice(token,id)
-    //       .then((response) => {
+   
+     //Delete vat report
+      vatReportDelete(id, refetchData) {
+        let token = useJwt.getToken()
+        useJwt
+        .DeleteVatReport(token,id)
+          .then((response) => {
 
-    //         this.$toast({
-    //           component: ToastificationContent,
-    //           props: {
-    //             title: `Invoice Deleted Successfully`,
-    //             icon: "DeleteIcon",
-    //             variant: "success",
-    //           },
-    //         });
-    //         refetchData()
-    //       })
-    //       .catch((error) => {
-    //         this.$toast({
-    //           component: ToastificationContent,
-    //           props: {
-    //             title: `${error.response.data.errorMessage}`,
-    //             icon: "DeleteIcon",
-    //             variant: "error",
-    //           },
-    //         });
-    //       });
-    //   }
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `Vat Deleted Successfully`,
+                icon: "DeleteIcon",
+                variant: "success",
+              },
+            });
+            refetchData()
+          })
+          .catch((error) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `${error.response.data.errorMessage}`,
+                icon: "DeleteIcon",
+                variant: "error",
+              },
+            });
+          });
+      }
   },
   data(){
     return{
@@ -299,14 +298,6 @@ export default {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
-
-    //   const statusOptions = [
-    //     'Downloaded',
-    //     'Draft',
-    //     'Paid',
-    //     'Partial Payment',
-    //     'Past Due',
-    //   ]
 
     const {
       fetchVatReports,

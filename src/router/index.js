@@ -259,6 +259,11 @@ const router = new VueRouter({
 
     // Company Vat Reports
     {
+      path: '/company/:companyId/vat-report/preview/:id',
+      name: 'company-vat-report-preview',
+      component: () => import('@/views/company/VatReports/vat-report-preview/VatReportPreview.vue'),
+    },
+    {
       path: '/company/:companyId/vat-report/add',
       name: 'company-vat-report-add',
       component: () => import('@/views/company/VatReports/vat-reports-add/VatReportAdd.vue'),
