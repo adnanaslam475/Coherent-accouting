@@ -1224,9 +1224,9 @@ export default {
       let month = tPeriod.substring(5, tPeriod.length);
 
       if (month.length === 1) {
-        finalTaxPeriod = year + "-0" + month;
+        finalTaxPeriod = year + "-0" + month + "-01";
       } else {
-        finalTaxPeriod = year + "-" + month;
+        finalTaxPeriod = year + "-" + month + "-01";
       }
       // console.log("Final result" + finalTaxPeriod);
       this.$refs.addVatReportRules.validate().then((success) => {
