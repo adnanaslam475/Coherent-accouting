@@ -1287,10 +1287,13 @@ export default {
                   variant: "success",
                 },
               });
-              this.$router.push({
-                name: "CompanyView",
-                params: { id: router.currentRoute.params.companyId },
-              });
+              return this.$router.push({
+                      name: "CompanyView", 
+                      params: { 
+                        id: router.currentRoute.params.companyId,
+                        InvoiceId: 3
+                      }
+                    })
             })
             .catch((error) => {
               this.loading = false;

@@ -69,7 +69,7 @@
                       padding-top: 5px;
                     "
                   >
-                    {{ vatReportData.period }}
+                    {{ vatReportData.period.substr(0,7) }}
                   </p>
                   <small><b>мм / гггг</b></small>
                 </b-col>
@@ -94,7 +94,7 @@
                 <b-col cols="4" xl="4" md="4"> </b-col
               ></b-row>
               <b-row>
-                <b-col cols="8" xl="8" md="8" class="mt-1">
+                <b-col cols="8" xl="8" md="8" class="mt-0">
                   <p
                     style="
                       border-radius: 5px;
@@ -1147,7 +1147,7 @@
           <!--  -->
           <b-row class="mt-1">
             <b-col cols="4" xl="4" md="4"> </b-col>
-            <b-col cols="8" xl="8" md="8">
+            <b-col cols="8" xl="8" md="8" style="padding-left: 0px">
               <p style="font-size: 12px">
                 представлявам лицето, посочено в кл. А, и посочената в този
                 формуляр информация е вярна и точна.
@@ -1157,14 +1157,14 @@
 
           <b-row class="">
             <b-col cols="4" xl="4" md="4"> </b-col>
-            <b-col cols="8" xl="8" md="8">
+            <b-col cols="8" xl="8" md="8" style="padding-left: 0px">
               <p style="font-size: 12px">
                 са налице обстоятелствата по чл. 92, ал. 3 и 4 ЗДДС.
               </p></b-col
             >
           </b-row>
 
-          <b-row class="mt-1">
+          <b-row class="mt-0">
             <b-col cols="4" xl="4" md="4"> </b-col>
             <b-col cols="8" xl="8" md="8" style="padding-left: 0px">
               <p style="font-size: 12px">
@@ -1218,6 +1218,7 @@ import {
   VBToggle,
   BCardHeader,
 } from "bootstrap-vue";
+
 export default {
   components: {
     BRow,
@@ -1229,7 +1230,7 @@ export default {
     BButton,
     BAlert,
     BLink,
-    BCardHeader,
+    BCardHeader
   },
   props: {
     vatReportData: {

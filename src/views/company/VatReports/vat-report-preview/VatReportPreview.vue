@@ -1,6 +1,6 @@
 <template>
   <section class="invoice-add-wrapper">
-    <b-row class="invoice-preview-list">
+    <b-row class="invoice-preview-list" v-if="vatReportData !== null">
       <!-- Col: Left (Vat Report Container) -->
       <b-col cols="12" xl="10" md="10" class="w-100-print">
         <b-form>
@@ -71,7 +71,6 @@
                           border-radius: 0.357rem;
                         "
                         dateFormat="Y-MM"
-                        :monthLabels="monthLabels"
                         disabled
                       />
                       <small><b>мм / гггг</b></small>
@@ -97,7 +96,7 @@
                     <b-col cols="4" xl="4" md="4"> </b-col
                   ></b-row>
                   <b-row>
-                    <b-col cols="8" xl="8" md="8" class="mt-1">
+                    <b-col cols="8" xl="8" md="8" class="mt-0">
                       <p
                         style="
                           border-radius: 5px;
@@ -287,7 +286,7 @@
               </b-row>
 
               <!-- input column 12 and 22 -->
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="4" xl="4" md="4" class=""
                   ><p>
                     - данъчна основа на ВОП и данъчна основа на получени
@@ -343,7 +342,7 @@
               </b-row>
 
               <!-- input column 23 -->
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="4" xl="4" md="4" class=""> </b-col>
                 <b-col cols="1" xl="1" md="1" style="padding: 0px"> </b-col>
                 <b-col
@@ -382,7 +381,7 @@
 
               <!-- input columns 13 and 24 -->
               <b-row
-                class="mt-1 pb-2"
+                class="mt-0 pb-2"
                 style="border-bottom: 1px solid lightgrey"
               >
                 <b-col cols="4" xl="4" md="4" class=""
@@ -471,7 +470,7 @@
               </b-row>
 
               <!-- input column 15  -->
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="4" xl="4" md="4" class=""
                   ><p>- данъчна основа ВОД на стоки</p>
                 </b-col>
@@ -499,7 +498,7 @@
               </b-row>
 
               <!-- input column 16  -->
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="4" xl="4" md="4" class=""
                   ><p>
                     - данъчна основа на доставки по чл. 140, 146 и чл. 173 ЗДДС
@@ -529,7 +528,7 @@
               </b-row>
 
               <!-- input column 17 -->
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="4" xl="4" md="4" class=""
                   ><p>
                     - Данъчна основа на доставки на услуги по чл. 21, ал. 2 с
@@ -670,7 +669,7 @@
               </b-row>
 
               <!--  -->
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="4" xl="4" md="4" class=""
                   ><p>
                     Данъчна основа на получените доставки, ВОП, получените
@@ -683,7 +682,7 @@
               </b-row>
 
               <!-- input column 31 and 41 -->
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="4" xl="4" md="4" class=""
                   ><p>- с право на пълен данъчен кредит</p>
                 </b-col>
@@ -733,7 +732,7 @@
               </b-row>
 
               <!-- input column 32 and 42 -->
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="4" xl="4" md="4" class=""
                   ><p>- с право на частичен данъчен кредит</p>
                 </b-col>
@@ -783,7 +782,7 @@
               </b-row>
 
               <!-- input column 43 -->
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="6" xl="6" md="6" class=""> </b-col>
                 <b-col cols="4" xl="4" md="4" class=""
                   ><p>Годишна корекция по чл. 73, ал. 8 (+/-)</p>
@@ -812,7 +811,7 @@
 
               <!--  input column 33 and 40-->
               <b-row
-                class="mt-1 pb-2"
+                class="mt-0 pb-2"
                 style="border-bottom: 1px solid lightgrey"
               >
                 <b-col cols="4" xl="4" md="4" class=""
@@ -1053,7 +1052,7 @@
               </b-row>
 
               <!-- input column 82 -->
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="6" xl="6" md="6" class=""> </b-col>
                 <b-col cols="4" xl="4" md="4" class="">
                   <p>
@@ -1083,7 +1082,7 @@
                 </b-col>
               </b-row>
 
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="12" xl="12" md="12">
                   <p>Долуподписаният:</p></b-col
                 >
@@ -1112,7 +1111,7 @@
               <!--  -->
               <b-row class="mt-1">
                 <b-col cols="4" xl="4" md="4"> </b-col>
-                <b-col cols="8" xl="8" md="8">
+                <b-col cols="8" xl="8" md="8" style="padding-left: 0px;">
                   <p>
                     представлявам лицето, посочено в кл. А, и посочената в този
                     формуляр информация е вярна и точна.
@@ -1122,14 +1121,14 @@
 
               <b-row class="">
                 <b-col cols="4" xl="4" md="4"> </b-col>
-                <b-col cols="8" xl="8" md="8">
+                <b-col cols="8" xl="8" md="8" style="padding-left: 0px;">
                   <p>
                     са налице обстоятелствата по чл. 92, ал. 3 и 4 ЗДДС.
                   </p></b-col
                 >
               </b-row>
 
-              <b-row class="mt-1">
+              <b-row class="mt-0">
                 <b-col cols="4" xl="4" md="4"> </b-col>
                 <b-col cols="8" xl="8" md="8" style="padding-left: 0px">
                   <p>
@@ -1185,7 +1184,7 @@
             :float-layout="true"
             :enable-download="true"
             :preview-modal="false"
-            :paginate-elements-by-height="1100"
+            :paginate-elements-by-height="800"
             :filename="'vat-report-' + vatReportData.id"
             :pdf-quality="2"
             :manual-pagination="false"
@@ -1195,25 +1194,12 @@
             pdf-content-width="800px"
             @progress="onProgress($event)"
             ref="html2Pdf"
+
           >
-            <section class="invoice-pdf" slot="pdf-content">
-              <div>
-                <vat-report-download :vat-report-data="this.vatReportData" />
-              </div>
-              <!-- <b-alert variant="danger" :show="invoiceData === undefined">
-                <h4 class="alert-heading">Error fetching invoice data</h4>
-                <div class="alert-body">
-                  No invoice found with this invoice id. Check
-                  <b-link
-                    class="alert-link"
-                    :to="{ name: 'apps-invoice-list' }"
-                  >
-                    Invoice List
-                  </b-link>
-                  for other invoices.
-                </div>
-              </b-alert> -->
-            </section>
+            <vat-report-download
+              :vat-report-data="this.vatReportData"
+              slot="pdf-content"
+            />
           </vue-html2pdf>
 
           <!-- Button: Print -->
@@ -1222,6 +1208,7 @@
             variant="outline-secondary"
             class="mb-75"
             block
+            @click="printVatReport()"
           >
             Print
           </b-button>
@@ -1275,6 +1262,13 @@ import VatReportDownload from "../vat-report-download/VatReportDownload.vue";
 import VueHtml2pdf from "vue-html2pdf";
 
 export default {
+  props: { 
+    htmlToPdfOptions: { 
+
+margin: 100, 
+      }
+
+  },
   directives: {
     Ripple,
     "b-toggle": VBToggle,
@@ -1290,6 +1284,7 @@ export default {
     BLink,
     BCardBody,
     BCardHeader,
+
     vatReportsStoreModule,
     VueMonthlyPicker,
     VueHtml2pdf,
@@ -1297,21 +1292,9 @@ export default {
   },
   data() {
     return {
-      monthLabels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+     
       companyID: "",
+      
     };
   },
 
@@ -1348,43 +1331,44 @@ export default {
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
 
-    const vatReportData = ref({
-      responsiblePerson: "",
-      taxPeriod: "",
-      nameAndAddress: "",
-      vatNumber: "",
-      input04: "",
-      cell01: "",
-      cell11: "",
-      cell12: "",
-      cell13: "",
-      cell14: "",
-      cell15: "",
-      cell16: "",
-      cell17: "",
-      cell18: "",
-      cell19: "",
-      cell20: "",
-      cell21: "",
-      cell22: "",
-      cell23: "",
-      cell24: "",
-      cell25: "",
-      cell26: "",
-      cell30: "",
-      cell31: "",
-      cell32: "",
-      cell33: "",
-      cell40: "",
-      cell41: "",
-      cell42: "",
-      cell50: "",
-      cell60: "",
-      cell70: "",
-      cell80: "",
-      cell81: "",
-      dateCreated: "",
-    });
+    const vatReportData = ref(null);
+    // const vatReportData = ref({
+    //   responsiblePerson: "",
+    //   taxPeriod: "",
+    //   nameAndAddress: "",
+    //   vatNumber: "",
+    //   input04: "",
+    //   cell01: "",
+    //   cell11: "",
+    //   cell12: "",
+    //   cell13: "",
+    //   cell14: "",
+    //   cell15: "",
+    //   cell16: "",
+    //   cell17: "",
+    //   cell18: "",
+    //   cell19: "",
+    //   cell20: "",
+    //   cell21: "",
+    //   cell22: "",
+    //   cell23: "",
+    //   cell24: "",
+    //   cell25: "",
+    //   cell26: "",
+    //   cell30: "",
+    //   cell31: "",
+    //   cell32: "",
+    //   cell33: "",
+    //   cell40: "",
+    //   cell41: "",
+    //   cell42: "",
+    //   cell50: "",
+    //   cell60: "",
+    //   cell70: "",
+    //   cell80: "",
+    //   cell81: "",
+    //   dateCreated: "",
+    // });
     store
       .dispatch("vat-reports/fetchSingleVatReport", {
         id: router.currentRoute.params.id,
@@ -1400,14 +1384,14 @@ export default {
       });
 
     //print vat report
-    const printInvoice = () => {
+    const printVatReport = () => {
       window.print();
     };
 
     return {
       vatReportData,
       avatarText,
-      printInvoice,
+      printVatReport,
     };
   },
 };
@@ -1425,7 +1409,6 @@ small {
   border: none !important;
 }
 
-
 .vue-monthly-picker .vmp-input-append {
   display: none !important;
 }
@@ -1433,7 +1416,45 @@ small {
   cursor: auto;
 }
 
-.vue-monthly-picker:hover {
-  cursor: auto;
+@media print {
+
+// Global Styles
+body {
+  background-color: transparent !important;
+}
+nav.header-navbar {
+  display: none;
+}
+.main-menu {
+  display: none;
+}
+.header-navbar-shadow {
+  display: none !important;
+}
+.content.app-content {
+  margin-left: 0;
+  padding-top: 2rem !important;
+}
+footer.footer {
+  display: none;
+}
+.card {
+  background-color: transparent;
+  box-shadow: none;
+}
+.customizer-toggle {
+  display: none !important;
+}
+}
+
+@media print {
+  .w-100-print{
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+  .hide-from-print {
+       display : none;
+  }
+  // @page { margin: 0 }
 }
 </style>
