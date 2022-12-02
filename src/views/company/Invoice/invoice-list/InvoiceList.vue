@@ -34,19 +34,22 @@
           </b-button>
           <b-button
             variant="primary"
-            class="mr-1 position-relative"
+            class="mr-1 position-relative p-set"
           >
             <b-form-file
               class="file-input"
               v-model="file"
               @input="addfile(companyId)"
             />
+
             <b-spinner v-if="fileLoading" small variant="light" />
-            Add From File
+              Add From File
+            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path">
+            </svg-icon>
           </b-button>
           <b-button
             variant="primary"
-            class="mr-1 position-relative"
+            class="mr-1 position-relative p-set"
           >
             <b-form-file
               ref="imageUploader"
@@ -55,7 +58,9 @@
               @change="addMultiplefile"
             />
             <b-spinner v-if="multiplefileLoading" small variant="light" />
-            Add Multiple Files
+             Add Multiple Files
+            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path1">
+            </svg-icon>
           </b-button>
 
         </b-col>
@@ -392,6 +397,9 @@ import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
 import router from '@/router'
+import SvgIcon from '@jamescoyle/vue-icon'
+import { mdiTrayArrowUp } from '@mdi/js';
+import { mdiCloudUploadOutline } from '@mdi/js';
 export default {
   props: ['invoiceTab'],
   data(){
@@ -399,7 +407,9 @@ export default {
       file: null,
       fileLoading: false,
       multiplefile: null,
-      multiplefileLoading: false
+      multiplefileLoading: false,
+      path:  mdiTrayArrowUp,
+      path1: mdiCloudUploadOutline
     }
   },
   methods: {
@@ -535,7 +545,8 @@ export default {
     BCardHeader,
     InvoiceDownload,
     BFormFile,
-    BSpinner
+    BSpinner,
+    SvgIcon
   },
   setup() {
     
@@ -731,7 +742,16 @@ export default {
   margin: 0;
   opacity: 0;
 }
+.p-set{
+  padding-right: calc(1.5rem + 20px);
+}
 .file-input label{
   cursor: pointer;
+}
+.file-upload{
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%) !important;
 }
 </style>
