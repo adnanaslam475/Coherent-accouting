@@ -127,14 +127,18 @@
                   />
                 </b-link>
               </b-row>
-              <small class="notification-text">{{ notification | limitDisplay(fullIndex) }}
-                <a
-                  v-if="fullIndex !== notification.id"
+              <small class="notification-text">
+                You can download file by clicking <a
                   href="javascript:void(0)"
-                  @click="fullIndex = notification.id"
-                >
-                  read more
-                </a>
+                  @click="downloadFile(notification)"
+                >here</a>
+                <!--                <a-->
+                <!--                  v-if="fullIndex !== notification.id"-->
+                <!--                  href="javascript:void(0)"-->
+                <!--                  @click="fullIndex = notification.id"-->
+                <!--                >-->
+                <!--                  read more-->
+                <!--                </a>-->
               </small>
             </b-media>
           </b-link>
@@ -198,32 +202,32 @@
           <span>Tickets</span>
         </b-dropdown-item>
 
-<!--        <b-dropdown-item link-class="d-flex align-items-center">-->
-<!--          <feather-icon-->
-<!--            size="16"-->
-<!--            icon="MailIcon"-->
-<!--            class="mr-50"-->
-<!--          />-->
-<!--          <span>Inbox</span>-->
-<!--        </b-dropdown-item>-->
+        <!--        <b-dropdown-item link-class="d-flex align-items-center">-->
+        <!--          <feather-icon-->
+        <!--            size="16"-->
+        <!--            icon="MailIcon"-->
+        <!--            class="mr-50"-->
+        <!--          />-->
+        <!--          <span>Inbox</span>-->
+        <!--        </b-dropdown-item>-->
 
-<!--        <b-dropdown-item link-class="d-flex align-items-center">-->
-<!--          <feather-icon-->
-<!--            size="16"-->
-<!--            icon="CheckSquareIcon"-->
-<!--            class="mr-50"-->
-<!--          />-->
-<!--          <span>Task</span>-->
-<!--        </b-dropdown-item>-->
+        <!--        <b-dropdown-item link-class="d-flex align-items-center">-->
+        <!--          <feather-icon-->
+        <!--            size="16"-->
+        <!--            icon="CheckSquareIcon"-->
+        <!--            class="mr-50"-->
+        <!--          />-->
+        <!--          <span>Task</span>-->
+        <!--        </b-dropdown-item>-->
 
-<!--        <b-dropdown-item link-class="d-flex align-items-center">-->
-<!--          <feather-icon-->
-<!--            size="16"-->
-<!--            icon="MessageSquareIcon"-->
-<!--            class="mr-50"-->
-<!--          />-->
-<!--          <span>Chat</span>-->
-<!--        </b-dropdown-item>-->
+        <!--        <b-dropdown-item link-class="d-flex align-items-center">-->
+        <!--          <feather-icon-->
+        <!--            size="16"-->
+        <!--            icon="MessageSquareIcon"-->
+        <!--            class="mr-50"-->
+        <!--          />-->
+        <!--          <span>Chat</span>-->
+        <!--        </b-dropdown-item>-->
         <b-dropdown-divider />
         <b-dropdown-item
           :to="{ name:'settings' }"
@@ -236,25 +240,25 @@
           />
           <span>Settings</span>
         </b-dropdown-item>
-<!--        <b-dropdown-item-->
-<!--          :to="{name:'my-plans'}"-->
-<!--          link-class="d-flex align-items-center"-->
-<!--        >-->
-<!--          <feather-icon-->
-<!--            size="16"-->
-<!--            icon="CreditCardIcon"-->
-<!--            class="mr-50"-->
-<!--          />-->
-<!--          <span>Pricing</span>-->
-<!--        </b-dropdown-item>-->
-<!--        <b-dropdown-item link-class="d-flex align-items-center">-->
-<!--          <feather-icon-->
-<!--            size="16"-->
-<!--            icon="InfoIcon"-->
-<!--            class="mr-50"-->
-<!--          />-->
-<!--          <span>FAQ</span>-->
-<!--        </b-dropdown-item>-->
+        <!--        <b-dropdown-item-->
+        <!--          :to="{name:'my-plans'}"-->
+        <!--          link-class="d-flex align-items-center"-->
+        <!--        >-->
+        <!--          <feather-icon-->
+        <!--            size="16"-->
+        <!--            icon="CreditCardIcon"-->
+        <!--            class="mr-50"-->
+        <!--          />-->
+        <!--          <span>Pricing</span>-->
+        <!--        </b-dropdown-item>-->
+        <!--        <b-dropdown-item link-class="d-flex align-items-center">-->
+        <!--          <feather-icon-->
+        <!--            size="16"-->
+        <!--            icon="InfoIcon"-->
+        <!--            class="mr-50"-->
+        <!--          />-->
+        <!--          <span>FAQ</span>-->
+        <!--        </b-dropdown-item>-->
         <b-dropdown-item
           link-class="d-flex align-items-center"
           @click="logout"
@@ -292,6 +296,7 @@ import Ripple from 'vue-ripple-directive'
 import { ref } from '@vue/composition-api'
 import axios from '@/libs/axios'
 import useJwt from '@/auth/jwt/useJwt'
+import router from '@/router'
 
 export default {
   components: {
@@ -317,12 +322,6 @@ export default {
     Ripple,
   },
   filters: {
-    limitDisplay(value, index) {
-      if (index !== value.id) {
-        return `${value.message.substring(0, 18)}...`
-      }
-      return value.message
-    },
   },
   props: {
     toggleVerticalMenuActive: {
@@ -340,9 +339,57 @@ export default {
     this.getUserDetail()
     this.getNotificationCount()
     this.getNotifications()
+    this.getUserIpAddress()
     window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
+    parseMessage(value) {
+      const data = JSON.parse(value.message)
+      return `You can download file by clicking <a href="javascript:void(0)" v-on:click="downloadFile(${data})">here</a>`
+    },
+    async downloadFile(message) {
+      const data = JSON.parse(message.message)
+      await axios.get(`${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${data.companyId}`, { responseType: 'blob' })
+        .then(response => {
+          console.log(response.data)
+          if (response.status === 200) {
+            const reader = new FileReader()
+            reader.readAsDataURL(response.data)
+
+            const filePath = reader.result
+            const a = document.createElement('a')
+            a.href = filePath
+            a.download = `${data.companyId}.zip`
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
+          }
+        })
+        .catch(error => {
+          console.log(error)
+          this.makeToast('danger', error.response.errorCode, error.response.errorMessage)
+        })
+    },
+    async getUserIpAddress() {
+      const response = await fetch('https://api.ipify.org/?format=json')
+      const myJson = await response.json()
+      localStorage.setItem('ip', myJson.ip)
+      await this.getUserLocationViaIp(myJson.ip)
+    },
+    async getUserLocationViaIp(ip) {
+      const response = await fetch(`http://ip-api.com/json/${ip}`)
+      const myJson = await response.json()
+      localStorage.setItem('location', JSON.stringify(myJson))
+      if (myJson.countryCode.toLowerCase() === 'bg') {
+        myJson.locale = myJson.countryCode.toLowerCase()
+        this.changeLanguage(myJson)
+        localStorage.setItem('language', 'bg')
+      } else {
+        myJson.locale = 'en'
+        this.changeLanguage(myJson)
+        localStorage.setItem('language', 'en')
+      }
+    },
     toggleReadMore(id) {
       this.notifications.map(notification => {
         if (notification.id === id) {
@@ -398,14 +445,14 @@ export default {
     async getUserDetail() {
       try {
         const data = await axios.get('account/api/user/who-am-i')
-        if(data.status != 200){
+        if (data.status != 200) {
           this.logout()
-        } else{
+        } else {
           this.userDetail = data.data
           localStorage.setItem('userData', JSON.stringify(data.data))
         }
       } catch (error) {
-        console.log("error",error);
+        console.log('error', error)
         this.logout()
       }
     },
@@ -431,6 +478,13 @@ export default {
         // eslint-disable-next-line radix
         this.notifications = this.notifications.filter(notification => parseInt(notification.id) !== parseInt(notificationId))
       }
+    },
+    makeToast(variant = null, title = null, message = null) {
+      this.$bvToast.toast(message, {
+        title,
+        variant,
+        solid: false,
+      })
     },
   },
   setup() {

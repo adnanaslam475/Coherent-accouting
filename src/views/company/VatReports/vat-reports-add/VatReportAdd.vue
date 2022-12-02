@@ -41,7 +41,6 @@
                       Входящ No................../....................... г.
                     </p></b-col
                   >
-                  <!-- <b-col cols="2" xl="2" md="2"></b-col> -->
                 </b-row>
                 <!--  -->
                 <b-row class="mt-0">
@@ -61,14 +60,30 @@
                       v-bind:name="$t('input_01')"
                       rules="required"
                     >
-                      <b-form-input
+                      <!-- <b-form-input
                         id="input_01"
                         v-model="form.taxPeriod"
                         name="input_01"
                         :state="errors.length > 0 ? false : null"
-                      />
-                      <!-- <small><b>мм / гггг</b></small> -->
-                      <small class="text-danger">{{ errors[0] }}</small>
+                      /> -->
+                      <vue-monthly-picker
+                        id="input_01"
+                        v-model="form.taxPeriod"
+                        name="input_01"
+                        style="
+                          background-color: #fff;
+                          background-clip: padding-box;
+                          height: 40px;
+                          border: 1px solid #dbdbdb;
+                          border-radius: 0.357rem;
+                        "
+                        dateFormat="Y-MM"
+                        :monthLabels="monthLabels"
+                        :class="errors.length > 0 ? 'is-invalid' : null"
+                      >
+                      </vue-monthly-picker>
+                      <small><b>мм / гггг</b></small>
+                      <small class="text-danger ml-1">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-col>
                   <b-col cols="3" xl="3" md="3"></b-col>
@@ -78,7 +93,7 @@
             </b-row>
 
             <!--  -->
-            <b-row class="pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="12" xl="6" md="6" class="mt-2">
                 <b-row
                   ><b-col cols="8" xl="8" md="8" class="mt-1"
@@ -134,7 +149,18 @@
                   <b-col cols="3" xl="3" md="3"></b-col>
                   <b-col cols="6" xl="6" md="6"> <p>ИН:</p></b-col>
                   <b-col cols="3" xl="3" md="3">
-                    <b-form-input id="input-04" v-model="form.input04" />
+                    <validation-provider
+                      #default="{ errors }"
+                      v-bind:name="$t('eic')"
+                      rules="required"
+                    >
+                      <b-form-input
+                        id="eic"
+                        v-model="form.eic"
+                        :state="errors.length > 0 ? false : null"
+                      />
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
                   </b-col>
                 </b-row>
               </b-col>
@@ -153,7 +179,7 @@
             </b-row>
 
             <!--  input column 01 and 20-->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>
                   Общ размер на данъчните основи за облагане с ДДС (сума от кл.
@@ -366,7 +392,7 @@
             </b-row>
 
             <!-- input columns 13 and 24 -->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>Данъчна основа на облагаемите доставки със ставка 9%</p>
               </b-col>
@@ -576,7 +602,7 @@
             </b-row>
 
             <!-- input column 19 -->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>
                   - Данъчна основа на освободените доставки и освободените ВОП
@@ -789,7 +815,7 @@
             </b-row>
 
             <!--  input column 33 and 40-->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>- коефициент по чл. 73, ал. 5 ЗДДС</p>
               </b-col>
@@ -847,7 +873,7 @@
             </b-row>
 
             <!-- input column 50 and 60 -->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>ДДС за внасяне (кл.20 - кл.40) >= 0</p>
               </b-col>
@@ -907,7 +933,7 @@
             </b-row>
 
             <!-- input column 70 and 71 -->
-            <b-row class="mt-1 pb-2" style="border-bottom: 2px solid darkgrey">
+            <b-row class="mt-1 pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>
                   Данък за внасяне от кл. 50, приспаднат по реда на чл. 92, ал.
@@ -1059,7 +1085,8 @@
               <b-col cols="12" xl="12" md="12"> <p>Долуподписаният:</p></b-col>
             </b-row>
 
-            <b-row class="mt pb-2" style="border-bottom: 2px solid darkgrey">
+            <!-- responsible person -->
+            <b-row class="mt pb-2" style="border-bottom: 1px solid lightgrey">
               <b-col cols="4" xl="4" md="4" class=""
                 ><validation-provider
                   #default="{ errors }"
@@ -1108,6 +1135,7 @@
               >
             </b-row>
 
+            <!-- dateCreated -->
             <b-row class="">
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>Дата на съставяне:</p>
@@ -1117,10 +1145,18 @@
                   #default="{ errors }"
                   v-bind:name="$t('dateCreated')"
                   rules="required"
-                  ><b-form-input
+                >
+                  <!-- <b-form-input
                     id="dateCreated"
                     v-model="form.dateCreated"
                     :state="errors.length > 0 ? false : null"
+                  /> -->
+                  <flat-pickr
+                    id="dateCreated"
+                    v-model="form.dateCreated"
+                    :state="errors.length > 0 ? false : null"
+                    class="form-control"
+                    style="background-color: white !important"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -1130,9 +1166,9 @@
               </b-col>
             </b-row>
 
-            <b-row class="mt-2 text-end">
-              <b-col col="11" md="11" xl="11"></b-col>
-              <b-col col="1" md="1" xl="1"
+            <b-row class="mt-2 mb-0 text-end">
+              <b-col cols="11" md="11" xl="11"></b-col>
+              <b-col cols="1" md="1" xl="1"
                 ><b-button variant="primary" @click="addVatReport">
                   Add
                 </b-button></b-col
@@ -1155,29 +1191,17 @@ import {
   BCardBody,
   BFormInput,
   BButton,
-  BTable,
-  BMedia,
-  BAvatar,
-  BLink,
-  BBadge,
-  BDropdown,
-  BDropdownItem,
-  BPagination,
-  BTooltip,
-  BTableLite,
-  BCardText,
-  BAlert,
-  VBToggle,
   BCardHeader,
 } from "bootstrap-vue";
-
-import { onUnmounted } from "@vue/composition-api";
 import store from "@/store";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { required } from "@validations";
 import { extend } from "vee-validate";
+import flatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
+import VueMonthlyPicker from "vue-monthly-picker";
 
 extend("required", {
   ...required,
@@ -1186,14 +1210,25 @@ extend("required", {
 
 import router from "@/router";
 export default {
-  props: ["invoiceTab"],
   methods: {
     state() {
       return 1;
     },
 
-    //
+    // adding a vat report
     addVatReport() {
+      let finalTaxPeriod;
+
+      let tPeriod = this.form.taxPeriod._i;
+      let year = tPeriod.substring(0, 4);
+      let month = tPeriod.substring(5, tPeriod.length);
+
+      if (month.length === 1) {
+        finalTaxPeriod = year + "-0" + month + "-01";
+      } else {
+        finalTaxPeriod = year + "-" + month + "-01";
+      }
+      // console.log("Final result" + finalTaxPeriod);
       this.$refs.addVatReportRules.validate().then((success) => {
         if (success) {
           var data = JSON.stringify({
@@ -1228,11 +1263,11 @@ export default {
             cell81: this.form.inputColumn81,
             cell82: this.form.inputColumn82,
             dateCreated: this.form.dateCreated,
-            ei: "",
+            eic: this.form.eic,
             id: 0,
             nameAndAddress: this.form.nameAndAddress,
-            period: this.form.taxPeriod,
-            responsiblePerson: "",
+            period: finalTaxPeriod,
+            responsiblePerson: this.form.responsiblePerson,
             vatNumber: this.form.vatNumber,
           });
           // console.log(data);
@@ -1247,19 +1282,25 @@ export default {
               this.$toast({
                 component: ToastificationContent,
                 props: {
-                  title: `Invoice Create Successfully`,
+                  title: `Vat Created Successfully`,
                   icon: "EditIcon",
                   variant: "success",
                 },
               });
-              // this.$router.push({ name: 'company-invoice-preview', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+              return this.$router.push({
+                      name: "CompanyView", 
+                      params: { 
+                        id: router.currentRoute.params.companyId,
+                        InvoiceId: 3
+                      }
+                    })
             })
             .catch((error) => {
               this.loading = false;
               this.$toast({
                 component: ToastificationContent,
                 props: {
-                  title: `${error.response.data.errorMessage}`,
+                  title: `Something Went Wrong`,
                   icon: "EditIcon",
                   variant: "error",
                 },
@@ -1271,6 +1312,7 @@ export default {
   },
   data() {
     return {
+      substr: "",
       form: {
         responsiblePerson: "",
         taxPeriod: "",
@@ -1308,6 +1350,21 @@ export default {
         inputColumn81: "",
         dateCreated: "",
       },
+
+      monthLabels: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
     };
   },
   components: {
@@ -1317,27 +1374,29 @@ export default {
     BCol,
     BFormInput,
     BButton,
-    BTable,
-    BMedia,
-    BAvatar,
-    BLink,
-    BBadge,
-    BDropdown,
-    BDropdownItem,
-    BPagination,
-    BTooltip,
     BCardBody,
-    BTableLite,
-    BCardText,
-    BAlert,
-    VBToggle,
     ValidationProvider,
     ValidationObserver,
     BCardHeader,
-
+    flatPickr,
+    VueMonthlyPicker,
   },
 };
 </script>
 
 <style lang="scss">
+small {
+  font-size: 0.8rem;
+}
+
+.vue-monthly-picker .input {
+  height: 2.7rem !important;
+  webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.is-invalid {
+  border-color: #ea5455 !important;
+}
 </style>

@@ -4,7 +4,11 @@ WORKDIR /app
 # Copy all files from current directory to working dir in image
 COPY . .
 # install node modules and build assets
+RUN npm install --save filepond .
 RUN npm install core-js
+
+
+
 RUN yarn install && yarn build
 
 # nginx state for serving content

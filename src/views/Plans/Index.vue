@@ -74,7 +74,7 @@
                   <small
                       v-show="!monthlyPlanShow"
                       class="annual-pricing text-muted"
-                  >USD {{ pricing.basicPlan.yearlyPlan.totalAnual }} / year</small>
+                  >€ {{ pricing.basicPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
@@ -140,7 +140,7 @@
                   <small
                       v-show="!monthlyPlanShow"
                       class="annual-pricing text-muted"
-                  >USD {{ pricing.beginnerPlan.yearlyPlan.totalAnual }} / year</small>
+                  >€ {{ pricing.beginnerPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
@@ -195,7 +195,7 @@
                   <small
                       v-show="!monthlyPlanShow"
                       class="annual-pricing text-muted"
-                  >USD {{ pricing.starterPlan.yearlyPlan.totalAnual }} / year</small>
+                  >€ {{ pricing.starterPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
@@ -251,7 +251,7 @@
                   <small
                       v-show="!monthlyPlanShow"
                       class="annual-pricing text-muted"
-                  >USD {{ pricing.primaryPlan.yearlyPlan.totalAnual }} / year</small>
+                  >€ {{ pricing.primaryPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
@@ -307,7 +307,7 @@
                   <small
                       v-show="!monthlyPlanShow"
                       class="annual-pricing text-muted"
-                  >USD {{ pricing.platinumPlan.yearlyPlan.totalAnual }} / year</small>
+                  >€ {{ pricing.platinumPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
 

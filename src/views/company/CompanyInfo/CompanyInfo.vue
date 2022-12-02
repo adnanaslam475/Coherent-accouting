@@ -25,7 +25,7 @@
 
                       <div class="d-flex flex-column ml-1">
                         <div class="mb-1">
-                          <h4 class="mb-0" v-if="companyNameLength >= 43">{{ companyRecord.companyName.substr(0,44) }}</h4>
+                          <h4 class="mb-0" v-if="companyNameLength >= 43">{{ companyName.substr(0,44) }}</h4>
                           <h4 class="mb-0" v-else>{{ companyRecord.companyName }}</h4>
                           <span class="card-text">{{
                             companyRecord.companyMail
@@ -172,7 +172,7 @@
                           <span class="font-weight-bold">Address</span>
                         </th>
                         <td class="pb-50">
-                          {{ companyRecord.companyAddress.substr(0, 38) }}
+                          {{ companyAddress.substr(0, 38) }}
                         </td>
                       </tr>
                       <tr>
@@ -394,7 +394,7 @@
                 <b-link
                   :to="{
                     name: 'company-invoice-preview',
-                    params: { id: data.item.id },
+                    params: { companyId: companyID, id: data.item.id },
                   }"
                   class="font-weight-bold"
                 >
@@ -407,7 +407,7 @@
                 <b-link
                   :to="{
                     name: 'company-invoice-preview',
-                    params: { id: data.item.id },
+                    params: {  companyId: companyID , id: data.item.id },
                   }"
                   class="font-weight-bold"
                 >
@@ -428,7 +428,7 @@
                 <b-link
                   :to="{
                    name: 'company-invoice-preview',
-                    params: { id: data.item.id },
+                    params: {  companyId: companyID , id: data.item.id },
                   }"
                   class="font-weight-bold"
                 >
@@ -562,7 +562,7 @@
                     @click="
                       $router.push({
                         name: 'company-invoice-preview',
-                        params: { id: data.item.id },
+                        params: { companyId: companyID , id: data.item.id },
                       })
                     "
                   />
@@ -734,6 +734,8 @@ export default {
   },
   data() {
     return {
+      companyAddress:'',
+      companyName:'',
       companyNameLength: '',
       sortBy : 'id',
       sortDesc: false,
@@ -945,6 +947,8 @@ export default {
         this.companyNameLength = this.companyRecord.companyName.length;
         this.companyOwnerName = this.companyRecord.companyOwnerApi.companyOwnerName;
         this.companyOwnerEGN = this.companyRecord.companyOwnerApi.ownerEGN;
+        this.companyName = this.companyRecord.companyName;
+        this.companyAddress = this.companyRecord.companyAddress;
 
 
       }

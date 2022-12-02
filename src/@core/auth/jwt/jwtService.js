@@ -293,6 +293,18 @@ export default class JwtService {
     }) 
   }
 
+  //Delete Vat Report
+  DeleteVatReport(token,id) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.delete(`${this.jwtConfig.VatReportDeleteEndPoint}/${id}`,{
+      headers: headers
+    }) 
+  }
+
   EditUser(token,id,...args) {
     let headers = {
       'Content-Type': 'application/json',
@@ -401,21 +413,12 @@ export default class JwtService {
   }
 
   addFileInvoice(token,CompanyId,file){
-    let config = {
-      headers: {
-        'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-        'Content-Type' : 'multipart/form-data'
-      }
-    }
-    return this.axiosIns2.post(`${this.jwtConfig.fileInvoiceEndpoint}/${CompanyId}`,file,config) 
-  }
-  addMultipleFileInvoice(token,CompanyId,files){
     let headers = {
       'Authorization': `${this.jwtConfig.tokenType} ${token}`,
       'Content-Type' : 'multipart/form-data'
     }
-    return this.axiosIns2.post(`${this.jwtConfig.multipleFileInvoiceEndpoint}/${CompanyId}`, files, {
+    return this.axiosIns2.post(`${this.jwtConfig.fileInvoiceEndpoint}/${CompanyId}`, file, {
       headers: headers
-    })   
+    }) 
   }
 }
