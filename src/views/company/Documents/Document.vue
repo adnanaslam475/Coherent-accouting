@@ -125,7 +125,7 @@
               </div>
             </template>
             <template #cell(Notes)="data">
-              <b-row v-if="asset.id === data.item.id">
+              <b-row class="w-100" v-if="asset.id === data.item.id">
                 <b-col
                   cols="10"
                 >
@@ -393,12 +393,13 @@ export default {
         //   label: 'Binary Id',
         //   sortable: true,
         // },
-        'Notes',
-        // {
-        //   key: 'notes',
-        //   label: 'Notes',
-        //   sortable: true,
-        // },
+        // 'Notes',
+        {
+          key: 'notes',
+          label: 'Notes',
+          sortable: true,
+          class: 'w-100',
+        },
         {
           key: 'action',
           label: 'Action',

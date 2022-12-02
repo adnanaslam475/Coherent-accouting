@@ -20,7 +20,6 @@ export default {
         type: $themeConfig.layout.footer.type,
       },
     },
-    language: 'en',
   },
   getters: {},
   mutations: {
