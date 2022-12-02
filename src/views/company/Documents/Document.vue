@@ -117,7 +117,7 @@
                   :key="images.length + '-' + !!images[data.item.id]"
                   class="hover-img"
                   blank-color="#ccc"
-                  :src="images[data.item.id].type === 'image/jpeg' || images[data.item.id].type === 'image/png' ? images[data.item.id].image : filesImages[images[data.item.id].type]"
+                  :src="images[data.item.id].type === 'image/bmp' || images[data.item.id].type === 'image/jpeg' || images[data.item.id].type === 'image/png' ? images[data.item.id].image : filesImages[images[data.item.id].type]"
                   rounded
                   width="62px"
                   @click="showImageDetail(data.item.id)"
@@ -245,7 +245,7 @@
     >
       <b-img
         class="w-100"
-        :src="imageD.type === 'image/jpeg' || imageD.type === 'image/png' ? imageD.image : filesImages[imageD.type]"
+        :src="imageD.type === 'image/bmp' || imageD.type === 'image/jpeg' || imageD.type === 'image/png' ? imageD.image : filesImages[imageD.type]"
       />
       <b-link
         class="btn btn-primary download-icon"

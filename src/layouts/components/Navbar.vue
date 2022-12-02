@@ -340,9 +340,30 @@ export default {
     this.getUserDetail()
     this.getNotificationCount()
     this.getNotifications()
+    this.getUserIpAddress()
     window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
+    async getUserIpAddress() {
+      const response = await fetch('https://api.ipify.org/?format=json')
+      const myJson = await response.json()
+      localStorage.setItem('ip', myJson.ip)
+      await this.getUserLocationViaIp(myJson.ip)
+    },
+    async getUserLocationViaIp(ip) {
+      const response = await fetch(`http://ip-api.com/json/${ip}`)
+      const myJson = await response.json()
+      localStorage.setItem('location', JSON.stringify(myJson))
+      if (myJson.countryCode.toLowerCase() === 'bg') {
+        myJson.locale = myJson.countryCode.toLowerCase()
+        this.changeLanguage(myJson)
+        localStorage.setItem('language', 'bg')
+      } else {
+        myJson.locale = 'en'
+        this.changeLanguage(myJson)
+        localStorage.setItem('language', 'en')
+      }
+    },
     toggleReadMore(id) {
       this.notifications.map(notification => {
         if (notification.id === id) {

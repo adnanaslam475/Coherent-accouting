@@ -85,6 +85,7 @@
       id="ticket-create-modal"
       title="Add New Ticket"
       ok-title="Submit"
+      cancel-title="Close"
       cancel-variant="outline-secondary"
       @ok="validationCreateTicket"
       @close="resetModal"
@@ -140,17 +141,15 @@
           </b-form>
         </validation-observer>
       </b-card-text>
-      <template #modal-footer>
-        <button v-b-modal.modal-close_visit class="btn btn-outline-primary">Close</button>
-        <button @click="validationCreateTicket()" v-b-modal.modal-close_visit class="btn btn-primary">Submit</button>
-      </template>
     </b-modal>
     <b-modal
       id="ticket-update-modal"
       title="Update Ticket"
       ok-title="Update"
+      cancel-title="Close"
       cancel-variant="outline-secondary"
       @ok="validationUpdateTicket"
+      @close="resetModal"
     >
       <b-card-text>
         <validation-observer ref="simpleRules">
@@ -201,10 +200,6 @@
           </b-form>
         </validation-observer>
       </b-card-text>
-      <template #modal-footer>
-        <button v-b-modal.modal-close_visit class="btn btn-outline-primary">Close</button>
-        <button @click="validationUpdateTicket()" v-b-modal.modal-close_visit class="btn btn-primary">Update</button>
-      </template>
     </b-modal>
   </b-card>
 </template>
@@ -336,6 +331,7 @@ export default {
       }
     },
     resetModal() {
+      console.log('res')
       this.ticket = {}
       this.$bvModal.hide('ticket-create-modal')
       this.$bvModal.hide('ticket-update-modal')
