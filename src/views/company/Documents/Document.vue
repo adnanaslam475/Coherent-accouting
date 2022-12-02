@@ -334,7 +334,9 @@ export default {
         // eslint-disable-next-line global-require
         'text/plain': require('@/assets/images/icons/txt.png'),
         // eslint-disable-next-line global-require
-        'application/vnd.rar': require('@/assets/images/icons/unknown.png'),
+        'application/vnd.rar': require('@/assets/images/icons/zip.png'),
+        // eslint-disable-next-line global-require
+        'application/zip': require('@/assets/images/icons/zip.png'),
         // eslint-disable-next-line global-require
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': require('@/assets/images/icons/xls.png'),
       },
@@ -487,6 +489,7 @@ export default {
           if (response.status === 200) {
             const reader = new FileReader()
             reader.readAsDataURL(response.data)
+            console.log(response.data.type)
             // eslint-disable-next-line func-names
             reader.onload = function () {
               self.images[id] = {

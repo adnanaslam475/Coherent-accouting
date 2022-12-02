@@ -321,8 +321,7 @@ export default {
   directives: {
     Ripple,
   },
-  filters: {
-  },
+  filters: {},
   props: {
     toggleVerticalMenuActive: {
       type: Function,
@@ -351,18 +350,19 @@ export default {
       const data = JSON.parse(message.message)
       await axios.get(`${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${data.companyId}`, { responseType: 'blob' })
         .then(response => {
-          console.log(response.data)
+          console.log(response)
           if (response.status === 200) {
             const reader = new FileReader()
             reader.readAsDataURL(response.data)
-
-            const filePath = reader.result
-            const a = document.createElement('a')
-            a.href = filePath
-            a.download = `${data.companyId}.zip`
-            document.body.appendChild(a)
-            a.click()
-            document.body.removeChild(a)
+            reader.onload = function () {
+              const filePath = reader.result
+              const a = document.createElement('a')
+              a.href = filePath
+              a.download = `${data.companyId}.zip`
+              document.body.appendChild(a)
+              a.click()
+              document.body.removeChild(a)
+            }
           }
         })
         .catch(error => {
