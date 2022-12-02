@@ -394,7 +394,7 @@
                 <b-link
                   :to="{
                     name: 'company-invoice-preview',
-                    params: { id: data.item.id },
+                    params: { companyId: companyID, id: data.item.id },
                   }"
                   class="font-weight-bold"
                 >
@@ -407,7 +407,7 @@
                 <b-link
                   :to="{
                     name: 'company-invoice-preview',
-                    params: { id: data.item.id },
+                    params: {  companyId: companyID , id: data.item.id },
                   }"
                   class="font-weight-bold"
                 >
@@ -428,7 +428,7 @@
                 <b-link
                   :to="{
                    name: 'company-invoice-preview',
-                    params: { id: data.item.id },
+                    params: {  companyId: companyID , id: data.item.id },
                   }"
                   class="font-weight-bold"
                 >
@@ -562,7 +562,7 @@
                     @click="
                       $router.push({
                         name: 'company-invoice-preview',
-                        params: { id: data.item.id },
+                        params: { companyId: companyID , id: data.item.id },
                       })
                     "
                   />
