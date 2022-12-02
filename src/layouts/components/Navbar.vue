@@ -351,7 +351,7 @@ export default {
       const data = JSON.parse(message.message)
       await axios.get(`${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${data.companyId}`, { responseType: 'blob' })
         .then(response => {
-          console.log(response)
+          console.log(response.data)
           if (response.status === 200) {
             const reader = new FileReader()
             reader.readAsDataURL(response.data)
@@ -359,7 +359,7 @@ export default {
             const filePath = reader.result
             const a = document.createElement('a')
             a.href = filePath
-            a.download = data.companyId
+            a.download = `${data.companyId}.zip`
             document.body.appendChild(a)
             a.click()
             document.body.removeChild(a)
