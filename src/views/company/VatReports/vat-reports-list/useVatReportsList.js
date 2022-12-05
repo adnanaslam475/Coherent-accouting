@@ -11,7 +11,7 @@ export default function useInvoicesList() {
 
     const refVatReportsTable = ref(null)
 
-    // Table Handlers
+    // Table Handlers 
     const tableColumns = [
         { key: 'id', label: '#', sortable: true },
         { key: 'cell01', label: 'cell-01', sortable: true },
@@ -34,6 +34,7 @@ export default function useInvoicesList() {
     const sortBy = ref('id')
     const isSortDirDesc = ref(true)
     const statusFilter = ref(null)
+    const companyId = ref(null)
 
     const dataMeta = computed(() => {
         const localItemsCount = refVatReportsTable.value ? refVatReportsTable.value.localItems.length : 0
@@ -60,7 +61,8 @@ export default function useInvoicesList() {
                 direction: isSortDirDesc.value,
                 currentPage: currentPage.value,
                 perPage: perPage.value,
-                q: searchQuery.value
+                q: searchQuery.value, 
+                companyId: companyId.value
 
             })
             .then(response => {
@@ -86,6 +88,7 @@ export default function useInvoicesList() {
         tableColumns,
         perPage,
         currentPage,
+        companyId,
         totalVatReports,
         dataMeta,
         perPageOptions,

@@ -11,6 +11,7 @@ export default {
     fetchVatReports(ctx, queryParams) {
       let pageNumber = queryParams.currentPage
       let perPageValue = queryParams.perPage
+      let companyId = queryParams.companyId
 
       let token = useJwt.getToken()
       let axiosVatReports = axios.create({
@@ -41,7 +42,7 @@ export default {
       }
       //getting a list of values
       else {
-
+ 
         let config = {
           headers: { 'Authorization': "Bearer " + token },
           params: {
@@ -51,7 +52,7 @@ export default {
         }
         return new Promise((resolve, reject) => {
           axiosVatReports
-            .get(`/account/api/report/list/${pageNumber ? pageNumber : 1}/${perPageValue ? perPageValue : 10}`, config)
+            .get(`/account/api/report/list/${companyId}/${pageNumber ? pageNumber : 1}/${perPageValue ? perPageValue : 10}`, config)
             .then((response) => {
               resolve(response)
             })

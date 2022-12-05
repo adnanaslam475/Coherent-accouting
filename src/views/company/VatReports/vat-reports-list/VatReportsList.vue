@@ -18,7 +18,23 @@
             :clearable="false"
             class="per-page-selector d-inline-block ml-50 mr-1"
           />
-          <b-button variant="primary" @click="actionTab" :to="{ name: 'company-vat-report-add', params: { companyId: $route.params.id  }}"> Add Record </b-button>
+          <b-button
+            class="mr-1"
+            variant="primary"
+            @click="actionTab"
+            :to="{
+              name: 'company-vat-report-add',
+              params: { companyId: $route.params.id },
+            }"
+          >
+            Add Record
+          </b-button>
+
+          <!-- Generate Button -->
+
+          <b-button v-b-modal.modal-prevent-closing variant="primary">
+            Generate
+          </b-button>
         </b-col>
 
         <!-- Search -->
@@ -34,6 +50,89 @@
       </b-row>
     </div>
 
+    <!-- Modal pop-up to select month -->
+    <b-modal
+      id="modal-prevent-closing"
+      ref="modal"
+      title="Select Month"
+      ok-title="Submit"
+      cancel-title="Close"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="handleOk"
+    >
+      <form ref="form" @submit.stop.prevent="handleMonthSelected">
+        <validation-observer ref="selectMonthRules" tag="form">
+          <validation-provider
+            #default="{ errors }"
+            v-bind:name="$t('month_selected')"
+            rules="required"
+          >
+            <vue-monthly-picker
+              v-model="selectedMonthData.date"
+              id="month_selected"
+              name="month_selected"
+              dateFormat="Y-MM"
+              :monthLabels="monthLabels"
+              :class="errors.length > 0 ? 'is-invalid' : null"
+              placeHolder="Please Select: "
+            >
+            </vue-monthly-picker>
+            <small class="text-danger">{{ errors[0] }}</small>
+          </validation-provider>
+        </validation-observer>
+      </form>
+    </b-modal>
+
+    <!-- Modal pop-up containing the list of invoices for vat report -->
+    <b-modal
+      id="modal-invoices-for-report"
+      ref="modal"
+      title="Invoices for Vat Reports"
+      ok-title="Download Zip"
+      cancel-title="Close"
+      scrollable
+    >
+      <form ref="form" @submit.stop.prevent="handleMonthSelected">
+        <!-- Vat Reports Table -->
+        <b-table
+          :items="invoicesForReport"
+          responsive
+          :fields="InvoicesTableColumns"
+          primary-key="id"
+          show-empty
+          empty-text="No matching records found"
+          class="position-relative invoiceList"
+        >
+          <template #cell(isChecked)="data">
+            <b-form-checkbox
+              :id="'checkbox'+data.item.id"
+              name="checkbox-1"
+              value="accepted"
+              unchecked-value="not_accepted"
+            ></b-form-checkbox>
+          </template>
+
+          <!-- Column: Id -->
+          <template #cell(id)="data"> #{{ data.value }} </template>
+
+          <!-- Column: cell-01 -->
+          <template #cell(invoiceNumber)="data">
+            <span class="text-nowrap">
+              {{ data.value }}
+            </span>
+          </template>
+
+          <!-- Column: cell-20 -->
+          <template #cell(dateIssued)="data">
+            <span class="text-nowrap">
+              {{ data.value }}
+            </span>
+          </template>
+        </b-table>
+      </form>
+    </b-modal>
+
     <!-- Vat Reports Table -->
     <b-table
       ref="refVatReportsTable"
@@ -47,127 +146,136 @@
       :sort-desc.sync="isSortDirDesc"
       class="position-relative invoiceList"
     >
-   
-    <!-- Column: Id -->
-    <template #cell(id)="data">
-      <!-- <b-link
+      <!-- Column: Id -->
+      <template #cell(id)="data">
+        <!-- <b-link
           :to="{ name: 'apps-invoice-preview', params: { id: data.item.id }}"
           class="font-weight-bold"
         > -->
-      #{{ data.value }}
-      <!-- </b-link> -->
-    </template>
+        #{{ data.value }}
+        <!-- </b-link> -->
+      </template>
 
-    <!-- Column: cell-01 -->
-    <template #cell(cell-01)="data">
-      <span class="text-nowrap">
-        {{ data.value }}
-      </span>
-    </template>
+      <!-- Column: cell-01 -->
+      <template #cell(cell-01)="data">
+        <span class="text-nowrap">
+          {{ data.value }}
+        </span>
+      </template>
 
-    <!-- Column: cell-20 -->
-    <template #cell(cell-20)="data">
-      <span class="text-nowrap">
-        {{ data.value }}
-      </span>
-    </template>
+      <!-- Column: cell-20 -->
+      <template #cell(cell-20)="data">
+        <span class="text-nowrap">
+          {{ data.value }}
+        </span>
+      </template>
 
-    <!-- Column: cell-30 -->
-    <template #cell(cell-30)="data">
-      <span class="text-nowrap">
-        {{ data.value }}
-      </span>
-    </template>
+      <!-- Column: cell-30 -->
+      <template #cell(cell-30)="data">
+        <span class="text-nowrap">
+          {{ data.value }}
+        </span>
+      </template>
 
-    <!-- Column: cell-31 -->
-    <template #cell(cell-31)="data">
-      <span class="text-nowrap">
-        {{ data.value }}
-      </span>
-    </template>
+      <!-- Column: cell-31 -->
+      <template #cell(cell-31)="data">
+        <span class="text-nowrap">
+          {{ data.value }}
+        </span>
+      </template>
 
-    <!-- Column: cell-40 -->
-    <template #cell(cell-40)="data">
-      <span class="text-nowrap">
-        {{ data.value }}
-      </span>
-    </template>
+      <!-- Column: cell-40 -->
+      <template #cell(cell-40)="data">
+        <span class="text-nowrap">
+          {{ data.value }}
+        </span>
+      </template>
 
-    <!-- Column: cell-50 -->
-    <template #cell(cell-50)="data">
-      <span class="text-nowrap">
-        {{ data.value }}
-      </span>
-    </template>
+      <!-- Column: cell-50 -->
+      <template #cell(cell-50)="data">
+        <span class="text-nowrap">
+          {{ data.value }}
+        </span>
+      </template>
 
-    <!-- Column: cell-60 -->
-    <template #cell(cell-60)="data">
-      <span class="text-nowrap">
-        {{ data.value }}
-      </span>
-    </template>
+      <!-- Column: cell-60 -->
+      <template #cell(cell-60)="data">
+        <span class="text-nowrap">
+          {{ data.value }}
+        </span>
+      </template>
 
-    <!-- Column: cell-70 -->
-    <template #cell(cell-70)="data">
-      <span class="text-nowrap">
-        {{ data.value }}
-      </span>
-    </template>
+      <!-- Column: cell-70 -->
+      <template #cell(cell-70)="data">
+        <span class="text-nowrap">
+          {{ data.value }}
+        </span>
+      </template>
 
-    <!-- Column: cell-71 -->
-    <template #cell(cell-71)="data">
-      <span class="text-nowrap">
-        {{ data.value }}
-      </span>
-    </template>
+      <!-- Column: cell-71 -->
+      <template #cell(cell-71)="data">
+        <span class="text-nowrap">
+          {{ data.value }}
+        </span>
+      </template>
 
-    <!-- Column: Actions -->
-    <template #cell(actions)="data"> 
-      <div class="text-nowrap">
-        <feather-icon
-          :id="`report-row-${data.item.id}-preview-icon`"
-          icon="EyeIcon"
-          size="16"
-          class="mx-1 cursor-pointer"
-          @click="$router.push({ name: 'company-vat-report-preview', params: { id: data.item.id, companyId: companyID  }})"
+      <!-- Column: Actions -->
+      <template #cell(actions)="data">
+        <div class="text-nowrap">
+          <feather-icon
+            :id="`report-row-${data.item.id}-preview-icon`"
+            icon="EyeIcon"
+            size="16"
+            class="mx-1 cursor-pointer"
+            @click="
+              $router.push({
+                name: 'company-vat-report-preview',
+                params: { id: data.item.id, companyId: companyID },
+              })
+            "
+          />
+          <b-tooltip
+            title="Preview Report"
+            class="cursor-pointer"
+            :target="`report-row-${data.item.id}-preview-icon`"
+          />
 
-        />
-        <b-tooltip
-          title="Preview Report"
-          class="cursor-pointer"
-          :target="`report-row-${data.item.id}-preview-icon`"
-        />
-
-        <!-- Dropdown -->
-        <b-dropdown
-          variant="link"
-          toggle-class="p-0"
-          no-caret
-          :right="$store.state.appConfig.isRTL"
-        >
-          <template #button-content>
-            <feather-icon
-              icon="MoreVerticalIcon"
-              size="16"
-              class="align-middle text-body"
-            />
-          </template>
-          <!-- <b-dropdown-item @click="generatePDF(data.item.id)">
+          <!-- Dropdown -->
+          <b-dropdown
+            variant="link"
+            toggle-class="p-0"
+            no-caret
+            :right="$store.state.appConfig.isRTL"
+          >
+            <template #button-content>
+              <feather-icon
+                icon="MoreVerticalIcon"
+                size="16"
+                class="align-middle text-body"
+              />
+            </template>
+            <!-- <b-dropdown-item @click="generatePDF(data.item.id)">
             <feather-icon icon="DownloadIcon" />
             <span class="align-middle ml-50">Download</span>
           </b-dropdown-item> -->
-          <b-dropdown-item  :to="{ name: 'company-vat-report-edit', params: { companyId: companyID , id: data.item.id }}"
-          >
-            <feather-icon icon="EditIcon" />
-            <span class="align-middle ml-50">Edit</span>
-          </b-dropdown-item>
-          <b-dropdown-item @click="vatReportDelete(data.item.id,refetchData)">
-            <feather-icon icon="TrashIcon" />
-            <span class="align-middle ml-50">Delete</span>
-          </b-dropdown-item>
-        </b-dropdown>
-       
-      </div> </template>
+            <b-dropdown-item
+              :to="{
+                name: 'company-vat-report-edit',
+                params: { companyId: companyID, id: data.item.id },
+              }"
+            >
+              <feather-icon icon="EditIcon" />
+              <span class="align-middle ml-50">Edit</span>
+            </b-dropdown-item>
+            <b-dropdown-item
+              @click="vatReportDelete(data.item.id, refetchData)"
+            >
+              <feather-icon icon="TrashIcon" />
+              <span class="align-middle ml-50">Delete</span>
+            </b-dropdown-item>
+          </b-dropdown>
+        </div>
+      </template>
     </b-table>
   </b-card>
 </template>
@@ -194,6 +302,7 @@ import {
   BAlert,
   VBToggle,
   BCardHeader,
+  BFormCheckbox,
 } from "bootstrap-vue";
 import { avatarText } from "@core/utils/filter";
 import vSelect from "vue-select";
@@ -206,55 +315,138 @@ import useJwt from "@/auth/jwt/useJwt";
 
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import router from "@/router";
-//   import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
+import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { required } from "@validations";
+import { extend } from "vee-validate";
+import VueMonthlyPicker from "vue-monthly-picker";
+
+extend("required", {
+  ...required,
+  message: "This field is mandatory",
+});
+
 export default {
   props: ["vatReportsTab"],
   methods: {
     state() {
       return 1;
     },
+
+    //
+    resetModal() {
+      this.selectedMonthData.date = "";
+    },
+
+    handleOk(bvModalEvent) {
+      // Prevent modal from closing
+      bvModalEvent.preventDefault();
+      // Trigger submit handler
+      this.handleMonthSelected();
+    },
+
+    //
+    handleMonthSelected() {
+      this.$refs.selectMonthRules.validate().then((success) => {
+        if (success) {
+          let monthVal;
+          let tPeriod = this.selectedMonthData.date._i;
+
+          let year = tPeriod.substring(0, 4);
+          let month = tPeriod.substring(5, tPeriod.length);
+
+          if (month.length === 1) {
+            monthVal = year + "-0" + month + "-01";
+          } else {
+            monthVal = year + "-" + month + "-01";
+          }
+
+          this.selectedMonthData.date = monthVal;
+          let token = useJwt.getToken();
+          useJwt
+            .InvoicesForVatReport(token, this.selectedMonthData)
+            .then((response) => {
+              this.invoicesForReport = response.data.elements;
+              // console.log(this.invoicesForReport);
+            });
+          this.$nextTick(() => {
+            this.$bvModal.hide("modal-prevent-closing");
+          });
+
+          this.$nextTick(() => {
+            this.$bvModal.show("modal-invoices-for-report");
+          });
+        }
+      });
+    },
+
+    //
     actionTab() {
       this.$emit("state", this.state());
     },
-   
-     //Delete vat report
-      vatReportDelete(id, refetchData) {
-        let token = useJwt.getToken()
-        useJwt
-        .DeleteVatReport(token,id)
-          .then((response) => {
 
-            this.$toast({
-              component: ToastificationContent,
-              props: {
-                title: `Vat Deleted Successfully`,
-                icon: "DeleteIcon",
-                variant: "success",
-              },
-            });
-            refetchData()
-          })
-          .catch((error) => {
-            this.$toast({
-              component: ToastificationContent,
-              props: {
-                title: `${error.response.data.errorMessage}`,
-                icon: "DeleteIcon",
-                variant: "error",
-              },
-            });
+    //Delete vat report
+    vatReportDelete(id, refetchData) {
+      let token = useJwt.getToken();
+      useJwt
+        .DeleteVatReport(token, id)
+        .then((response) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Vat Deleted Successfully`,
+              icon: "DeleteIcon",
+              variant: "success",
+            },
           });
-      }
+          refetchData();
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "DeleteIcon",
+              variant: "error",
+            },
+          });
+        });
+    },
   },
-  data(){
-    return{
-      companyID: ''
-    }
-
+  data() {
+    return {
+      invoicesForReport: [],
+      selectedMonthData: {
+        companyId: "",
+        date: "",
+        pageNumber: 1,
+        pageSize: 5000,
+      },
+      companyID: "",
+      monthLabels: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      InvoicesTableColumns: [
+        { key: "isChecked", label: "" },
+        { key: "id", label: "#", sortable: true },
+        { key: "invoiceNumber" },
+        { key: "dateIssued", label: "date Issued" },
+      ],
+    };
   },
   created: function () {
     this.companyID = this.$route.params.id;
-
+    this.selectedMonthData.companyId = this.companyID;
   },
   components: {
     BCard,
@@ -274,6 +466,7 @@ export default {
     vSelect,
     BCardBody,
     BTableLite,
+    BFormCheckbox,
     BCardText,
     BAlert,
     VBToggle,
@@ -282,6 +475,9 @@ export default {
     //   InvoiceDownload
     useVatReportsList,
     vatReportsStoreModule,
+    ValidationProvider,
+    ValidationObserver,
+    VueMonthlyPicker,
   },
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = "vat-reports";
@@ -304,6 +500,7 @@ export default {
       tableColumns,
       perPage,
       currentPage,
+      companyId,
       totalVatReports,
       dataMeta,
       perPageOptions,
@@ -315,11 +512,14 @@ export default {
       refetchData,
     } = useVatReportsList();
 
+    companyId.value = router.currentRoute.params.id;
+
     return {
       fetchVatReports,
       tableColumns,
       perPage,
       currentPage,
+      companyId,
       totalVatReports,
       dataMeta,
       perPageOptions,
@@ -450,6 +650,30 @@ export default {
 }
 .invoice-pdf .gap-2 {
   gap: 15px;
+}
+
+.vue-monthly-picker .input {
+  width: 76% !important;
+}
+
+.vue-monthly-picker .selected {
+  background-color: #7367f0 !important;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    margin: 16rem auto auto auto;
+  }
+
+  #modal-invoices-for-report .modal-dialog {
+    max-width: 900px !important;
+  }
+
+  #modal-invoices-for-report .modal-dialog {
+    margin: 8rem auto auto auto;
+    height: auto;
+    max-height: 42rem !important;
+  }
 }
 </style>
   

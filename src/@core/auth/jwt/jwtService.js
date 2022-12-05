@@ -305,6 +305,19 @@ export default class JwtService {
     }) 
   }
 
+  //Get Invoices for report
+  InvoicesForVatReport(token,...args){
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.post(`${this.jwtConfig.GetInvoicesForReportEndPoint}`, ...args, {
+      headers: headers
+    }) 
+
+  }
+
   EditUser(token,id,...args) {
     let headers = {
       'Content-Type': 'application/json',
