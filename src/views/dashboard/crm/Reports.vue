@@ -6,7 +6,7 @@
       </div>
     </b-card-header>
     <b-card-body>
-      <b-tabs class="report-tabs">
+      <b-tabs class="report-tabs" v-model="reportTab">
         <b-tab active>
           <template #title>
             <b-media no-body>
@@ -27,7 +27,7 @@
             :series="columnChart.series"
           />
         </b-tab>
-        <b-tab>
+        <b-tab :style="`display: block !important; position: ${reportTab !=1 ? 'absolute' : 'relative' }; visibility: ${reportTab !=1 ? 'hidden' : 'visible' }; `">
           <template #title>
             <b-media no-body>
               <b-avatar
@@ -40,6 +40,7 @@
             </b-media>
             <span class="text-center">Vat Reports</span>
           </template>
+        
           <vue-apex-charts
             type="bar"
             height="400"
@@ -103,7 +104,7 @@ export default {
       column: {
         series1: "#826af9",
         series2: "#d2b0ff",
-        bg: "#f8d3ff",
+        bg: "transparent",
       },
       success: {
         shade_100: "#7eefc7",
@@ -172,13 +173,7 @@ export default {
               bar: {
                 columnWidth: "15%",
                 colors: {
-                  backgroundBarColors: [
-                    chartColors.column.bg,
-                    chartColors.column.bg,
-                    chartColors.column.bg,
-                    chartColors.column.bg,
-                    chartColors.column.bg,
-                  ],
+                  backgroundBarColors: [],
                   backgroundBarRadius: 10,
                 },
               },
@@ -249,13 +244,7 @@ export default {
               bar: {
                 columnWidth: "15%",
                 colors: {
-                  backgroundBarColors: [
-                    chartColors.column.bg,
-                    chartColors.column.bg,
-                    chartColors.column.bg,
-                    chartColors.column.bg,
-                    chartColors.column.bg,
-                  ],
+                  backgroundBarColors: [],
                   backgroundBarRadius: 10,
                 },
               },
@@ -303,6 +292,7 @@ export default {
     return {
       path: mdiReceiptTextOutline,
       path1: mdiBallot,
+      reportTab: 0
     };
   },
 };

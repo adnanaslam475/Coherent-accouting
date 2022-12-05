@@ -36,6 +36,8 @@ export default function useInvoicesList() {
   const currentPage = ref(1)
   const perPageOptions = [10, 25, 50, 100]
   const searchQuery = ref('')
+  const dateFrom = ref('')
+  const dateTo = ref('')
   const sortBy = ref('id')
   const isSortDirDesc = ref(true)
   const statusFilter = ref(null)
@@ -54,7 +56,7 @@ export default function useInvoicesList() {
     refInvoiceListTable.value.refresh()
   }
 
-  watch([currentPage, perPage, searchQuery, statusFilter], () => {
+  watch([currentPage, perPage, dateFrom, dateTo, searchQuery, statusFilter], () => {
     refetchData()
   })
 
@@ -67,7 +69,9 @@ export default function useInvoicesList() {
         currentPage : currentPage.value,
         perPage: perPage.value,
         q: searchQuery.value,
-        companyId: companyId.value
+        companyId: companyId.value,
+        dateFrom: dateFrom.value,
+        dateTo: dateTo.value
       })
       .then(response => {
         const { elements, totalElements } = response.data
@@ -120,6 +124,8 @@ export default function useInvoicesList() {
     dataMeta,
     perPageOptions,
     searchQuery,
+    dateFrom,
+    dateTo,
     sortBy,
     isSortDirDesc,
     refInvoiceListTable,

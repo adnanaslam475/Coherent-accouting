@@ -27,10 +27,15 @@
             </b-avatar>
           </b-media-aside>
           <b-media-body>
-            <h6 class="transaction-title">
-              {{ transaction.companyName }}
-            </h6>
-            <small>{{ transaction.companyOwnerApi.companName }}</small>
+            <b-link
+              :to="{ name: 'CompanyView', params: { id: transaction.id }}"
+              class="font-weight-bold"
+            >
+              <h6 class="transaction-title">
+                {{ transaction.companyName }}
+              </h6>
+              <small>{{ transaction.companyOwnerApi.companName }}</small>
+            </b-link>
           </b-media-body>
         </b-media>
         <div
@@ -58,7 +63,8 @@ import {
   BAvatar,
   BDropdown,
   BDropdownItem,
-  BAlert
+  BAlert,
+  BLink
 } from "bootstrap-vue";
 
 export default {
@@ -73,7 +79,8 @@ export default {
     BAvatar,
     BDropdown,
     BDropdownItem,
-    BAlert
+    BAlert,
+    BLink
   },
   setup() {
     const activeProject = ref(null)

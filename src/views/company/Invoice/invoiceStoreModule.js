@@ -15,8 +15,14 @@ export default {
           baseURL: 'http://167.86.93.80:8765',
         })
 
-        if(queryParams.q){
-
+        if(queryParams.q || queryParams.dateFrom || queryParams.dateTo){
+          let data = {}
+          if(queryParams.dateFrom || queryParams.dateTo){
+            data = {
+              dateFrom: queryParams.dateFrom,
+              dateTo: queryParams.dateTo
+            }
+          } 
           let config = {
             headers: {'Authorization': "Bearer "+token},
             params: {
@@ -28,7 +34,7 @@ export default {
           }
           return new Promise((resolve, reject) => {
             axiosInvoice
-              .get(`/account/api/invoice/search/${companyId}/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
+              .post(`/account/api/invoice/search/${companyId}/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`,data, config)
               .then((response) =>{
                 resolve(response)
               })

@@ -1106,8 +1106,9 @@ export default {
     });
 
     invoiceData.value = router.currentRoute.params.invoiceData ? router.currentRoute.params.invoiceData : invoiceData.value
-    invoiceData.value.currency = invoiceData.value.currency.toLowerCase().trim() == 'lv' ? "лв." : invoiceData.value.currency
-    
+    invoiceData.value.currency = invoiceData.value.currency.toLowerCase().trim() == 'lv' ? "лв." : invoiceData.value.currency.toLowerCase().trim() == 'bgn' ? "лв." : invoiceData.value.currency
+    invoiceData.value.verified = true 
+
     const currencyOptions =  [
       { value: 'лв.', text: 'лв.' },
       { value: '$', text: '$' },

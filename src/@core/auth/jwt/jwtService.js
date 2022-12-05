@@ -136,7 +136,6 @@ export default class JwtService {
         data.append(key, arguments[0][key]);
       }
     }
-
     let headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json',
@@ -420,5 +419,14 @@ export default class JwtService {
     return this.axiosIns2.post(`${this.jwtConfig.fileInvoiceEndpoint}/${CompanyId}`, file, {
       headers: headers
     }) 
+  }
+  addMultipleFileInvoice(token,CompanyId,files){
+    let headers = {
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Content-Type' : 'multipart/form-data'
+    }
+    return this.axiosIns2.post(`${this.jwtConfig.multipleFileInvoiceEndpoint}/${CompanyId}`, files, {
+      headers: headers
+    })   
   }
 }

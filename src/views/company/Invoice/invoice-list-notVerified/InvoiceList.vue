@@ -13,7 +13,7 @@
         <!-- Per Page -->
         <b-col
           cols="12"
-          md="8"
+          md="7"
           class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
         >
           <label>Entries</label>
@@ -24,14 +24,39 @@
             :clearable="false"
             class="per-page-selector d-inline-block ml-50 mr-1"
           />
+          <b-button
+            variant="primary"
+            class="mr-1 position-relative p-set"
+          >
+            <b-form-file
+              ref="imageUploader"
+              class="file-input"
+              multiple
+              @change="addMultiplefile"
+            />
+            <b-spinner v-if="multiplefileLoading" small variant="light" />
+             Add Multiple Files
+            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path1">
+            </svg-icon>
+        </b-button>
         </b-col>
 
         <!-- Search -->
         <b-col
           cols="12"
-          md="4"
+          md="5"
         >
           <div class="d-flex align-items-center justify-content-end">
+            <flat-pickr
+              v-model="dateFrom"
+              class="form-control invoice-edit-input invoice-input-top mr-1 filter-date"
+              placeholder="Start date"
+            />       
+            <flat-pickr
+              v-model="dateTo"
+              class="form-control invoice-edit-input invoice-input-top mr-1 filter-date"
+              placeholder="End date"
+            />
             <b-form-input
               v-model="searchQuery"
               class="d-inline-block mr-1"
@@ -345,7 +370,7 @@
 <script>
 import {
   BCard, BRow, BCol,BCardBody, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
-  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip,BTableLite,BCardText,BAlert,VBToggle,BCardHeader
+  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip,BTableLite,BCardText,BAlert,VBToggle,BCardHeader,BFormFile,BSpinner
 } from 'bootstrap-vue'
 import { avatarText } from '@core/utils/filter'
 import vSelect from 'vue-select'
@@ -358,8 +383,18 @@ import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
 import router from '@/router'
+import SvgIcon from '@jamescoyle/vue-icon'
+import { mdiCloudUploadOutline } from '@mdi/js';
+import flatPickr from "vue-flatpickr-component";
 export default {
   props: ['invoiceTab'],
+  data(){
+    return{
+      multiplefile: null,
+      multiplefileLoading: false,
+      path1: mdiCloudUploadOutline
+    }
+  },
   methods: {
     state() {
       return 1;
@@ -399,6 +434,42 @@ export default {
             },
           });
         });
+    },
+    addMultiplefile(event){
+      this.multiplefile = event.target.files
+      this.multiplefileLoading = true
+      let companyID = router.currentRoute.params.companyId ? router.currentRoute.params.companyId : router.currentRoute.params.id
+      let token = useJwt.getToken()
+      let formData = new FormData()
+      for( var i = 0; i < this.multiplefile.length; i++ ){
+        formData.append(`files`,this.multiplefile[i]);
+      }
+      
+      useJwt
+        .addMultipleFileInvoice(token,companyID,formData)
+        .then((response) => {
+          this.multiplefileLoading = false
+          event.target.value = ''
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `You will see your invoices in "Not verified invoices" tab of the company`,
+              icon: "EditIcon",
+              variant: "success",
+            },
+          });
+        })
+        .catch((error) => {
+          this.multiplefileLoading = false
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "DeleteIcon",
+              variant: "error",
+            },
+          });
+        });
     }
 
   },
@@ -425,7 +496,11 @@ export default {
     VBToggle,
     VueHtml2pdf,
     BCardHeader,
-    InvoiceDownload
+    InvoiceDownload,
+    BFormFile,
+    SvgIcon,
+    BSpinner,
+    flatPickr
   },
   setup() {
     
@@ -456,6 +531,8 @@ export default {
       dataMeta,
       perPageOptions,
       searchQuery,
+      dateFrom,
+      dateTo,
       sortBy,
       isSortDirDesc,
       refInvoiceListTable,
@@ -479,6 +556,8 @@ export default {
       dataMeta,
       perPageOptions,
       searchQuery,
+      dateFrom,
+      dateTo,
       companyId,
       sortBy,
       isSortDirDesc,
@@ -519,6 +598,7 @@ export default {
 
 <style lang="scss">
 @import '@core/scss/vue/libs/vue-select.scss';
+@import "@core/scss/vue/libs/vue-flatpicker.scss";
 .invoiceList th{
   position: relative;
   vertical-align: middle !important;
@@ -611,5 +691,8 @@ export default {
 }
 .invoice-pdf .gap-2{
   gap: 15px;
+}
+.filter-date{
+  max-width: 10rem;
 }
 </style>

@@ -38,6 +38,16 @@
           md="6"
         >
           <div class="d-flex align-items-center justify-content-end">
+            <flat-pickr
+              v-model="dateFrom"
+              class="form-control invoice-edit-input invoice-input-top mr-1 filter-date"
+              placeholder="Start date"
+            />       
+            <flat-pickr
+              v-model="dateTo"
+              class="form-control invoice-edit-input invoice-input-top mr-1 filter-date"
+              placeholder="End date"
+            />
             <b-form-input
               v-model="searchQuery"
               class="d-inline-block mr-1"
@@ -346,6 +356,7 @@ import invoiceStoreModule from '../invoiceStoreModule'
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
+import flatPickr from "vue-flatpickr-component";
 export default {
   props: ['invoiceTab'],
   methods: {
@@ -413,7 +424,8 @@ export default {
     VBToggle,
     VueHtml2pdf,
     BCardHeader,
-    InvoiceDownload
+    InvoiceDownload,
+    flatPickr
   },
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
@@ -443,6 +455,8 @@ export default {
       dataMeta,
       perPageOptions,
       searchQuery,
+      dateFrom,
+      dateTo,
       sortBy,
       isSortDirDesc,
       refInvoiceListTable,
@@ -466,6 +480,8 @@ export default {
       dataMeta,
       perPageOptions,
       searchQuery,
+      dateFrom,
+      dateTo,
       sortBy,
       isSortDirDesc,
       refInvoiceListTable,
@@ -486,6 +502,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@core/scss/vue/libs/vue-flatpicker.scss";
 .per-page-selector {
   width: 90px;
 }
@@ -597,5 +614,8 @@ export default {
 }
 .invoice-pdf .gap-2{
   gap: 15px;
+}
+.filter-date{
+  max-width: 10rem;
 }
 </style>
