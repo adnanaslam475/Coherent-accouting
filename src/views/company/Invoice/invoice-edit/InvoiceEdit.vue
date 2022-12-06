@@ -529,7 +529,7 @@
                       <!-- Form Input Fields OR content inside bordered area  -->
                       <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                       <div class="d-flex border rounded">
-                        <b-row class="flex-grow-1 py-2 px-1 invoice-add-transections">
+                        <b-row class="flex-grow-1 py-1 px-1 invoice-add-transections">
                           <!-- Single Item Form Headers -->
                           <b-col cols="12" lg="1">
                             <label class="d-inline d-lg-none"
@@ -539,7 +539,7 @@
                             <b-form-input
                               :value="index+1"
                               type="text"
-                              class="mb-2"
+                              class="mb-0"
                               disabled
                             />
                              
@@ -560,7 +560,7 @@
                                   $store.state.appConfig.isRTL ? 'rtl' : 'ltr'
                                 "
                                 type="text"
-                                class="mb-2"
+                                class="mb-0"
                               />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -575,7 +575,7 @@
                               <b-form-input
                                 v-model="item.quantity"
                                 type="number"
-                                class="mb-2"
+                                class="mb-0"
                               />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -592,7 +592,7 @@
                               <b-form-input
                                 v-model="item.measurement"
                                 type="text"
-                                class="mb-2"
+                                class="mb-0"
                               />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -609,14 +609,14 @@
                               <b-input-group
                                 class="input-group-merge invoice-edit-input-group"
                               >
-                                <b-input-group-prepend is-text class="mb-2">
+                                <b-input-group-prepend is-text class="0">
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
 
                                 <b-form-input
                                   v-model="item.singleAmountTransaction"
                                   type="number"
-                                  class="mb-2"
+                                  class="mb-0"
                                   step="0.01"
                                   placeholder="0.00"
                                 />
@@ -652,14 +652,14 @@
                               <b-input-group
                                 class="input-group-merge invoice-edit-input-group"
                               >
-                                <b-input-group-prepend is-text class="mb-2">
+                                <b-input-group-prepend is-text class="mb-0">
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
 
                                 <b-form-input
                                   :value="(item.singleAmountTransaction * item.quantity).toFixed(2)"
                                   disabled
-                                  class="mb-2"
+                                  class="mb-0"
                                 />
                               </b-input-group>
                               <small class="text-danger">{{ errors[0] }}</small>
@@ -1126,7 +1126,7 @@ export default {
     const VerifiedInvisible = ref(null)
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
-        response.data.currency = response.data.currency.toLowerCase().trim() == 'lv' ? "лв." : response.data.currency 
+        response.data.currency = response.data.currency.toLowerCase().trim() == 'lv' ? "лв." : response.data.currency.toLowerCase().trim() == 'bgn' ? "лв." : response.data.currency 
         invoiceData.value = response.data
         VerifiedInvisible.value = invoiceData.value.verified
         // ? We are adding some extra data in response for data purpose
@@ -1159,6 +1159,7 @@ export default {
     }
     const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent)=> {
       tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
+      vatPercent = vatPercent ? vatPercent : 0
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
@@ -1171,6 +1172,7 @@ export default {
     }
     const totalPrice = (item, vatPercent, tradeDiscountPercent)=> {
       tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
+      vatPercent = vatPercent ? vatPercent : 0
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);

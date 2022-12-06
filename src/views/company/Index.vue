@@ -136,50 +136,33 @@
       </template>
 
       <template style="text-align: center !important" #cell(action)="data">
-        <!-- <b-button variant="outline-primary" class="btn-icon"> -->
+       
+        <feather-icon
+          :id="`edit-${data.item.id}-preview-icon`"
+          icon="EditIcon"
+          size="16"
+          class="mx-0"
+          @click="$router.push({ name: 'EditCompany', params: { id: data.item.id }})"
+          style="cursor: pointer"
+        />
+        <b-tooltip
+          title="Edit Company"
+          :target="`edit-${data.item.id}-preview-icon`"
+        />
 
-        <!-- Dropdown -->
-        <b-dropdown
-          variant="link"
-          toggle-class="p-0"
-          no-caret
-          :right="$store.state.appConfig.isRTL"
-        >
-          <template #button-content>
-            <feather-icon
-              icon="MoreVerticalIcon"
-              size="16"
-              class="align-middle text-body ml-1"
-            />
-          </template>
-          <!-- <b-dropdown-item>
-            <feather-icon icon="DownloadIcon" />
-            <span class="align-middle ml-50">Download</span>
-          </b-dropdown-item> -->
-          <b-dropdown-item
-            :to="{
-              name: 'EditCompany',
-              params: { id: data.item.id },
-            }"
-          >
-            <feather-icon icon="EditIcon" />
-            <span class="align-middle ml-50">Edit</span>
-          </b-dropdown-item>
-          <b-dropdown-item>
-            <feather-icon icon="TrashIcon" />
-            <span
-              class="align-middle ml-50"
-              @click="deleteCompany(data.item.id)"
-              >Delete</span
-            >
-          </b-dropdown-item>
-          <!-- <b-dropdown-item>
-            <feather-icon icon="CopyIcon" />
-            <span class="align-middle ml-50">Duplicate</span>
-          </b-dropdown-item> -->
-        </b-dropdown>
+        <feather-icon
+          :id="`delete-${data.item.id}-preview-icon`"
+          icon="TrashIcon"
+          size="16"
+          class="mx-1"
+          @click="deleteCompany(data.item.id)"
+          style="cursor: pointer"
+        />
+        <b-tooltip
+          title="Delete Company"
+          :target="`delete-${data.item.id}-preview-icon`"
+        />
 
-        <!-- </b-button> -->
       </template>
     </b-table>
 

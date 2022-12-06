@@ -13,10 +13,8 @@ export default function useInvoicesList() {
 
   // Table Handlers
   const tableColumns = [
-    { key: 'id', label: '#', sortable: true },
     { key: 'invoiceNumber', sortable: true},
     { key: 'invoiceDate', label: "date Issued", sortable: true },
-    { key: 'documentType', sortable: true },
     { key: 'recipientCompanyName', label: "recipient Company", sortable: true},
     { key: 'supplierCompanyName', label: "supplier Company" , sortable: true },
     { key: 'amountNonVat', sortable: true },

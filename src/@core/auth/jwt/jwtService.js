@@ -442,4 +442,20 @@ export default class JwtService {
       headers: headers
     })   
   }
+
+  refreshTokenAPI() {
+    var getrefreshToken = this.getRefreshToken()
+    var data = qs.stringify({
+      grant_type: "refresh_token",
+      refresh_token: getrefreshToken,
+    });
+    let headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+        'Authorization': 'Basic YWNtZTphY21lc2VjcmV0',
+    }
+    return this.axiosIns2.post('/userauth/oauth/token', data, {
+        headers: headers
+    })
+  }
 }

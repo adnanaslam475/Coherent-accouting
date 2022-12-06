@@ -80,16 +80,6 @@
         />
       </template>
 
-      <!-- Column: Id -->
-      <template #cell(id)="data">
-        <b-link
-          :to="{ name: 'apps-invoice-preview', params: { id: data.item.id }}"
-          class="font-weight-bold"
-        >
-          #{{ data.value }}
-        </b-link>
-      </template>
-
       <!-- Column: invoiceNumber -->
       <template #cell(invoiceNumber)="data">
         <b-link
@@ -107,17 +97,6 @@
         <span class="text-nowrap">
           {{ data.item.dateIssued }}
         </span>
-      </template>
-
-      <template #cell(documentType)="data">
-        <b-link
-          :to="{ name: 'apps-invoice-preview', params: { id: data.item.id }}"
-          class="font-weight-bold"
-        >
-          <span class="text-nowrap">
-            {{ data.value }}
-          </span>
-        </b-link>
       </template>
 
       <!-- Column: recipientCompany -->

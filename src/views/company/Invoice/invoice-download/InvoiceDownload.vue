@@ -138,11 +138,11 @@
               {{ data.item.quantity }}
           </template>
           <template #cell(singleAmountTransaction)="data">
-              <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.singleAmountTransaction }}</span>
+              <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.singleAmountTransaction }}</span>
               <span v-else>{{ invoiceData.currency }} {{ data.item.singleAmountTransaction }}</span>
           </template>
           <template #cell(transactionTotalAmountNonVat)="data">
-            <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.transactionTotalAmountNonVat }}</span>
+            <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.transactionTotalAmountNonVat }}</span>
             <span v-else>{{ invoiceData.currency }} {{ data.item.transactionTotalAmountNonVat }}</span>
           </template>
         </b-table-lite>
@@ -166,7 +166,7 @@
                 <div class="invoice-total-item">
                   <p class="invoice-total-title">Total price NonVat:</p>
                   <p class="invoice-total-amount">
-                    <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.amountNonVat}}</span>
+                    <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.amountNonVat}}</span>
                     <span v-else>{{ invoiceData.currency }} {{invoiceData.amountNonVat}}</span>
                   </p>
                 </div>
@@ -179,7 +179,7 @@
                 <div class="invoice-total-item">
                   <p class="invoice-total-title">VAT Amount:</p>
                   <p class="invoice-total-amount">
-                    <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.vatAmount}}</span>
+                    <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.vatAmount}}</span>
                     <span v-else>{{ invoiceData.currency }} {{invoiceData.vatAmount}}</span>
                   </p>
                 </div>
@@ -192,7 +192,7 @@
                 <div class="invoice-total-item">
                   <p class="invoice-total-title">Discount Sum:</p>
                   <p class="invoice-total-amount">
-                    <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.tradeDiscountAmount}}</span>
+                    <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.tradeDiscountAmount}}</span>
                     <span v-else>{{ invoiceData.currency }} {{invoiceData.tradeDiscountAmount}}</span>
                   </p>
                 </div>
@@ -200,7 +200,7 @@
                 <div class="invoice-total-item">
                   <p class="invoice-total-title">Total Price:</p>
                   <p class="invoice-total-amount">
-                    <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.totalAmount}}</span>
+                    <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.totalAmount}}</span>
                     <span v-else>{{ invoiceData.currency }} {{invoiceData.totalAmount}}</span>
                   </p>
                 </div>

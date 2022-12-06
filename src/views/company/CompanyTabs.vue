@@ -38,7 +38,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="FileIcon"/>
-          <span style="font-size: 13px">Not Verified Invoices</span>
+          <span style="font-size: 13px">Multiple Upload</span>
         </template>
         <NotVerifiedInvoice/>
       </b-tab>

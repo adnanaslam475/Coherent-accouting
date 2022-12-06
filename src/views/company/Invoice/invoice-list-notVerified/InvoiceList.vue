@@ -89,20 +89,10 @@
         />
       </template>
 
-      <!-- Column: Id -->
-      <template #cell(id)="data">
-        <b-link
-          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }}"
-          class="font-weight-bold"
-        >
-          #{{ data.value }}
-        </b-link>
-      </template>
-
       <!-- Column: invoiceNumber -->
       <template #cell(invoiceNumber)="data">
         <b-link
-          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }}"
+          :to="{ name: 'company-invoice-edit', params: { id: data.item.id, companyId: companyId  }}"
           class="font-weight-bold"
         >
           <span class="text-nowrap">
@@ -118,20 +108,9 @@
         </span>
       </template>
 
-      <template #cell(documentType)="data">
-        <b-link
-          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }}"
-          class="font-weight-bold"
-        >
-          <span class="text-nowrap">
-            {{ data.value }}
-          </span>
-        </b-link>
-      </template>
-
       <template #cell(transactionType)="data">
         <b-link
-          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }}"
+          :to="{ name: 'company-invoice-edit', params: { id: data.item.id, companyId: companyId  }}"
           class="font-weight-bold"
         >
           <span class="text-nowrap"  :id="`transactionType-row-${data.item.id}`">
@@ -257,7 +236,7 @@
             icon="EyeIcon"
             size="16"
             class="mx-1 cursor-pointer"
-            @click="$router.push({ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId  }})"
+            @click="$router.push({ name: 'company-invoice-edit', params: { id: data.item.id, companyId: companyId  }})"
           />
           <b-tooltip
             title="Preview Invoice"
