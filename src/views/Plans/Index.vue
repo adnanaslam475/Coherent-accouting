@@ -1,7 +1,7 @@
 <template>
   <section
-      v-if="Object.keys(pricing).length"
-      id="pricing-plan"
+    v-if="Object.keys(pricing).length"
+    id="pricing-plan"
   >
     <!-- title text and switch button -->
     <div class="text-center">
@@ -34,26 +34,26 @@
     <!-- pricing plan cards -->
     <b-row class="pricing-card">
       <b-col
-          offset-sm-2
-          sm="10"
-          md="12"
-          offset-lg="2"
-          lg="10"
-          class="mx-auto d-flex align-items-center justify-content-center"
+        offset-sm-2
+        sm="10"
+        md="12"
+        offset-lg="2"
+        lg="10"
+        class="mx-auto d-flex align-items-center justify-content-center"
       >
         <b-col cols="10">
           <b-row class="mx-auto d-flex align-items-center justify-content-center">
             <b-col md="4">
               <b-card
-                  align="center"
-                  class="pb-1"
+                align="center"
+                class="pb-1"
               >
                 <!-- img -->
                 <b-img
-                    v-if="hotAirBallon"
-                    :src="hotAirBallon"
-                    class="mb-2 mt-1 w-25"
-                    alt="basic svg img"
+                  v-if="hotAirBallon"
+                  :src="hotAirBallon"
+                  class="mb-2 mt-1 w-25"
+                  alt="basic svg img"
                 />
                 <!--/ img -->
                 <h3>{{ pricing.basicPlan.title }}</h3>
@@ -65,15 +65,16 @@
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
-                    <span class="pricing-basic-value font-weight-bolder text-primary"
+                    <span
+                      class="pricing-basic-value font-weight-bolder text-primary"
                     >{{
-                        monthlyPlanShow ? pricing.basicPlan.monthlyPrice : pricing.basicPlan.yearlyPlan.perMonth
-                      }}</span>
+                      monthlyPlanShow ? pricing.basicPlan.monthlyPrice : pricing.basicPlan.yearlyPlan.perMonth
+                    }}</span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
-                      v-show="!monthlyPlanShow"
-                      class="annual-pricing text-muted"
+                    v-show="!monthlyPlanShow"
+                    class="annual-pricing text-muted"
                   >€ {{ pricing.basicPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
@@ -81,8 +82,8 @@
                 <!-- plan benefit -->
                 <b-list-group class="list-group-circle text-left">
                   <b-list-group-item
-                      v-for="(data,index) in pricing.basicPlan.planBenefits"
-                      :key="index"
+                    v-for="(data,index) in pricing.basicPlan.planBenefits"
+                    :key="index"
                   >
                     {{ data }}
                   </b-list-group-item>
@@ -91,10 +92,10 @@
 
                 <!-- buttons -->
                 <b-button
-                    v-ripple.400="'rgba(40, 199, 111, 0.15)'"
-                    block
-                    class="mt-2"
-                    variant="outline-success"
+                  v-ripple.400="'rgba(40, 199, 111, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="outline-success"
                 >
                   Your current plan
                 </b-button>
@@ -102,26 +103,26 @@
             </b-col>
             <b-col md="4">
               <b-card
-                  class="pb-1 popular"
-                  align="center"
+                class="pb-1 popular"
+                align="center"
               >
                 <div
-                    v-show="pricing.beginnerPlan.popular"
-                    class="pricing-badge text-right"
+                  v-show="pricing.beginnerPlan.popular"
+                  class="pricing-badge text-right"
                 >
                   <b-badge
-                      variant="light-primary"
-                      pill
+                    variant="light-primary"
+                    pill
                   >
                     Popular
                   </b-badge>
                 </div>
                 <!-- img -->
                 <b-img
-                    v-if="helicolptorImage"
-                    :src="helicolptorImage"
-                    class="mb-1 w-25"
-                    alt="svg img"
+                  v-if="helicolptorImage"
+                  :src="helicolptorImage"
+                  class="mb-1 w-25"
+                  alt="svg img"
                 />
                 <!--/ img -->
                 <h3>{{ pricing.beginnerPlan.title }}</h3>
@@ -131,15 +132,16 @@
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
-                    <span class="pricing-basic-value font-weight-bolder text-primary"
+                    <span
+                      class="pricing-basic-value font-weight-bolder text-primary"
                     >{{
-                        monthlyPlanShow ? pricing.beginnerPlan.monthlyPrice : pricing.beginnerPlan.yearlyPlan.perMonth
-                      }}</span>
+                      monthlyPlanShow ? pricing.beginnerPlan.monthlyPrice : pricing.beginnerPlan.yearlyPlan.perMonth
+                    }}</span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
-                      v-show="!monthlyPlanShow"
-                      class="annual-pricing text-muted"
+                    v-show="!monthlyPlanShow"
+                    class="annual-pricing text-muted"
                   >€ {{ pricing.beginnerPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
@@ -147,8 +149,8 @@
                 <!-- plan benefit -->
                 <b-list-group class="list-group-circle text-left">
                   <b-list-group-item
-                      v-for="(data,index) in pricing.beginnerPlan.planBenefits"
-                      :key="index"
+                    v-for="(data,index) in pricing.beginnerPlan.planBenefits"
+                    :key="index"
                   >
                     {{ data }}
                   </b-list-group-item>
@@ -157,10 +159,10 @@
 
                 <!-- buttons -->
                 <b-button
-                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                    block
-                    class="mt-2"
-                    variant="primary"
+                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="primary"
                 >
                   Upgrade
                 </b-button>
@@ -168,15 +170,15 @@
             </b-col>
             <b-col md="4">
               <b-card
-                  align="center"
-                  class="pb-1"
+                align="center"
+                class="pb-1"
               >
                 <!-- img -->
                 <b-img
-                    v-if="aeroplanImage"
-                    :src="aeroplanImage"
-                    class="mb-2 w-25"
-                    alt="enterprise svg img"
+                  v-if="aeroplanImage"
+                  :src="aeroplanImage"
+                  class="mb-2 w-25"
+                  alt="enterprise svg img"
                 />
                 <!--/ img -->
                 <h3>{{ pricing.starterPlan.title }}</h3>
@@ -186,24 +188,25 @@
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
-                    <span class="pricing-basic-value font-weight-bolder text-primary"
+                    <span
+                      class="pricing-basic-value font-weight-bolder text-primary"
                     >{{
-                        monthlyPlanShow ? pricing.starterPlan.monthlyPrice : pricing.starterPlan.yearlyPlan.perMonth
-                      }}</span>
+                      monthlyPlanShow ? pricing.starterPlan.monthlyPrice : pricing.starterPlan.yearlyPlan.perMonth
+                    }}</span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
-                      v-show="!monthlyPlanShow"
-                      class="annual-pricing text-muted"
+                    v-show="!monthlyPlanShow"
+                    class="annual-pricing text-muted"
                   >€ {{ pricing.starterPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
                 <!-- plan benefit -->
                 <b-list-group
-                    v-for="(data,index) in pricing.starterPlan.planBenefits"
-                    :key="index"
-                    class="list-group-circle text-left"
+                  v-for="(data,index) in pricing.starterPlan.planBenefits"
+                  :key="index"
+                  class="list-group-circle text-left"
                 >
                   <b-list-group-item>
                     {{ data }}
@@ -213,10 +216,10 @@
 
                 <!-- buttons -->
                 <b-button
-                    v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                    block
-                    class="mt-2"
-                    variant="outline-primary"
+                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="outline-primary"
                 >
                   Upgrade
                 </b-button>
@@ -224,15 +227,15 @@
             </b-col>
             <b-col md="4">
               <b-card
-                  align="center"
-                  class="pb-1"
+                align="center"
+                class="pb-1"
               >
                 <!-- img -->
                 <b-img
-                    v-if="aeroplanJetImage"
-                    :src="aeroplanJetImage"
-                    class="mb-2 w-25"
-                    alt="enterprise svg img"
+                  v-if="aeroplanJetImage"
+                  :src="aeroplanJetImage"
+                  class="mb-2 w-25"
+                  alt="enterprise svg img"
                 />
                 <!--/ img -->
                 <h3>{{ pricing.primaryPlan.title }}</h3>
@@ -242,24 +245,25 @@
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
-                    <span class="pricing-basic-value font-weight-bolder text-primary"
+                    <span
+                      class="pricing-basic-value font-weight-bolder text-primary"
                     >{{
-                        monthlyPlanShow ? pricing.primaryPlan.monthlyPrice : pricing.primaryPlan.yearlyPlan.perMonth
-                      }}</span>
+                      monthlyPlanShow ? pricing.primaryPlan.monthlyPrice : pricing.primaryPlan.yearlyPlan.perMonth
+                    }}</span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
-                      v-show="!monthlyPlanShow"
-                      class="annual-pricing text-muted"
+                    v-show="!monthlyPlanShow"
+                    class="annual-pricing text-muted"
                   >€ {{ pricing.primaryPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
                 <!-- plan benefit -->
                 <b-list-group
-                    v-for="(data,index) in pricing.primaryPlan.planBenefits"
-                    :key="index"
-                    class="list-group-circle text-left"
+                  v-for="(data,index) in pricing.primaryPlan.planBenefits"
+                  :key="index"
+                  class="list-group-circle text-left"
                 >
                   <b-list-group-item>
                     {{ data }}
@@ -269,10 +273,10 @@
 
                 <!-- buttons -->
                 <b-button
-                    v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                    block
-                    class="mt-2"
-                    variant="outline-primary"
+                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="outline-primary"
                 >
                   Upgrade
                 </b-button>
@@ -280,15 +284,15 @@
             </b-col>
             <b-col md="4">
               <b-card
-                  align="center"
-                  class="pb-1"
+                align="center"
+                class="pb-1"
               >
                 <!-- img -->
                 <b-img
-                    v-if="roketImage"
-                    :src="roketImage"
-                    class="mb-2 w-25"
-                    alt="enterprise svg img"
+                  v-if="roketImage"
+                  :src="roketImage"
+                  class="mb-2 w-25"
+                  alt="enterprise svg img"
                 />
                 <!--/ img -->
                 <h3>{{ pricing.platinumPlan.title }}</h3>
@@ -298,24 +302,25 @@
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
-                    <span class="pricing-basic-value font-weight-bolder text-primary"
+                    <span
+                      class="pricing-basic-value font-weight-bolder text-primary"
                     >{{
-                        monthlyPlanShow ? pricing.platinumPlan.monthlyPrice : pricing.platinumPlan.yearlyPlan.perMonth
-                      }}</span>
+                      monthlyPlanShow ? pricing.platinumPlan.monthlyPrice : pricing.platinumPlan.yearlyPlan.perMonth
+                    }}</span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
-                      v-show="!monthlyPlanShow"
-                      class="annual-pricing text-muted"
+                    v-show="!monthlyPlanShow"
+                    class="annual-pricing text-muted"
                   >€ {{ pricing.platinumPlan.yearlyPlan.totalAnual }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
                 <!-- plan benefit -->
                 <b-list-group
-                    v-for="(data,index) in pricing.platinumPlan.planBenefits"
-                    :key="index"
-                    class="list-group-circle text-left"
+                  v-for="(data,index) in pricing.platinumPlan.planBenefits"
+                  :key="index"
+                  class="list-group-circle text-left"
                 >
                   <b-list-group-item>
                     {{ data }}
@@ -325,10 +330,10 @@
 
                 <!-- buttons -->
                 <b-button
-                    v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                    block
-                    class="mt-2"
-                    variant="outline-primary"
+                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="outline-primary"
                 >
                   Upgrade
                 </b-button>
@@ -341,72 +346,72 @@
     <!--/ pricing plan cards -->
 
     <!-- pricing free trial -->
-<!--    <div class="pricing-free-trial">-->
-<!--      <b-row>-->
-<!--        <b-col-->
-<!--            lg="10"-->
-<!--            offset-lg="3"-->
-<!--            class="mx-auto"-->
-<!--        >-->
-<!--          <div class="pricing-trial-content d-flex justify-content-between">-->
-<!--            <div class="text-center text-md-left mt-3">-->
-<!--              <h3 class="text-primary">-->
-<!--                Still not convinced? Start with a 14-day FREE trial!-->
-<!--              </h3>-->
-<!--              <h5>You will get full access to with all the features for 14 days.</h5>-->
-<!--              <b-button-->
-<!--                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"-->
-<!--                  variant="primary"-->
-<!--                  class="mt-2 mt-lg-3"-->
-<!--              >-->
-<!--                Start 14-day FREE trial-->
-<!--              </b-button>-->
-<!--            </div>-->
+    <!--    <div class="pricing-free-trial">-->
+    <!--      <b-row>-->
+    <!--        <b-col-->
+    <!--            lg="10"-->
+    <!--            offset-lg="3"-->
+    <!--            class="mx-auto"-->
+    <!--        >-->
+    <!--          <div class="pricing-trial-content d-flex justify-content-between">-->
+    <!--            <div class="text-center text-md-left mt-3">-->
+    <!--              <h3 class="text-primary">-->
+    <!--                Still not convinced? Start with a 14-day FREE trial!-->
+    <!--              </h3>-->
+    <!--              <h5>You will get full access to with all the features for 14 days.</h5>-->
+    <!--              <b-button-->
+    <!--                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"-->
+    <!--                  variant="primary"-->
+    <!--                  class="mt-2 mt-lg-3"-->
+    <!--              >-->
+    <!--                Start 14-day FREE trial-->
+    <!--              </b-button>-->
+    <!--            </div>-->
 
-<!--            &lt;!&ndash; images &ndash;&gt;-->
-<!--            <b-img-->
-<!--                fluid-->
-<!--                :src="require('@/assets/images/illustration/pricing-Illustration.svg')"-->
-<!--                class="pricing-trial-img"-->
-<!--                alt="svg img"-->
-<!--            />-->
-<!--            &lt;!&ndash;/ images &ndash;&gt;-->
-<!--          </div>-->
-<!--        </b-col>-->
-<!--      </b-row>-->
-<!--    </div>-->
+    <!--            &lt;!&ndash; images &ndash;&gt;-->
+    <!--            <b-img-->
+    <!--                fluid-->
+    <!--                :src="require('@/assets/images/illustration/pricing-Illustration.svg')"-->
+    <!--                class="pricing-trial-img"-->
+    <!--                alt="svg img"-->
+    <!--            />-->
+    <!--            &lt;!&ndash;/ images &ndash;&gt;-->
+    <!--          </div>-->
+    <!--        </b-col>-->
+    <!--      </b-row>-->
+    <!--    </div>-->
     <!--/ pricing free trial -->
 
     <!-- pricing faq -->
-<!--    <div class="pricing-faq">-->
-<!--      <h3 class="text-center">-->
-<!--        FAQ's-->
-<!--      </h3>-->
-<!--      <p class="text-center">-->
-<!--        Let us help answer the most common questions.-->
-<!--      </p>-->
-<!--      <b-row class="py-2">-->
-<!--        <b-col-->
-<!--            lg="10"-->
-<!--            offset-lg="2"-->
-<!--            class="mx-auto"-->
-<!--        >-->
-<!--          <app-collapse-->
-<!--              accordion-->
-<!--              type="margin"-->
-<!--          >-->
+    <!--    <div class="pricing-faq">-->
+    <!--      <h3 class="text-center">-->
+    <!--        FAQ's-->
+    <!--      </h3>-->
+    <!--      <p class="text-center">-->
+    <!--        Let us help answer the most common questions.-->
+    <!--      </p>-->
+    <!--      <b-row class="py-2">-->
+    <!--        <b-col-->
+    <!--            lg="10"-->
+    <!--            offset-lg="2"-->
+    <!--            class="mx-auto"-->
+    <!--        >-->
+    <!--          <app-collapse-->
+    <!--              accordion-->
+    <!--              type="margin"-->
+    <!--          >-->
 
-<!--            <app-collapse-item-->
-<!--                v-for="(data,index) in pricing.qandA"-->
-<!--                :key="index"-->
-<!--                :title="data.question"-->
-<!--            >-->
-<!--              {{ data.ans }}-->
-<!--            </app-collapse-item>-->
-<!--          </app-collapse>-->
-<!--        </b-col>-->
-<!--      </b-row>-->
-<!--    </div>-->
+    <!--            <app-collapse-item-->
+    <!--                v-for="(data,index) in pricing.qandA"-->
+    <!--                :key="index"-->
+    <!--                :title="data.question"-->
+    <!--            >-->
+    <!--              {{ data.ans }}-->
+    <!--            </app-collapse-item>-->
+    <!--          </app-collapse>-->
+    <!--        </b-col>-->
+    <!--      </b-row>-->
+    <!--    </div>-->
     <!--/ pricing faq -->
   </section>
 </template>
@@ -440,7 +445,7 @@ export default {
       aeroplanImage: '',
       helicolptorImage: '',
       aeroplanJetImage: '',
-      status: 'monthly',
+      status: 'annually',
       monthlyPlanShow: true,
       pricing: {
         basicPlan: {
@@ -564,6 +569,7 @@ export default {
     this.roketImage = require('@/assets/images/illustration/rocket-svgrepo-com.svg')
     this.aeroplanJetImage = require('@/assets/images/illustration/aeroplane-plane-svgrepo-com.svg')
     this.helicolptorImage = require('@/assets/images/illustration/helicoptor.svg')
+    this.monthlyPlanShow = this.status === 'monthly'
   },
   methods: {
     tooglePlan() {
