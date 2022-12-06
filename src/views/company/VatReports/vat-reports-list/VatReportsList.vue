@@ -91,6 +91,7 @@
       title="Invoices for Vat Reports"
       ok-title="Download Zip"
       cancel-title="Close"
+      @ok="getZipFile()"
       scrollable
     >
       <form ref="form" @submit.stop.prevent="handleMonthSelected">
@@ -103,14 +104,16 @@
           show-empty
           empty-text="No matching records found"
           class="position-relative invoiceList"
-        >
+        > 
           <template #cell(isChecked)="data">
             <b-form-checkbox
-              :id="'checkbox'+data.item.id"
+              :id="'checkbox' + data.item.id"
               name="checkbox-1"
               value="accepted"
               unchecked-value="not_accepted"
-            ></b-form-checkbox>
+              v-model="status[data.item.id]"
+              ></b-form-checkbox
+            >
           </template>
 
           <!-- Column: Id -->
@@ -320,6 +323,8 @@ import { required } from "@validations";
 import { extend } from "vee-validate";
 import VueMonthlyPicker from "vue-monthly-picker";
 
+import axios from "@/libs/axios";
+
 extend("required", {
   ...required,
   message: "This field is mandatory",
@@ -332,11 +337,59 @@ export default {
       return 1;
     },
 
+    //getting zip file from backend
+    getZipFile() {
+      let j = 0;
+      for (let i = 0; i < this.totalInvoicesForReport; i++) {
+        if (this.status[this.invoicesForReport[i].id] == "accepted") {
+          this.idsToSend[j] = this.invoicesForReport[i].id;
+          j++;
+        }
+      }
+
+      let token = useJwt.getToken();
+      useJwt.GetVatReportsZip(token, this.idsToSend).then((response) => {
+        if(response.data.fileId != null){
+        const data = JSON.parse(response.data.fileId);
+        axios
+          .get(
+            `${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${data.companyId}`,
+            { responseType: "blob" }
+          )
+          .then((response) => {
+            // console.log(response);
+            if (response.status === 200) {
+              const reader = new FileReader();
+              reader.readAsDataURL(response.data);
+              reader.onload = function () {
+                const filePath = reader.result;
+                const a = document.createElement("a");
+                a.href = filePath;
+                a.download = `${data.binaryId}`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+              };
+            }
+          })
+          .catch((error) => {
+            // console.log(error);
+            this.makeToast(
+              "danger",
+              error.response.errorCode,
+              error.response.errorMessage
+            );
+          });
+        }
+        });
+    },
+
     //
     resetModal() {
       this.selectedMonthData.date = "";
     },
 
+    //
     handleOk(bvModalEvent) {
       // Prevent modal from closing
       bvModalEvent.preventDefault();
@@ -366,6 +419,10 @@ export default {
             .InvoicesForVatReport(token, this.selectedMonthData)
             .then((response) => {
               this.invoicesForReport = response.data.elements;
+              this.totalInvoicesForReport = response.data.totalElements;
+              for (let i = 0; i < this.totalInvoicesForReport; i++) {
+                this.status[this.invoicesForReport[i].id] = "accepted";
+              }
               // console.log(this.invoicesForReport);
             });
           this.$nextTick(() => {
@@ -414,6 +471,10 @@ export default {
   },
   data() {
     return {
+      checkedAll: true,
+      idsToSend: [],
+      totalInvoicesForReport: "",
+      status: [],
       invoicesForReport: [],
       selectedMonthData: {
         companyId: "",

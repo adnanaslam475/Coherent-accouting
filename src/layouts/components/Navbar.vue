@@ -445,12 +445,8 @@ export default {
     async getUserDetail() {
       try {
         const data = await axios.get('account/api/user/who-am-i')
-        if (data.status != 200) {
-          this.logout()
-        } else {
-          this.userDetail = data.data
-          localStorage.setItem('userData', JSON.stringify(data.data))
-        }
+        this.userDetail = data.data
+        localStorage.setItem('userData', JSON.stringify(data.data))
       } catch (error) {
         console.log('error', error)
         this.logout()

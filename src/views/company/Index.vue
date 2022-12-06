@@ -1,29 +1,25 @@
+
+
 <template>
   <div>
     <div class="row">
       <!-- <input data-v-9a6e255c="" type="text" placeholder="Search..." class="d-inline-block mr-1 form-control col-4" style="margin-left: 15px" /> -->
       <div
-
+        
+        
         class="input-group col-4 abc"
       >
         <!----><input
-                 id="__BVID__3198"
-                 v-model="searchQuery"
-                 data-v-15eba8c6=""
-                 type="text"
-                 placeholder="Search Product"
-                 class="search-product form-control "
-                 @keyup="searchCompanies()"
-               >
-        <div
           data-v-15eba8c6=""
-          class="input-group-append"
-        >
-          <div
-            data-v-15eba8c6=""
-            class="input-group-text"
-            style="height: 38px; cursor:pointer"
-          >
+          type="text"
+          placeholder="Search Product"
+          class="search-product form-control "
+          id="__BVID__3198"
+          v-model="searchQuery"
+          @keyup="searchCompanies()"
+        />
+        <div data-v-15eba8c6="" class="input-group-append">       
+          <div data-v-15eba8c6="" class="input-group-text" style="height: 38px; cursor:pointer" > 
             <!-- #7367f0 -->
             <svg
               data-v-15eba8c6=""
@@ -38,19 +34,14 @@
               stroke-linejoin="round"
               class="text-muted feather feather-search"
             >
-              <circle
-                data-v-15eba8c6=""
-                cx="11"
-                cy="11"
-                r="8"
-              />
+              <circle data-v-15eba8c6="" cx="11" cy="11" r="8"></circle>
               <line
                 data-v-15eba8c6=""
                 x1="21"
                 y1="21"
                 x2="16.65"
                 y2="16.65"
-              />
+              ></line>
             </svg>
           </div>
         </div>
@@ -61,27 +52,21 @@
         variant="relief-primary"
         class="float-right mb-1 col-2 ml-auto"
         style="margin-right: 15px"
-      >Add Company</b-button>
+        >Add Company</b-button
+      >
     </div>
-    <b-table
-      :fields="fields"
-      :items="items"
-      responsive
-      class="mb-0"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      @sort-changed="checkStatus"
-    >
+    <b-table :fields="fields" :items="items" responsive class="mb-0"  :sort-by.sync="sortBy"  :sort-desc.sync="sortDesc" @sort-changed="checkStatus">
       <template #cell(Country)="data">
         <div>
           <!-- {{data.item.companyCountry}} -->
           <!-- :src="getImage(data.item.companyCountry)" -->
           <img
-            :src="&quot;@/assets/flags/&quot; + data.item.companyIsoAlpha2Country.toLowerCase() + &quot;.png&quot;"
+            :src='"@/assets/flags/" + data.item.companyIsoAlpha2Country.toLowerCase() + ".png"'
             style="width: 30px; height: 20px; margin-left: 10px"
-          >
+          />
         </div>
       </template>
+
 
       <template #cell(companyName)="data">
         <div
@@ -98,13 +83,15 @@
             justify-content: center;
           "
         >
-          <span>{{ data.item.companyName.substr(0, 1)
-          }}{{
-            data.item.companyName.substr(
-              data.item.companyName.indexOf(" ") + 1,
-              1
-            ).toUpperCase()
-          }}</span>
+          <span
+            >{{ data.item.companyName.substr(0, 1)
+            }}{{
+              data.item.companyName.substr(
+                data.item.companyName.indexOf(" ") + 1,
+                1
+              ).toUpperCase()
+            }}</span
+          >
         </div>
         <div
           v-else
@@ -120,12 +107,13 @@
             justify-content: center;
           "
         >
-          <span>{{ data.item.companyName.substr(0, 1)
-          }}{{ data.item.companyName.substr(1, 1).toUpperCase() }}</span>
+          <span
+            >{{ data.item.companyName.substr(0, 1)
+            }}{{ data.item.companyName.substr(1, 1).toUpperCase() }}</span
+          >
         </div>
-        <b-link
-          :to="{ name: 'CompanyView', params: { id: data.item.id } }"
-        >{{ data.item.companyName }}
+        <b-link :to="{ name: 'CompanyView', params: { id: data.item.id } }"
+          >{{ data.item.companyName }}
         </b-link>
 
         <!-- <div>{{data.item.companyName}}</div> -->
@@ -147,53 +135,34 @@
         <!-- <div>{{data.item.companyIdentificationNumber}}</div> -->
       </template>
 
-      <template
-        #cell(action)="data"
-        style="text-align: center !important"
-      >
-        <!-- <b-button variant="outline-primary" class="btn-icon"> -->
+      <template style="text-align: center !important" #cell(action)="data">
+       
+        <feather-icon
+          :id="`edit-${data.item.id}-preview-icon`"
+          icon="EditIcon"
+          size="16"
+          class="mx-0"
+          @click="$router.push({ name: 'EditCompany', params: { id: data.item.id }})"
+          style="cursor: pointer"
+        />
+        <b-tooltip
+          title="Edit Company"
+          :target="`edit-${data.item.id}-preview-icon`"
+        />
 
-        <!-- Dropdown -->
-        <b-dropdown
-          variant="link"
-          toggle-class="p-0"
-          no-caret
-          :right="$store.state.appConfig.isRTL"
-        >
-          <template #button-content>
-            <feather-icon
-              icon="MoreVerticalIcon"
-              size="16"
-              class="align-middle text-body ml-1"
-            />
-          </template>
-          <!-- <b-dropdown-item>
-            <feather-icon icon="DownloadIcon" />
-            <span class="align-middle ml-50">Download</span>
-          </b-dropdown-item> -->
-          <b-dropdown-item
-            :to="{
-              name: 'EditCompany',
-              params: { id: data.item.id },
-            }"
-          >
-            <feather-icon icon="EditIcon" />
-            <span class="align-middle ml-50">Edit</span>
-          </b-dropdown-item>
-          <b-dropdown-item>
-            <feather-icon icon="TrashIcon" />
-            <span
-              class="align-middle ml-50"
-              @click="deleteCompany(data.item.id)"
-            >Delete</span>
-          </b-dropdown-item>
-          <!-- <b-dropdown-item>
-            <feather-icon icon="CopyIcon" />
-            <span class="align-middle ml-50">Duplicate</span>
-          </b-dropdown-item> -->
-        </b-dropdown>
+        <feather-icon
+          :id="`delete-${data.item.id}-preview-icon`"
+          icon="TrashIcon"
+          size="16"
+          class="mx-1"
+          @click="deleteCompany(data.item.id)"
+          style="cursor: pointer"
+        />
+        <b-tooltip
+          title="Delete Company"
+          :target="`delete-${data.item.id}-preview-icon`"
+        />
 
-        <!-- </b-button> -->
       </template>
     </b-table>
 
@@ -236,26 +205,20 @@
             @input="getNewRecord"
           >
             <template #prev-text>
-              <feather-icon
-                icon="ChevronLeftIcon"
-                size="18"
-              />
+              <feather-icon icon="ChevronLeftIcon" size="18" />
             </template>
             <template #next-text>
-              <feather-icon
-                icon="ChevronRightIcon"
-                size="18"
-              />
+              <feather-icon icon="ChevronRightIcon" size="18" />
             </template>
           </b-pagination>
         </b-col>
       </b-row>
     </div>
   </div>
-</template>
+</template> 
 <script>
-import BCardCode from '@core/components/b-card-code/BCardCode.vue'
-import Swal from 'sweetalert2'
+import BCardCode from "@core/components/b-card-code/BCardCode.vue";
+import Swal from "sweetalert2";
 
 // import {  BBadge, BButton, BLink, } from 'bootstrap-vue'
 
@@ -275,10 +238,10 @@ import {
   BPagination,
   BTooltip,
   BProgress,
-} from 'bootstrap-vue'
+} from "bootstrap-vue";
 
-import useJwt from '@/auth/jwt/useJwt'
-import axios from '@/libs/axios'
+import useJwt from "@/auth/jwt/useJwt";
+import axios from "@/libs/axios";
 
 // import store from '@/store'
 
@@ -306,29 +269,30 @@ export default {
 
   data() {
     return {
-      direction: 'asc',
-      sortField: 'companyName',
-      sortBy: 'companyName',
+      direction:"asc",
+      sortField: "companyName",
+      sortBy : 'companyName',
       sortDesc: false,
       fields: [
         // A virtual column that doesn't exist in items
-        'Country',
+        "Country",
         // A column that needs custom formatting
-        { key: 'companyName', label: 'Company Name', sortable: true },
-        { key: 'companyMail', label: 'Email', sortable: true },
+        { key: "companyName", label: "Company Name", sortable: true},
+        {key: "companyMail", label: "Email", sortable: true},
         // A regular column
-        { key: 'companyOwnerFirstName', label: 'Owner Name', sortable: true },
+        { key: "companyOwnerFirstName", label: "Owner Name", sortable: true },
         // A regular column
-        { key: 'companyIdentificationNumber', label: 'Company ID', sortable: true },
+        { key: "companyIdentificationNumber", label: "Company ID", sortable: true },
         // A virtual column made up from two fields
-        { key: 'action', label: 'Action' },
+        { key: "action", label: "Action" },
       ],
       items: [],
       currentPage: 1,
-      perPage: '10',
-      totalRecords: '',
-      totalPages: '',
-      searchQuery: '',
+      perPage: "10",
+      totalRecords: "",
+      totalPages: "",
+      searchQuery:"",
+     
 
       // items: [
       //   {
@@ -377,57 +341,50 @@ export default {
       //     action: 'Edit/Delete'
       //   }
       // ],
-    }
-  },
-  created() {
-    this.getAllCompanies()
-    // useJwt.clientToken().then(res => {
-    //   let token = res.data.access_token
-    //   useJwt.companies(token).then(response => {
-    //     console.log(response);
-    //   }).catch(error => {
-    //     //
-    //   })
-    // })
+    };
   },
   methods: {
-    checkStatus(ctx) {
-      if (ctx.sortDesc === false) {
-        this.direction = 'asc'
-      } else {
-        this.direction = 'desc'
+    checkStatus(ctx){
+      if(ctx.sortDesc === false){
+        this.direction = "asc";
       }
-      this.sortField = ctx.sortBy
-      this.getAllCompanies()
+      else{
+        this.direction = "desc";
+      }
+      this.sortField = ctx.sortBy;
+     this.getAllCompanies();
+     
     },
 
-    // getting the list of all companies
-    async searchCompanies() {
+     // getting the list of all companies
+     async searchCompanies() {
       const data = await axios.get(
-        `/account/api/company/search/${
-          this.currentPage
-        }/${
-          this.perPage
-        }?direction=${this.direction}&queryString=${this.searchQuery}&sortField=${this.sortField}`,
+        "/account/api/company/search/" +
+          this.currentPage +
+          "/" +
+          this.perPage +
+          "?direction="+this.direction+"&queryString="+this.searchQuery +"&sortField="+this.sortField,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "http://localhost:8080",
           },
-        },
-      )
+        }
+      );
 
-      if (data.data.elements != '') {
-        this.items = data.data.elements
-        this.totalRecords = data.data.totalElements
-        this.totalPages = Math.ceil(this.totalRecords / this.perPage)
+      if (data.data.elements != "") {
+        this.items = data.data.elements;
+        this.totalRecords = data.data.totalElements;
+        this.totalPages = Math.ceil(this.totalRecords / this.perPage);
         // console.log(this.totalPages);
-      } else {
-        this.items = []
-        this.totalRecords = ''
-        this.totalPages = ''
       }
+      else{
+        this.items = [];
+        this.totalRecords = "";
+        this.totalPages = "";
+      }
+ 
     },
 
     // getImage(country) {
@@ -438,57 +395,60 @@ export default {
     //
     async deleteCompany(companyID) {
       const self = this
-      const config = {
-        method: 'delete',
-        url: `/account/api/company/${companyID}`,
+      var config = {
+        method: "delete",
+        url: "/account/api/company/" + companyID,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          'Access-Control-Allow-Credentials': true,
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:8080',
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
         },
-      }
+      };
 
       await axios(config)
-        .then(response => {
-          self.getAllCompanies()
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          // console.log(companyID);
+          self.getAllCompanies();
           Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Company Deleted!',
+            position: "center",
+            icon: "success",
+            title: "Company Deleted!",
             showConfirmButton: false,
             timer: 1400,
-          })
+          });
+         
         })
-        .catch(error => {
-          console.log(error)
-        })
-      setTimeout(() => {
-        this.getAllCompanies()
-      }, 1400)
+        .catch(function (error) {
+          console.log(error);
+        });
+        setTimeout(() => {
+       this.getAllCompanies();
+      }, 1400);
     },
 
     // getting the list of all companies
     async getAllCompanies() {
       const data = await axios.get(
-        `/account/api/company/list/${
-          this.currentPage
-        }/${
-          this.perPage
-        }?direction=${this.direction}&sortField=${this.sortField}`,
+        "/account/api/company/list/" +
+          this.currentPage +
+          "/" +
+          this.perPage +
+          "?direction="+this.direction+"&sortField="+this.sortField,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "http://localhost:8080",
           },
-        },
-      )
+        }
+      );
 
-      if (data.data.elements !== '') {
-        this.items = data.data.elements
-        this.totalRecords = data.data.totalElements
-        this.totalPages = Math.ceil(this.totalRecords / this.perPage)
+      if (data.data.elements != "") {
+        this.items = data.data.elements;
+        this.totalRecords = data.data.totalElements;
+        this.totalPages = Math.ceil(this.totalRecords / this.perPage);
         // console.log(this.totalPages);
       }
 
@@ -513,26 +473,38 @@ export default {
     async getNewRecord(cP) {
       // alert(cP);
       const data = await axios.get(
-        `/account/api/company/list/${
-          cP
-        }/${
-          this.perPage
-        }?direction=desc&sortField=id`,
+        "/account/api/company/list/" +
+          cP +
+          "/" +
+          this.perPage +
+          "?direction=desc&sortField=id",
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "http://localhost:8080",
           },
-        },
-      )
+        }
+      );
 
-      if (data.data.elements !== '') {
-        this.items = data.data.elements
+      if (data.data.elements != "") {
+        this.items = data.data.elements;
       }
     },
   },
-}
+  created() {
+    console.log();
+    this.getAllCompanies();
+    // useJwt.clientToken().then(res => {
+    //   let token = res.data.access_token
+    //   useJwt.companies(token).then(response => {
+    //     console.log(response);
+    //   }).catch(error => {
+    //     //
+    //   })
+    // })
+  },
+};
 </script>
 <style scoped>
 /*  */
@@ -541,3 +513,4 @@ export default {
 }
 
 </style>>
+
