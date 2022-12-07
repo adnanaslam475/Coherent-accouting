@@ -26,12 +26,14 @@
               <b-button
                 :to="{ name: 'company-users-edit', params: { id: $route.params.id, companyId: $route.params.companyId  } }"
                 variant="primary"
+                size="sm"
               >
                 Edit
               </b-button>
               <b-button
                 variant="outline-danger"
                 class="ml-1"
+                size="sm"
                 @click="UserDelete(userData.id)"
               >
                 Delete

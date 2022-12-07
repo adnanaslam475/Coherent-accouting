@@ -52,9 +52,7 @@
                           >
                             {{ companyRecord.companyName }}
                           </h4>
-                          <span class="card-text">{{
-                            companyRecord.companyMail
-                          }}</span>
+                          <span class="card-text">{{ companyRecord.companyMail }}</span>
                         </div>
                         <div class="d-flex flex-wrap">
                           <b-button
