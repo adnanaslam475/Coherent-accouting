@@ -3,57 +3,63 @@
     <b-tabs v-model="companyTab">
       <b-tab>
         <template #title>
-          <feather-icon icon="BriefcaseIcon"/>
+          <feather-icon icon="BriefcaseIcon" />
           <span style="font-size: 13px">Company Info</span>
         </template>
         <CompanyInfo
-            :company-tab="companyTab"
-            @state="update($event)"
+          :company-tab="companyTab"
+          @state="update($event)"
         />
       </b-tab>
 
       <b-tab>
         <template #title>
-          <feather-icon icon="FileTextIcon"/>
+          <feather-icon icon="FileTextIcon" />
           <span style="font-size: 13px">Invoices</span>
         </template>
-        <Invoice :invoiceTab="invoiceTab" @state="updateInvoiceTab($event)" />
+        <Invoice
+          :invoice-tab="invoiceTab"
+          @state="updateInvoiceTab($event)"
+        />
       </b-tab>
       <b-tab>
         <template #title>
-          <feather-icon icon="FlagIcon"/>
+          <feather-icon icon="FlagIcon" />
           <span style="font-size: 13px">Yearly Reports</span>
         </template>
-        <YearlyReport/>
+        <YearlyReport />
       </b-tab>
 
       <b-tab>
         <template #title>
-          <feather-icon icon="FlagIcon"/>
+          <feather-icon icon="FlagIcon" />
           <span style="font-size: 13px">Vat Reports</span>
         </template>
-        <VatReports :vatReportsTab="vatReportsTab" @state="updateVatReportsTab($event)"/>
+        <VatReports
+          :vat-reports-tab="vatReportsTab"
+          @state="updateVatReportsTab($event)"
+        />
       </b-tab>
 
       <b-tab>
         <template #title>
-          <feather-icon icon="FileIcon"/>
+          <feather-icon icon="FileIcon" />
           <span style="font-size: 13px">Multiple Upload</span>
         </template>
-        <NotVerifiedInvoice/>
+        <NotVerifiedInvoice />
       </b-tab>
 
       <b-tab>
         <template #title>
-          <feather-icon icon="FolderIcon"/>
+          <feather-icon icon="FolderIcon" />
           <span style="font-size: 13px">Documents</span>
         </template>
-        <Document/>
+        <Document />
       </b-tab>
 
       <b-tab>
         <template #title>
-          <feather-icon icon="UserIcon"/>
+          <feather-icon icon="UserIcon" />
           <span style="font-size: 13px">Private Persons</span>
         </template>
         <PrivatePersons />
@@ -117,7 +123,7 @@ export default {
     },
     updateVatReportsTab(value) {
       this.vatReportsTab = value
-    }
+    },
   },
 }
 </script>

@@ -90,6 +90,20 @@
       :sort-desc.sync="isSortDirDesc"
       class="position-relative invoiceList"
     >
+      <template #empty="scope">
+        <div class="d-flex align-items-center justify-content-center">
+          <div class="mb-1 start-chat-icon">
+            <feather-icon
+                icon="FolderIcon"
+                size="40"
+            />
+          </div>
+          <h5 class="sidebar-toggle start-chat-text">
+            No records found
+          </h5>
+        </div>
+      </template>
+
       <template #head(invoiceStatus)>
         <feather-icon icon="TrendingUpIcon" class="mx-auto" />
       </template>
@@ -128,7 +142,7 @@
             <b-badge
               pill
               :variant="`${
-                data.value == 'EXPENSE' ? 'light-danger' : 'light-success'
+                data.value === 'EXPENSE' ? 'light-danger' : 'light-success'
               }`"
               class="text-capitalize"
             >
@@ -204,9 +218,9 @@
         <span class="text-nowrap">
           <span
             v-if="
-              data.item.currency == 'lv' ||
-              data.item.currency == 'лв' ||
-              data.item.currency == 'лв.'
+              data.item.currency === 'lv' ||
+              data.item.currency === 'лв' ||
+              data.item.currency === 'лв.'
             "
             >лв. {{ data.value }}</span
           >
@@ -219,9 +233,9 @@
         <span class="text-nowrap">
           <span
             v-if="
-              data.item.currency == 'lv' ||
-              data.item.currency == 'лв' ||
-              data.item.currency == 'лв.'
+              data.item.currency === 'lv' ||
+              data.item.currency === 'лв' ||
+              data.item.currency === 'лв.'
             "
             >лв. {{ data.value }}</span
           >
@@ -234,9 +248,9 @@
         <span class="text-nowrap">
           <span
             v-if="
-              data.item.currency == 'lv' ||
-              data.item.currency == 'лв' ||
-              data.item.currency == 'лв.'
+              data.item.currency === 'lv' ||
+              data.item.currency === 'лв' ||
+              data.item.currency === 'лв.'
             "
             >лв. {{ data.value }}</span
           >
@@ -349,6 +363,7 @@
           class="d-flex align-items-center justify-content-center justify-content-sm-end"
         >
           <b-pagination
+            v-if="totalInvoices > 0"
             v-model="currentPage"
             :total-rows="totalInvoices"
             :per-page="perPage"
