@@ -95,7 +95,7 @@
           <div class="mb-1 start-chat-icon">
             <feather-icon
                 icon="FolderIcon"
-                size="40"
+                size="20"
             />
           </div>
           <h5 class="sidebar-toggle start-chat-text">

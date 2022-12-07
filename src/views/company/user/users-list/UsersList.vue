@@ -75,10 +75,10 @@
         <template #empty="scope">
           <div class="d-flex align-items-center justify-content-center">
             <div class="mb-1 start-chat-icon">
-              <feather-icon
+ <feather-icon
                 icon="FolderIcon"
-                size="40"
-              />
+                size="20"
+            />
             </div>
             <h5 class="sidebar-toggle start-chat-text">
               No records found

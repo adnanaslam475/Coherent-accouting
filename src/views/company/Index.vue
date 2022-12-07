@@ -82,7 +82,7 @@
           <div class="mb-1 start-chat-icon">
             <feather-icon
               icon="FolderIcon"
-              size="40"
+              size="20"
             />
           </div>
           <h5 class="sidebar-toggle start-chat-text">
@@ -449,7 +449,7 @@ export default {
         },
       )
 
-      if (data.data.elements != '') {
+      if (data.data.elements !== '') {
         this.items = data.data.elements
         this.totalRecords = data.data.totalElements
         this.totalPages = Math.ceil(this.totalRecords / this.perPage)
@@ -488,7 +488,7 @@ export default {
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Company Deleted!',
+            title: 'Company Deleted..!',
             showConfirmButton: false,
             timer: 1400,
           })
@@ -504,11 +504,7 @@ export default {
     // getting the list of all companies
     async getAllCompanies() {
       const data = await axios.get(
-        `/account/api/company/list/${
-          this.currentPage
-        }/${
-          this.perPage
-        }?direction=${this.direction}&sortField=${this.sortField}`,
+        `/account/api/company/list/${this.currentPage}/${this.perPage}?direction=${this.direction}&sortField=${this.sortField}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -518,11 +514,14 @@ export default {
         },
       )
 
-      if (data.data.elements != '') {
+      if (data.data.elements !== '') {
         this.items = data.data.elements
         this.totalRecords = data.data.totalElements
         this.totalPages = Math.ceil(this.totalRecords / this.perPage)
         // console.log(this.totalPages);
+      }
+      else {
+        this.items = []
       }
 
       // axios.get("/account/api/company/list/1/10?direction=desc&sortField=id", {
@@ -546,11 +545,7 @@ export default {
     async getNewRecord(cP) {
       // alert(cP);
       const data = await axios.get(
-        `/account/api/company/list/${
-          cP
-        }/${
-          this.perPage
-        }?direction=desc&sortField=id`,
+        `/account/api/company/list/${cP}/${this.perPage}?direction=desc&sortField=id`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -559,8 +554,7 @@ export default {
           },
         },
       )
-
-      if (data.data.elements != '') {
+      if (data.data.elements !== '') {
         this.items = data.data.elements
       }
     },

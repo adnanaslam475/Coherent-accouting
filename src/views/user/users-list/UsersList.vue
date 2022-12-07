@@ -9,7 +9,6 @@
       @refetch-data="refetchData"
     />
 
-
     <!-- Table Container Card -->
     <b-card
       no-body
@@ -73,20 +72,33 @@
         empty-text="No matching records found"
         :sort-desc.sync="isSortDirDesc"
       >
+        <template #empty="scope">
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="mb-1 start-chat-icon">
+              <feather-icon
+                icon="FolderIcon"
+                size="20"
+              />
+            </div>
+            <h5 class="sidebar-toggle start-chat-text">
+              No records found
+            </h5>
+          </div>
+        </template>
 
-      <!-- Column: Id -->
+        <!-- Column: Id -->
         <template #cell(id)="data">
-        <span
-          class="font-weight-bold"
-        >
-          <b-link
-            :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-            class="font-weight-bold d-block text-nowrap"
+          <span
+            class="font-weight-bold"
           >
-            #{{ data.value }}
-          </b-link>
-        </span>
-      </template>
+            <b-link
+              :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+              class="font-weight-bold d-block text-nowrap"
+            >
+              #{{ data.value }}
+            </b-link>
+          </span>
+        </template>
 
         <!-- Column: User -->
         <template #cell(firstMiddleAndLastName)="data">
@@ -100,38 +112,36 @@
               />
             </template>
             <b-link
-            :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-            class="font-weight-bold d-block text-nowrap"
-          >
-                {{ data.item.firstMiddleAndLastName }}
-              </b-link>
-              <b-badge
-                  pill
-                  :variant="`light-success`"
-                  class="text-capitalize"
-                >
-                <small>{{ data.item.firstMiddleAndLastName }}</small>
-              </b-badge>
-            
-      
-            
+              :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+              class="font-weight-bold d-block text-nowrap"
+            >
+              {{ data.item.firstMiddleAndLastName }}
+            </b-link>
+            <b-badge
+              pill
+              :variant="`light-success`"
+              class="text-capitalize"
+            >
+              <small>{{ data.item.firstMiddleAndLastName }}</small>
+            </b-badge>
+
           </b-media>
         </template>
 
         <template #cell(identificationNumber)="data">
 
-            <b-badge
-                :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-                variant="primary"
-                class="text-capitalize"
-              >
-              <span class="text-nowrap text-capitalize">{{ data.value }}</span>
-            </b-badge>
-          
+          <b-badge
+            :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+            variant="primary"
+            class="text-capitalize"
+          >
+            <span class="text-nowrap text-capitalize">{{ data.value }}</span>
+          </b-badge>
+
         </template>
 
         <template #cell(idcardNumber)="data">
-            <span class="text-nowrap text-capitalize">{{ data.value }}</span>
+          <span class="text-nowrap text-capitalize">{{ data.value }}</span>
         </template>
 
         <!-- Column: Actions -->
@@ -225,12 +235,12 @@ import vSelect from 'vue-select'
 import store from '@/store'
 import { ref, onUnmounted } from '@vue/composition-api'
 import { avatarText } from '@core/utils/filter'
+import useJwt from '@/auth/jwt/useJwt'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import UsersListFilters from './UsersListFilters.vue'
 import useUsersList from './useUsersList'
 import userStoreModule from '../userStoreModule'
 import UserListAddNew from './UserListAddNew.vue'
-import useJwt from "@/auth/jwt/useJwt";
-import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 export default {
   components: {
@@ -255,32 +265,31 @@ export default {
   },
   methods: {
     UserDelete(id, refetchData) {
-      let token = useJwt.getToken()
+      const token = useJwt.getToken()
       useJwt
-        .DeleteUser(token,id)
-        .then((response) => {
-          
+        .DeleteUser(token, id)
+        .then(response => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `User Deleted Successfully`,
-              icon: "DeleteIcon",
-              variant: "success",
+              title: 'User Deleted Successfully',
+              icon: 'DeleteIcon',
+              variant: 'success',
             },
-          });
+          })
           refetchData()
         })
-        .catch((error) => {
+        .catch(error => {
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: "DeleteIcon",
-              variant: "error",
+              icon: 'DeleteIcon',
+              variant: 'error',
             },
-          });
-        });
-    }
+          })
+        })
+    },
   },
   setup() {
     const USER_APP_STORE_MODULE_NAME = 'app-user'
