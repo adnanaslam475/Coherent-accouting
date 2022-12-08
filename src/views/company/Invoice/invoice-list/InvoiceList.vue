@@ -456,7 +456,11 @@ import router from "@/router";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiTrayArrowUp } from "@mdi/js";
 import flatPickr from "vue-flatpickr-component";
+import Ripple from 'vue-ripple-directive'
 export default {
+  directives: {
+    Ripple,
+  },
   props: ["invoiceTab"],
   data() {
     return {

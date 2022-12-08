@@ -301,6 +301,7 @@ import {
 import useJwt from "@/auth/jwt/useJwt";
 import axios from "@/libs/axios";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import Ripple from 'vue-ripple-directive'
 
 export default {
   components: {
@@ -324,6 +325,9 @@ export default {
     BTooltip,
     BModal,
     BCardText,
+  },
+  directives: {
+    Ripple,
   },
 
   data() {

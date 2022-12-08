@@ -433,6 +433,7 @@ import flatPickr from 'vue-flatpickr-component'
 import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
 import invoiceStoreModule from '../invoiceStoreModule'
 import useInvoicesList from './useInvoiceList'
+import Ripple from 'vue-ripple-directive'
 
 export default {
   components: {
@@ -471,6 +472,9 @@ export default {
       multiplefileLoading: false,
       path1: mdiCloudUploadOutline,
     }
+  },
+  directives: {
+    Ripple,
   },
   methods: {
     state() {
