@@ -297,6 +297,7 @@ import { ref } from '@vue/composition-api'
 import axios from '@/libs/axios'
 import useJwt from '@/auth/jwt/useJwt'
 import router from '@/router'
+import { EventBus } from '@/GlobalEventBus'
 
 export default {
   components: {
@@ -340,6 +341,13 @@ export default {
     this.getNotifications()
     this.getUserIpAddress()
     window.addEventListener('scroll', this.handleScroll)
+  },
+  mounted() {
+    const self = this
+    EventBus.$on('zip-downloaded', () => {
+      self.getNotificationCount()
+      self.getNotifications()
+    })
   },
   methods: {
     parseMessage(value) {

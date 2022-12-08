@@ -366,6 +366,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
 import axios from '@/libs/axios'
 import vatReportsStoreModule from '../vatReportsStoreModule'
 import useVatReportsList from './useVatReportsList'
+import { EventBus } from '@/GlobalEventBus'
 
 extend('required', {
   ...required,
@@ -452,6 +453,7 @@ export default {
 
     // getting zip file from backend
     getZipFile() {
+      const self = this
       let j = 0
       for (let i = 0; i < this.totalInvoicesForReport; i++) {
         if (this.status[this.invoicesForReport[i].id] == 'accepted') {
@@ -482,6 +484,7 @@ export default {
                   document.body.appendChild(a)
                   a.click()
                   document.body.removeChild(a)
+                  EventBus.$emit('zip-downloaded')
                 }
               }
             })
