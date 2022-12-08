@@ -8,7 +8,7 @@ export default {
   verifyToken:"/account/api/forgot-password",
   resetPasswordRequestEndpoint: '/account/api/forgot-password',
   resetPasswordEndpoint: '/account/api/save-forgot-password',
-  refreshEndpoint: '/jwt/refresh-token',
+  refreshEndpoint: '/userauth/oauth/token',
   logoutEndpoint: '/jwt/logout',
   invoiceAddEndpoint: '/account/api/user-invoice/create',
   invoiceEditEndpoint: '/account/api/user-invoice',

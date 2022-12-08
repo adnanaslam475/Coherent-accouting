@@ -153,6 +153,14 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/free-digital-invoices/preview',
+      name: 'free-digital-invoices-preview',
+      component: () => import('@/views/FreeDigitalInvoicesPreview.vue'),
+      meta: {
+        layout: 'full',
+      }
+    },
+    {
       path: '/why-choose-us',
       name: 'why-choose-us',
       component: () => import('@/views/WhyChooseUs.vue'),

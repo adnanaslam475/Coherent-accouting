@@ -2,19 +2,33 @@
   <div>
     <div class="row">
       <!-- <input data-v-9a6e255c="" type="text" placeholder="Search..." class="d-inline-block mr-1 form-control col-4" style="margin-left: 15px" /> -->
-      <div class="input-group col-4 abc">
-        <!----><input
-                 v-model="searchQuery"
-                 type="text"
-                 placeholder="Search Product"
-                 class="search-product form-control"
-                 @keyup="searchCompanies()"
-               >
-        <div class="input-group-append">
-          <div
-            class="input-group-text"
-            style="height: 38px; cursor: pointer"
-          >
+      <div
+        
+        
+        class="input-group col-4 abc"
+      >
+        <!---->
+        <div class="position-relative"
+          style="height: max-content;"
+        >
+        <input
+          data-v-15eba8c6=""
+          type="text"
+          placeholder="Search Product"
+          class="search-product form-control "
+          id="__BVID__3198"
+          v-model="searchQuery"
+          @input="searchCompanies(false)"
+        />
+        <feather-icon
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="searchCompanies(true)"
+              />
+        </div>
+        <div data-v-15eba8c6="" class="input-group-append">       
+          <div data-v-15eba8c6="" class="input-group-text" style="height: 38px; cursor:pointer" > 
             <!-- #7367f0 -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -28,26 +42,17 @@
               stroke-linejoin="round"
               class="text-muted feather feather-search"
             >
-              <circle
-                cx="11"
-                cy="11"
-                r="8"
-              />
-              <line
-                x1="21"
-                y1="21"
-                x2="16.65"
-                y2="16.65"
-              />
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
           </div>
         </div>
         <b-button
-          v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-          variant="outline-primary"
-          class="h-75"
-          size="sm"
-          @click="getAllCompanies()"
+            v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+            variant="outline-primary"
+            @click="getAllCompanies()"
+            size="sm"
+            class="h-75"
         >
           <feather-icon icon="RefreshCcwIcon" />
         </b-button>
@@ -58,7 +63,7 @@
         variant="relief-primary"
         class="float-right mb-1 col-2 ml-auto"
         style="margin-right: 15px"
-      >Add Company
+        >Add Company
       </b-button>
     </div>
     <b-table
@@ -76,21 +81,16 @@
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
-            <feather-icon
-              icon="FolderIcon"
-              size="40"
-            />
+            <feather-icon icon="FolderIcon" size="40" />
           </div>
-          <h5 class="sidebar-toggle start-chat-text">
-            No records found
-          </h5>
+          <h5 class="sidebar-toggle start-chat-text">No records found</h5>
         </div>
       </template>
 
       <template #cell(Country)="data">
         <div>
           <img
-            :src="&quot;@/assets/flags/&quot; + data.item.companyIsoAlpha2Country.toLowerCase() + &quot;.png&quot;"
+            :src='"@/assets/flags/"+ data.item.companyIsoAlpha2Country.toLowerCase() + ".png"'
             style="width: 30px; height: 20px; margin-left: 10px"
           >
         </div>
@@ -111,12 +111,14 @@
             justify-content: center;
           "
         >
-          <span>{{ data.item.companyName.substr(0, 1)
-          }}{{
-            data.item.companyName
-              .substr(data.item.companyName.indexOf(" ") + 1, 1)
-              .toUpperCase()
-          }}</span>
+          <span
+            >{{ data.item.companyName.substr(0, 1)
+            }}{{
+              data.item.companyName
+                .substr(data.item.companyName.indexOf(" ") + 1, 1)
+                .toUpperCase()
+            }}</span
+          >
         </div>
         <div
           v-else
@@ -132,12 +134,13 @@
             justify-content: center;
           "
         >
-          <span>{{ data.item.companyName.substr(0, 1)
-          }}{{ data.item.companyName.substr(1, 1).toUpperCase() }}</span>
+          <span
+            >{{ data.item.companyName.substr(0, 1)
+            }}{{ data.item.companyName.substr(1, 1).toUpperCase() }}</span
+          >
         </div>
-        <b-link
-          :to="{ name: 'CompanyView', params: { id: data.item.id } }"
-        >{{ data.item.companyName }}
+        <b-link :to="{ name: 'CompanyView', params: { id: data.item.id } }"
+          >{{ data.item.companyName }}
         </b-link>
 
         <!-- <div>{{data.item.companyName}}</div> -->
@@ -152,18 +155,28 @@
       </template>
 
       <template #cell(companyIdentificationNumber)="data">
-        <b-link
-          :to="{ name: 'CompanyView', params: { id: data.item.id } }"
-        >{{ data.item.companyIdentificationNumber }}
+        <b-link :to="{ name: 'CompanyView', params: { id: data.item.id } }"
+          >{{ data.item.companyIdentificationNumber }}
         </b-link>
 
         <!-- <div>{{data.item.companyIdentificationNumber}}</div> -->
       </template>
 
-      <template
-        #cell(action)="data"
-        style="text-align: center !important"
-      >
+      <template style="text-align: center !important" #cell(action)="data">
+
+        <feather-icon
+            :id="`preview-${data.item.id}-preview-icon`"
+            icon="EyeIcon"
+            size="16"
+            class="mx-1"
+            style="cursor: pointer"
+            @click="$router.push({ name: 'CompanyView', params: { id: data.item.id }})"
+          />
+          <b-tooltip
+            title="Preview Company"
+            :target="`preview-${data.item.id}-preview-icon`"
+          />
+       
         <feather-icon
           :id="`edit-${data.item.id}-preview-icon`"
           icon="EditIcon"
@@ -234,16 +247,10 @@
             @input="getNewRecord"
           >
             <template #prev-text>
-              <feather-icon
-                icon="ChevronLeftIcon"
-                size="18"
-              />
+              <feather-icon icon="ChevronLeftIcon" size="18" />
             </template>
             <template #next-text>
-              <feather-icon
-                icon="ChevronRightIcon"
-                size="18"
-              />
+              <feather-icon icon="ChevronRightIcon" size="18" />
             </template>
           </b-pagination>
         </b-col>
@@ -258,24 +265,18 @@
       cancel-title="Cancel"
       @ok="deleteCompany(companyToDelete)"
     >
-      <b-card-text
-        class="text-center"
-        style="font-size: 15px"
-      >
+      <b-card-text class="text-center" style="font-size: 15px">
         Are you sure you want to delete this company?
       </b-card-text>
-      <b-card-text
-        class="text-center"
-        style="font-size: 15px"
-      >
+      <b-card-text class="text-center" style="font-size: 15px">
         It will delete all the data related to it.
       </b-card-text>
     </b-modal>
   </div>
 </template>
 <script>
-import BCardCode from '@core/components/b-card-code/BCardCode.vue'
-import Swal from 'sweetalert2'
+import BCardCode from "@core/components/b-card-code/BCardCode.vue";
+import Swal from "sweetalert2";
 
 import {
   BCard,
@@ -295,11 +296,11 @@ import {
   BProgress,
   BModal,
   BCardText,
-} from 'bootstrap-vue'
+} from "bootstrap-vue";
 
-import useJwt from '@/auth/jwt/useJwt'
-import axios from '@/libs/axios'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import useJwt from "@/auth/jwt/useJwt";
+import axios from "@/libs/axios";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 export default {
   components: {
@@ -327,50 +328,50 @@ export default {
 
   data() {
     return {
-      companyToDelete: '',
+      companyToDelete: "",
       deleteModalShow: false,
-      direction: 'asc',
-      sortField: 'companyName',
-      sortBy: 'companyName',
+      direction: "asc",
+      sortField: "companyName",
+      sortBy: "companyName",
       sortDesc: false,
       fields: [
         // A virtual column that doesn't exist in items
-        'Country',
+        "Country",
         // A column that needs custom formatting
         {
-          key: 'companyName',
-          label: 'Company Name',
+          key: "companyName",
+          label: "Company Name",
           sortable: true,
         },
         {
-          key: 'companyMail',
-          label: 'Email',
-          sortable: true,
-        },
-        // A regular column
-        {
-          key: 'companyOwnerFirstName',
-          label: 'Owner Name',
+          key: "companyMail",
+          label: "Email",
           sortable: true,
         },
         // A regular column
         {
-          key: 'companyIdentificationNumber',
-          label: 'Company ID',
+          key: "companyOwnerFirstName",
+          label: "Owner Name",
+          sortable: true,
+        },
+        // A regular column
+        {
+          key: "companyIdentificationNumber",
+          label: "Company ID",
           sortable: true,
         },
         // A virtual column made up from two fields
         {
-          key: 'action',
-          label: 'Action',
+          key: "action",
+          label: "Action",
         },
       ],
       items: [],
       currentPage: 1,
-      perPage: '10',
-      totalRecords: '',
-      totalPages: '',
-      searchQuery: '',
+      perPage: "10",
+      totalRecords: "",
+      totalPages: "",
+      searchQuery: "",
 
       // items: [
       //   {
@@ -419,91 +420,95 @@ export default {
       //     action: 'Edit/Delete'
       //   }
       // ],
-    }
+    };
   },
   created() {
-    this.getAllCompanies()
+    console.log();
+    this.getAllCompanies();
   },
   methods: {
     //
     getCompanyIDtoDelete(val) {
-      this.deleteModalShow = !this.deleteModalShow
-      this.companyToDelete = val
+      this.deleteModalShow = !this.deleteModalShow;
+      this.companyToDelete = val;
     },
     //
     checkStatus(ctx) {
       if (ctx.sortDesc === false) {
-        this.direction = 'asc'
+        this.direction = "asc";
       } else {
-        this.direction = 'desc'
+        this.direction = "desc";
       }
-      this.sortField = ctx.sortBy
-      this.getAllCompanies()
+      this.sortField = ctx.sortBy;
+      this.getAllCompanies();
     },
 
-    // getting the list of all companies
-    async searchCompanies() {
+     // getting the list of all companies
+     async searchCompanies(clear) {
+      if(clear){
+        this.searchQuery = ''
+      }
       const data = await axios.get(
         `/account/api/company/search/${this.currentPage}/${this.perPage}?direction=${this.direction}&queryString=${this.searchQuery}&sortField=${this.sortField}`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "http://localhost:8080",
           },
-        },
-      )
+        }
+      );
 
-      if (data.data.elements != '') {
-        this.items = data.data.elements
-        this.totalRecords = data.data.totalElements
-        this.totalPages = Math.ceil(this.totalRecords / this.perPage)
+      if (data.data.elements != "") {
+        this.items = data.data.elements;
+        this.totalRecords = data.data.totalElements;
+        this.totalPages = Math.ceil(this.totalRecords / this.perPage);
         // console.log(this.totalPages);
       } else {
-        this.items = []
-        this.totalRecords = ''
-        this.totalPages = ''
+        this.items = [];
+        this.totalRecords = "";
+        this.totalPages = "";
       }
     },
 
     //
     async deleteCompany(companyID) {
-      const self = this
+      const self = this;
       const config = {
-        method: 'delete',
+        method: "delete",
         url: `/account/api/company/${companyID}`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          'Access-Control-Allow-Credentials': true,
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:8080',
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
         },
-      }
+      };
 
       await axios(config)
-        .then(response => {
+        .then((response) => {
           // console.log(JSON.stringify(response.data))
           self.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Company Deleted Successfully',
-              icon: 'EditIcon',
-              variant: 'success',
+              title: `Company Deleted Successfully`,
+              icon: "EditIcon",
+              variant: "success",
             },
-          })
-          self.getAllCompanies()
+          });
+          self.getAllCompanies();
         })
-        .catch(error => {
+        .catch((error) => {
           // console.log(error)
           self.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Something Went Wrong',
-              icon: 'EditIcon',
-              variant: 'error',
+              title: `Something Went Wrong`,
+              icon: "EditIcon",
+              variant: "error",
             },
-          })
-        })
+          });
+        });
     },
 
     // getting the list of all companies
@@ -512,19 +517,20 @@ export default {
         `/account/api/company/list/${this.currentPage}/${this.perPage}?direction=${this.direction}&sortField=${this.sortField}`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "http://localhost:8080",
           },
-        },
-      )
+        }
+      );
 
-      if (data.data.elements != '') {
-        this.items = data.data.elements
-        this.totalRecords = data.data.totalElements
-        this.totalPages = Math.ceil(this.totalRecords / this.perPage)
+      if (data.data.elements != "") {
+        this.items = data.data.elements;
+        this.totalRecords = data.data.totalElements;
+        this.totalPages = Math.ceil(this.totalRecords / this.perPage);
         // console.log(this.totalPages);
       }
+
     },
 
     //
@@ -534,19 +540,19 @@ export default {
         `/account/api/company/list/${cP}/${this.perPage}?direction=desc&sortField=id`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "http://localhost:8080",
           },
-        },
-      )
+        }
+      );
 
-      if (data.data.elements != '') {
-        this.items = data.data.elements
+      if (data.data.elements != "") {
+        this.items = data.data.elements;
       }
     },
   },
-}
+};
 </script>
 <style lang="scss">
 /*  */
