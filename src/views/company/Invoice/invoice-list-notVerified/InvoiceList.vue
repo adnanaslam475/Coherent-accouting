@@ -48,6 +48,14 @@
               :path="path1"
             />
           </b-button>
+          <b-button
+              v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+              variant="outline-primary"
+              @click="fetchInvoices"
+          >
+            <feather-icon icon="RefreshCcwIcon" />
+          </b-button>
+
         </b-col>
 
         <!-- Search -->
