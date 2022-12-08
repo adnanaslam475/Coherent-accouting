@@ -5,27 +5,15 @@
         <!-- Company Details -->
         <div class="card border-primary">
           <!----><!---->
-          <div
-            class="card-body"
-            style="padding: 0px"
-          >
+          <div class="card-body" style="padding: 0px">
             <!----><!---->
-            <div
-              class="row"
-              style="padding: 15px 0px 18px 15px"
-            >
+            <div class="row" style="padding: 15px 0px 18px 15px">
               <div
                 class="d-flex justify-content-between flex-column col-5"
-                style="padding-left: 0.5rem; padding-right:0.5rem"
+                style="padding-left: 0.5rem; padding-right: 0.5rem"
               >
-                <div
-                  class="card"
-                  style="margin-right: 10px"
-                >
-                  <div
-                    class="card-body"
-                    style="padding: 0px"
-                  >
+                <div class="card" style="margin-right: 10px">
+                  <div class="card-body" style="padding: 0px">
                     <div class="d-flex justify-content-start">
                       <span
                         class="b-avatar rounded"
@@ -40,18 +28,23 @@
 
                       <div class="d-flex flex-column ml-1">
                         <div class="mb-1">
-                          <h4
-                            v-if="companyNameLength >= 43"
-                            class="mb-0"
-                          >
-                            {{ companyName.substr(0,44) }}
+                          <h4 v-if="companyNameLength >= 43" class="mb-0">
+                            {{ companyName.substr(0, 44) }}
                           </h4>
                           <h4
                             v-else
+                            id="comp-name-copy"
                             class="mb-0"
+                            ref="compNAME"
+                            @click="copyTextNoInput('compNAME')"
+                            @mouseleave="defaultToolTip()"
+                            style="cursor:pointer"
                           >
                             {{ companyRecord.companyName }}
                           </h4>
+                          <b-tooltip target="comp-name-copy">{{
+                            copyToClipboard
+                          }}</b-tooltip>
                           <span class="card-text">{{
                             companyRecord.companyMail
                           }}</span>
@@ -62,7 +55,7 @@
                             size="sm"
                             variant="primary"
                             @click="editCompany()"
-                          >Edit
+                            >Edit
                           </b-button>
 
                           <b-button
@@ -71,7 +64,6 @@
                             size="sm"
                             class="ml-1"
                             @click="deleteModalShow = !deleteModalShow"
-                            
                           >
                             Delete
                           </b-button>
@@ -87,12 +79,18 @@
                           style="margin-left: 8px; margin-right: -5px"
                         />
                         <div class="ml-1">
-                          <h6 class="mb-0">
-                            Owner Name
-                          </h6>
-                          <small>{{
-                            companyOwnerName
-                          }}</small>
+                          <h6 class="mb-0">Owner Name</h6>
+                          <small
+                            ref="compOWNER"
+                            @click="copyTextNoInput('compOWNER')"
+                            id="comp-owner-copy"
+                            style="cursor: pointer"
+                            @mouseleave="defaultToolTip()"
+                            >{{ companyOwnerName }}</small
+                          >
+                          <b-tooltip target="comp-owner-copy">{{
+                            copyToClipboard
+                          }}</b-tooltip>
                         </div>
                       </div>
                       <div class="d-flex align-items-center">
@@ -103,15 +101,21 @@
                           style="margin-left: 8px; margin-right: -5px"
                         />
                         <div class="ml-1">
-                          <h6 class="mb-0">
-                            Owner EGN
-                          </h6>
+                          <h6 class="mb-0">Owner EGN</h6>
                           <small
-                            v-if="
-                              companyOwnerEGN != null
-                            "
-                          >{{ companyOwnerEGN }}</small>
+                            ref="compEGN"
+                            v-if="companyOwnerEGN != null"
+                            id="comp-egn-copy"
+                            @click="copyTextNoInput('compEGN')"
+                            style="cursor: pointer"
+                            @mouseleave="defaultToolTip()"
+                            >{{ companyOwnerEGN }}</small
+                          >
+
                           <small v-else>NIL</small>
+                          <b-tooltip target="comp-egn-copy">{{
+                            copyToClipboard
+                          }}</b-tooltip>
                         </div>
                       </div>
                     </div>
@@ -143,50 +147,79 @@
                           <span class="font-weight-bold">Company ID</span>
                         </th>
                         <td class="pb-50 text-capitalize">
-                          {{ companyRecord.companyIdentificationNumber }}
+                          <p
+                            id="comp-id-copy"
+                            ref="compID"
+                            @click="copyTextNoInput('compID')"
+                            @mouseleave="defaultToolTip()"
+                            style="
+                              width: fit-content;
+                              margin: 0px;
+                              cursor: pointer;
+                            "
+                          >
+                            {{ companyRecord.companyIdentificationNumber }}
+                          </p>
                         </td>
+                        <b-tooltip target="comp-id-copy">{{
+                          copyToClipboard
+                        }}</b-tooltip>
                       </tr>
                       <tr>
                         <th class="pb-50">
-                          <feather-icon
-                            icon="FlagIcon"
-                            class="mr-75"
-                          />
+                          <feather-icon icon="FlagIcon" class="mr-75" />
                           <span class="font-weight-bold">Vat Number</span>
                         </th>
                         <td
                           v-if="companyRecord.companyVatNumber != null"
                           class="pb-50 text-capitalize"
                         >
-                          {{ companyRecord.companyVatNumber }}
+                          <p
+                            id="comp-vat-copy"
+                            ref="compVAT"
+                            @click="copyTextNoInput('compVAT')"
+                            @mouseleave="defaultToolTip()"
+                            style="
+                              width: fit-content;
+                              margin: 0px;
+                              cursor: pointer;
+                            "
+                          >
+                            {{ companyRecord.companyVatNumber }}
+                          </p>
+                          <b-tooltip target="comp-vat-copy">{{
+                            copyToClipboard
+                          }}</b-tooltip>
                         </td>
-                        <td
-                          v-else
-                          class="pb-50 text-capitalize"
-                        >
-                          NIL
-                        </td>
+                        <td v-else class="pb-50 text-capitalize">NIL</td>
                       </tr>
                       <tr>
                         <th class="pb-50">
-                          <feather-icon
-                            icon="CreditCardIcon"
-                            class="mr-75"
-                          />
+                          <feather-icon icon="CreditCardIcon" class="mr-75" />
                           <span class="font-weight-bold">Bank Account</span>
                         </th>
                         <td
                           v-if="companyRecord.companyBankAccount != null"
                           class="pb-50"
                         >
-                          {{ companyRecord.companyBankAccount }}
+                          <p
+                            id="comp-account-copy"
+                            ref="compBANKACCOUNT"
+                            @click="copyTextNoInput('compBANKACCOUNT')"
+                            @mouseleave="defaultToolTip()"
+                            style="
+                              width: fit-content;
+                              margin: 0px;
+                              cursor: pointer;
+                            "
+                          >
+                            {{ companyRecord.companyBankAccount }}
+                          </p>
+                          <b-tooltip target="comp-account-copy">{{
+                            copyToClipboard
+                          }}</b-tooltip>
                         </td>
-                        <td
-                          v-else
-                          class="pb-50"
-                        >
-                          NIL
-                        </td>
+                        <td v-else class="pb-50">NIL</td>
                       </tr>
                       <tr>
                         <th>
@@ -209,21 +242,48 @@
                           <span class="font-weight-bold">Contact</span>
                         </th>
                         <td class="pb-50">
-                          {{ companyRecord.companyPhone }}
+                          <p
+                            id="comp-contact-copy"
+                            ref="compCONTACT"
+                            @click="copyTextNoInput('compCONTACT')"
+                            @mouseleave="defaultToolTip()"
+                            style="
+                              width: fit-content;
+                              margin: 0px;
+                              cursor: pointer;
+                            "
+                          >
+                            {{ companyRecord.companyPhone }}
+                          </p>
                         </td>
+                        <b-tooltip target="comp-contact-copy">{{
+                          copyToClipboard
+                        }}</b-tooltip>
                       </tr>
                       <tr>
                         <th class="pb-50">
-                          <feather-icon
-                            icon="MapPinIcon"
-                            class="mr-75"
-                          />
+                          <feather-icon icon="MapPinIcon" class="mr-75" />
 
                           <span class="font-weight-bold">Address</span>
                         </th>
                         <td class="pb-50">
-                          {{ companyAddress.substr(0, 38) }}
+                          <p
+                            id="comp-address-copy"
+                            ref="compADDRESS"
+                            @click="copyTextNoInput('compADDRESS')"
+                            @mouseleave="defaultToolTip()"
+                            style="
+                              width: fit-content;
+                              margin: 0px;
+                              cursor: pointer;
+                            "
+                          >
+                            {{ companyAddress.substr(0, 38) }}
+                          </p>
                         </td>
+                        <b-tooltip target="comp-address-copy">{{
+                          copyToClipboard
+                        }}</b-tooltip>
                       </tr>
                       <tr>
                         <th class="pb-50">
@@ -239,17 +299,8 @@
                             stroke-linejoin="round"
                             class="mr-75 feather feather-globe"
                           >
-                            <circle
-                              cx="12"
-                              cy="12"
-                              r="10"
-                            />
-                            <line
-                              x1="2"
-                              y1="12"
-                              x2="22"
-                              y2="12"
-                            />
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="2" y1="12" x2="22" y2="12" />
                             <path
                               d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
                             />
@@ -272,17 +323,11 @@
       </div>
       <!-- Summary -->
       <div class="col-md-5 col-lg-3 col-xl-3 col-12">
-        <b-card
-          id="inner-card-body"
-          class="border-primary ml-0 body-0"
-        >
+        <b-card id="inner-card-body" class="border-primary ml-0 body-0">
           <table class="mt-2 mt-xl-0 w-100">
             <tr>
               <th class="pb-50">
-                <feather-icon
-                  icon="AlignJustifyIcon"
-                  class="mr-50"
-                />
+                <feather-icon icon="AlignJustifyIcon" class="mr-50" />
                 <span class="font-weight-bold">Total Assets</span>
               </th>
               <td class="pb-50">
@@ -291,10 +336,7 @@
             </tr>
             <tr>
               <th class="pb-50">
-                <feather-icon
-                  icon="FileTextIcon"
-                  class="mr-50"
-                />
+                <feather-icon icon="FileTextIcon" class="mr-50" />
                 <span class="font-weight-bold">Total Invoices</span>
               </th>
               <td class="pb-50">
@@ -303,10 +345,7 @@
             </tr>
             <tr>
               <th class="pb-50">
-                <feather-icon
-                  icon="AlertCircleIcon"
-                  class="mr-50"
-                />
+                <feather-icon icon="AlertCircleIcon" class="mr-50" />
                 <span class="font-weight-bold">Total NotVerified Invoices</span>
               </th>
               <td class="pb-50">
@@ -315,10 +354,7 @@
             </tr>
             <tr>
               <th class="pb-50">
-                <feather-icon
-                  icon="AlertTriangleIcon"
-                  class="mr-50"
-                />
+                <feather-icon icon="AlertTriangleIcon" class="mr-50" />
                 <span class="font-weight-bold">Total Private Person</span>
               </th>
               <td class="pb-50">
@@ -327,10 +363,7 @@
             </tr>
             <tr>
               <th class="pb-50">
-                <feather-icon
-                  icon="ListIcon"
-                  class="mr-50"
-                />
+                <feather-icon icon="ListIcon" class="mr-50" />
                 <span class="font-weight-bold">Total Vat Reports</span>
               </th>
               <td class="pb-50">
@@ -339,10 +372,7 @@
             </tr>
             <tr>
               <th class="pb-50">
-                <feather-icon
-                  icon="FileIcon"
-                  class="mr-50"
-                />
+                <feather-icon icon="FileIcon" class="mr-50" />
                 <span class="font-weight-bold">Total Yearly Reports</span>
               </th>
               <td class="pb-50">
@@ -380,23 +410,14 @@
     >
       <b-card-text class="text-center" style="font-size: 15px">
         Are you sure you want to delete this company?
-      
       </b-card-text>
       <b-card-text class="text-center" style="font-size: 15px">
-  
         It will delete all the data related to it.
       </b-card-text>
-    </b-modal> 
+    </b-modal>
 
-    <b-row
-      class=""
-      style="margin-top: 2.5rem"
-    >
-
-      <b-col
-        class="mb-1"
-        cols="6"
-      >
+    <b-row class="" style="margin-top: 2.5rem">
+      <b-col class="mb-1" cols="6">
         <!-- Report time-line card -->
         <b-card
           v-if="monthlyReportGraphDisplay.length > 0"
@@ -424,11 +445,7 @@
               />
             </div>
           </b-card-header>
-          <b-collapse
-            id="collapse-1"
-            class="mt-1"
-            visible
-          >
+          <b-collapse id="collapse-1" class="mt-1" visible>
             <b-card-body
               v-if="monthlyReportGraph.length > 0"
               style="padding: 0px 15px"
@@ -450,7 +467,8 @@
                     <h6>{{ graph.count }} Reports have been created</h6>
                     <small
                       class="timeline-item-time text-nowrap text-muted ml-1"
-                    >{{ graph.date }}</small>
+                      >{{ graph.date }}</small
+                    >
                   </div>
                 </app-timeline-item>
               </app-timeline>
@@ -469,7 +487,6 @@
             <b-card-title>Company Invoices</b-card-title>
             <div class="d-flex align-items-center">
               <feather-icon
-
                 icon="RefreshCcwIcon"
                 size="17"
                 style="cursor: pointer"
@@ -486,16 +503,15 @@
               />
             </div>
           </b-card-header>
-          <b-collapse
-            id="collapse-2"
-            class="mt-1"
-            visible
-          >
+          <b-collapse id="collapse-2" class="mt-1" visible>
             <b-card-body
               v-if="companyInvoices.length > 0"
-              style="padding: 0px 15px; height: auto;
-    max-height: 45.7rem;
-    overflow-y: scroll;"
+              style="
+                padding: 0px 15px;
+                height: auto;
+                max-height: 45.7rem;
+                overflow-y: scroll;
+              "
             >
               <b-table
                 :items="companyInvoices"
@@ -510,10 +526,7 @@
                 <template #empty="scope">
                   <div class="d-flex align-items-center justify-content-center">
                     <div class="mb-1 start-chat-icon">
-                      <feather-icon
-                        icon="FolderIcon"
-                        size="40"
-                      />
+                      <feather-icon icon="FolderIcon" size="40" />
                     </div>
                     <h4 class="sidebar-toggle start-chat-text">
                       Start Conversation
@@ -538,7 +551,7 @@
                   <b-link
                     :to="{
                       name: 'company-invoice-preview',
-                      params: { companyId: companyID , id: data.item.id },
+                      params: { companyId: companyID, id: data.item.id },
                     }"
                     class="font-weight-bold"
                   >
@@ -559,7 +572,7 @@
                   <b-link
                     :to="{
                       name: 'company-invoice-preview',
-                      params: { companyId: companyID , id: data.item.id },
+                      params: { companyId: companyID, id: data.item.id },
                     }"
                     class="font-weight-bold"
                   >
@@ -594,7 +607,6 @@
                       Company Owner Name:
                       {{ data.item.recipientCompany.companyOwnerName }}
                     </p>
-
                   </b-tooltip>
                 </template>
 
@@ -623,7 +635,6 @@
                       Company Owner Name:
                       {{ data.item.supplierCompany.companyOwnerName }}
                     </p>
-
                   </b-tooltip>
                 </template>
 
@@ -634,14 +645,15 @@
                       v-if="
                         data.item.currency == 'lv' || data.item.currency == 'LV'
                       "
-                    >лв{{ data.value }}</span>
+                      >лв{{ data.value }}</span
+                    >
 
-                    <span
-                      v-if="data.item.currency == 'usd'"
-                    >${{ data.value }}</span>
-                    <span
-                      v-if="data.item.currency == 'euro'"
-                    >€{{ data.value }}</span>
+                    <span v-if="data.item.currency == 'usd'"
+                      >${{ data.value }}</span
+                    >
+                    <span v-if="data.item.currency == 'euro'"
+                      >€{{ data.value }}</span
+                    >
                   </span>
                 </template>
 
@@ -652,13 +664,14 @@
                       v-if="
                         data.item.currency == 'lv' || data.item.currency == 'LV'
                       "
-                    >лв{{ data.value }}</span>
-                    <span
-                      v-if="data.item.currency == 'usd'"
-                    >${{ data.value }}</span>
-                    <span
-                      v-if="data.item.currency == 'euro'"
-                    >€{{ data.value }}</span>
+                      >лв{{ data.value }}</span
+                    >
+                    <span v-if="data.item.currency == 'usd'"
+                      >${{ data.value }}</span
+                    >
+                    <span v-if="data.item.currency == 'euro'"
+                      >€{{ data.value }}</span
+                    >
                   </span>
                 </template>
 
@@ -669,13 +682,14 @@
                       v-if="
                         data.item.currency == 'lv' || data.item.currency == 'LV'
                       "
-                    >лв{{ data.value }}</span>
-                    <span
-                      v-if="data.item.currency == 'usd'"
-                    >${{ data.value }}</span>
-                    <span
-                      v-if="data.item.currency == 'euro'"
-                    >€{{ data.value }}</span>
+                      >лв{{ data.value }}</span
+                    >
+                    <span v-if="data.item.currency == 'usd'"
+                      >${{ data.value }}</span
+                    >
+                    <span v-if="data.item.currency == 'euro'"
+                      >€{{ data.value }}</span
+                    >
                   </span>
                 </template>
 
@@ -690,7 +704,7 @@
                       @click="
                         $router.push({
                           name: 'company-invoice-preview',
-                          params: { companyId: companyID , id: data.item.id },
+                          params: { companyId: companyID, id: data.item.id },
                         })
                       "
                     />
@@ -760,15 +774,11 @@
                   </div>
                 </template>
               </b-table>
-
             </b-card-body>
           </b-collapse>
         </b-card>
       </b-col>
-      <b-col
-        class="mb-1"
-        cols="6"
-      >
+      <b-col class="mb-1" cols="6">
         <!-- Invoices Per Day -->
         <ApexBarChart
           class="mb-1"
@@ -787,15 +797,15 @@
 </template>
 
 <script>
-import axios from '@/libs/axios'
-import Swal from 'sweetalert2'
-import Ripple from 'vue-ripple-directive'
-import AppTimeline from '@core/components/app-timeline/AppTimeline.vue'
-import AppTimelineItem from '@core/components/app-timeline/AppTimelineItem.vue'
+import axios from "@/libs/axios";
+import Swal from "sweetalert2";
+import Ripple from "vue-ripple-directive";
+import AppTimeline from "@core/components/app-timeline/AppTimeline.vue";
+import AppTimelineItem from "@core/components/app-timeline/AppTimelineItem.vue";
 // eslint-disable-next-line import/extensions
-import ApexBarChart from '@/views/company/ApexBarChart'
-import VueHtml2pdf from 'vue-html2pdf'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import ApexBarChart from "@/views/company/ApexBarChart";
+import VueHtml2pdf from "vue-html2pdf";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import {
   BCard,
   BRow,
@@ -814,27 +824,27 @@ import {
   BCollapse,
   VBToggle,
   BModal,
-  BCardText
-} from 'bootstrap-vue'
-import InvoiceDownload from '../../invoice/invoice-download/InvoiceDownload.vue'
+  BCardText,
+} from "bootstrap-vue";
+import InvoiceDownload from "../../invoice/invoice-download/InvoiceDownload.vue";
 
 const chartColors = {
-  primaryColorShade: '#836AF9',
-  yellowColor: '#ffe800',
-  successColorShade: '#28dac6',
-  warningColorShade: '#ffe802',
-  warningLightColor: '#FDAC34',
-  infoColorShade: '#299AFF',
-  greyColor: '#4F5D70',
-  blueColor: '#2c9aff',
-  blueLightColor: '#84D0FF',
-  greyLightColor: '#EDF1F4',
-  tooltipShadow: 'rgba(0, 0, 0, 0.25)',
-  lineChartPrimary: '#666ee8',
-  lineChartDanger: '#ff4961',
-  labelColor: '#6e6b7b',
-  grid_line_color: 'rgba(200, 200, 200, 0.2)',
-}
+  primaryColorShade: "#836AF9",
+  yellowColor: "#ffe800",
+  successColorShade: "#28dac6",
+  warningColorShade: "#ffe802",
+  warningLightColor: "#FDAC34",
+  infoColorShade: "#299AFF",
+  greyColor: "#4F5D70",
+  blueColor: "#2c9aff",
+  blueLightColor: "#84D0FF",
+  greyLightColor: "#EDF1F4",
+  tooltipShadow: "rgba(0, 0, 0, 0.25)",
+  lineChartPrimary: "#666ee8",
+  lineChartDanger: "#ff4961",
+  labelColor: "#6e6b7b",
+  grid_line_color: "rgba(200, 200, 200, 0.2)",
+};
 
 export default {
   components: {
@@ -859,51 +869,61 @@ export default {
     VueHtml2pdf,
     InvoiceDownload,
     BModal,
-  BCardText
+    BCardText,
   },
   directives: {
     Ripple,
-    'b-tooltip': VBTooltip,
-    'b-toggle': VBToggle,
+    "b-tooltip": VBTooltip,
+    "b-toggle": VBToggle,
   },
   data() {
     return {
+      copyToClipboard: "Copy to clipboard",
+      compNAME: "",
+      compADDRESS: "",
+      compCONTACT: "",
+      compBANKACCOUNT: "",
+      compVAT: "",
+      compID: "",
+      compOWNER: "",
+      compEGN: "",
+      message: "",
       deleteModalShow: false,
-      companyAddress: '',
-      companyName: '',
-      companyNameLength: '',
-      sortBy: 'id',
+      companyAddress: "",
+      companyName: "",
+      companyNameLength: "",
+      sortBy: "id",
       sortDesc: false,
       tableColumns: [
-        { key: 'id', label: '#', sortable: true },
-        { key: 'invoiceNumber', sortable: true },
-        { key: 'invoiceDate', label: 'date Issued', sortable: true },
-        { key: 'documentType', sortable: true },
+        { key: "id", label: "#", sortable: true },
+        { key: "invoiceNumber", sortable: true },
+        { key: "invoiceDate", label: "date Issued", sortable: true },
+        { key: "documentType", sortable: true },
         {
-          key: 'recipientCompanyName',
-          label: 'recipient Company',
+          key: "recipientCompanyName",
+          label: "recipient Company",
           sortable: true,
         },
         {
-          key: 'supplierCompanyName',
-          label: 'supplier Company',
+          key: "supplierCompanyName",
+          label: "supplier Company",
           sortable: true,
         },
-        { key: 'amountNonVat', label: 'Amount Non Vat', sortable: true },
-        { key: 'totalAmount', sortable: true },
-        { key: 'vatAmount', sortable: true },
-        { key: 'actions' },
+        { key: "amountNonVat", label: "Amount Non Vat", sortable: true },
+        { key: "totalAmount", sortable: true },
+        { key: "vatAmount", sortable: true },
+        { key: "actions" },
       ],
       companyInvoices: [],
       companyInvoicesDisplay: [],
       pageNumber: 1,
       perPageInvoices: 30,
-      invoiceDirection: 'asc',
-      invoiceSortField: 'id',
-      companyID: '',
+      invoiceDirection: "asc",
+      invoiceSortField: "id",
+      companyID: "",
       companyRecord: {},
-      companyOwnerName: '',
-      companyOwnerEGN: '',
+      companyOwnerName: "",
+      companyOwnerEGN: "",
       statisticItems: {
         totalAssets: 0,
         totalInvoices: 0,
@@ -912,200 +932,225 @@ export default {
         totalVatReports: 0,
         totalYearlyReports: 0,
       },
-      variants: ['primary', 'danger', 'info', 'warning'],
+      variants: ["primary", "danger", "info", "warning"],
       monthlyReportGraph: [],
       monthlyReportGraphDisplay: [],
       dailyInvoices: [],
       rangePicker: [],
-    }
+    };
   },
   created() {
-    this.companyID = this.$route.params.id
-    this.getCompanyInfo()
-    this.getStatistics()
-    this.getMonthReportGraph()
-    this.getCompanyInvoices()
+    this.companyID = this.$route.params.id;
+    this.getCompanyInfo();
+    this.getStatistics();
+    this.getMonthReportGraph();
+    this.getCompanyInvoices();
   },
   methods: {
+    //
+    defaultToolTip() {
+      this.copyToClipboard = "Copy to clipboard";
+    },
+    //Copy to Clipboard
+    copyTextNoInput(val) {
+      const storage = document.createElement("textarea");
+      if (val === "compOWNER") {
+        storage.value = this.$refs.compOWNER.innerHTML;
+      } else if (val === "compEGN") {
+        storage.value = this.$refs.compEGN.innerHTML;
+      } else if (val === "compID") {
+        storage.value = this.$refs.compID.innerHTML;
+      } else if (val === "compVAT") {
+        storage.value = this.$refs.compVAT.innerHTML;
+      } else if (val === "compBANKACCOUNT") {
+        storage.value = this.$refs.compBANKACCOUNT.innerHTML;
+      } else if (val === "compCONTACT") {
+        storage.value = this.$refs.compCONTACT.innerHTML;
+      } else if (val === "compNAME") {
+        storage.value = this.$refs.compNAME.innerHTML;
+      } else {
+        storage.value = this.$refs.compADDRESS.innerHTML;
+      }
+
+      storage.select();
+      storage.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(storage.value);
+
+      this.copyToClipboard = "Copied";
+      setTimeout(() => {
+        this.$root.$emit("bv::hide::tooltip");
+      }, 700);
+    },
 
     // delete a single company invoice
     async deleteCompanyInvoice(invoiceID) {
-      const self = this
+      const self = this;
       const config = {
-        method: 'delete',
+        method: "delete",
         url: `/account/api/invoice/${invoiceID}`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          'Access-Control-Allow-Credentials': true,
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:8080',
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
         },
-      }
+      };
 
       await axios(config)
-        .then(response => {
+        .then((response) => {
           // console.log(JSON.stringify(response.data));
           self.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Company Invoice Deleted Successfully',
-              icon: 'DeleteIcon',
-              variant: 'success',
+              title: "Company Invoice Deleted Successfully",
+              icon: "DeleteIcon",
+              variant: "success",
             },
-          })
+          });
         })
-        .catch(error => {
-          console.log(error)
-        })
+        .catch((error) => {
+          console.log(error);
+        });
       setTimeout(() => {
-        this.getCompanyInvoices()
-      }, 1400)
+        this.getCompanyInvoices();
+      }, 1400);
     },
     //
     onProgress(event) {
-      console.log(`Processed: ${event} / 100`)
+      console.log(`Processed: ${event} / 100`);
     },
     //
     generatePDF(itemID) {
-      this.$refs[`invoicePdf${itemID}`].generatePdf()
+      this.$refs[`invoicePdf${itemID}`].generatePdf();
     },
     //
     checkStatus(ctx) {
       if (ctx.sortDesc === false) {
-        this.invoiceDirection = 'asc'
+        this.invoiceDirection = "asc";
       } else {
-        this.invoiceDirection = 'desc'
+        this.invoiceDirection = "desc";
       }
-      this.invoiceSortField = ctx.sortBy
-      this.getCompanyInvoices()
+      this.invoiceSortField = ctx.sortBy;
+      this.getCompanyInvoices();
     },
     //
     refreshMonthReportGraph() {
-      this.monthlyReportGraph = []
-      this.getMonthReportGraph()
+      this.monthlyReportGraph = [];
+      this.getMonthReportGraph();
     },
     // company invoices data
     async getCompanyInvoices() {
-      const self = this
-      self.companyInvoices = []
+      const self = this;
+      self.companyInvoices = [];
       const data = await axios
         .get(
-          `/account/api/invoice/list/${
-            this.companyID
-          }/${
-            this.pageNumber
-          }/${
-            this.perPageInvoices
-          }?direction=${
-            this.invoiceDirection
-          }&sortField=${
-            this.invoiceSortField
-          }&verified=true`,
+          `/account/api/invoice/list/${this.companyID}/${this.pageNumber}/${this.perPageInvoices}?direction=${this.invoiceDirection}&sortField=${this.invoiceSortField}&verified=true`,
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-              'Access-Control-Allow-Credentials': true,
-              'Access-Control-Allow-Origin': 'http://localhost:8080',
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              "Access-Control-Allow-Credentials": true,
+              "Access-Control-Allow-Origin": "http://localhost:8080",
             },
-          },
+          }
         )
-        .then(response => {
+        .then((response) => {
           // console.log(JSON.stringify(response.data));
-          self.companyInvoices = response.data.elements
-          self.companyInvoicesDisplay = response.data.elements
+          self.companyInvoices = response.data.elements;
+          self.companyInvoicesDisplay = response.data.elements;
         })
-        .catch(error => {
-          console.log(error)
-        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     getMonthReportGraph() {
       axios
         .get(
-          `/account/api/company/reports-month-graph/${this.$route.params.id}`,
+          `/account/api/company/reports-month-graph/${this.$route.params.id}`
         )
-        .then(response => {
-          this.monthlyReportGraph = response.data
-          this.monthlyReportGraphDisplay = response.data
-        })
+        .then((response) => {
+          this.monthlyReportGraph = response.data;
+          this.monthlyReportGraphDisplay = response.data;
+        });
     },
     // delete the company
     async deleteCompany() {
       let self = this;
       const config = {
-        method: 'delete',
+        method: "delete",
         url: `/account/api/company/${this.companyID}`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          'Access-Control-Allow-Credentials': true,
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:8080',
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
         },
-      }
+      };
       await axios(config)
-         .then(response => {
+        .then((response) => {
           // console.log(JSON.stringify(response.data))
           self.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: `Company Deleted Successfully`,
-                  icon: "EditIcon",
-                  variant: "success",
-                },
-              });
-              return self.$router.push({
-                      name: "companies", 
-                    })
+            component: ToastificationContent,
+            props: {
+              title: `Company Deleted Successfully`,
+              icon: "EditIcon",
+              variant: "success",
+            },
+          });
+          return self.$router.push({
+            name: "companies",
+          });
         })
-        .catch(error => {
+        .catch((error) => {
           // console.log(error)
           self.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: `Something Went Wrong`,
-                  icon: "EditIcon",
-                  variant: "error",
-                },
-              });
-        })
+            component: ToastificationContent,
+            props: {
+              title: `Something Went Wrong`,
+              icon: "EditIcon",
+              variant: "error",
+            },
+          });
+        });
     },
     // function to edit the record of company
     async editCompany() {
       await this.$router.push({
-        name: 'EditCompany',
+        name: "EditCompany",
         params: { id: this.companyRecord.id },
-      })
+      });
     },
     //
     async getCompanyInfo() {
       const data = await axios.get(`/account/api/company/${this.companyID}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          'Access-Control-Allow-Credentials': true,
-          'Access-Control-Allow-Origin': 'http://localhost:8080',
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "http://localhost:8080",
         },
-      })
+      });
       if (data.status === 200) {
-        this.companyRecord = data.data
-        this.companyNameLength = this.companyRecord.companyName.length
-        this.companyOwnerName = this.companyRecord.companyOwnerApi.companyOwnerName
-        this.companyOwnerEGN = this.companyRecord.companyOwnerApi.ownerEGN
-        this.companyName = this.companyRecord.companyName
-        this.companyAddress = this.companyRecord.companyAddress
+        this.companyRecord = data.data;
+        this.companyNameLength = this.companyRecord.companyName.length;
+        this.companyOwnerName =
+          this.companyRecord.companyOwnerApi.companyOwnerName;
+        this.companyOwnerEGN = this.companyRecord.companyOwnerApi.ownerEGN;
+        this.companyName = this.companyRecord.companyName;
+        this.companyAddress = this.companyRecord.companyAddress;
       }
     },
     async getStatistics() {
       axios(
-        `/account/api/company/statistics-items-count/${this.$route.params.id}`,
+        `/account/api/company/statistics-items-count/${this.$route.params.id}`
       )
-        .then(response => {
-          this.statisticItems = response.data
+        .then((response) => {
+          this.statisticItems = response.data;
         })
-        .catch(error => {
-          console.log(error)
-        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
-}
+};
 </script>
 
   <style scoped>
