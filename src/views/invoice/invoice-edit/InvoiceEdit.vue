@@ -1727,9 +1727,7 @@ background-color:$product-details-bg;
 .card-header.invoice-header h5{
   color: #fff !important;
 }
-.flex-1{
-  flex: 1;
-}
+ 
 .invoice-input-top{
   width: 16rem; 
   max-width: 100%;

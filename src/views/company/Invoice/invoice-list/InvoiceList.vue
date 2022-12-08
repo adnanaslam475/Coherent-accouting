@@ -56,23 +56,47 @@
         <!-- Search -->
         <b-col cols="12" md="6">
           <div class="d-flex align-items-center justify-content-end">
+            <div class="position-relative mr-1 filter-date">
+              <flat-pickr
+                v-model="dateFrom"
+                class="form-control invoice-edit-input invoice-input-top"
+                placeholder="Start date"
+              />
 
-            <flat-pickr
-              v-model="dateFrom"
-              class="form-control invoice-edit-input invoice-input-top mr-1 filter-date"
-              placeholder="Start date"
-            />       
-            <flat-pickr
-              v-model="dateTo"
-              class="form-control invoice-edit-input invoice-input-top mr-1 filter-date"
-              placeholder="End date"
-            />
-          
-            <b-form-input
-              v-model="searchQuery"
-              class="d-inline-block mr-1"
-              placeholder="Search..."
-            />
+              <feather-icon
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="dateFrom = ''"
+              />
+            </div>
+            <div class="position-relative mr-1 filter-date">
+              <flat-pickr
+                v-model="dateTo"
+                class="form-control invoice-edit-input invoice-input-top"
+                placeholder="End date"
+              />
+
+              <feather-icon
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="dateTo = ''"
+              />
+            </div>
+            <div class="position-relative flex-1">
+              <b-form-input
+                v-model="searchQuery"
+                class="d-inline-block mr-1"
+                placeholder="Search..."
+              />
+              <feather-icon
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="searchQuery = ''"
+              />
+            </div>
           </div>
         </b-col>
       </b-row>
@@ -734,8 +758,5 @@ export default {
   right: 1rem;
   top: 50%;
   transform: translateY(-50%) !important;
-}
-.filter-date{
-  max-width: 10rem;
 }
 </style>

@@ -9,15 +9,26 @@
         
         class="input-group col-4 abc"
       >
-        <!----><input
+        <!---->
+        <div class="position-relative"
+          style="height: max-content;"
+        >
+        <input
           data-v-15eba8c6=""
           type="text"
           placeholder="Search Product"
           class="search-product form-control "
           id="__BVID__3198"
           v-model="searchQuery"
-          @keyup="searchCompanies()"
+          @input="searchCompanies(false)"
         />
+        <feather-icon
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="searchCompanies(true)"
+              />
+            </div>
         <div data-v-15eba8c6="" class="input-group-append">       
           <div data-v-15eba8c6="" class="input-group-text" style="height: 38px; cursor:pointer" > 
             <!-- #7367f0 -->
@@ -136,6 +147,19 @@
       </template>
 
       <template style="text-align: center !important" #cell(action)="data">
+
+        <feather-icon
+            :id="`preview-${data.item.id}-preview-icon`"
+            icon="EyeIcon"
+            size="16"
+            class="mx-1"
+            style="cursor: pointer"
+            @click="$router.push({ name: 'CompanyView', params: { id: data.item.id }})"
+          />
+          <b-tooltip
+            title="Preview Company"
+            :target="`preview-${data.item.id}-preview-icon`"
+          />
        
         <feather-icon
           :id="`edit-${data.item.id}-preview-icon`"
@@ -357,7 +381,10 @@ export default {
     },
 
      // getting the list of all companies
-     async searchCompanies() {
+     async searchCompanies(clear) {
+      if(clear){
+        this.searchQuery = ''
+      }
       const data = await axios.get(
         "/account/api/company/search/" +
           this.currentPage +

@@ -1,7 +1,7 @@
-import jwtDefaultConfig from './jwtDefaultConfig'
-import axios from 'axios'
-var qs = require('qs');
-var FormData = require('form-data');
+import jwtDefaultConfig from "./jwtDefaultConfig";
+import axios from "axios";
+var qs = require("qs");
+var FormData = require("form-data");
 
 export default class JwtService {
   // Will be used by this service for making API calls
@@ -9,453 +9,342 @@ export default class JwtService {
   axiosIns1 = axios.create({
     // You can add your headers here
     // ================================
-    baseURL: 'http://167.86.93.80:8765',
+    baseURL: "http://167.86.93.80:8765",
     // timeout: 1000,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json',
-      'Authorization': 'Basic cmVnaXN0ZXItYXBwOmFjbWVzZWNyZXQ='
-    }
-  })
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+      Authorization: "Basic cmVnaXN0ZXItYXBwOmFjbWVzZWNyZXQ=",
+    },
+  });
+
   axiosIns2 = axios.create({
     // You can add your headers here
     // ================================
-    baseURL: 'http://167.86.93.80:8765',
-
-  })
-  axiosIns3 = axios.create({
-    // You can add your headers here
-    // ================================
-    baseURL: 'http://167.86.93.80:8765',
-
-  })
+    baseURL: "http://167.86.93.80:8765",
+    // timeout: 1000,
+  });
 
   axiosIns4 = axios.create({
-    baseURL: 'https://api.ipify.org/?format=json',
-  })
+    baseURL: "https://api.ipify.org/?format=json",
+  });
 
-  axiosIns5 = axios.create({
-    baseURL: 'http://167.86.93.80:8898',
-  })
-
+  axiosIns = null
   // jwtConfig <= Will be used by this service
-  jwtConfig = { ...jwtDefaultConfig }
+  jwtConfig = { ...jwtDefaultConfig };
 
   // For Refreshing Token
-  isAlreadyFetchingAccessToken = false
+  isAlreadyFetchingAccessToken = false;
 
   // For Refreshing Token
-  subscribers = []
+  subscribers = [];
 
   constructor(axiosIns, jwtOverrideConfig) {
-    this.axiosIns = axiosIns
-    this.jwtConfig = { ...this.jwtConfig, ...jwtOverrideConfig }
+    this.axiosIns = axiosIns;
+    this.jwtConfig = { ...this.jwtConfig, ...jwtOverrideConfig };
 
     // Request Interceptor
     this.axiosIns.interceptors.request.use(
-        config => {
-          // Get token from localStorage
-          const accessToken = this.getToken()
+      (config) => {
+        // Get token from localStorage
+        const accessToken = this.getToken();
 
-          // If token is present add it to request's Authorization Header
-          if (accessToken) {
-            // eslint-disable-next-line no-param-reassign
-            config.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`
-          }
-          return config
-        },
-        error => Promise.reject(error),
-    )
+        // If token is present add it to request's Authorization Header
+        if (accessToken) {
+          // eslint-disable-next-line no-param-reassign
+          config.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`;
+        }
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
 
     // Add request/response interceptor
     this.axiosIns.interceptors.response.use(
-        response => response,
-        error => {
-          // const { config, response: { status } } = error
-          const { config, response } = error
-          const originalRequest = config
+      (response) => response,
+      (error) => {
+        // const { config, response: { status } } = error
+        const { config, response } = error;
+        const originalRequest = config;
 
-          // if (status === 401) {
-          if (response && response.status === 401) {
-            if (!this.isAlreadyFetchingAccessToken) {
-              this.isAlreadyFetchingAccessToken = true
-              this.refreshToken().then(r => {
-                this.isAlreadyFetchingAccessToken = false
+        // if (status === 401) {
+        if (response && response.status === 401) {
+          if (!this.isAlreadyFetchingAccessToken) {
+            this.isAlreadyFetchingAccessToken = true;
+            this.refreshToken().then((r) => {
+              this.isAlreadyFetchingAccessToken = false;
 
-                // Update accessToken in localStorage
-                this.setToken(r.data.accessToken)
-                this.setRefreshToken(r.data.refreshToken)
+              // Update accessToken in localStorage
+              this.setToken(r.data.access_token);
+              this.setRefreshToken(r.data.refresh_token);
 
-                this.onAccessTokenFetched(r.data.accessToken)
-              })
-            }
-            const retryOriginalRequest = new Promise(resolve => {
-              this.addSubscriber(accessToken => {
-                // Make sure to assign accessToken according to your response.
-                // Check: https://pixinvent.ticksy.com/ticket/2413870
-                // Change Authorization header
-                originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`
-                resolve(this.axiosIns(originalRequest))
-              })
-            })
-            return retryOriginalRequest
+              this.onAccessTokenFetched(r.data.access_token);
+            });
           }
-          return Promise.reject(error)
-        },
-    )
+          const retryOriginalRequest = new Promise((resolve) => {
+            this.addSubscriber((accessToken) => {
+              // Make sure to assign accessToken according to your response.
+              // Check: https://pixinvent.ticksy.com/ticket/2413870
+              // Change Authorization header
+              originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`;
+              resolve(this.axiosIns(originalRequest));
+            });
+          });
+          return retryOriginalRequest;
+        }
+        return Promise.reject(error);
+      }
+    );
   }
 
   onAccessTokenFetched(accessToken) {
-    this.subscribers = this.subscribers.filter(callback => callback(accessToken))
+    this.subscribers = this.subscribers.filter((callback) =>
+      callback(accessToken)
+    );
   }
 
   addSubscriber(callback) {
-    this.subscribers.push(callback)
+    this.subscribers.push(callback);
   }
 
   getToken() {
-    return localStorage.getItem(this.jwtConfig.storageTokenKeyName)
+    return localStorage.getItem(this.jwtConfig.storageTokenKeyName);
   }
 
   getRefreshToken() {
-    return localStorage.getItem(this.jwtConfig.storageRefreshTokenKeyName)
+    return localStorage.getItem(this.jwtConfig.storageRefreshTokenKeyName);
   }
 
   setToken(value) {
-    localStorage.setItem(this.jwtConfig.storageTokenKeyName, value)
+    localStorage.setItem(this.jwtConfig.storageTokenKeyName, value);
   }
 
   setRefreshToken(value) {
-    localStorage.setItem(this.jwtConfig.storageRefreshTokenKeyName, value)
+    localStorage.setItem(this.jwtConfig.storageRefreshTokenKeyName, value);
   }
 
   login(...args) {
     let data = new FormData();
-    for ( var key in arguments[0] ) {
+    for (var key in arguments[0]) {
       if (arguments[0].hasOwnProperty(key)) {
         data.append(key, arguments[0][key]);
       }
     }
     let headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json',
-      'Authorization': 'Basic YWNtZTphY21lc2VjcmV0',
-    }
-    return this.axiosIns3.post(this.jwtConfig.loginEndpoint, data, {
-      headers: headers
-    })
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+      Authorization: "Basic YWNtZTphY21lc2VjcmV0",
+    };
+    return this.axiosIns2.post(this.jwtConfig.loginEndpoint, data, {
+      headers: headers,
+    });
   }
 
-  getIpAddress(){
-    return this.axiosIns4.get()
+  getIpAddress() {
+    return this.axiosIns4.get();
   }
-  clientToken(){
+  clientToken() {
     const data = qs.stringify({
-      'grant_type': 'client_credentials'
-    })
-    return this.axiosIns1.post(this.jwtConfig.clientToken, data)
+      grant_type: "client_credentials",
+    });
+    return this.axiosIns1.post(this.jwtConfig.clientToken, data);
   }
 
-  register(token,...args) {
+  register(token, ...args) {
     let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
+      "Content-Type": "application/json",
+      Authorization: `${this.jwtConfig.tokenType} ${token}`,
+      Accept: "application/json",
+    };
     return this.axiosIns2.post(this.jwtConfig.registerEndpoint, ...args, {
-      headers: headers
-    })
+      headers: headers,
+    });
   }
 
-  resetPasswordRequest(token,...args) {
+  resetPasswordRequest(token, ...args) {
     let headers = {
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`
-    }
-    return this.axiosIns2.post(this.jwtConfig.resetPasswordRequestEndpoint, ...args, {
-      headers: headers
-    })
+      Authorization: `${this.jwtConfig.tokenType} ${token}`,
+    };
+    return this.axiosIns2.post(
+      this.jwtConfig.resetPasswordRequestEndpoint,
+      ...args,
+      {
+        headers: headers,
+      }
+    );
   }
 
-  resetPassword(token,...args) {
+  resetPassword(token, ...args) {
     let headers = {
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`
-    }
+      Authorization: `${this.jwtConfig.tokenType} ${token}`,
+    };
     return this.axiosIns2.post(this.jwtConfig.resetPasswordEndpoint, ...args, {
-      headers: headers
-    })
+      headers: headers,
+    });
   }
 
   refreshToken() {
-    return this.axiosIns.post(this.jwtConfig.refreshEndpoint, {
+    return this.axiosIns1.post(this.jwtConfig.refreshEndpoint, {
+      grant_type: "refresh_token",
       refreshToken: this.getRefreshToken(),
-    })
+    });
   }
 
-  countries(token){
+  countries(token) {
     let headers = {
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-    }
+      Authorization: `${this.jwtConfig.tokenType} ${token}`,
+    };
     return this.axiosIns2.get(this.jwtConfig.countryToken, {
-      headers: headers
-    })
+      headers: headers,
+    });
   }
 
   //add invoice
 
-  addInvoice(token,...args) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.post(this.jwtConfig.invoiceAddEndpoint, ...args, {
-      headers: headers
-    }) 
+  addInvoice(token, ...args) {
+    return this.axiosIns.post(this.jwtConfig.invoiceAddEndpoint, ...args)
   }
 
-  EditInvoice(token,id,...args) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.put(`${this.jwtConfig.invoiceEditEndpoint}/${id}`, ...args, {
-      headers: headers
-    }) 
+  EditInvoice(token, id, ...args) {
+    return this.axiosIns.put(`${this.jwtConfig.invoiceEditEndpoint}/${id}`,...args)
   }
 
-  addCompanyInvoice(token,id,...args) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.post(`${this.jwtConfig.CompanyInvoiceAddEndpoint}/${id}`, ...args, {
-      headers: headers
-    }) 
+  addCompanyInvoice(token, id, ...args) {
+
+    return this.axiosIns.post(
+      `${this.jwtConfig.CompanyInvoiceAddEndpoint}/${id}`,
+      ...args
+    );
   }
 
-  EditCompanyInvoice(token,id,companyId,...args) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.put(`${this.jwtConfig.companyInvoiceEditEndpoint}/${id}/${companyId}`, ...args, {
-      headers: headers
-    }) 
+  EditCompanyInvoice(token, id, companyId, ...args) {
+    return this.axiosIns.put(
+      `${this.jwtConfig.companyInvoiceEditEndpoint}/${id}/${companyId}`,
+      ...args
+    );
   }
 
-  DeleteInvoice(token,id) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.delete(`${this.jwtConfig.invoiceDeleteEndpoint}/${id}`,{
-      headers: headers
-    }) 
+  DeleteInvoice(token, id) {
+    return this.axiosIns.delete(
+      `${this.jwtConfig.invoiceDeleteEndpoint}/${id}`
+    );
   }
 
-  DeleteCompanyInvoice(token,id) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.delete(`${this.jwtConfig.companyInvoiceDeleteEndpoint}/${id}`,{
-      headers: headers
-    }) 
+  DeleteCompanyInvoice(token, id) {
+    return this.axiosIns.delete(
+      `${this.jwtConfig.companyInvoiceDeleteEndpoint}/${id}`
+    );
   }
 
   //Add Vat-Report
-  addCompanyVatReport(token,id,...args) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.post(`${this.jwtConfig.VatReportAddEndPoint}/${id}`, ...args, {
-      headers: headers
-    }) 
+  addCompanyVatReport(token, id, ...args) {
+
+    return this.axiosIns.post(
+      `${this.jwtConfig.VatReportAddEndPoint}/${id}`,
+      ...args
+    );
   }
 
   //Edit Vat-Report
-  editCompanyVatReport(token,id,...args) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.put(`${this.jwtConfig.VatReportEditEndPoint}/${id}`, ...args, {
-      headers: headers
-    }) 
+  editCompanyVatReport(token, id, ...args) {
+
+    return this.axiosIns.put(
+      `${this.jwtConfig.VatReportEditEndPoint}/${id}`,
+      ...args
+    );
   }
 
   //Delete Vat Report
-  DeleteVatReport(token,id) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.delete(`${this.jwtConfig.VatReportDeleteEndPoint}/${id}`,{
-      headers: headers
-    }) 
+  DeleteVatReport(token, id) {
+    return this.axiosIns.delete(
+      `${this.jwtConfig.VatReportDeleteEndPoint}/${id}`
+    );
   }
 
   //Get Invoices for report
-  InvoicesForVatReport(token,...args){
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.post(`${this.jwtConfig.GetInvoicesForReportEndPoint}`, ...args, {
-      headers: headers
-    }) 
-
+  InvoicesForVatReport(token, ...args) {
+    return this.axiosIns.post(
+      `${this.jwtConfig.GetInvoicesForReportEndPoint}`,
+      ...args
+    );
   }
 
-  EditUser(token,id,...args) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.put(`${this.jwtConfig.UserEditEndpoint}/${id}`, ...args, {
-      headers: headers
-    }) 
+  EditUser(token, id, ...args) {
+
+    return this.axiosIns.put(
+      `${this.jwtConfig.UserEditEndpoint}/${id}`,
+      ...args
+    );
   }
 
-  DeleteUser(token,id) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.delete(`${this.jwtConfig.UserDeleteEndpoint}/${id}`,{
-      headers: headers
-    }) 
+  DeleteUser(token, id) {
+    return this.axiosIns.delete(`${this.jwtConfig.UserDeleteEndpoint}/${id}`);
   }
 
-  EditCompanyUser(token,id,companyId,...args) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.put(`${this.jwtConfig.UserCompanyEditEndpoint}/${id}/${companyId}`, ...args, {
-      headers: headers
-    }) 
+  EditCompanyUser(token, id, companyId, ...args) {
+    return this.axiosIns.put(
+      `${this.jwtConfig.UserCompanyEditEndpoint}/${id}/${companyId}`,
+      ...args
+    );
   }
 
-  DeleteCompanyUser(token,id) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.delete(`${this.jwtConfig.UserCompanyDeleteEndpoint}/${id}`,{
-      headers: headers
-    }) 
+  DeleteCompanyUser(token, id) {
+    return this.axiosIns.delete(
+      `${this.jwtConfig.UserCompanyDeleteEndpoint}/${id}`
+    );
   }
 
-  SearchCompanyName(token, ...args){
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.post(this.jwtConfig.SearchCompanyEndpoint, ...args, {
-      headers: headers
-    }) 
+  SearchCompanyName(token, ...args) {
+    return this.axiosIns.post(this.jwtConfig.SearchCompanyEndpoint, ...args);
   }
 
-  SearchCompanyEic(token, eic){
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.get(`${this.jwtConfig.SearchEicEndpoint}/${eic}`, {
-      headers: headers
-    }) 
+  SearchCompanyEic(token, eic) {
+    return this.axiosIns.get(`${this.jwtConfig.SearchEicEndpoint}/${eic}`);
   }
 
-  SearchCompanyPerson(token, params){
-
+  SearchCompanyPerson(token, params) {
     let config = {
       headers: {
-        'Authorization': `${this.jwtConfig.tokenType} ${token}`
+        Authorization: `${this.jwtConfig.tokenType} ${token}`,
       },
       params: params,
-    }
-    return this.axiosIns2.get(this.jwtConfig.SearchEicPerson, config) 
+    };
+    return this.axiosIns2.get(this.jwtConfig.SearchEicPerson, config);
   }
 
-  SearchCompaniesPerson(token, companyId, params){
-
+  SearchCompaniesPerson(token, companyId, params) {
     let config = {
       headers: {
-        'Authorization': `${this.jwtConfig.tokenType} ${token}`
+        Authorization: `${this.jwtConfig.tokenType} ${token}`,
       },
       params: params,
-    }
-    return this.axiosIns2.get(`${this.jwtConfig.searchEicPersonCompanies}/${companyId}/1/100`, config) 
+    };
+    return this.axiosIns2.get(
+      `${this.jwtConfig.searchEicPersonCompanies}/${companyId}/1/100`,
+      config
+    );
   }
 
-  verifyToken(token,UrlToken){
-    let headers = {
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-    }
-    return this.axiosIns2.get(`${this.jwtConfig.verifyToken}?token=${UrlToken}`, {
-      headers: headers
-    })
+  verifyToken(token, UrlToken) {
+    return this.axiosIns.get(
+      `${this.jwtConfig.verifyToken}?token=${UrlToken}`
+    );
   }
 
   companies(token) {
-    let headers = {
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-    }
-
-    return this.axiosIns2.get(`${this.jwtConfig.getCompanies}`, {
-      headers: headers
-    })
+    return this.axiosIns.get(`${this.jwtConfig.getCompanies}`);
   }
 
-  addFileInvoice(token,CompanyId,file){
-    let headers = {
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Content-Type' : 'multipart/form-data'
-    }
-    return this.axiosIns2.post(`${this.jwtConfig.fileInvoiceEndpoint}/${CompanyId}`, file, {
-      headers: headers
-    }) 
+  addFileInvoice(token, CompanyId, file) {
+    return this.axiosIns.post(
+      `${this.jwtConfig.fileInvoiceEndpoint}/${CompanyId}`,
+      file
+    );
   }
-  addMultipleFileInvoice(token,CompanyId,files){
-    let headers = {
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Content-Type' : 'multipart/form-data'
-    }
-    return this.axiosIns2.post(`${this.jwtConfig.multipleFileInvoiceEndpoint}/${CompanyId}`, files, {
-      headers: headers
-    })   
-  }
-
-  refreshTokenAPI() {
-    var getrefreshToken = this.getRefreshToken()
-    var data = qs.stringify({
-      grant_type: "refresh_token",
-      refresh_token: getrefreshToken,
-    });
-    let headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json',
-        'Authorization': 'Basic YWNtZTphY21lc2VjcmV0',
-    }
-    return this.axiosIns2.post('/userauth/oauth/token', data, {
-        headers: headers
-    })
+  addMultipleFileInvoice(token, CompanyId, files) {
+    return this.axiosIns.post(
+      `${this.jwtConfig.multipleFileInvoiceEndpoint}/${CompanyId}`,
+      files
+    );
   }
 }

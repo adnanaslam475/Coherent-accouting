@@ -13,7 +13,7 @@
         <!-- Per Page -->
         <b-col
           cols="12"
-          md="7"
+          md="5"
           class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
         >
           <label>Entries</label>
@@ -44,24 +44,50 @@
         <!-- Search -->
         <b-col
           cols="12"
-          md="5"
+          md="7"
         >
           <div class="d-flex align-items-center justify-content-end">
-            <flat-pickr
-              v-model="dateFrom"
-              class="form-control invoice-edit-input invoice-input-top mr-1 filter-date"
-              placeholder="Start date"
-            />       
-            <flat-pickr
-              v-model="dateTo"
-              class="form-control invoice-edit-input invoice-input-top mr-1 filter-date"
-              placeholder="End date"
-            />
-            <b-form-input
-              v-model="searchQuery"
-              class="d-inline-block mr-1"
-              placeholder="Search..."
-            />
+            <div class="position-relative mr-1 filter-date">
+              <flat-pickr
+                v-model="dateFrom"
+                class="form-control invoice-edit-input invoice-input-top"
+                placeholder="Start date"
+              />
+
+              <feather-icon
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="dateFrom = ''"
+              />
+            </div>
+            <div class="position-relative mr-1 filter-date">
+              <flat-pickr
+                v-model="dateTo"
+                class="form-control invoice-edit-input invoice-input-top"
+                placeholder="End date"
+              />
+
+              <feather-icon
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="dateTo = ''"
+              />
+            </div>
+            <div class="position-relative flex-1">
+              <b-form-input
+                v-model="searchQuery"
+                class="d-inline-block mr-1"
+                placeholder="Search..."
+              />
+              <feather-icon
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="searchQuery = ''"
+              />
+            </div>
 
           </div>
         </b-col>
@@ -655,9 +681,7 @@ export default {
   padding-top: 0;
 }
 
-.flex-1{
-  flex: 1;
-}
+ 
 .invoice-pdf{
   background-color: #f8f8f8;
 }
@@ -670,8 +694,5 @@ export default {
 }
 .invoice-pdf .gap-2{
   gap: 15px;
-}
-.filter-date{
-  max-width: 10rem;
 }
 </style>

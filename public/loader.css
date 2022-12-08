@@ -126,3 +126,24 @@ body {
   top: 25px;
   right: 25px;
 }
+.filter-date {
+  min-width: 10rem;
+  max-width: 10rem;
+}
+.flex-1{
+  flex: 1;
+}
+.clear-all {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 8px;
+  width: 14px;
+  height: 14px;
+}
+.table thead th, .table tfoot th {
+  font-size: 0.7rem !important;
+}
+.table tbody td {
+  font-size: 0.8rem !important;
+}

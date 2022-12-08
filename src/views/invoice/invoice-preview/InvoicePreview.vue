@@ -617,9 +617,7 @@ export default {
   padding-top: 0;
 }
 
-.flex-1{
-  flex: 1;
-}
+ 
 .invoice-pdf{
   background-color: #f8f8f8;
 }
