@@ -1,59 +1,67 @@
 <template>
   <b-col>
     <b-tabs v-model="companyTab">
+      <!-- Company-Info tab -->
       <b-tab>
         <template #title>
-          <feather-icon icon="BriefcaseIcon"/>
+          <feather-icon icon="BriefcaseIcon" />
           <span style="font-size: 13px">Company Info</span>
         </template>
-        <CompanyInfo
-            :company-tab="companyTab"
-            @state="update($event)"
+        <CompanyInfo :company-tab="companyTab" @state="update($event)" />
+      </b-tab>
+
+      <!-- invoices tab -->
+      <b-tab>
+        <template #title>
+          <feather-icon icon="FileTextIcon" />
+          <span style="font-size: 13px">Invoices</span>
+        </template>
+        <Invoice :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)" />
+      </b-tab>
+
+      <!-- Multiple Uploads tab -->
+      <b-tab>
+        <template #title>
+          <feather-icon icon="FileIcon" />
+          <span style="font-size: 13px">Multiple Upload</span>
+        </template>
+        <NotVerifiedInvoice />
+      </b-tab>
+
+      <!-- Vat Reports tab -->
+      <b-tab>
+        <template #title>
+          <feather-icon icon="FlagIcon" />
+          <span style="font-size: 13px">Vat Reports</span>
+        </template>
+        <VatReports
+          :vat-reports-tab="vatReportsTab"
+          @state="updateVatReportsTab($event)"
         />
       </b-tab>
 
+      <!-- Yearly Reports Tab -->
       <b-tab>
         <template #title>
-          <feather-icon icon="FileTextIcon"/>
-          <span style="font-size: 13px">Invoices</span>
-        </template>
-        <Invoice :invoiceTab="invoiceTab" @state="updateInvoiceTab($event)" />
-      </b-tab>
-      <b-tab>
-        <template #title>
-          <feather-icon icon="FlagIcon"/>
+          <feather-icon icon="FlagIcon" />
           <span style="font-size: 13px">Yearly Reports</span>
         </template>
-        <YearlyReport/>
+        <YearlyReport />
       </b-tab>
 
+      <!-- Documents tab -->
       <b-tab>
         <template #title>
-          <feather-icon icon="FlagIcon"/>
-          <span style="font-size: 13px">Vat Reports</span>
-        </template>
-        <VatReports :vatReportsTab="vatReportsTab" @state="updateVatReportsTab($event)"/>
-      </b-tab>
-
-      <b-tab>
-        <template #title>
-          <feather-icon icon="FileIcon"/>
-          <span style="font-size: 13px">Multiple Upload</span>
-        </template>
-        <NotVerifiedInvoice/>
-      </b-tab>
-
-      <b-tab>
-        <template #title>
-          <feather-icon icon="FolderIcon"/>
+          <feather-icon icon="FolderIcon" />
           <span style="font-size: 13px">Documents</span>
         </template>
-        <Document/>
+        <Document />
       </b-tab>
 
+      <!--Private Person tab -->
       <b-tab>
         <template #title>
-          <feather-icon icon="UserIcon"/>
+          <feather-icon icon="UserIcon" />
           <span style="font-size: 13px">Private Persons</span>
         </template>
         <PrivatePersons />
@@ -67,22 +75,16 @@
 </template>
 
 <script>
-import {
-  BTabs,
-  BTab,
-  BCardText,
-  BCol,
-  BCard,
-} from 'bootstrap-vue'
-import CompanyInfo from './CompanyInfo/CompanyInfo.vue'
-import Invoice from './Invoice/invoice-list/InvoiceList.vue'
-import VatReports from './VatReports/vat-reports-list/VatReportsList.vue'
-import VATMonthReport from './VATMonthReports/VATMonthReport.vue'
-import YearlyReport from './YearlyReports/YearlyReport.vue'
-import NotVerifiedInvoice from './Invoice/invoice-list-notVerified/InvoiceList.vue'
-import Document from './Documents/Document.vue'
-import PrivatePersons from './user/users-list/UsersList.vue'
-import { codeIcon } from './code'
+import { BTabs, BTab, BCardText, BCol, BCard } from "bootstrap-vue";
+import CompanyInfo from "./CompanyInfo/CompanyInfo.vue";
+import Invoice from "./Invoice/invoice-list/InvoiceList.vue";
+import VatReports from "./VatReports/vat-reports-list/VatReportsList.vue";
+import VATMonthReport from "./VATMonthReports/VATMonthReport.vue";
+import YearlyReport from "./YearlyReports/YearlyReport.vue";
+import NotVerifiedInvoice from "./Invoice/invoice-list-notVerified/InvoiceList.vue";
+import Document from "./Documents/Document.vue";
+import PrivatePersons from "./user/users-list/UsersList.vue";
+import { codeIcon } from "./code";
 
 export default {
   components: {
@@ -103,23 +105,25 @@ export default {
   data() {
     return {
       codeIcon,
-      companyTab: this.$route.params.InvoiceId ? this.$route.params.InvoiceId : 0,
+      companyTab: this.$route.params.InvoiceId
+        ? this.$route.params.InvoiceId
+        : 0,
       invoiceTab: 0,
       vatReportsTab: 0,
-    }
+    };
   },
   methods: {
     update(value) {
-      this.companyTab = value
+      this.companyTab = value;
     },
     updateInvoiceTab(value) {
-      this.invoiceTab = value
+      this.invoiceTab = value;
     },
     updateVatReportsTab(value) {
-      this.vatReportsTab = value
-    }
+      this.vatReportsTab = value;
+    },
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -131,7 +135,7 @@ export default {
 // .card-body {
 //   padding-bottom: 0rem;
 // }
-#main-card-body .card-body{
+#main-card-body .card-body {
   padding: 0px;
 }
 </style>

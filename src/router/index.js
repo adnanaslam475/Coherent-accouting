@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { isUserLoggedIn, getUserData, getHomeRouteForLoggedInUser } from '@/auth/utils'
-import { i18n } from '../main'
 import useJwt from '@/auth/jwt/useJwt'
+import { i18n } from '../main'
 
 Vue.use(VueRouter)
 
@@ -14,7 +14,7 @@ const router = new VueRouter({
   scrollBehavior() {
     return {
       x: 0,
-      y: 0
+      y: 0,
     }
   },
   routes: [
@@ -158,6 +158,14 @@ const router = new VueRouter({
       component: () => import('@/views/FreeDigitalInvoicesPreview.vue'),
       meta: {
         layout: 'full',
+      }
+    },
+    {
+      path: '/why-choose-us',
+      name: 'why-choose-us',
+      component: () => import('@/views/WhyChooseUs.vue'),
+      meta: {
+        layout: 'full',
       },
     },
     {
@@ -232,23 +240,23 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'Companies',
-            to: '/companies'
+            to: '/companies',
           },
           {
             text: 'Edit Company',
             active: true,
           },
         ],
-      }
+      },
     },
-    // Company Invoices 
+    // Company Invoices
     // {
     //   path: '/companyInvoice/preview/:id',
     //   name: 'company-invoice-preview',
     //   component: () => import('@/views/company/CompanyInvoice/CompanyInvoice.vue'),
     // },
-    
-    //Company invoices add/edit/preview
+
+    // Company invoices add/edit/preview
     {
       path: '/company/:companyId/invoice/preview/:id',
       name: 'company-invoice-preview',
@@ -282,7 +290,6 @@ const router = new VueRouter({
       name: 'company-vat-report-edit',
       component: () => import('@/views/company/VatReports/vat-report-edit/vatReportEdit.vue'),
     },
-
 
     // company private person edit/preview
     {
@@ -423,49 +430,46 @@ router.beforeEach((to, _, next) => {
     if (!isLoggedIn) return next({ name: 'login' })
 
     return next()
-
   }
-    // else if( to.name == "auth-reset-password-v1"){
-// router.beforeEach((to, _, next) => {
-//     let isLoggedIn = isUserLoggedIn()
-//     if (to.name == "/" || to.name == "home" || to.name == "invoices") {
-//       if (!isLoggedIn) {
-//         return next({ name: 'login' })
-//       }
+  // else if( to.name == "auth-reset-password-v1"){
+  // router.beforeEach((to, _, next) => {
+  //     let isLoggedIn = isUserLoggedIn()
+  //     if (to.name == "/" || to.name == "home" || to.name == "invoices") {
+  //       if (!isLoggedIn) {
+  //         return next({ name: 'login' })
+  //       }
 
-//       return next();
+  //       return next();
 
-//     }
-//     else if( to.name == "auth-reset-password-v1"){
+  //     }
+  //     else if( to.name == "auth-reset-password-v1"){
 
-    //   let tokenUrl = window?.location?.search?.split('=')[1] ? window.location.search.split('=')[1] : ""
+  //   let tokenUrl = window?.location?.search?.split('=')[1] ? window.location.search.split('=')[1] : ""
 
-    //   if(tokenUrl){
-    //     useJwt.clientToken()
-    //       .then(res => {
-    //           let token = res.data.access_token
-    //           useJwt.verifyToken(token,tokenUrl)
-    //             .then(response => {
-    //               console.log("response",response)
+  //   if(tokenUrl){
+  //     useJwt.clientToken()
+  //       .then(res => {
+  //           let token = res.data.access_token
+  //           useJwt.verifyToken(token,tokenUrl)
+  //             .then(response => {
+  //               console.log("response",response)
 
-    //               return this.$router.push('/')
-    //             })
-    //             .catch(error => {
+  //               return this.$router.push('/')
+  //             })
+  //             .catch(error => {
 
-    //             })
-    //       })
-    //       .catch(error => {
+  //             })
+  //       })
+  //       .catch(error => {
 
-    //       })
-    //   } else {
-    //     return next()
-    //   }
+  //       })
+  //   } else {
+  //     return next()
+  //   }
 
   // }
 
-  else {
-    return next()
-  }
+  return next()
 })
 
 // ? For splash screen

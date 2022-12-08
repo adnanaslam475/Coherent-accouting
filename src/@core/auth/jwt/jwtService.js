@@ -269,12 +269,28 @@ export default class JwtService {
     );
   }
 
-  EditUser(token, id, ...args) {
+  //Get Create-Vat-Report-Zip
+  GetVatReportsZip(token,...args){
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.post(`${this.jwtConfig.CreateVatReportZipFileEndPoint}`, ...args, {
+      headers: headers
+    }) 
 
-    return this.axiosIns.put(
-      `${this.jwtConfig.UserEditEndpoint}/${id}`,
-      ...args
-    );
+  }
+
+  EditUser(token,id,...args) {
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.put(`${this.jwtConfig.UserEditEndpoint}/${id}`, ...args, {
+      headers: headers
+    }) 
   }
 
   DeleteUser(token, id) {

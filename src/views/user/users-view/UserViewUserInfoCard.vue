@@ -5,8 +5,7 @@
 
       <!-- User Info: Left col -->
       <b-col
-        cols="21"
-        xl="4"
+        cols="4"
         class="d-flex justify-content-between flex-column"
       >
         <!-- User Avatar & Action Buttons -->
@@ -26,6 +25,7 @@
             <div class="d-flex flex-wrap">
               <b-button
                 :to="{ name: 'apps-users-edit', params: { id: userData.id } }"
+                size="sm"
                 variant="primary"
               >
                 Edit
@@ -33,6 +33,7 @@
               <b-button
                 variant="outline-danger"
                 class="ml-1"
+                size="sm"
                 @click="UserDelete(userData.id)"
               >
                 Delete
@@ -44,8 +45,7 @@
 
       <!-- Right Col: Table -->
       <b-col
-        cols="12"
-        xl="4"
+        cols="8"
       >
         <table class="mt-2 mt-xl-0 user-preview-detail">
           <tr>
@@ -125,8 +125,7 @@
       <b-col
         cols="12"
         xl="4"
-      >
-      </b-col>
+      />
     </b-row>
   </b-card>
 </template>
@@ -136,9 +135,9 @@ import {
   BCard, BButton, BAvatar, BRow, BCol,
 } from 'bootstrap-vue'
 import { avatarText } from '@core/utils/filter'
+import useJwt from '@/auth/jwt/useJwt'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import useUsersList from '../users-list/useUsersList'
-import useJwt from "@/auth/jwt/useJwt";
-import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 export default {
   components: {
@@ -152,37 +151,36 @@ export default {
   },
   methods: {
     UserDelete(id) {
-      let token = useJwt.getToken()
+      const token = useJwt.getToken()
       useJwt
-        .DeleteUser(token,id)
-        .then((response) => {
-          
+        .DeleteUser(token, id)
+        .then(response => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `User Deleted Successfully`,
-              icon: "DeleteIcon",
-              variant: "success",
+              title: 'User Deleted Successfully',
+              icon: 'DeleteIcon',
+              variant: 'success',
             },
-          });
+          })
           return this.$router.push({
-              name: "invoices", 
-              params: { 
-                id: 2 
-              }
-            })
+            name: 'invoices',
+            params: {
+              id: 2,
+            },
+          })
         })
-        .catch((error) => {
+        .catch(error => {
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: "DeleteIcon",
-              variant: "error",
+              icon: 'DeleteIcon',
+              variant: 'error',
             },
-          });
-        });
-    }
+          })
+        })
+    },
   },
   setup() {
     const { resolveUserRoleVariant } = useUsersList()

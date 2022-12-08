@@ -21,24 +21,30 @@
           <b-button
             class="mr-1"
             variant="primary"
-            @click="actionTab"
             :to="{
               name: 'company-vat-report-add',
               params: { companyId: $route.params.id },
             }"
+            @click="actionTab"
           >
             Add Record
           </b-button>
 
           <!-- Generate Button -->
 
-          <b-button v-b-modal.modal-prevent-closing variant="primary">
+          <b-button
+            v-b-modal.modal-prevent-closing
+            variant="primary"
+          >
             Generate
           </b-button>
         </b-col>
 
         <!-- Search -->
-        <b-col cols="12" md="6">
+        <b-col
+          cols="12"
+          md="6"
+        >
           <div class="d-flex align-items-center justify-content-end">
             <b-form-input
               v-model="searchQuery"
@@ -61,23 +67,28 @@
       @hidden="resetModal"
       @ok="handleOk"
     >
-      <form ref="form" @submit.stop.prevent="handleMonthSelected">
-        <validation-observer ref="selectMonthRules" tag="form">
+      <form
+        ref="form"
+        @submit.stop.prevent="handleMonthSelected"
+      >
+        <validation-observer
+          ref="selectMonthRules"
+          tag="form"
+        >
           <validation-provider
             #default="{ errors }"
-            v-bind:name="$t('month_selected')"
+            :name="$t('month_selected')"
             rules="required"
           >
             <vue-monthly-picker
-              v-model="selectedMonthData.date"
               id="month_selected"
+              v-model="selectedMonthData.date"
               name="month_selected"
-              dateFormat="Y-MM"
-              :monthLabels="monthLabels"
+              date-format="Y-MM"
+              :month-labels="monthLabels"
               :class="errors.length > 0 ? 'is-invalid' : null"
-              placeHolder="Please Select: "
-            >
-            </vue-monthly-picker>
+              place-holder="Please Select: "
+            />
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </validation-observer>
@@ -91,10 +102,13 @@
       title="Invoices for Vat Reports"
       ok-title="Download Zip"
       cancel-title="Close"
-      @ok="getZipFile()"
       scrollable
+      @ok="getZipFile()"
     >
-      <form ref="form" @submit.stop.prevent="handleMonthSelected">
+      <form
+        ref="form"
+        @submit.stop.prevent="handleMonthSelected"
+      >
         <!-- Vat Reports Table -->
         <b-table
           :items="invoicesForReport"
@@ -104,29 +118,44 @@
           show-empty
           empty-text="No matching records found"
           class="position-relative invoiceList"
-        > 
+        >
+          <template #empty="scope">
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="mb-1 start-chat-icon">
+                <feather-icon
+                    icon="FolderIcon"
+                    size="40"
+                />
+              </div>
+              <h5 class="sidebar-toggle start-chat-text">
+                No records found
+              </h5>
+            </div>
+          </template>
+
           <template #cell(isChecked)="data">
             <b-form-checkbox
               :id="'checkbox' + data.item.id"
+              v-model="status[data.item.id]"
               name="checkbox-1"
               value="accepted"
               unchecked-value="not_accepted"
-              v-model="status[data.item.id]"
-              ></b-form-checkbox
-            >
+            />
           </template>
 
           <!-- Column: Id -->
-          <template #cell(id)="data"> #{{ data.value }} </template>
+          <template #cell(id)="data">
+            #{{ data.value }}
+          </template>
 
-          <!-- Column: cell-01 -->
+          
           <template #cell(invoiceNumber)="data">
             <span class="text-nowrap">
               {{ data.value }}
             </span>
           </template>
 
-          <!-- Column: cell-20 -->
+        
           <template #cell(dateIssued)="data">
             <span class="text-nowrap">
               {{ data.value }}
@@ -149,6 +178,19 @@
       :sort-desc.sync="isSortDirDesc"
       class="position-relative invoiceList"
     >
+      <template #empty="scope">
+        <div class="d-flex align-items-center justify-content-center">
+          <div class="mb-1 start-chat-icon">
+            <feather-icon
+                icon="FolderIcon"
+                size="40"
+            />
+          </div>
+          <h5 class="sidebar-toggle start-chat-text">
+            No records found
+          </h5>
+        </div>
+      </template>
       <!-- Column: Id -->
       <template #cell(id)="data">
         <!-- <b-link
@@ -282,8 +324,8 @@
     </b-table>
   </b-card>
 </template>
-  
-  <script>
+
+<script>
 import {
   BCard,
   BRow,
@@ -306,209 +348,31 @@ import {
   VBToggle,
   BCardHeader,
   BFormCheckbox,
-} from "bootstrap-vue";
-import { avatarText } from "@core/utils/filter";
-import vSelect from "vue-select";
-import { onUnmounted } from "@vue/composition-api";
-import store from "@/store";
-import useVatReportsList from "./useVatReportsList";
-import VueHtml2pdf from "vue-html2pdf";
-import vatReportsStoreModule from "../vatReportsStoreModule";
-import useJwt from "@/auth/jwt/useJwt";
+} from 'bootstrap-vue'
+import { avatarText } from '@core/utils/filter'
+import vSelect from 'vue-select'
+import { onUnmounted } from '@vue/composition-api'
+import store from '@/store'
+import VueHtml2pdf from 'vue-html2pdf'
+import useJwt from '@/auth/jwt/useJwt'
 
-import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
-import router from "@/router";
-import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { required } from "@validations";
-import { extend } from "vee-validate";
-import VueMonthlyPicker from "vue-monthly-picker";
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import router from '@/router'
+import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
+import { required } from '@validations'
 
-import axios from "@/libs/axios";
+import VueMonthlyPicker from 'vue-monthly-picker'
 
-extend("required", {
+import axios from '@/libs/axios'
+import vatReportsStoreModule from '../vatReportsStoreModule'
+import useVatReportsList from './useVatReportsList'
+
+extend('required', {
   ...required,
-  message: "This field is mandatory",
-});
+  message: 'This field is mandatory',
+})
 
 export default {
-  props: ["vatReportsTab"],
-  methods: {
-    state() {
-      return 1;
-    },
-
-    //getting zip file from backend
-    getZipFile() {
-      let j = 0;
-      for (let i = 0; i < this.totalInvoicesForReport; i++) {
-        if (this.status[this.invoicesForReport[i].id] == "accepted") {
-          this.idsToSend[j] = this.invoicesForReport[i].id;
-          j++;
-        }
-      }
-
-      let token = useJwt.getToken();
-      useJwt.GetVatReportsZip(token, this.idsToSend).then((response) => {
-        if(response.data.fileId != null){
-        const data = JSON.parse(response.data.fileId);
-        axios
-          .get(
-            `${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${data.companyId}`,
-            { responseType: "blob" }
-          )
-          .then((response) => {
-            // console.log(response);
-            if (response.status === 200) {
-              const reader = new FileReader();
-              reader.readAsDataURL(response.data);
-              reader.onload = function () {
-                const filePath = reader.result;
-                const a = document.createElement("a");
-                a.href = filePath;
-                a.download = `${data.binaryId}`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-              };
-            }
-          })
-          .catch((error) => {
-            // console.log(error);
-            this.makeToast(
-              "danger",
-              error.response.errorCode,
-              error.response.errorMessage
-            );
-          });
-        }
-        });
-    },
-
-    //
-    resetModal() {
-      this.selectedMonthData.date = "";
-    },
-
-    //
-    handleOk(bvModalEvent) {
-      // Prevent modal from closing
-      bvModalEvent.preventDefault();
-      // Trigger submit handler
-      this.handleMonthSelected();
-    },
-
-    //
-    handleMonthSelected() {
-      this.$refs.selectMonthRules.validate().then((success) => {
-        if (success) {
-          let monthVal;
-          let tPeriod = this.selectedMonthData.date._i;
-
-          let year = tPeriod.substring(0, 4);
-          let month = tPeriod.substring(5, tPeriod.length);
-
-          if (month.length === 1) {
-            monthVal = year + "-0" + month + "-01";
-          } else {
-            monthVal = year + "-" + month + "-01";
-          }
-
-          this.selectedMonthData.date = monthVal;
-          let token = useJwt.getToken();
-          useJwt
-            .InvoicesForVatReport(token, this.selectedMonthData)
-            .then((response) => {
-              this.invoicesForReport = response.data.elements;
-              this.totalInvoicesForReport = response.data.totalElements;
-              for (let i = 0; i < this.totalInvoicesForReport; i++) {
-                this.status[this.invoicesForReport[i].id] = "accepted";
-              }
-              // console.log(this.invoicesForReport);
-            });
-          this.$nextTick(() => {
-            this.$bvModal.hide("modal-prevent-closing");
-          });
-
-          this.$nextTick(() => {
-            this.$bvModal.show("modal-invoices-for-report");
-          });
-        }
-      });
-    },
-
-    //
-    actionTab() {
-      this.$emit("state", this.state());
-    },
-
-    //Delete vat report
-    vatReportDelete(id, refetchData) {
-      let token = useJwt.getToken();
-      useJwt
-        .DeleteVatReport(token, id)
-        .then((response) => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Vat Deleted Successfully`,
-              icon: "DeleteIcon",
-              variant: "success",
-            },
-          });
-          refetchData();
-        })
-        .catch((error) => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `${error.response.data.errorMessage}`,
-              icon: "DeleteIcon",
-              variant: "error",
-            },
-          });
-        });
-    },
-  },
-  data() {
-    return {
-      checkedAll: true,
-      idsToSend: [],
-      totalInvoicesForReport: "",
-      status: [],
-      invoicesForReport: [],
-      selectedMonthData: {
-        companyId: "",
-        date: "",
-        pageNumber: 1,
-        pageSize: 5000,
-      },
-      companyID: "",
-      monthLabels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      InvoicesTableColumns: [
-        { key: "isChecked", label: "" },
-        { key: "id", label: "#", sortable: true },
-        { key: "invoiceNumber" },
-        { key: "dateIssued", label: "date Issued" },
-      ],
-    };
-  },
-  created: function () {
-    this.companyID = this.$route.params.id;
-    this.selectedMonthData.companyId = this.companyID;
-  },
   components: {
     BCard,
     BRow,
@@ -540,21 +404,201 @@ export default {
     ValidationObserver,
     VueMonthlyPicker,
   },
+  props: ['vatReportsTab'],
+  data() {
+    return {
+      checkedAll: true,
+      idsToSend: [],
+      totalInvoicesForReport: '',
+      status: [],
+      invoicesForReport: [],
+      selectedMonthData: {
+        companyId: '',
+        date: '',
+        pageNumber: 1,
+        pageSize: 5000,
+      },
+      companyID: '',
+      monthLabels: [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ],
+      InvoicesTableColumns: [
+        { key: 'isChecked', label: '' },
+        { key: 'id', label: '#', sortable: true },
+        { key: 'invoiceNumber' },
+        { key: 'dateIssued', label: 'date Issued' },
+      ],
+    }
+  },
+  created() {
+    this.companyID = this.$route.params.id
+    this.selectedMonthData.companyId = this.companyID
+  },
+  methods: {
+    state() {
+      return 1
+    },
+
+    // getting zip file from backend
+    getZipFile() {
+      let j = 0
+      for (let i = 0; i < this.totalInvoicesForReport; i++) {
+        if (this.status[this.invoicesForReport[i].id] == 'accepted') {
+          this.idsToSend[j] = this.invoicesForReport[i].id
+          j++
+        }
+      }
+
+      const token = useJwt.getToken()
+      useJwt.GetVatReportsZip(token, this.idsToSend).then(response => {
+        if (response.data.fileId != null) {
+          const data = JSON.parse(response.data.fileId)
+          axios
+            .get(
+              `${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${data.companyId}`,
+              { responseType: 'blob' },
+            )
+            .then(response => {
+            // console.log(response);
+              if (response.status === 200) {
+                const reader = new FileReader()
+                reader.readAsDataURL(response.data)
+                reader.onload = function () {
+                  const filePath = reader.result
+                  const a = document.createElement('a')
+                  a.href = filePath
+                  a.download = `${data.binaryId}`
+                  document.body.appendChild(a)
+                  a.click()
+                  document.body.removeChild(a)
+                }
+              }
+            })
+            .catch(error => {
+            // console.log(error);
+              this.makeToast(
+                'danger',
+                error.response.errorCode,
+                error.response.errorMessage,
+              )
+            })
+        }
+        this.invoicesForReport = [];
+        
+      })
+    },
+
+    //
+    resetModal() {
+      this.selectedMonthData.date = ''
+    },
+
+    //
+    handleOk(bvModalEvent) {
+      // Prevent modal from closing
+      bvModalEvent.preventDefault()
+      // Trigger submit handler
+      this.handleMonthSelected()
+    },
+
+    //
+    handleMonthSelected() {
+      this.$refs.selectMonthRules.validate().then(success => {
+        if (success) {
+          let monthVal
+          const tPeriod = this.selectedMonthData.date._i
+
+          const year = tPeriod.substring(0, 4)
+          const month = tPeriod.substring(5, tPeriod.length)
+
+          if (month.length === 1) {
+            monthVal = `${year}-0${month}-01`
+          } else {
+            monthVal = `${year}-${month}-01`
+          }
+
+          this.selectedMonthData.date = monthVal
+          const token = useJwt.getToken()
+          useJwt
+            .InvoicesForVatReport(token, this.selectedMonthData)
+            .then(response => {
+              this.invoicesForReport = response.data.elements
+              this.totalInvoicesForReport = response.data.totalElements
+              for (let i = 0; i < this.totalInvoicesForReport; i++) {
+                this.status[this.invoicesForReport[i].id] = 'accepted'
+              }
+              // console.log(this.invoicesForReport);
+            })
+          this.$nextTick(() => {
+            this.$bvModal.hide('modal-prevent-closing')
+          })
+
+          this.$nextTick(() => {
+            this.$bvModal.show('modal-invoices-for-report')
+          })
+        }
+      })
+    },
+
+    //
+    actionTab() {
+      this.$emit('state', this.state())
+    },
+
+    // Delete vat report
+    vatReportDelete(id, refetchData) {
+      const token = useJwt.getToken()
+      useJwt
+        .DeleteVatReport(token, id)
+        .then(response => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Vat Deleted Successfully',
+              icon: 'DeleteIcon',
+              variant: 'success',
+            },
+          })
+          refetchData()
+        })
+        .catch(error => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: 'DeleteIcon',
+              variant: 'error',
+            },
+          })
+        })
+    },
+  },
   setup() {
-    const INVOICE_APP_STORE_MODULE_NAME = "vat-reports";
+    const INVOICE_APP_STORE_MODULE_NAME = 'vat-reports'
 
     // Register module
-    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
+    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) {
       store.registerModule(
         INVOICE_APP_STORE_MODULE_NAME,
-        vatReportsStoreModule
-      );
+        vatReportsStoreModule,
+      )
+    }
 
     // UnRegister on leave
     onUnmounted(() => {
-      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
-        store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
-    });
+      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
+    })
 
     const {
       fetchVatReports,
@@ -571,9 +615,9 @@ export default {
       refVatReportsTable,
 
       refetchData,
-    } = useVatReportsList();
+    } = useVatReportsList()
 
-    companyId.value = router.currentRoute.params.id;
+    companyId.value = router.currentRoute.params.id
 
     return {
       fetchVatReports,
@@ -590,11 +634,11 @@ export default {
       refVatReportsTable,
       refetchData,
       avatarText,
-    };
+    }
   },
-};
+}
 </script>
-  
+
   <style lang="scss" scoped>
 .per-page-selector {
   width: 90px;
@@ -612,7 +656,7 @@ export default {
   }
 }
 </style>
-  
+
   <style lang="scss">
 @import "@core/scss/vue/libs/vue-select.scss";
 .invoiceList th {
@@ -737,4 +781,3 @@ export default {
   }
 }
 </style>
-  

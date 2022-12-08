@@ -106,8 +106,24 @@
             :items="items"
             responsive
             class="mb-0"
+            show-empty
+            empty-text="No matching records found"
             @sort-changed="checkStatus"
           >
+            <template #empty="scope">
+              <div class="d-flex align-items-center justify-content-center">
+                <div class="mb-1 start-chat-icon">
+                  <feather-icon
+                      icon="FolderIcon"
+                      size="20"
+                  />
+                </div>
+                <h5 class="sidebar-toggle start-chat-text">
+                  No records found
+                </h5>
+              </div>
+            </template>
+
             <template #cell(Media)="data">
               <div>
                 <!--                :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type])"-->
@@ -211,6 +227,7 @@
           "
         >
           <b-pagination
+            v-if="items.length > 0"
             v-model="currentPage"
             :total-rows="totalRecords"
             :per-page="perPage"

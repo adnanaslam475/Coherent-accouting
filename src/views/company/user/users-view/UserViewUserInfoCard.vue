@@ -5,8 +5,7 @@
 
       <!-- User Info: Left col -->
       <b-col
-        cols="21"
-        xl="4"
+        cols="4"
         class="d-flex justify-content-between flex-column"
       >
         <!-- User Avatar & Action Buttons -->
@@ -27,12 +26,14 @@
               <b-button
                 :to="{ name: 'company-users-edit', params: { id: $route.params.id, companyId: $route.params.companyId  } }"
                 variant="primary"
+                size="sm"
               >
                 Edit
               </b-button>
               <b-button
                 variant="outline-danger"
                 class="ml-1"
+                size="sm"
                 @click="UserDelete(userData.id)"
               >
                 Delete
@@ -41,11 +42,9 @@
           </div>
         </div>
       </b-col>
-
       <!-- Right Col: Table -->
       <b-col
-        cols="12"
-        xl="4"
+        cols="8"
       >
         <table class="mt-2 mt-xl-0 user-preview-detail">
           <tr>
@@ -121,11 +120,6 @@
             </td>
           </tr>
         </table>
-      </b-col>
-      <b-col
-        cols="12"
-        xl="4"
-      >
       </b-col>
     </b-row>
   </b-card>

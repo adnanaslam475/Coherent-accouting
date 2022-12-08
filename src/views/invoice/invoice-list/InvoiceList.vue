@@ -95,6 +95,19 @@
       :sort-desc.sync="isSortDirDesc"
       class="position-relative invoiceList"
     >
+      <template #empty="scope">
+        <div class="d-flex align-items-center justify-content-center">
+          <div class="mb-1 start-chat-icon">
+            <feather-icon
+                icon="FolderIcon"
+                size="20"
+            />
+          </div>
+          <h5 class="sidebar-toggle start-chat-text">
+            No records found
+          </h5>
+        </div>
+      </template>
 
       <template #head(invoiceStatus)>
         <feather-icon
@@ -124,7 +137,10 @@
 
       <!-- Column: recipientCompany -->
       <template #cell(recipientCompanyName)="data">
-        <span class="text-nowrap"  :id="`recipientCompany-row-${data.item.id}`">
+        <span
+          :id="`recipientCompany-row-${data.item.id}`"
+          class="text-nowrap"
+        >
           <b-badge
             pill
             :variant="`light-success`"
@@ -158,8 +174,11 @@
 
       <!-- Column: supplierCompany -->
       <template #cell(supplierCompanyName)="data">
- 
-        <span class="text-nowrap"  :id="`supplierCompany-row-${data.item.id}`">
+
+        <span
+          :id="`supplierCompany-row-${data.item.id}`"
+          class="text-nowrap"
+        >
           <b-badge
             pill
             :variant="`light-success`"
@@ -172,7 +191,7 @@
           :target="`supplierCompany-row-${data.item.id}`"
           placement="top"
         >
-        
+
           <p class="mb-0">
             Company Eic: {{ data.item.supplierCompany.companyEic }}
           </p>
@@ -248,7 +267,6 @@
             no-caret
             :right="$store.state.appConfig.isRTL"
           >
-
             <template #button-content>
               <feather-icon
                 icon="MoreVerticalIcon"
@@ -273,6 +291,7 @@
             :show-layout="false"
             :float-layout="true"
             :enable-download="true"
+            :ref="`invoicePdf${data.item.id}`"
             :preview-modal="false"
             :paginate-elements-by-height="1100"
             filename="invoice"
@@ -283,10 +302,12 @@
             pdf-orientation="portrait"
             pdf-content-width="800px"
             @progress="onProgress($event)"
-            :ref="`invoicePdf${data.item.id}`"
           >
-            <section class="invoice-pdf invoice-preview-list" slot="pdf-content">
-              <invoice-download :invoice-data="data.item"  />
+            <section
+              slot="pdf-content"
+              class="invoice-pdf invoice-preview-list"
+            >
+              <invoice-download :invoice-data="data.item" />
             </section>
           </vue-html2pdf>
         </div>
@@ -294,7 +315,6 @@
     </b-table>
     <div class="mx-2 mb-2">
       <b-row>
-
         <b-col
           cols="12"
           sm="6"
@@ -308,7 +328,6 @@
           sm="6"
           class="d-flex align-items-center justify-content-center justify-content-sm-end"
         >
-
           <b-pagination
             v-model="currentPage"
             :total-rows="totalInvoices"
@@ -332,12 +351,8 @@
               />
             </template>
           </b-pagination>
-
         </b-col>
-
       </b-row>
-
-      
     </div>
   </b-card>
 
@@ -345,64 +360,22 @@
 
 <script>
 import {
-  BCard, BRow, BCol,BCardBody, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
-  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip,BTableLite,BCardText,BAlert,VBToggle,BCardHeader
+  BCard, BRow, BCol, BCardBody, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
+  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip, BTableLite, BCardText, BAlert, VBToggle, BCardHeader,
 } from 'bootstrap-vue'
 import { avatarText } from '@core/utils/filter'
 import vSelect from 'vue-select'
 import { onUnmounted } from '@vue/composition-api'
 import store from '@/store'
-import useInvoicesList from './useInvoiceList'
-import VueHtml2pdf from "vue-html2pdf";
-import invoiceStoreModule from '../invoiceStoreModule'
-import useJwt from "@/auth/jwt/useJwt";
-import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import VueHtml2pdf from 'vue-html2pdf'
+import useJwt from '@/auth/jwt/useJwt'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import flatPickr from 'vue-flatpickr-component'
 import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
-import flatPickr from "vue-flatpickr-component";
-export default {
-  props: ['invoiceTab'],
-  methods: {
-    state() {
-      return 1;
-    },
-    actionTab() {
-      this.$emit("state", this.state())
-    },
-    onProgress(event) {
-      console.log(`Processed: ${event} / 100`);
-    },
-    generatePDF(itemID) {
-      this.$refs['invoicePdf'+itemID].generatePdf();
-    },
-    invoiceDelete(id, refetchData) {
-      let token = useJwt.getToken()
-      useJwt
-        .DeleteInvoice(token,id)
-        .then((response) => {
-          
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Invoice Deleted Successfully`,
-              icon: "DeleteIcon",
-              variant: "success",
-            },
-          });
-          refetchData()
-        })
-        .catch((error) => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `${error.response.data.errorMessage}`,
-              icon: "DeleteIcon",
-              variant: "error",
-            },
-          });
-        });
-    }
+import invoiceStoreModule from '../invoiceStoreModule'
+import useInvoicesList from './useInvoiceList'
 
-  },
+export default {
   components: {
     BCard,
     BRow,
@@ -427,7 +400,49 @@ export default {
     VueHtml2pdf,
     BCardHeader,
     InvoiceDownload,
-    flatPickr
+    flatPickr,
+  },
+  props: ['invoiceTab'],
+  methods: {
+    state() {
+      return 1
+    },
+    actionTab() {
+      this.$emit('state', this.state())
+    },
+    onProgress(event) {
+      console.log(`Processed: ${event} / 100`)
+    },
+    generatePDF(itemID) {
+      this.$refs[`invoicePdf${itemID}`].generatePdf()
+    },
+    invoiceDelete(id, refetchData) {
+      const token = useJwt.getToken()
+      useJwt
+        .DeleteInvoice(token, id)
+        .then(response => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Invoice Deleted Successfully',
+              icon: 'DeleteIcon',
+              variant: 'success',
+            },
+          })
+          refetchData()
+        })
+        .catch(error => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: 'DeleteIcon',
+              variant: 'error',
+            },
+          })
+        })
+    },
+
   },
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
@@ -470,8 +485,6 @@ export default {
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
     } = useInvoicesList()
-
-  
 
     return {
       fetchInvoices,
