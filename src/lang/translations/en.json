@@ -8,7 +8,8 @@
     "questions": "Questions",
     "videos": "Videos",
     "prices": "Prices",
-    "free_digital_invoices": "Free digital invoices"
+    "free_digital_invoices": "Free digital invoices",
+    "why_choose_use": "Why Choose Us"
   },
   "login": {
     "title": "Welcome to Coherent Accounting! \uD83D\uDC4B",
@@ -70,7 +71,8 @@
     "questions": "Questions",
     "videos":"Videos",
     "prices":"Prices",
-    "free_digital_invoices":"Free digital invoices"
+    "free_digital_invoices":"Free digital invoices",
+    "why_choose_use": "Why Choose Us"
   },
   "pricing":{
     "title": "Pricing Plans",
@@ -132,6 +134,17 @@
     "label_fdi_5": "Възможност за дистанционна работа от вкъщи и \"Home office\" без да се налага да носите лаптопа или компютъра си до вкъщи.",
     "title_abt_6": "",
     "label_fdi_6": "Направете си акаунт напълно безплатно и ползвайте пълната фунционалност на системата за 2 месеца."
+  },
+  "why_choose_use": {
+    "title": "Why Choose Us",
+    "title_1": "Ние сме с най-нсики цени на пазара за подобни услуги.",
+    "title_2": "One-click Генериране на ДДС Деклар и списък с покупки и продажби. Txt и ексел файлове за НАП.",
+    "title_3": "OCR обработка на фактури за секунди.",
+    "title_4": "Ние се грижим за природата и това да я пазим. Използвайки дигитални фактури, а не хартиени, ние спасяваме дърво всеки ден. Това е нашата мисия и цел. Включи се и ти.",
+    "title_5": "Достъпен UX.Лесен за научаване и свикване за работа. Лесни менюта и фунционалности, за разлика от други плаатформи с тежки менюта и сложност.",
+    "title_6": "Модерен дизайн и причтен за работа.",
+    "title_7": "Всичко нужно за един счетоводител на едно място. Без импорт и екпорт към други платформи.",
+    "title_8": "Автоматизирани изчисления."
   },
   "home": "Home",
   "dashboard": "Dashboard",

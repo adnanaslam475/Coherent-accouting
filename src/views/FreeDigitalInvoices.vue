@@ -10,12 +10,12 @@
             {{ $t('free_digital_invoices.title')}}
           </h1>
         </div>
-    
+
       </section>
       <!--/ search input -->
-  
+
       <section id="about-content">
-  
+
         <!-- content -->
         <b-row class="kb-search-content-info match-height m-0">
           <b-col
@@ -40,7 +40,7 @@
       </section>
     </div>
   </template>
-  
+
   <script>
   import {
     BRow, BCol, BCard, BCardBody, BForm, BInputGroup, BFormInput, BCardText, BInputGroupPrepend,
@@ -362,11 +362,10 @@
     }
   }
   </script>
-  
+
   <style lang="scss">
   @import '@core/scss/vue/pages/page-knowledge-base.scss';
   .break-spaces{
     white-space: pre-line;
   }
   </style>
-  
