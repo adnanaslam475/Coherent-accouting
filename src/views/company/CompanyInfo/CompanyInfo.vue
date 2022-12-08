@@ -52,7 +52,9 @@
                           >
                             {{ companyRecord.companyName }}
                           </h4>
-                          <span class="card-text">{{ companyRecord.companyMail }}</span>
+                          <span class="card-text">{{
+                            companyRecord.companyMail
+                          }}</span>
                         </div>
                         <div class="d-flex flex-wrap">
                           <b-button
@@ -68,7 +70,8 @@
                             variant="danger"
                             size="sm"
                             class="ml-1"
-                            @click="deleteCompany"
+                            @click="deleteModalShow = !deleteModalShow"
+                            
                           >
                             Delete
                           </b-button>
@@ -366,6 +369,24 @@
         </b-card>
       </div>
     </div>
+
+    <!-- modal -->
+    <b-modal
+      v-model="deleteModalShow"
+      title="Delete Company"
+      ok-title="Confirm"
+      cancel-title="Cancel"
+      @ok="deleteCompany()"
+    >
+      <b-card-text class="text-center" style="font-size: 15px">
+        Are you sure you want to delete this company?
+      
+      </b-card-text>
+      <b-card-text class="text-center" style="font-size: 15px">
+  
+        It will delete all the data related to it.
+      </b-card-text>
+    </b-modal> 
 
     <b-row
       class=""
@@ -792,6 +813,8 @@ import {
   BTooltip,
   BCollapse,
   VBToggle,
+  BModal,
+  BCardText
 } from 'bootstrap-vue'
 import InvoiceDownload from '../../invoice/invoice-download/InvoiceDownload.vue'
 
@@ -835,6 +858,8 @@ export default {
     VBToggle,
     VueHtml2pdf,
     InvoiceDownload,
+    BModal,
+  BCardText
   },
   directives: {
     Ripple,
@@ -843,6 +868,7 @@ export default {
   },
   data() {
     return {
+      deleteModalShow: false,
       companyAddress: '',
       companyName: '',
       companyNameLength: '',
@@ -901,6 +927,7 @@ export default {
     this.getCompanyInvoices()
   },
   methods: {
+
     // delete a single company invoice
     async deleteCompanyInvoice(invoiceID) {
       const self = this
@@ -1003,6 +1030,7 @@ export default {
     },
     // delete the company
     async deleteCompany() {
+      let self = this;
       const config = {
         method: 'delete',
         url: `/account/api/company/${this.companyID}`,
@@ -1014,21 +1042,31 @@ export default {
         },
       }
       await axios(config)
-        .then(response => {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Company Deleted!',
-            showConfirmButton: false,
-            timer: 1400,
-          })
+         .then(response => {
+          // console.log(JSON.stringify(response.data))
+          self.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `Company Deleted Successfully`,
+                  icon: "EditIcon",
+                  variant: "success",
+                },
+              });
+              return self.$router.push({
+                      name: "companies", 
+                    })
         })
         .catch(error => {
-          // console.log(error);
+          // console.log(error)
+          self.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `Something Went Wrong`,
+                  icon: "EditIcon",
+                  variant: "error",
+                },
+              });
         })
-      setTimeout(() => {
-        this.$router.go(-1)
-      }, 1410)
     },
     // function to edit the record of company
     async editCompany() {

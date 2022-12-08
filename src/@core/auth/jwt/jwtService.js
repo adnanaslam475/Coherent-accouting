@@ -317,6 +317,19 @@ export default class JwtService {
 
   }
 
+  //Get Create-Vat-Report-Zip
+  GetVatReportsZip(token,...args){
+    let headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
+      'Accept': 'application/json'
+    }
+    return this.axiosIns2.post(`${this.jwtConfig.CreateVatReportZipFileEndPoint}`, ...args, {
+      headers: headers
+    }) 
+
+  }
+
   EditUser(token,id,...args) {
     let headers = {
       'Content-Type': 'application/json',

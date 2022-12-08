@@ -223,10 +223,12 @@
                     </validation-provider>
                   </b-form-group>
                 </b-col>
+
+                 
               </b-form-row>
-              <b-form-row v-if="isVatCheck === true">
+              <b-form-row>
                 <b-col
-                  ><b-form-group
+                v-if="isVatCheck === true"><b-form-group
                     id="input-group-7"
                     label="Company Vat Number"
                     label-for="company_vat_no"
@@ -245,7 +247,90 @@
                     </validation-provider>
                   </b-form-group></b-col
                 >
-                <b-col></b-col>
+                <!-- Company Status -->
+                <b-col>
+                  <b-form-group
+                    id="input-group-4"
+                    label="Company Status"
+                    label-for="status"
+                  >
+                    <validation-provider
+                      #default="{ errors }"
+                      v-bind:name="$t('status')"
+                      rules="required"
+                    >
+                      <v-select
+                        v-model="getCompanyStatus"
+                        :options="statusOptions"
+                        :filterBy="
+                          (option, search) => {
+                            return (
+                              (option.status || '')
+                                .toLocaleLowerCase()
+                                .indexOf(search.toLocaleLowerCase()) > -1
+                            );
+                          }
+                        "
+                       
+                        id="company-status"
+                        name="country-status"
+                        v-bind:placeholder="$t('Please select company status')"
+                        :value="$store.state.selected"
+                        v-on:input="updateCompanyStatus()"
+                        
+                      >
+                        
+
+                        <template #selected-option="option" v-if="(isStatusSelected === true)" >
+                          <div
+                            style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: left;
+                              grid-gap: 8px;
+                            "
+                          >
+                            {{ getCompanyStatus }}
+                          </div>
+                        </template>
+
+
+                        <template #selected-option="option" v-else>
+                          <div
+                            style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: left;
+                              grid-gap: 8px;
+                            "
+                          >
+
+                            {{ option.status }}
+                          </div>
+                        </template>
+
+
+                        <template v-slot:option="option">
+                          <span
+                            style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: left;
+                              grid-gap: 8px;
+                            "
+                          >
+
+                            {{ option.status }}
+                          </span>
+                        </template>
+                      </v-select>
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
+
+                    
+                  </b-form-group>
+                </b-col>
+                <b-col  v-if="(isVatCheck === false)"></b-col>
               </b-form-row>
               <b-form-row>
                 <b-col>
@@ -443,7 +528,6 @@
 import {
   BCard,
   BCardBody,
-  BcardText,
   BButton,
   BForm,
   BFormGroup,
@@ -467,6 +551,8 @@ import { digits } from "@validations";
 import flatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 import { extend } from "vee-validate";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+
 
 extend("required", {
   ...required,
@@ -482,7 +568,6 @@ export default {
   name: "EditCompany",
   components: {
     BCard,
-    BcardText,
     BButton,
     BForm,
     BFormGroup,
@@ -503,6 +588,12 @@ export default {
   },
   data() {
     return {
+      isStatusSelected: '',
+      statusOptions:[
+      { status: "ACTIVE"},
+        { status: "INAVTIVE" },
+      ],
+      getCompanyStatus: "",
       companyRecord: [],
       getCompanyName: "",
       getCompanyEmail: "",
@@ -512,7 +603,7 @@ export default {
       getCompanyID: "",
       getCompOwnerEgn:"",
       getVatNumber: "", 
-      isVatCheck: "",
+      isVatCheck: false,
       getBankAccount: "",
       getCompanyCurrency: "",
       getCompanyPhone:"",
@@ -711,6 +802,9 @@ export default {
         this.companyCurrencySelected = this.getCompanyCurrency.value;
         this.getCompanyCurrency = this.companyCurrencySelected;
       }
+      if(this.isStatusSelected === false){
+        this.getCompanyStatus = this.getCompanyStatus.status;
+      }
       var data = JSON.stringify({
         companyAddress: this.getCompanyAddress,
         companyCountry: this.getCompanyCountry,
@@ -734,6 +828,7 @@ export default {
         companyVatAccepted: this.isVatCheck,
         companyVatNumber: this.getVatNumber,
         id: this.companyID,
+        status:  this.getCompanyStatus
       });
 
       var config = {
@@ -750,33 +845,34 @@ export default {
 
       const data1 = await axios(config)
       .then(function (response) {
-  console.log(JSON.stringify(response.data));
-  Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Record Updated!",
-            showConfirmButton: false,
-            timer: 1700,
-          });
-          setTimeout(() => {
-        self.$router.go(-1);
-      }, 1710);
-})
-.catch(function (error) {
-  console.log(error);
-  Swal.fire({
-            position: "center",
-            icon: "error",
-            title: 'Oops...',
-            text: "Something went wrong!",
-           
-            showConfirmButton: false,
-            timer: 1700,
-          });
-          setTimeout(() => {
+  // console.log(JSON.stringify(response.data));
+        self.$toast({
+          component: ToastificationContent,
+          props: {
+          title: `Company Updated Successfully`,
+                  icon: "EditIcon",
+                  variant: "success",
+                },
+              });
+              return self.$router.go(-1);
+            })
+
+        .catch(function (error) {
+          console.log(error);
+              self.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `Something Went Wrong`,
+                  icon: "EditIcon",
+                  variant: "error",
+                  timer: 1700,
+
+                },
+              });
+              setTimeout(() => {
         self.$router.go();
       }, 1740);
-});
+            })
       
     },
 
@@ -809,13 +905,31 @@ export default {
           this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
         this.getCompanyEmail = this.companyRecord.companyMail;
         this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;  
+        this.getCompanyStatus = this.companyRecord.status;
+        if(this.getCompanyStatus === null){
+          this.isStatusSelected = false;
+        }
+        else{
+          this.isStatusSelected = true;
+        }
       }
+
+
     },
+
+    //
+    updateCompanyStatus(){
+      this.isStatusSelected = false;
+    },
+
+
 
     //
     updateCountryStatus(){
       this.isCountrySelected = true;
     },
+
+    
 
      //
      updateCurrencyStatus(){
@@ -861,7 +975,7 @@ export default {
           if (success) {
             resolve(true);
           } else {
-            reject();
+            reject(); 
           }
         });
       });

@@ -124,7 +124,7 @@
               <div class="mb-1 start-chat-icon">
                 <feather-icon
                     icon="FolderIcon"
-                    size="20"
+                    size="40"
                 />
               </div>
               <h5 class="sidebar-toggle start-chat-text">
@@ -148,14 +148,14 @@
             #{{ data.value }}
           </template>
 
-          <!-- Column: cell-01 -->
+          
           <template #cell(invoiceNumber)="data">
             <span class="text-nowrap">
               {{ data.value }}
             </span>
           </template>
 
-          <!-- Column: cell-20 -->
+        
           <template #cell(dateIssued)="data">
             <span class="text-nowrap">
               {{ data.value }}
@@ -183,7 +183,7 @@
           <div class="mb-1 start-chat-icon">
             <feather-icon
                 icon="FolderIcon"
-                size="20"
+                size="40"
             />
           </div>
           <h5 class="sidebar-toggle start-chat-text">
@@ -494,6 +494,8 @@ export default {
               )
             })
         }
+        this.invoicesForReport = [];
+        
       })
     },
 
