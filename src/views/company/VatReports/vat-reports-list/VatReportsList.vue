@@ -123,8 +123,8 @@
             <div class="d-flex align-items-center justify-content-center">
               <div class="mb-1 start-chat-icon">
                 <feather-icon
-                    icon="FolderIcon"
-                    size="40"
+                  icon="FolderIcon"
+                  size="40"
                 />
               </div>
               <h5 class="sidebar-toggle start-chat-text">
@@ -148,14 +148,12 @@
             #{{ data.value }}
           </template>
 
-          
           <template #cell(invoiceNumber)="data">
             <span class="text-nowrap">
               {{ data.value }}
             </span>
           </template>
 
-        
           <template #cell(dateIssued)="data">
             <span class="text-nowrap">
               {{ data.value }}
@@ -182,8 +180,8 @@
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
             <feather-icon
-                icon="FolderIcon"
-                size="40"
+              icon="FolderIcon"
+              size="40"
             />
           </div>
           <h5 class="sidebar-toggle start-chat-text">
@@ -364,9 +362,9 @@ import { required } from '@validations'
 import VueMonthlyPicker from 'vue-monthly-picker'
 
 import axios from '@/libs/axios'
+import { EventBus } from '@/GlobalEventBus'
 import vatReportsStoreModule from '../vatReportsStoreModule'
 import useVatReportsList from './useVatReportsList'
-import { EventBus } from '@/GlobalEventBus'
 
 extend('required', {
   ...required,
@@ -485,6 +483,14 @@ export default {
                   a.click()
                   document.body.removeChild(a)
                   EventBus.$emit('zip-downloaded')
+                  self.$toast({
+                    component: ToastificationContent,
+                    props: {
+                      title: 'New Notification Received',
+                      icon: 'BellIcon',
+                      variant: 'success',
+                    },
+                  })
                 }
               }
             })
@@ -497,8 +503,7 @@ export default {
               )
             })
         }
-        this.invoicesForReport = [];
-        
+        this.invoicesForReport = []
       })
     },
 
