@@ -21,7 +21,6 @@
           <b-button
             variant="primary"
             class="mr-1"
-            @click="actionTab"
             :to="{
               name: 'company-invoice-add',
               params: {
@@ -30,17 +29,25 @@
                   : $route.params.id,
               },
             }"
+            @click="actionTab"
           >
             Add Record
           </b-button>
-          <b-button variant="primary" class="mr-1 position-relative p-set">
+          <b-button
+            variant="primary"
+            class="mr-1 position-relative p-set"
+          >
             <b-form-file
-              class="file-input"
               v-model="file"
+              class="file-input"
               @input="addfile(companyId)"
             />
 
-            <b-spinner v-if="fileLoading" small variant="light" />
+            <b-spinner
+              v-if="fileLoading"
+              small
+              variant="light"
+            />
             Add From File
             <svg-icon
               width="20"
@@ -48,20 +55,22 @@
               class="file-upload"
               type="mdi"
               :path="path"
-            >
-            </svg-icon>
+            />
           </b-button>
           <b-button
-              v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-              variant="outline-primary"
-              @click="refetchData"
+            v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+            variant="outline-primary"
+            @click="refetchData"
           >
             <feather-icon icon="RefreshCcwIcon" />
           </b-button>
         </b-col>
 
         <!-- Search -->
-        <b-col cols="12" md="6">
+        <b-col
+          cols="12"
+          md="6"
+        >
           <div class="d-flex align-items-center justify-content-end">
             <div class="position-relative mr-1 filter-date">
               <flat-pickr
@@ -112,7 +121,6 @@
     <b-table
       ref="refInvoiceListTable"
       :items="fetchInvoices"
-      responsive
       :fields="tableColumns"
       primary-key="id"
       :sort-by.sync="sortBy"
@@ -125,8 +133,8 @@
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
             <feather-icon
-                icon="FolderIcon"
-                size="20"
+              icon="FolderIcon"
+              size="20"
             />
           </div>
           <h5 class="sidebar-toggle start-chat-text">
@@ -136,7 +144,10 @@
       </template>
 
       <template #head(invoiceStatus)>
-        <feather-icon icon="TrendingUpIcon" class="mx-auto" />
+        <feather-icon
+          icon="TrendingUpIcon"
+          class="mx-auto"
+        />
       </template>
 
       <!-- Column: invoiceNumber -->
@@ -169,7 +180,10 @@
           }"
           class="font-weight-bold"
         >
-          <span class="text-nowrap" :id="`transactionType-row-${data.item.id}`">
+          <span
+            :id="`transactionType-row-${data.item.id}`"
+            class="text-nowrap"
+          >
             <b-badge
               pill
               :variant="`${
@@ -185,8 +199,15 @@
 
       <!-- Column: recipientCompany -->
       <template #cell(recipientCompanyName)="data">
-        <span class="text-nowrap" :id="`recipientCompany-row-${data.item.id}`">
-          <b-badge pill :variant="`light-success`" class="text-capitalize">
+        <span
+          :id="`recipientCompany-row-${data.item.id}`"
+          class="text-nowrap"
+        >
+          <b-badge
+            pill
+            :variant="`light-success`"
+            class="text-capitalize"
+          >
             {{ data.item.recipientCompany.companName }}
           </b-badge>
         </span>
@@ -216,8 +237,15 @@
 
       <!-- Column: supplierCompany -->
       <template #cell(supplierCompanyName)="data">
-        <span class="text-nowrap" :id="`supplierCompany-row-${data.item.id}`">
-          <b-badge pill :variant="`light-success`" class="text-capitalize">
+        <span
+          :id="`supplierCompany-row-${data.item.id}`"
+          class="text-nowrap"
+        >
+          <b-badge
+            pill
+            :variant="`light-success`"
+            class="text-capitalize"
+          >
             {{ data.item.supplierCompany.companName }}
           </b-badge>
         </span>
@@ -250,11 +278,10 @@
           <span
             v-if="
               data.item.currency === 'lv' ||
-              data.item.currency === 'лв' ||
-              data.item.currency === 'лв.'
+                data.item.currency === 'лв' ||
+                data.item.currency === 'лв.'
             "
-            >лв. {{ data.value }}</span
-          >
+          >лв. {{ data.value }}</span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -265,11 +292,10 @@
           <span
             v-if="
               data.item.currency === 'lv' ||
-              data.item.currency === 'лв' ||
-              data.item.currency === 'лв.'
+                data.item.currency === 'лв' ||
+                data.item.currency === 'лв.'
             "
-            >лв. {{ data.value }}</span
-          >
+          >лв. {{ data.value }}</span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -280,11 +306,10 @@
           <span
             v-if="
               data.item.currency === 'lv' ||
-              data.item.currency === 'лв' ||
-              data.item.currency === 'лв.'
+                data.item.currency === 'лв' ||
+                data.item.currency === 'лв.'
             "
-            >лв. {{ data.value }}</span
-          >
+          >лв. {{ data.value }}</span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -322,6 +347,7 @@
             variant="link"
             toggle-class="p-0"
             no-caret
+            dropleft
             :right="$store.state.appConfig.isRTL"
           >
             <template #button-content>
@@ -353,6 +379,7 @@
             :show-layout="false"
             :float-layout="true"
             :enable-download="true"
+            :ref="`invoicePdf${data.item.id}`"
             :preview-modal="false"
             :paginate-elements-by-height="1100"
             filename="invoice"
@@ -363,11 +390,10 @@
             pdf-orientation="portrait"
             pdf-content-width="800px"
             @progress="onProgress($event)"
-            :ref="`invoicePdf${data.item.id}`"
           >
             <section
-              class="invoice-pdf invoice-preview-list"
               slot="pdf-content"
+              class="invoice-pdf invoice-preview-list"
             >
               <invoice-download :invoice-data="data.item" />
             </section>
@@ -382,10 +408,10 @@
           sm="6"
           class="d-flex align-items-center justify-content-center justify-content-sm-start"
         >
-          <span class="text-muted"
-            >Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
-            {{ dataMeta.of }} entries</span
-          >
+          <span
+            class="text-muted"
+          >Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
+            {{ dataMeta.of }} entries</span>
         </b-col>
         <!-- Pagination -->
         <b-col
@@ -405,10 +431,16 @@
             next-class="next-item"
           >
             <template #prev-text>
-              <feather-icon icon="ChevronLeftIcon" size="18" />
+              <feather-icon
+                icon="ChevronLeftIcon"
+                size="18"
+              />
             </template>
             <template #next-text>
-              <feather-icon icon="ChevronRightIcon" size="18" />
+              <feather-icon
+                icon="ChevronRightIcon"
+                size="18"
+              />
             </template>
           </b-pagination>
         </b-col>
@@ -441,103 +473,26 @@ import {
   BCardHeader,
   BFormFile,
   BSpinner,
-} from "bootstrap-vue";
-import { avatarText } from "@core/utils/filter";
-import vSelect from "vue-select";
-import { onUnmounted } from "@vue/composition-api";
-import store from "@/store";
-import useInvoicesList from "./useInvoiceList";
-import VueHtml2pdf from "vue-html2pdf";
-import invoiceStoreModule from "../invoiceStoreModule";
-import useJwt from "@/auth/jwt/useJwt";
-import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
-import InvoiceDownload from "../invoice-download/InvoiceDownload.vue";
-import router from "@/router";
-import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiTrayArrowUp } from "@mdi/js";
-import flatPickr from "vue-flatpickr-component";
+} from 'bootstrap-vue'
+import { avatarText } from '@core/utils/filter'
+import vSelect from 'vue-select'
+import { onUnmounted } from '@vue/composition-api'
+import store from '@/store'
+import VueHtml2pdf from 'vue-html2pdf'
+import useJwt from '@/auth/jwt/useJwt'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import router from '@/router'
+import SvgIcon from '@jamescoyle/vue-icon'
+import { mdiTrayArrowUp } from '@mdi/js'
+import flatPickr from 'vue-flatpickr-component'
 import Ripple from 'vue-ripple-directive'
+import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
+import invoiceStoreModule from '../invoiceStoreModule'
+import useInvoicesList from './useInvoiceList'
+
 export default {
   directives: {
     Ripple,
-  },
-  props: ["invoiceTab"],
-  data() {
-    return {
-      file: null,
-      fileLoading: false,
-      path: mdiTrayArrowUp,
-    };
-  },
-  methods: {
-    state() {
-      return 1;
-    },
-    actionTab() {
-      this.$emit("state", this.state());
-    },
-    onProgress(event) {
-      console.log(`Processed: ${event} / 100`);
-    },
-    generatePDF(itemID) {
-      this.$refs["invoicePdf" + itemID].generatePdf();
-    },
-    invoiceDelete(id, refetchData) {
-      let token = useJwt.getToken();
-      useJwt
-        .DeleteCompanyInvoice(token, id)
-        .then((response) => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Invoice Deleted Successfully`,
-              icon: "DeleteIcon",
-              variant: "success",
-            },
-          });
-          refetchData();
-        })
-        .catch((error) => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `${error.response.data.errorMessage}`,
-              icon: "DeleteIcon",
-              variant: "error",
-            },
-          });
-        });
-    },
-    addfile(companyId) {
-      this.fileLoading = true;
-      let token = useJwt.getToken();
-      let formData = new FormData();
-      formData.append("file", this.file);
-      this.file = null;
-      useJwt
-        .addFileInvoice(token, companyId, formData)
-        .then((response) => {
-          this.fileLoading = false;
-          return this.$router.push({
-            name: "company-invoice-add",
-            params: {
-              companyId: companyId,
-              invoiceData: response.data,
-            },
-          });
-        })
-        .catch((error) => {
-          this.fileLoading = false;
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `${error.response.data.errorMessage}`,
-              icon: "DeleteIcon",
-              variant: "error",
-            },
-          });
-        });
-    },
   },
   components: {
     BCard,
@@ -568,26 +523,102 @@ export default {
     SvgIcon,
     flatPickr,
   },
+  props: ['invoiceTab'],
+  data() {
+    return {
+      file: null,
+      fileLoading: false,
+      path: mdiTrayArrowUp,
+    }
+  },
+  methods: {
+    state() {
+      return 1
+    },
+    actionTab() {
+      this.$emit('state', this.state())
+    },
+    onProgress(event) {
+      console.log(`Processed: ${event} / 100`)
+    },
+    generatePDF(itemID) {
+      this.$refs[`invoicePdf${itemID}`].generatePdf()
+    },
+    invoiceDelete(id, refetchData) {
+      const token = useJwt.getToken()
+      useJwt
+        .DeleteCompanyInvoice(token, id)
+        .then(response => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Invoice Deleted Successfully',
+              icon: 'DeleteIcon',
+              variant: 'success',
+            },
+          })
+          refetchData()
+        })
+        .catch(error => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: 'DeleteIcon',
+              variant: 'error',
+            },
+          })
+        })
+    },
+    addfile(companyId) {
+      this.fileLoading = true
+      const token = useJwt.getToken()
+      const formData = new FormData()
+      formData.append('file', this.file)
+      this.file = null
+      useJwt
+        .addFileInvoice(token, companyId, formData)
+        .then(response => {
+          this.fileLoading = false
+          return this.$router.push({
+            name: 'company-invoice-add',
+            params: {
+              companyId,
+              invoiceData: response.data,
+            },
+          })
+        })
+        .catch(error => {
+          this.fileLoading = false
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: 'DeleteIcon',
+              variant: 'error',
+            },
+          })
+        })
+    },
+  },
   setup() {
-    const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
+    const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
 
     // Register module
-    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
-      store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule);
+    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule)
 
     // UnRegister on leave
     onUnmounted(() => {
-      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
-        store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
-    });
+      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
+    })
 
     const statusOptions = [
-      "Downloaded",
-      "Draft",
-      "Paid",
-      "Partial Payment",
-      "Past Due",
-    ];
+      'Downloaded',
+      'Draft',
+      'Paid',
+      'Partial Payment',
+      'Past Due',
+    ]
 
     const {
       fetchInvoices,
@@ -610,11 +641,11 @@ export default {
 
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
-    } = useInvoicesList();
+    } = useInvoicesList()
 
     companyId.value = router.currentRoute.params.companyId
       ? router.currentRoute.params.companyId
-      : router.currentRoute.params.id;
+      : router.currentRoute.params.id
 
     return {
       fetchInvoices,
@@ -641,9 +672,9 @@ export default {
       avatarText,
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
-    };
+    }
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

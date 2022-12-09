@@ -86,7 +86,6 @@
     <b-table
       ref="refInvoiceListTable"
       :items="fetchInvoices"
-      responsive
       :fields="tableColumns"
       primary-key="id"
       :sort-by.sync="sortBy"
@@ -264,6 +263,7 @@
           <b-dropdown
             variant="link"
             toggle-class="p-0"
+            dropleft
             no-caret
             :right="$store.state.appConfig.isRTL"
           >
