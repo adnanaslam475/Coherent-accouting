@@ -115,7 +115,6 @@
     <b-table
       ref="refInvoiceListTable"
       :items="fetchInvoices"
-      responsive
       :fields="tableColumns"
       primary-key="id"
       :sort-by.sync="sortBy"
@@ -313,6 +312,7 @@
           <b-dropdown
             variant="link"
             toggle-class="p-0"
+            dropleft
             no-caret
             :right="$store.state.appConfig.isRTL"
           >
@@ -516,6 +516,7 @@ export default {
         })
     },
     addMultiplefile(event) {
+      const self = this
       this.multiplefile = event.target.files
       this.multiplefileLoading = true
       const companyID = router.currentRoute.params.companyId ? router.currentRoute.params.companyId : router.currentRoute.params.id
@@ -529,6 +530,7 @@ export default {
         .addMultipleFileInvoice(token, companyID, formData)
         .then(response => {
           this.multiplefileLoading = false
+          self.refetchData()
           event.target.value = ''
           this.$toast({
             component: ToastificationContent,
