@@ -2,33 +2,16 @@
   <div>
     <div class="row">
       <!-- <input data-v-9a6e255c="" type="text" placeholder="Search..." class="d-inline-block mr-1 form-control col-4" style="margin-left: 15px" /> -->
-      <div
-        
-        
-        class="input-group col-4 abc"
-      >
-        <!---->
-        <div class="position-relative"
-          style="height: max-content;"
-        >
-        <input
-          data-v-15eba8c6=""
+      <div class="input-group col-4 abc">
+        <!----><input
+          v-model="searchQuery"
           type="text"
           placeholder="Search Product"
-          class="search-product form-control "
-          id="__BVID__3198"
-          v-model="searchQuery"
-          @input="searchCompanies(false)"
+          class="search-product form-control"
+          @keyup="searchCompanies()"
         />
-        <feather-icon
-                size="16"
-                icon="XIcon"
-                class="cursor-pointer clear-all"
-                @click="searchCompanies(true)"
-              />
-        </div>
-        <div data-v-15eba8c6="" class="input-group-append">       
-          <div data-v-15eba8c6="" class="input-group-text" style="height: 38px; cursor:pointer" > 
+        <div class="input-group-append">
+          <div class="input-group-text" style="height: 38px; cursor: pointer">
             <!-- #7367f0 -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -47,15 +30,6 @@
             </svg>
           </div>
         </div>
-        <b-button
-            v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-            variant="outline-primary"
-            @click="getAllCompanies()"
-            size="sm"
-            class="h-75"
-        >
-          <feather-icon icon="RefreshCcwIcon" />
-        </b-button>
         <!---->
       </div>
       <b-button
@@ -90,7 +64,7 @@
       <template #cell(Country)="data">
         <div>
           <img
-            :src='"@/assets/flags/"+ data.item.companyIsoAlpha2Country.toLowerCase() + ".png"'
+            :src="&quot;@/assets/flags/&quot; + data.item.companyIsoAlpha2Country.toLowerCase() + &quot;.png&quot;"
             style="width: 30px; height: 20px; margin-left: 10px"
           >
         </div>
@@ -146,8 +120,14 @@
         <!-- <div>{{data.item.companyName}}</div> -->
       </template>
 
+      <!-- Company Email Column -->
       <template #cell(companyMail)="data">
         <div>{{ data.item.companyMail }}</div>
+      </template>
+
+      <!-- Company Status Column -->
+      <template #cell(status)="data">
+        <div>{{ data.item.status }}</div>
       </template>
 
       <template #cell(companyOwnerFirstName)="data">
@@ -162,21 +142,7 @@
         <!-- <div>{{data.item.companyIdentificationNumber}}</div> -->
       </template>
 
-      <template style="text-align: center !important" #cell(action)="data">
-
-        <feather-icon
-            :id="`preview-${data.item.id}-preview-icon`"
-            icon="EyeIcon"
-            size="16"
-            class="mx-1"
-            style="cursor: pointer"
-            @click="$router.push({ name: 'CompanyView', params: { id: data.item.id }})"
-          />
-          <b-tooltip
-            title="Preview Company"
-            :target="`preview-${data.item.id}-preview-icon`"
-          />
-       
+      <template #cell(action)="data" style="text-align: center !important">
         <feather-icon
           :id="`edit-${data.item.id}-preview-icon`"
           icon="EditIcon"
@@ -301,7 +267,6 @@ import {
 import useJwt from "@/auth/jwt/useJwt";
 import axios from "@/libs/axios";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
-import Ripple from 'vue-ripple-directive'
 
 export default {
   components: {
@@ -326,9 +291,6 @@ export default {
     BModal,
     BCardText,
   },
-  directives: {
-    Ripple,
-  },
 
   data() {
     return {
@@ -350,6 +312,10 @@ export default {
         {
           key: "companyMail",
           label: "Email",
+          sortable: true,
+        },
+        {
+          key:'status',
           sortable: true,
         },
         // A regular column
@@ -447,11 +413,8 @@ export default {
       this.getAllCompanies();
     },
 
-     // getting the list of all companies
-     async searchCompanies(clear) {
-      if(clear){
-        this.searchQuery = ''
-      }
+    // getting the list of all companies
+    async searchCompanies() {
       const data = await axios.get(
         `/account/api/company/search/${this.currentPage}/${this.perPage}?direction=${this.direction}&queryString=${this.searchQuery}&sortField=${this.sortField}`,
         {

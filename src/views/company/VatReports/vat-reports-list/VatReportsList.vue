@@ -32,19 +32,13 @@
 
           <!-- Generate Button -->
 
-          <b-button
-            v-b-modal.modal-prevent-closing
-            variant="primary"
-          >
+          <b-button v-b-modal.modal-prevent-closing variant="primary">
             Generate
           </b-button>
         </b-col>
 
         <!-- Search -->
-        <b-col
-          cols="12"
-          md="6"
-        >
+        <b-col cols="12" md="6">
           <div class="d-flex align-items-center justify-content-end">
             <b-form-input
               v-model="searchQuery"
@@ -67,14 +61,8 @@
       @hidden="resetModal"
       @ok="handleOk"
     >
-      <form
-        ref="form"
-        @submit.stop.prevent="handleMonthSelected"
-      >
-        <validation-observer
-          ref="selectMonthRules"
-          tag="form"
-        >
+      <form ref="form" @submit.stop.prevent="handleMonthSelected">
+        <validation-observer ref="selectMonthRules" tag="form">
           <validation-provider
             #default="{ errors }"
             :name="$t('month_selected')"
@@ -104,11 +92,9 @@
       cancel-title="Close"
       scrollable
       @ok="getZipFile()"
+      :ok-disabled="modalDisabled"
     >
-      <form
-        ref="form"
-        @submit.stop.prevent="handleMonthSelected"
-      >
+      <form ref="form" @submit.stop.prevent="handleMonthSelected">
         <!-- Vat Reports Table -->
         <b-table
           :items="invoicesForReport"
@@ -122,14 +108,9 @@
           <template #empty="scope">
             <div class="d-flex align-items-center justify-content-center">
               <div class="mb-1 start-chat-icon">
-                <feather-icon
-                  icon="FolderIcon"
-                  size="40"
-                />
+                <feather-icon icon="FolderIcon" size="40" />
               </div>
-              <h5 class="sidebar-toggle start-chat-text">
-                No records found
-              </h5>
+              <h5 class="sidebar-toggle start-chat-text">No records found</h5>
             </div>
           </template>
 
@@ -144,9 +125,7 @@
           </template>
 
           <!-- Column: Id -->
-          <template #cell(id)="data">
-            #{{ data.value }}
-          </template>
+          <template #cell(id)="data"> #{{ data.value }} </template>
 
           <template #cell(invoiceNumber)="data">
             <span class="text-nowrap">
@@ -161,6 +140,14 @@
           </template>
         </b-table>
       </form>
+    </b-modal>
+
+    <!-- Spinner Modal -->
+    <b-modal id="modal-spinner" ref="modal">
+      <b-button variant="primary" disabled style="font-size: 20px">
+        <b-spinner style="width: 1.7rem; height: 1.7rem"></b-spinner>
+        The file is being downloaded...
+      </b-button>
     </b-modal>
 
     <!-- Vat Reports Table -->
@@ -179,14 +166,9 @@
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
-            <feather-icon
-              icon="FolderIcon"
-              size="40"
-            />
+            <feather-icon icon="FolderIcon" size="40" />
           </div>
-          <h5 class="sidebar-toggle start-chat-text">
-            No records found
-          </h5>
+          <h5 class="sidebar-toggle start-chat-text">No records found</h5>
         </div>
       </template>
       <!-- Column: Id -->
@@ -346,30 +328,30 @@ import {
   VBToggle,
   BCardHeader,
   BFormCheckbox,
-} from 'bootstrap-vue'
-import { avatarText } from '@core/utils/filter'
-import vSelect from 'vue-select'
-import { onUnmounted } from '@vue/composition-api'
-import store from '@/store'
-import VueHtml2pdf from 'vue-html2pdf'
-import useJwt from '@/auth/jwt/useJwt'
+  BSpinner,
+} from "bootstrap-vue";
+import { avatarText } from "@core/utils/filter";
+import vSelect from "vue-select";
+import { onUnmounted } from "@vue/composition-api";
+import store from "@/store";
+import VueHtml2pdf from "vue-html2pdf";
+import useJwt from "@/auth/jwt/useJwt";
 
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import router from '@/router'
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
-import { required } from '@validations'
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import router from "@/router";
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
+import { required } from "@validations";
 
-import VueMonthlyPicker from 'vue-monthly-picker'
+import VueMonthlyPicker from "vue-monthly-picker";
 
-import axios from '@/libs/axios'
-import { EventBus } from '@/GlobalEventBus'
-import vatReportsStoreModule from '../vatReportsStoreModule'
-import useVatReportsList from './useVatReportsList'
+import axios from "@/libs/axios";
+import vatReportsStoreModule from "../vatReportsStoreModule";
+import useVatReportsList from "./useVatReportsList";
 
-extend('required', {
+extend("required", {
   ...required,
-  message: 'This field is mandatory',
-})
+  message: "This field is mandatory",
+});
 
 export default {
   components: {
@@ -396,6 +378,7 @@ export default {
     VBToggle,
     VueHtml2pdf,
     BCardHeader,
+    BSpinner,
     //   InvoiceDownload
     useVatReportsList,
     vatReportsStoreModule,
@@ -403,210 +386,237 @@ export default {
     ValidationObserver,
     VueMonthlyPicker,
   },
-  props: ['vatReportsTab'],
+  props: ["vatReportsTab"],
   data() {
     return {
+      modalDisabled: true,
       checkedAll: true,
       idsToSend: [],
-      totalInvoicesForReport: '',
+      totalInvoicesForReport: "",
       status: [],
       invoicesForReport: [],
       selectedMonthData: {
-        companyId: '',
-        date: '',
+        companyId: "",
+        date: "",
         pageNumber: 1,
         pageSize: 5000,
       },
-      companyID: '',
+      companyID: "",
       monthLabels: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
       ],
       InvoicesTableColumns: [
-        { key: 'isChecked', label: '' },
-        { key: 'id', label: '#', sortable: true },
-        { key: 'invoiceNumber' },
-        { key: 'dateIssued', label: 'date Issued' },
+        { key: "isChecked", label: "" },
+        { key: "id", label: "#", sortable: true },
+        { key: "invoiceNumber" },
+        { key: "dateIssued", label: "date Issued" },
       ],
-    }
+    };
   },
   created() {
-    this.companyID = this.$route.params.id
-    this.selectedMonthData.companyId = this.companyID
+    this.companyID = this.$route.params.id;
+    this.selectedMonthData.companyId = this.companyID;
   },
   methods: {
     state() {
-      return 1
+      return 1;
     },
 
     // getting zip file from backend
     getZipFile() {
-      const self = this
-      let j = 0
+      this.$nextTick(() => {
+        this.$bvModal.show("modal-spinner");
+      });
+      let j = 0;
       for (let i = 0; i < this.totalInvoicesForReport; i++) {
-        if (this.status[this.invoicesForReport[i].id] == 'accepted') {
-          this.idsToSend[j] = this.invoicesForReport[i].id
-          j++
+        if (this.status[this.invoicesForReport[i].id] == "accepted") {
+          this.idsToSend[j] = this.invoicesForReport[i].id;
+          j++;
         }
       }
 
-      const token = useJwt.getToken()
-      useJwt.GetVatReportsZip(token, this.idsToSend).then(response => {
+      const token = useJwt.getToken();
+      useJwt.GetVatReportsZip(token, this.idsToSend).then((response) => {
         if (response.data.fileId != null) {
-          const data = JSON.parse(response.data.fileId)
+          const data = JSON.parse(response.data.fileId);
           axios
             .get(
               `${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${data.companyId}`,
-              { responseType: 'blob' },
+              { responseType: "blob" }
             )
-            .then(response => {
-            // console.log(response);
+            .then((response) => {
+              // console.log(response);
               if (response.status === 200) {
-                const reader = new FileReader()
-                reader.readAsDataURL(response.data)
+                const reader = new FileReader();
+                reader.readAsDataURL(response.data);
                 reader.onload = function () {
-                  const filePath = reader.result
-                  const a = document.createElement('a')
-                  a.href = filePath
-                  a.download = `${data.binaryId}`
-                  document.body.appendChild(a)
-                  a.click()
-                  document.body.removeChild(a)
-                  EventBus.$emit('zip-downloaded')
-                  self.$toast({
-                    component: ToastificationContent,
-                    props: {
-                      title: 'New Notification Received',
-                      icon: 'BellIcon',
-                      variant: 'success',
-                    },
-                  })
-                }
+                  const filePath = reader.result;
+                  const a = document.createElement("a");
+                  a.href = filePath;
+                  a.download = `${data.binaryId}`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                };
+
+                //
+                this.$nextTick(() => {
+                  this.$bvModal.hide("modal-spinner");
+                });
+
+                this.$toast({
+                  component: ToastificationContent,
+                  props: {
+                    title: "The file has been downloaded",
+                    icon: "DeleteIcon",
+                    variant: "success",
+                  },
+                });
               }
             })
-            .catch(error => {
-            // console.log(error);
-              this.makeToast(
-                'danger',
-                error.response.errorCode,
-                error.response.errorMessage,
-              )
-            })
+            .catch((error) => {
+              // console.log(error);
+              // this.makeToast(
+              //   "danger",
+              //   error.response.errorCode,
+              //   error.response.errorMessage
+              // );
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `Something went wrong`,
+                  icon: "DeleteIcon",
+                  variant: "error",
+                },
+              });
+            });
         }
-        this.invoicesForReport = []
-      })
+        this.invoicesForReport = [];
+      });
     },
 
     //
     resetModal() {
-      this.selectedMonthData.date = ''
+      this.selectedMonthData.date = "";
     },
 
     //
     handleOk(bvModalEvent) {
       // Prevent modal from closing
-      bvModalEvent.preventDefault()
+      bvModalEvent.preventDefault();
       // Trigger submit handler
-      this.handleMonthSelected()
+      this.handleMonthSelected();
     },
 
     //
     handleMonthSelected() {
-      this.$refs.selectMonthRules.validate().then(success => {
+      this.modalDisabled = true;
+      this.invoicesForReport = [];
+      this.$refs.selectMonthRules.validate().then((success) => {
         if (success) {
-          let monthVal
-          const tPeriod = this.selectedMonthData.date._i
+          let monthVal;
+          const tPeriod = this.selectedMonthData.date._i;
 
-          const year = tPeriod.substring(0, 4)
-          const month = tPeriod.substring(5, tPeriod.length)
+          const year = tPeriod.substring(0, 4);
+          const month = tPeriod.substring(5, tPeriod.length);
 
           if (month.length === 1) {
-            monthVal = `${year}-0${month}-01`
+            monthVal = `${year}-0${month}-01`;
           } else {
-            monthVal = `${year}-${month}-01`
+            monthVal = `${year}-${month}-01`;
           }
 
-          this.selectedMonthData.date = monthVal
-          const token = useJwt.getToken()
+          this.selectedMonthData.date = monthVal;
+          const token = useJwt.getToken();
           useJwt
             .InvoicesForVatReport(token, this.selectedMonthData)
-            .then(response => {
-              this.invoicesForReport = response.data.elements
-              this.totalInvoicesForReport = response.data.totalElements
+            .then((response) => {
+              this.invoicesForReport = response.data.elements;
+
+              this.totalInvoicesForReport = response.data.totalElements;
               for (let i = 0; i < this.totalInvoicesForReport; i++) {
-                this.status[this.invoicesForReport[i].id] = 'accepted'
+                this.status[this.invoicesForReport[i].id] = "accepted";
+              }
+
+              //
+              if (this.totalInvoicesForReport === 0) {
+                this.modalDisabled = true;
+              } else {
+                this.modalDisabled = false;
               }
               // console.log(this.invoicesForReport);
-            })
+            });
           this.$nextTick(() => {
-            this.$bvModal.hide('modal-prevent-closing')
-          })
+            this.$bvModal.hide("modal-prevent-closing");
+          });
 
           this.$nextTick(() => {
-            this.$bvModal.show('modal-invoices-for-report')
-          })
+            this.$bvModal.show("modal-invoices-for-report");
+          });
         }
-      })
+      });
     },
 
     //
     actionTab() {
-      this.$emit('state', this.state())
+      this.$emit("state", this.state());
     },
 
     // Delete vat report
     vatReportDelete(id, refetchData) {
-      const token = useJwt.getToken()
+      const token = useJwt.getToken();
       useJwt
         .DeleteVatReport(token, id)
-        .then(response => {
+        .then((response) => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Vat Deleted Successfully',
-              icon: 'DeleteIcon',
-              variant: 'success',
+              title: "Vat Deleted Successfully",
+              icon: "DeleteIcon",
+              variant: "success",
             },
-          })
-          refetchData()
+          });
+          refetchData();
         })
-        .catch(error => {
+        .catch((error) => {
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: 'DeleteIcon',
-              variant: 'error',
+              icon: "DeleteIcon",
+              variant: "error",
             },
-          })
-        })
+          });
+        });
     },
   },
   setup() {
-    const INVOICE_APP_STORE_MODULE_NAME = 'vat-reports'
+    const INVOICE_APP_STORE_MODULE_NAME = "vat-reports";
 
     // Register module
     if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) {
       store.registerModule(
         INVOICE_APP_STORE_MODULE_NAME,
-        vatReportsStoreModule,
-      )
+        vatReportsStoreModule
+      );
     }
 
     // UnRegister on leave
     onUnmounted(() => {
-      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
-    })
+      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
+        store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
+    });
 
     const {
       fetchVatReports,
@@ -623,9 +633,9 @@ export default {
       refVatReportsTable,
 
       refetchData,
-    } = useVatReportsList()
+    } = useVatReportsList();
 
-    companyId.value = router.currentRoute.params.id
+    companyId.value = router.currentRoute.params.id;
 
     return {
       fetchVatReports,
@@ -642,9 +652,9 @@ export default {
       refVatReportsTable,
       refetchData,
       avatarText,
-    }
+    };
   },
-}
+};
 </script>
 
   <style lang="scss" scoped>
@@ -786,6 +796,31 @@ export default {
     margin: 8rem auto auto auto;
     height: auto;
     max-height: 42rem !important;
+  }
+
+  #modal-spinner .modal-header {
+    display: none !important;
+  }
+
+  #modal-spinner .modal-header {
+    display: none !important;
+  }
+
+  #modal-spinner .modal-footer {
+    display: none !important;
+  }
+
+  #modal-spinner .modal-content {
+    width: fit-content !important;
+    margin-left: 60px !important;
+  }
+
+  #modal-spinner .modal-body {
+    padding: 0px !important;
+  }
+
+  #modal-spinner .modal-dialog {
+    margin: 20rem auto auto auto;
   }
 }
 </style>

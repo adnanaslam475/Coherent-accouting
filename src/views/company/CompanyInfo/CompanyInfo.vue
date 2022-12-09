@@ -37,8 +37,7 @@
                             class="mb-0"
                             ref="compNAME"
                             @click="copyTextNoInput('compNAME')"
-                            @mouseleave="defaultToolTip()"
-                            style="cursor:pointer"
+                            style="cursor: pointer"
                           >
                             {{ companyRecord.companyName }}
                           </h4>
@@ -85,7 +84,6 @@
                             @click="copyTextNoInput('compOWNER')"
                             id="comp-owner-copy"
                             style="cursor: pointer"
-                            @mouseleave="defaultToolTip()"
                             >{{ companyOwnerName }}</small
                           >
                           <b-tooltip target="comp-owner-copy">{{
@@ -108,7 +106,6 @@
                             id="comp-egn-copy"
                             @click="copyTextNoInput('compEGN')"
                             style="cursor: pointer"
-                            @mouseleave="defaultToolTip()"
                             >{{ companyOwnerEGN }}</small
                           >
 
@@ -151,7 +148,6 @@
                             id="comp-id-copy"
                             ref="compID"
                             @click="copyTextNoInput('compID')"
-                            @mouseleave="defaultToolTip()"
                             style="
                               width: fit-content;
                               margin: 0px;
@@ -178,7 +174,6 @@
                             id="comp-vat-copy"
                             ref="compVAT"
                             @click="copyTextNoInput('compVAT')"
-                            @mouseleave="defaultToolTip()"
                             style="
                               width: fit-content;
                               margin: 0px;
@@ -206,7 +201,6 @@
                             id="comp-account-copy"
                             ref="compBANKACCOUNT"
                             @click="copyTextNoInput('compBANKACCOUNT')"
-                            @mouseleave="defaultToolTip()"
                             style="
                               width: fit-content;
                               margin: 0px;
@@ -246,7 +240,6 @@
                             id="comp-contact-copy"
                             ref="compCONTACT"
                             @click="copyTextNoInput('compCONTACT')"
-                            @mouseleave="defaultToolTip()"
                             style="
                               width: fit-content;
                               margin: 0px;
@@ -271,7 +264,6 @@
                             id="comp-address-copy"
                             ref="compADDRESS"
                             @click="copyTextNoInput('compADDRESS')"
-                            @mouseleave="defaultToolTip()"
                             style="
                               width: fit-content;
                               margin: 0px;
@@ -878,6 +870,7 @@ export default {
   },
   data() {
     return {
+      copiedText: "",
       copyToClipboard: "Copy to clipboard",
       compNAME: "",
       compADDRESS: "",
@@ -947,39 +940,49 @@ export default {
     this.getCompanyInvoices();
   },
   methods: {
-    //
-    defaultToolTip() {
-      this.copyToClipboard = "Copy to clipboard";
-    },
     //Copy to Clipboard
     copyTextNoInput(val) {
       const storage = document.createElement("textarea");
       if (val === "compOWNER") {
+        this.copiedText = "Owner name ";
         storage.value = this.$refs.compOWNER.innerHTML;
       } else if (val === "compEGN") {
         storage.value = this.$refs.compEGN.innerHTML;
+        this.copiedText = "Owner EGN ";
       } else if (val === "compID") {
         storage.value = this.$refs.compID.innerHTML;
+        this.copiedText = "Company ID ";
       } else if (val === "compVAT") {
         storage.value = this.$refs.compVAT.innerHTML;
+        this.copiedText = "Vat number ";
       } else if (val === "compBANKACCOUNT") {
         storage.value = this.$refs.compBANKACCOUNT.innerHTML;
+        this.copiedText = "Bank Account ";
       } else if (val === "compCONTACT") {
         storage.value = this.$refs.compCONTACT.innerHTML;
+        this.copiedText = "Contact ";
       } else if (val === "compNAME") {
         storage.value = this.$refs.compNAME.innerHTML;
+        this.copiedText = "Company name ";
       } else {
         storage.value = this.$refs.compADDRESS.innerHTML;
+        this.copiedText = "Address ";
       }
 
       storage.select();
       storage.setSelectionRange(0, 99999);
       navigator.clipboard.writeText(storage.value);
+      // this.copyToClipboard = "Copied";
 
-      this.copyToClipboard = "Copied";
-      setTimeout(() => {
-        this.$root.$emit("bv::hide::tooltip");
-      }, 700);
+      this.$root.$emit("bv::hide::tooltip");
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: this.copiedText + "copied",
+          icon: "DeleteIcon",
+          variant: "success",
+        },
+      });
     },
 
     // delete a single company invoice
