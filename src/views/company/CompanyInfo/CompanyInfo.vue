@@ -725,10 +725,10 @@
                         <span class="align-middle ml-50">Download</span>
                       </b-dropdown-item>
                       <b-dropdown-item
-                        :to="{
-                          name: 'apps-invoice-edit',
-                          params: { id: data.item.id },
-                        }"
+                      :to="{
+                name: 'company-invoice-edit',
+                params: { id: data.item.id, companyId: companyID  },
+              }"
                       >
                         <feather-icon icon="EditIcon" />
                         <span class="align-middle ml-50">Edit</span>
@@ -789,7 +789,6 @@
 </template>
 
 <script>
-import axios from "@/libs/axios";
 import Swal from "sweetalert2";
 import Ripple from "vue-ripple-directive";
 import AppTimeline from "@core/components/app-timeline/AppTimeline.vue";
@@ -798,6 +797,8 @@ import AppTimelineItem from "@core/components/app-timeline/AppTimelineItem.vue";
 import ApexBarChart from "@/views/company/ApexBarChart";
 import VueHtml2pdf from "vue-html2pdf";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import useJwt from "@/auth/jwt/useJwt";
+import axios from "@/libs/axios";
 import {
   BCard,
   BRow,
@@ -987,36 +988,30 @@ export default {
 
     // delete a single company invoice
     async deleteCompanyInvoice(invoiceID) {
-      const self = this;
-      const config = {
-        method: "delete",
-        url: `/account/api/invoice/${invoiceID}`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Access-Control-Allow-Credentials": true,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:8080",
-        },
-      };
-
-      await axios(config)
+      let token = useJwt.getToken();
+      useJwt
+        .DeleteCompanyInvoice(token, invoiceID)
         .then((response) => {
-          // console.log(JSON.stringify(response.data));
-          self.$toast({
+          this.$toast({
             component: ToastificationContent,
             props: {
-              title: "Company Invoice Deleted Successfully",
+              title: `Invoice Deleted Successfully`,
               icon: "DeleteIcon",
               variant: "success",
             },
           });
+          this.getCompanyInvoices();
         })
         .catch((error) => {
-          console.log(error);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Something went wrong`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          });
         });
-      setTimeout(() => {
-        this.getCompanyInvoices();
-      }, 1400);
     },
     //
     onProgress(event) {
@@ -1077,35 +1072,24 @@ export default {
     },
     // delete the company
     async deleteCompany() {
-      let self = this;
-      const config = {
-        method: "delete",
-        url: `/account/api/company/${this.companyID}`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Access-Control-Allow-Credentials": true,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:8080",
-        },
-      };
-      await axios(config)
+      const token = useJwt.getToken();
+      useJwt
+        .DeleteCompany(token, this.companyID)
         .then((response) => {
-          // console.log(JSON.stringify(response.data))
-          self.$toast({
+          this.$toast({
             component: ToastificationContent,
             props: {
-              title: `Company Deleted Successfully`,
-              icon: "EditIcon",
-              variant: "success",
+              title: "Company Deleted Successfully",
+              icon: "AlertTriangleIcon",
+                variant: "danger",
             },
           });
-          return self.$router.push({
+          return this.$router.push({
             name: "companies",
           });
         })
         .catch((error) => {
-          // console.log(error)
-          self.$toast({
+          this.$toast({
             component: ToastificationContent,
             props: {
               title: `Something Went Wrong`,
@@ -1166,8 +1150,6 @@ export default {
 }
 
 .card-body {
-  /* padding-top: 1.1rem !important;
-  padding-bottom: 0.8rem !important; */
 }
 
 #inner-card-body .card-body {

@@ -416,8 +416,6 @@
       </tab-content>
     </form-wizard>
 
-    <!-- </b-card-body>
-    </b-card> -->
   </div>
 </template>
 
@@ -821,25 +819,6 @@ export default {
         this.form.vat_no = "";
       }
       var data = JSON.stringify({
-        //   companyName: "My Company",
-        //   companyCountry: "Bulgaria",
-        //   companyIsoAlpha2Country: "BG",
-        //   companyOwnerApi: {
-        //     companyOwnerName: "Ivan",
-        //     ownerEGN: "8523155",
-        //   },
-
-        //   companyAddress: "Sofia Petar Stanev N5",
-        //   companyIdentificationNumber: "12q34775dd6",
-        //   companyPhone: "0556412459",
-        //   companyMail: "office@abv.bg",
-        //   companyBankAccount: "BG123456789",
-        //   companyCurrency: "LEV",
-        //   companyVatNumber: "123456",
-        //   digitalSignature: "",
-        //   companyFinancialStartOfYear: "2022-05-19",
-        //   vat: true,
-        // });
 
         companyName: this.form.company_name,
         companyCountry: this.getCompanyCountry,
@@ -894,32 +873,32 @@ export default {
             component: ToastificationContent,
             props: {
               title: `Something Went Wrong`,
-              icon: "EditIcon",
-              variant: "error",
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
           });
 
           return self.$router.go();
         });
     },
-    //
-    async populateCountries() {
-      var config = {
-        method: "get",
-        url: "/account/api/countries",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          "Access-Control-Allow-Credentials": true,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:8080",
-        },
-      };
-
-      const data = await axios(config);
-
-      if (data.data != "") {
-        this.getCountries = data.data;
-      }
+    //populating the list of countries 
+    populateCountries() {
+      const token = useJwt.getToken();
+      useJwt
+        .countries(token)
+        .then((response) => {
+          this.getCountries = response.data;
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Something Went Wrong`,
+              icon: "EditIcon",
+              variant: "error",
+            },
+          });
+        });
     },
   },
   created() {

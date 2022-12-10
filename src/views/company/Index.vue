@@ -144,6 +144,23 @@
 
       <template #cell(action)="data" style="text-align: center !important">
         <feather-icon
+            :id="`invoice-row-${data.item.id}-preview-icon`"
+            icon="EyeIcon"
+            size="16"
+            class="mr-1 cursor-pointer"
+            @click="
+              $router.push({
+                name: 'CompanyView', params: { id: data.item.id },
+              })
+            "
+          />
+          <b-tooltip
+            title="View Company"
+            class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-preview-icon`"
+          />
+
+        <feather-icon
           :id="`edit-${data.item.id}-preview-icon`"
           icon="EditIcon"
           size="16"
@@ -342,54 +359,6 @@ export default {
       totalRecords: "",
       totalPages: "",
       searchQuery: "",
-
-      // items: [
-      //   {
-      //     id: '1234567',
-      //     Country: 'BG',
-      //     company_name: 'Accounting Software',
-      //     Email: 'accounting@software.com',
-      //     owner_name: 'Ivan Ivonov',
-      //     company_identification_number: 'CVS1234567NHY',
-      //     action: 'Edit/Delete'
-      //   },
-      //   {
-      //     id: '1234568',
-      //     Country: 'EN',
-      //     company_name: 'NodeJs Software',
-      //     Email: 'accounting@software.com',
-      //     owner_name: 'Ivan Ivonov',
-      //     company_identification_number: 'CVS1234567NHY',
-      //     action: 'Edit/Delete'
-      //   },
-      //   {
-      //     id: '1234569',
-      //     Country: 'EN',
-      //     company_name: 'Accounting Software',
-      //     Email: 'accounting@software.com',
-      //     owner_name: 'Ivan Ivonov',
-      //     company_identification_number: 'CVS1234JH7NHY',
-      //     action: 'Edit/Delete'
-      //   },
-      //   {
-      //     id: '1234570',
-      //     Country: 'BG',
-      //     company_name: 'Laravel Software',
-      //     Email: 'laravel@software.com',
-      //     owner_name: 'Ivan Ivonov',
-      //     company_identification_number: 'CVS1254567NHY',
-      //     action: 'Edit/Delete'
-      //   },
-      //   {
-      //     id: '1234571',
-      //     Country: 'EN',
-      //     company_name: 'VueJs Software',
-      //     Email: 'vue@software.com',
-      //     owner_name: 'Ivan Ivonov',
-      //     company_identification_number: 'CVS12877NHY',
-      //     action: 'Edit/Delete'
-      //   }
-      // ],
     };
   },
   created() {
@@ -438,36 +407,24 @@ export default {
       }
     },
 
-    //
-    async deleteCompany(companyID) {
-      const self = this;
-      const config = {
-        method: "delete",
-        url: `/account/api/company/${companyID}`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Access-Control-Allow-Credentials": true,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:8080",
-        },
-      };
-
-      await axios(config)
+    //deleting a company
+    deleteCompany(companyID) { 
+      const token = useJwt.getToken();
+      useJwt
+        .DeleteCompany(token, companyID)
         .then((response) => {
-          // console.log(JSON.stringify(response.data))
-          self.$toast({
+          this.$toast({
             component: ToastificationContent,
             props: {
-              title: `Company Deleted Successfully`,
-              icon: "EditIcon",
+              title: "Company Deleted Successfully",
+              icon: "DeleteIcon",
               variant: "success",
             },
           });
-          self.getAllCompanies();
+          this.getAllCompanies();
         })
         .catch((error) => {
-          // console.log(error)
-          self.$toast({
+          this.$toast({
             component: ToastificationContent,
             props: {
               title: `Something Went Wrong`,

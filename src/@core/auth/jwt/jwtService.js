@@ -68,30 +68,35 @@ export default class JwtService {
         const originalRequest = config;
 
         // if (status === 401) {
-        if (response && response.status === 401) {
-          if (!this.isAlreadyFetchingAccessToken) {
-            this.isAlreadyFetchingAccessToken = true;
-            this.refreshToken().then((r) => {
-              this.isAlreadyFetchingAccessToken = false;
+        // if (response && response.status === 401) {
+        //   if (!this.isAlreadyFetchingAccessToken) {
+        //     this.isAlreadyFetchingAccessToken = true;
+        //     this.refreshToken()
+        //     .then((r) => {
+        //       this.isAlreadyFetchingAccessToken = false;
 
-              // Update accessToken in localStorage
-              this.setToken(r.data.access_token);
-              this.setRefreshToken(r.data.refresh_token);
+        //       // Update accessToken in localStorage
+        //       this.setToken(r.data.access_token);
+        //       this.setRefreshToken(r.data.refresh_token);
 
-              this.onAccessTokenFetched(r.data.access_token);
-            });
-          }
-          const retryOriginalRequest = new Promise((resolve) => {
-            this.addSubscriber((accessToken) => {
-              // Make sure to assign accessToken according to your response.
-              // Check: https://pixinvent.ticksy.com/ticket/2413870
-              // Change Authorization header
-              originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`;
-              resolve(this.axiosIns(originalRequest));
-            });
-          });
-          return retryOriginalRequest;
-        }
+        //       this.onAccessTokenFetched(r.data.access_token);
+        //     })
+        //     .catch(()=> {
+              
+              
+        //     });
+        //   }
+        //   const retryOriginalRequest = new Promise((resolve) => {
+        //     this.addSubscriber((accessToken) => {
+        //       // Make sure to assign accessToken according to your response.
+        //       // Check: https://pixinvent.ticksy.com/ticket/2413870
+        //       // Change Authorization header
+        //       originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`;
+        //       resolve(this.axiosIns(originalRequest));
+        //     });
+        //   });
+        //   return retryOriginalRequest;
+        // }
         return Promise.reject(error);
       }
     );
@@ -282,6 +287,13 @@ export default class JwtService {
 
   }
 
+  //Delete Company
+  DeleteCompany(token, id) {
+    return this.axiosIns.delete(
+      `${this.jwtConfig.deleteCompanyEndPoint}/${id}`
+    );
+  }
+
   EditUser(token,id,...args) {
     let headers = {
       'Content-Type': 'application/json',
@@ -349,6 +361,11 @@ export default class JwtService {
 
   companies(token) {
     return this.axiosIns.get(`${this.jwtConfig.getCompanies}`);
+  }
+
+  //wrong old password
+  wrongOldPassword(token, ...args) {
+    return this.axiosIns.post(this.jwtConfig.wrongOldPasswordEndPoint, ...args);
   }
 
   addFileInvoice(token, CompanyId, file) {
