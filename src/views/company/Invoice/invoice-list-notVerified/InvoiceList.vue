@@ -48,6 +48,14 @@
               :path="path1"
             />
           </b-button>
+          <b-button
+              v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+              variant="outline-primary"
+              @click="refetchData"
+          >
+            <feather-icon icon="RefreshCcwIcon" />
+          </b-button>
+
         </b-col>
 
         <!-- Search -->
@@ -107,8 +115,8 @@
     <b-table
       ref="refInvoiceListTable"
       :items="fetchInvoices"
-      responsive
       :fields="tableColumns"
+      responsive
       primary-key="id"
       :sort-by.sync="sortBy"
       show-empty
@@ -310,6 +318,7 @@
           <b-dropdown
             variant="link"
             toggle-class="p-0"
+            dropleft
             no-caret
             :right="$store.state.appConfig.isRTL"
           >
@@ -430,6 +439,7 @@ import flatPickr from 'vue-flatpickr-component'
 import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
 import invoiceStoreModule from '../invoiceStoreModule'
 import useInvoicesList from './useInvoiceList'
+import Ripple from 'vue-ripple-directive'
 
 export default {
   components: {
@@ -468,6 +478,9 @@ export default {
       multiplefileLoading: false,
       path1: mdiCloudUploadOutline,
     }
+  },
+  directives: {
+    Ripple,
   },
   methods: {
     state() {
@@ -509,6 +522,7 @@ export default {
         })
     },
     addMultiplefile(event) {
+      const self = this
       this.multiplefile = event.target.files
       this.multiplefileLoading = true
       const companyID = router.currentRoute.params.companyId ? router.currentRoute.params.companyId : router.currentRoute.params.id
@@ -522,6 +536,7 @@ export default {
         .addMultipleFileInvoice(token, companyID, formData)
         .then(response => {
           this.multiplefileLoading = false
+          self.refetchData()
           event.target.value = ''
           this.$toast({
             component: ToastificationContent,

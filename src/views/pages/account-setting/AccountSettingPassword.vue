@@ -181,6 +181,7 @@
 </template>
 
 <script>
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import {
   BButton, BForm, BFormGroup, BFormInput, BRow, BCol, BCard, BInputGroup, BInputGroupAppend,
 } from 'bootstrap-vue'
@@ -188,6 +189,7 @@ import Ripple from 'vue-ripple-directive'
 import { extend, ValidationProvider, ValidationObserver } from 'vee-validate'
 import { required, min, confirmed } from 'vee-validate/dist/rules'
 import axios from '@/libs/axios'
+import useJwt from "@/auth/jwt/useJwt";
 
 extend('required', required)
 extend('min', min)
@@ -263,22 +265,32 @@ export default {
         oldPassword: this.passwordValueOld,
         newPassword: this.newPasswordValue,
       }
-      try {
-        await axios.post('/account/api/user/change-password', credentials)
-          // eslint-disable-next-line func-names
-          .then(response => {
+
+      let token = useJwt.getToken();
+          await useJwt
+          .wrongOldPassword(token, credentials)
+          .then((response) => {
             if (response.status === 200) {
-              this.makeToast('success', 'Success', 'Password Updated Successfully')
-            } else {
-              this.makeToast('danger', response.data.errorCode, response.data.errorMessage)
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: "Password updated successfully ",
+                  icon: "DeleteIcon",
+                  variant: "success",
+                },
+              });
             }
           })
-          .catch(error => {
-            this.makeToast('danger', error.data.errorCode, error.data.errorMessage)
-          })
-      } catch (error) {
-        console.log('error ', error)
-      }
+          .catch((error) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `Old password is incorrect `,
+                icon: "AlertTriangleIcon",
+                variant: "danger",
+              },
+            });
+          });
     },
     makeToast(variant = null, title = null, message = null) {
       this.$bvToast.toast(message, {

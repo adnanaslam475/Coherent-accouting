@@ -29,6 +29,9 @@ export default {
   fileInvoiceEndpoint: '/index/api/invoice/ocr',
   multipleFileInvoiceEndpoint: '/index/api/multiple/invoice/ocr',
 
+  //Delete Company 
+  deleteCompanyEndPoint:'/account/api/company',
+
   // Vat-Reports
   VatReportAddEndPoint: '/account/api/report/create',
   VatReportEditEndPoint: '/account/api/report/update',
@@ -39,6 +42,8 @@ export default {
   CreateVatReportZipFileEndPoint: '/account/api/calculation/create-vat-report',
 
   getCompanies: '/api/company/list/1/10',
+
+  wrongOldPasswordEndPoint: '/account/api/user/change-password',
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>
   tokenType: 'Bearer',

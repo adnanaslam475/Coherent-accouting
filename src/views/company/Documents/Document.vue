@@ -114,8 +114,8 @@
               <div class="d-flex align-items-center justify-content-center">
                 <div class="mb-1 start-chat-icon">
                   <feather-icon
-                      icon="FolderIcon"
-                      size="20"
+                    icon="FolderIcon"
+                    size="20"
                   />
                 </div>
                 <h5 class="sidebar-toggle start-chat-text">
@@ -141,7 +141,10 @@
               </div>
             </template>
             <template #cell(Notes)="data">
-              <b-row class="w-100" v-if="asset.id === data.item.id">
+              <b-row
+                v-if="asset.id === data.item.id"
+                class="w-100"
+              >
                 <b-col
                   cols="10"
                 >
@@ -172,48 +175,50 @@
               #cell(action)="data"
               style="text-align: center !important"
             >
-              <b-link
-                @click="showImageDetail(data.item.id)"
-              >
-                <feather-icon
-                  icon="EyeIcon"
-                />
-              </b-link>
-              <!-- Dropdown -->
-              <b-dropdown
-                variant="link"
-                toggle-class="p-0"
-                no-caret
-                :right="$store.state.appConfig.isRTL"
-              >
-                <template #button-content>
+              <b-row>
+                <b-link
+                  @click="showImageDetail(data.item.id)"
+                >
                   <feather-icon
-                    icon="MoreVerticalIcon"
-                    size="16"
-                    class="align-middle text-body ml-1"
+                    icon="EyeIcon"
                   />
-                </template>
-                <b-dropdown-item
-                  @click="editRecord(data)"
+                </b-link>
+                <!-- Dropdown -->
+                <b-dropdown
+                  variant="link"
+                  toggle-class="p-0"
+                  no-caret
+                  :right="$store.state.appConfig.isRTL"
                 >
-                  <feather-icon icon="EditIcon" />
-                  <span class="align-middle ml-50">Edit</span>
-                </b-dropdown-item>
-                <b-dropdown-item
-                  @click="deleteAsset(data.item.binaryId)"
-                >
-                  <feather-icon icon="TrashIcon" />
-                  <span class="align-middle ml-50">Delete</span>
-                </b-dropdown-item>
-                <b-dropdown-item
-                  v-if="images[data.item.id]"
-                  :download="JSON.parse(data.item.binaryId).binaryId"
-                  :href="images[data.item.id].image"
-                >
-                  <feather-icon icon="DownloadIcon" />
-                  <span class="align-middle ml-50">Download</span>
-                </b-dropdown-item>
-              </b-dropdown>
+                  <template #button-content>
+                    <feather-icon
+                      icon="MoreVerticalIcon"
+                      size="16"
+                      class="align-middle text-body ml-1"
+                    />
+                  </template>
+                  <b-dropdown-item
+                    @click="editRecord(data)"
+                  >
+                    <feather-icon icon="EditIcon" />
+                    <span class="align-middle ml-50">Edit</span>
+                  </b-dropdown-item>
+                  <b-dropdown-item
+                    @click="deleteAsset(data.item.binaryId)"
+                  >
+                    <feather-icon icon="TrashIcon" />
+                    <span class="align-middle ml-50">Delete</span>
+                  </b-dropdown-item>
+                  <b-dropdown-item
+                    v-if="images[data.item.id]"
+                    :download="JSON.parse(data.item.binaryId).binaryId"
+                    :href="images[data.item.id].image"
+                  >
+                    <feather-icon icon="DownloadIcon" />
+                    <span class="align-middle ml-50">Download</span>
+                  </b-dropdown-item>
+                </b-dropdown>
+              </b-row>
             </template>
           </b-table>
         </b-col>

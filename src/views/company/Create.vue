@@ -310,8 +310,22 @@
                     id="company_currency"
                     :state="errors.length > 0 ? false : null"
                     v-bind:placeholder="$t('Please select currency')"
+                    v-on:input="updateCurrencyStatus()"
                   >
-                    <template #selected-option="option">
+                  <template #selected-option="option" v-if="defaultCurrency === true">
+                        <div
+                          style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: left;
+                            grid-gap: 8px;
+                          "
+                        >
+                          {{ form.company_currency }} 
+                         
+                        </div>
+                      </template>
+                    <template #selected-option="option" v-else>
                       <div
                         style="
                           display: flex;
@@ -320,7 +334,7 @@
                           grid-gap: 8px;
                         "
                       >
-                        {{ option.value }} - {{ option.name }}
+                        {{ option.value }}
                       </div>
                     </template>
                     <template v-slot:option="option">
@@ -416,8 +430,6 @@
       </tab-content>
     </form-wizard>
 
-    <!-- </b-card-body>
-    </b-card> -->
   </div>
 </template>
 
@@ -485,6 +497,7 @@ export default {
   },
   data() {
     return {
+      defaultCurrency:true,
       companyCountrySelected: "",
       companyCountryISOSelected: "",
       getCompanyISO: "",
@@ -503,7 +516,7 @@ export default {
         company_iso_country: null,
         owner_egn: null,
         company_bank_account: null,
-        company_currency: null,
+        company_currency: 'BGN',
         phone_no: null,
         vat_no: null,
         fin_year: null,
@@ -685,6 +698,11 @@ export default {
     };
   },
   methods: {
+   //
+   updateCurrencyStatus(){
+      this.defaultCurrency = false;
+     },
+
     //getting country name and ISO from v-select
     updateCountryStatus() {
       this.companyCountrySelected = this.getCompanyCountry.country;
@@ -817,29 +835,18 @@ export default {
     //create a company
     async saveCompany() {
       let self = this;
+      let currency;
       if (this.isVatCheck === false) {
         this.form.vat_no = "";
       }
-      var data = JSON.stringify({
-        //   companyName: "My Company",
-        //   companyCountry: "Bulgaria",
-        //   companyIsoAlpha2Country: "BG",
-        //   companyOwnerApi: {
-        //     companyOwnerName: "Ivan",
-        //     ownerEGN: "8523155",
-        //   },
 
-        //   companyAddress: "Sofia Petar Stanev N5",
-        //   companyIdentificationNumber: "12q34775dd6",
-        //   companyPhone: "0556412459",
-        //   companyMail: "office@abv.bg",
-        //   companyBankAccount: "BG123456789",
-        //   companyCurrency: "LEV",
-        //   companyVatNumber: "123456",
-        //   digitalSignature: "",
-        //   companyFinancialStartOfYear: "2022-05-19",
-        //   vat: true,
-        // });
+      if(this.defaultCurrency === true){
+        currency = this.form.company_currency;
+      }
+      else{
+        currency = this.form.company_currency.value;
+      }
+      var data = JSON.stringify({
 
         companyName: this.form.company_name,
         companyCountry: this.getCompanyCountry,
@@ -853,7 +860,7 @@ export default {
         companyPhone: this.form.phone_no,
         companyMail: this.form.company_email,
         companyBankAccount: this.form.company_bank_account,
-        companyCurrency: this.form.company_currency.value,
+        companyCurrency: currency,
         companyVatNumber: this.form.vat_no,
         digitalSignature: "",
         companyFinancialStartOfYear: this.form.fin_year,
@@ -894,32 +901,32 @@ export default {
             component: ToastificationContent,
             props: {
               title: `Something Went Wrong`,
-              icon: "EditIcon",
-              variant: "error",
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
           });
 
           return self.$router.go();
         });
     },
-    //
-    async populateCountries() {
-      var config = {
-        method: "get",
-        url: "/account/api/countries",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          "Access-Control-Allow-Credentials": true,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:8080",
-        },
-      };
-
-      const data = await axios(config);
-
-      if (data.data != "") {
-        this.getCountries = data.data;
-      }
+    //populating the list of countries 
+    populateCountries() {
+      const token = useJwt.getToken();
+      useJwt
+        .countries(token)
+        .then((response) => {
+          this.getCountries = response.data;
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Something Went Wrong`,
+              icon: "EditIcon",
+              variant: "error",
+            },
+          });
+        });
     },
   },
   created() {

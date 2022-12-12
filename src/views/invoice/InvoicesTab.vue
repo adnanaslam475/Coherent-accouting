@@ -2,7 +2,7 @@
   <div>
     <b-tabs
       v-model="invoiceTab"
-      class="invoice-tabs-view position-relative overflow-hidden"
+      class="invoice-tabs-view position-relative"
     >
       <b-tab>
         <template #title>

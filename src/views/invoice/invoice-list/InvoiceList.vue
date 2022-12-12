@@ -86,8 +86,8 @@
     <b-table
       ref="refInvoiceListTable"
       :items="fetchInvoices"
-      responsive
       :fields="tableColumns"
+      responsive
       primary-key="id"
       :sort-by.sync="sortBy"
       show-empty
@@ -269,6 +269,7 @@
           <b-dropdown
             variant="link"
             toggle-class="p-0"
+            dropleft
             no-caret
             :right="$store.state.appConfig.isRTL"
           >
@@ -379,6 +380,7 @@ import flatPickr from 'vue-flatpickr-component'
 import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
 import invoiceStoreModule from '../invoiceStoreModule'
 import useInvoicesList from './useInvoiceList'
+import Ripple from 'vue-ripple-directive'
 
 export default {
   components: {
@@ -406,6 +408,9 @@ export default {
     BCardHeader,
     InvoiceDownload,
     flatPickr,
+  },
+  directives: {
+    Ripple,
   },
   props: ['invoiceTab'],
   methods: {

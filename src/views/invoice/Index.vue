@@ -1,10 +1,8 @@
 <template>
   <div>
-    <b-row class="match-height">
-      <b-col lg="12" md="12" sm="12">
+      <b-col cols="12">
         <InvoicesTab />
       </b-col>
-    </b-row>
   </div>
 </template>
 
