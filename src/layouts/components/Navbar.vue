@@ -457,7 +457,6 @@ export default {
         localStorage.setItem('userData', JSON.stringify(data.data))
       } catch (error) {
         console.log('error', error)
-        this.logout()
       }
     },
     logout() {
