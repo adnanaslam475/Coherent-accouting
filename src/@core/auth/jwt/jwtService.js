@@ -61,35 +61,33 @@ export default class JwtService {
       (error) => Promise.reject(error)
     );
 
-    // Add request/response interceptor
-    this.axiosIns.interceptors.response.use(
-      (response) => response,
-      (error) => {
+    // Add response interceptor
+    this.axiosIns.interceptors.response.use((response) => {
+      return response;
+    },(error) => {
         // const { config, response: { status } } = error
-        const { config, response } = error;
-        const originalRequest = config;
+        // const { config, response } = error.config;
+        const originalRequest = error.config;
 
-        // if (status === 401) {
-        if (response && response.status === 401) {
-          if (!this.isAlreadyFetchingAccessToken) {
-            this.isAlreadyFetchingAccessToken = true;
+        if (error.response && error.response.data && error.response.status === 401) {
+          if (error.response.data.error_description && error.response.data.error_description.includes('Access token expired:')) {
             this.refreshToken().then((r) => {
-              this.isAlreadyFetchingAccessToken = false;
-
               // Update accessToken in localStorage
               this.setToken(r.data.access_token);
               this.setRefreshToken(r.data.refresh_token);
-
               this.onAccessTokenFetched(r.data.access_token);
             }).catch(error => {
               console.log(error.response)
-              if (error.response && error.response.status === 401) {
+              if (error.response && error.response.status === 401 
+                && error.response.data && error.response.data.error_description 
+                && error.response.data.error_description.includes('Invalid refresh token (expired):')) {
                 localStorage.removeItem(this.jwtConfig.storageTokenKeyName)
                 localStorage.removeItem(this.jwtConfig.storageRefreshTokenKeyName)
                 localStorage.removeItem('userData')
                 router.push({ name: 'login' })
               }
             });
+
           }
           const retryOriginalRequest = new Promise((resolve) => {
             this.addSubscriber((accessToken) => {
