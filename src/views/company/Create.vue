@@ -310,8 +310,22 @@
                     id="company_currency"
                     :state="errors.length > 0 ? false : null"
                     v-bind:placeholder="$t('Please select currency')"
+                    v-on:input="updateCurrencyStatus()"
                   >
-                    <template #selected-option="option">
+                  <template #selected-option="option" v-if="defaultCurrency === true">
+                        <div
+                          style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: left;
+                            grid-gap: 8px;
+                          "
+                        >
+                          {{ form.company_currency }} 
+                         
+                        </div>
+                      </template>
+                    <template #selected-option="option" v-else>
                       <div
                         style="
                           display: flex;
@@ -320,7 +334,7 @@
                           grid-gap: 8px;
                         "
                       >
-                        {{ option.value }} - {{ option.name }}
+                        {{ option.value }}
                       </div>
                     </template>
                     <template v-slot:option="option">
@@ -483,6 +497,7 @@ export default {
   },
   data() {
     return {
+      defaultCurrency:true,
       companyCountrySelected: "",
       companyCountryISOSelected: "",
       getCompanyISO: "",
@@ -501,7 +516,7 @@ export default {
         company_iso_country: null,
         owner_egn: null,
         company_bank_account: null,
-        company_currency: null,
+        company_currency: 'BGN',
         phone_no: null,
         vat_no: null,
         fin_year: null,
@@ -683,6 +698,11 @@ export default {
     };
   },
   methods: {
+   //
+   updateCurrencyStatus(){
+      this.defaultCurrency = false;
+     },
+
     //getting country name and ISO from v-select
     updateCountryStatus() {
       this.companyCountrySelected = this.getCompanyCountry.country;
@@ -815,8 +835,16 @@ export default {
     //create a company
     async saveCompany() {
       let self = this;
+      let currency;
       if (this.isVatCheck === false) {
         this.form.vat_no = "";
+      }
+
+      if(this.defaultCurrency === true){
+        currency = this.form.company_currency;
+      }
+      else{
+        currency = this.form.company_currency.value;
       }
       var data = JSON.stringify({
 
@@ -832,7 +860,7 @@ export default {
         companyPhone: this.form.phone_no,
         companyMail: this.form.company_email,
         companyBankAccount: this.form.company_bank_account,
-        companyCurrency: this.form.company_currency.value,
+        companyCurrency: currency,
         companyVatNumber: this.form.vat_no,
         digitalSignature: "",
         companyFinancialStartOfYear: this.form.fin_year,

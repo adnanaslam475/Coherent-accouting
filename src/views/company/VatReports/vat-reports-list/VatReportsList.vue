@@ -95,7 +95,7 @@
       :ok-disabled="modalDisabled"
     >
       <form ref="form" @submit.stop.prevent="handleMonthSelected">
-        <!-- Vat Reports Table -->
+        <!-- invoices-for-vat-reports Table -->
         <b-table
           :items="invoicesForReport"
           responsive
@@ -108,7 +108,7 @@
           <template #empty="scope">
             <div class="d-flex align-items-center justify-content-center">
               <div class="mb-1 start-chat-icon">
-                <feather-icon icon="FolderIcon" size="40" />
+                <feather-icon icon="FolderIcon" size="35" />
               </div>
               <h5 class="sidebar-toggle start-chat-text">No records found</h5>
             </div>
@@ -124,15 +124,35 @@
             />
           </template>
 
-          <!-- Column: Id -->
-          <template #cell(id)="data"> #{{ data.value }} </template>
-
+          <!-- Invoice Number -->
           <template #cell(invoiceNumber)="data">
             <span class="text-nowrap">
               {{ data.value }}
             </span>
           </template>
 
+          <!-- recepientCompanyName -->
+          <template #cell(recipientCompanyName)="data">
+            <span class="text-nowrap">
+              {{ data.item.recipientCompany.companName }}
+            </span>
+          </template>
+
+          <!-- supplierCompanyName -->
+          <template #cell(supplierCompanyName)="data">
+            <span class="text-nowrap">
+              {{ data.item.supplierCompany.companName }}
+            </span>
+          </template>
+
+          <!-- transactionType -->
+          <template #cell(transactionType)="data">
+            <span class="text-nowrap">
+              {{ data.value }}
+            </span>
+          </template>
+
+          <!-- dateIssued -->
           <template #cell(dateIssued)="data">
             <span class="text-nowrap">
               {{ data.value }}
@@ -418,9 +438,11 @@ export default {
       ],
       InvoicesTableColumns: [
         { key: "isChecked", label: "" },
-        { key: "id", label: "#", sortable: true },
         { key: "invoiceNumber" },
-        { key: "dateIssued", label: "date Issued" },
+        { key: "recipientCompanyName" },
+        { key: "supplierCompanyName" },
+        { key: "transactionType" },
+        { key: "dateIssued" },
       ],
     };
   },
@@ -556,14 +578,29 @@ export default {
                 this.modalDisabled = false;
               }
               // console.log(this.invoicesForReport);
-            });
-          this.$nextTick(() => {
-            this.$bvModal.hide("modal-prevent-closing");
-          });
 
-          this.$nextTick(() => {
-            this.$bvModal.show("modal-invoices-for-report");
-          });
+              this.$nextTick(() => {
+                this.$bvModal.hide("modal-prevent-closing");
+              });
+
+              this.$nextTick(() => {
+                this.$bvModal.show("modal-invoices-for-report");
+              });
+            })
+            .catch((error) => {
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `${error.response.data.errorMessage}`,
+                  icon: "AlertTriangleIcon",
+                  variant: "danger",
+                },
+              });
+
+              this.$nextTick(() => {
+                this.$bvModal.hide("modal-prevent-closing");
+              });
+            });
         }
       });
     },

@@ -7,7 +7,7 @@
           <!----><!---->
           <div class="card-body" style="padding: 0px">
             <!----><!---->
-            <div class="row" style="padding: 15px 0px 18px 15px">
+            <div class="row" style="padding: 15px 0px 15px 15px">
               <div
                 class="d-flex justify-content-between flex-column col-5"
                 style="padding-left: 0.5rem; padding-right: 0.5rem"
@@ -28,19 +28,26 @@
 
                       <div class="d-flex flex-column ml-1">
                         <div class="mb-1">
-                          <h4 v-if="companyNameLength >= 43" class="mb-0">
+                          <CopyToClipboard v-if="companyNameLength >= 43"
+                            :text="compNAME"
+                            @copy="copyTextNoInput(8)"
+                          >
+                          <h4  class="mb-0" style="cursor: pointer"  id="comp-name-copy">
                             {{ companyName.substr(0, 44) }}
-                          </h4>
+                          </h4></CopyToClipboard>
+
+                          <CopyToClipboard  v-else
+                            :text="compNAME"
+                            @copy="copyTextNoInput(8)"
+                          >
                           <h4
-                            v-else
+                           
                             id="comp-name-copy"
                             class="mb-0"
-                            ref="compNAME"
-                            @click="copyTextNoInput('compNAME')"
                             style="cursor: pointer"
                           >
                             {{ companyRecord.companyName }}
-                          </h4>
+                          </h4></CopyToClipboard>
                           <b-tooltip target="comp-name-copy">{{
                             copyToClipboard
                           }}</b-tooltip>
@@ -79,13 +86,15 @@
                         />
                         <div class="ml-1">
                           <h6 class="mb-0">Owner Name</h6>
+                          <CopyToClipboard
+                            :text="companyOwnerName"
+                            @copy="copyTextNoInput(1)"
+                          >
                           <small
-                            ref="compOWNER"
-                            @click="copyTextNoInput('compOWNER')"
                             id="comp-owner-copy"
                             style="cursor: pointer"
                             >{{ companyOwnerName }}</small
-                          >
+                          ></CopyToClipboard>
                           <b-tooltip target="comp-owner-copy">{{
                             copyToClipboard
                           }}</b-tooltip>
@@ -100,16 +109,20 @@
                         />
                         <div class="ml-1">
                           <h6 class="mb-0">Owner EGN</h6>
+                          <CopyToClipboard
+                            :text="companyOwnerEGN"
+                            @copy="copyTextNoInput(2)"
+                          >
                           <small
-                            ref="compEGN"
                             v-if="companyOwnerEGN != null"
                             id="comp-egn-copy"
-                            @click="copyTextNoInput('compEGN')"
                             style="cursor: pointer"
                             >{{ companyOwnerEGN }}</small
                           >
-
                           <small v-else>NIL</small>
+                        </CopyToClipboard>
+
+                         
                           <b-tooltip target="comp-egn-copy">{{
                             copyToClipboard
                           }}</b-tooltip>
@@ -123,6 +136,7 @@
                 <b-row>
                   <b-col cols="12">
                     <table class="mt-2 mt-xl-0 w-100 company-info-table">
+                      <!-- Company ID -->
                       <tr>
                         <th class="pb-50">
                           <svg
@@ -144,10 +158,12 @@
                           <span class="font-weight-bold">Company ID</span>
                         </th>
                         <td class="pb-50 text-capitalize">
+                          <CopyToClipboard
+                            :text="compID"
+                            @copy="copyTextNoInput(3)"
+                          >
                           <p
                             id="comp-id-copy"
-                            ref="compID"
-                            @click="copyTextNoInput('compID')"
                             style="
                               width: fit-content;
                               margin: 0px;
@@ -155,12 +171,14 @@
                             "
                           >
                             {{ companyRecord.companyIdentificationNumber }}
-                          </p>
+                          </p></CopyToClipboard>
                         </td>
                         <b-tooltip target="comp-id-copy">{{
                           copyToClipboard
                         }}</b-tooltip>
+                        <!--  -->
                       </tr>
+                       <!-- Company Vat Number -->
                       <tr>
                         <th class="pb-50">
                           <feather-icon icon="FlagIcon" class="mr-75" />
@@ -170,37 +188,44 @@
                           v-if="companyRecord.companyVatNumber != null"
                           class="pb-50 text-capitalize"
                         >
-                          <p
-                            id="comp-vat-copy"
-                            ref="compVAT"
-                            @click="copyTextNoInput('compVAT')"
-                            style="
-                              width: fit-content;
-                              margin: 0px;
-                              cursor: pointer;
-                            "
+                          <CopyToClipboard
+                            :text="compVAT"
+                            @copy="copyTextNoInput(4)"
                           >
-                            {{ companyRecord.companyVatNumber }}
-                          </p>
-                          <b-tooltip target="comp-vat-copy">{{
-                            copyToClipboard
-                          }}</b-tooltip>
+                            <p
+                              id="comp-vat-copy"
+                              style="
+                                width: fit-content;
+                                margin: 0px;
+                                cursor: pointer;
+                              "
+                            >
+                              {{ companyRecord.companyVatNumber }}
+                            </p></CopyToClipboard>
+                            <b-tooltip target="comp-vat-copy">{{
+                              copyToClipboard
+                            }}</b-tooltip>
+                          
                         </td>
                         <td v-else class="pb-50 text-capitalize">NIL</td>
                       </tr>
+                       <!-- Company Bank Account -->
                       <tr>
                         <th class="pb-50">
                           <feather-icon icon="CreditCardIcon" class="mr-75" />
                           <span class="font-weight-bold">Bank Account</span>
                         </th>
                         <td
-                          v-if="companyRecord.companyBankAccount != null"
+                        v-if="companyRecord.companyBankAccount != null"
                           class="pb-50"
                         >
-                          <p
+                        <CopyToClipboard 
+                            :text="compBANKACCOUNT"
+                            @copy="copyTextNoInput(5)"
+                            class="abbbc"
+                          >
+                          <p 
                             id="comp-account-copy"
-                            ref="compBANKACCOUNT"
-                            @click="copyTextNoInput('compBANKACCOUNT')"
                             style="
                               width: fit-content;
                               margin: 0px;
@@ -208,13 +233,14 @@
                             "
                           >
                             {{ companyRecord.companyBankAccount }}
-                          </p>
+                          </p></CopyToClipboard>
                           <b-tooltip target="comp-account-copy">{{
                             copyToClipboard
                           }}</b-tooltip>
                         </td>
                         <td v-else class="pb-50">NIL</td>
                       </tr>
+                       <!-- Company Phone -->
                       <tr>
                         <th>
                           <svg
@@ -236,10 +262,12 @@
                           <span class="font-weight-bold">Contact</span>
                         </th>
                         <td class="pb-50">
+                          <CopyToClipboard
+                            :text="compCONTACT"
+                            @copy="copyTextNoInput(6)"
+                          >
                           <p
                             id="comp-contact-copy"
-                            ref="compCONTACT"
-                            @click="copyTextNoInput('compCONTACT')"
                             style="
                               width: fit-content;
                               margin: 0px;
@@ -248,6 +276,7 @@
                           >
                             {{ companyRecord.companyPhone }}
                           </p>
+                          </CopyToClipboard>
                         </td>
                         <b-tooltip target="comp-contact-copy">{{
                           copyToClipboard
@@ -260,10 +289,12 @@
                           <span class="font-weight-bold">Address</span>
                         </th>
                         <td class="pb-50">
+                          <CopyToClipboard
+                            :text="companyAddress"
+                            @copy="copyTextNoInput(7)"
+                          >
                           <p
                             id="comp-address-copy"
-                            ref="compADDRESS"
-                            @click="copyTextNoInput('compADDRESS')"
                             style="
                               width: fit-content;
                               margin: 0px;
@@ -271,7 +302,7 @@
                             "
                           >
                             {{ companyAddress.substr(0, 38) }}
-                          </p>
+                          </p></CopyToClipboard>
                         </td>
                         <b-tooltip target="comp-address-copy">{{
                           copyToClipboard
@@ -725,10 +756,10 @@
                         <span class="align-middle ml-50">Download</span>
                       </b-dropdown-item>
                       <b-dropdown-item
-                      :to="{
-                name: 'company-invoice-edit',
-                params: { id: data.item.id, companyId: companyID  },
-              }"
+                        :to="{
+                          name: 'company-invoice-edit',
+                          params: { id: data.item.id, companyId: companyID },
+                        }"
                       >
                         <feather-icon icon="EditIcon" />
                         <span class="align-middle ml-50">Edit</span>
@@ -820,6 +851,7 @@ import {
   BCardText,
 } from "bootstrap-vue";
 import InvoiceDownload from "../../invoice/invoice-download/InvoiceDownload.vue";
+import CopyToClipboard from "vue-copy-to-clipboard";
 
 const chartColors = {
   primaryColorShade: "#836AF9",
@@ -863,6 +895,7 @@ export default {
     InvoiceDownload,
     BModal,
     BCardText,
+    CopyToClipboard,
   },
   directives: {
     Ripple,
@@ -871,6 +904,7 @@ export default {
   },
   data() {
     return {
+      textt: "copyyyyyy",
       copiedText: "",
       copyToClipboard: "Copy to clipboard",
       compNAME: "",
@@ -943,39 +977,32 @@ export default {
   methods: {
     //Copy to Clipboard
     copyTextNoInput(val) {
-      const storage = document.createElement("textarea");
-      if (val === "compOWNER") {
-        this.copiedText = "Owner name ";
-        storage.value = this.$refs.compOWNER.innerHTML;
-      } else if (val === "compEGN") {
-        storage.value = this.$refs.compEGN.innerHTML;
-        this.copiedText = "Owner EGN ";
-      } else if (val === "compID") {
-        storage.value = this.$refs.compID.innerHTML;
-        this.copiedText = "Company ID ";
-      } else if (val === "compVAT") {
-        storage.value = this.$refs.compVAT.innerHTML;
-        this.copiedText = "Vat number ";
-      } else if (val === "compBANKACCOUNT") {
-        storage.value = this.$refs.compBANKACCOUNT.innerHTML;
-        this.copiedText = "Bank Account ";
-      } else if (val === "compCONTACT") {
-        storage.value = this.$refs.compCONTACT.innerHTML;
-        this.copiedText = "Contact ";
-      } else if (val === "compNAME") {
-        storage.value = this.$refs.compNAME.innerHTML;
-        this.copiedText = "Company name ";
-      } else {
-        storage.value = this.$refs.compADDRESS.innerHTML;
-        this.copiedText = "Address ";
-      }
-
-      storage.select();
-      storage.setSelectionRange(0, 99999);
-      navigator.clipboard.writeText(storage.value);
-      // this.copyToClipboard = "Copied";
-
       this.$root.$emit("bv::hide::tooltip");
+      switch (val) {
+        case 1:
+          this.copiedText = "Owner name ";
+          break;
+        case 2:
+          this.copiedText = "Owner EGN ";
+          break;
+        case 3:
+          this.copiedText = "Company ID ";
+          break;
+        case 4:
+          this.copiedText = "Vat number ";
+          break;
+        case 5:
+          this.copiedText = "Bank Account ";
+          break;
+        case 6:
+          this.copiedText = "Contact ";
+          break;
+        case 7:
+          this.copiedText = "Address ";
+          break;
+        default:
+          this.copiedText = "Company name ";
+      }
       this.$toast({
         component: ToastificationContent,
         props: {
@@ -984,6 +1011,7 @@ export default {
           variant: "success",
         },
       });
+
     },
 
     // delete a single company invoice
@@ -1081,7 +1109,7 @@ export default {
             props: {
               title: "Company Deleted Successfully",
               icon: "AlertTriangleIcon",
-                variant: "danger",
+              variant: "danger",
             },
           });
           return this.$router.push({
@@ -1123,6 +1151,11 @@ export default {
         this.companyOwnerEGN = this.companyRecord.companyOwnerApi.ownerEGN;
         this.companyName = this.companyRecord.companyName;
         this.companyAddress = this.companyRecord.companyAddress;
+        this.compID = this.companyRecord.companyIdentificationNumber;
+        this.compVAT = this.companyRecord.companyVatNumber;
+        this.compBANKACCOUNT = this.companyRecord.companyBankAccount;
+        this.compCONTACT = this.companyRecord.companyPhone;
+        this.compNAME = this.companyRecord.companyName;
       }
     },
     async getStatistics() {
