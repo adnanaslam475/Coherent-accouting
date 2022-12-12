@@ -281,26 +281,11 @@ export default class JwtService {
 
   //Get Create-Vat-Report-Zip
   GetVatReportsZip(token,...args){
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.post(`${this.jwtConfig.CreateVatReportZipFileEndPoint}`, ...args, {
-      headers: headers
-    }) 
-
+    return this.axiosIns.post(`${this.jwtConfig.CreateVatReportZipFileEndPoint}`, ...args) 
   }
 
   EditUser(token,id,...args) {
-    let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${this.jwtConfig.tokenType} ${token}`,
-      'Accept': 'application/json'
-    }
-    return this.axiosIns2.put(`${this.jwtConfig.UserEditEndpoint}/${id}`, ...args, {
-      headers: headers
-    }) 
+    return this.axiosIns.put(`${this.jwtConfig.UserEditEndpoint}/${id}`, ...args) 
   }
 
   DeleteUser(token, id) {
@@ -330,22 +315,16 @@ export default class JwtService {
 
   SearchCompanyPerson(token, params) {
     let config = {
-      headers: {
-        Authorization: `${this.jwtConfig.tokenType} ${token}`,
-      },
       params: params,
     };
-    return this.axiosIns2.get(this.jwtConfig.SearchEicPerson, config);
+    return this.axiosIns.get(this.jwtConfig.SearchEicPerson, config);
   }
 
   SearchCompaniesPerson(token, companyId, params) {
     let config = {
-      headers: {
-        Authorization: `${this.jwtConfig.tokenType} ${token}`,
-      },
       params: params,
     };
-    return this.axiosIns2.get(
+    return this.axiosIns.get(
       `${this.jwtConfig.searchEicPersonCompanies}/${companyId}/1/100`,
       config
     );
