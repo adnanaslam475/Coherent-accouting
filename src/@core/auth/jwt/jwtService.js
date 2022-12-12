@@ -2,6 +2,7 @@ import jwtDefaultConfig from "./jwtDefaultConfig";
 import axios from "axios";
 var qs = require("qs");
 var FormData = require("form-data");
+import router from '@/router'
 
 export default class JwtService {
   // Will be used by this service for making API calls
@@ -14,7 +15,7 @@ export default class JwtService {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
-      Authorization: "Basic cmVnaXN0ZXItYXBwOmFjbWVzZWNyZXQ=",
+      Authorization: "Basic YWNtZTphY21lc2VjcmV0",
     },
   });
 
@@ -30,6 +31,7 @@ export default class JwtService {
   });
 
   axiosIns = null
+
   // jwtConfig <= Will be used by this service
   jwtConfig = { ...jwtDefaultConfig };
 
@@ -79,6 +81,14 @@ export default class JwtService {
               this.setRefreshToken(r.data.refresh_token);
 
               this.onAccessTokenFetched(r.data.access_token);
+            }).catch(error => {
+              console.log(error.response)
+              if (error.response && error.response.status === 401) {
+                localStorage.removeItem(this.jwtConfig.storageTokenKeyName)
+                localStorage.removeItem(this.jwtConfig.storageRefreshTokenKeyName)
+                localStorage.removeItem('userData')
+                router.push({ name: 'login' })
+              }
             });
           }
           const retryOriginalRequest = new Promise((resolve) => {
@@ -184,10 +194,10 @@ export default class JwtService {
   }
 
   refreshToken() {
-    return this.axiosIns1.post(this.jwtConfig.refreshEndpoint, {
-      grant_type: "refresh_token",
-      refreshToken: this.getRefreshToken(),
-    });
+    let data = new FormData();
+    data.append('grant_type', 'refresh_token');
+    data.append('refresh_token', this.getRefreshToken())
+    return this.axiosIns1.post(this.jwtConfig.refreshEndpoint, data);
   }
 
   countries(token) {

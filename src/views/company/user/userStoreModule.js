@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '@axios'
 import useJwt from "@/auth/jwt/useJwt";
 
 export default {
@@ -12,14 +12,9 @@ export default {
       let pageNumber = queryParams.currentPage
       let perPageValue = queryParams.perPage
       let companyId = queryParams.companyId
-      
-      let token = useJwt.getToken()
-      let axiosUser = axios.create({
-        baseURL: 'http://167.86.93.80:8765',
-      })
+
       if(queryParams.q){
         let config = {
-          headers: {'Authorization': "Bearer "+token},
           params: {
             direction: queryParams.direction ? 'desc' : 'asc',
             sortField: queryParams.sortField,
@@ -27,21 +22,20 @@ export default {
           },
         }
         return new Promise((resolve, reject) => {
-          axiosUser
+          axios
             .get(`/account/api/person/search/${companyId}/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
             .then(response => resolve(response))
             .catch(error => reject(error))
         })
       } else{
         let config = {
-          headers: {'Authorization': "Bearer "+token},
           params: {
             direction: queryParams.direction ? 'desc' : 'asc',
             sortField: queryParams.sortField,
           },
         }
         return new Promise((resolve, reject) => {
-          axiosUser
+          axios
             .get(`/account/api/person/list/${companyId}/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
             .then(response => resolve(response))
             .catch(error => reject(error))
@@ -50,30 +44,16 @@ export default {
 
     },
     fetchUser(ctx, { id }) {
-      let token = useJwt.getToken()
-      let axiosUser = axios.create({
-        baseURL: 'http://167.86.93.80:8765',
-      })
-      let config = {
-        headers: {'Authorization': "Bearer "+token},
-      }
       return new Promise((resolve, reject) => {
-        axiosUser
-          .get(`/account/api/person/${id}`,config)
+        axios
+          .get(`/account/api/person/${id}`)
           .then(response => resolve(response))
           .catch(error => reject(error))
       })
     },
     addUser(ctx, queryParams) {
-      let token = useJwt.getToken()
-      let axiosUser = axios.create({
-        baseURL: 'http://167.86.93.80:8765',
-      })
-      let config = {
-        headers: {'Authorization': "Bearer "+token},
-      }
       return new Promise((resolve, reject) => {
-        axiosUser
+        axios
           .post(`/account/api/person/create/${queryParams.id}`, queryParams.userData, config )
           .then(response => resolve(response))
           .catch(error => reject(error))

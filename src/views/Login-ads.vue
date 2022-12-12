@@ -238,7 +238,7 @@
                 password: this.password,
               })
                 .then(response => {
-                  
+                  console.log("response.data",response.data)
                   this.loading = false
                   localStorage.setItem('userData', JSON.stringify(response))
                   useJwt.setToken(response.data.access_token)

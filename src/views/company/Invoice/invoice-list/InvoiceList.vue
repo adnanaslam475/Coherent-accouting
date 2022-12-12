@@ -188,6 +188,9 @@
           placement="top"
         >
           <p class="mb-0">
+            Company Name: {{ data.item.recipientCompany.companName }}
+          </p>
+          <p class="mb-0">
             Company Eic: {{ data.item.recipientCompany.companyEic }}
           </p>
           <p class="mb-0">
@@ -218,6 +221,9 @@
           :target="`supplierCompany-row-${data.item.id}`"
           placement="top"
         >
+          <p class="mb-0">
+            Company Name: {{ data.item.supplierCompany.companName }}
+          </p>
           <p class="mb-0">
             Company Eic: {{ data.item.supplierCompany.companyEic }}
           </p>
@@ -695,11 +701,7 @@ export default {
 .invoice-preview-list .invoice-date {
   font-weight: bold !important;
 }
-.invoice-preview.date-issued {
-  width: max-content;
-  margin-right: 0;
-  margin-left: auto;
-}
+
 .invoiceNumber {
   font-weight: 500;
   font-size: 16px;

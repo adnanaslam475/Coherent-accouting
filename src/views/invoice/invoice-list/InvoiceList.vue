@@ -154,6 +154,9 @@
           placement="top"
         >
           <p class="mb-0">
+            Company Name: {{ data.item.recipientCompany.companName }}
+          </p>
+          <p class="mb-0">
             Company Eic: {{ data.item.recipientCompany.companyEic }}
           </p>
           <p class="mb-0">
@@ -191,7 +194,9 @@
           :target="`supplierCompany-row-${data.item.id}`"
           placement="top"
         >
-
+          <p class="mb-0">
+            Company Name: {{ data.item.supplierCompany.companName }}
+          </p>
           <p class="mb-0">
             Company Eic: {{ data.item.supplierCompany.companyEic }}
           </p>

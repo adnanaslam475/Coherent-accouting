@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '@axios'
 import useJwt from "@/auth/jwt/useJwt";
 export default {
   namespaced: true,
@@ -10,10 +10,6 @@ export default {
         let pageNumber = queryParams.currentPage
         let perPageValue = queryParams.perPage
         let companyId = queryParams.companyId
-        let token = useJwt.getToken()
-        let axiosInvoice = axios.create({
-          baseURL: 'http://167.86.93.80:8765',
-        })
 
         if(queryParams.q || queryParams.dateFrom || queryParams.dateTo){
           let data = {}
@@ -24,7 +20,6 @@ export default {
             }
           } 
           let config = {
-            headers: {'Authorization': "Bearer "+token},
             params: {
               direction: queryParams.direction ? 'desc' : 'asc',
               sortField: queryParams.sortField,
@@ -33,7 +28,7 @@ export default {
             },
           }
           return new Promise((resolve, reject) => {
-            axiosInvoice
+            axios
               .post(`/account/api/invoice/search/${companyId}/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`,data, config)
               .then((response) =>{
                 resolve(response)
@@ -46,7 +41,6 @@ export default {
         } else{
 
           let config = {
-            headers: {'Authorization': "Bearer "+token},
             params: {
               direction: queryParams.direction ? 'desc' : 'asc',
               sortField: queryParams.sortField,
@@ -54,7 +48,7 @@ export default {
             },
           }
           return new Promise((resolve, reject) => {
-            axiosInvoice
+            axios
               .get(`/account/api/invoice/list/${companyId}/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
               .then((response) =>{
                 resolve(response)
@@ -67,16 +61,9 @@ export default {
         }
     },
     fetchInvoice(ctx, { id }) {
-      let token = useJwt.getToken()
-      let axiosInvoice = axios.create({
-        baseURL: 'http://167.86.93.80:8765',
-      })
-      let config = {
-        headers: {'Authorization': "Bearer "+token},
-      }
       return new Promise((resolve, reject) => {
-        axiosInvoice
-          .get(`/account/api/invoice/${id}`,config)
+        axios
+          .get(`/account/api/invoice/${id}`)
           .then(response => resolve(response))
           .catch(error => reject(error))
       })

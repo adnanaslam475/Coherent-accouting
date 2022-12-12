@@ -680,14 +680,41 @@
                     </b-col>
                   </b-row>
                 </div>
-                <b-button
-                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                  size="sm"
-                  variant="primary"
-                  @click="addNewItemInItemForm"
-                >
-                  Add Item
-                </b-button>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <b-button
+                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                    size="sm"
+                    variant="primary"
+                    @click="addNewItemInItemForm"
+                  >
+                    Add Item
+                  </b-button>
+                  <b-card
+                    no-body
+                    class="invoice-preview date-issued mb-0"
+                  >
+                    <b-card-header class="justify-content-end"> 
+                      <div class="mt-md-0 mt-2">
+                        <div class="d-flex align-items-center mb-0">
+                          <span class="title mr-1"> Transaction type: </span>
+                          <validation-provider
+                          #default="{ errors }"
+                          name="transectionType"
+                          rules="required"
+                        >
+                          
+                          <b-form-select
+                              v-model="invoiceData.transactionType"
+                              :options="transectionOptions"
+                            >
+                          </b-form-select>
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
+                        </div>
+                      </div>
+                    </b-card-header>
+                  </b-card>
+                </div>
               </b-card-body>
 
               <!-- Invoice Description: Total -->
@@ -1122,6 +1149,11 @@ export default {
       { value: 'лв.', text: 'лв.' },
       { value: '$', text: '$' },
       { value: '€', text: '€' },
+    ]
+    const transectionOptions = [
+      { value: null, text: 'Please select transection type', disabled: true },
+      { value: 'INCOME', text: 'INCOME' },
+      { value: 'EXPENSE', text: 'EXPENSE' },
     ]
     const VerifiedInvisible = ref(null)
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
@@ -1604,6 +1636,7 @@ export default {
       invoiceData,
       VerifiedInvisible,
       currencyOptions,
+      transectionOptions,
       itemFormBlankItem,
       vatAmount,
       totalPrice,

@@ -162,8 +162,23 @@
               </b-card>
           </div>
         </div>
-
-        <b-card
+        <div class="d-flex justify-content-between align-items-center">
+          <b-card
+            no-body
+            class="invoice-preview date-issued ml-0"
+          >
+            <b-card-header class="justify-content-end"> 
+              <div class="invoice-date-wrapper invoice-middle-content">
+                <p class="invoice-date-title">
+                  Transaction Type:
+                </p>
+                <p class="invoice-date">
+                  {{ invoiceData.transactionType }}
+                </p>
+              </div>
+            </b-card-header>
+          </b-card>
+          <b-card
           no-body
           class="invoice-preview date-issued"
         >
@@ -177,8 +192,8 @@
               </p>
             </div>
           </b-card-header>
-        </b-card>
-         
+          </b-card>
+         </div>
         <b-card
             no-body
             class="invoice-preview-card"

@@ -10,15 +10,25 @@
       toggleable="lg"
       type="light"
       variant="light"
-      style="padding: 2rem;"
+      style="padding: 1.5rem;"
+      class="dark-bg-color"
     >
       <b-navbar-brand href="#">
         <div class="d-flex align-items-center">
-          <vuexy-logo />
-
-          <h2 class="brand-text text-primary ml-1 mb-0">
-            {{ $t("app_logo_title") }}
-          </h2>
+          <b-link
+              class="navbar-brand d-flex align-items-center"
+              to="/"
+          >
+            <span class="brand-logo nav-logo">
+              <b-img
+                :src="appLogoImage"
+                alt="logo"
+              />
+            </span>
+            <h2 class="brand-text mb-0">
+              {{ appName }}
+            </h2>
+          </b-link>
         </div>
       </b-navbar-brand>
 
@@ -63,6 +73,7 @@
 </template>
 <script>
 import VuexyLogo from '@core/layouts/components/Logo.vue'
+import { $themeConfig } from '@themeConfig'
 import {
   BRow,
   BCol,
@@ -72,6 +83,8 @@ import {
   BCollapse,
   BNavItem,
   BNavbarToggle,
+  BImg,
+  BLink
 } from 'bootstrap-vue'
 
 export default {
@@ -85,6 +98,16 @@ export default {
     BNavItem,
     BNavbarToggle,
     VuexyLogo,
+    BImg,
+    BLink
+  },
+  setup() {
+    // App Name
+    const { appName, appLogoImage } = $themeConfig.app
+    return {
+      appName,
+      appLogoImage,
+    }
   },
 }
 </script>
@@ -96,5 +119,25 @@ export default {
   color: #6e6b7b !important;
   padding-bottom: 0 !important;
 }
-
+.brand-text {
+    color: #0A64BC !important;
+    font-weight: 600;
+    letter-spacing: 0.01rem;
+    font-size: 1.45rem;
+    animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+}
+.brand-logo.nav-logo{
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+.navbar-brand .brand-logo img {
+    max-width: 36px;
+}
+.dark-layout .dark-bg-color {
+    background-color: #283046 !important;
+}
+.dark-layout .navbar-collapse ul li a{
+color: #d0d2d6 !important;
+}
 </style>

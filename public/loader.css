@@ -133,6 +133,15 @@ body {
 .flex-1{
   flex: 1;
 }
+.invoice-preview.date-issued {
+  width: max-content;
+  margin-right: 0;
+  margin-left: auto;
+}
+.invoice-preview.date-issued .card-header{
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
 .clear-all {
   position: absolute;
   top: 50%;
@@ -142,8 +151,17 @@ body {
   height: 14px;
 }
 .table thead th, .table tfoot th {
-  font-size: 0.7rem !important;
+  font-size: 0.8rem !important;
 }
 .table tbody td {
-  font-size: 0.8rem !important;
+  font-size: 1rem !important;
+}
+h2.brand-text{
+  white-space: break-spaces;
+}
+.table tr td span[id^="recipientCompany-row-"] span.badge,.table tr td span[id^="supplierCompany-row-"] span.badge{
+  overflow: hidden;
+  max-width: 20ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
