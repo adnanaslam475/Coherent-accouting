@@ -109,13 +109,13 @@
           <!-- password -->
           <b-col cols="6">
             <b-form-group
-                label="Password"
+                label="New Password"
                 label-for="a-password"
             >
               <validation-provider
                   #default="{ errors }"
-                  name="Password"
-                  vid="Password"
+                  name="New Password"
+                  vid="newPassword"
                   rules="required"
               >
                 <b-form-input
@@ -123,7 +123,7 @@
                     v-model="newPasswordValue"
                     :state="errors.length > 0 ? false:null"
                     :type="passwordFieldTypeNew"
-                    placeholder="Password"
+                    placeholder="New Password"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>

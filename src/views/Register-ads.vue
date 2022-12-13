@@ -158,6 +158,27 @@
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
+
+                  <b-form-group
+                          v-bind:label="$t('register.lbl_c_vatNumber')"
+                          label-for="register-vatNumber"
+                  >
+                    <validation-provider
+                            #default="{ errors }"
+                            name="vatNumber"
+                            vid="vatNumber"
+                            rules="required"
+                    >
+                      <b-form-input
+                              id="register-vatNumber"
+                              v-model="vatNumber"
+                              name="register-vatNumber"
+                              :state="errors.length > 0 ? false:null"
+                              v-bind:placeholder="$t('register.lbl_c_vatNumber')"
+                      />
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
+                  </b-form-group>
                 </div>
 
               <!-- email -->
@@ -400,6 +421,7 @@
         ipAddress: "",
         isoAlpha2Country: "",
         companyAddress: "",
+        vatNumber: "",
         registrationNumber: "",
         sideImg: require("@/assets/images/pages/register-v2.svg"),
         // validation
@@ -453,6 +475,7 @@
                         companyAddress: this.account == "COMPANY" ? this.companyAddress : "",
                         companyName: this.account == "COMPANY" ? this.companyName : "",
                         companyRegistrationNumber: this.account == "COMPANY" ? this.registrationNumber : "",
+                        vatNumber: this.account == "COMPANY" ? this.vatNumber : "",
                         country: this.country?.text,
                         gdpr: this.gdpr,
                         identifier: "",

@@ -59,6 +59,9 @@
     border-bottom: none;
     padding: 1.5rem;
     background-color: transparent;
+    &.invoice-header {
+      background-color: $primary;
+    }
     .card-title {
       margin-bottom: 0;
     }
@@ -107,6 +110,10 @@
     border-top: 1px solid $gray-300;
     background-color: transparent;
   }
+
+}
+.vue-monthly-picker .selected {
+  background-color: $primary !important;
 }
 // Card Column
 .card-columns {

@@ -87,7 +87,7 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/forgot-password',
+      path: '/account/forgot-password',
       name: 'auth-forgot-password',
       component: () => import('@/views/ForgotPassword.vue'),
       meta: {
@@ -97,7 +97,7 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/account/forgot-password',
+      path: '/account/reset-password',
       name: 'auth-reset-password-v1',
       component: () => import('@/views/ResetPassword-v1.vue'),
       meta: {
@@ -105,7 +105,7 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/reset-password-email',
+      path: '/account/reset-password-email',
       name: 'reset-password-email-v1',
       component: () => import('@/views/ResetPasswordEmail-v1.vue'),
       meta: {

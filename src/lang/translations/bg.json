@@ -32,6 +32,7 @@
 		"lbl_c_name": "Име на фирма",
 		"lbl_c_address": "Адрес на фирма",
 		"lbl_c_registrationNumber": "ЕИК",
+		"lbl_c_vatNumber": "ДДС номер",
 		"lbl_email": "Email",
 		"email_placeholder": "john@example.com",
 		"lbl_password": "Password",

@@ -34,7 +34,7 @@
       </div>
       <b-button
         to="/company/create"
-        variant="relief-primary"
+        variant="primary"
         class="float-right mb-1 col-2 ml-auto"
         style="margin-right: 15px"
         >Add Company
@@ -64,7 +64,7 @@
       <template #cell(Country)="data">
         <div>
           <img
-            :src="&quot;@/assets/flags/&quot; + data.item.companyIsoAlpha2Country.toLowerCase() + &quot;.png&quot;"
+            :src='"@/assets/flags/" + data.item.companyIsoAlpha2Country.toLowerCase() + ".png"'
             style="width: 30px; height: 20px; margin-left: 10px"
           >
         </div>
@@ -77,13 +77,13 @@
             margin-right: 8px;
             padding-top: 4px;
             border-radius: 50%;
-            background-color: #7367f0;
             color: white;
             width: 32px;
             height: 28px;
             display: inline-flex;
             justify-content: center;
           "
+          class="btn-primary"
         >
           <span
             >{{ data.item.companyName.substr(0, 1)
@@ -113,7 +113,7 @@
             }}{{ data.item.companyName.substr(1, 1).toUpperCase() }}</span
           >
         </div>
-        <b-link :to="{ name: 'CompanyView', params: { id: data.item.id } }"
+        <b-link class="font-weight-bold" :to="{ name: 'CompanyView', params: { id: data.item.id } }"
           >{{ data.item.companyName }}
         </b-link>
 
@@ -135,7 +135,7 @@
       </template>
 
       <template #cell(companyIdentificationNumber)="data">
-        <b-link :to="{ name: 'CompanyView', params: { id: data.item.id } }"
+        <b-link class="font-weight-bold" :to="{ name: 'CompanyView', params: { id: data.item.id } }"
           >{{ data.item.companyIdentificationNumber }}
         </b-link>
 
@@ -143,50 +143,52 @@
       </template>
 
       <template #cell(action)="data" style="text-align: center !important">
-        <feather-icon
-            :id="`invoice-row-${data.item.id}-preview-icon`"
-            icon="EyeIcon"
-            size="16"
-            class="mr-1 cursor-pointer"
-            @click="
-              $router.push({
-                name: 'CompanyView', params: { id: data.item.id },
-              })
-            "
-          />
+        <div class="d-flex">
+          <feather-icon
+              :id="`invoice-row-${data.item.id}-preview-icon`"
+              icon="EyeIcon"
+              size="16"
+              class="mr-1 cursor-pointer"
+              @click="
+                $router.push({
+                  name: 'CompanyView', params: { id: data.item.id },
+                })
+              "
+            />
           <b-tooltip
             title="View Company"
             class="cursor-pointer"
             :target="`invoice-row-${data.item.id}-preview-icon`"
           />
 
-        <feather-icon
-          :id="`edit-${data.item.id}-preview-icon`"
-          icon="EditIcon"
-          size="16"
-          class="mx-0"
-          style="cursor: pointer"
-          @click="
-            $router.push({ name: 'EditCompany', params: { id: data.item.id } })
-          "
-        />
-        <b-tooltip
-          title="Edit Company"
-          :target="`edit-${data.item.id}-preview-icon`"
-        />
+          <feather-icon
+            :id="`edit-${data.item.id}-preview-icon`"
+            icon="EditIcon"
+            size="16"
+            class="mx-0"
+            style="cursor: pointer"
+            @click="
+              $router.push({ name: 'EditCompany', params: { id: data.item.id } })
+            "
+          />
+          <b-tooltip
+            title="Edit Company"
+            :target="`edit-${data.item.id}-preview-icon`"
+          />
 
-        <feather-icon
-          :id="`delete-${data.item.id}-preview-icon`"
-          icon="TrashIcon"
-          size="16"
-          class="mx-1"
-          style="cursor: pointer"
-          @click="getCompanyIDtoDelete(data.item.id)"
-        />
-        <b-tooltip
-          title="Delete Company"
-          :target="`delete-${data.item.id}-preview-icon`"
-        />
+          <feather-icon
+            :id="`delete-${data.item.id}-preview-icon`"
+            icon="TrashIcon"
+            size="16"
+            class="ml-1"
+            style="cursor: pointer"
+            @click="getCompanyIDtoDelete(data.item.id)"
+          />
+          <b-tooltip
+            title="Delete Company"
+            :target="`delete-${data.item.id}-preview-icon`"
+          />
+        </div>
       </template>
     </b-table>
 

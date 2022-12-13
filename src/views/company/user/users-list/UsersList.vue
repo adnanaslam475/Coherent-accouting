@@ -106,6 +106,7 @@
             <template #aside>
               <b-avatar
                 size="32"
+                variant="primary"
                 :src="data.item.avatar"
                 :text="avatarText(data.item.firstMiddleAndLastName)"
                 :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }"

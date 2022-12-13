@@ -32,6 +32,7 @@
     "lbl_c_name": "Company name",
     "lbl_c_address": "Company address",
     "lbl_c_registrationNumber": "Company Registration Number",
+    "lbl_c_vatNumber": "Vat Number",
     "lbl_email": "Email",
     "email_placeholder": "john@example.com",
     "lbl_password": "Password",

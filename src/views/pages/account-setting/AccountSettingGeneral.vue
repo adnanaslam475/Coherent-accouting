@@ -27,25 +27,6 @@
       </b-media-aside>
 
       <b-media-body class="mt-75 ml-75">
-        <!-- upload button -->
-        <b-button
-          v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-          variant="primary"
-          size="sm"
-          class="mb-75 mr-75"
-          @click="$refs.refInputEl.$el.click()"
-        >
-          Upload
-        </b-button>
-        <b-form-file
-          ref="refInputEl"
-          v-model="profileFile"
-          accept=".jpg, .png, .gif"
-          :hidden="true"
-          plain
-          @input="inputImageRenderer"
-        />
-        <!--/ upload button -->
 
         <!-- reset -->
         <b-button
@@ -58,7 +39,6 @@
           Reset
         </b-button>
         <!--/ reset -->
-        <b-card-text>Allowed JPG, GIF or PNG. Max size of 800kB</b-card-text>
       </b-media-body>
     </b-media>
     <!--/ media -->
@@ -181,6 +161,30 @@
               </validation-provider>
             </b-form-group>
           </b-col>
+          <b-col
+            v-if="userDetail.accountType === 'COMPANY'"
+            sm="6"
+          >
+            <b-form-group
+              label="Vat Number"
+              label-for="vatNumber"
+            >
+              <validation-provider
+                #default="{ errors }"
+                name="Vat Number"
+                vid="Vat Number"
+                rules="required"
+              >
+                <b-form-input
+                  v-model="userDetail.vatNumber"
+                  :state="errors.length > 0 ? false:null"
+                  name="vatNumber"
+                  placeholder="Vat Number"
+                />
+                <small class="text-danger">{{ errors[0] }}</small>
+              </validation-provider>
+            </b-form-group>
+          </b-col>
           <b-col sm="6">
             <b-form-group
               label="email"
@@ -227,29 +231,7 @@
               </validation-provider>
             </b-form-group>
           </b-col>
-          <b-col sm="6">
-            <b-form-group
-              label="password"
-              label-for="password"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="Password"
-                vid="Password"
-                rules="required"
-              >
-                <b-form-input
-                  v-model="userDetail.password"
-                  type="password"
-                  :state="errors.length > 0 ? false:null"
-                  name="password"
-                  placeholder="Password"
-                  required
-                />
-                <small class="text-danger">{{ errors[0] }}</small>
-              </validation-provider>
-            </b-form-group>
-          </b-col>
+
           <b-col sm="6">
             <b-form-group
               label="Country"
@@ -463,6 +445,7 @@ export default {
         this.userDetail.companyAddress = ''
         this.userDetail.companyRegistrationNumber = ''
         this.userDetail.companyName = ''
+        this.userDetail.vatNumber = ''
       }
       const data = await axios.put(`account/api/user/update/${this.userDetail.email}`, this.userDetail)
       if (data.status === 200) {
@@ -478,20 +461,14 @@ export default {
     },
   },
   setup() {
-    const refInputEl = ref(null)
     const previewEl = ref(null)
     const userDetail = ref({
       accountType: '',
     })
-
-    const { inputImageRenderer } = useInputImageRenderer(refInputEl, previewEl)
-
     return {
       countries,
       userDetail,
-      refInputEl,
       previewEl,
-      inputImageRenderer,
     }
   },
 }

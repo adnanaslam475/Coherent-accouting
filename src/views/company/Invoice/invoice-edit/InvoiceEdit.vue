@@ -1783,7 +1783,6 @@ background-color:$product-details-bg;
   border-color: #3b4253!important;
 }
 .card-header.invoice-header{
-    background-color: #7367f0 !important;
     padding: 0.75rem;
     border: 0;
     border-radius: 0;
