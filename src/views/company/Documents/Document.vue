@@ -473,11 +473,11 @@ export default {
       postData.type = 'ASSET'
       await axios.post('/account/api/asset/create', postData)
         .then(async response => {
-          if (response.status === 201) {
+          if (response.status === 201 || response.status === 200) {
             this.notes = ''
             this.showForm = false
-            this.makeToast('success', 'Created', 'Asset Created Successfully')
             await this.getAssets()
+            this.makeToast('success', 'Created', 'Asset Created Successfully')
           }
         })
         .catch(error => {

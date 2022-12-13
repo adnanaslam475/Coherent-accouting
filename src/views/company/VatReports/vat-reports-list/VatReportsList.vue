@@ -191,14 +191,15 @@
           <h5 class="sidebar-toggle start-chat-text">No records found</h5>
         </div>
       </template>
-      <!-- Column: Id -->
-      <template #cell(id)="data">
-        <!-- <b-link
-          :to="{ name: 'apps-invoice-preview', params: { id: data.item.id }}"
-          class="font-weight-bold"
-        > -->
-        #{{ data.value }}
-        <!-- </b-link> -->
+
+      <!-- Column: period-->
+      <template #cell(period)="data">
+        {{ data.value.substr(0,7) }}
+      </template>
+
+      <!-- Column: nameAndAddress -->
+      <template #cell(nameAndAddress)="data">
+        {{ data.value }}
       </template>
 
       <!-- Column: cell-01 -->
@@ -768,6 +769,7 @@ export default {
   border-color: #3b4253 !important;
 }
 .card-header.invoice-header {
+  background-color: #7367f0 !important;
   padding: 0.75rem;
   border: 0;
   border-radius: 0;
@@ -809,6 +811,10 @@ export default {
 
 .vue-monthly-picker .input {
   width: 76% !important;
+}
+
+.vue-monthly-picker .selected {
+  background-color: #7367f0 !important;
 }
 
 @media (min-width: 576px) {

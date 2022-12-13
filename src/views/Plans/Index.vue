@@ -43,8 +43,10 @@
       >
         <b-col cols="10">
           <b-row class="mx-auto d-flex align-items-center justify-content-center">
+
+            <!-- Basic Plan -->
             <b-col md="4">
-              <b-card
+              <b-card 
                 align="center"
                 class="pb-1"
               >
@@ -61,23 +63,28 @@
                   {{ pricing.basicPlan.subtitle }}
                 </b-card-text>
 
-                <!-- annual plan -->
+                <!-- Plan fee -->
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
                     <span
                       class="pricing-basic-value font-weight-bolder text-primary"
-                    >{{
+                    >
+                    <!-- {{
                       monthlyPlanShow ? pricing.basicPlan.monthlyPrice : pricing.basicPlan.yearlyPlan.perMonth
-                    }}</span>
+                    }} -->
+                    {{
+                      monthlyPlanShow ? monthlyBasic : annualBasicMonth
+                    }}
+
+                    </span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ {{ pricing.basicPlan.yearlyPlan.totalAnual }} / year</small>
+                  >€ {{  annualBasic}} / year</small>
                 </div>
-                <!--/ annual plan -->
 
                 <!-- plan benefit -->
                 <b-list-group class="list-group-circle text-left">
@@ -101,6 +108,8 @@
                 </b-button>
               </b-card>
             </b-col>
+
+            <!-- Beginner Plan -->
             <b-col md="4">
               <b-card
                 class="pb-1 popular"
@@ -128,23 +137,27 @@
                 <h3>{{ pricing.beginnerPlan.title }}</h3>
                 <b-card-text>{{ pricing.beginnerPlan.subtitle }}</b-card-text>
 
-                <!-- annual plan -->
+                <!-- plan price -->
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
                     <span
                       class="pricing-basic-value font-weight-bolder text-primary"
-                    >{{
+                    >
+                    <!-- {{
                       monthlyPlanShow ? pricing.beginnerPlan.monthlyPrice : pricing.beginnerPlan.yearlyPlan.perMonth
-                    }}</span>
+                    }} -->
+                    {{
+                      monthlyPlanShow ? monthlyBeginner : annualBeginnerMonth
+                    }}
+                    </span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ {{ pricing.beginnerPlan.yearlyPlan.totalAnual }} / year</small>
+                  >€ {{ annualBeginner  }} / year</small>
                 </div>
-                <!--/ annual plan -->
 
                 <!-- plan benefit -->
                 <b-list-group class="list-group-circle text-left">
@@ -168,6 +181,8 @@
                 </b-button>
               </b-card>
             </b-col>
+
+            <!-- Starter Plan -->
             <b-col md="4">
               <b-card
                 align="center"
@@ -190,15 +205,20 @@
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
                     <span
                       class="pricing-basic-value font-weight-bolder text-primary"
-                    >{{
+                    >
+                    <!-- {{
                       monthlyPlanShow ? pricing.starterPlan.monthlyPrice : pricing.starterPlan.yearlyPlan.perMonth
-                    }}</span>
+                    }} -->
+                    {{
+                      monthlyPlanShow ? monthlyStarter : annualStarterMonth
+                    }}
+                    </span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ {{ pricing.starterPlan.yearlyPlan.totalAnual }} / year</small>
+                  >€ {{ annualStarter }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
@@ -225,6 +245,8 @@
                 </b-button>
               </b-card>
             </b-col>
+
+            <!-- Enterprise Plan -->
             <b-col md="4">
               <b-card
                 align="center"
@@ -247,15 +269,20 @@
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
                     <span
                       class="pricing-basic-value font-weight-bolder text-primary"
-                    >{{
+                    >
+                    <!-- {{
                       monthlyPlanShow ? pricing.primaryPlan.monthlyPrice : pricing.primaryPlan.yearlyPlan.perMonth
-                    }}</span>
+                    }} -->
+                    {{
+                      monthlyPlanShow ? monthlyEnterprise : annualEnterpriseMonth
+                    }}
+                    </span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ {{ pricing.primaryPlan.yearlyPlan.totalAnual }} / year</small>
+                  >€ {{ annualEnterprise  }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
@@ -282,6 +309,8 @@
                 </b-button>
               </b-card>
             </b-col>
+
+            <!-- Platinum Plan -->
             <b-col md="4">
               <b-card
                 align="center"
@@ -304,15 +333,20 @@
                     <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
                     <span
                       class="pricing-basic-value font-weight-bolder text-primary"
-                    >{{
+                    >
+                    <!-- {{
                       monthlyPlanShow ? pricing.platinumPlan.monthlyPrice : pricing.platinumPlan.yearlyPlan.perMonth
-                    }}</span>
+                    }} -->
+                    {{
+                      monthlyPlanShow ? monthlyPlatinum : annualPlatinumMonth
+                    }}
+                    </span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ {{ pricing.platinumPlan.yearlyPlan.totalAnual }} / year</small>
+                  >€ {{ annualPlatinum }} / year</small>
                 </div>
                 <!--/ annual plan -->
 
@@ -421,6 +455,7 @@ import {
   BFormCheckbox, BRow, BCol, BCard, BImg, BCardText, BListGroup, BListGroupItem, BButton, BBadge,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
+import useJwt from "@/auth/jwt/useJwt";
 /* eslint-disable global-require */
 export default {
   components: {
@@ -440,6 +475,21 @@ export default {
   },
   data() {
     return {
+      annualPlatinumMonth: '',
+      annualEnterpriseMonth:'',
+      annualStarterMonth:'',
+      annualBeginnerMonth:'',
+      annualBasicMonth: '',
+      annualPlatinum: '',
+      annualEnterprise:'',
+      annualStarter:'',
+      annualBeginner:'',
+      annualBasic: '',
+      monthlyPlatinum: '',
+      monthlyEnterprise:'',
+      monthlyStarter:'',
+      monthlyBeginner:'',
+      monthlyBasic:'',
       hotAirBallon: '',
       roketImage: '',
       aeroplanImage: '',
@@ -447,6 +497,7 @@ export default {
       aeroplanJetImage: '',
       status: 'annually',
       monthlyPlanShow: true,
+      plansPrice:[],
       pricing: {
         basicPlan: {
           title: 'Basic',
@@ -570,11 +621,58 @@ export default {
     this.aeroplanJetImage = require('@/assets/images/illustration/aeroplane-plane-svgrepo-com.svg')
     this.helicolptorImage = require('@/assets/images/illustration/helicoptor.svg')
     this.monthlyPlanShow = this.status === 'monthly'
+    this.getPlansValues();
   },
   methods: {
     tooglePlan() {
       this.monthlyPlanShow = this.status === 'monthly'
     },
+
+    //get plans
+    getPlansValues(){
+      useJwt.getPlansPrices().then((response) => {
+        this.plansPrice = response.data;
+        for(let i=0; i<this.plansPrice.length; i++){
+          if((this.plansPrice[i].name === "BASIC") && (this.plansPrice[i].planType === "MONTHLY") ){
+            this.monthlyBasic = this.plansPrice[i].fee;
+          }
+          if((this.plansPrice[i].name === "BASIC") && (this.plansPrice[i].planType === "YEARLY") ){
+            this.annualBasic = this.plansPrice[i].fee;
+            this.annualBasicMonth = this.plansPrice[i].monthPrice;
+          }
+          if((this.plansPrice[i].name === "BEGINNER") && (this.plansPrice[i].planType === "MONTHLY") ){
+            this.monthlyBeginner = this.plansPrice[i].fee;
+          }
+          if((this.plansPrice[i].name === "BEGINNER") && (this.plansPrice[i].planType === "YEARLY") ){
+            this.annualBeginner = this.plansPrice[i].fee;
+            this.annualBeginnerMonth = this.plansPrice[i].monthPrice;
+          }
+          if((this.plansPrice[i].name === "STARTER") && (this.plansPrice[i].planType === "MONTHLY") ){
+            this.monthlyStarter = this.plansPrice[i].fee;
+          }
+          if((this.plansPrice[i].name === "STARTER") && (this.plansPrice[i].planType === "YEARLY") ){
+            this.annualStarter = this.plansPrice[i].fee;
+            this.annualStarterMonth = this.plansPrice[i].monthPrice;
+          }
+          if((this.plansPrice[i].name === "ENTERPRISE") && (this.plansPrice[i].planType === "MONTHLY") ){
+            this.monthlyEnterprise= this.plansPrice[i].fee;
+          }
+          if((this.plansPrice[i].name === "ENTERPRISE") && (this.plansPrice[i].planType === "YEARLY") ){
+            this.annualEnterprise = this.plansPrice[i].fee;
+            this.annualEnterpriseMonth = this.plansPrice[i].monthPrice;
+          }
+          if((this.plansPrice[i].name === "PLATINIUM") && (this.plansPrice[i].planType === "MONTHLY") ){
+            this.monthlyPlatinum = this.plansPrice[i].fee;
+          }
+          if((this.plansPrice[i].name === "PLATINIUM") && (this.plansPrice[i].planType === "YEARLY") ){
+            this.annualPlatinum = this.plansPrice[i].fee;
+            this.annualPlatinumMonth = this.plansPrice[i].monthPrice;
+
+          }
+          
+        }
+      });
+    }
   },
 }
 /* eslint-disable global-require */

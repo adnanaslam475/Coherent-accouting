@@ -43,6 +43,9 @@ export default {
 
   getCompanies: '/api/company/list/1/10',
 
+  //Getting Plans
+  GetPlansEndPoint:'/account/api/payment/plans',
+
   wrongOldPasswordEndPoint: '/account/api/user/change-password',
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>

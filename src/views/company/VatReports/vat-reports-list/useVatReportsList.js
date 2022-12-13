@@ -13,16 +13,18 @@ export default function useInvoicesList() {
 
     // Table Handlers 
     const tableColumns = [
-        { key: 'id', label: '#', sortable: true },
-        { key: 'cell01', label: 'cell-01', sortable: true },
-        { key: 'cell20', label: 'cell-20', sortable: true },
-        { key: 'cell30',label: 'cell-30', sortable: true },
-        { key: 'cell31', label: 'cell-31', sortable: true },
-        { key: 'cell40', label: 'cell-40',sortable: true },
-        { key: 'cell50', label: 'cell-50',sortable: true },
-        { key: 'cell60', label: 'cell-60',sortable: true },
-        { key: 'cell70', label: 'cell-70',sortable: true },
-        { key: 'cell71', label: 'cell-71',sortable: true },
+        // { key: 'id', label: '#', sortable: true },
+        { key: 'period', sortable: true },
+        { key: 'nameAndAddress', label: 'Company Name  and Address', sortable: true },
+        { key: 'cell01', label: 'total sum base taxes', sortable: true },
+        { key: 'cell20', label: 'total vat', sortable: true },
+        { key: 'cell30',label: 'base tax and tax addition', sortable: true },
+        { key: 'cell31', label: 'with full tax credit', sortable: true },
+        { key: 'cell40', label: 'total  tax credit',sortable: true },
+        { key: 'cell50', label: 'VAT to pay',sortable: true },
+        { key: 'cell60', label: 'VAT to exclude',sortable: true },
+        { key: 'cell70', label: 'tax to pay',sortable: true },
+        { key: 'cell71', label: 'tax to pay effective',sortable: true },
         { key: 'actions' },
     ]
 
@@ -31,7 +33,7 @@ export default function useInvoicesList() {
     const currentPage = ref(1)
     const perPageOptions = [10, 25, 50, 100]
     const searchQuery = ref('')
-    const sortBy = ref('id')
+    const sortBy = ref('period')
     const isSortDirDesc = ref(true)
     const statusFilter = ref(null)
     const companyId = ref(null)

@@ -350,4 +350,11 @@ export default class JwtService {
       files
     );
   }
+
+  //Getting Plans
+  getPlansPrices(){
+    return this.axiosIns2.get(this.jwtConfig.GetPlansEndPoint, {
+    });
+
+  }
 }
