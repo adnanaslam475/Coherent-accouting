@@ -382,8 +382,17 @@
     </b-row>
     <!--/ pricing plan cards -->
 
+     <!--Footnote  -->
+    <b-row >
+      <b-col sm="10"
+        md="12"
+        offset-lg="2"
+        lg="10"
+        class="mx-auto"><b>Note:</b>  All prices are without VAT</b-col>
+    </b-row>
+
     <!-- pricing free trial -->
-    <div class="pricing-free-trial">
+    <div class="pricing-free-trial mt-5">
       <b-row>
         <b-col
             lg="10"
@@ -700,39 +709,37 @@ export default {
             this.monthlyBasic = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "BASIC") && (this.plansPrice[i].planType === "YEARLY") ){
-            this.annualBasic = this.plansPrice[i].fee;
-            this.annualBasicMonth = this.plansPrice[i].monthPrice;
+            this.annualBasic = this.plansPrice[i].yearPrice;
+            this.annualBasicMonth = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "BEGINNER") && (this.plansPrice[i].planType === "MONTHLY") ){
             this.monthlyBeginner = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "BEGINNER") && (this.plansPrice[i].planType === "YEARLY") ){
-            this.annualBeginner = this.plansPrice[i].fee;
-            this.annualBeginnerMonth = this.plansPrice[i].monthPrice;
+            this.annualBeginner = this.plansPrice[i].yearPrice;
+            this.annualBeginnerMonth = this.plansPrice[i].fee
           }
           if((this.plansPrice[i].name === "STARTER") && (this.plansPrice[i].planType === "MONTHLY") ){
             this.monthlyStarter = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "STARTER") && (this.plansPrice[i].planType === "YEARLY") ){
-            this.annualStarter = this.plansPrice[i].fee;
-            this.annualStarterMonth = this.plansPrice[i].monthPrice;
+            this.annualStarter = this.plansPrice[i].yearPrice;
+            this.annualStarterMonth = this.plansPrice[i].fee;
 
           }
           if((this.plansPrice[i].name === "ENTERPRISE") && (this.plansPrice[i].planType === "MONTHLY") ){
             this.monthlyEnterprise= this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "ENTERPRISE") && (this.plansPrice[i].planType === "YEARLY") ){
-            this.annualEnterprise = this.plansPrice[i].fee;
-            this.annualEnterpriseMonth = this.plansPrice[i].monthPrice;
-            
-
+            this.annualEnterprise = this.plansPrice[i].yearPrice;
+            this.annualEnterpriseMonth = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "PLATINIUM") && (this.plansPrice[i].planType === "MONTHLY") ){
             this.monthlyPlatinum = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "PLATINIUM") && (this.plansPrice[i].planType === "YEARLY") ){
-            this.annualPlatinum = this.plansPrice[i].fee;
-            this.annualPlatinumMonth = this.plansPrice[i].monthPrice;
+            this.annualPlatinum = this.plansPrice[i].yearPrice;
+            this.annualPlatinumMonth = this.plansPrice[i].fee;
 
           }
           

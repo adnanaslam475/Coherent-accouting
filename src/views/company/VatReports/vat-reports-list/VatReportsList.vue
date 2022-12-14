@@ -194,7 +194,9 @@
 
       <!-- Column: period-->
       <template #cell(period)="data">
+        <span class="text-nowrap">
         {{ data.value.substr(0,7) }}
+        </span>
       </template>
 
       <!-- Column: nameAndAddress -->
@@ -272,7 +274,7 @@
             :id="`report-row-${data.item.id}-preview-icon`"
             icon="EyeIcon"
             size="16"
-            class="mx-1 cursor-pointer"
+            class="mr-1 cursor-pointer"
             @click="
               $router.push({
                 name: 'company-vat-report-preview',
