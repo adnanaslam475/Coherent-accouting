@@ -69,37 +69,37 @@ export default class JwtService {
         // const { config, response } = error.config;
         const originalRequest = error.config;
 
-        if (error.response && error.response.status === 401) {
-          if (error.response.data && error.response.data.error_description 
-            && error.response.data.error_description.includes('Access token expired:')) {
-            this.refreshToken().then((r) => {
-              // Update accessToken in localStorage
-              this.setToken(r.data.access_token);
-              this.setRefreshToken(r.data.refresh_token);
-              this.onAccessTokenFetched(r.data.access_token);
-            }).catch(error => {
-              if (error.response && error.response.status === 401) {
-                // && error.response.data && error.response.data.error_description 
-                // && error.response.data.error_description.includes('Invalid refresh token (expired):')) {
-                localStorage.removeItem(this.jwtConfig.storageTokenKeyName)
-                localStorage.removeItem(this.jwtConfig.storageRefreshTokenKeyName)
-                localStorage.removeItem('userData')
-                router.push({ name: 'login' })
-              }
-            });
+        // if (error.response && error.response.status === 401) {
+        //   if (error.response.data && error.response.data.error_description 
+        //     && error.response.data.error_description.includes('Access token expired:')) {
+        //     this.refreshToken().then((r) => {
+        //       // Update accessToken in localStorage
+        //       this.setToken(r.data.access_token);
+        //       this.setRefreshToken(r.data.refresh_token);
+        //       this.onAccessTokenFetched(r.data.access_token);
+        //     }).catch(error => {
+        //       if (error.response && error.response.status === 401) {
+        //         // && error.response.data && error.response.data.error_description 
+        //         // && error.response.data.error_description.includes('Invalid refresh token (expired):')) {
+        //         localStorage.removeItem(this.jwtConfig.storageTokenKeyName)
+        //         localStorage.removeItem(this.jwtConfig.storageRefreshTokenKeyName)
+        //         localStorage.removeItem('userData')
+        //         router.push({ name: 'login' })
+        //       }
+        //     });
 
-          }
-          const retryOriginalRequest = new Promise((resolve) => {
-            this.addSubscriber((accessToken) => {
-              // Make sure to assign accessToken according to your response.
-              // Check: https://pixinvent.ticksy.com/ticket/2413870
-              // Change Authorization header
-              originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`;
-              resolve(this.axiosIns(originalRequest));
-            });
-          });
-          return retryOriginalRequest;
-        }
+        //   }
+        //   const retryOriginalRequest = new Promise((resolve) => {
+        //     this.addSubscriber((accessToken) => {
+        //       // Make sure to assign accessToken according to your response.
+        //       // Check: https://pixinvent.ticksy.com/ticket/2413870
+        //       // Change Authorization header
+        //       originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`;
+        //       resolve(this.axiosIns(originalRequest));
+        //     });
+        //   });
+        //   return retryOriginalRequest;
+        // }
         return Promise.reject(error);
       }
     );
@@ -207,7 +207,7 @@ export default class JwtService {
     });
   }
 
-  //add invoice
+  //Invoice
 
   addInvoice(token, ...args) {
     return this.axiosIns.post(this.jwtConfig.invoiceAddEndpoint, ...args)
@@ -217,8 +217,14 @@ export default class JwtService {
     return this.axiosIns.put(`${this.jwtConfig.invoiceEditEndpoint}/${id}`,...args)
   }
 
-  addCompanyInvoice(token, id, ...args) {
+  DeleteInvoice(token, id) {
+    return this.axiosIns.delete(
+      `${this.jwtConfig.invoiceDeleteEndpoint}/${id}`
+    );
+  }
 
+  // Company Invoices
+  addCompanyInvoice(token, id, ...args) {
     return this.axiosIns.post(
       `${this.jwtConfig.CompanyInvoiceAddEndpoint}/${id}`,
       ...args
@@ -229,12 +235,6 @@ export default class JwtService {
     return this.axiosIns.put(
       `${this.jwtConfig.companyInvoiceEditEndpoint}/${id}/${companyId}`,
       ...args
-    );
-  }
-
-  DeleteInvoice(token, id) {
-    return this.axiosIns.delete(
-      `${this.jwtConfig.invoiceDeleteEndpoint}/${id}`
     );
   }
 
@@ -349,6 +349,18 @@ export default class JwtService {
       `${this.jwtConfig.multipleFileInvoiceEndpoint}/${CompanyId}`,
       files
     );
+  }
+
+  //Delete Company
+  DeleteCompany(token, id) {
+    return this.axiosIns.delete(
+      `${this.jwtConfig.deleteCompanyEndPoint}/${id}`
+    );
+  }
+
+  //wrong old password
+  wrongOldPassword(token, ...args) {
+    return this.axiosIns.post(this.jwtConfig.wrongOldPasswordEndPoint, ...args);
   }
 
   //Getting Plans

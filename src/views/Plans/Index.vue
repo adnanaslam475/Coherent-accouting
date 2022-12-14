@@ -379,74 +379,10 @@
     </b-row>
     <!--/ pricing plan cards -->
 
-    <!-- pricing free trial -->
-    <!--    <div class="pricing-free-trial">-->
-    <!--      <b-row>-->
-    <!--        <b-col-->
-    <!--            lg="10"-->
-    <!--            offset-lg="3"-->
-    <!--            class="mx-auto"-->
-    <!--        >-->
-    <!--          <div class="pricing-trial-content d-flex justify-content-between">-->
-    <!--            <div class="text-center text-md-left mt-3">-->
-    <!--              <h3 class="text-primary">-->
-    <!--                Still not convinced? Start with a 14-day FREE trial!-->
-    <!--              </h3>-->
-    <!--              <h5>You will get full access to with all the features for 14 days.</h5>-->
-    <!--              <b-button-->
-    <!--                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"-->
-    <!--                  variant="primary"-->
-    <!--                  class="mt-2 mt-lg-3"-->
-    <!--              >-->
-    <!--                Start 14-day FREE trial-->
-    <!--              </b-button>-->
-    <!--            </div>-->
+    <b-row>
+      <b-col><b>Note: </b>All prices are without VAT</b-col>
+    </b-row>
 
-    <!--            &lt;!&ndash; images &ndash;&gt;-->
-    <!--            <b-img-->
-    <!--                fluid-->
-    <!--                :src="require('@/assets/images/illustration/pricing-Illustration.svg')"-->
-    <!--                class="pricing-trial-img"-->
-    <!--                alt="svg img"-->
-    <!--            />-->
-    <!--            &lt;!&ndash;/ images &ndash;&gt;-->
-    <!--          </div>-->
-    <!--        </b-col>-->
-    <!--      </b-row>-->
-    <!--    </div>-->
-    <!--/ pricing free trial -->
-
-    <!-- pricing faq -->
-    <!--    <div class="pricing-faq">-->
-    <!--      <h3 class="text-center">-->
-    <!--        FAQ's-->
-    <!--      </h3>-->
-    <!--      <p class="text-center">-->
-    <!--        Let us help answer the most common questions.-->
-    <!--      </p>-->
-    <!--      <b-row class="py-2">-->
-    <!--        <b-col-->
-    <!--            lg="10"-->
-    <!--            offset-lg="2"-->
-    <!--            class="mx-auto"-->
-    <!--        >-->
-    <!--          <app-collapse-->
-    <!--              accordion-->
-    <!--              type="margin"-->
-    <!--          >-->
-
-    <!--            <app-collapse-item-->
-    <!--                v-for="(data,index) in pricing.qandA"-->
-    <!--                :key="index"-->
-    <!--                :title="data.question"-->
-    <!--            >-->
-    <!--              {{ data.ans }}-->
-    <!--            </app-collapse-item>-->
-    <!--          </app-collapse>-->
-    <!--        </b-col>-->
-    <!--      </b-row>-->
-    <!--    </div>-->
-    <!--/ pricing faq -->
   </section>
 </template>
 
@@ -637,36 +573,36 @@ export default {
             this.monthlyBasic = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "BASIC") && (this.plansPrice[i].planType === "YEARLY") ){
-            this.annualBasic = this.plansPrice[i].fee;
-            this.annualBasicMonth = this.plansPrice[i].monthPrice;
+            this.annualBasic = this.plansPrice[i].yearPrice;
+            this.annualBasicMonth = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "BEGINNER") && (this.plansPrice[i].planType === "MONTHLY") ){
             this.monthlyBeginner = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "BEGINNER") && (this.plansPrice[i].planType === "YEARLY") ){
-            this.annualBeginner = this.plansPrice[i].fee;
-            this.annualBeginnerMonth = this.plansPrice[i].monthPrice;
+            this.annualBeginner = this.plansPrice[i].yearPrice;
+            this.annualBeginnerMonth = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "STARTER") && (this.plansPrice[i].planType === "MONTHLY") ){
             this.monthlyStarter = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "STARTER") && (this.plansPrice[i].planType === "YEARLY") ){
-            this.annualStarter = this.plansPrice[i].fee;
-            this.annualStarterMonth = this.plansPrice[i].monthPrice;
+            this.annualStarter = this.plansPrice[i].yearPrice;
+            this.annualStarterMonth = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "ENTERPRISE") && (this.plansPrice[i].planType === "MONTHLY") ){
             this.monthlyEnterprise= this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "ENTERPRISE") && (this.plansPrice[i].planType === "YEARLY") ){
-            this.annualEnterprise = this.plansPrice[i].fee;
-            this.annualEnterpriseMonth = this.plansPrice[i].monthPrice;
+            this.annualEnterprise = this.plansPrice[i].yearPrice;
+            this.annualEnterpriseMonth = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "PLATINIUM") && (this.plansPrice[i].planType === "MONTHLY") ){
             this.monthlyPlatinum = this.plansPrice[i].fee;
           }
           if((this.plansPrice[i].name === "PLATINIUM") && (this.plansPrice[i].planType === "YEARLY") ){
-            this.annualPlatinum = this.plansPrice[i].fee;
-            this.annualPlatinumMonth = this.plansPrice[i].monthPrice;
+            this.annualPlatinum = this.plansPrice[i].yearPrice;
+            this.annualPlatinumMonth = this.plansPrice[i].fee;
 
           }
           
