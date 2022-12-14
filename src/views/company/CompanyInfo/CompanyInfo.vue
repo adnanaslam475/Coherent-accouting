@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-md-7 col-lg-9 col-xl-9 col-12">
+      <div class="col-md-7 col-lg-8 col-xl-8 col-12">
         <!-- Company Details -->
         <div class="card border-primary">
           <!----><!---->
@@ -345,8 +345,8 @@
         </div>
       </div>
       <!-- Summary -->
-      <div class="col-md-5 col-lg-3 col-xl-3 col-12">
-        <b-card id="inner-card-body" class="border-primary ml-0 body-0">
+      <div class="col-md-5 col-lg-4 col-xl-4 col-12">
+        <b-card id="inner-card-body" class="border-primary ml-0 body-0 pr-3">
           <table class="mt-2 mt-xl-0 w-100">
             <tr>
               <th class="pb-50">
@@ -412,11 +412,38 @@
               class="company-info-btn"
               variant="outline-primary"
             >
-              <b-dropdown-item>Create Invoice</b-dropdown-item>
-              <b-dropdown-item>Create Vat Report</b-dropdown-item>
-              <b-dropdown-item>Create Private Person</b-dropdown-item>
-              <b-dropdown-item>Create Vat Report</b-dropdown-item>
-              <b-dropdown-item>Create Yearly Report</b-dropdown-item>
+              <b-dropdown-item
+                :to="{
+                  name: 'company-invoice-add',
+                  params: {
+                    companyId: $route.params.companyId
+                      ? $route.params.companyId
+                      : $route.params.id,
+                  },
+                }"
+              >
+               Create Invoice
+              </b-dropdown-item>
+              <b-dropdown-item
+                :to="{
+                  name: 'company-vat-report-add',
+                  params: {
+                    companyId: $route.params.companyId
+                      ? $route.params.companyId
+                      : $route.params.id,
+                  },
+                }"
+              >
+
+                Create Vat Report
+              </b-dropdown-item>
+              <b-dropdown-item
+                @click="actionTab"
+              >Create Private Person</b-dropdown-item>
+              <b-dropdown-item
+              >
+                Create Yearly Report
+              </b-dropdown-item>
             </b-dropdown>
           </div>
         </b-card>
@@ -498,308 +525,11 @@
             </b-card-body>
           </b-collapse>
         </b-card>
-
-        <!-- Company Invoices card -->
-        <b-card
-          v-if="companyInvoicesDisplay.length > 0"
-          no-body
-          style="padding: 0px; margin-top: 29px"
-          class="mb-2"
-        >
-          <b-card-header style="padding: 1.5rem 1.5rem 1.51rem 1rem">
-            <b-card-title>Company Invoices</b-card-title>
-            <div class="d-flex align-items-center">
-              <feather-icon
-                icon="RefreshCcwIcon"
-                size="17"
-                style="cursor: pointer"
-                @click="getCompanyInvoices()"
-              />
-              <feather-icon
-                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                v-b-toggle.collapse-2
-                icon="ChevronDownIcon"
-                size="24"
-                class="ml-2"
-                variant="outline-primary"
-                style="margin-right: -10px"
-              />
-            </div>
-          </b-card-header>
-          <b-collapse id="collapse-2" class="mt-1" visible>
-            <b-card-body
-              v-if="companyInvoices.length > 0"
-              style="
-                padding: 0px 15px;
-                height: auto;
-                max-height: 45.7rem;
-                overflow-y: scroll;
-              "
-            >
-              <b-table
-                :items="companyInvoices"
-                responsive
-                :fields="tableColumns"
-                primary-key="id"
-                class="position-relative invoiceList"
-                :sort-by.sync="sortBy"
-                :sort-desc.sync="sortDesc"
-                @sort-changed="checkStatus"
-              >
-                <template #empty="scope">
-                  <div class="d-flex align-items-center justify-content-center">
-                    <div class="mb-1 start-chat-icon">
-                      <feather-icon icon="FolderIcon" size="40" />
-                    </div>
-                    <h4 class="sidebar-toggle start-chat-text">
-                      Start Conversation
-                    </h4>
-                  </div>
-                </template>
-
-                <template #cell(id)="data">
-                  <b-link
-                    :to="{
-                      name: 'company-invoice-preview',
-                      params: { companyId: companyID, id: data.item.id },
-                    }"
-                    class="font-weight-bold"
-                  >
-                    #{{ data.item.id }}
-                  </b-link>
-                </template>
-
-                <!-- Column: invoiceNumber -->
-                <template #cell(invoiceNumber)="data">
-                  <b-link
-                    :to="{
-                      name: 'company-invoice-preview',
-                      params: { companyId: companyID, id: data.item.id },
-                    }"
-                    class="font-weight-bold"
-                  >
-                    <span class="text-nowrap">
-                      {{ data.item.invoiceNumber }}
-                    </span>
-                  </b-link>
-                </template>
-
-                <!-- Column: Issued Date -->
-                <template #cell(invoiceDate)="data">
-                  <span class="text-nowrap">
-                    {{ data.item.dateIssued }}
-                  </span>
-                </template>
-
-                <template #cell(documentType)="data">
-                  <b-link
-                    :to="{
-                      name: 'company-invoice-preview',
-                      params: { companyId: companyID, id: data.item.id },
-                    }"
-                    class="font-weight-bold"
-                  >
-                    <span class="text-nowrap">
-                      {{ data.item.documentType }}
-                    </span>
-                  </b-link>
-                </template>
-
-                <!-- Column: recipientCompany -->
-                <template #cell(recipientCompanyName)="data">
-                  <span
-                    :id="`recipientCompany-row-${data.item.id}`"
-                    class="text-nowrap"
-                  >
-                    <b-badge
-                      pill
-                      :variant="`light-success`"
-                      class="text-capitalize"
-                    >
-                      {{ data.item.recipientCompany.companName }}
-                    </b-badge>
-                  </span>
-                  <b-tooltip
-                    :target="`recipientCompany-row-${data.item.id}`"
-                    placement="top"
-                  >
-                    <p class="mb-0">
-                      Company Eic: {{ data.item.recipientCompany.companyEic }}
-                    </p>
-                    <p class="mb-0">
-                      Company Owner Name:
-                      {{ data.item.recipientCompany.companyOwnerName }}
-                    </p>
-                  </b-tooltip>
-                </template>
-
-                <!-- Column: supplierCompany -->
-                <template #cell(supplierCompanyName)="data">
-                  <span
-                    :id="`supplierCompany-row-${data.item.id}`"
-                    class="text-nowrap"
-                  >
-                    <b-badge
-                      pill
-                      :variant="`light-success`"
-                      class="text-capitalize"
-                    >
-                      {{ data.item.supplierCompany.companName }}
-                    </b-badge>
-                  </span>
-                  <b-tooltip
-                    :target="`supplierCompany-row-${data.item.id}`"
-                    placement="top"
-                  >
-                    <p class="mb-0">
-                      Company Eic: {{ data.item.supplierCompany.companyEic }}
-                    </p>
-                    <p class="mb-0">
-                      Company Owner Name:
-                      {{ data.item.supplierCompany.companyOwnerName }}
-                    </p>
-                  </b-tooltip>
-                </template>
-
-                <!-- Column: amount non vat -->
-                <template #cell(amountNonVat)="data">
-                  <span class="text-nowrap">
-                    <span
-                      v-if="
-                        data.item.currency == 'lv' || data.item.currency == 'LV'
-                      "
-                      >лв{{ data.value }}</span
-                    >
-
-                    <span v-if="data.item.currency == 'usd'"
-                      >${{ data.value }}</span
-                    >
-                    <span v-if="data.item.currency == 'euro'"
-                      >€{{ data.value }}</span
-                    >
-                  </span>
-                </template>
-
-                <!-- Column: totalAmount -->
-                <template #cell(totalAmount)="data">
-                  <span class="text-nowrap">
-                    <span
-                      v-if="
-                        data.item.currency == 'lv' || data.item.currency == 'LV'
-                      "
-                      >лв{{ data.value }}</span
-                    >
-                    <span v-if="data.item.currency == 'usd'"
-                      >${{ data.value }}</span
-                    >
-                    <span v-if="data.item.currency == 'euro'"
-                      >€{{ data.value }}</span
-                    >
-                  </span>
-                </template>
-
-                <!-- Column: vatAmount -->
-                <template #cell(vatAmount)="data">
-                  <span class="text-nowrap">
-                    <span
-                      v-if="
-                        data.item.currency == 'lv' || data.item.currency == 'LV'
-                      "
-                      >лв{{ data.value }}</span
-                    >
-                    <span v-if="data.item.currency == 'usd'"
-                      >${{ data.value }}</span
-                    >
-                    <span v-if="data.item.currency == 'euro'"
-                      >€{{ data.value }}</span
-                    >
-                  </span>
-                </template>
-
-                <!-- Column: Actions -->
-                <template #cell(actions)="data">
-                  <div class="text-nowrap">
-                    <feather-icon
-                      :id="`invoice-row-${data.item.id}-preview-icon`"
-                      icon="EyeIcon"
-                      size="16"
-                      class="mx-1 cursor-pointer"
-                      @click="
-                        $router.push({
-                          name: 'company-invoice-preview',
-                          params: { companyId: companyID, id: data.item.id },
-                        })
-                      "
-                    />
-                    <b-tooltip
-                      title="Preview Invoice"
-                      class="cursor-pointer"
-                      :target="`invoice-row-${data.item.id}-preview-icon`"
-                    />
-
-                    <!-- Dropdown -->
-                    <b-dropdown
-                      variant="link"
-                      toggle-class="p-0"
-                      no-caret
-                      :right="$store.state.appConfig.isRTL"
-                    >
-                      <template #button-content>
-                        <feather-icon
-                          icon="MoreVerticalIcon"
-                          size="16"
-                          class="align-middle text-body"
-                        />
-                      </template>
-                      <b-dropdown-item @click="generatePDF(data.item.id)">
-                        <feather-icon icon="DownloadIcon" />
-                        <span class="align-middle ml-50">Download</span>
-                      </b-dropdown-item>
-                      <b-dropdown-item
-                        :to="{
-                          name: 'company-invoice-edit',
-                          params: { id: data.item.id, companyId: companyID },
-                        }"
-                      >
-                        <feather-icon icon="EditIcon" />
-                        <span class="align-middle ml-50">Edit</span>
-                      </b-dropdown-item>
-                      <b-dropdown-item
-                        @click="deleteCompanyInvoice(data.item.id)"
-                      >
-                        <feather-icon icon="TrashIcon" />
-                        <span class="align-middle ml-50">Delete</span>
-                      </b-dropdown-item>
-                    </b-dropdown>
-                    <vue-html2pdf
-                      :show-layout="false"
-                      :float-layout="true"
-                      :enable-download="true"
-                      :preview-modal="false"
-                      :paginate-elements-by-height="1100"
-                      :ref="`invoicePdf${data.item.id}`"
-                      filename="invoice"
-                      :pdf-quality="2"
-                      :manual-pagination="false"
-                      pdf-format="a4"
-                      :pdf-margin="10"
-                      pdf-orientation="portrait"
-                      pdf-content-width="800px"
-                      @progress="onProgress($event)"
-                    >
-                      <section
-                        slot="pdf-content"
-                        class="invoice-pdf invoice-preview-list"
-                      >
-                        <invoice-download :invoice-data="data.item" />
-                      </section>
-                    </vue-html2pdf>
-                  </div>
-                </template>
-              </b-table>
-            </b-card-body>
-          </b-collapse>
-        </b-card>
+        <ApexBarChart
+          class="mb-1"
+          chart-type="monthly"
+          title="Invoices Per Month"
+        />
       </b-col>
       <b-col class="mb-1" cols="6">
         <!-- Invoices Per Day -->
@@ -809,11 +539,6 @@
           title="Invoices Per Day"
         />
         <!-- Invoices Per Month -->
-        <ApexBarChart
-          class="mb-1"
-          chart-type="monthly"
-          title="Invoices Per Month"
-        />
       </b-col>
     </b-row>
   </div>
@@ -942,8 +667,6 @@ export default {
         { key: "vatAmount", sortable: true },
         { key: "actions" },
       ],
-      companyInvoices: [],
-      companyInvoicesDisplay: [],
       pageNumber: 1,
       perPageInvoices: 30,
       invoiceDirection: "asc",
@@ -972,7 +695,6 @@ export default {
     this.getCompanyInfo();
     this.getStatistics();
     this.getMonthReportGraph();
-    this.getCompanyInvoices();
   },
   methods: {
     //Copy to Clipboard
@@ -1014,33 +736,6 @@ export default {
 
     },
 
-    // delete a single company invoice
-    async deleteCompanyInvoice(invoiceID) {
-      let token = useJwt.getToken();
-      useJwt
-        .DeleteCompanyInvoice(token, invoiceID)
-        .then((response) => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Invoice Deleted Successfully`,
-              icon: "DeleteIcon",
-              variant: "success",
-            },
-          });
-          this.getCompanyInvoices();
-        })
-        .catch((error) => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Something went wrong`,
-              icon: "AlertTriangleIcon",
-              variant: "danger",
-            },
-          });
-        });
-    },
     //
     onProgress(event) {
       console.log(`Processed: ${event} / 100`);
@@ -1050,44 +745,13 @@ export default {
       this.$refs[`invoicePdf${itemID}`].generatePdf();
     },
     //
-    checkStatus(ctx) {
-      if (ctx.sortDesc === false) {
-        this.invoiceDirection = "asc";
-      } else {
-        this.invoiceDirection = "desc";
-      }
-      this.invoiceSortField = ctx.sortBy;
-      this.getCompanyInvoices();
-    },
+ 
     //
     refreshMonthReportGraph() {
       this.monthlyReportGraph = [];
       this.getMonthReportGraph();
     },
     // company invoices data
-    async getCompanyInvoices() {
-      const self = this;
-      self.companyInvoices = [];
-      const data = await axios
-        .get(
-          `/account/api/invoice/list/${this.companyID}/${this.pageNumber}/${this.perPageInvoices}?direction=${this.invoiceDirection}&sortField=${this.invoiceSortField}&verified=true`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-              "Access-Control-Allow-Credentials": true,
-              "Access-Control-Allow-Origin": "http://localhost:8080",
-            },
-          }
-        )
-        .then((response) => {
-          // console.log(JSON.stringify(response.data));
-          self.companyInvoices = response.data.elements;
-          self.companyInvoicesDisplay = response.data.elements;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
     getMonthReportGraph() {
       axios
         .get(
@@ -1169,6 +833,17 @@ export default {
           console.log(error);
         });
     },
+    state() {
+      return 6
+    },
+    actionTab() {
+      this.$emit('state', 
+        {
+          "state": this.state(),
+          "addRecord": true,
+        }
+      )
+    }
   },
 };
 </script>
@@ -1180,9 +855,6 @@ export default {
 
 .card {
   margin-bottom: 0rem;
-}
-
-.card-body {
 }
 
 #inner-card-body .card-body {

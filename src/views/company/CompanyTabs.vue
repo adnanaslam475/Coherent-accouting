@@ -64,7 +64,7 @@
           <feather-icon icon="UserIcon" />
           <span style="font-size: 13px">Private Persons</span>
         </template>
-        <PrivatePersons />
+        <PrivatePersons :add-record="addRecord" @state="updateAddRecord($event)" />
       </b-tab>
     </b-tabs>
 
@@ -109,12 +109,21 @@ export default {
         ? this.$route.params.InvoiceId
         : 0,
       invoiceTab: 0,
+      addRecord: false,
       vatReportsTab: 0,
     };
   },
   methods: {
     update(value) {
-      this.companyTab = value;
+      if(value.state){
+        this.companyTab = value.state;
+      }
+      if(value.addRecord){
+        this.addRecord = value.addRecord;
+      }   
+    },
+    updateAddRecord(value){
+      this.addRecord = value;
     },
     updateInvoiceTab(value) {
       this.invoiceTab = value;

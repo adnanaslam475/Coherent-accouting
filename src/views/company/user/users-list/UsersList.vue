@@ -51,6 +51,7 @@
               <b-button
                 variant="primary"
                 @click="isAddNewUserSidebarActive = true"
+                ref="refAddUserBtn"
               >
                 <span class="text-nowrap">Add User</span>
               </b-button>
@@ -266,6 +267,15 @@ export default {
 
     vSelect,
   },
+  props: ['addRecord'],
+  watch: { 
+    addRecord: function(newVal, oldVal) {
+      if(newVal){
+        this.triggerAddRecord()
+      }
+      this.$emit('state', false)
+    }
+  },
   methods: {
     UserDelete(id, refetchData) {
       const token = useJwt.getToken()
@@ -293,6 +303,9 @@ export default {
           })
         })
     },
+    triggerAddRecord(){
+      this.$refs.refAddUserBtn.click()
+    }
   },
   setup() {
     const USER_APP_STORE_MODULE_NAME = 'app-user'

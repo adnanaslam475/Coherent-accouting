@@ -443,35 +443,35 @@
                 </div>
               </div>
             </div>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between align-items-center mb-2">
               <b-card
                 no-body
-                class="invoice-preview date-issued invisible"
+                class="invoice-preview date-issued mb-0 ml-0"
               >
                 <b-card-header class="justify-content-end"> 
                   <div class="mt-md-0 mt-2">
                     <div class="d-flex align-items-center mb-0">
+                      <span class="title mr-1"> Transaction type: </span>
                       <validation-provider
-                        #default="{ errors }"
-                        name="dateIssued"
-                        
-                      >
-                        <b-form-checkbox
-                            v-model="invoiceData.verified"
-                            plain
-                          >
-                        </b-form-checkbox>
-                        
-                        <small class="text-danger">{{ errors[0] }}</small>
-                      </validation-provider>
-                      <span class="title"> Verified </span>
+                      #default="{ errors }"
+                      name="transectionType"
+                      rules="required"
+                    >
+                      
+                      <b-form-select
+                          v-model="invoiceData.transactionType"
+                          :options="transectionOptions"
+                        >
+                      </b-form-select>
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
                     </div>
                   </div>
                 </b-card-header>
               </b-card>
               <b-card
                 no-body
-                class="invoice-preview date-issued"
+                class="invoice-preview date-issued mb-0"
               >
                 <b-card-header class="justify-content-end"> 
                   <div class="mt-md-0 mt-2">
@@ -680,41 +680,15 @@
                     </b-col>
                   </b-row>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                  <b-button
-                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                    size="sm"
-                    variant="primary"
-                    @click="addNewItemInItemForm"
-                  >
-                    Add Item
-                  </b-button>
-                  <b-card
-                    no-body
-                    class="invoice-preview date-issued mb-0"
-                  >
-                    <b-card-header class="justify-content-end"> 
-                      <div class="mt-md-0 mt-2">
-                        <div class="d-flex align-items-center mb-0">
-                          <span class="title mr-1"> Transaction type: </span>
-                          <validation-provider
-                          #default="{ errors }"
-                          name="transectionType"
-                          rules="required"
-                        >
-                          
-                          <b-form-select
-                              v-model="invoiceData.transactionType"
-                              :options="transectionOptions"
-                            >
-                          </b-form-select>
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                        </div>
-                      </div>
-                    </b-card-header>
-                  </b-card>
-                </div>
+                
+                <b-button
+                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                  size="sm"
+                  variant="primary"
+                  @click="addNewItemInItemForm"
+                >
+                  Add Item
+                </b-button>       
               </b-card-body>
 
               <!-- Invoice Description: Total -->

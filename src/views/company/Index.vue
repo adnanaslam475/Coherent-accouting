@@ -71,52 +71,53 @@
       </template>
 
       <template #cell(companyName)="data">
-        <div
-          v-if="data.item.companyName.indexOf(' ') > 0"
-          style="
-            margin-right: 8px;
-            padding-top: 4px;
-            border-radius: 50%;
-            color: white;
-            width: 32px;
-            height: 28px;
-            display: inline-flex;
-            justify-content: center;
-          "
-          class="btn-primary"
-        >
-          <span
-            >{{ data.item.companyName.substr(0, 1)
-            }}{{
-              data.item.companyName
-                .substr(data.item.companyName.indexOf(" ") + 1, 1)
-                .toUpperCase()
-            }}</span
+        <div class="d-flex align-items-center">
+          <div
+            v-if="data.item.companyName.indexOf(' ') > 0"
+            style="
+              margin-right: 8px;
+              border-radius: 50%;
+              color: white;
+              min-width: 32px;
+              min-height: 28px;
+              display: inline-flex;
+              justify-content: center;
+              align-items: center;
+            "
+            class="btn-primary"
           >
-        </div>
-        <div
-          v-else
-          style="
-            margin-right: 8px;
-            padding-top: 4px;
-            border-radius: 50%;
-            background-color: #7367f0;
-            color: white;
-            width: 32px;
-            height: 28px;
-            display: inline-flex;
-            justify-content: center;
-          "
-        >
-          <span
-            >{{ data.item.companyName.substr(0, 1)
-            }}{{ data.item.companyName.substr(1, 1).toUpperCase() }}</span
+            <span
+              >{{ data.item.companyName.substr(0, 1)
+              }}{{
+                data.item.companyName
+                  .substr(data.item.companyName.indexOf(" ") + 1, 1)
+                  .toUpperCase()
+              }}</span
+            >
+          </div>
+          <div
+            v-else
+            style="
+              margin-right: 8px;
+              border-radius: 50%;
+              background-color: #7367f0;
+              color: white;
+              min-width: 32px;
+              min-height: 28px;
+              display: inline-flex;
+              justify-content: center;
+              align-items: center;
+            "
           >
+            <span
+              >{{ data.item.companyName.substr(0, 1)
+              }}{{ data.item.companyName.substr(1, 1).toUpperCase() }}</span
+            >
+          </div>
+          <b-link style="min-width: max-content;" class="font-weight-bold" :to="{ name: 'CompanyView', params: { id: data.item.id } }"
+            >{{ data.item.companyName }}
+          </b-link>
         </div>
-        <b-link class="font-weight-bold" :to="{ name: 'CompanyView', params: { id: data.item.id } }"
-          >{{ data.item.companyName }}
-        </b-link>
-
         <!-- <div>{{data.item.companyName}}</div> -->
       </template>
 
