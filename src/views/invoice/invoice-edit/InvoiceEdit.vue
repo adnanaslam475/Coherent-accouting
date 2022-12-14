@@ -1,6 +1,8 @@
 <template>
   <section class="invoice-add-wrapper">
     <!-- Alert: No item found -->
+    <TabList />
+
     <b-alert
       variant="danger"
       :show="invoiceData === undefined"
@@ -19,6 +21,7 @@
         for other invoices.
       </div>
     </b-alert>
+    
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
       <b-form @submit.prevent="invoiceEdit(invoiceData)">
         <b-row
@@ -581,7 +584,7 @@
                                   v-model="item.singleAmountTransaction"
                                   type="number"
                                   class="mb-0"
-                                  step="0.01"
+                                  step="any"
                                   placeholder="0.00"
                                 />
                               </b-input-group>
@@ -718,7 +721,7 @@
                                     ? invoiceData.vatPercent
                                     : 20
                                 "
-                                step="0.01"
+                                step="any"
                                 type="number"
                               />
 
@@ -772,7 +775,7 @@
                                     ? invoiceData.tradeDiscountPercent
                                     : 0
                                 "
-                                step="0.01"
+                                step="any"
                                 type="number"
                               />
 
@@ -938,6 +941,8 @@ import InvoiceSidebarSendInvoice from '../InvoiceSidebarSendInvoice.vue'
 import InvoiceSidebarAddPayment from '../InvoiceSidebarAddPayment.vue'
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import TabList from "../TabList.vue"
+
 export default {
   components: {
     BRow,
@@ -969,7 +974,8 @@ export default {
     BSpinner,
     BFormRadio,
     BListGroup, 
-    BListGroupItem 
+    BListGroupItem,
+    TabList 
   },
   directives: {
     Ripple,
@@ -1228,7 +1234,11 @@ export default {
         invoiceData.value.supplierCompany.companyEic = item.eic
       }
       if( item.managers && item.managers[0]){
-        invoiceData.value.supplierCompany.companyOwnerName = item.managers[0]
+        let managers = ""
+        item?.managers?.map((item,index)=>{
+          managers = index == 0 ? managers + item : managers + ", " + item
+        })
+        invoiceData.value.supplierCompany.companyOwnerName = managers
       }
       showSuggestions.value  = false
       datalist.value = []
@@ -1287,7 +1297,11 @@ export default {
         invoiceData.value.supplierCompany.companyEic = item.eic
       }
       if( item.managers && item.managers[0]){
-        invoiceData.value.supplierCompany.companyOwnerName = item.managers[0]
+        let managers = ""
+        item?.managers?.map((item,index)=>{
+          managers = index == 0 ? managers + item : managers + ", " + item
+        })
+        invoiceData.value.supplierCompany.companyOwnerName = managers
       }
       showSuggestionsEic.value  = false
       datalistEic.value = []
@@ -1346,7 +1360,11 @@ export default {
         invoiceData.value.recipientCompany.companyEic = item.eic
       }
       if( item.managers && item.managers[0]){
-        invoiceData.value.recipientCompany.companyOwnerName = item.managers[0]
+        let managers = ""
+        item?.managers?.map((item,index)=>{
+          managers = index == 0 ? managers + item : managers + ", " + item
+        })
+        invoiceData.value.recipientCompany.companyOwnerName = managers
       }
       showSuggestionsRecipient.value  = false
       datalistRecipient.value = []
@@ -1405,7 +1423,11 @@ export default {
         invoiceData.value.recipientCompany.companyEic = item.eic
       }
       if( item.managers && item.managers[0]){
-        invoiceData.value.recipientCompany.companyOwnerName = item.managers[0]
+        let managers = ""
+        item?.managers?.map((item,index)=>{
+          managers = index == 0 ? managers + item : managers + ", " + item
+        })
+        invoiceData.value.recipientCompany.companyOwnerName = managers
       }
       showSuggestionsEicRecipient.value  = false
       datalistEicRecipient.value = []

@@ -1,6 +1,8 @@
 <template>
   <section class="invoice-preview-wrapper">
 
+    <TabList />
+
     <!-- Alert: No item found -->
     <b-alert
       variant="danger"
@@ -403,6 +405,7 @@ import Ripple from 'vue-ripple-directive'
 import invoiceStoreModule from '../invoiceStoreModule'
 import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
 import VueHtml2pdf from "vue-html2pdf";
+import TabList from "../../TabList.vue"
 export default {
   directives: {
     Ripple,
@@ -421,7 +424,8 @@ export default {
     VueHtml2pdf,
     Logo,
     BCardHeader,
-    InvoiceDownload
+    InvoiceDownload,
+    TabList
   },
   setup() {
     const invoiceData = ref(null)

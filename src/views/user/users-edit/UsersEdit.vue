@@ -1,6 +1,7 @@
 <template>
+  <div>
+  <TabList />
   <component :is="userData === undefined ? 'div' : 'b-card'">
-
     <!-- Alert: No item found -->
     <b-alert
       variant="danger"
@@ -35,6 +36,7 @@
       </b-row>
     </template>
   </component>
+  </div>
 </template>
 
 <script>
@@ -46,7 +48,7 @@ import router from '@/router'
 import store from '@/store'
 import userStoreModule from '../userStoreModule'
 import UserEditTabInformation from './UserEditTabInformation.vue'
-
+import TabList from "../../invoice/TabList.vue"
 export default {
   components: {
     BTab,
@@ -57,6 +59,7 @@ export default {
     BRow, 
     BCol,
     UserEditTabInformation,
+    TabList
   },
   setup() {
     const userData = ref(null)

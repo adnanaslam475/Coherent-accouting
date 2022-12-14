@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <TabList />
     <!-- Alert: No item found -->
     <b-alert
       variant="danger"
@@ -50,7 +50,7 @@ import {
 import userStoreModule from '../userStoreModule'
 import UserViewUserInfoCard from './UserViewUserInfoCard.vue'
 import InvoiceList from '../../Invoice/invoice-list/InvoiceList.vue'
-
+import TabList from "../../TabList.vue"
 export default {
   components: {
     BRow,
@@ -60,7 +60,8 @@ export default {
 
     // Local Components
     UserViewUserInfoCard,
-    InvoiceList
+    InvoiceList,
+    TabList
   },
   setup() {
     const userData = ref(null)

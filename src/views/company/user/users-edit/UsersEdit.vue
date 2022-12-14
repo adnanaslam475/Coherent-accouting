@@ -1,40 +1,42 @@
-<template>
-  <component :is="userData === undefined ? 'div' : 'b-card'">
+<template>  
+  <div>
+    <TabList />
+    <component :is="userData === undefined ? 'div' : 'b-card'">
+      <!-- Alert: No item found -->
+      <b-alert
+        variant="danger"
+        :show="userData === undefined"
+      >
+        <h4 class="alert-heading">
+          Error fetching user data
+        </h4>
+        <div class="alert-body">
+          No user found with this user id. Check
+          <b-link
+            class="alert-link"
+            :to="{ name: 'apps-users-list'}"
+          >
+            User List
+          </b-link>
+          for other users.
+        </div>
+      </b-alert>
 
-    <!-- Alert: No item found -->
-    <b-alert
-      variant="danger"
-      :show="userData === undefined"
-    >
-      <h4 class="alert-heading">
-        Error fetching user data
-      </h4>
-      <div class="alert-body">
-        No user found with this user id. Check
-        <b-link
-          class="alert-link"
-          :to="{ name: 'apps-users-list'}"
-        >
-          User List
-        </b-link>
-        for other users.
-      </div>
-    </b-alert>
-
-    <template v-if="userData">
-      <!-- First Row -->
-      <b-row>
-        <b-col
-          cols="12"
-          xl="12"
-          lg="12"
-          md="12"
-        >
-          <user-edit-tab-information class="mt-2 pt-75" :user-data="userData" />
-        </b-col>
-      </b-row>
-    </template>
-  </component>
+      <template v-if="userData">
+        <!-- First Row -->
+        <b-row>
+          <b-col
+            cols="12"
+            xl="12"
+            lg="12"
+            md="12"
+          >
+            <user-edit-tab-information class="mt-2 pt-75" :user-data="userData" />
+          </b-col>
+        </b-row>
+      </template>
+    </component>
+  </div>
 </template>
 
 <script>
@@ -46,7 +48,7 @@ import router from '@/router'
 import store from '@/store'
 import userStoreModule from '../userStoreModule'
 import UserEditTabInformation from './UserEditTabInformation.vue'
-
+import TabList from "../../TabList.vue"
 export default {
   components: {
     BTab,
@@ -57,6 +59,7 @@ export default {
     BRow, 
     BCol,
     UserEditTabInformation,
+    TabList
   },
   setup() {
     const userData = ref(null)

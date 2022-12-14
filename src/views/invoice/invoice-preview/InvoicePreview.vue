@@ -1,6 +1,6 @@
 <template>
   <section class="invoice-preview-wrapper">
-
+    <TabList />
     <!-- Alert: No item found -->
     <b-alert
       variant="danger"
@@ -393,6 +393,8 @@ import InvoiceSidebarSendInvoice from '../InvoiceSidebarSendInvoice.vue'
 import InvoiceSidebarAddPayment from '../InvoiceSidebarAddPayment.vue'
 import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
 import VueHtml2pdf from "vue-html2pdf";
+import TabList from "../TabList.vue"
+
 export default {
   directives: {
     Ripple,
@@ -413,7 +415,8 @@ export default {
     InvoiceSidebarAddPayment,
     InvoiceSidebarSendInvoice,
     BCardHeader,
-    InvoiceDownload
+    InvoiceDownload,
+    TabList
   },
   setup() {
     const invoiceData = ref(null)

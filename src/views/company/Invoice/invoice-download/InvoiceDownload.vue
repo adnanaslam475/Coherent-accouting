@@ -103,16 +103,26 @@
           </b-card>
         </div>
       </div>
-      <div style="padding: 0 1rem;">
+      <div class="d-flex justify-content-between alogn-items-center" style="padding: 0 1rem;">
+        <b-card v-if="invoiceData.transactionType" no-body class="invoice-preview date-issued ml-0">
+          <b-card-header class="justify-content-end">
+            <div class="invoice-date-wrapper invoice-middle-content">
+              <p class="invoice-date-title">Transaction type:</p>
+              <p class="invoice-date">
+                {{ invoiceData.transactionType }}
+              </p>
+            </div>
+          </b-card-header>
+        </b-card>
         <b-card no-body class="invoice-preview date-issued">
-        <b-card-header class="justify-content-end">
-          <div class="invoice-date-wrapper invoice-middle-content">
-            <p class="invoice-date-title">Date Issued:</p>
-            <p class="invoice-date">
-              {{ invoiceData.dateIssued }}
-            </p>
-          </div>
-        </b-card-header>
+          <b-card-header class="justify-content-end">
+            <div class="invoice-date-wrapper invoice-middle-content">
+              <p class="invoice-date-title">Date Issued:</p>
+              <p class="invoice-date">
+                {{ invoiceData.dateIssued }}
+              </p>
+            </div>
+          </b-card-header>
         </b-card>
       </div>
 

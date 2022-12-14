@@ -1,5 +1,6 @@
 <template>
   <section class="invoice-add-wrapper">
+    <TabList />
     <b-form>
       <b-card no-body>
         <b-card-header
@@ -900,7 +901,7 @@
                 ><h4>50</h4>
               </b-col>
               <b-col cols="4" xl="4" md="4" class="">
-                <p>ДДС за възстановяване (кл.20 - кл.40) < 0</p>
+                <p>ДДС за възстановяване (кл.20 - кл.40) &lt; 0</p>
               </b-col>
               <b-col cols="1" xl="1" md="1" style="padding: 0px"
                 ><validation-provider
@@ -1202,7 +1203,7 @@ import { extend } from "vee-validate";
 import flatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 import VueMonthlyPicker from "vue-monthly-picker";
-
+import TabList from "../../TabList.vue"
 extend("required", {
   ...required,
   message: "This field is mandatory",
@@ -1380,6 +1381,7 @@ export default {
     BCardHeader,
     flatPickr,
     VueMonthlyPicker,
+    TabList
   },
 };
 </script>
@@ -1391,7 +1393,6 @@ small {
 
 .vue-monthly-picker .input {
   height: 2.7rem !important;
-  webkit-box-shadow: none !important;
   box-shadow: none !important;
   border: none !important;
 }

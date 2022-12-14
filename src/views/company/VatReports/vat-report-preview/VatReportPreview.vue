@@ -1,5 +1,6 @@
 <template>
   <section class="invoice-add-wrapper">
+    <TabList />
     <b-row class="invoice-preview-list" v-if="vatReportData !== null">
       <!-- Col: Left (Vat Report Container) -->
       <b-col cols="12" xl="10" md="10" class="w-100-print">
@@ -899,7 +900,7 @@
                   ><h4>50</h4>
                 </b-col>
                 <b-col cols="4" xl="4" md="4" class="">
-                  <p>ДДС за възстановяване (кл.20 - кл.40) < 0</p>
+                  <p>ДДС за възстановяване (кл.20 - кл.40) &lt; 0</p>
                 </b-col>
                 <b-col cols="1" xl="1" md="1" style="padding: 0px">
                   <p
@@ -1260,7 +1261,7 @@ import Ripple from "vue-ripple-directive";
 import VatReportDownload from "../vat-report-download/VatReportDownload.vue";
 
 import VueHtml2pdf from "vue-html2pdf";
-
+import TabList from "../../TabList.vue"
 export default {
   props: { 
     htmlToPdfOptions: { 
@@ -1289,6 +1290,7 @@ margin: 100,
     VueMonthlyPicker,
     VueHtml2pdf,
     VatReportDownload,
+    TabList
   },
   data() {
     return {
@@ -1404,7 +1406,6 @@ small {
 
 .vue-monthly-picker .input {
   height: 2.7rem !important;
-  webkit-box-shadow: none !important;
   box-shadow: none !important;
   border: none !important;
 }

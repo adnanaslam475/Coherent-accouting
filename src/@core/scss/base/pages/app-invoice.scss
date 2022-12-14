@@ -103,6 +103,12 @@ $invoice-card-body-padding: 2.5rem;
   }
 }
 
+.invoice-actions{
+  .card{
+    top: calc(#{$content-padding} + #{$navbar-height} + #{$floating-nav-margin});
+    position: sticky;
+  }
+} 
 // Invoice Edit & Add
 .invoice-edit,
 .invoice-add {

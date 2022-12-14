@@ -1,5 +1,6 @@
 <template>
   <section class="invoice-add-wrapper">
+    <TabList />
     <!-- Alert: No item found -->
     <b-alert
       variant="danger"
@@ -617,7 +618,7 @@
                                   v-model="item.singleAmountTransaction"
                                   type="number"
                                   class="mb-0"
-                                  step="0.01"
+                                  step="any"
                                   placeholder="0.00"
                                 />
                               </b-input-group>
@@ -755,7 +756,7 @@
                                     ? invoiceData.vatPercent
                                     : 20
                                 "
-                                step="0.01"
+                                step="any"
                                 type="number"
                               />
 
@@ -809,7 +810,7 @@
                                     ? invoiceData.tradeDiscountPercent
                                     : 0
                                 "
-                                step="0.01"
+                                step="any"
                                 type="number"
                               />
 
@@ -939,6 +940,18 @@
                 Save
               </b-button>
               <b-button
+                v-if="!VerifiedInvisible"
+                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                variant="outline-primary"
+                block
+                :disabled="invalid || loading"
+                type="button"
+                @click="invoiceVerify(invoiceData)"
+              >
+              <b-spinner v-if="loading" small variant="light" />
+                Verify
+              </b-button>
+              <b-button
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 variant="outline-primary"
                 block
@@ -971,6 +984,7 @@ import flatPickr from 'vue-flatpickr-component'
 import invoiceStoreModule from '../invoiceStoreModule'
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import TabList from "../../TabList.vue"
 export default {
   components: {
     BRow,
@@ -1000,7 +1014,8 @@ export default {
     BSpinner,
     BFormRadio,
     BListGroup, 
-    BListGroupItem 
+    BListGroupItem,
+    TabList 
   },
   directives: {
     Ripple,
@@ -1076,13 +1091,23 @@ export default {
                       variant: "success",
                     },
                   });
-                  return this.$router.push({
-                      name: "CompanyView", 
-                      params: { 
-                        id: router.currentRoute.params.companyId,
-                        InvoiceId: 1
-                      }
+                  if(response.data.verified){
+                    return this.$router.push({
+                        name: "CompanyView", 
+                        params: { 
+                          id: router.currentRoute.params.companyId,
+                          InvoiceId: 1
+                        }
+                      })
+                  } else{
+                    return this.$router.push({
+                        name: "CompanyView", 
+                        params: { 
+                          id: router.currentRoute.params.companyId,
+                          InvoiceId: 2
+                        }
                     })
+                  }
                 })
                 .catch((error) => {
                   this.loading = false
@@ -1097,6 +1122,10 @@ export default {
                 });
         }
       });
+    },
+    invoiceVerify(invoiceData){
+      invoiceData.verified = true
+      this.invoiceEdit(invoiceData)
     }
   },
   setup() {
@@ -1264,7 +1293,11 @@ export default {
         invoiceData.value.supplierCompany.companyEic = item.eic
       }
       if( item.managers && item.managers[0]){
-        invoiceData.value.supplierCompany.companyOwnerName = item.managers[0]
+        let managers = ""
+        item?.managers?.map((item,index)=>{
+          managers = index == 0 ? managers + item : managers + ", " + item
+        })
+        invoiceData.value.supplierCompany.companyOwnerName = managers
       }
       showSuggestions.value  = false
       datalist.value = []
@@ -1323,7 +1356,11 @@ export default {
         invoiceData.value.supplierCompany.companyEic = item.eic
       }
       if( item.managers && item.managers[0]){
-        invoiceData.value.supplierCompany.companyOwnerName = item.managers[0]
+        let managers = ""
+        item?.managers?.map((item,index)=>{
+          managers = index == 0 ? managers + item : managers + ", " + item
+        })
+        invoiceData.value.supplierCompany.companyOwnerName = managers
       }
       showSuggestionsEic.value  = false
       datalistEic.value = []
@@ -1382,7 +1419,11 @@ export default {
         invoiceData.value.recipientCompany.companyEic = item.eic
       }
       if( item.managers && item.managers[0]){
-        invoiceData.value.recipientCompany.companyOwnerName = item.managers[0]
+        let managers = ""
+        item?.managers?.map((item,index)=>{
+          managers = index == 0 ? managers + item : managers + ", " + item
+        })
+        invoiceData.value.recipientCompany.companyOwnerName = managers
       }
       showSuggestionsRecipient.value  = false
       datalistRecipient.value = []
@@ -1441,7 +1482,11 @@ export default {
         invoiceData.value.recipientCompany.companyEic = item.eic
       }
       if( item.managers && item.managers[0]){
-        invoiceData.value.recipientCompany.companyOwnerName = item.managers[0]
+        let managers = ""
+        item?.managers?.map((item,index)=>{
+          managers = index == 0 ? managers + item : managers + ", " + item
+        })
+        invoiceData.value.recipientCompany.companyOwnerName = managers
       }
       showSuggestionsEicRecipient.value  = false
       datalistEicRecipient.value = []

@@ -47,7 +47,7 @@
               number
               min="0"
               max="1"
-              step="0.01"
+              step="any"
             />
             <b-input-group-append
               is-text
