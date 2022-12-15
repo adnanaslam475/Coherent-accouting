@@ -165,3 +165,77 @@ h2.brand-text{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.custom-switch-btn.custom-switch .custom-control-label {
+  padding-left: 8.5rem !important;
+}
+.custom-switch-btn.custom-switch .custom-control-label::before{
+  width: 8.5rem !important;
+  height: 2.5rem !important;
+  border-radius: 2.5rem !important;
+}
+.custom-switch-btn.custom-switch .custom-control-label:after {
+  top: 6px !important;
+  left: 6px !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+.custom-switch-btn.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+  transform: translateX(6rem) !important;
+}
+.custom-switch-btn.custom-switch .custom-control-label .switch-icon-left{
+  left: 10px !important;
+}
+.custom-switch-btn.custom-switch .custom-control-label .switch-icon-left, .custom-switch-btn.custom-switch .custom-control-label .switch-icon-right{
+  top: 4px;
+  font-size: 1rem;
+}
+/* custom-switch-1 */
+.custom-switch-btn-1.custom-switch .custom-control-label {
+  padding-left: 5.5rem !important;
+}
+.custom-switch-btn-1.custom-switch .custom-control-label::before{
+  width: 5.5rem !important;
+  height: 2.5rem !important;
+  border-radius: 2.5rem !important;
+}
+.custom-switch-btn-1.custom-switch .custom-control-label:after {
+  top: 6px !important;
+  left: 6px !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+.custom-switch-btn-1.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+  transform: translateX(3rem) !important;
+}
+.custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-left{
+  left: 10px !important;
+}
+.custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-left, .custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-right{
+  top: 4px;
+  font-size: 1rem;
+}
+/* custom-switch-2 */
+.custom-switch-btn-2.custom-switch .custom-control-label {
+  padding-left: 9.5rem !important;
+}
+.custom-switch-btn-2.custom-switch .custom-control-label::before{
+  width: 9.5rem !important;
+  height: 2.5rem !important;
+  border-radius: 2.5rem !important;
+}
+.custom-switch-btn-2.custom-switch .custom-control-label:after {
+  top: 6px !important;
+  left: 6px !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+.custom-switch-btn-2.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+  transform: translateX(7rem) !important;
+}
+.custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-left{
+  left: 10px !important;
+}
+.custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-left, .custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-right{
+  top: 4px;
+  font-size: 1rem;
+}

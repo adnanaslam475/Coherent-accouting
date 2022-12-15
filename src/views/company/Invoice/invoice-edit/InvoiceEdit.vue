@@ -77,6 +77,7 @@
                     plain
                     name="accountTypeoptions"
                     value="company"
+                    class="d-none"
                   >
                     <h5>COMPANY</h5>
                   </b-form-radio>
@@ -85,9 +86,24 @@
                     plain
                     name="accountTypeoptions"
                     value="person"
+                    class="d-none"
                   >
                     <h5>PERSON</h5>
                   </b-form-radio>
+                  <b-form-checkbox
+                    v-model="AccountTypeOptionToggleValue"
+                    @change="AccountTypeOptionToggle(AccountTypeOptionToggleValue)"
+                    class="custom-control-primary custom-switch-btn"
+                    name="AccountTypeOptionToggle"
+                    switch
+                  >
+                    <span class="switch-icon-left">
+                      Person
+                    </span>
+                    <span class="switch-icon-right">
+                      Company
+                    </span>
+                  </b-form-checkbox>
                 </div>
               </div>
             
@@ -470,6 +486,20 @@
                   </div>
                 </b-card-header>
               </b-card>
+              <b-form-checkbox
+                v-model="InvoiceTypeOptionToggleValue"
+                @change="InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)"
+                class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                name="AccountTypeOptionToggle"
+                switch
+              >
+                <span class="switch-icon-left">
+                  ORIGINAL
+                </span>
+                <span class="switch-icon-right">
+                  PROFORMA
+                </span>
+              </b-form-checkbox>
               <b-card
                 no-body
                 class="invoice-preview date-issued mb-0"
@@ -1138,7 +1168,16 @@ export default {
     onUnmounted(() => {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
     })
-    var AccountTypeOption = "company"
+    var AccountTypeOption = ref("company")
+    var AccountTypeOptionToggleValue = false
+    
+    let AccountTypeOptionToggle = (value)=>{
+      if(value){
+        AccountTypeOption.value = "person"
+      } else{
+        AccountTypeOption.value = "company"
+      }
+    }
     const itemFormBlankItem = {
       serviceOrItemDescription: "",
       singleAmountTransaction: 0.00,
@@ -1176,6 +1215,16 @@ export default {
           invoiceData.value = undefined
         }
       })
+
+    var InvoiceTypeOptionToggleValue = invoiceData.value.invoiceType == "ORIGINAL" ? false : true 
+    
+    let InvoiceTypeOptionToggle = (value)=>{
+      if(value){
+        invoiceData.value.invoiceType = "ORIGINAL"
+      } else{
+        invoiceData.value.invoiceType = "PROFORMA"
+      }
+    }
 
     const amountNonVat = (item)=> {
       let totalAmountNonVat = item.reduce((acc, ele) => {
@@ -1252,7 +1301,8 @@ export default {
 
         // ? Set single Item in form for adding data
         transactions: invoiceData.value.transactions,
-
+        transactionType: invoiceData.value.transactionType,
+        invoiceType: invoiceData.value.invoiceType,
         documentType: "INVOICE",
         verified: invoiceData.value.verified
       }
@@ -1652,6 +1702,10 @@ export default {
 
     return {
       AccountTypeOption,
+      AccountTypeOptionToggleValue,
+      AccountTypeOptionToggle,
+      InvoiceTypeOptionToggleValue,
+      InvoiceTypeOptionToggle,
       invoiceData,
       VerifiedInvisible,
       currencyOptions,

@@ -132,7 +132,7 @@ export default {
       chartOptions: {},
     });
 
-    function formatDate(date) {
+    function formatDate(date, type) {
       var d = new Date(date),
         month = "" + (d.getMonth() + 1),
         day = "" + d.getDate(),
@@ -140,8 +140,12 @@ export default {
 
       if (month.length < 2) month = "0" + month;
       if (day.length < 2) day = "0" + day;
-
-      return [month, day].join("/");
+      if(type == "vat Reports"){
+        return [year, month].join("/");
+      } else{
+        return [month, day].join("/");
+      }
+      
     }
 
     let invoices = [];
@@ -151,7 +155,7 @@ export default {
       .then((response) => {
         response.data.map((item) => {
           invoices.push(item.count);
-          let date = formatDate(item.date);
+          let date = formatDate(item.date, "invoices");
            xaxisCategories.push(date);
         });
         let chartData = {
@@ -221,7 +225,7 @@ export default {
       .then((response) => {
         response.data.map((item) => {
           VatReports.push(item.count);
-          let date = formatDate(item.date);
+          let date = formatDate(item.date, "vat Reports");
           xaxisCategories1.push(date);
         });
 

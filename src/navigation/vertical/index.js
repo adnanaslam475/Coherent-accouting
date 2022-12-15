@@ -30,13 +30,13 @@ export default [
     icon: 'PackageIcon',
   },
   {
-    title: 'Settings',
+    title: 'My Profile',
     route: 'settings',
-    icon: 'SettingsIcon',
+    icon: 'UserIcon',
   },
   {
     title: 'Contacts',
     route: 'contacts',
-    icon: 'UsersIcon',
+    icon: 'BookIcon',
   },
 ]

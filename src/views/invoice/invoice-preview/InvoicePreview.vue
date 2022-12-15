@@ -49,7 +49,9 @@
             </div>
           </b-card-header>
         </b-card>
-        
+        <h1 class="text-primary text-center" style="margin-bottom: 2rem;">
+          {{invoiceData.invoiceType}}
+        </h1>
         <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2">
           <!-- Header: Left Content -->
           <div class="mt-md-0 mt-2 flex-1">

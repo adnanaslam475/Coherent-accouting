@@ -255,6 +255,36 @@
               </validation-provider>
             </b-form-group>
           </b-col>
+
+          <b-col sm="6">
+            <b-form-group
+              label="Email Subscription"
+              label-for="marketingConfirmed"
+            >
+              <validation-provider
+                #default="{ errors }"
+                name="marketingConfirmed"
+                vid="marketingConfirmed"
+                rules="required"
+              >
+              <b-form-checkbox
+                  v-model="userDetail.marketingConfirmed"
+                  class="custom-control-primary custom-switch-btn-1"
+                  name="check-button"
+                  switch
+                >
+                  <span class="switch-icon-left">
+                    ON
+                  </span>
+                  <span class="switch-icon-right">
+                    OFF
+                  </span>
+                </b-form-checkbox>
+                <small class="text-danger">{{ errors[0] }}</small>
+              </validation-provider>
+            </b-form-group>
+          </b-col>
+
           <b-col cols="12">
             <b-button
               v-ripple.400="'rgba(255, 255, 255, 0.15)'"
@@ -298,6 +328,7 @@ import {
   BMediaBody,
   BRow,
   BFormSelect,
+  BFormCheckbox
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import { useInputImageRenderer } from '@core/comp-functions/forms/form-utils'
@@ -338,6 +369,7 @@ export default {
     // eslint-disable-next-line vue/no-unused-components
     ValidationObserver,
     vSelect,
+    BFormCheckbox
   },
   directives: {
     Ripple,
