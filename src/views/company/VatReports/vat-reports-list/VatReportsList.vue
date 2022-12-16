@@ -720,9 +720,7 @@ export default {
 .gap-2 {
   grid-gap: 25px;
 }
-.invoice-add .invoice-total-wrapper {
-  max-width: 25rem !important;
-}
+ 
 .invoice-preview-list .invoice-date-wrapper {
   display: flex;
   grid-gap: 10px;
@@ -767,7 +765,6 @@ export default {
   border-color: #3b4253 !important;
 }
 .card-header.invoice-header {
-  background-color: #7367f0 !important;
   padding: 0.75rem;
   border: 0;
   border-radius: 0;

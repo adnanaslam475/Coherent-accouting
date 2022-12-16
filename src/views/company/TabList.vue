@@ -1,6 +1,6 @@
 <template>
 
-    <div class="tabs">
+    <div class="tabs tabs-hide-print">
       <b-nav tabs align="left">
         <b-nav-item :to="{ name: 'CompanyView', params: { InvoiceId: 0, id: $route.params.companyId }}" :active="invoiceTab !== 0">
           <feather-icon icon="BriefcaseIcon" />

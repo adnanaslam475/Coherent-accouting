@@ -142,6 +142,11 @@ body {
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
 }
+.clear-all-add{
+  top: -0.7rem;
+  position: relative;
+  right: -1rem;
+}
 .clear-all {
   position: absolute;
   top: 50%;
@@ -239,3 +244,35 @@ h2.brand-text{
   top: 4px;
   font-size: 1rem;
 }
+input.form-control:disabled{
+  text-align: right;
+}
+@media print {
+  .tabs-hide-print{
+    display: none;
+  }
+}
+/* Add/edit transaction UI */
+.transaction-container{
+  border-radius: 15px;
+  overflow: hidden;
+}
+.p-custom{
+  padding: 0.5rem 1rem;
+}
+.px-custom{
+  padding: 0 1rem;
+}
+.py-custom{
+  padding: 0.8rem;
+}
+.custom-font{
+  font-size: 1.2rem;
+}
+.opacity-1{
+  opacity: 1 !important;
+}
+.invoice-add .invoice-total-wrapper {
+  max-width: max-content !important;
+}
+/* Preview transaction UI */

@@ -78,7 +78,7 @@
                       </b-card-header>
                       <b-card-body class="invoice-body">
                         <div
-                          class="d-flex justify-content-end border-left py-50 px-25 clear-all"
+                          class="d-flex justify-content-end border-left py-50 px-25 clear-all-add"
                         >
                           <feather-icon
                             size="16"
@@ -244,7 +244,7 @@
                       </b-card-header>
                       <b-card-body class="invoice-body">
                         <div
-                          class="d-flex justify-content-end border-left py-50 px-25 clear-all"
+                          class="d-flex justify-content-end border-left py-50 px-25 clear-all-add"
                         >
                           <feather-icon
                             size="16"
@@ -1638,9 +1638,7 @@ export default {
 .gap-2 {
   grid-gap: 20px;
 }
-.invoice-add .invoice-total-wrapper {
-  max-width: 25rem !important;
-}
+
 .accountType{
   display: flex;
   gap: 10px;
@@ -1705,10 +1703,5 @@ export default {
 }
 .invoice-input-middle .input-group.invoice-edit-input-group span{
   width: 100%;
-}
-.clear-all{
-  top: -0.7rem;
-  position: relative;
-  right: -1rem;
 }
 </style>

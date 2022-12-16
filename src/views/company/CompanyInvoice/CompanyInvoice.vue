@@ -529,9 +529,7 @@ export default {
 .gap-2 {
   grid-gap: 25px;
 }
-.invoice-add .invoice-total-wrapper {
-  max-width: 25rem !important;
-}
+ 
 .invoice-preview-list .invoice-date-wrapper{
   display: flex;
   grid-gap: 10px;

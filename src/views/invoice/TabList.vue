@@ -1,6 +1,6 @@
 <template>
 
-  <div class="tabs">
+  <div class="tabs tabs-hide-print">
     <b-nav tabs align="center">
       <b-nav-item :to="{ name: 'invoices', params: { id: 0 }}" :active="invoiceTab !== 0">
         <feather-icon icon="BookOpenIcon" />

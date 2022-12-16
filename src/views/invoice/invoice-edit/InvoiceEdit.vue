@@ -23,7 +23,7 @@
     </b-alert>
     
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
-      <b-form @submit.prevent="invoiceEdit(invoiceData)">
+      <b-form @submit.prevent="invoiceEdit(invoiceData,'invoices')">
         <b-row
           v-if="invoiceData"
           class="invoice-add"
@@ -115,7 +115,7 @@
                     </b-card-header> 
                     <b-card-body class="invoice-body">
                       <div
-                          class="d-flex justify-content-end border-left py-50 px-25 clear-all"
+                          class="d-flex justify-content-end border-left py-50 px-25 clear-all-add"
                         >
                           <feather-icon
                             size="16"
@@ -272,7 +272,7 @@
                     </b-card-header> 
                     <b-card-body class="invoice-body">
                       <div
-                          class="d-flex justify-content-end border-left py-50 px-25 clear-all"
+                          class="d-flex justify-content-end border-left py-50 px-25 clear-all-add"
                         >
                           <feather-icon
                             size="16"
@@ -522,7 +522,7 @@
                             <b-form-input
                               :value="index+1"
                               type="text"
-                              class="mb-0"
+                              class="mb-0 text-left"
                               disabled
                             />
                              
@@ -904,8 +904,10 @@
                 variant="outline-primary"
                 class="mb-75"
                 block
-                :to="{ name: 'apps-invoice-preview', params: { id: invoiceData.id }}"
+                :disabled="invalid || loading"
+                @click="invoiceEdit(invoiceData,'preview')"
               >
+                <b-spinner v-if="loading" small variant="light" />
                 Preview
               </b-button>
 
@@ -1044,7 +1046,7 @@ export default {
         this.trSetHeight(this.$refs.form ? this.$refs.form.scrollHeight : 0)
       })
     },
-    invoiceEdit(invoiceData) {
+    invoiceEdit(invoiceData,redirectPage) {
       invoiceData.transactions.map(item =>{
         item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
         return item
@@ -1068,12 +1070,21 @@ export default {
                       variant: "success",
                     },
                   });
-                  return this.$router.push({
+                  if(redirectPage == 'invoices'){
+                    return this.$router.push({
                       name: "invoices", 
                       params: { 
                         id: 0 
                       }
                     })
+                  } else{
+                    return this.$router.push({ 
+                      name: "apps-invoice-preview", 
+                      params: { 
+                        id: invoiceData.id 
+                      }
+                    })
+                  }
                 })
                 .catch((error) => {
                   this.loading = false
@@ -1717,9 +1728,7 @@ background-color:$product-details-bg;
 .gap-2 {
   grid-gap: 20px;
 }
-.invoice-add .invoice-total-wrapper {
-  max-width: 25rem !important;
-}
+ 
 .accountType{
   display: flex;
   gap: 10px;
@@ -1785,9 +1794,5 @@ background-color:$product-details-bg;
 .invoice-input-middle .input-group.invoice-edit-input-group span{
   width: 100%;
 }
-.clear-all{
-  top: -0.7rem;
-  position: relative;
-  right: -1rem;
-}
+
 </style>

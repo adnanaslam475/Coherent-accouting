@@ -207,6 +207,7 @@
           <!-- Invoice Description: Table -->
           <b-table-lite
             responsive
+            class="transaction-container-preview"
             :items="invoiceData.transactions"
             :fields="['no.','serviceOrItemDescription', 'qty', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"            
           >
@@ -563,9 +564,7 @@ export default {
 .gap-2 {
   grid-gap: 25px;
 }
-.invoice-add .invoice-total-wrapper {
-  max-width: 25rem !important;
-}
+ 
 .invoice-preview-list .invoice-date-wrapper{
   display: flex;
   grid-gap: 10px;
