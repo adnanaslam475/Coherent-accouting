@@ -462,10 +462,10 @@
                 switch
               >
                 <span class="switch-icon-left">
-                  ORIGINAL
+                  PROFORMA
                 </span>
                 <span class="switch-icon-right">
-                  PROFORMA
+                  ORIGINAL
                 </span>
               </b-form-checkbox>
               <b-card
@@ -1196,9 +1196,9 @@ export default {
     
     let InvoiceTypeOptionToggle = (value)=>{
       if(value){
-        invoiceData.value.invoiceType = "ORIGINAL"
-      } else{
         invoiceData.value.invoiceType = "PROFORMA"
+      } else{
+        invoiceData.value.invoiceType = "ORIGINAL"
       }
     }
 
