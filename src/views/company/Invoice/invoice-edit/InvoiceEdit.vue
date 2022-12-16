@@ -494,10 +494,10 @@
                 switch
               >
                 <span class="switch-icon-left">
-                  PROFORMA
-                </span>
-                <span class="switch-icon-right">          
                   ORIGINAL
+                </span>
+                <span class="switch-icon-right">
+                  PROFORMA
                 </span>
               </b-form-checkbox>
               <b-card
@@ -1017,6 +1017,7 @@ import invoiceStoreModule from '../invoiceStoreModule'
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import TabList from "../../TabList.vue"
+import { required } from "@validations";
 export default {
   components: {
     BRow,
@@ -1064,6 +1065,7 @@ export default {
   },
   data() {
     return {
+      invoiceID: null,
       loading: false,
       supplierVat: [],
       recipientVat: []
@@ -1074,6 +1076,7 @@ export default {
   },
   created() {
     window.addEventListener('resize', this.initTrHeight)
+    this.invoiceID = this.$route.params.id;
   },
   destroyed() {
     window.removeEventListener('resize', this.initTrHeight)
@@ -1199,7 +1202,21 @@ export default {
       transactionTotalAmountNonVat: ""
     }
 
-    const invoiceData = ref(null)
+    const invoiceData = ref({
+      id: null,
+      transactions:[],
+      supplierCompany: {
+        companName: '',
+      companyAddress: '',
+      companyEic: '',
+      },
+      recipientCompany: {
+        companName: '',
+      companyAddress: '',
+      companyEic: '',
+      }
+    })
+    
     const currencyOptions =  [
       { value: 'лв.', text: 'лв.' },
       { value: '$', text: '$' },
@@ -1210,7 +1227,6 @@ export default {
       { value: 'EXPENSE', text: 'EXPENSE' },
     ]
     const VerifiedInvisible = ref(null)
-    var InvoiceTypeOptionToggleValue = ref(null)
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
         response.data.currency = response.data.currency.toLowerCase().trim() == 'lv' ? "лв." : response.data.currency.toLowerCase().trim() == 'bgn' ? "лв." : response.data.currency 
@@ -1219,7 +1235,6 @@ export default {
         // ? We are adding some extra data in response for data purpose
         // * Your response will contain this extra data
         // ? [Purpose is to make it more API friendly and less static as possible]
-        InvoiceTypeOptionToggleValue = invoiceData?.value?.invoiceType == "ORIGINAL" ? false : true
         invoiceData.value.transactions = response.data.transactions.map(item=>{
           return item
         })
@@ -1230,13 +1245,13 @@ export default {
         }
       })
 
-    
+    var InvoiceTypeOptionToggleValue = invoiceData.value.invoiceType == "ORIGINAL" ? false : true 
     
     let InvoiceTypeOptionToggle = (value)=>{
       if(value){
-        invoiceData.value.invoiceType = "PROFORMA"
-      } else{
         invoiceData.value.invoiceType = "ORIGINAL"
+      } else{
+        invoiceData.value.invoiceType = "PROFORMA"
       }
     }
 
