@@ -10,7 +10,7 @@ export default [
     icon: 'BriefcaseIcon',
   },
   {
-    title: 'Invoices',
+    title: 'My Invoices',
     route: 'invoices',
     icon: 'FileTextIcon',
   },
@@ -20,7 +20,7 @@ export default [
     icon: 'VideoIcon',
   },
   {
-    title: 'Tickets',
+    title: 'My Tickets',
     route: 'tickets',
     icon: 'TagIcon',
   },

@@ -517,7 +517,7 @@
                     <h6>{{ graph.count }} Reports have been created</h6>
                     <small
                       class="timeline-item-time text-nowrap text-muted ml-1"
-                      >{{ graph.date }}</small
+                      >{{ graph.date.substr(0,7) }}</small
                     >
                   </div>
                 </app-timeline-item>

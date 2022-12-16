@@ -91,7 +91,7 @@
       ok-title="Download Zip"
       cancel-title="Close"
       scrollable
-      @ok="getZipFile()"
+      @ok="getZipFile(refetchData)"
       :ok-disabled="modalDisabled"
     >
       <form ref="form" @submit.stop.prevent="handleMonthSelected">
@@ -459,7 +459,7 @@ export default {
     },
 
     // getting zip file from backend
-    getZipFile() {
+    getZipFile(refetchData) {
       this.$nextTick(() => {
         this.$bvModal.show("modal-spinner");
       });
@@ -508,15 +508,11 @@ export default {
                     variant: "success",
                   },
                 });
+                refetchData();
               }
             })
             .catch((error) => {
               // console.log(error);
-              // this.makeToast(
-              //   "danger",
-              //   error.response.errorCode,
-              //   error.response.errorMessage
-              // );
               this.$toast({
                 component: ToastificationContent,
                 props: {
