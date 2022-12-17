@@ -53,6 +53,7 @@
                     plain
                     name="accountTypeoptions"
                     value="company"
+                    class="d-none"
                   >
                     <h5>COMPANY</h5>
                   </b-form-radio>
@@ -61,9 +62,24 @@
                     plain
                     name="accountTypeoptions"
                     value="person"
+                    class="d-none"
                   >
                     <h5>PERSON</h5>
                   </b-form-radio>
+                  <b-form-checkbox
+                    v-model="AccountTypeOptionToggleValue"
+                    @change="AccountTypeOptionToggle(AccountTypeOptionToggleValue)"
+                    class="custom-control-primary custom-switch-btn"
+                    name="AccountTypeOptionToggle"
+                    switch
+                  >
+                    <span class="switch-icon-left">
+                      Person
+                    </span>
+                    <span class="switch-icon-right">
+                      Company
+                    </span>
+                  </b-form-checkbox>
                 </div>
 
                 <div
@@ -1124,7 +1140,16 @@ export default {
       // 
     })
   
-    var AccountTypeOption = "company"
+    var AccountTypeOption = ref("company")
+    var AccountTypeOptionToggleValue = false
+    
+    let AccountTypeOptionToggle = (value)=>{
+      if(value){
+        AccountTypeOption.value = "person"
+      } else{
+        AccountTypeOption.value = "company"
+      }
+    }
     
     const itemFormBlankItem = {
       serviceOrItemDescription: "",
@@ -1540,6 +1565,8 @@ export default {
 
     return {
       AccountTypeOption,
+      AccountTypeOptionToggle,
+      AccountTypeOptionToggleValue,
       invoiceData,
       currencyOptions,
       itemFormBlankItem,
