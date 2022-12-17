@@ -494,10 +494,10 @@
                 switch
               >
                 <span class="switch-icon-left">
-                  ORIGINAL
+                  PROFORMA
                 </span>
                 <span class="switch-icon-right">
-                  PROFORMA
+                  ORIGINAL
                 </span>
               </b-form-checkbox>
               <b-card
@@ -1227,6 +1227,7 @@ export default {
       { value: 'EXPENSE', text: 'EXPENSE' },
     ]
     const VerifiedInvisible = ref(null)
+    var InvoiceTypeOptionToggleValue = ref(null)
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
         response.data.currency = response.data.currency.toLowerCase().trim() == 'lv' ? "лв." : response.data.currency.toLowerCase().trim() == 'bgn' ? "лв." : response.data.currency 
@@ -1235,6 +1236,7 @@ export default {
         // ? We are adding some extra data in response for data purpose
         // * Your response will contain this extra data
         // ? [Purpose is to make it more API friendly and less static as possible]
+        InvoiceTypeOptionToggleValue.value = invoiceData.value.invoiceType == "PROFORMA" ? true : false
         invoiceData.value.transactions = response.data.transactions.map(item=>{
           return item
         })
@@ -1244,14 +1246,12 @@ export default {
           invoiceData.value = undefined
         }
       })
-
-    var InvoiceTypeOptionToggleValue = invoiceData.value.invoiceType == "ORIGINAL" ? false : true 
     
     let InvoiceTypeOptionToggle = (value)=>{
       if(value){
-        invoiceData.value.invoiceType = "ORIGINAL"
-      } else{
         invoiceData.value.invoiceType = "PROFORMA"
+      } else{
+        invoiceData.value.invoiceType = "ORIGINAL"
       }
     }
 
