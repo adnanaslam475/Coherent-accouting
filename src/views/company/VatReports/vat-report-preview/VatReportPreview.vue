@@ -6,7 +6,7 @@
       <b-col cols="12" xl="10" md="10" class="w-100-print">
         <b-form>
           <b-card no-body>
-            <b-card-header
+            <!-- <b-card-header
               class="justify-content-center mb-2"
               style="border-bottom: 0.5px lightgrey solid"
             >
@@ -15,7 +15,7 @@
                   VAT Report # {{ vatReportData.id }}
                 </h4>
               </div>
-            </b-card-header>
+            </b-card-header> -->
             <b-card-body>
               <!--  -->
               <b-row>
@@ -102,7 +102,8 @@
                         style="
                           border-radius: 5px;
                           border: 1px solid lightgrey;
-                          height: 35px;
+                          min-height: 35px;
+                      height: auto;
                           padding-left: 5px;
                           padding-top: 5px;
                         "
@@ -122,7 +123,8 @@
                         style="
                           border-radius: 5px;
                           border: 1px solid lightgrey;
-                          height: 35px;
+                          min-height: 35px;
+                      height: auto;
                           padding-left: 5px;
                           padding-top: 5px;
                         "
@@ -141,7 +143,8 @@
                         style="
                           border-radius: 5px;
                           border: 1px solid lightgrey;
-                          height: 35px;
+                          min-height: 35px;
+                      height: auto;
                           padding-left: 5px;
                           padding-top: 5px;
                         "
@@ -205,7 +208,7 @@
                     style="
                       border-radius: 5px;
                       border: 1px solid lightgrey;
-                      height: 35px;
+                      min-height: 35px;
                       padding-left: 10px;
                       padding-top: 5px;
                     "
@@ -245,7 +248,7 @@
                     style="
                       border-radius: 5px;
                       border: 1px solid lightgrey;
-                      height: 35px;
+                      min-height: 35px;
                       padding-left: 10px;
                       padding-top: 5px;
                     "
@@ -269,7 +272,7 @@
                     style="
                       border-radius: 5px;
                       border: 1px solid lightgrey;
-                      height: 35px;
+                      min-height: 35px;
                       padding-left: 10px;
                       padding-top: 5px;
                     "
@@ -299,7 +302,7 @@
                     style="
                       border-radius: 5px;
                       border: 1px solid lightgrey;
-                      height: 35px;
+                      min-height: 35px;
                       padding-left: 10px;
                       padding-top: 5px;
                     "
@@ -325,7 +328,7 @@
                     style="
                       border-radius: 5px;
                       border: 1px solid lightgrey;
-                      height: 35px;
+                      min-height: 35px;
                       padding-left: 10px;
                       padding-top: 5px;
                     "

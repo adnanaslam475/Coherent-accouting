@@ -2,14 +2,7 @@
   <b-row>
     <b-col cols="12" xl="12" md="12">
       <b-card no-body>
-        <b-card-header
-          class="justify-content-center mb-2"
-          style="border-bottom: 0.5px lightgrey solid"
-        >
-          <div class="d-flex align-items-center mb-0">
-            <h5 class="title mr-1 mb-0">VAT Report # {{ vatReportData.id }}</h5>
-          </div>
-        </b-card-header>
+        
         <b-card-body>
           <b-row>
             <b-col cols="12" xl="6" md="6">
@@ -100,7 +93,8 @@
                       border-radius: 5px;
                       font-size: 12px;
                       border: 1px solid lightgrey;
-                      height: 35px;
+                      min-height: 35px;
+                      height: auto;
                       padding-left: 5px;
                       padding-top: 5px;
                     "
@@ -123,7 +117,8 @@
                       border-radius: 5px;
                       font-size: 12px;
                       border: 1px solid lightgrey;
-                      height: 35px;
+                      min-height: 35px;
+                      height: auto;
                       padding-left: 5px;
                       padding-top: 5px;
                     "
@@ -145,7 +140,8 @@
                       border-radius: 5px;
                       font-size: 12px;
                       border: 1px solid lightgrey;
-                      height: 35px;
+                      min-height: 35px;
+                      height: auto;
                       padding-left: 5px;
                       padding-top: 5px;
                     "
@@ -209,7 +205,7 @@
                   border-radius: 5px;
                   font-size: 12px;
                   border: 1px solid lightgrey;
-                  height: 35px;
+                  min-height: 35px;
                   padding-left: 10px;
                   padding-top: 5px;
                 "
@@ -250,7 +246,7 @@
                   border-radius: 5px;
                   font-size: 12px;
                   border: 1px solid lightgrey;
-                  height: 35px;
+                  min-height: 35px;
                   padding-left: 10px;
                   padding-top: 5px;
                 "
@@ -275,7 +271,7 @@
                   border-radius: 5px;
                   font-size: 12px;
                   border: 1px solid lightgrey;
-                  height: 35px;
+                  min-height: 35px;
                   padding-left: 10px;
                   padding-top: 5px;
                 "
@@ -306,7 +302,7 @@
                   border-radius: 5px;
                   font-size: 12px;
                   border: 1px solid lightgrey;
-                  height: 35px;
+                  min-height: 35px;
                   padding-left: 10px;
                   padding-top: 5px;
                 "
@@ -333,7 +329,7 @@
                   border-radius: 5px;
                   font-size: 12px;
                   border: 1px solid lightgrey;
-                  height: 35px;
+                  min-height: 35px;
                   padding-left: 10px;
                   padding-top: 5px;
                 "

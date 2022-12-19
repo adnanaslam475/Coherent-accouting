@@ -3,14 +3,7 @@
     <TabList />
     <b-form>
       <b-card no-body>
-        <b-card-header
-          class="justify-content-center mb-2"
-          style="border-bottom: 0.5px lightgrey solid"
-        >
-          <div class="d-flex align-items-center mb-0">
-            <h4 class="title mr-1 mb-0">VAT Report # {{ vatReportData.id }}</h4>
-          </div>
-        </b-card-header>
+        
         <b-card-body>
           <validation-observer ref="editVatReportRules" tag="form">
             <!--  -->
