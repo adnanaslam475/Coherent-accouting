@@ -222,6 +222,9 @@
                     v-model="form.owner_egn"
                     :state="errors.length > 0 ? false : null"
                     placeholder="Owner EGN"
+                    type="number"
+                    :formatter="formatOwnerEGN"
+                   
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -698,6 +701,10 @@ export default {
     };
   },
   methods: {
+    //
+    formatOwnerEGN(e){
+     return String(e).substring(0,10);
+  },
    //
    updateCurrencyStatus(){
       this.defaultCurrency = false;

@@ -34,7 +34,7 @@
     <b-tab>
       <template #title>
         <feather-icon
-          icon="LockIcon"
+          icon="PackageIcon"
           size="18"
           class="mr-50"
         />

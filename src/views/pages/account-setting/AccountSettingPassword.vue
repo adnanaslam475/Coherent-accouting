@@ -1,28 +1,24 @@
 <template>
   <b-card>
     <validation-observer ref="simpleRules">
-
       <!-- form -->
       <b-form @submit.prevent="validationForm()">
         <b-row>
           <!-- old password -->
           <b-col cols="6">
-            <b-form-group
-                label="Password"
-                label-for="a-password"
-            >
+            <b-form-group label="Password" label-for="old-password">
               <validation-provider
-                  #default="{ errors }"
-                  name="Password"
-                  vid="Password"
-                  rules="required"
+                #default="{ errors }"
+                name="Password"
+                vid="Password"
+                rules="required"
               >
                 <b-form-input
-                    id="a-password"
-                    v-model="passwordValueOld"
-                    :state="errors.length > 0 ? false:null"
-                    :type="passwordFieldTypeOld"
-                    placeholder="Password"
+                  id="old-password"
+                  v-model="passwordValueOld"
+                  :state="errors.length > 0 ? false : null"
+                  :type="passwordFieldTypeOld"
+                  placeholder="Password"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -108,22 +104,19 @@
 
           <!-- password -->
           <b-col cols="6">
-            <b-form-group
-                label="New Password"
-                label-for="a-password"
-            >
+            <b-form-group label="New Password" label-for="new-password">
               <validation-provider
-                  #default="{ errors }"
-                  name="New Password"
-                  vid="newPassword"
-                  rules="required"
+                #default="{ errors }"
+                name="New Password"
+                vid="newPassword"
+                rules="required"
               >
                 <b-form-input
-                    id="a-password"
-                    v-model="newPasswordValue"
-                    :state="errors.length > 0 ? false:null"
-                    :type="passwordFieldTypeNew"
-                    placeholder="New Password"
+                  id="new-password"
+                  v-model="newPasswordValue"
+                  :state="errors.length > 0 ? false : null"
+                  :type="passwordFieldTypeNew"
+                  placeholder="New Password"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -132,22 +125,18 @@
 
           <!-- confirm password -->
           <b-col cols="6">
-            <b-form-group
-                label="Confirm Password"
-                label-for="ac-password"
-            >
+            <b-form-group label="Confirm Password" label-for="ac-password">
               <validation-provider
-                  #default="{ errors }"
-                  name="Confirm Password"
-                  rules="required|confirmed:Password"
+                #default="{ errors }"
+                name="Confirm Password"
+                rules="required|confirmed:newPassword"
               >
-
                 <b-form-input
-                    id="ac-password"
-                    v-model="RetypePassword"
-                    :state="errors.length > 0 ? false:null"
-                    :type="passwordFieldTypeRetype"
-                    placeholder="Confirm Password"
+                  id="ac-password"
+                  v-model="RetypePassword"
+                  :state="errors.length > 0 ? false : null"
+                  :type="passwordFieldTypeRetype"
+                  placeholder="Confirm Password"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -157,18 +146,18 @@
           <!-- buttons -->
           <b-col cols="12">
             <b-button
-                v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                variant="primary"
-                class="mt-1 mr-1"
-                type="submit"
+              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+              variant="primary"
+              class="mt-1 mr-1"
+              type="submit"
             >
               Save changes
             </b-button>
             <b-button
-                v-ripple.400="'rgba(186, 191, 199, 0.15)'"
-                type="reset"
-                variant="outline-secondary"
-                class="mt-1"
+              v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+              type="reset"
+              variant="outline-secondary"
+              class="mt-1"
             >
               Reset
             </b-button>
@@ -183,17 +172,25 @@
 <script>
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import {
-  BButton, BForm, BFormGroup, BFormInput, BRow, BCol, BCard, BInputGroup, BInputGroupAppend,
-} from 'bootstrap-vue'
-import Ripple from 'vue-ripple-directive'
-import { extend, ValidationProvider, ValidationObserver } from 'vee-validate'
-import { required, min, confirmed } from 'vee-validate/dist/rules'
-import axios from '@/libs/axios'
+  BButton,
+  BForm,
+  BFormGroup,
+  BFormInput,
+  BRow,
+  BCol,
+  BCard,
+  BInputGroup,
+  BInputGroupAppend,
+} from "bootstrap-vue";
+import Ripple from "vue-ripple-directive";
+import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
+import { required, min, confirmed } from "vee-validate/dist/rules";
+import axios from "@/libs/axios";
 import useJwt from "@/auth/jwt/useJwt";
 
-extend('required', required)
-extend('min', min)
-extend('confirmed', confirmed)
+extend("required", required);
+extend("min", min);
+extend("confirmed", confirmed);
 
 export default {
   components: {
@@ -216,23 +213,30 @@ export default {
   },
   data() {
     return {
-      passwordValueOld: '',
-      newPasswordValue: '',
-      RetypePassword: '',
-      passwordFieldTypeOld: 'password',
-      passwordFieldTypeNew: 'password',
-      passwordFieldTypeRetype: 'password',
-    }
+      is401True: false,
+      passwordValueOld: "",
+      newPasswordValue: "",
+      RetypePassword: "",
+      passwordFieldTypeOld: "password",
+      passwordFieldTypeNew: "password",
+      passwordFieldTypeRetype: "password",
+    };
   },
   computed: {
     passwordToggleIconOld() {
-      return this.passwordFieldTypeOld === 'password' ? 'EyeIcon' : 'EyeOffIcon'
+      return this.passwordFieldTypeOld === "password"
+        ? "EyeIcon"
+        : "EyeOffIcon";
     },
     passwordToggleIconNew() {
-      return this.passwordFieldTypeNew === 'password' ? 'EyeIcon' : 'EyeOffIcon'
+      return this.passwordFieldTypeNew === "password"
+        ? "EyeIcon"
+        : "EyeOffIcon";
     },
     passwordToggleIconRetype() {
-      return this.passwordFieldTypeRetype === 'password' ? 'EyeIcon' : 'EyeOffIcon'
+      return this.passwordFieldTypeRetype === "password"
+        ? "EyeIcon"
+        : "EyeOffIcon";
     },
   },
   // watch: {
@@ -243,62 +247,80 @@ export default {
   // },
   methods: {
     togglePasswordOld() {
-      this.passwordFieldTypeOld = this.passwordFieldTypeOld === 'password' ? 'text' : 'password'
+      this.passwordFieldTypeOld =
+        this.passwordFieldTypeOld === "password" ? "text" : "password";
     },
     togglePasswordNew() {
-      this.passwordFieldTypeNew = this.passwordFieldTypeNew === 'password' ? 'text' : 'password'
+      this.passwordFieldTypeNew =
+        this.passwordFieldTypeNew === "password" ? "text" : "password";
     },
     togglePasswordRetype() {
-      this.passwordFieldTypeRetype = this.passwordFieldTypeRetype === 'password' ? 'text' : 'password'
+      this.passwordFieldTypeRetype =
+        this.passwordFieldTypeRetype === "password" ? "text" : "password";
     },
     validationForm() {
-      this.$refs.simpleRules.validate()
-        .then(success => {
-          if (success) {
-            // eslint-disable-next-line
-            this.updatePassword()
-          }
-        })
+      this.$refs.simpleRules.validate().then((success) => {
+        if (success) {
+          // eslint-disable-next-line
+          this.updatePassword();
+        }
+      });
     },
     async updatePassword() {
+      this.is401True = false;
       const credentials = {
         oldPassword: this.passwordValueOld,
         newPassword: this.newPasswordValue,
-      }
+      };
 
       let token = useJwt.getToken();
-          await useJwt
-          .wrongOldPassword(token, credentials)
-          .then((response) => {
-            if (response.status === 200) {
-              this.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: "Password updated successfully ",
-                  icon: "DeleteIcon",
-                  variant: "success",
-                },
-              });
-            }
-          })
-          .catch((error) => {
+      await useJwt
+        .wrongOldPassword(token, credentials)
+        .then((response) => {
+          if (response.status === 200) {
+            this.is401True = true;
             this.$toast({
               component: ToastificationContent,
               props: {
-                title: `Old password is incorrect `,
-                icon: "AlertTriangleIcon",
-                variant: "danger",
+                title: "Password updated successfully ",
+                icon: "DeleteIcon",
+                variant: "success",
               },
             });
+          }
+          if (response.status === 401) {
+            console.log("Hey");
+          }
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Old password is incorrect `,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
           });
+        });
+
+      if (this.is401True === false) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `Old password is incorrect `,
+            icon: "AlertTriangleIcon",
+            variant: "danger",
+          },
+        });
+      }
     },
     makeToast(variant = null, title = null, message = null) {
       this.$bvToast.toast(message, {
         title,
         variant,
         solid: false,
-      })
+      });
     },
   },
-}
+};
 </script>
