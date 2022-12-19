@@ -709,11 +709,7 @@ export default {
 .dark-layout .card.invoice-card{
   border-color: #3b4253!important;
 }
-.card-header.invoice-header{
-    padding: 0.75rem;
-    border: 0;
-    border-radius: 0;
-}
+ 
 .card-header.invoice-header h5{
   color: #fff !important;
 }

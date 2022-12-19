@@ -223,7 +223,7 @@
                           </b-input-group>
                         </div>
                         <div
-                          v-if="supplierVat[0] == 'true'"
+                          v-if="supplierVat == 'true'"
                           class="d-flex align-items-center mb-1"
                         >
                           <span class="title mr-1"> Company Vat No: </span>
@@ -239,13 +239,22 @@
                           </b-input-group>
                         </div>
                         <div class="d-flex align-items-center mb-1">
+                          <span class="mr-1">
+                            Vat:
+                          </span>
                           <b-form-checkbox
                             v-model="supplierVat"
-                            value="true"
-                            plain
+                            class="custom-control-primary custom-switch-btn-1"
+                            name="check-button"
+                            switch
                           >
+                            <span class="switch-icon-left">
+                              YES
+                            </span>
+                            <span class="switch-icon-right">
+                              NO
+                            </span>
                           </b-form-checkbox>
-                          <span class="title mr-1"> Vat </span>
                         </div>
                       </b-card-body>
                     </b-card>
@@ -464,7 +473,7 @@
                         <div
                           v-if="
                             AccountTypeOption == 'company' &&
-                            recipientVat[0] == 'true'
+                            recipientVat == 'true'
                           "
                           class="d-flex align-items-center mb-1"
                         >
@@ -484,68 +493,111 @@
                           v-if="AccountTypeOption == 'company'"
                           class="d-flex align-items-center mb-1"
                         >
+                          <span class="mr-1">
+                            Vat:
+                          </span>
                           <b-form-checkbox
                             v-model="recipientVat"
-                            value="true"
-                            plain
+                            class="custom-control-primary custom-switch-btn-1"
+                            name="check-button"
+                            switch
                           >
+                            <span class="switch-icon-left">
+                              YES
+                            </span>
+                            <span class="switch-icon-right">
+                              NO
+                            </span>
                           </b-form-checkbox>
-                          <span class="title mr-1"> Vat </span>
                         </div>
                       </b-card-body>
                     </b-card>
                   </div>
                 </div>
               </div>
-
-              <b-card no-body class="invoice-preview date-issued">
-                <b-card-header class="justify-content-end">
-                  <div class="mt-md-0 mt-2">
-                    <div class="d-flex align-items-center mb-0">
-                      <span class="title mr-1"> Date: </span>
-                      <validation-provider
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <b-card
+                  no-body
+                  class="invoice-preview date-issued mb-0 ml-0"
+                >
+                  <b-card-header class="justify-content-end"> 
+                    <div class="mt-md-0 mt-2">
+                      <div class="d-flex align-items-center mb-0">
+                        <span class="title mr-1"> Transaction type: </span>
+                        <validation-provider
                         #default="{ errors }"
-                        name="dateIssued"
-                        
+                        name="transectionType"
+                        rules="required"
                       >
-                        <flat-pickr
-                          v-model="invoiceData.dateIssued"
-                          class="form-control invoice-edit-input invoice-input-top"
-                        />
+                        
+                        <b-form-select
+                            v-model="invoiceData.transactionType"
+                            :options="transectionOptions"
+                          >
+                        </b-form-select>
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
+                      </div>
                     </div>
-                  </div>
-                </b-card-header>
-              </b-card>
+                  </b-card-header>
+                </b-card>
+                <b-form-checkbox
+                  v-model="InvoiceTypeOptionToggleValue"
+                  @change="InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)"
+                  class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                  name="AccountTypeOptionToggle"
+                  switch
+                >
+                  <span class="switch-icon-left">
+                    PROFORMA
+                  </span>
+                  <span class="switch-icon-right">
+                    ORIGINAL
+                  </span>
+                </b-form-checkbox>
+                <b-card no-body class="invoice-preview date-issued mb-0">
+                  <b-card-header class="justify-content-end">
+                    <div class="mt-md-0 mt-2">
+                      <div class="d-flex align-items-center mb-0">
+                        <span class="title mr-1"> Date: </span>
+                        <validation-provider
+                          #default="{ errors }"
+                          name="dateIssued"
+                          
+                        >
+                          <flat-pickr
+                            v-model="invoiceData.dateIssued"
+                            class="form-control invoice-edit-input invoice-input-top"
+                          />
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
+                      </div>
+                    </div>
+                  </b-card-header>
+                </b-card>
+              </div>
 
-              <b-card no-body class="invoice-add-card">
-                <!-- Items Section -->
-                <b-card-body class="invoice-padding form-item-section px-0">
-                  <div
+              <b-card no-body class="invoice-add-card mb-1">           
+              <!-- Items Section -->
+                <b-card-body class="invoice-padding form-item-section p-0">
+                  <div             
                     ref="form"
-                    class="repeater-form h-auto"
+                    class="repeater-form h-auto border transaction-container border-1 border-primary"
                     :style="{ height: trHeight }"
                   >
                     <b-row
-                      v-for="(item, index) in invoiceData.transactions"
-                      :key="index"
                       ref="row"
-                      class="pb-2 m-0"
+                      class="pb-0 m-0"
                     >
                       <!-- Item Form -->
                       <!-- ? This will be in loop => So consider below markup for single item -->
-                      <b-col cols="12" class="p-0">
+                      <b-col cols="12" class="p-0 border border-0">
                         <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
-                        <div class="d-none d-lg-flex">
-                          <b-row
-                            class="flex-grow-1 px-1 invoice-add-transections"
-                          >
+                        <div class="d-none d-lg-flex bg-primary p-custom text-white">
+                          <b-row class="flex-grow-1 px-1 invoice-add-transections">
                             <!-- Single Item Form Headers -->
                             <b-col cols="12" lg="1"> No. </b-col>
-                            <b-col cols="12" lg="2">
-                              Item name or Service
-                            </b-col>
+                            <b-col cols="12" lg="2"> Item name or Service </b-col>
                             <b-col cols="12" lg="1"> Qty </b-col>
                             <b-col cols="12" lg="2"> Measurement </b-col>
                             <b-col cols="12" lg="2"> Single Price </b-col>
@@ -557,20 +609,25 @@
 
                         <!-- Form Input Fields OR content inside bordered area  -->
                         <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
-                        <div class="d-flex border rounded">
-                          <b-row
-                            class="flex-grow-1 py-1 px-1 invoice-add-transections"
-                          >
+                        <div 
+                          v-for="(item, index) in invoiceData.transactions"
+                          :key="index"
+                          class="d-flex px-custom"
+                        >
+                          <b-row class="flex-grow-1 py-1 px-1 invoice-add-transections">
                             <!-- Single Item Form Headers -->
                             <b-col cols="12" lg="1">
-                              <label class="d-inline d-lg-none">No.</label>
-
+                              <label class="d-inline d-lg-none"
+                                >No.</label
+                              >
+                              
                               <b-form-input
-                                :value="index + 1"
+                                :value="index+1"
                                 type="text"
-                                class="mb-0"
+                                class="mb-0 text-left"
                                 disabled
                               />
+                              
                             </b-col>
 
                             <b-col cols="12" lg="2">
@@ -580,7 +637,7 @@
                               <validation-provider
                                 #default="{ errors }"
                                 name="transectionServiceOrItemDescription"
-                                
+                                rules="required"
                               >
                                 <b-form-input
                                   v-model="item.serviceOrItemDescription"
@@ -590,9 +647,7 @@
                                   type="text"
                                   class="mb-0"
                                 />
-                                <small class="text-danger">{{
-                                  errors[0]
-                                }}</small>
+                                <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider>
                             </b-col>
                             <b-col cols="12" lg="1">
@@ -600,16 +655,14 @@
                               <validation-provider
                                 #default="{ errors }"
                                 name="transectionQuantity"
-                                
+                                rules="required"
                               >
                                 <b-form-input
                                   v-model="item.quantity"
                                   type="number"
                                   class="mb-0"
                                 />
-                                <small class="text-danger">{{
-                                  errors[0]
-                                }}</small>
+                                <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider>
                             </b-col>
                             <b-col cols="12" lg="2">
@@ -619,16 +672,14 @@
                               <validation-provider
                                 #default="{ errors }"
                                 name="transectionMeasurement"
-                                
+                                rules="required"
                               >
                                 <b-form-input
                                   v-model="item.measurement"
                                   type="text"
                                   class="mb-0"
                                 />
-                                <small class="text-danger">{{
-                                  errors[0]
-                                }}</small>
+                                <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider>
                             </b-col>
                             <b-col cols="12" lg="2">
@@ -638,7 +689,7 @@
                               <validation-provider
                                 #default="{ errors }"
                                 name="transectionSingleAmountTransaction"
-                                
+                                rules="required"
                               >
                                 <b-input-group
                                   class="input-group-merge invoice-edit-input-group"
@@ -655,9 +706,7 @@
                                     placeholder="0.00"
                                   />
                                 </b-input-group>
-                                <small class="text-danger">{{
-                                  errors[0]
-                                }}</small>
+                                <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider>
                             </b-col>
                             <b-col cols="12" lg="2">
@@ -665,16 +714,15 @@
                               <validation-provider
                                 #default="{ errors }"
                                 name="transectionCurrency"
-                                
+                                rules="required"
                               >
+                                
                                 <b-form-select
-                                  v-model="invoiceData.currency"
-                                  :options="currencyOptions"
-                                >
+                                    v-model="invoiceData.currency"
+                                    :options="currencyOptions"
+                                  >
                                 </b-form-select>
-                                <small class="text-danger">{{
-                                  errors[0]
-                                }}</small>
+                                <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider>
                             </b-col>
                             <b-col cols="12" lg="2">
@@ -684,7 +732,7 @@
                               <validation-provider
                                 #default="{ errors }"
                                 name="transectionTotal"
-                                
+                                rules="required"
                               >
                                 <b-input-group
                                   class="input-group-merge invoice-edit-input-group"
@@ -694,28 +742,21 @@
                                   </b-input-group-prepend>
 
                                   <b-form-input
-                                    :value="
-                                      (
-                                        item.singleAmountTransaction *
-                                        item.quantity
-                                      ).toFixed(2)
-                                    "
+                                    :value="(item.singleAmountTransaction * item.quantity).toFixed(2)"
                                     disabled
                                     class="mb-0"
                                   />
                                 </b-input-group>
-                                <small class="text-danger">{{
-                                  errors[0]
-                                }}</small>
+                                <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider>
                             </b-col>
                           </b-row>
                           <div
-                            class="d-flex flex-column justify-content-between border-left py-50 px-25"
+                            class="d-flex justify-content-center align-items-center py-50 px-25"
                           >
                             <feather-icon
                               size="16"
-                              icon="XIcon"
+                              icon="Trash2Icon"
                               class="cursor-pointer"
                               @click="removeItem(index)"
                             />
@@ -723,236 +764,236 @@
                         </div>
                       </b-col>
                     </b-row>
-                  </div>
-                  <b-button
+                  </div>             
+                </b-card-body>
+              </b-card>
+              <b-button
                     v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                     size="sm"
                     variant="primary"
                     @click="addNewItemInItemForm"
+                    class="mb-2"
                   >
-                    Add Item
-                  </b-button>
-                </b-card-body>
-
-                <!-- Invoice Description: Total -->
-                <b-card-body class="invoice-padding pb-0">
-                  <b-row>
+                  Add Item
+              </b-button>
+              
+              <b-card no-body class="invoice-add-card mb-1">  
+                <b-card-body class="invoice-padding form-item-section p-0">
+                  <b-row class="pb-0 m-0 border transaction-container border-1 border-primary">
                     <!-- Col: Sales Persion -->
                     <b-col
                       cols="12"
-                      md="6"
-                      class="mt-md-0 mt-3 d-flex align-items-center"
-                      order="2"
-                      order-md="1"
+                      class="border border-0 row m-0 py-2"
                     >
-                    </b-col>
+                      <b-col
+                        cols="12"
+                        md="7"
+                        class="mt-md-6 d-flex"
+                        order="2"
+                        order-md="1"
+                      >
+                      <h1 class="invoiceTypeHeading">
+                        {{ invoiceData.invoiceType }}
+                      </h1>
+                      </b-col>
 
-                    <!-- Col: Total -->
-                    <b-col
-                      cols="12"
-                      md="6"
-                      class="mt-md-6 d-flex justify-content-end"
-                      order="1"
-                      order-md="2"
-                    >
-                      <div class="invoice-total-wrapper">
-                        <div class="invoice-total-item">
-                          <p class="invoice-total-title">Total price NonVat:</p>
-                          <p class="invoice-total-amount">
-                            <validation-provider
-                              #default="{ errors }"
-                              name="amountNonVat"
-                              
-                            >
-                              <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
+                      <!-- Col: Total -->
+                      <b-col
+                        cols="12"
+                        md="5"
+                        class="mt-md-6 d-flex justify-content-end"
+                        order="1"
+                        order-md="2"
+                      >
+                        <div class="invoice-total-wrapper">
+                          <div class="invoice-total-item">
+                            <p class="invoice-total-title">Total price NonVat:</p>
+                            <p class="invoice-total-amount">
+                              <validation-provider
+                                #default="{ errors }"
+                                name="amountNonVat"
+                                rules="required"
                               >
-                                <b-input-group-prepend is-text>
-                                  <span>{{ invoiceData.currency }}</span>
-                                </b-input-group-prepend>
+                                <b-input-group
+                                  class="input-group-merge invoice-edit-input-group"
+                                >
+                                  <b-input-group-prepend is-text>
+                                    <span>{{ invoiceData.currency }}</span>
+                                  </b-input-group-prepend>
 
-                                <b-form-input
-                                  :value="
-                                    amountNonVat(invoiceData.transactions)
-                                      ? amountNonVat(invoiceData.transactions)
-                                      : 0
-                                  "
-                                  disabled
-                                />
-                              </b-input-group>
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
-                          </p>
-                        </div>
-                        <div class="invoice-total-item">
-                          <p class="invoice-total-title">VAT:</p>
-                          <p class="invoice-total-amount">
-                            <validation-provider
-                              #default="{ errors }"
-                              name="vat"
-                              
-                            >
-                              <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
+                                  <b-form-input
+                                    :value="amountNonVat(invoiceData.transactions) ? amountNonVat(invoiceData.transactions) : 0"
+                                    disabled
+                                  />
+                                </b-input-group>
+                                <small class="text-danger">{{ errors[0] }}</small>
+                              </validation-provider>
+                            </p>
+                          </div>
+                          <div class="invoice-total-item">
+                            <p class="invoice-total-title">VAT:</p>
+                            <p class="invoice-total-amount">
+                              <validation-provider
+                                #default="{ errors }"
+                                name="vat"
+                                rules="required"
                               >
-                                <b-form-input
-                                  v-model="invoiceData.vatPercent"
-                                  :value="
-                                    invoiceData.vatPercent
-                                      ? invoiceData.vatPercent
-                                      : 20
-                                  "
-                                  step="any"
-                                  type="number"
-                                />
-
-                                <b-input-group-append is-text>
-                                  <span>%</span>
-                                </b-input-group-append>
-                              </b-input-group>
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
-                          </p>
-                        </div>
-                        <div class="invoice-total-item">
-                          <p class="invoice-total-title">VAT Amount:</p>
-                          <p class="invoice-total-amount">
-                            <validation-provider
-                              #default="{ errors }"
-                              name="vatPercent"
-                              
-                            >
-                              <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
-                              >
-                                <b-input-group-prepend is-text>
-                                  <span>{{ invoiceData.currency }}</span>
-                                </b-input-group-prepend>
-                                <b-form-input
-                                  :value="
-                                    vatAmount(
-                                      invoiceData.transactions,
+                                <b-input-group
+                                  class="input-group-merge invoice-edit-input-group"
+                                >
+                                  <b-form-input
+                                    v-model="invoiceData.vatPercent"
+                                    :value="
                                       invoiceData.vatPercent
-                                    )
-                                  "
-                                  type="number"
-                                  disabled
-                                />
-                              </b-input-group>
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
-                          </p>
-                        </div>
-                        <div class="invoice-total-item">
-                          <p class="invoice-total-title">Discount Percent:</p>
-                          <p class="invoice-total-amount">
-                            <validation-provider
-                              #default="{ errors }"
-                              name="tradeDiscountPercent"
-                              
-                            >
-                              <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
-                              >
-                                <b-form-input
-                                  v-model="invoiceData.tradeDiscountPercent"
-                                  :value="
-                                    invoiceData.tradeDiscountPercent
-                                      ? invoiceData.tradeDiscountPercent
-                                      : 0
-                                  "
-                                  step="any"
-                                  type="number"
-                                />
+                                        ? invoiceData.vatPercent
+                                        : 20
+                                    "
+                                    step="any"
+                                    type="number"
+                                    class="text-right"
+                                  />
 
-                                <b-input-group-append is-text>
-                                  <span>%</span>
-                                </b-input-group-append>
-                              </b-input-group>
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
-                          </p>
-                        </div>
-                        <div class="invoice-total-item">
-                          <p class="invoice-total-title">Discount Sum:</p>
-                          <p class="invoice-total-amount">
-                            <validation-provider
-                              #default="{ errors }"
-                              name="tradeDiscountAmount"
-                              
-                            >
-                              <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
+                                  <b-input-group-append is-text>
+                                    <span>%</span>
+                                  </b-input-group-append>
+                                </b-input-group>
+                                <small class="text-danger">{{ errors[0] }}</small>
+                              </validation-provider>
+                            </p>
+                          </div>
+                          <div class="invoice-total-item">
+                            <p class="invoice-total-title">VAT Amount:</p>
+                            <p class="invoice-total-amount">
+                              <validation-provider
+                                #default="{ errors }"
+                                name="vatPercent"
+                                rules="required"
                               >
-                                <b-input-group-prepend is-text>
-                                  <span>{{ invoiceData.currency }}</span>
-                                </b-input-group-prepend>
-
-                                <b-form-input
-                                  :value="
-                                    tradeDiscountAmount(
-                                      invoiceData.transactions,
-                                      invoiceData.vatPercent,
+                                <b-input-group
+                                  class="input-group-merge invoice-edit-input-group"
+                                >
+                                  <b-input-group-prepend is-text>
+                                    <span>{{ invoiceData.currency }}</span>
+                                  </b-input-group-prepend>
+                                  <b-form-input                    
+                                    :value="vatAmount(invoiceData.transactions,invoiceData.vatPercent)"
+                                    type="number"
+                                    disabled
+                                  />
+                                </b-input-group>
+                                <small class="text-danger">{{ errors[0] }}</small>
+                              </validation-provider>
+                            </p>
+                          </div>
+                          <div class="invoice-total-item">
+                            <p class="invoice-total-title">Discount Percent:</p>
+                            <p class="invoice-total-amount">
+                              <validation-provider
+                                #default="{ errors }"
+                                name="tradeDiscountPercent"
+                                rules="required"
+                              >
+                                <b-input-group
+                                  class="input-group-merge invoice-edit-input-group"
+                                >
+                                  <b-form-input
+                                    v-model="invoiceData.tradeDiscountPercent"
+                                    :value="
                                       invoiceData.tradeDiscountPercent
-                                    )
-                                      ? tradeDiscountAmount(
-                                          invoiceData.transactions,
-                                          invoiceData.vatPercent,
-                                          invoiceData.tradeDiscountPercent
-                                        )
-                                      : 0
-                                  "
-                                  disabled
-                                />
-                              </b-input-group>
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
-                          </p>
-                        </div>
-                        <hr class="my-50" />
-                        <div class="invoice-total-item">
-                          <p class="invoice-total-title">Total Price:</p>
-                          <p class="invoice-total-amount">
-                            <validation-provider
-                              #default="{ errors }"
-                              name="totalPrice"
-                              
-                            >
-                              <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
-                              >
-                                <b-input-group-prepend is-text>
-                                  <span>{{ invoiceData.currency }}</span>
-                                </b-input-group-prepend>
+                                        ? invoiceData.tradeDiscountPercent
+                                        : 0
+                                    "
+                                    step="any"
+                                    type="number"
+                                    class="text-right"
+                                  />
 
-                                <b-form-input
-                                  :value="
-                                    totalPrice(
-                                      invoiceData.transactions,
-                                      invoiceData.vatPercent,
-                                      invoiceData.tradeDiscountPercent
-                                    )
-                                      ? totalPrice(
-                                          invoiceData.transactions,
-                                          invoiceData.vatPercent,
-                                          invoiceData.tradeDiscountPercent
-                                        )
-                                      : 0
-                                  "
-                                  disabled
-                                />
-                              </b-input-group>
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
-                          </p>
+                                  <b-input-group-append is-text>
+                                    <span>%</span>
+                                  </b-input-group-append>
+                                </b-input-group>
+                                <small class="text-danger">{{ errors[0] }}</small>
+                              </validation-provider>
+                            </p>
+                          </div>
+                          <div class="invoice-total-item">
+                            <p class="invoice-total-title">Discount Sum:</p>
+                            <p class="invoice-total-amount">
+                              <validation-provider
+                                #default="{ errors }"
+                                name="tradeDiscountAmount"
+                                rules="required"
+                              >
+                                <b-input-group
+                                  class="input-group-merge invoice-edit-input-group"
+                                >
+                                  <b-input-group-prepend is-text>
+                                    <span>{{ invoiceData.currency }}</span>
+                                  </b-input-group-prepend>
+
+                                  <b-form-input
+                                    :value="
+                                      tradeDiscountAmount(
+                                        invoiceData.transactions,
+                                        invoiceData.vatPercent,
+                                        invoiceData.tradeDiscountPercent
+                                      )
+                                        ? tradeDiscountAmount(
+                                            invoiceData.transactions,
+                                            invoiceData.vatPercent,
+                                            invoiceData.tradeDiscountPercent
+                                          )
+                                        : 0
+                                    "
+                                    disabled
+                                  />
+                                </b-input-group>
+                                <small class="text-danger">{{ errors[0] }}</small>
+                              </validation-provider>
+                            </p>
+                          </div>
+                          <div class="invoice-total-item">
+                            <p class="invoice-total-title font-weight-bolder custom-font">Total Price:</p>
+                            <p class="invoice-total-amount">
+                              <validation-provider
+                                #default="{ errors }"
+                                name="totalPrice"
+                                rules="required"
+                              >
+                                <b-input-group
+                                  class="input-group-merge invoice-edit-input-group"
+                                >
+                                  <b-input-group-prepend is-text>
+                                    <span>{{ invoiceData.currency }}</span>
+                                  </b-input-group-prepend>
+
+                                  <b-form-input
+                                    :value="
+                                      totalPrice(
+                                        invoiceData.transactions,
+                                        invoiceData.vatPercent,
+                                        invoiceData.tradeDiscountPercent
+                                      )
+                                        ? totalPrice(
+                                            invoiceData.transactions,
+                                            invoiceData.vatPercent,
+                                            invoiceData.tradeDiscountPercent
+                                          )
+                                        : 0
+                                    "
+                                    disabled
+                                    class="opacity-1 font-weight-bolder custom-font"
+                                  />
+                                </b-input-group>
+                                <small class="text-danger">{{ errors[0] }}</small>
+                              </validation-provider>
+                            </p>
+                          </div>
                         </div>
-                      </div>
+                      </b-col>
                     </b-col>
                   </b-row>
                 </b-card-body>
-
-                <!-- Spacer -->
-                <hr class="invoice-spacing" />
               </b-card>
             </b-col>
 
@@ -1107,7 +1148,7 @@ export default {
       });
     },
     invoicePreview(invoiceData,AccountTypeOption) {
-
+      
       if(AccountTypeOption == 'person'){
          invoiceData.recipientCompany.companName = invoiceData.recipientCompany.companyOwnerName
          invoiceData.recipientCompany.companyVatEic = ''
@@ -1186,7 +1227,8 @@ export default {
 
       // ? Set single Item in form for adding data
       transactions: [JSON.parse(JSON.stringify(itemFormBlankItem))],
-
+      transactionType: "INCOME",
+      invoiceType: "ORIGINAL",
       documentType: "INVOICE",
       verified: true
     });
@@ -1198,12 +1240,25 @@ export default {
         item.index = index + 1
         return item
     })
-
+    
     const currencyOptions =  [
       { value: 'лв.', text: 'лв.' },
       { value: '$', text: '$' },
       { value: '€', text: '€' },
     ]
+    const transectionOptions = [
+      { value: 'INCOME', text: 'INCOME' },
+      { value: 'EXPENSE', text: 'EXPENSE' },
+    ]
+    var InvoiceTypeOptionToggleValue = invoiceData.value.invoiceType == "PROFORMA" ? true : false
+    
+    let InvoiceTypeOptionToggle = (value)=>{
+      if(value){
+        invoiceData.value.invoiceType = "PROFORMA"
+      } else{
+        invoiceData.value.invoiceType = "ORIGINAL"
+      }
+    }
 
     const vatAmount = (item, vatPercent)=> {
       let amountNonVat = item.reduce((acc, ele) => {
@@ -1283,9 +1338,10 @@ export default {
 
         // ? Set single Item in form for adding data
         transactions: invoiceData.value.transactions,
-
+        transactionType: invoiceData.value.transactionType,
+        invoiceType: invoiceData.value.invoiceType,
         documentType: "INVOICE",
-        verified: true
+        verified: invoiceData.value.verified
       }
     }
     var datalist = ref([])
@@ -1567,8 +1623,11 @@ export default {
       AccountTypeOption,
       AccountTypeOptionToggle,
       AccountTypeOptionToggleValue,
+      InvoiceTypeOptionToggleValue,
+      InvoiceTypeOptionToggle,
       invoiceData,
       currencyOptions,
+      transectionOptions,
       itemFormBlankItem,
       vatAmount,
       totalPrice,
@@ -1701,10 +1760,7 @@ export default {
 .dark-layout .input-suggesstions .list-group-item{
   background-color: #161d31 !important;
 }
-.invoice-add-transections .col-12{
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
+ 
 
 .card.invoice-card{
   border: 1px solid #ebe9f1;
@@ -1715,11 +1771,7 @@ export default {
 .dark-layout .card.invoice-card{
   border-color: #3b4253!important;
 }
-.card-header.invoice-header{
-    padding: 0.75rem;
-    border: 0;
-    border-radius: 0;
-}
+
 .card-header.invoice-header h5{
   color: #fff !important;
 }

@@ -133,6 +133,11 @@ body {
 .flex-1{
   flex: 1;
 }
+.card-header.invoice-header{
+  padding: 0.72rem;
+  border: 0;
+  border-radius: 0;
+}
 .invoice-preview.date-issued {
   width: max-content;
   margin-right: 0;
@@ -170,6 +175,11 @@ h2.brand-text{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* custom-switch-btn */
+.custom-switch-btn{
+  height: 2.5rem !important;
+}
 .custom-switch-btn.custom-switch .custom-control-label {
   padding-left: 8.5rem !important;
 }
@@ -195,6 +205,9 @@ h2.brand-text{
   font-size: 1rem;
 }
 /* custom-switch-1 */
+.custom-switch-btn-1{
+  height: 2.5rem !important;
+}
 .custom-switch-btn-1.custom-switch .custom-control-label {
   padding-left: 5.5rem !important;
 }
@@ -220,6 +233,9 @@ h2.brand-text{
   font-size: 1rem;
 }
 /* custom-switch-2 */
+.custom-switch-btn-2{
+  height: 2.5rem !important;
+}
 .custom-switch-btn-2.custom-switch .custom-control-label {
   padding-left: 9.5rem !important;
 }
@@ -254,7 +270,7 @@ input.form-control:disabled{
 }
 /* Add/edit transaction UI */
 .transaction-container{
-  border-radius: 15px;
+  border-radius: 15px !important;
   overflow: hidden;
 }
 .p-custom{
@@ -267,12 +283,35 @@ input.form-control:disabled{
   padding: 0.8rem;
 }
 .custom-font{
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 .opacity-1{
   opacity: 1 !important;
 }
 .invoice-add .invoice-total-wrapper {
-  max-width: max-content !important;
+  max-width: 100% !important;
+}
+.invoiceTypeHeading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: xxx-large;
+  font-size: -webkit-xxx-large;
+  transform: rotate(330deg) scale(1.2);
+  font-weight: 400;
+}
+.invoice-add-transections .form-control,.invoice-add-transections .input-group-text,.invoice-add-transections .custom-select {
+  height: 2.5rem !important;
+}
+.invoice-add-transections .col-12{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 /* Preview transaction UI */
+.invoiceStat .invoice-total-item .invoice-total-title.font-weight-bolder{
+  font-weight: 600 !important;
+}
+ 
+/* custom-preview-table */
+

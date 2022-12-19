@@ -75,7 +75,7 @@
               </div>
             
               <div
-                class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input invoice-input-middle"
+                class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input invoice-input-middle mb-md-0"
               >
                 <div class="mt-md-0 mt-2 flex-1">
                   <b-card
@@ -206,7 +206,7 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="supplierVat[0] == 'true'" class="d-flex align-items-center mb-1">
+                      <div v-if="supplierVat == 'true'" class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
                           Company Vat No:
                         </span>
@@ -220,15 +220,22 @@
                         </b-input-group>
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                        <b-form-checkbox
-                            v-model="supplierVat"
-                            value="true"
-                            plain
-                          >
-                          </b-form-checkbox>
-                          <span class="title mr-1">
-                            Vat
+                          <span class="mr-1">
+                            Vat:
                           </span>
+                          <b-form-checkbox
+                            v-model="supplierVat"
+                            class="custom-control-primary custom-switch-btn-1"
+                            name="check-button"
+                            switch
+                          >
+                            <span class="switch-icon-left">
+                              YES
+                            </span>
+                            <span class="switch-icon-right">
+                              NO
+                            </span>
+                          </b-form-checkbox>
                       </div>
                     </b-card-body>
                   </b-card>
@@ -398,7 +405,7 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="AccountTypeOption=='company' && recipientVat[0] == 'true'" class="d-flex align-items-center mb-1">
+                      <div v-if="AccountTypeOption=='company' && recipientVat == 'true'" class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
                           Company Vat No:
                         </span>
@@ -412,15 +419,22 @@
                         </b-input-group>
                       </div>
                       <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
+                        <span class="mr-1">
+                          Vat:
+                        </span>
                         <b-form-checkbox
-                            v-model="recipientVat"
-                            value="true"
-                            plain
-                          >
-                          </b-form-checkbox>
-                          <span class="title mr-1">
-                            Vat
+                          v-model="recipientVat"
+                          class="custom-control-primary custom-switch-btn-1"
+                          name="check-button"
+                          switch
+                        >
+                          <span class="switch-icon-left">
+                            YES
                           </span>
+                          <span class="switch-icon-right">
+                            NO
+                          </span>
+                        </b-form-checkbox>
                       </div>
                     </b-card-body>
                   </b-card>
@@ -492,24 +506,21 @@
                 </b-card-header>
               </b-card>
             </div>
-            <b-card no-body class="invoice-add-card">
-           
+            <b-card no-body class="invoice-add-card mb-1">           
               <!-- Items Section -->
-              <b-card-body class="invoice-padding form-item-section px-0">
-                <div
+              <b-card-body class="invoice-padding form-item-section p-0">
+                <div             
                   ref="form"
-                  class="repeater-form h-auto"
+                  class="repeater-form h-auto border transaction-container border-1 border-primary"
                   :style="{ height: trHeight }"
                 >
                   <b-row
-                    v-for="(item, index) in invoiceData.transactions"
-                    :key="index"
                     ref="row"
-                    class="pb-2 m-0"
+                    class="pb-0 m-0"
                   >
                     <!-- Item Form -->
                     <!-- ? This will be in loop => So consider below markup for single item -->
-                    <b-col cols="12" class="p-0 border transaction-container border-2 border-primary">
+                    <b-col cols="12" class="p-0 border border-0">
                       <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                       <div class="d-none d-lg-flex bg-primary p-custom text-white">
                         <b-row class="flex-grow-1 px-1 invoice-add-transections">
@@ -527,7 +538,11 @@
 
                       <!-- Form Input Fields OR content inside bordered area  -->
                       <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
-                      <div class="d-flex px-custom">
+                      <div 
+                        v-for="(item, index) in invoiceData.transactions"
+                        :key="index"
+                        class="d-flex px-custom"
+                      >
                         <b-row class="flex-grow-1 py-1 px-1 invoice-add-transections">
                           <!-- Single Item Form Headers -->
                           <b-col cols="12" lg="1">
@@ -666,11 +681,11 @@
                           </b-col>
                         </b-row>
                         <div
-                          class="d-flex flex-column justify-content-between border-left py-50 px-25"
+                          class="d-flex justify-content-center align-items-center py-50 px-25"
                         >
                           <feather-icon
                             size="16"
-                            icon="XIcon"
+                            icon="Trash2Icon"
                             class="cursor-pointer"
                             @click="removeItem(index)"
                           />
@@ -678,34 +693,46 @@
                       </div>
                     </b-col>
                   </b-row>
-                </div>
-                  
-                <b-button
+                </div>             
+              </b-card-body>
+            </b-card>
+            <b-button
                   v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                   size="sm"
                   variant="primary"
                   @click="addNewItemInItemForm"
+                  class="mb-2"
                 >
-                  Add Item
-                </b-button>
-
-                
-              </b-card-body>
-
-              <!-- Invoice Description: Total -->
-              <b-card-body class="invoice-padding pb-0 form-item-section px-0">
-                <b-row class="m-0">
+                Add Item
+            </b-button>
+            
+            <b-card no-body class="invoice-add-card mb-1">  
+              <b-card-body class="invoice-padding form-item-section p-0">
+                <b-row class="pb-0 m-0 border transaction-container border-1 border-primary">
                   <!-- Col: Sales Persion -->
                   <b-col
                     cols="12"
-                    class="border transaction-container border-2 border-primary p-0 row m-0 py-1"
+                    class="border border-0 row m-0 py-2"
                   >
                     <b-col
                       cols="12"
-                      md="6"
+                      md="7"
                       class="mt-md-6 d-flex"
                       order="2"
                       order-md="1"
+                    >
+                    <h1 class="invoiceTypeHeading">
+                      {{ invoiceData.invoiceType }}
+                    </h1>
+                    </b-col>
+
+                    <!-- Col: Total -->
+                    <b-col
+                      cols="12"
+                      md="5"
+                      class="mt-md-6 d-flex justify-content-end"
+                      order="1"
+                      order-md="2"
                     >
                       <div class="invoice-total-wrapper">
                         <div class="invoice-total-item">
@@ -752,6 +779,7 @@
                                   "
                                   step="any"
                                   type="number"
+                                  class="text-right"
                                 />
 
                                 <b-input-group-append is-text>
@@ -786,18 +814,6 @@
                             </validation-provider>
                           </p>
                         </div>
-                      </div>
-                    </b-col>
-
-                    <!-- Col: Total -->
-                    <b-col
-                      cols="12"
-                      md="6"
-                      class="mt-md-6 d-flex justify-content-end"
-                      order="1"
-                      order-md="2"
-                    >
-                      <div class="invoice-total-wrapper">
                         <div class="invoice-total-item">
                           <p class="invoice-total-title">Discount Percent:</p>
                           <p class="invoice-total-amount">
@@ -818,6 +834,7 @@
                                   "
                                   step="any"
                                   type="number"
+                                  class="text-right"
                                 />
 
                                 <b-input-group-append is-text>
@@ -1830,10 +1847,7 @@ export default {
 .dark-layout .input-suggesstions .list-group-item{
   background-color: #161d31 !important;
 }
-.invoice-add-transections .col-12{
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
+ 
 
 .card.invoice-card{
   border: 1px solid #ebe9f1;
@@ -1844,11 +1858,7 @@ export default {
 .dark-layout .card.invoice-card{
   border-color: #3b4253!important;
 }
-.card-header.invoice-header{
-    padding: 0.75rem;
-    border: 0;
-    border-radius: 0;
-}
+ 
 .card-header.invoice-header h5{
   color: #fff !important;
 }

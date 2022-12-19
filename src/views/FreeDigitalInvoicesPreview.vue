@@ -41,6 +41,10 @@
               </div>
             </b-card-header>
           </b-card>
+
+          <h1 class="text-primary text-center" style="margin-bottom: 2rem;">
+            {{invoiceData.invoiceType}}
+          </h1>
           
           <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2">
             <!-- Header: Left Content -->
@@ -155,7 +159,23 @@
             </div>
           </div>
   
-          <b-card
+          <div class="d-flex justify-content-between align-items-center">
+            <b-card
+              no-body
+              class="invoice-preview date-issued ml-0"
+            >
+              <b-card-header class="justify-content-end"> 
+                <div class="invoice-date-wrapper invoice-middle-content">
+                  <p class="invoice-date-title">
+                    Transaction Type:
+                  </p>
+                  <p class="invoice-date">
+                    {{ invoiceData.transactionType }}
+                  </p>
+                </div>
+              </b-card-header>
+            </b-card>
+            <b-card
             no-body
             class="invoice-preview date-issued"
           >
@@ -169,17 +189,19 @@
                 </p>
               </div>
             </b-card-header>
-          </b-card>
+            </b-card>
+         </div>
            
           <b-card
               no-body
-              class="invoice-preview-card"
+              class="invoice-preview-card transaction-container"
           >
             <!-- Invoice Description: Table -->
             <b-table-lite
               responsive
               :items="invoiceData.transactions"
-              :fields="['no.','serviceOrItemDescription', 'qty', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"            
+              :fields="['no.','serviceOrItemDescription', 'qty', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"
+              class="custom-preview-table"            
             >
               <template #cell(no.)="data">
                   {{ data.item.index }}
@@ -198,23 +220,34 @@
             </b-table-lite>
   
             <!-- Invoice Description: Total -->
-            <b-card-body class="invoice-padding pb-0">
+
+  
+          </b-card>
+
+          <b-card
+            no-body
+            class="invoice-preview-card transaction-container"
+          >
+            <b-card-body class="invoice-padding">
               <b-row class="invoiceStat">
   
                 <!-- Col: Sales Persion -->
                 <b-col
                   cols="12"
-                  md="6"
-                  class="mt-md-0 mt-3"
+                  md="7"
+                  class="mt-md-6 d-flex"
                   order="2"
                   order-md="1"
                 >
+                <h1 class="invoiceTypeHeading">
+                  {{ invoiceData.invoiceType }}
+                </h1>
                 </b-col>
   
                 <!-- Col: Total -->
                 <b-col
                   cols="12"
-                  md="6"
+                  md="5"
                   class="mt-md-6 d-flex justify-content-end"
                   order="1"
                   order-md="2"
@@ -263,12 +296,12 @@
                         <span v-else>{{ invoiceData.currency }} {{invoiceData.tradeDiscountAmount}}</span>
                       </p>
                     </div>
-                    <hr class="my-50">
+                    
                     <div class="invoice-total-item">
-                      <p class="invoice-total-title">
+                      <p class="invoice-total-title font-weight-bolder custom-font mb-0">
                         Total Price:
                       </p>
-                      <p class="invoice-total-amount">
+                      <p class="invoice-total-amount font-weight-bolder custom-font mb-0">
                         <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.totalAmount}}</span>
                         <span v-else>{{ invoiceData.currency }} {{invoiceData.totalAmount}}</span>
                       </p>
@@ -277,7 +310,6 @@
                 </b-col>
               </b-row>
             </b-card-body>
-  
           </b-card>
         </b-col>
   
