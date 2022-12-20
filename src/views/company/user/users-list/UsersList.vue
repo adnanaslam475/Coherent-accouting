@@ -148,7 +148,54 @@
 
         <!-- Column: Actions -->
         <template #cell(actions)="data">
-          <b-dropdown
+          <div class="d-flex">
+          <feather-icon
+              :id="`private-person-row-${data.item.id}-preview-icon`"
+              icon="EyeIcon"
+              size="16"
+              class="mr-1 cursor-pointer"
+              @click="
+                $router.push({
+                  name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId }
+                })
+              "
+            />
+          <b-tooltip
+            title="View Details"
+            class="cursor-pointer"
+            :target="`private-person-row-${data.item.id}-preview-icon`"
+          />
+
+          <feather-icon
+            :id="`edit-${data.item.id}-preview-icon`"
+            icon="EditIcon"
+            size="16"
+            class="mx-0"
+            style="cursor: pointer"
+            @click="
+              $router.push({ name: 'company-users-edit', params: { id: data.item.id, companyId: companyId} })
+            "
+          />
+          <b-tooltip
+            title="Edit Details"
+            :target="`edit-${data.item.id}-preview-icon`"
+          />
+
+          <feather-icon
+            :id="`delete-${data.item.id}-preview-icon`"
+            icon="TrashIcon"
+            size="16"
+            class="ml-1"
+            style="cursor: pointer"
+            @click="UserDelete(data.item.id,refetchData)"
+          />
+          <b-tooltip
+            title="Delete"
+            :target="`delete-${data.item.id}-preview-icon`"
+          />
+        </div>
+
+          <!-- <b-dropdown
             variant="link"
             no-caret
             :right="$store.state.appConfig.isRTL"
@@ -159,7 +206,7 @@
                 icon="MoreVerticalIcon"
                 size="16"
                 class="align-middle text-body"
-              />
+              /> 
             </template>
             <b-dropdown-item :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }">
               <feather-icon icon="FileTextIcon" />
@@ -175,7 +222,7 @@
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
             </b-dropdown-item>
-          </b-dropdown>
+          </b-dropdown> -->
         </template>
 
       </b-table>
@@ -232,7 +279,7 @@
 <script>
 import {
   BCard, BRow, BCol, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
-  BBadge, BDropdown, BDropdownItem, BPagination,
+  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import store from '@/store'
@@ -264,6 +311,7 @@ export default {
     BDropdown,
     BDropdownItem,
     BPagination,
+    BTooltip,
 
     vSelect,
   },

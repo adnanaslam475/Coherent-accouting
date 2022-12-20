@@ -553,10 +553,36 @@
                         name="dateIssued"
                         
                       >
-                        <flat-pickr
+                        <!-- <flat-pickr
                           v-model="invoiceData.dateIssued"
                           class="form-control invoice-edit-input invoice-input-top"
-                        />
+                        /> -->
+                         
+                        <div class="position-relative mr-1 filter-date">
+                          <flat-pickr
+                            v-model="invoiceData.dateIssued"
+                            class="
+                              form-control
+                              invoice-edit-input invoice-input-top
+                            "
+                            placeholder="Select date: "
+                          />
+
+                          <feather-icon
+                            v-if="invoiceData.dateIssued === ''"
+                            size="16"
+                            icon="CalendarIcon"
+                            class="cursor-pointer clear-all"
+                          />
+                          <feather-icon
+                            v-else
+                            size="16"
+                            icon="XIcon"
+                            class="cursor-pointer clear-all"
+                            @click="invoiceData.dateIssued = ''"
+                          />
+                        </div>
+
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
                     </div>

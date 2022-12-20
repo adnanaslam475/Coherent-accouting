@@ -53,7 +53,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="FolderIcon" />
-          <span style="font-size: 13px">Documents</span>
+          <span style="font-size: 13px">Company Documents</span>
         </template>
         <Document />
       </b-tab>

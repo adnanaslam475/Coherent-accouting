@@ -53,13 +53,40 @@
                       v-bind:name="$t('input_01')"
                       rules="required"
                     >
-                      <!-- <b-form-input
-                        id="input_01"
-                        v-model="form.taxPeriod"
-                        name="input_01"
-                        :state="errors.length > 0 ? false : null"
-                      /> -->
-                      <vue-monthly-picker
+                      <div class="position-relative filter-date">
+                        <vue-monthly-picker
+                          id="input_01"
+                          v-model="form.taxPeriod"
+                          name="input_01"
+                          style="
+                            background-color: #fff;
+                            background-clip: padding-box;
+                            height: 40px;
+                            border: 1px solid #dbdbdb;
+                            border-radius: 0.357rem;
+                          "
+                          dateFormat="Y-MM"
+                          :monthLabels="monthLabels"
+                          :class="errors.length > 0 ? 'is-invalid' : null"
+                        >
+                        </vue-monthly-picker>
+
+                        <feather-icon
+                          v-if="form.taxPeriod === ''"
+                          size="16"
+                          icon="CalendarIcon"
+                          class="cursor-pointer clear-all"
+                        />
+                        <feather-icon
+                          v-else
+                          size="16"
+                          icon="XIcon"
+                          class="cursor-pointer clear-all"
+                          @click="form.taxPeriod = ''"
+                        />
+                      </div>
+
+                      <!-- <vue-monthly-picker
                         id="input_01"
                         v-model="form.taxPeriod"
                         name="input_01"
@@ -74,7 +101,7 @@
                         :monthLabels="monthLabels"
                         :class="errors.length > 0 ? 'is-invalid' : null"
                       >
-                      </vue-monthly-picker>
+                      </vue-monthly-picker> -->
                       <small><b>мм / гггг</b></small>
                       <small class="text-danger ml-1">{{ errors[0] }}</small>
                     </validation-provider>
@@ -1133,28 +1160,48 @@
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>Дата на съставяне:</p>
               </b-col>
-              <b-col cols="1" xl="1" md="1" style="padding: 0px"
+              <b-col cols="2" xl="2" md="2" style="padding: 0px"
                 ><validation-provider
                   #default="{ errors }"
                   v-bind:name="$t('dateCreated')"
                   rules="required"
                 >
-                  <!-- <b-form-input
-                    id="dateCreated"
-                    v-model="form.dateCreated"
-                    :state="errors.length > 0 ? false : null"
-                  /> -->
-                  <flat-pickr
+                  <div class="position-relative">
+                    <flat-pickr
+                      id="dateCreated"
+                      v-model="form.dateCreated"
+                      :state="errors.length > 0 ? false : null"
+                      class="form-control"
+                      style="background-color: white !important"
+                      placeholder="Select date"
+                    />
+
+                    <feather-icon
+                      v-if="form.dateCreated === ''"
+                      size="16"
+                      icon="CalendarIcon"
+                      class="cursor-pointer clear-all"
+                    />
+                    <feather-icon
+                      v-else
+                      size="16"
+                      icon="XIcon"
+                      class="cursor-pointer clear-all"
+                      @click="form.dateCreated = ''"
+                    />
+                  </div>
+
+                  <!-- <flat-pickr
                     id="dateCreated"
                     v-model="form.dateCreated"
                     :state="errors.length > 0 ? false : null"
                     class="form-control"
                     style="background-color: white !important"
-                  />
+                  /> -->
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-col>
-              <b-col cols="4" xl="4" md="4" style="padding-top: 7px"
+              <b-col cols="3" xl="3" md="3" style="padding-top: 7px"
                 ><p>Длъжност: Изпълнителен директор</p>
               </b-col>
             </b-row>
@@ -1195,7 +1242,7 @@ import { extend } from "vee-validate";
 import flatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 import VueMonthlyPicker from "vue-monthly-picker";
-import TabList from "../../TabList.vue"
+import TabList from "../../TabList.vue";
 extend("required", {
   ...required,
   message: "This field is mandatory",
@@ -1281,12 +1328,12 @@ export default {
                 },
               });
               return this.$router.push({
-                      name: "CompanyView", 
-                      params: { 
-                        id: router.currentRoute.params.companyId,
-                        InvoiceId: 3
-                      }
-                    })
+                name: "CompanyView",
+                params: {
+                  id: router.currentRoute.params.companyId,
+                  InvoiceId: 3,
+                },
+              });
             })
             .catch((error) => {
               this.loading = false;
@@ -1373,7 +1420,7 @@ export default {
     BCardHeader,
     flatPickr,
     VueMonthlyPicker,
-    TabList
+    TabList,
   },
 };
 </script>
@@ -1391,5 +1438,14 @@ small {
 
 .is-invalid {
   border-color: #ea5455 !important;
+}
+
+.filter-date {
+  min-width: 10rem;
+  max-width: 15rem;
+}
+
+.vue-monthly-picker .vmp-input-append {
+  display: none !important;
 }
 </style>

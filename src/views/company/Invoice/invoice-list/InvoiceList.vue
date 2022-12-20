@@ -78,13 +78,24 @@
                 class="form-control invoice-edit-input invoice-input-top"
                 placeholder="Start date"
               />
-
-              <feather-icon
+              <feather-icon v-if="dateFrom === ''"
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+              />
+              <feather-icon v-else
                 size="16"
                 icon="XIcon"
                 class="cursor-pointer clear-all"
                 @click="dateFrom = ''"
               />
+
+              <!-- <feather-icon
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+                @click="dateFrom = ''"
+              /> -->
             </div>
             <div class="position-relative mr-1 filter-date">
               <flat-pickr
@@ -93,12 +104,24 @@
                 placeholder="End date"
               />
 
-              <feather-icon
+              <feather-icon v-if="dateTo === ''"
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+              />
+              <feather-icon v-else
                 size="16"
                 icon="XIcon"
                 class="cursor-pointer clear-all"
                 @click="dateTo = ''"
               />
+
+              <!-- <feather-icon
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+                @click="dateTo = ''"
+              /> -->
             </div>
             <div class="position-relative flex-1">
               <b-form-input

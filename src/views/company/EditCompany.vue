@@ -506,7 +506,17 @@
                       v-bind:name="$t('company_fin_year')"
                       rules="required"
                     >
-                      <flat-pickr
+                      <!-- <flat-pickr
+                        id="company_fin_year"
+                        class="form-control"
+                        v-model="getCompFinYear"
+                        :state="errors.length > 0 ? false : null"
+                        placeholder="Select date"
+                        style="background-color: white !important;"
+                      /> -->
+
+                      <div class="position-relative mr-1">
+                        <flat-pickr
                         id="company_fin_year"
                         class="form-control"
                         v-model="getCompFinYear"
@@ -514,6 +524,20 @@
                         placeholder="Select date"
                         style="background-color: white !important;"
                       />
+                          <feather-icon
+                            v-if="getCompFinYear === ''"
+                            size="16"
+                            icon="CalendarIcon"
+                            class="cursor-pointer clear-all"
+                          />
+                          <feather-icon
+                            v-else
+                            size="16"
+                            icon="XIcon"
+                            class="cursor-pointer clear-all"
+                            @click="getCompFinYear = ''"
+                          />
+                        </div>
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group></b-col
