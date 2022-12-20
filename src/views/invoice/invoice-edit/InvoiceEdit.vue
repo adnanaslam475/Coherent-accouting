@@ -508,17 +508,18 @@
                           :options="transectionOptions"
                         >
                       </b-form-select>
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                    </div>
-                  </div>
-                </b-card-header>
-              </b-card>
-              <b-form-checkbox
-                v-model="InvoiceTypeOptionToggleValue"
-                @change="InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)"
-                class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
-                name="AccountTypeOptionToggle"
+             size="16"
+                            icon="XIcon"
+                            class="cursor-pointer clear-all"
+                            @click="invoiceData.dateIssued = ''"
+                          />
+                        </div>
+                      <!-- <flat-pickr
+                        v-model="invoiceData.dateIssued"
+                        class="form-control invoice-edit-input invoice-input-top"
+                      /> -->
+>>>>>>> 669ca4fb44ac71440d3fb9237cd80ec775599e05
+OptionToggle"
                 switch
               >
                 <span class="switch-icon-left">
@@ -1157,7 +1158,7 @@ export default {
         item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
         return item
       })
-  
+      invoiceData.verified = true
       this.$refs.invoiceEditForm.validate().then((success) => {
         if (success) {
           this.loading = true;
