@@ -369,4 +369,14 @@ export default class JwtService {
     });
 
   }
+
+  //Getting user's current plan
+  getUserCurrentPlan(token) {
+    let headers = {
+      Authorization: `${this.jwtConfig.tokenType} ${token}`,
+    };
+    return this.axiosIns.get(this.jwtConfig. GetUserCurrentPlan, {
+      headers: headers,
+    });
+  }
 }

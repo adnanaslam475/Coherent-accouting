@@ -54,12 +54,8 @@
                       v-bind:name="$t('input_01')"
                       rules="required"
                     >
-                      <!-- <b-form-input
-                        id="input_01"
-                        v-model="vatReportData.taxPeriod"
-                        name="input_01"
-                        :state="errors.length > 0 ? false : null"
-                      /> -->
+
+                    <div class="position-relative filter-date">
                       <vue-monthly-picker
                         id="input_01"
                         v-model="vatReportData.period"
@@ -77,6 +73,39 @@
                         v-on:input="updatePeriodStatus()"
                       >
                       </vue-monthly-picker>
+
+                        <feather-icon
+                          v-if="vatReportData.period === ''"
+                          size="16"
+                          icon="CalendarIcon"
+                          class="cursor-pointer clear-all"
+                        />
+                        <feather-icon
+                          v-else
+                          size="16"
+                          icon="XIcon"
+                          class="cursor-pointer clear-all"
+                          @click="vatReportData.period = ''"
+                        />
+                      </div>
+                      
+                      <!-- <vue-monthly-picker
+                        id="input_01"
+                        v-model="vatReportData.period"
+                        name="input_01"
+                        style="
+                          background-color: #fff;
+                          background-clip: padding-box;
+                          height: 40px;
+                          border: 1px solid #dbdbdb;
+                          border-radius: 0.357rem;
+                        "
+                        dateFormat="Y-MM"
+                        :monthLabels="monthLabels"
+                        :class="errors.length > 0 ? 'is-invalid' : null"
+                        v-on:input="updatePeriodStatus()"
+                      >
+                      </vue-monthly-picker> -->
                       <small><b>мм / гггг</b></small>
                       <small class="text-danger ml-1">{{ errors[0] }}</small>
                     </validation-provider>
@@ -1135,17 +1164,13 @@
               <b-col cols="4" xl="4" md="4" class=""
                 ><p>Дата на съставяне:</p>
               </b-col>
-              <b-col cols="1" xl="1" md="1" style="padding: 0px"
+              <b-col cols="2" xl="2" md="2" style="padding: 0px"
                 ><validation-provider
                   #default="{ errors }"
                   v-bind:name="$t('dateCreated')"
                   rules="required"
                 >
-                  <!-- <b-form-input
-                    id="dateCreated"
-                    v-model="vatReportData.dateCreated"
-                    :state="errors.length > 0 ? false : null"
-                  /> -->
+                <div class="position-relative">
                   <flat-pickr
                     id="dateCreated"
                     v-model="vatReportData.dateCreated"
@@ -1153,10 +1178,33 @@
                     class="form-control"
                     style="background-color: white !important"
                   />
+
+                    <feather-icon
+                      v-if="vatReportData.dateCreated === ''"
+                      size="16"
+                      icon="CalendarIcon"
+                      class="cursor-pointer clear-all"
+                    />
+                    <feather-icon
+                      v-else
+                      size="16"
+                      icon="XIcon"
+                      class="cursor-pointer clear-all"
+                      @click="vatReportData.dateCreated = ''"
+                    />
+                  </div>
+                  
+                  <!-- <flat-pickr
+                    id="dateCreated"
+                    v-model="vatReportData.dateCreated"
+                    :state="errors.length > 0 ? false : null"
+                    class="form-control"
+                    style="background-color: white !important"
+                  /> -->
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-col>
-              <b-col cols="4" xl="4" md="4" style="padding-top: 7px"
+              <b-col cols="3" xl="3" md="3" style="padding-top: 7px"
                 ><p>Длъжност: Изпълнителен директор</p>
               </b-col>
             </b-row>
@@ -1419,5 +1467,13 @@ small {
 
 .is-invalid {
   border-color: #ea5455 !important;
+}
+
+.filter-date {
+  min-width: 10rem;
+  max-width: 15rem;
+}
+.vue-monthly-picker .vmp-input-append {
+  display: none !important;
 }
 </style>

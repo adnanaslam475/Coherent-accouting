@@ -42,7 +42,12 @@
                 placeholder="Start date"
               />
 
-              <feather-icon
+              <feather-icon v-if="dateFrom === ''"
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+              />
+              <feather-icon v-else
                 size="16"
                 icon="XIcon"
                 class="cursor-pointer clear-all"
@@ -56,7 +61,12 @@
                 placeholder="End date"
               />
 
-              <feather-icon
+              <feather-icon v-if="dateTo === ''"
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+              />
+              <feather-icon v-else
                 size="16"
                 icon="XIcon"
                 class="cursor-pointer clear-all"

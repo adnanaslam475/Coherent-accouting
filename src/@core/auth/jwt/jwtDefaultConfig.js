@@ -45,6 +45,7 @@ export default {
 
   //Getting Plans
   GetPlansEndPoint:'/account/api/payment/plans',
+  GetUserCurrentPlan:'/account/api/user/plan/current-plan',
 
   wrongOldPasswordEndPoint: '/account/api/user/change-password',
   // This will be prefixed in authorization header with token

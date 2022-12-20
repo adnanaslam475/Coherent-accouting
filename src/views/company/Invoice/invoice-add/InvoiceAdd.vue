@@ -2,16 +2,12 @@
   <section class="invoice-add-wrapper">
     <TabList />
     <validation-observer ref="invoiceForm" #default="{ invalid }">
-      <b-form @submit.prevent="invoiceAdd(invoiceData,AccountTypeOption)">
+      <b-form @submit.prevent="invoiceAdd(invoiceData, AccountTypeOption)">
         <b-row class="invoice-add">
           <!-- Col: Left (Invoice Container) -->
           <b-col cols="12" xl="10" md="10">
-            
-            <b-card
-              no-body
-              class="invoice-add"
-            >
-              <b-card-header class="justify-content-center"> 
+            <b-card no-body class="invoice-add">
+              <b-card-header class="justify-content-center">
                 <div class="d-flex align-items-center mb-0">
                   <h4 class="title mr-1 mb-0">Invoice</h4>
                   <validation-provider
@@ -21,7 +17,10 @@
                     rules="required"
                   >
                     <b-input-group
-                      class="input-group-merge invoice-edit-input-group invoice-input-top"
+                      class="
+                        input-group-merge
+                        invoice-edit-input-group invoice-input-top
+                      "
                     >
                       <b-input-group-prepend is-text>
                         <feather-icon icon="HashIcon" />
@@ -37,7 +36,7 @@
                 </div>
               </b-card-header>
             </b-card>
-             
+
             <div>
               <div class="accountType">
                 <b-form-radio
@@ -60,45 +59,54 @@
                 </b-form-radio>
                 <b-form-checkbox
                   v-model="AccountTypeOptionToggleValue"
-                  @change="AccountTypeOptionToggle(AccountTypeOptionToggleValue)"
+                  @change="
+                    AccountTypeOptionToggle(AccountTypeOptionToggleValue)
+                  "
                   class="custom-control-primary custom-switch-btn"
                   name="AccountTypeOptionToggle"
                   switch
                 >
-                  <span class="switch-icon-left">
-                    Person
-                  </span>
-                  <span class="switch-icon-right">
-                    Company
-                  </span>
+                  <span class="switch-icon-left"> Person </span>
+                  <span class="switch-icon-right"> Company </span>
                 </b-form-checkbox>
               </div>
-            
+
               <div
-                class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input invoice-input-middle mb-md-0"
+                class="
+                  d-flex
+                  justify-content-between
+                  flex-md-row flex-column
+                  invoice-spacing
+                  mt-0
+                  gap-2
+                  invoice-add-input invoice-input-middle
+                  mb-md-0
+                "
               >
                 <div class="mt-md-0 mt-2 flex-1">
-                  <b-card
-                    no-body
-                    class="invoice-add invoice-card"
-                  >
-                    <b-card-header class="justify-content-center invoice-header mb-1">
-                        <h5 
-                          class="m-0" 
-                        >
-                          Supplier
-                        </h5>
-                    </b-card-header> 
+                  <b-card no-body class="invoice-add invoice-card">
+                    <b-card-header
+                      class="justify-content-center invoice-header mb-1"
+                    >
+                      <h5 class="m-0">Supplier</h5>
+                    </b-card-header>
                     <b-card-body class="invoice-body">
                       <div
-                          class="d-flex justify-content-end border-left py-50 px-25 clear-all-add"
-                        >
-                          <feather-icon
-                            size="16"
-                            icon="XIcon"
-                            class="cursor-pointer"
-                            @click="clearAll('supplier')"
-                          />
+                        class="
+                          d-flex
+                          justify-content-end
+                          border-left
+                          py-50
+                          px-25
+                          clear-all-add
+                        "
+                      >
+                        <feather-icon
+                          size="16"
+                          icon="XIcon"
+                          class="cursor-pointer"
+                          @click="clearAll('supplier')"
+                        />
                       </div>
                       <div class="d-flex align-items-center mb-1">
                         <span class="title mr-1">Company Name: </span>
@@ -112,17 +120,25 @@
                           >
                             <b-form-input
                               v-model="invoiceData.supplierCompany.companName"
-                              @input="SearchCompanyName(invoiceData.supplierCompany.companName)"
+                              @input="
+                                SearchCompanyName(
+                                  invoiceData.supplierCompany.companName
+                                )
+                              "
                               list="my-company_name"
                               autocomplete="off"
                               @blur="hideSuggestion()"
                               @focus="ShowSuggestion(datalist)"
                             />
-                            <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
+                            <b-list-group
+                              v-if="showSuggestions"
+                              id="my-company_name"
+                              class="input-suggesstions"
+                            >
                               <b-list-group-item
                                 v-for="data in datalist"
                                 :key="data.eic"
-                                @click= autoCompletefn(data)                        
+                                @click="autoCompletefn(data)"
                               >
                                 {{ data.company_name }}
                               </b-list-group-item>
@@ -132,9 +148,7 @@
                         </b-input-group>
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                        <span class="title mr-1">
-                          Company Address:
-                        </span>
+                        <span class="title mr-1"> Company Address: </span>
 
                         <b-input-group
                           class="input-group invoice-edit-input-group"
@@ -145,7 +159,9 @@
                             rules="required"
                           >
                             <b-form-input
-                              v-model="invoiceData.supplierCompany.companyAddress"
+                              v-model="
+                                invoiceData.supplierCompany.companyAddress
+                              "
                               autocomplete="off"
                             />
                             <small class="text-danger">{{ errors[0] }}</small>
@@ -153,9 +169,7 @@
                         </b-input-group>
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                        <span class="title mr-1">
-                          Company ID Number:
-                        </span>
+                        <span class="title mr-1"> Company ID Number: </span>
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
@@ -163,21 +177,28 @@
                             #default="{ errors }"
                             name="supplierCompanyIdNumber"
                             rules="required"
-                            
                           >
                             <b-form-input
                               v-model="invoiceData.supplierCompany.companyEic"
-                              @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)"
+                              @input="
+                                SearchCompanyEic(
+                                  invoiceData.supplierCompany.companyEic
+                                )
+                              "
                               list="my-company_name"
                               autocomplete="off"
                               @blur="hideSuggestionEic()"
                               @focus="ShowSuggestionEic(datalistEic)"
                             />
-                            <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
+                            <b-list-group
+                              v-if="showSuggestionsEic"
+                              id="my-company_name"
+                              class="input-suggesstions"
+                            >
                               <b-list-group-item
                                 v-for="data in datalistEic"
                                 :key="data.eic"
-                                @click= autoCompletefnEic(data)                        
+                                @click="autoCompletefnEic(data)"
                               >
                                 {{ data.eic }}
                               </b-list-group-item>
@@ -206,10 +227,11 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="supplierVat == 'true'" class="d-flex align-items-center mb-1">
-                        <span class="title mr-1">
-                          Company Vat No:
-                        </span>
+                      <div
+                        v-if="supplierVat == 'true'"
+                        class="d-flex align-items-center mb-1"
+                      >
+                        <span class="title mr-1"> Company Vat No: </span>
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
@@ -220,93 +242,121 @@
                         </b-input-group>
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                          <span class="mr-1">
-                            Vat:
-                          </span>
-                          <b-form-checkbox
-                            v-model="supplierVat"
-                            class="custom-control-primary custom-switch-btn-1"
-                            name="check-button"
-                            switch
-                          >
-                            <span class="switch-icon-left">
-                              YES
-                            </span>
-                            <span class="switch-icon-right">
-                              NO
-                            </span>
-                          </b-form-checkbox>
+                        <span class="mr-1"> Vat: </span>
+                        <b-form-checkbox
+                          v-model="supplierVat"
+                          class="custom-control-primary custom-switch-btn-1"
+                          name="check-button"
+                          switch
+                        >
+                          <span class="switch-icon-left"> YES </span>
+                          <span class="switch-icon-right"> NO </span>
+                        </b-form-checkbox>
                       </div>
                     </b-card-body>
                   </b-card>
                 </div>
 
                 <div class="mt-md-0 mt-2 flex-1">
-                  <b-card
-                    no-body
-                    class="invoice-add invoice-card"
-                  >
-                    <b-card-header class="justify-content-center invoice-header mb-1">
-                        <h5 
-                          class="m-0" 
-                        >
-                          Recipient
-                        </h5>
-                    </b-card-header> 
+                  <b-card no-body class="invoice-add invoice-card">
+                    <b-card-header
+                      class="justify-content-center invoice-header mb-1"
+                    >
+                      <h5 class="m-0">Recipient</h5>
+                    </b-card-header>
                     <b-card-body class="invoice-body">
                       <div
-                          class="d-flex justify-content-end border-left py-50 px-25 clear-all-add"
-                        >
-                          <feather-icon
-                            size="16"
-                            icon="XIcon"
-                            class="cursor-pointer"
-                            @click="clearAll('recipient')"
-                          />
+                        class="
+                          d-flex
+                          justify-content-end
+                          border-left
+                          py-50
+                          px-25
+                          clear-all-add
+                        "
+                      >
+                        <feather-icon
+                          size="16"
+                          icon="XIcon"
+                          class="cursor-pointer"
+                          @click="clearAll('recipient')"
+                        />
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                        <span v-if="AccountTypeOption=='company'" class="title mr-1">Company Name:</span> 
-                        <span v-if="AccountTypeOption=='person'" class="title mr-1">Person Name:</span>         
+                        <span
+                          v-if="AccountTypeOption == 'company'"
+                          class="title mr-1"
+                          >Company Name:</span
+                        >
+                        <span
+                          v-if="AccountTypeOption == 'person'"
+                          class="title mr-1"
+                          >Person Name:</span
+                        >
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
                           <validation-provider
                             #default="{ errors }"
-                            :name="AccountTypeOption == 'company' ? 'recipientCompanyName' : 'personName'"
+                            :name="
+                              AccountTypeOption == 'company'
+                                ? 'recipientCompanyName'
+                                : 'personName'
+                            "
                             rules="required"
                           >
                             <b-form-input
                               v-if="AccountTypeOption == 'company'"
                               v-model="invoiceData.recipientCompany.companName"
-                              @input="SearchCompanyNameRecipient(invoiceData.recipientCompany.companName)"
+                              @input="
+                                SearchCompanyNameRecipient(
+                                  invoiceData.recipientCompany.companName
+                                )
+                              "
                               list="my-company_name"
                               autocomplete="off"
                               @blur="hideSuggestionRecipient()"
-                              @focus="ShowSuggestionRecipient(datalistRecipient)"
+                              @focus="
+                                ShowSuggestionRecipient(datalistRecipient)
+                              "
                             />
-                            <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions">
+                            <b-list-group
+                              v-if="showSuggestionsRecipient"
+                              id="my-company_name"
+                              class="input-suggesstions"
+                            >
                               <b-list-group-item
                                 v-for="data in datalistRecipient"
                                 :key="data.eic"
-                                @click= autoCompletefnRecipient(data)                        
+                                @click="autoCompletefnRecipient(data)"
                               >
                                 {{ data.company_name }}
                               </b-list-group-item>
                             </b-list-group>
                             <b-form-input
                               v-if="AccountTypeOption == 'person'"
-                              v-model="invoiceData.recipientCompany.companyOwnerName"
-                              @input="SearchCompanyPerson(invoiceData.recipientCompany.companyOwnerName)"
+                              v-model="
+                                invoiceData.recipientCompany.companyOwnerName
+                              "
+                              @input="
+                                SearchCompanyPerson(
+                                  invoiceData.recipientCompany.companyOwnerName
+                                )
+                              "
                               list="my-company_name"
                               autocomplete="off"
                               @blur="hideSuggestionPerson()"
                               @focus="ShowSuggestionPerson(datalistPerson)"
                             />
-                            <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions">
+                            <b-list-group
+                              v-if="showSuggestionsPerson"
+                              id="my-company_name"
+                              class="input-suggesstions"
+                            >
                               <b-list-group-item
                                 v-for="data in datalistPerson"
                                 :key="data.eic"
-                                @click= autoCompletefnPerson(data)                        
+                                @click="autoCompletefnPerson(data)"
                               >
                                 {{ data.firstMiddleAndLastName }}
                               </b-list-group-item>
@@ -316,18 +366,32 @@
                         </b-input-group>
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                        <span class="title mr-1" v-if="AccountTypeOption=='company'">Company Address:</span>
-                        <span class="title mr-1" v-if="AccountTypeOption=='person'">Person Address:</span>  
+                        <span
+                          class="title mr-1"
+                          v-if="AccountTypeOption == 'company'"
+                          >Company Address:</span
+                        >
+                        <span
+                          class="title mr-1"
+                          v-if="AccountTypeOption == 'person'"
+                          >Person Address:</span
+                        >
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
                           <validation-provider
                             #default="{ errors }"
-                            :name="AccountTypeOption=='company' ? 'recipientCompanyAddress' : 'personAddress'"
+                            :name="
+                              AccountTypeOption == 'company'
+                                ? 'recipientCompanyAddress'
+                                : 'personAddress'
+                            "
                             rules="required"
                           >
                             <b-form-input
-                              v-model="invoiceData.recipientCompany.companyAddress"
+                              v-model="
+                                invoiceData.recipientCompany.companyAddress
+                              "
                               autocomplete="off"
                             />
                             <small class="text-danger">{{ errors[0] }}</small>
@@ -335,30 +399,52 @@
                         </b-input-group>
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                        <span class="title mr-1" v-if="AccountTypeOption=='company'">Company ID Number:</span>
-                        <span class="title mr-1" v-if="AccountTypeOption=='person'">Person ID Number:</span>  
+                        <span
+                          class="title mr-1"
+                          v-if="AccountTypeOption == 'company'"
+                          >Company ID Number:</span
+                        >
+                        <span
+                          class="title mr-1"
+                          v-if="AccountTypeOption == 'person'"
+                          >Person ID Number:</span
+                        >
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
                           <validation-provider
                             #default="{ errors }"
-                            :name="AccountTypeOption=='company' ? 'recipientCompanyIdNumber' : 'personIdNumber'"
+                            :name="
+                              AccountTypeOption == 'company'
+                                ? 'recipientCompanyIdNumber'
+                                : 'personIdNumber'
+                            "
                             rules="required"
                           >
                             <b-form-input
                               v-if="AccountTypeOption == 'company'"
                               v-model="invoiceData.recipientCompany.companyEic"
-                              @input="SearchCompanyEicRecipient(invoiceData.recipientCompany.companyEic)"
+                              @input="
+                                SearchCompanyEicRecipient(
+                                  invoiceData.recipientCompany.companyEic
+                                )
+                              "
                               list="my-company_name"
                               autocomplete="off"
                               @blur="hideSuggestionEicRecipient()"
-                              @focus="ShowSuggestionEicRecipient(datalistEicRecipient)"
+                              @focus="
+                                ShowSuggestionEicRecipient(datalistEicRecipient)
+                              "
                             />
-                            <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name" class="input-suggesstions">
+                            <b-list-group
+                              v-if="showSuggestionsEicRecipient"
+                              id="my-company_name"
+                              class="input-suggesstions"
+                            >
                               <b-list-group-item
                                 v-for="data in datalistEicRecipient"
                                 :key="data.eic"
-                                @click= autoCompletefnEicRecipient(data)                        
+                                @click="autoCompletefnEicRecipient(data)"
                               >
                                 {{ data.eic }}
                               </b-list-group-item>
@@ -367,17 +453,29 @@
                             <b-form-input
                               v-if="AccountTypeOption == 'person'"
                               v-model="invoiceData.recipientCompany.companyEic"
-                              @input="SearchCompanyPersonIdNumber(invoiceData.recipientCompany.companyEic)"
+                              @input="
+                                SearchCompanyPersonIdNumber(
+                                  invoiceData.recipientCompany.companyEic
+                                )
+                              "
                               list="my-company_name"
                               autocomplete="off"
                               @blur="hideSuggestionPersonIdNumber()"
-                              @focus="ShowSuggestionPersonIdNumber(datalistPersonIdNumber)"
+                              @focus="
+                                ShowSuggestionPersonIdNumber(
+                                  datalistPersonIdNumber
+                                )
+                              "
                             />
-                            <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name" class="input-suggesstions">
+                            <b-list-group
+                              v-if="showSuggestionsPersonIdNumber"
+                              id="my-company_name"
+                              class="input-suggesstions"
+                            >
                               <b-list-group-item
                                 v-for="data in datalistPersonIdNumber"
                                 :key="data.eic"
-                                @click= autoCompletefnPersonIdNumber(data)                        
+                                @click="autoCompletefnPersonIdNumber(data)"
                               >
                                 {{ data.identificationNumber }}
                               </b-list-group-item>
@@ -387,7 +485,10 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
+                      <div
+                        v-if="AccountTypeOption == 'company'"
+                        class="d-flex align-items-center mb-1"
+                      >
                         <span class="title mr-1">Company Owner: </span>
                         <b-input-group
                           class="input-group invoice-edit-input-group"
@@ -395,20 +496,28 @@
                           <validation-provider
                             #default="{ errors }"
                             name="recipientCompanyOwner"
-                            :rules="AccountTypeOption=='company' ? 'required' : ''"
+                            :rules="
+                              AccountTypeOption == 'company' ? 'required' : ''
+                            "
                           >
                             <b-form-input
-                              v-model="invoiceData.recipientCompany.companyOwnerName"
+                              v-model="
+                                invoiceData.recipientCompany.companyOwnerName
+                              "
                               autocomplete="off"
                             />
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="AccountTypeOption=='company' && recipientVat == 'true'" class="d-flex align-items-center mb-1">
-                        <span class="title mr-1">
-                          Company Vat No:
-                        </span>
+                      <div
+                        v-if="
+                          AccountTypeOption == 'company' &&
+                          recipientVat == 'true'
+                        "
+                        class="d-flex align-items-center mb-1"
+                      >
+                        <span class="title mr-1"> Company Vat No: </span>
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
@@ -418,52 +527,44 @@
                           />
                         </b-input-group>
                       </div>
-                      <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
-                        <span class="mr-1">
-                          Vat:
-                        </span>
+                      <div
+                        v-if="AccountTypeOption == 'company'"
+                        class="d-flex align-items-center mb-1"
+                      >
+                        <span class="mr-1"> Vat: </span>
                         <b-form-checkbox
                           v-model="recipientVat"
                           class="custom-control-primary custom-switch-btn-1"
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left">
-                            YES
-                          </span>
-                          <span class="switch-icon-right">
-                            NO
-                          </span>
+                          <span class="switch-icon-left"> YES </span>
+                          <span class="switch-icon-right"> NO </span>
                         </b-form-checkbox>
                       </div>
                     </b-card-body>
                   </b-card>
-
                 </div>
               </div>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-2">
-              <b-card
-                no-body
-                class="invoice-preview date-issued mb-0 ml-0"
-              >
-                <b-card-header class="justify-content-end"> 
+              <b-card no-body class="invoice-preview date-issued mb-0 ml-0">
+                <b-card-header class="justify-content-end">
                   <div class="mt-md-0 mt-2">
                     <div class="d-flex align-items-center mb-0">
                       <span class="title mr-1"> Transaction type: </span>
                       <validation-provider
-                      #default="{ errors }"
-                      name="transectionType"
-                      rules="required"
-                    >
-                      
-                      <b-form-select
+                        #default="{ errors }"
+                        name="transectionType"
+                        rules="required"
+                      >
+                        <b-form-select
                           v-model="invoiceData.transactionType"
                           :options="transectionOptions"
                         >
-                      </b-form-select>
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
+                        </b-form-select>
+                        <small class="text-danger">{{ errors[0] }}</small>
+                      </validation-provider>
                     </div>
                   </div>
                 </b-card-header>
@@ -471,22 +572,19 @@
               <b-form-checkbox
                 v-model="InvoiceTypeOptionToggleValue"
                 @change="InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)"
-                class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                class="
+                  custom-control-primary custom-switch-btn-2
+                  flex-1
+                  text-center
+                "
                 name="AccountTypeOptionToggle"
                 switch
               >
-                <span class="switch-icon-left">
-                  PROFORMA
-                </span>
-                <span class="switch-icon-right">
-                  ORIGINAL
-                </span>
+                <span class="switch-icon-left"> PROFORMA </span>
+                <span class="switch-icon-right"> ORIGINAL </span>
               </b-form-checkbox>
-              <b-card
-                no-body
-                class="invoice-preview date-issued mb-0"
-              >
-                <b-card-header class="justify-content-end"> 
+              <b-card no-body class="invoice-preview date-issued mb-0">
+                <b-card-header class="justify-content-end">
                   <div class="mt-md-0 mt-2">
                     <div class="d-flex align-items-center mb-0">
                       <span class="title mr-1"> Date: </span>
@@ -495,10 +593,34 @@
                         name="dateIssued"
                         rules="required"
                       >
-                        <flat-pickr
+                        <!-- <flat-pickr
                           v-model="invoiceData.dateIssued"
                           class="form-control invoice-edit-input invoice-input-top"
-                        />
+                        /> -->
+                        <div class="position-relative mr-1 filter-date">
+                          <flat-pickr
+                            v-model="invoiceData.dateIssued"
+                            class="
+                              form-control
+                              invoice-edit-input invoice-input-top
+                            "
+                            placeholder="Select date:"
+                          />
+
+                          <feather-icon
+                            v-if="invoiceData.dateIssued === ''"
+                            size="16"
+                            icon="CalendarIcon"
+                            class="cursor-pointer clear-all"
+                          />
+                          <feather-icon
+                            v-else
+                            size="16"
+                            icon="XIcon"
+                            class="cursor-pointer clear-all"
+                            @click="invoiceData.dateIssued = ''"
+                          />
+                        </div>
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
                     </div>
@@ -506,24 +628,31 @@
                 </b-card-header>
               </b-card>
             </div>
-            <b-card no-body class="invoice-add-card mb-1">           
+            <b-card no-body class="invoice-add-card mb-1">
               <!-- Items Section -->
               <b-card-body class="invoice-padding form-item-section p-0">
-                <div             
+                <div
                   ref="form"
-                  class="repeater-form h-auto border transaction-container border-1 border-primary"
+                  class="
+                    repeater-form
+                    h-auto
+                    border
+                    transaction-container
+                    border-1 border-primary
+                  "
                   :style="{ height: trHeight }"
                 >
-                  <b-row
-                    ref="row"
-                    class="pb-0 m-0"
-                  >
+                  <b-row ref="row" class="pb-0 m-0">
                     <!-- Item Form -->
                     <!-- ? This will be in loop => So consider below markup for single item -->
                     <b-col cols="12" class="p-0 border border-0">
                       <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
-                      <div class="d-none d-lg-flex bg-primary p-custom text-white">
-                        <b-row class="flex-grow-1 px-1 invoice-add-transections">
+                      <div
+                        class="d-none d-lg-flex bg-primary p-custom text-white"
+                      >
+                        <b-row
+                          class="flex-grow-1 px-1 invoice-add-transections"
+                        >
                           <!-- Single Item Form Headers -->
                           <b-col cols="12" lg="1"> No. </b-col>
                           <b-col cols="12" lg="2"> Item name or Service </b-col>
@@ -538,25 +667,24 @@
 
                       <!-- Form Input Fields OR content inside bordered area  -->
                       <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
-                      <div 
+                      <div
                         v-for="(item, index) in invoiceData.transactions"
                         :key="index"
                         class="d-flex px-custom"
                       >
-                        <b-row class="flex-grow-1 py-1 px-1 invoice-add-transections">
+                        <b-row
+                          class="flex-grow-1 py-1 px-1 invoice-add-transections"
+                        >
                           <!-- Single Item Form Headers -->
                           <b-col cols="12" lg="1">
-                            <label class="d-inline d-lg-none"
-                              >No.</label
-                            >
-                            
+                            <label class="d-inline d-lg-none">No.</label>
+
                             <b-form-input
-                              :value="index+1"
+                              :value="index + 1"
                               type="text"
                               class="mb-0 text-left"
                               disabled
                             />
-                             
                           </b-col>
 
                           <b-col cols="12" lg="2">
@@ -621,7 +749,10 @@
                               rules="required"
                             >
                               <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
+                                class="
+                                  input-group-merge
+                                  invoice-edit-input-group
+                                "
                               >
                                 <b-input-group-prepend is-text class="mb-0">
                                   <span>{{ invoiceData.currency }}</span>
@@ -645,11 +776,10 @@
                               name="transectionCurrency"
                               rules="required"
                             >
-                              
                               <b-form-select
-                                  v-model="invoiceData.currency"
-                                  :options="currencyOptions"
-                                >
+                                v-model="invoiceData.currency"
+                                :options="currencyOptions"
+                              >
                               </b-form-select>
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -664,14 +794,22 @@
                               rules="required"
                             >
                               <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
+                                class="
+                                  input-group-merge
+                                  invoice-edit-input-group
+                                "
                               >
                                 <b-input-group-prepend is-text class="mb-0">
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
 
                                 <b-form-input
-                                  :value="(item.singleAmountTransaction * item.quantity).toFixed(2)"
+                                  :value="
+                                    (
+                                      item.singleAmountTransaction *
+                                      item.quantity
+                                    ).toFixed(2)
+                                  "
                                   disabled
                                   class="mb-0"
                                 />
@@ -681,7 +819,13 @@
                           </b-col>
                         </b-row>
                         <div
-                          class="d-flex justify-content-center align-items-center py-50 px-25"
+                          class="
+                            d-flex
+                            justify-content-center
+                            align-items-center
+                            py-50
+                            px-25
+                          "
                         >
                           <feather-icon
                             size="16"
@@ -693,27 +837,32 @@
                       </div>
                     </b-col>
                   </b-row>
-                </div>             
+                </div>
               </b-card-body>
             </b-card>
             <b-button
-                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                  size="sm"
-                  variant="primary"
-                  @click="addNewItemInItemForm"
-                  class="mb-2"
-                >
-                Add Item
+              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+              size="sm"
+              variant="primary"
+              @click="addNewItemInItemForm"
+              class="mb-2"
+            >
+              Add Item
             </b-button>
-            
-            <b-card no-body class="invoice-add-card mb-1">  
+
+            <b-card no-body class="invoice-add-card mb-1">
               <b-card-body class="invoice-padding form-item-section p-0">
-                <b-row class="pb-0 m-0 border transaction-container border-1 border-primary">
+                <b-row
+                  class="
+                    pb-0
+                    m-0
+                    border
+                    transaction-container
+                    border-1 border-primary
+                  "
+                >
                   <!-- Col: Sales Persion -->
-                  <b-col
-                    cols="12"
-                    class="border border-0 row m-0 py-2"
-                  >
+                  <b-col cols="12" class="border border-0 row m-0 py-2">
                     <b-col
                       cols="12"
                       md="7"
@@ -721,9 +870,9 @@
                       order="2"
                       order-md="1"
                     >
-                    <h1 class="invoiceTypeHeading">
-                      {{ invoiceData.invoiceType }}
-                    </h1>
+                      <h1 class="invoiceTypeHeading">
+                        {{ invoiceData.invoiceType }}
+                      </h1>
                     </b-col>
 
                     <!-- Col: Total -->
@@ -744,14 +893,21 @@
                               rules="required"
                             >
                               <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
+                                class="
+                                  input-group-merge
+                                  invoice-edit-input-group
+                                "
                               >
                                 <b-input-group-prepend is-text>
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
 
                                 <b-form-input
-                                  :value="amountNonVat(invoiceData.transactions) ? amountNonVat(invoiceData.transactions) : 0"
+                                  :value="
+                                    amountNonVat(invoiceData.transactions)
+                                      ? amountNonVat(invoiceData.transactions)
+                                      : 0
+                                  "
                                   disabled
                                 />
                               </b-input-group>
@@ -768,7 +924,10 @@
                               rules="required"
                             >
                               <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
+                                class="
+                                  input-group-merge
+                                  invoice-edit-input-group
+                                "
                               >
                                 <b-form-input
                                   v-model="invoiceData.vatPercent"
@@ -799,13 +958,21 @@
                               rules="required"
                             >
                               <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
+                                class="
+                                  input-group-merge
+                                  invoice-edit-input-group
+                                "
                               >
                                 <b-input-group-prepend is-text>
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
-                                <b-form-input                    
-                                  :value="vatAmount(invoiceData.transactions,invoiceData.vatPercent)"
+                                <b-form-input
+                                  :value="
+                                    vatAmount(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent
+                                    )
+                                  "
                                   type="number"
                                   disabled
                                 />
@@ -823,7 +990,10 @@
                               rules="required"
                             >
                               <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
+                                class="
+                                  input-group-merge
+                                  invoice-edit-input-group
+                                "
                               >
                                 <b-form-input
                                   v-model="invoiceData.tradeDiscountPercent"
@@ -854,7 +1024,10 @@
                               rules="required"
                             >
                               <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
+                                class="
+                                  input-group-merge
+                                  invoice-edit-input-group
+                                "
                               >
                                 <b-input-group-prepend is-text>
                                   <span>{{ invoiceData.currency }}</span>
@@ -882,7 +1055,15 @@
                           </p>
                         </div>
                         <div class="invoice-total-item">
-                          <p class="invoice-total-title font-weight-bolder custom-font">Total Price:</p>
+                          <p
+                            class="
+                              invoice-total-title
+                              font-weight-bolder
+                              custom-font
+                            "
+                          >
+                            Total Price:
+                          </p>
                           <p class="invoice-total-amount">
                             <validation-provider
                               #default="{ errors }"
@@ -890,7 +1071,10 @@
                               rules="required"
                             >
                               <b-input-group
-                                class="input-group-merge invoice-edit-input-group"
+                                class="
+                                  input-group-merge
+                                  invoice-edit-input-group
+                                "
                               >
                                 <b-input-group-prepend is-text>
                                   <span>{{ invoiceData.currency }}</span>
@@ -911,7 +1095,11 @@
                                       : 0
                                   "
                                   disabled
-                                  class="opacity-1 font-weight-bolder custom-font"
+                                  class="
+                                    opacity-1
+                                    font-weight-bolder
+                                    custom-font
+                                  "
                                 />
                               </b-input-group>
                               <small class="text-danger">{{ errors[0] }}</small>
@@ -969,7 +1157,6 @@
       </b-form>
     </validation-observer>
     <invoice-sidebar-add-new-customer />
-
   </section>
 </template>
 
@@ -980,7 +1167,7 @@ import { ref, onUnmounted } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
 import Ripple from "vue-ripple-directive";
 import store from "@/store";
-import TabList from "../../TabList.vue"
+import TabList from "../../TabList.vue";
 import {
   BRow,
   BCol,
@@ -1002,8 +1189,8 @@ import {
   VBToggle,
   BSpinner,
   BFormRadio,
-  BListGroup, 
-  BListGroupItem
+  BListGroup,
+  BListGroupItem,
 } from "bootstrap-vue";
 import vSelect from "vue-select";
 import flatPickr from "vue-flatpickr-component";
@@ -1011,7 +1198,7 @@ import invoiceStoreModule from "../invoiceStoreModule";
 import InvoiceSidebarAddNewCustomer from "../InvoiceSidebarAddNewCustomer.vue";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
-import router from '@/router'
+import router from "@/router";
 export default {
   components: {
     BRow,
@@ -1039,15 +1226,15 @@ export default {
     ValidationProvider,
     ValidationObserver,
     BFormRadio,
-    BListGroup, 
+    BListGroup,
     BListGroupItem,
-    TabList
+    TabList,
   },
   data() {
     return {
       loading: false,
       supplierVat: [],
-      recipientVat: []
+      recipientVat: [],
     };
   },
   directives: {
@@ -1088,25 +1275,31 @@ export default {
         this.trSetHeight(this.$refs.form.scrollHeight);
       });
     },
-    invoiceAdd(invoiceData,AccountTypeOption) {
-
-      if(AccountTypeOption == 'person'){
-         invoiceData.recipientCompany.companName = invoiceData.recipientCompany.companyOwnerName
-         invoiceData.recipientCompany.companyVatEic = ''
+    invoiceAdd(invoiceData, AccountTypeOption) {
+      if (AccountTypeOption == "person") {
+        invoiceData.recipientCompany.companName =
+          invoiceData.recipientCompany.companyOwnerName;
+        invoiceData.recipientCompany.companyVatEic = "";
       }
-      
-      invoiceData.transactions.map(item =>{
-        item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
-        return item
-      })
+
+      invoiceData.transactions.map((item) => {
+        item.transactionTotalAmountNonVat = (
+          parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
+        ).toFixed(2);
+        return item;
+      });
       this.$refs.invoiceForm.validate().then((success) => {
         if (success) {
           this.loading = true;
-          let token = useJwt.getToken()
+          let token = useJwt.getToken();
           useJwt
-            .addCompanyInvoice(token, router.currentRoute.params.companyId, invoiceData)
+            .addCompanyInvoice(
+              token,
+              router.currentRoute.params.companyId,
+              invoiceData
+            )
             .then((response) => {
-              this.loading = false
+              this.loading = false;
               this.$toast({
                 component: ToastificationContent,
                 props: {
@@ -1115,10 +1308,16 @@ export default {
                   variant: "success",
                 },
               });
-              this.$router.push({ name: 'company-invoice-preview', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+              this.$router.push({
+                name: "company-invoice-preview",
+                params: {
+                  id: response.data.id,
+                  companyId: router.currentRoute.params.companyId,
+                },
+              });
             })
             .catch((error) => {
-              this.loading = false
+              this.loading = false;
               this.$toast({
                 component: ToastificationContent,
                 props: {
@@ -1130,7 +1329,7 @@ export default {
             });
         }
       });
-    }
+    },
   },
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
@@ -1144,24 +1343,24 @@ export default {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
-    
-    var AccountTypeOption = ref("company")
-    var AccountTypeOptionToggleValue = false
-    
-    let AccountTypeOptionToggle = (value)=>{
-      if(value){
-        AccountTypeOption.value = "person"
-      } else{
-        AccountTypeOption.value = "company"
+
+    var AccountTypeOption = ref("company");
+    var AccountTypeOptionToggleValue = false;
+
+    let AccountTypeOptionToggle = (value) => {
+      if (value) {
+        AccountTypeOption.value = "person";
+      } else {
+        AccountTypeOption.value = "company";
       }
-    }
+    };
 
     const itemFormBlankItem = {
       serviceOrItemDescription: "",
-      singleAmountTransaction: 0.00,
+      singleAmountTransaction: 0.0,
       quantity: 0,
       measurement: "",
-      transactionTotalAmountNonVat: ""
+      transactionTotalAmountNonVat: "",
     };
 
     var invoiceData = ref({
@@ -1183,7 +1382,7 @@ export default {
       },
       currency: "лв.",
       amountNonVat: "",
-      vatAmount:"",
+      vatAmount: "",
       vatPercent: 20,
       tradeDiscountPercent: 0,
       tradeDiscountAmount: "",
@@ -1194,54 +1393,67 @@ export default {
       transactionType: "INCOME",
       invoiceType: "ORIGINAL",
       documentType: "INVOICE",
-      verified: true
+      verified: true,
     });
 
-    invoiceData.value = router.currentRoute.params.invoiceData ? router.currentRoute.params.invoiceData : invoiceData.value
-    invoiceData.value.currency = invoiceData.value.currency.toLowerCase().trim() == 'lv' ? "лв." : invoiceData.value.currency.toLowerCase().trim() == 'bgn' ? "лв." : invoiceData.value.currency
-    invoiceData.value.verified = true 
+    invoiceData.value = router.currentRoute.params.invoiceData
+      ? router.currentRoute.params.invoiceData
+      : invoiceData.value;
+    invoiceData.value.currency =
+      invoiceData.value.currency.toLowerCase().trim() == "lv"
+        ? "лв."
+        : invoiceData.value.currency.toLowerCase().trim() == "bgn"
+        ? "лв."
+        : invoiceData.value.currency;
+    invoiceData.value.verified = true;
 
-    const currencyOptions =  [
-      { value: 'лв.', text: 'лв.' },
-      { value: '$', text: '$' },
-      { value: '€', text: '€' },
-    ]
+    const currencyOptions = [
+      { value: "лв.", text: "лв." },
+      { value: "$", text: "$" },
+      { value: "€", text: "€" },
+    ];
 
     const transectionOptions = [
-      { value: 'INCOME', text: 'INCOME' },
-      { value: 'EXPENSE', text: 'EXPENSE' },
-    ]
+      { value: "INCOME", text: "INCOME" },
+      { value: "EXPENSE", text: "EXPENSE" },
+    ];
 
-    var InvoiceTypeOptionToggleValue = false
-    
-    let InvoiceTypeOptionToggle = (value)=>{
-      if(value){
-        invoiceData.value.invoiceType = "PROFORMA"
-      } else{
-        invoiceData.value.invoiceType = "ORIGINAL"
+    var InvoiceTypeOptionToggleValue = false;
+
+    let InvoiceTypeOptionToggle = (value) => {
+      if (value) {
+        invoiceData.value.invoiceType = "PROFORMA";
+      } else {
+        invoiceData.value.invoiceType = "ORIGINAL";
       }
-    }
+    };
 
-    const vatAmount = (item, vatPercent)=> {
+    const vatAmount = (item, vatPercent) => {
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
-      let totalVatAmount = parseFloat(amountNonVat) * (parseFloat(vatPercent)/100)
+      let totalVatAmount =
+        parseFloat(amountNonVat) * (parseFloat(vatPercent) / 100);
       invoiceData.value.vatAmount = parseFloat(totalVatAmount).toFixed(2);
       return parseFloat(totalVatAmount).toFixed(2);
-    }
+    };
 
-    const amountNonVat = (item)=> {
+    const amountNonVat = (item) => {
       let totalAmountNonVat = item.reduce((acc, ele) => {
-        return acc + parseFloat(ele.quantity) * parseFloat(ele.singleAmountTransaction);
+        return (
+          acc +
+          parseFloat(ele.quantity) * parseFloat(ele.singleAmountTransaction)
+        );
       }, 0);
-      invoiceData.value.amountNonVat = parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
+      invoiceData.value.amountNonVat = parseFloat(
+        totalAmountNonVat ? totalAmountNonVat : 0
+      ).toFixed(2);
       return parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
-    }
+    };
 
-    const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent)=> {
-      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
-      vatPercent = vatPercent ? vatPercent : 0
+    const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent) => {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0;
+      vatPercent = vatPercent ? vatPercent : 0;
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
@@ -1249,13 +1461,15 @@ export default {
         (parseFloat(tradeDiscountPercent) / 100) *
         (parseFloat(amountNonVat) +
           (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat));
-      invoiceData.value.tradeDiscountAmount = parseFloat(totaltradeDiscountAmount).toFixed(2);
+      invoiceData.value.tradeDiscountAmount = parseFloat(
+        totaltradeDiscountAmount
+      ).toFixed(2);
       return parseFloat(totaltradeDiscountAmount).toFixed(2);
-    }
+    };
 
-    const totalPrice = (item, vatPercent, tradeDiscountPercent)=> {
-      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
-      vatPercent = vatPercent ? vatPercent : 0
+    const totalPrice = (item, vatPercent, tradeDiscountPercent) => {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0;
+      vatPercent = vatPercent ? vatPercent : 0;
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
@@ -1270,7 +1484,7 @@ export default {
         tradeDiscountAmount;
       invoiceData.value.totalAmount = parseFloat(totalPrice).toFixed(2);
       return parseFloat(totalPrice).toFixed(2);
-    }
+    };
 
     const clearForm = () => {
       invoiceData.value = {
@@ -1292,7 +1506,7 @@ export default {
         },
         currency: invoiceData.value.currency,
         amountNonVat: "",
-        vatAmount:"",
+        vatAmount: "",
         vatPercent: 20,
         tradeDiscountPercent: 0,
         tradeDiscountAmount: "",
@@ -1303,401 +1517,392 @@ export default {
         transactionType: invoiceData.value.transactionType,
         invoiceType: invoiceData.value.invoiceType,
         documentType: "INVOICE",
-        verified: invoiceData.value.verified
-      }
-    }
-    var datalist = ref([])
-    var showSuggestions = ref(false)
-    
-    const SearchCompanyName = (companyName)=>{   
-      if(companyName.length > 0){
-        let token = useJwt.getToken()
+        verified: invoiceData.value.verified,
+      };
+    };
+    var datalist = ref([]);
+    var showSuggestions = ref(false);
+
+    const SearchCompanyName = (companyName) => {
+      if (companyName.length > 0) {
+        let token = useJwt.getToken();
         useJwt
           .SearchCompanyName(token, { companyName })
           .then((response) => {
-            if(response?.data != undefined || response?.data.length != 0 ){
-              showSuggestions.value = true
+            if (response?.data != undefined || response?.data.length != 0) {
+              showSuggestions.value = true;
+            } else {
+              showSuggestions.value = false;
             }
-            else{
-              showSuggestions.value = false
-            }
-            datalist.value = response?.data
+            datalist.value = response?.data;
           })
           .catch((error) => {
-            console.log("error",error)
+            console.log("error", error);
           });
-      } else{
-        showSuggestions.value  = false
+      } else {
+        showSuggestions.value = false;
       }
-    }
+    };
 
-    const autoCompletefn = (item) =>{      
-      if(item.company_name){
-        invoiceData.value.supplierCompany.companName = item.company_name
+    const autoCompletefn = (item) => {
+      if (item.company_name) {
+        invoiceData.value.supplierCompany.companName = item.company_name;
       }
-      if(item.address){
-        invoiceData.value.supplierCompany.companyAddress = item.address
+      if (item.address) {
+        invoiceData.value.supplierCompany.companyAddress = item.address;
       }
-      if(item.eic){
-        invoiceData.value.supplierCompany.companyEic = item.eic
+      if (item.eic) {
+        invoiceData.value.supplierCompany.companyEic = item.eic;
       }
-      if( item.managers && item.managers[0]){
-        let managers = ""
-        item?.managers?.map((item,index)=>{
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.supplierCompany.companyOwnerName = managers
+      if (item.managers && item.managers[0]) {
+        let managers = "";
+        item?.managers?.map((item, index) => {
+          managers = index == 0 ? managers + item : managers + ", " + item;
+        });
+        invoiceData.value.supplierCompany.companyOwnerName = managers;
       }
-      showSuggestions.value  = false
-      datalist.value = []
-    }
+      showSuggestions.value = false;
+      datalist.value = [];
+    };
 
     const hideSuggestion = () => {
       setTimeout(() => {
-        if(showSuggestions.value){
-         showSuggestions.value = false
+        if (showSuggestions.value) {
+          showSuggestions.value = false;
         }
       }, 100);
-    }
+    };
 
     const ShowSuggestion = (items) => {
-      if(items != undefined || items.length != 0 ){
-        showSuggestions.value = true
+      if (items != undefined || items.length != 0) {
+        showSuggestions.value = true;
+      } else {
+        showSuggestions.value = false;
       }
-      else{
-        showSuggestions.value = false
-      }
-    }
+    };
 
-    var datalistEic = ref([])
-    var showSuggestionsEic = ref(false)
-    
-    const SearchCompanyEic = (companyEic)=>{   
-      if(companyEic){
-        let token = useJwt.getToken()
+    var datalistEic = ref([]);
+    var showSuggestionsEic = ref(false);
+
+    const SearchCompanyEic = (companyEic) => {
+      if (companyEic) {
+        let token = useJwt.getToken();
         useJwt
           .SearchCompanyEic(token, companyEic)
           .then((response) => {
-            if(response?.data != undefined || response?.data.length != 0 ){
-              showSuggestionsEic.value = true
+            if (response?.data != undefined || response?.data.length != 0) {
+              showSuggestionsEic.value = true;
+            } else {
+              showSuggestionsEic.value = false;
             }
-            else{
-              showSuggestionsEic.value = false
-            }
-            datalistEic.value = response?.data
+            datalistEic.value = response?.data;
           })
           .catch((error) => {
-            console.log("error",error)
+            console.log("error", error);
           });
-      } else{
-        showSuggestionsEic.value  = false
+      } else {
+        showSuggestionsEic.value = false;
       }
-    }
+    };
 
-    const autoCompletefnEic = (item) =>{      
-      if(item.company_name){
-        invoiceData.value.supplierCompany.companName = item.company_name
+    const autoCompletefnEic = (item) => {
+      if (item.company_name) {
+        invoiceData.value.supplierCompany.companName = item.company_name;
       }
-      if(item.address){
-        invoiceData.value.supplierCompany.companyAddress = item.address
+      if (item.address) {
+        invoiceData.value.supplierCompany.companyAddress = item.address;
       }
-      if(item.eic){
-        invoiceData.value.supplierCompany.companyEic = item.eic
+      if (item.eic) {
+        invoiceData.value.supplierCompany.companyEic = item.eic;
       }
-      if( item.managers && item.managers[0]){
-        let managers = ""
-        item?.managers?.map((item,index)=>{
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.supplierCompany.companyOwnerName = managers
+      if (item.managers && item.managers[0]) {
+        let managers = "";
+        item?.managers?.map((item, index) => {
+          managers = index == 0 ? managers + item : managers + ", " + item;
+        });
+        invoiceData.value.supplierCompany.companyOwnerName = managers;
       }
-      showSuggestionsEic.value  = false
-      datalistEic.value = []
-    }
+      showSuggestionsEic.value = false;
+      datalistEic.value = [];
+    };
 
     const hideSuggestionEic = () => {
       setTimeout(() => {
-        if(showSuggestionsEic.value){
-          showSuggestionsEic.value = false
+        if (showSuggestionsEic.value) {
+          showSuggestionsEic.value = false;
         }
       }, 100);
-    }
+    };
 
     const ShowSuggestionEic = (items) => {
-      if(items != undefined || items.length != 0 ){
-        showSuggestionsEic.value = true
+      if (items != undefined || items.length != 0) {
+        showSuggestionsEic.value = true;
+      } else {
+        showSuggestionsEic.value = false;
       }
-      else{
-        showSuggestionsEic.value = false
-      }
-    }
-    
-    var datalistRecipient = ref([])
-    var showSuggestionsRecipient = ref(false)
-    
-    const SearchCompanyNameRecipient = (companyName)=>{   
-      if(companyName.length > 0){
-        let token = useJwt.getToken()
+    };
+
+    var datalistRecipient = ref([]);
+    var showSuggestionsRecipient = ref(false);
+
+    const SearchCompanyNameRecipient = (companyName) => {
+      if (companyName.length > 0) {
+        let token = useJwt.getToken();
         useJwt
           .SearchCompanyName(token, { companyName })
           .then((response) => {
-            if(response?.data != undefined || response?.data.length != 0 ){
-              showSuggestionsRecipient.value = true
+            if (response?.data != undefined || response?.data.length != 0) {
+              showSuggestionsRecipient.value = true;
+            } else {
+              showSuggestionsRecipient.value = false;
             }
-            else{
-              showSuggestionsRecipient.value = false
-            }
-            datalistRecipient.value = response?.data
+            datalistRecipient.value = response?.data;
           })
           .catch((error) => {
-            console.log("error",error)
+            console.log("error", error);
           });
-      } else{
-        showSuggestionsRecipient.value  = false
+      } else {
+        showSuggestionsRecipient.value = false;
       }
-    }
+    };
 
-    const autoCompletefnRecipient = (item) =>{      
-      if(item.company_name){
-        invoiceData.value.recipientCompany.companName = item.company_name
+    const autoCompletefnRecipient = (item) => {
+      if (item.company_name) {
+        invoiceData.value.recipientCompany.companName = item.company_name;
       }
-      if(item.address){
-        invoiceData.value.recipientCompany.companyAddress = item.address
+      if (item.address) {
+        invoiceData.value.recipientCompany.companyAddress = item.address;
       }
-      if(item.eic){
-        invoiceData.value.recipientCompany.companyEic = item.eic
+      if (item.eic) {
+        invoiceData.value.recipientCompany.companyEic = item.eic;
       }
-      if( item.managers && item.managers[0]){
-        let managers = ""
-        item?.managers?.map((item,index)=>{
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.recipientCompany.companyOwnerName = managers
+      if (item.managers && item.managers[0]) {
+        let managers = "";
+        item?.managers?.map((item, index) => {
+          managers = index == 0 ? managers + item : managers + ", " + item;
+        });
+        invoiceData.value.recipientCompany.companyOwnerName = managers;
       }
-      showSuggestionsRecipient.value  = false
-      datalistRecipient.value = []
-    }
+      showSuggestionsRecipient.value = false;
+      datalistRecipient.value = [];
+    };
 
     const hideSuggestionRecipient = () => {
       setTimeout(() => {
-        if(showSuggestionsRecipient.value){
-         showSuggestionsRecipient.value = false
+        if (showSuggestionsRecipient.value) {
+          showSuggestionsRecipient.value = false;
         }
       }, 100);
-    }
+    };
 
     const ShowSuggestionRecipient = (items) => {
-      if(items != undefined || items.length != 0 ){
-        showSuggestionsRecipient.value = true
+      if (items != undefined || items.length != 0) {
+        showSuggestionsRecipient.value = true;
+      } else {
+        showSuggestionsRecipient.value = false;
       }
-      else{
-        showSuggestionsRecipient.value = false
-      }
-    }
+    };
 
-    var datalistEicRecipient = ref([])
-    var showSuggestionsEicRecipient = ref(false)
-    
-    const SearchCompanyEicRecipient = (companyEic)=>{   
-      if(companyEic){
-        let token = useJwt.getToken()
+    var datalistEicRecipient = ref([]);
+    var showSuggestionsEicRecipient = ref(false);
+
+    const SearchCompanyEicRecipient = (companyEic) => {
+      if (companyEic) {
+        let token = useJwt.getToken();
         useJwt
           .SearchCompanyEic(token, companyEic)
           .then((response) => {
-            if(response?.data != undefined || response?.data.length != 0 ){
-              showSuggestionsEicRecipient.value = true
+            if (response?.data != undefined || response?.data.length != 0) {
+              showSuggestionsEicRecipient.value = true;
+            } else {
+              showSuggestionsEicRecipient.value = false;
             }
-            else{
-              showSuggestionsEicRecipient.value = false
-            }
-            datalistEicRecipient.value = response?.data
+            datalistEicRecipient.value = response?.data;
           })
           .catch((error) => {
-            console.log("error",error)
+            console.log("error", error);
           });
-      } else{
-        showSuggestionsEicRecipient.value  = false
+      } else {
+        showSuggestionsEicRecipient.value = false;
       }
-    }
+    };
 
-    const autoCompletefnEicRecipient = (item) =>{      
-      if(item.company_name){
-        invoiceData.value.recipientCompany.companName = item.company_name
+    const autoCompletefnEicRecipient = (item) => {
+      if (item.company_name) {
+        invoiceData.value.recipientCompany.companName = item.company_name;
       }
-      if(item.address){
-        invoiceData.value.recipientCompany.companyAddress = item.address
+      if (item.address) {
+        invoiceData.value.recipientCompany.companyAddress = item.address;
       }
-      if(item.eic){
-        invoiceData.value.recipientCompany.companyEic = item.eic
+      if (item.eic) {
+        invoiceData.value.recipientCompany.companyEic = item.eic;
       }
-      if( item.managers && item.managers[0]){
-        let managers = ""
-        item?.managers?.map((item,index)=>{
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.recipientCompany.companyOwnerName = managers
+      if (item.managers && item.managers[0]) {
+        let managers = "";
+        item?.managers?.map((item, index) => {
+          managers = index == 0 ? managers + item : managers + ", " + item;
+        });
+        invoiceData.value.recipientCompany.companyOwnerName = managers;
       }
-      showSuggestionsEicRecipient.value  = false
-      datalistEicRecipient.value = []
-    }
+      showSuggestionsEicRecipient.value = false;
+      datalistEicRecipient.value = [];
+    };
 
     const hideSuggestionEicRecipient = () => {
       setTimeout(() => {
-        if(showSuggestionsEicRecipient.value){
-          showSuggestionsEicRecipient.value = false
+        if (showSuggestionsEicRecipient.value) {
+          showSuggestionsEicRecipient.value = false;
         }
       }, 100);
-    }
+    };
 
     const ShowSuggestionEicRecipient = (items) => {
-      if(items != undefined || items.length != 0 ){
-        showSuggestionsEicRecipient.value = true
+      if (items != undefined || items.length != 0) {
+        showSuggestionsEicRecipient.value = true;
+      } else {
+        showSuggestionsEicRecipient.value = false;
       }
-      else{
-        showSuggestionsEicRecipient.value = false
-      }
-    }
+    };
 
-    var datalistPerson = ref([])
-    var showSuggestionsPerson = ref(false)
-    
-    const SearchCompanyPerson = (companyPerson)=>{   
-      if(companyPerson){
-        let token = useJwt.getToken()
+    var datalistPerson = ref([]);
+    var showSuggestionsPerson = ref(false);
+
+    const SearchCompanyPerson = (companyPerson) => {
+      if (companyPerson) {
+        let token = useJwt.getToken();
         useJwt
-          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {         
-            direction: 'desc',
-            sortField: 'id',
-            searchTerm: companyPerson
+          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {
+            direction: "desc",
+            sortField: "id",
+            searchTerm: companyPerson,
           })
           .then((response) => {
-            if(response?.data != undefined || response?.data.length != 0 ){
-              showSuggestionsPerson.value = true
+            if (response?.data != undefined || response?.data.length != 0) {
+              showSuggestionsPerson.value = true;
+            } else {
+              showSuggestionsPerson.value = false;
             }
-            else{
-              showSuggestionsPerson.value = false
-            }
-            datalistPerson.value = response?.data?.elements
+            datalistPerson.value = response?.data?.elements;
           })
           .catch((error) => {
-            console.log("error",error)
+            console.log("error", error);
           });
-      } else{
-        showSuggestionsPerson.value  = false
+      } else {
+        showSuggestionsPerson.value = false;
       }
-    }
+    };
 
-    const autoCompletefnPerson = (item) =>{      
-      if(item.firstMiddleAndLastName){
-        invoiceData.value.recipientCompany.companyOwnerName = item.firstMiddleAndLastName
+    const autoCompletefnPerson = (item) => {
+      if (item.firstMiddleAndLastName) {
+        invoiceData.value.recipientCompany.companyOwnerName =
+          item.firstMiddleAndLastName;
       }
-      if(item.address){
-        invoiceData.value.recipientCompany.companyAddress = item.address
+      if (item.address) {
+        invoiceData.value.recipientCompany.companyAddress = item.address;
       }
-      if(item.identificationNumber){
-        invoiceData.value.recipientCompany.companyEic = item.identificationNumber
+      if (item.identificationNumber) {
+        invoiceData.value.recipientCompany.companyEic =
+          item.identificationNumber;
       }
-      showSuggestionsPerson.value  = false
-      datalistPerson.value = []
-    }
+      showSuggestionsPerson.value = false;
+      datalistPerson.value = [];
+    };
 
     const hideSuggestionPerson = () => {
       setTimeout(() => {
-        if(showSuggestionsPerson.value){
-          showSuggestionsPerson.value = false
+        if (showSuggestionsPerson.value) {
+          showSuggestionsPerson.value = false;
         }
       }, 100);
-    }
+    };
 
     const ShowSuggestionPerson = (items) => {
-      if(items != undefined || items.length != 0 ){
-        showSuggestionsPerson.value = true
+      if (items != undefined || items.length != 0) {
+        showSuggestionsPerson.value = true;
+      } else {
+        showSuggestionsPerson.value = false;
       }
-      else{
-        showSuggestionsPerson.value = false
-      }
-    }
+    };
 
-    var datalistPersonIdNumber = ref([])
-    var showSuggestionsPersonIdNumber = ref(false)
-    
-    const SearchCompanyPersonIdNumber = (companyPersonIdNumber)=>{   
-      if(companyPersonIdNumber){
-        let token = useJwt.getToken()
+    var datalistPersonIdNumber = ref([]);
+    var showSuggestionsPersonIdNumber = ref(false);
+
+    const SearchCompanyPersonIdNumber = (companyPersonIdNumber) => {
+      if (companyPersonIdNumber) {
+        let token = useJwt.getToken();
         useJwt
-          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {         
-            direction: 'desc',
-            sortField: 'id',
-            searchTerm: companyPersonIdNumber
+          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {
+            direction: "desc",
+            sortField: "id",
+            searchTerm: companyPersonIdNumber,
           })
           .then((response) => {
-            if(response?.data != undefined || response?.data.length != 0 ){
-              showSuggestionsPersonIdNumber.value = true
+            if (response?.data != undefined || response?.data.length != 0) {
+              showSuggestionsPersonIdNumber.value = true;
+            } else {
+              showSuggestionsPersonIdNumber.value = false;
             }
-            else{
-              showSuggestionsPersonIdNumber.value = false
-            }
-            datalistPersonIdNumber.value = response?.data?.elements
+            datalistPersonIdNumber.value = response?.data?.elements;
           })
           .catch((error) => {
-            console.log("error",error)
+            console.log("error", error);
           });
-      } else{
-        showSuggestionsPersonIdNumber.value  = false
+      } else {
+        showSuggestionsPersonIdNumber.value = false;
       }
-    }
+    };
 
-    const autoCompletefnPersonIdNumber = (item) =>{      
-      if(item.firstMiddleAndLastName){
-        invoiceData.value.recipientCompany.companyOwnerName = item.firstMiddleAndLastName
+    const autoCompletefnPersonIdNumber = (item) => {
+      if (item.firstMiddleAndLastName) {
+        invoiceData.value.recipientCompany.companyOwnerName =
+          item.firstMiddleAndLastName;
       }
-      if(item.address){
-        invoiceData.value.recipientCompany.companyAddress = item.address
+      if (item.address) {
+        invoiceData.value.recipientCompany.companyAddress = item.address;
       }
-      if(item.identificationNumber){
-        invoiceData.value.recipientCompany.companyEic = item.identificationNumber
+      if (item.identificationNumber) {
+        invoiceData.value.recipientCompany.companyEic =
+          item.identificationNumber;
       }
-      showSuggestionsPersonIdNumber.value  = false
-      datalistPersonIdNumber.value = []
-    }
+      showSuggestionsPersonIdNumber.value = false;
+      datalistPersonIdNumber.value = [];
+    };
 
     const hideSuggestionPersonIdNumber = () => {
       setTimeout(() => {
-        if(showSuggestionsPersonIdNumber.value){
-          showSuggestionsPersonIdNumber.value = false
+        if (showSuggestionsPersonIdNumber.value) {
+          showSuggestionsPersonIdNumber.value = false;
         }
       }, 100);
-    }
+    };
 
     const ShowSuggestionPersonIdNumber = (items) => {
-      if(items != undefined || items.length != 0 ){
-        showSuggestionsPersonIdNumber.value = true
+      if (items != undefined || items.length != 0) {
+        showSuggestionsPersonIdNumber.value = true;
+      } else {
+        showSuggestionsPersonIdNumber.value = false;
       }
-      else{
-        showSuggestionsPersonIdNumber.value = false
-      }
-    }
+    };
 
-    const clearAll = (type)=>{
-      if(type == 'supplier'){
-        invoiceData.value.supplierCompany =  {
+    const clearAll = (type) => {
+      if (type == "supplier") {
+        invoiceData.value.supplierCompany = {
           companyOwnerName: "",
           companName: "",
           companyEic: "",
           companyVatEic: "",
           companyAddress: "",
-        }
-     
-      } else if(type == 'recipient'){
+        };
+      } else if (type == "recipient") {
         invoiceData.value.recipientCompany = {
           companyOwnerName: "",
           companName: "",
           companyEic: "",
           companyVatEic: "",
           companyAddress: "",
-        }
+        };
       }
-    }
+    };
 
     return {
       AccountTypeOption,
@@ -1750,7 +1955,7 @@ export default {
       hideSuggestionPersonIdNumber,
       ShowSuggestionPersonIdNumber,
       clearForm,
-      clearAll
+      clearAll,
     };
   },
 };
@@ -1811,8 +2016,8 @@ export default {
 .gap-2 {
   grid-gap: 20px;
 }
- 
-.accountType{
+
+.accountType {
   display: flex;
   gap: 10px;
   justify-content: end;
@@ -1826,7 +2031,7 @@ export default {
   width: 5rem !important;
   min-width: 5rem !important;
 }
-.input-suggesstions{
+.input-suggesstions {
   position: absolute;
   z-index: 99;
   width: 100%;
@@ -1835,40 +2040,38 @@ export default {
   max-height: 15rem;
   overflow: auto;
 }
-.dark-layout .input-suggesstions{
+.dark-layout .input-suggesstions {
   border-color: #3b4253;
 }
-.input-suggesstions .list-group-item{
+.input-suggesstions .list-group-item {
   border-bottom: 0 !important;
-  border-radius: 0 !important; 
+  border-radius: 0 !important;
   background-color: #f8f8f8 !important;
   cursor: pointer;
 }
-.dark-layout .input-suggesstions .list-group-item{
+.dark-layout .input-suggesstions .list-group-item {
   background-color: #161d31 !important;
 }
- 
 
-.card.invoice-card{
+.card.invoice-card {
   border: 1px solid #ebe9f1;
   border-radius: 20px;
   overflow: hidden;
-  height: calc(100% - 2rem );
+  height: calc(100% - 2rem);
 }
-.dark-layout .card.invoice-card{
-  border-color: #3b4253!important;
-}
- 
-.card-header.invoice-header h5{
-  color: #fff !important;
-}
- 
-.invoice-input-top{
-  width: 16rem; 
-  max-width: 100%;
-}
-.invoice-input-middle .input-group.invoice-edit-input-group span{
-  width: 100%;
+.dark-layout .card.invoice-card {
+  border-color: #3b4253 !important;
 }
 
+.card-header.invoice-header h5 {
+  color: #fff !important;
+}
+
+.invoice-input-top {
+  width: 16rem;
+  max-width: 100%;
+}
+.invoice-input-middle .input-group.invoice-edit-input-group span {
+  width: 100%;
+}
 </style>
