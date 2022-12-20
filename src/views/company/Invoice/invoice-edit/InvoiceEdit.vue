@@ -1294,7 +1294,7 @@ export default {
       { value: 'INCOME', text: 'INCOME' },
       { value: 'EXPENSE', text: 'EXPENSE' },
     ]
-    const VerifiedInvisible = ref(null)
+    const VerifiedInvisible = ref(true)
     var InvoiceTypeOptionToggleValue = ref(null)
     var saleTypeOptionToggleValue = ref(null)
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
