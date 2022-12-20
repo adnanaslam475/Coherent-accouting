@@ -51,10 +51,6 @@
             </div>
           </b-card-header>
         </b-card>
-
-        <h1 class="text-primary text-center" style="margin-bottom: 2rem;">
-          {{invoiceData.invoiceType}}
-        </h1>
         
         <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2">
           <!-- Header: Left Content -->
@@ -202,7 +198,7 @@
          </div>
         <b-card
             no-body
-            class="invoice-preview-card transaction-container"
+            class="invoice-preview-card transaction-container border-primary"
         >
           <!-- Invoice Description: Table -->
           <b-table-lite
@@ -231,7 +227,7 @@
         </b-card>
         <b-card
             no-body
-            class="invoice-preview-card transaction-container"
+            class="invoice-preview-card transaction-container border-primary"
           >
             <b-card-body class="invoice-padding">
               <b-row class="invoiceStat">
@@ -607,12 +603,7 @@ export default {
   font-weight: 500;
   font-size: 16px;
 }
-.card.invoice-card{
-  border: 1px solid #ebe9f1;
-  border-radius: 20px;
-  overflow: hidden;
-  height: calc(100% - 2rem );
-}
+ 
 .dark-layout .card.invoice-card{
   border-color: #3b4253!important;
 }

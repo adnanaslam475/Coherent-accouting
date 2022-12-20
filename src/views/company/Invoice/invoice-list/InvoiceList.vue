@@ -217,13 +217,12 @@
           placement="top"
         >
           <p class="mb-0">
-            Company Name: {{ data.item.recipientCompany.companName }}
+            {{ data.item.recipientCompany.companName }}
           </p>
           <p class="mb-0">
-            Company Eic: {{ data.item.recipientCompany.companyEic }}
+            Eic: {{ data.item.recipientCompany.companyEic }}
           </p>
           <p class="mb-0">
-            Company Owner Name:
             {{ data.item.recipientCompany.companyOwnerName }}
           </p>
 
@@ -258,13 +257,13 @@
           placement="top"
         >
           <p class="mb-0">
-            Company Name: {{ data.item.supplierCompany.companName }}
+            {{ data.item.supplierCompany.companName }}
           </p>
           <p class="mb-0">
-            Company Eic: {{ data.item.supplierCompany.companyEic }}
+            Eic: {{ data.item.supplierCompany.companyEic }}
           </p>
           <p class="mb-0">
-            Company Owner Name: {{ data.item.supplierCompany.companyOwnerName }}
+            {{ data.item.supplierCompany.companyOwnerName }}
           </p>
 
           <!-- <p class="mb-0">

@@ -482,6 +482,20 @@
                   ORIGINAL
                 </span>
               </b-form-checkbox>
+              <b-form-checkbox
+                v-model="saleTypeOptionToggleValue"
+                @change="saleTypeOptionToggle(saleTypeOptionToggleValue)"
+                class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                name="AccountTypeOptionToggle"
+                switch
+              >
+                <span class="switch-icon-left">
+                  GOODS
+                </span>
+                <span class="switch-icon-right">
+                  SERVICE
+                </span>
+              </b-form-checkbox>
               <b-card
                 no-body
                 class="invoice-preview date-issued mb-0"
@@ -526,11 +540,11 @@
                         <b-row class="flex-grow-1 px-1 invoice-add-transections">
                           <!-- Single Item Form Headers -->
                           <b-col cols="12" lg="1"> No. </b-col>
-                          <b-col cols="12" lg="2"> Item name or Service </b-col>
+                          <b-col cols="12" lg="4"> Item name or Service </b-col>
                           <b-col cols="12" lg="1"> Qty </b-col>
-                          <b-col cols="12" lg="2"> Measurement </b-col>
+                          <b-col cols="12" lg="1"> Measure </b-col>
                           <b-col cols="12" lg="2"> Single Price </b-col>
-                          <b-col cols="12" lg="2"> Currency </b-col>
+                          <b-col cols="12" lg="1"> Currency </b-col>
                           <b-col cols="12" lg="2"> Total Price </b-col>
                         </b-row>
                         <div class="form-item-action-col" />
@@ -559,7 +573,7 @@
                              
                           </b-col>
 
-                          <b-col cols="12" lg="2">
+                          <b-col cols="12" lg="4">
                             <label class="d-inline d-lg-none"
                               >Item name or Service</label
                             >
@@ -594,9 +608,9 @@
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </b-col>
-                          <b-col cols="12" lg="2">
+                          <b-col cols="12" lg="1">
                             <label class="d-inline d-lg-none"
-                              >Measurement</label
+                              >Measure</label
                             >
                             <validation-provider
                               #default="{ errors }"
@@ -638,7 +652,7 @@
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </b-col>
-                          <b-col cols="12" lg="2">
+                          <b-col cols="12" lg="1">
                             <label class="d-inline d-lg-none">Currency</label>
                             <validation-provider
                               #default="{ errors }"
@@ -1070,13 +1084,6 @@ export default {
       this.invoiceData.transactions.push(
         JSON.parse(JSON.stringify(this.itemFormBlankItem))
       );
-
-      this.$nextTick(() => {
-        this.trAddHeight(this.$refs.row[0].offsetHeight);
-        setTimeout(() => {
-          this.$refs.form.style.overflow = null;
-        }, 350);
-      });
     },
     removeItem(index) {
       this.invoiceData.transactions.splice(index, 1);
@@ -1193,6 +1200,7 @@ export default {
       transactions: [JSON.parse(JSON.stringify(itemFormBlankItem))],
       transactionType: "INCOME",
       invoiceType: "ORIGINAL",
+      saleType: "SERVICE",
       documentType: "INVOICE",
       verified: true
     });
@@ -1222,6 +1230,14 @@ export default {
       }
     }
 
+    var saleTypeOptionToggleValue = false
+    let saleTypeOptionToggle = (value)=>{
+      if(value){
+        invoiceData.value.saleType = "GOODS"
+      } else{
+        invoiceData.value.saleType = "SERVICE"
+      }
+    }
     const vatAmount = (item, vatPercent)=> {
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
@@ -1705,6 +1721,8 @@ export default {
       AccountTypeOptionToggle,
       InvoiceTypeOptionToggleValue,
       InvoiceTypeOptionToggle,
+      saleTypeOptionToggleValue,
+      saleTypeOptionToggle,
       invoiceData,
       currencyOptions,
       transectionOptions,
@@ -1849,12 +1867,7 @@ export default {
 }
  
 
-.card.invoice-card{
-  border: 1px solid #ebe9f1;
-  border-radius: 20px;
-  overflow: hidden;
-  height: calc(100% - 2rem );
-}
+ 
 .dark-layout .card.invoice-card{
   border-color: #3b4253!important;
 }

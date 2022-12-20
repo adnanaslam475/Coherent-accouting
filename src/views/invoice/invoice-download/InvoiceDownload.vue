@@ -11,9 +11,6 @@
           </div>
         </b-card-header>
       </b-card>
-      <h1 class="text-primary text-center" style="margin-bottom: 2rem;">
-          {{invoiceData.invoiceType}}
-      </h1>
       <div
         class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2"
         style="padding: 0 1rem;"
@@ -105,103 +102,136 @@
           </b-card>
         </div>
       </div>
-      <div style="padding: 0 1rem;">
+      <div class="d-flex justify-content-between alogn-items-center" style="padding: 0 1rem;">
+        <b-card v-if="invoiceData.transactionType" no-body class="invoice-preview date-issued ml-0">
+          <b-card-header class="justify-content-end">
+            <div class="invoice-date-wrapper invoice-middle-content">
+              <p class="invoice-date-title">Transaction type:</p>
+              <p class="invoice-date">
+                {{ invoiceData.transactionType }}
+              </p>
+            </div>
+          </b-card-header>
+        </b-card>
         <b-card no-body class="invoice-preview date-issued">
-        <b-card-header class="justify-content-end">
-          <div class="invoice-date-wrapper invoice-middle-content">
-            <p class="invoice-date-title">Date Issued:</p>
-            <p class="invoice-date">
-              {{ invoiceData.dateIssued }}
-            </p>
-          </div>
-        </b-card-header>
+          <b-card-header class="justify-content-end">
+            <div class="invoice-date-wrapper invoice-middle-content">
+              <p class="invoice-date-title">Date Issued:</p>
+              <p class="invoice-date">
+                {{ invoiceData.dateIssued }}
+              </p>
+            </div>
+          </b-card-header>
         </b-card>
       </div>
 
-      <b-card no-body class="invoice-preview-card">
-        <!-- Invoice Description: Table -->
-        <b-table-lite
-          class="invoice-table"
-          responsive
-          :items="invoiceData.transactions"
-          :fields="[
-            'no.',
-            'serviceOrItemDescription',
-            'qty',
-            'measurement',
-            'singleAmountTransaction',
-            'transactionTotalAmountNonVat',
-          ]"
+      <b-card
+          no-body
+          class="invoice-preview-card transaction-container border-primary mx-1"
         >
-          <template #cell(no.)="data">
+          <!-- Invoice Description: Table -->
+          <b-table-lite
+            responsive
+            class="custom-preview-table"
+            :items="invoiceData.transactions"
+            :fields="['no.','serviceOrItemDescription', 'qty', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"            
+          >
+            <template #cell(no.)="data">
                 {{ data.item.index }}
-          </template>
-          <template #cell(qty)="data">
-              {{ data.item.quantity }}
-          </template>
-          <template #cell(singleAmountTransaction)="data">
-              <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.singleAmountTransaction }}</span>
-              <span v-else>{{ invoiceData.currency }} {{ data.item.singleAmountTransaction }}</span>
-          </template>
-          <template #cell(transactionTotalAmountNonVat)="data">
-            <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.transactionTotalAmountNonVat }}</span>
-            <span v-else>{{ invoiceData.currency }} {{ data.item.transactionTotalAmountNonVat }}</span>
-          </template>
-        </b-table-lite>
+            </template>
+            <template #cell(qty)="data">
+                {{ data.item.quantity }}
+            </template>
+            <template #cell(singleAmountTransaction)="data"> 
+                <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.singleAmountTransaction }}</span>
+                <span v-else>{{ invoiceData.currency }} {{ data.item.singleAmountTransaction }}</span>
+            </template>
+            <template #cell(transactionTotalAmountNonVat)="data">
+                <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.transactionTotalAmountNonVat }}</span>
+                <span v-else>{{ invoiceData.currency }} {{ data.item.transactionTotalAmountNonVat }}</span>
+            </template>
+          </b-table-lite>
 
-        <!-- Invoice Description: Total -->
-        <b-card-body class="invoice-padding pb-0">
+          <!-- Invoice Description: Total -->
+      </b-card>
+      <b-card
+        no-body
+        class="invoice-preview-card transaction-container border-primary mx-1"
+      >
+        <b-card-body class="invoice-padding">
           <b-row class="invoiceStat">
+
             <!-- Col: Sales Persion -->
-            <b-col cols="12" md="6" class="mt-md-0 mt-3" order="2" order-md="1">
+            <b-col
+              cols="12"
+              md="7"
+              class="mt-md-6 d-flex"
+              order="2"
+              order-md="1"
+            >
+            <h1 class="invoiceTypeHeading">
+              {{ invoiceData.invoiceType }}
+            </h1>
             </b-col>
 
             <!-- Col: Total -->
             <b-col
               cols="12"
-              md="6"
+              md="5"
               class="mt-md-6 d-flex justify-content-end"
               order="1"
               order-md="2"
             >
               <div class="invoice-total-wrapper">
                 <div class="invoice-total-item">
-                  <p class="invoice-total-title">Total price NonVat:</p>
+                  <p class="invoice-total-title">
+                    Total price NonVat:
+                  </p>
                   <p class="invoice-total-amount">
                     <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.amountNonVat}}</span>
                     <span v-else>{{ invoiceData.currency }} {{invoiceData.amountNonVat}}</span>
                   </p>
                 </div>
                 <div class="invoice-total-item">
-                  <p class="invoice-total-title">VAT:</p>
+                  <p class="invoice-total-title">
+                    VAT:
+                  </p>
                   <p class="invoice-total-amount">
-                    {{ invoiceData.vatPercent }} %
+                    {{invoiceData.vatPercent}} %
                   </p>
                 </div>
                 <div class="invoice-total-item">
-                  <p class="invoice-total-title">VAT Amount:</p>
+                  <p class="invoice-total-title">
+                    VAT Amount:
+                  </p>
                   <p class="invoice-total-amount">
                     <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.vatAmount}}</span>
                     <span v-else>{{ invoiceData.currency }} {{invoiceData.vatAmount}}</span>
                   </p>
                 </div>
                 <div class="invoice-total-item">
-                  <p class="invoice-total-title">Discount Percent:</p>
+                  <p class="invoice-total-title">
+                    Discount Percent:
+                  </p>
                   <p class="invoice-total-amount">
-                    {{ invoiceData.tradeDiscountPercent }} %
+                    {{invoiceData.tradeDiscountPercent}} %
                   </p>
                 </div>
                 <div class="invoice-total-item">
-                  <p class="invoice-total-title">Discount Sum:</p>
+                  <p class="invoice-total-title">
+                    Discount Sum:
+                  </p>
                   <p class="invoice-total-amount">
                     <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.tradeDiscountAmount}}</span>
                     <span v-else>{{ invoiceData.currency }} {{invoiceData.tradeDiscountAmount}}</span>
                   </p>
                 </div>
-                <hr class="my-50" />
+                
                 <div class="invoice-total-item">
-                  <p class="invoice-total-title">Total Price:</p>
-                  <p class="invoice-total-amount">
+                  <p class="invoice-total-title font-weight-bolder custom-font mb-0">
+                    Total Price:
+                  </p>
+                  <p class="invoice-total-amount font-weight-bolder custom-font mb-0">
                     <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.totalAmount}}</span>
                     <span v-else>{{ invoiceData.currency }} {{invoiceData.totalAmount}}</span>
                   </p>

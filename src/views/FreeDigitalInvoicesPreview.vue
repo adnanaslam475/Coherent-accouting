@@ -1,10 +1,10 @@
 <template>
     <div>
-      <b-row class="auth-inner m-0">
+      <b-row class="auth-inner m-0 print-none">
         <navbarAds />
       </b-row>
       <!-- search input -->
-      <section id="about">
+      <section class="print-none" id="about">
         <div class="text-center">
           <h1 class="text-primary text-center mt-5 mb-5">
             {{ $t("free_digital_invoices.title") }}
@@ -41,10 +41,6 @@
               </div>
             </b-card-header>
           </b-card>
-
-          <h1 class="text-primary text-center" style="margin-bottom: 2rem;">
-            {{invoiceData.invoiceType}}
-          </h1>
           
           <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2">
             <!-- Header: Left Content -->
@@ -610,20 +606,11 @@
     font-weight: 500;
     font-size: 16px;
   }
-  .card.invoice-card{
-    border: 1px solid #ebe9f1;
-    border-radius: 20px;
-    overflow: hidden;
-    height: calc(100% - 2rem );
-  }
+ 
   .dark-layout .card.invoice-card{
     border-color: #3b4253!important;
   }
-  .card-header.invoice-header{
-      padding: 0.75rem;
-      border: 0;
-      border-radius: 0;
-  }
+ 
   .card-header.invoice-header h5{
     color: #fff !important;
   }

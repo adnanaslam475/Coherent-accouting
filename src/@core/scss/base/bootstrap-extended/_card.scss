@@ -523,3 +523,10 @@
     }
   }
 }
+
+.card.invoice-card{
+  border: 1px solid $primary;
+  border-radius: 15px;
+  overflow: hidden;
+  height: calc(100% - 2rem );
+}

@@ -154,13 +154,13 @@
           placement="top"
         >
           <p class="mb-0">
-            Company Name: {{ data.item.recipientCompany.companName }}
+            {{ data.item.recipientCompany.companName }}
           </p>
           <p class="mb-0">
-            Company Eic: {{ data.item.recipientCompany.companyEic }}
+            Eic: {{ data.item.recipientCompany.companyEic }}
           </p>
           <p class="mb-0">
-            Company Owner Name: {{ data.item.recipientCompany.companyOwnerName }}
+            {{ data.item.recipientCompany.companyOwnerName }}
           </p>
 
           <!-- <p class="mb-0">
@@ -195,13 +195,13 @@
           placement="top"
         >
           <p class="mb-0">
-            Company Name: {{ data.item.supplierCompany.companName }}
+            {{ data.item.supplierCompany.companName }}
           </p>
           <p class="mb-0">
-            Company Eic: {{ data.item.supplierCompany.companyEic }}
+            Eic: {{ data.item.supplierCompany.companyEic }}
           </p>
           <p class="mb-0">
-            Company Owner Name: {{ data.item.supplierCompany.companyOwnerName }}
+            {{ data.item.supplierCompany.companyOwnerName }}
           </p>
 
           <!-- <p class="mb-0">
@@ -590,12 +590,7 @@ export default {
   font-weight: 500;
   font-size: 16px;
 }
-.card.invoice-card{
-  border: 1px solid #ebe9f1;
-  border-radius: 20px;
-  overflow: hidden;
-  height: calc(100% - 2rem );
-}
+ 
 .dark-layout .card.invoice-card{
   border-color: #3b4253!important;
 }

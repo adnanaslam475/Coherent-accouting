@@ -565,12 +565,6 @@ export default {
   font-weight: 500;
   font-size: 16px;
 }
-.card.invoice-card{
-  border: 1px solid #ebe9f1;
-  border-radius: 20px;
-  overflow: hidden;
-  height: calc(100% - 2rem );
-}
 .dark-layout .card.invoice-card{
   border-color: #3b4253!important;
 }

@@ -134,7 +134,7 @@ body {
   flex: 1;
 }
 .card-header.invoice-header{
-  padding: 0.72rem;
+  padding: 0.72rem !important;
   border: 0;
   border-radius: 0;
 }
@@ -264,7 +264,7 @@ input.form-control:disabled{
   text-align: right;
 }
 @media print {
-  .tabs-hide-print{
+  .tabs-hide-print,.print-none{
     display: none;
   }
 }
@@ -283,7 +283,7 @@ input.form-control:disabled{
   padding: 0.8rem;
 }
 .custom-font{
-  font-size: 1.4rem;
+  font-size: 1.3rem !important;
 }
 .opacity-1{
   opacity: 1 !important;
@@ -301,12 +301,12 @@ input.form-control:disabled{
   transform: rotate(330deg) scale(1.2);
   font-weight: 400;
 }
-.invoice-add-transections .form-control,.invoice-add-transections .input-group-text,.invoice-add-transections .custom-select {
-  height: 2.5rem !important;
+.invoice-add-transections{
+font-size: 0.8vw;
 }
 .invoice-add-transections .col-12{
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
 }
 /* Preview transaction UI */
 .invoiceStat .invoice-total-item .invoice-total-title.font-weight-bolder{

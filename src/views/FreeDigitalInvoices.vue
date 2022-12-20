@@ -555,6 +555,20 @@
                     ORIGINAL
                   </span>
                 </b-form-checkbox>
+                <b-form-checkbox
+                  v-model="saleTypeOptionToggleValue"
+                  @change="saleTypeOptionToggle(saleTypeOptionToggleValue)"
+                  class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                  name="AccountTypeOptionToggle"
+                  switch
+                >
+                  <span class="switch-icon-left">
+                    GOODS
+                  </span>
+                  <span class="switch-icon-right">
+                    SERVICE
+                  </span>
+                </b-form-checkbox>
                 <b-card no-body class="invoice-preview date-issued mb-0">
                   <b-card-header class="justify-content-end">
                     <div class="mt-md-0 mt-2">
@@ -1229,6 +1243,7 @@ export default {
       transactions: [JSON.parse(JSON.stringify(itemFormBlankItem))],
       transactionType: "INCOME",
       invoiceType: "ORIGINAL",
+      saleType: "SERVICE",
       documentType: "INVOICE",
       verified: true
     });
@@ -1257,6 +1272,16 @@ export default {
         invoiceData.value.invoiceType = "PROFORMA"
       } else{
         invoiceData.value.invoiceType = "ORIGINAL"
+      }
+    }
+
+    var saleTypeOptionToggleValue = invoiceData.value.saleType == "GOODS" ? true : false
+    
+    let saleTypeOptionToggle = (value)=>{
+      if(value){
+        invoiceData.value.saleType = "PROFORMA"
+      } else{
+        invoiceData.value.saleType = "ORIGINAL"
       }
     }
 
@@ -1340,6 +1365,7 @@ export default {
         transactions: invoiceData.value.transactions,
         transactionType: invoiceData.value.transactionType,
         invoiceType: invoiceData.value.invoiceType,
+        saleType: invoiceData.value.saleType,
         documentType: "INVOICE",
         verified: invoiceData.value.verified
       }
@@ -1621,10 +1647,12 @@ export default {
 
     return {
       AccountTypeOption,
-      AccountTypeOptionToggle,
       AccountTypeOptionToggleValue,
+      AccountTypeOptionToggle,
       InvoiceTypeOptionToggleValue,
       InvoiceTypeOptionToggle,
+      saleTypeOptionToggleValue,
+      saleTypeOptionToggle,
       invoiceData,
       currencyOptions,
       transectionOptions,
@@ -1762,12 +1790,7 @@ export default {
 }
  
 
-.card.invoice-card{
-  border: 1px solid #ebe9f1;
-  border-radius: 20px;
-  overflow: hidden;
-  height: calc(100% - 2rem );
-}
+ 
 .dark-layout .card.invoice-card{
   border-color: #3b4253!important;
 }
