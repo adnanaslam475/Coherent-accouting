@@ -1239,7 +1239,7 @@ export default {
     },
     invoiceVerify(invoiceData){
       invoiceData.verified = true
-      this.invoiceEdit(invoiceData)
+      this.invoiceEdit(invoiceData,'invoices')
     }
   },
   setup() {
