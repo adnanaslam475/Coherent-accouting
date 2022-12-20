@@ -53,7 +53,8 @@
           </b-col>
         </b-row>
       </b-form>
-      <b-form v-if="showEditForm" @submit.prevent="updateBinary">
+
+      <!-- <b-form v-if="showEditForm" @submit.prevent="updateBinary">
         <b-row>
           <b-col class="pb-2" cols="12">
             <b-input-group class="input-group-merge">
@@ -76,10 +77,10 @@
             </b-col>
           </b-col>
         </b-row>
-      </b-form>
-      <b-row>
-        <b-col cols="12">
-          <b-table
+      </b-form> -->
+
+      <!--Assets Table  -->
+      <b-table
             :fields="fields"
             :items="items"
             responsive
@@ -88,7 +89,7 @@
             empty-text="No matching records found"
             @sort-changed="checkStatus"
           >
-            <template #empty="scope">
+          <template #empty="scope">
               <div class="d-flex align-items-center justify-content-center">
                 <div class="mb-1 start-chat-icon">
                   <feather-icon icon="FolderIcon" size="20" />
@@ -97,6 +98,7 @@
               </div>
             </template>
 
+            <!-- Media -->
             <template #cell(Media)="data">
               <div>
                 <!-- :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type])"-->
@@ -116,7 +118,9 @@
                 />
               </div>
             </template>
-            <template #cell(Notes)="data">
+
+            <!-- Notes -->
+            <template #cell(notes)="data">
               <b-row v-if="asset.id === data.item.id" class="w-100">
                 <b-col cols="10">
                   <b-form-input
@@ -138,9 +142,11 @@
               </b-row>
               <p v-else>
                 {{ data.item.notes }}
-              </p>
-            </template>
-            <template
+              </p> 
+        </template>
+
+        <!-- Action Buttons -->
+        <template
               #cell(action)="data"
               style="text-align: center !important"
             >
@@ -181,8 +187,10 @@
                 </b-dropdown>
               </b-row>
             </template>
-          </b-table>
-        </b-col>
+        </b-table>
+
+<!-- Pagination -->
+      <b-row>
         <b-col
           cols="12"
           sm="6"
