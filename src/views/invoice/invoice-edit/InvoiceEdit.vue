@@ -63,8 +63,8 @@
             </b-card>
              
             <div>
-              <div class="accountType justify-content-between">
-                <div 
+              <div class="accountType">
+                <div
                   :class="`${VerifiedInvisible ?  'invisible': 'visible' } ml-1 d-flex align-items-center`"
                 >              
                   <span class="mr-1 d-none">
@@ -72,7 +72,7 @@
                   </span>
                   <b-form-checkbox
                     v-model="invoiceData.verified"
-                    :class="`d-none custom-control-primary custom-switch-btn-1 text-center`"
+                    :class="`custom-control-primary custom-switch-btn-1 text-center d-none`"
                     name="AccountTypeOptionToggle"
                     switch
                   >
@@ -508,18 +508,17 @@
                           :options="transectionOptions"
                         >
                       </b-form-select>
-             size="16"
-                            icon="XIcon"
-                            class="cursor-pointer clear-all"
-                            @click="invoiceData.dateIssued = ''"
-                          />
-                        </div>
-                      <!-- <flat-pickr
-                        v-model="invoiceData.dateIssued"
-                        class="form-control invoice-edit-input invoice-input-top"
-                      /> -->
->>>>>>> 669ca4fb44ac71440d3fb9237cd80ec775599e05
-OptionToggle"
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
+                    </div>
+                  </div>
+                </b-card-header>
+              </b-card>
+              <b-form-checkbox
+                v-model="InvoiceTypeOptionToggleValue"
+                @change="InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)"
+                class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                name="AccountTypeOptionToggle"
                 switch
               >
                 <span class="switch-icon-left">
@@ -556,10 +555,36 @@ OptionToggle"
                         name="dateIssued"
                         
                       >
-                        <flat-pickr
+                        <!-- <flat-pickr
                           v-model="invoiceData.dateIssued"
                           class="form-control invoice-edit-input invoice-input-top"
-                        />
+                        /> -->
+                         
+                        <div class="position-relative mr-1 filter-date">
+                          <flat-pickr
+                            v-model="invoiceData.dateIssued"
+                            class="
+                              form-control
+                              invoice-edit-input invoice-input-top
+                            "
+                            placeholder="Select date: "
+                          />
+
+                          <feather-icon
+                            v-if="invoiceData.dateIssued === ''"
+                            size="16"
+                            icon="CalendarIcon"
+                            class="cursor-pointer clear-all"
+                          />
+                          <feather-icon
+                            v-else
+                            size="16"
+                            icon="XIcon"
+                            class="cursor-pointer clear-all"
+                            @click="invoiceData.dateIssued = ''"
+                          />
+                        </div>
+
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
                     </div>
@@ -1023,6 +1048,7 @@ OptionToggle"
               <b-spinner v-if="loading" small variant="light" />
                 Save
               </b-button>
+   
               <b-button
                 v-if="!VerifiedInvisible"
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
@@ -1035,8 +1061,7 @@ OptionToggle"
               >
               <b-spinner v-if="loading" small variant="light" />
                 Verify
-              </b-button>
-              <b-button
+              </b-button>           <b-button
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 variant="outline-primary"
                 block
@@ -1208,7 +1233,7 @@ export default {
     }
   },
   setup() {
-    const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
+        const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
 
     // Register module
     if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule)
@@ -1216,7 +1241,7 @@ export default {
     // UnRegister on leave
     onUnmounted(() => {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
-    })
+    }) 
     var AccountTypeOption = ref("company")
     var AccountTypeOptionToggleValue = false
     
