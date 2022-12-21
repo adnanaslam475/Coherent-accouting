@@ -1,7 +1,7 @@
 <template>
   
 
-  <b-card class="card-transaction" no-body>
+  <b-card class="card-transaction" no-body style="height: calc( 100% - 2rem);">
     <b-card-header>
       <b-card-title>Unfinished Vat Reports</b-card-title>
     </b-card-header>

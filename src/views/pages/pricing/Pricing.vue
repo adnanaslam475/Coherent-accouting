@@ -314,8 +314,8 @@ export default {
   },
   data() {
     return {
-      status: 'monthly',
-      monthlyPlanShow: true,
+      status: 'annually',
+      monthlyPlanShow: false,
       pricing: {},
     }
   },

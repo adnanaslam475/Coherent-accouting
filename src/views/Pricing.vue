@@ -569,8 +569,8 @@ export default {
       aeroplanImage: '',
       helicolptorImage: '',
       aeroplanJetImage: '',
-      status: 'monthly',
-      monthlyPlanShow: true,
+      status: 'annually',
+      monthlyPlanShow: false,
       pricing: {
         basicPlan: {
           title: 'Basic',

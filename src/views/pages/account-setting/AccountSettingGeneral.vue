@@ -244,13 +244,30 @@
                 rules="required"
               >
                 <v-select
-                  v-model="userDetail.country"
-                  :state="errors.length > 0 ? false:null"
-                  :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                  :options="countries"
-                  :clearable="false"
+                  v-model="country"
+                  :options="options"
+                  :filterBy="(option, label, search)=> {
+                    return (option.text || '').toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1
+                  }"
                   input-id="country"
-                />
+                  name="country"
+                  v-bind:placeholder="$t('register.country_placeholder')"
+                  :value="$store.state.selected"
+                  :state="errors.length > 0 ? false:null"
+                  :clearable="false"
+                >
+                  <template #selected-option="option">
+                    <div style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
+                      <img :src="getImg(option.src)">
+                      {{ option.text }}
+                    </div>
+                  </template>
+                  <template v-slot:option="option">
+                      <span style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
+                        <img :src="getImg(option.src)">  {{ option.text }}
+                      </span>
+                  </template>
+                </v-select>
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
@@ -338,7 +355,7 @@ import useJwt from '@/auth/jwt/useJwt'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 import vSelect from 'vue-select'
-import countries from '@/@fake-db/data/other/countries'
+// import countries from '@/@fake-db/data/other/countries'
 import { confirmed, min, required } from 'vee-validate/dist/rules'
 
 extend('required', required)
@@ -385,12 +402,17 @@ export default {
     return {
       optionsLocal: JSON.parse(JSON.stringify(this.generalData)),
       profileFile: null,
+      options: [],
+      country: null
     }
   },
   created() {
     this.getUserDetail()
     // this.populateCountries()
     // console.log(JSON.parse(localStorage.getItem('userData')).data)
+  },
+  mounted() {
+    this.populateCountries();
   },
   // watch: {
   //   'userDetail.accountType': function (newV, oldV) {
@@ -424,6 +446,12 @@ export default {
     async getUserDetail() {
       const data = await axios.get('account/api/user/who-am-i')
       this.userDetail = data.data
+      this.country = {
+        Country: this.userDetail.isoAlpha2Country,
+        value: this.userDetail.isoAlpha2Country,
+        text: this.userDetail.country,
+        src: this.userDetail.isoAlpha2Country.toLocaleLowerCase(),
+      }
       // await this.getUserInfo()
     },
     async getUserInfo() {
@@ -440,7 +468,7 @@ export default {
             .then(response => {
               // eslint-disable-next-line array-callback-return
               response.data.map((value, key) => {
-                this.countries.push({
+                this.options.push({
                   Country: value.isoAlpha2Country,
                   value: value.isoAlpha2Country,
                   text: value.country,
@@ -479,6 +507,8 @@ export default {
         this.userDetail.companyName = ''
         this.userDetail.vatNumber = ''
       }
+      this.userDetail.country = this.country?.text
+      this.userDetail.isoAlpha2Country = this.country?.value
       const data = await axios.put(`account/api/user/update/${this.userDetail.email}`, this.userDetail)
       if (data.status === 200) {
         this.makeToast('success', 'Success', 'Settings Updated Successfully')
@@ -498,7 +528,6 @@ export default {
       accountType: '',
     })
     return {
-      countries,
       userDetail,
       previewEl,
     }

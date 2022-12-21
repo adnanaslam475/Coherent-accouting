@@ -12,7 +12,7 @@
       </b-nav-item>
       <b-nav-item :to="{ name: 'invoices', params: { id: 2 }}" :active="invoiceTab !== 0">
         <feather-icon icon="UsersIcon" />
-        Private Persons
+        Clients
       </b-nav-item>
     </b-nav>
   </div>

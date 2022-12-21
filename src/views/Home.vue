@@ -1,20 +1,6 @@
 <template>
   <section id="dashboard-ecommerce">
-    <b-row class="match-height">
-      <b-col
-        xl="4"
-        md="6"
-      >
-        <ecommerce-medal />
-      </b-col>
-      <b-col
-        xl="8"
-        md="6"
-      >
-        <ecommerce-statistics :data="data.statisticsItems" />
-      </b-col>
-    </b-row>
-    <b-row class="match-height">
+    <b-row>
       <b-col
         xl="4"
         md="6"
@@ -24,8 +10,20 @@
       <b-col
         xl="8"
         md="6"
+        class="row m-0"
       >
-      <crm-report />
+        <b-col
+          xl="12"
+          md="12"
+        >
+          <ecommerce-statistics :data="data.statisticsItems" />
+        </b-col>
+        <b-col
+          xl="12"
+          md="12"
+        >
+        <crm-report />
+        </b-col>
       </b-col>
     </b-row>
     <b-row class="match-height">

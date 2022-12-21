@@ -62,7 +62,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="UserIcon" />
-          <span style="font-size: 13px">Clients or Recipients</span>
+          <span style="font-size: 13px">Clients</span>
         </template>
         <PrivatePersons :add-record="addRecord" @state="updateAddRecord($event)" />
       </b-tab>

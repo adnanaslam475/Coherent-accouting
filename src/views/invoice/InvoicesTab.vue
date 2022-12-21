@@ -25,7 +25,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="UsersIcon" />
-          <span>Private Persons</span>
+          <span>Clients</span>
         </template>
         <privatePerson />
       </b-tab>

@@ -28,7 +28,7 @@
         </b-nav-item>
         <b-nav-item :to="{ name: 'CompanyView', params: { InvoiceId: 6, id: $route.params.companyId }}" :active="invoiceTab !== 0">
           <feather-icon icon="UserIcon" />
-          Private Persons
+          Clients
         </b-nav-item>
       </b-nav>
     </div>

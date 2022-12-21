@@ -67,12 +67,12 @@
                 <div
                   :class="`${VerifiedInvisible ?  'invisible': 'visible' } ml-1 d-flex align-items-center`"
                 >              
-                  <span class="mr-1 d-none">
+                  <span class="mr-1">
                     Verified:
                   </span>
                   <b-form-checkbox
                     v-model="invoiceData.verified"
-                    :class="`custom-control-primary custom-switch-btn-1 text-center d-none`"
+                    :class="`custom-control-primary custom-switch-btn-1 text-center`"
                     name="AccountTypeOptionToggle"
                     switch
                   >
@@ -1057,7 +1057,6 @@
                 :disabled="invalid || loading"
                 type="button"
                 @click="invoiceVerify(invoiceData)"
-                class="d-none"
               >
               <b-spinner v-if="loading" small variant="light" />
                 Verify
@@ -1288,7 +1287,7 @@ export default {
       { value: 'INCOME', text: 'INCOME' },
       { value: 'EXPENSE', text: 'EXPENSE' },
     ]
-    const VerifiedInvisible = ref(null)
+    const VerifiedInvisible = ref(true)
     var InvoiceTypeOptionToggleValue = ref(null)
     var saleTypeOptionToggleValue = ref(null)
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
