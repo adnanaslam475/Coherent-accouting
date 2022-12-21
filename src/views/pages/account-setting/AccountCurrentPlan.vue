@@ -1,52 +1,100 @@
 <template>
   <b-card>
-    <b-card-title>Current Plan</b-card-title>
+    <b-card-title>My Plan</b-card-title>
     <b-row>
+      <!-- Plan image -->
       <b-col cols="6">
-        <h4>Your Current Plan is <span style=" text-transform: capitalize; margin-right: 12px;">{{ currentPlan.planName }}</span>
-          <span v-if="currentPlan.active === true"
-              class="
-                v-chip v-chip--label
-                v-theme--light
-                text-primary
-                v-chip--density-default v-chip--size-small v-chip--variant-tonal
-              "
-              draggable="false"
-              style="background-color:aliceblue; padding: 5px 10px; border-radius: 20px"
-              ><span class="v-chip__underlay"></span
-              >
-              Active
-              </span
-            >
-            <span v-else
-              class="
-                v-chip v-chip--label
-                v-theme--light
-                text-primary
-                v-chip--density-default v-chip--size-small v-chip--variant-tonal
-              "
-              draggable="false"
-              style="background-color:aliceblue; padding: 5px 10px; border-radius: 20px"
-              ><span class="v-chip__underlay"></span
-              >
-              Inactive
-              </span
-            >
-          </h4>
-        <p>A simple start for everyone</p>
+        <b-img
+          :src="
+            currentPlan.planName === 'BASIC'
+              ? basicImage
+              : currentPlan.planName === 'BEGINNER'
+              ? beginnerImage
+              : currentPlan.planName === 'STARTER'
+              ? starterImage
+              : currentPlan.planName === 'ENTERPRISE'
+              ? enterpriseImage
+              : currentPlan.planName === 'PLATINIUM'
+              ? platinumImage
+              : ''
+          "
+          class="mb-2 ml-2 w-25"
+          alt="basic svg img"
+        />
       </b-col>
+
+      <!-- Alert  -->
       <b-col cols="6" class="p-0">
-        <b-alert show variant="danger" class="p-75">
-          <h4>
-            Your Current Plan is {{ currentPlan.planName }}
-          </h4>
-          <p>A simple start for everyone</p>
+        <b-alert
+          show
+          variant="warning"
+          class="p-75"
+          style="width: 95%; margin-left: 13px"
+          v-if="daysLeft <= 5"
+        >
+          <p style="font-size: 1.125rem">
+            <b>We need your attention!</b>
+          </p>
+          <p style="font-size: 1rem">Your plan expires soon</p>
+        </b-alert>
+        <b-alert
+          show
+          variant="success"
+          class="p-75"
+          style="width: 95%; margin-left: 13px"
+          v-else
+        >
+          <h4 style="font-size: 1.125rem">Enjoy your plan!</h4>
         </b-alert>
       </b-col>
+      <!-- Plan Details -->
       <b-col cols="6">
-        <h4>Active until {{ currentPlan.validTo }}</h4>
-        <p>We will send you a notification upon Subscription expiration</p>
+        <h4 style="margin-bottom: 1rem">
+          Your Current Plan is
+          <span style="text-transform: capitalize; margin-right: 12px">{{
+            currentPlan.planName
+          }}</span>
+        </h4>
+        <!-- Status -->
+        <p>
+          <b>Status: </b>
+          <span
+            v-if="currentPlan.active === true"
+            class="
+              v-chip v-chip--label
+              v-theme--light
+              text-primary
+              v-chip--density-default v-chip--size-small v-chip--variant-tonal
+            "
+            draggable="false"
+            style="
+              background-color: aliceblue;
+              padding: 5px 10px;
+              border-radius: 20px;
+            "
+            ><span class="v-chip__underlay"></span>
+            Active
+          </span>
+          <span
+            v-else
+            class="
+              v-chip v-chip--label
+              v-theme--light
+              text-danger
+              v-chip--density-default v-chip--size-small v-chip--variant-tonal
+            "
+            draggable="false"
+            style="
+              background-color: rgba(234, 84, 85, 0.12) !important;
+              padding: 5px 10px;
+              border-radius: 20px;
+            "
+            ><span class="v-chip__underlay"></span>
+            Inactive
+          </span>
+        </p>
       </b-col>
+      <!-- Progress Bar -->
       <b-col cols="6">
         <div class="progress-wrapper">
           <div class="d-flex align-items-center justify-content-between">
@@ -60,16 +108,20 @@
           <p>{{ daysLeft }} days remaining until your plan requires update</p>
         </div>
       </b-col>
-      <b-col cols="6">
-        <h4>{{ currentPlan.planMonthPrice }} € per Month popular</h4>
-        <p style="margin-bottom: 5px">
-          Standard plan for small to medium businesses
+      <b-col cols="6" style="margin-top: -25px">
+        <!-- Price -->
+        <p style="margin-bottom: 0.7rem">
+          <b>Price:</b> {{ currentPlan.planMonthPrice }} € per Month
         </p>
-        <p style="margin-bottom: 5px">{{ currentPlan.companyLimit }} companies</p>
-        <p v-if="currentPlan.var === true">Vat is active </p>
-        <p v-else>Vat is not active </p>
+        <!-- limits -->
+        <p><b>Limit: </b>{{ currentPlan.companyLimit }} companies</p>
       </b-col>
+
+      <b-col cols="6">
+        <h4>Active until {{ currentPlan.validTo }}</h4>
+        <p>We will send you a notification upon Subscription expiration</p>
       </b-col>
+
       <!-- buttons -->
       <b-col cols="12">
         <b-button
@@ -80,14 +132,14 @@
         >
           Update Plan
         </b-button>
-        <b-button
+        <!-- <b-button
           v-ripple.400="'rgba(186, 191, 199, 0.15)'"
           type="reset"
           variant="outline-secondary"
           class="mt-1"
         >
           Cancel Subscription
-        </b-button>
+        </b-button> -->
       </b-col>
       <!--/ buttons -->
     </b-row>
@@ -103,6 +155,7 @@ import {
   BProgress,
   BAlert,
   BButton,
+  BImg,
 } from "bootstrap-vue";
 import Ripple from "vue-ripple-directive";
 import useJwt from "@/auth/jwt/useJwt";
@@ -117,6 +170,7 @@ export default {
     BProgress,
     BAlert,
     BButton,
+    BImg,
   },
   directives: {
     Ripple,
@@ -130,6 +184,11 @@ export default {
       daysLeft: "",
       planDays: "",
       daysUtilized: "",
+      basicImage: require("@/assets/images/illustration/hot-air-balloon.svg"),
+      starterImage: require("@/assets/images/illustration/aeroplane-transport-svgrepo-com.svg"),
+      platinumImage: require("@/assets/images/illustration/rocket-svgrepo-com.svg"),
+      enterpriseImage: require("@/assets/images/illustration/aeroplane-plane-svgrepo-com.svg"),
+      beginnerImage: require("@/assets/images/illustration/helicoptor.svg"),
     };
   },
   methods: {

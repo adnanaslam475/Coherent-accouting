@@ -62,9 +62,28 @@
       <b-tab>
         <template #title>
           <feather-icon icon="UserIcon" />
-          <span style="font-size: 13px">Clients</span>
+          <span style="font-size: 13px">Clients or Recipients</span>
         </template>
-        <PrivatePersons :add-record="addRecord" @state="updateAddRecord($event)" />
+        <PrivatePersons
+          :add-record="addRecord"
+          @state="updateAddRecord($event)"
+        />
+      </b-tab>
+
+      <!-- Name of company -->
+      <b-tab title-item-class="ml-auto " disabled>
+        <template #title>
+          <span v-if="companyNameLength < 25">
+            <h4 style="color: #0a64bc">
+              <b>{{ companyName }}</b>
+            </h4></span
+          >
+          <span v-else>
+            <h4 style="color: #0a64bc">
+              <b>{{ companyName.substr(0, 24) }}</b>
+            </h4></span
+          >
+        </template>
       </b-tab>
     </b-tabs>
 
@@ -85,6 +104,7 @@ import NotVerifiedInvoice from "./Invoice/invoice-list-notVerified/InvoiceList.v
 import Document from "./Documents/Document.vue";
 import PrivatePersons from "./user/users-list/UsersList.vue";
 import { codeIcon } from "./code";
+import axios from "@/libs/axios";
 
 export default {
   components: {
@@ -104,6 +124,9 @@ export default {
   },
   data() {
     return {
+      companyNameLength: "",
+      companyName: "",
+      companyID: "",
       codeIcon,
       companyTab: this.$route.params.InvoiceId
         ? this.$route.params.InvoiceId
@@ -113,16 +136,35 @@ export default {
       vatReportsTab: 0,
     };
   },
+  created() {
+    this.companyID = this.$route.params.id;
+    this.getCompanyInfo();
+  },
   methods: {
+    async getCompanyInfo() {
+      const data = await axios.get(`/account/api/company/${this.companyID}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+      });
+      if (data.status === 200) {
+        let companyRecord = data.data;
+        this.companyName = companyRecord.companyName;
+        this.companyNameLength = this.companyName.length;
+       
+      }
+    },
     update(value) {
-      if(value.state){
+      if (value.state) {
         this.companyTab = value.state;
       }
-      if(value.addRecord){
+      if (value.addRecord) {
         this.addRecord = value.addRecord;
-      }   
+      }
     },
-    updateAddRecord(value){
+    updateAddRecord(value) {
       this.addRecord = value;
     },
     updateInvoiceTab(value) {

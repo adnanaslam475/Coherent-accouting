@@ -6,7 +6,7 @@
         <b-row>
           <!-- old password -->
           <b-col cols="6">
-            <b-form-group label="Old Password" label-for="old-password">
+            <b-form-group label="Password" label-for="old-password">
               <validation-provider
                 #default="{ errors }"
                 name="Password"
@@ -18,7 +18,7 @@
                   v-model="passwordValueOld"
                   :state="errors.length > 0 ? false : null"
                   :type="passwordFieldTypeOld"
-                  placeholder="Old Password"
+                  placeholder="Password"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -125,10 +125,10 @@
 
           <!-- confirm password -->
           <b-col cols="6">
-            <b-form-group label="Confirm New Password" label-for="ac-password">
+            <b-form-group label="Confirm Password" label-for="ac-password">
               <validation-provider
                 #default="{ errors }"
-                name="Confirm New Password"
+                name="Confirm Password"
                 rules="required|confirmed:newPassword"
               >
                 <b-form-input
@@ -136,7 +136,7 @@
                   v-model="RetypePassword"
                   :state="errors.length > 0 ? false : null"
                   :type="passwordFieldTypeRetype"
-                  placeholder="Confirm New Password"
+                  placeholder="Confirm Password"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -213,7 +213,6 @@ export default {
   },
   data() {
     return {
-      is401True: false,
       passwordValueOld: "",
       newPasswordValue: "",
       RetypePassword: "",
@@ -266,8 +265,8 @@ export default {
         }
       });
     },
+    //update password
     async updatePassword() {
-      this.is401True = false;
       const credentials = {
         oldPassword: this.passwordValueOld,
         newPassword: this.newPasswordValue,
@@ -278,7 +277,6 @@ export default {
         .wrongOldPassword(token, credentials)
         .then((response) => {
           if (response.status === 200) {
-            this.is401True = true;
             this.$toast({
               component: ToastificationContent,
               props: {
@@ -288,31 +286,18 @@ export default {
               },
             });
           }
-          if (response.status === 401) {
-            console.log("Hey");
-          }
         })
         .catch((error) => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `Old password is incorrect `,
+              title: `Incorrect old password `,
               icon: "AlertTriangleIcon",
               variant: "danger",
             },
           });
         });
 
-      if (this.is401True === false) {
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: `Old password is incorrect `,
-            icon: "AlertTriangleIcon",
-            variant: "danger",
-          },
-        });
-      }
     },
     makeToast(variant = null, title = null, message = null) {
       this.$bvToast.toast(message, {
