@@ -6,7 +6,7 @@
         <b-row>
           <!-- old password -->
           <b-col cols="6">
-            <b-form-group label="Password" label-for="old-password">
+            <b-form-group label="Old Password" label-for="old-password">
               <validation-provider
                 #default="{ errors }"
                 name="Password"
@@ -18,7 +18,7 @@
                   v-model="passwordValueOld"
                   :state="errors.length > 0 ? false : null"
                   :type="passwordFieldTypeOld"
-                  placeholder="Password"
+                  placeholder="Old Password"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -125,10 +125,10 @@
 
           <!-- confirm password -->
           <b-col cols="6">
-            <b-form-group label="Confirm Password" label-for="ac-password">
+            <b-form-group label="Confirm New Password" label-for="ac-password">
               <validation-provider
                 #default="{ errors }"
-                name="Confirm Password"
+                name="Confirm New Password"
                 rules="required|confirmed:newPassword"
               >
                 <b-form-input
@@ -136,7 +136,7 @@
                   v-model="RetypePassword"
                   :state="errors.length > 0 ? false : null"
                   :type="passwordFieldTypeRetype"
-                  placeholder="Confirm Password"
+                  placeholder="Confirm New Password"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -152,14 +152,6 @@
               type="submit"
             >
               Save changes
-            </b-button>
-            <b-button
-              v-ripple.400="'rgba(186, 191, 199, 0.15)'"
-              type="reset"
-              variant="outline-secondary"
-              class="mt-1"
-            >
-              Reset
             </b-button>
           </b-col>
           <!--/ buttons -->
