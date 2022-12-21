@@ -28,17 +28,6 @@
 
       <b-media-body class="mt-75 ml-75">
 
-        <!-- reset -->
-        <b-button
-          v-ripple.400="'rgba(186, 191, 199, 0.15)'"
-          variant="outline-secondary"
-          size="sm"
-          class="mb-75 mr-75"
-          @click="getUserDetail()"
-        >
-          Reset
-        </b-button>
-        <!--/ reset -->
       </b-media-body>
     </b-media>
     <!--/ media -->
