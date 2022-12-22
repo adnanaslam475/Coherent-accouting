@@ -153,14 +153,6 @@
             >
               Save changes
             </b-button>
-            <b-button
-              v-ripple.400="'rgba(186, 191, 199, 0.15)'"
-              type="reset"
-              variant="outline-secondary"
-              class="mt-1"
-            >
-              Reset
-            </b-button>
           </b-col>
           <!--/ buttons -->
         </b-row>
@@ -213,7 +205,6 @@ export default {
   },
   data() {
     return {
-      is401True: false,
       passwordValueOld: "",
       newPasswordValue: "",
       RetypePassword: "",
@@ -266,8 +257,8 @@ export default {
         }
       });
     },
+    //update password
     async updatePassword() {
-      this.is401True = false;
       const credentials = {
         oldPassword: this.passwordValueOld,
         newPassword: this.newPasswordValue,
@@ -278,7 +269,6 @@ export default {
         .wrongOldPassword(token, credentials)
         .then((response) => {
           if (response.status === 200) {
-            this.is401True = true;
             this.$toast({
               component: ToastificationContent,
               props: {
@@ -288,31 +278,18 @@ export default {
               },
             });
           }
-          if (response.status === 401) {
-            console.log("Hey");
-          }
         })
         .catch((error) => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `Old password is incorrect `,
+              title: `Incorrect old password `,
               icon: "AlertTriangleIcon",
               variant: "danger",
             },
           });
         });
 
-      if (this.is401True === false) {
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: `Old password is incorrect `,
-            icon: "AlertTriangleIcon",
-            variant: "danger",
-          },
-        });
-      }
     },
     makeToast(variant = null, title = null, message = null) {
       this.$bvToast.toast(message, {

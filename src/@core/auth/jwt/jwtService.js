@@ -89,6 +89,12 @@ export default class JwtService {
             });
 
           }
+
+          // incorrect old password
+          if(error.response.data.errorMessage === "The old password is not correct!"){
+            return;
+          }
+
           const retryOriginalRequest = new Promise((resolve) => {
             this.addSubscriber((accessToken) => {
               // Make sure to assign accessToken according to your response.
