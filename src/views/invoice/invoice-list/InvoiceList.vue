@@ -23,9 +23,9 @@
           />
           <b-button
             variant="primary"
-            @click="actionTab"
+            :to="{ name: 'apps-invoice-add'}"
           >
-            Add Record
+            Add Invoice
           </b-button>
         </b-col>
 

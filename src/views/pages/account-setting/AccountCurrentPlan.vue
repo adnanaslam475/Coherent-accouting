@@ -1,6 +1,6 @@
 <template>
   <b-card>
-    <b-card-title>My Plan</b-card-title>
+    <b-card-title class="ml-3">My Plan</b-card-title>
     <b-row>
       <!-- Plan image -->
       <b-col cols="6">
@@ -73,7 +73,7 @@
               border-radius: 20px;
             "
             ><span class="v-chip__underlay"></span>
-            Active
+            <b>Active</b>
           </span>
           <span
             v-else
@@ -90,7 +90,7 @@
               border-radius: 20px;
             "
             ><span class="v-chip__underlay"></span>
-            Inactive
+            <b> Inactive</b>
           </span>
         </p>
       </b-col>
@@ -99,13 +99,22 @@
         <div class="progress-wrapper">
           <div class="d-flex align-items-center justify-content-between">
             <b-card-title>Days</b-card-title>
-            <h5>{{ daysUtilized }} of {{ planDays }} Days</h5>
+            <h5 v-if="daysUtilized <= planDays">
+              {{ daysUtilized }} of {{ planDays }} Days
+            </h5>
+            <h5 v-else>{{ planDays }} of {{ planDays }} Days</h5>
           </div>
           <!--          <h4 class="mb-0">-->
           <!--            {{ value1+'%' }}-->
           <!--          </h4>-->
           <b-progress v-model="daysUtilized" :max="planDays" />
-          <p>{{ daysLeft }} days remaining until your plan requires update</p>
+
+          <p v-if="daysLeft < 0">
+            0 days remaining until your plan requires update
+          </p>
+          <p v-else>
+            {{ daysLeft }} days remaining until your plan requires update
+          </p>
         </div>
       </b-col>
       <b-col cols="6" style="margin-top: -25px">
@@ -117,9 +126,14 @@
         <p><b>Limit: </b>{{ currentPlan.companyLimit }} companies</p>
       </b-col>
 
-      <b-col cols="6">
+      <b-col cols="6" v-if="daysLeft > 0">
         <h4>Active until {{ currentPlan.validTo }}</h4>
         <p>We will send you a notification upon Subscription expiration</p>
+      </b-col>
+      <b-col cols="6" v-else>
+        <h4 class="text-danger">
+          Your plan expired on {{ currentPlan.validTo }}
+        </h4>
       </b-col>
 
       <!-- buttons -->

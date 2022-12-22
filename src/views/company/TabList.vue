@@ -24,11 +24,11 @@
         </b-nav-item>
         <b-nav-item :to="{ name: 'CompanyView', params: { InvoiceId: 5, id: $route.params.companyId }}" :active="invoiceTab !== 0">
           <feather-icon icon="FolderIcon" />
-          Documents
+          Company Documents
         </b-nav-item>
         <b-nav-item :to="{ name: 'CompanyView', params: { InvoiceId: 6, id: $route.params.companyId }}" :active="invoiceTab !== 0">
           <feather-icon icon="UserIcon" />
-          Clients
+          Clients or Recipients
         </b-nav-item>
       </b-nav>
     </div>

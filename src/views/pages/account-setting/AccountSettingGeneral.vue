@@ -278,6 +278,7 @@
                   class="custom-control-primary custom-switch-btn-1"
                   name="check-button"
                   switch
+                  @change="validationForm()"
                 >
                   <span class="switch-icon-left">
                     ON

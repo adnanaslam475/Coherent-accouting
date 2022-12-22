@@ -6,10 +6,10 @@
         <feather-icon icon="BookOpenIcon" />
         List Invoices
       </b-nav-item>
-      <b-nav-item :to="{ name: 'invoices', params: { id: 1 }}" :active="invoiceTab !== 0">
+      <!-- <b-nav-item :to="{ name: 'invoices', params: { id: 1 }}" :active="invoiceTab !== 0">
         <feather-icon icon="PenToolIcon" />
         Create Invoice
-      </b-nav-item>
+      </b-nav-item> -->
       <b-nav-item :to="{ name: 'invoices', params: { id: 2 }}" :active="invoiceTab !== 0">
         <feather-icon icon="UsersIcon" />
         Clients

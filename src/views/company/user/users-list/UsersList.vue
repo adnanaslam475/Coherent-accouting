@@ -1,7 +1,5 @@
 <template>
-
   <div>
-
     <user-list-add-new
       :is-add-new-user-sidebar-active.sync="isAddNewUserSidebarActive"
       :role-options="roleOptions"
@@ -10,16 +8,10 @@
     />
 
     <!-- Table Container Card -->
-    <b-card
-      no-body
-      class="mb-0"
-    >
-
+    <b-card no-body class="mb-0">
       <div class="m-2">
-
         <!-- Table Top -->
         <b-row>
-
           <!-- Per Page -->
           <b-col
             cols="12"
@@ -34,14 +26,11 @@
               :clearable="false"
               class="per-page-selector d-inline-block mx-50"
             />
-            <label>entries</label>
+            <label>Entries</label>
           </b-col>
 
           <!-- Search -->
-          <b-col
-            cols="12"
-            md="6"
-          >
+          <b-col cols="12" md="6">
             <div class="d-flex align-items-center justify-content-end">
               <b-form-input
                 v-model="searchQuery"
@@ -58,7 +47,6 @@
             </div>
           </b-col>
         </b-row>
-
       </div>
 
       <b-table
@@ -76,28 +64,16 @@
         <template #empty="scope">
           <div class="d-flex align-items-center justify-content-center">
             <div class="mb-1 start-chat-icon">
- <feather-icon
-                icon="FolderIcon"
-                size="20"
-            />
+              <feather-icon icon="FolderIcon" size="20" />
             </div>
-            <h5 class="sidebar-toggle start-chat-text">
-              No records found
-            </h5>
+            <h5 class="sidebar-toggle start-chat-text">No records found</h5>
           </div>
         </template>
 
         <!-- Column: Id -->
         <template #cell(id)="data">
-          <span
-            class="font-weight-bold"
-          >
-            <b-link
-              :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }"
-              class="font-weight-bold d-block text-nowrap"
-            >
-              #{{ data.value }}
-            </b-link>
+          <span class="font-weight-bold d-block text-nowrap">
+            #{{ data.value }}
           </span>
         </template>
 
@@ -110,139 +86,157 @@
                 variant="primary"
                 :src="data.item.avatar"
                 :text="avatarText(data.item.firstMiddleAndLastName)"
-                :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }"
               />
             </template>
-            <b-link
-              :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }"
-              class="font-weight-bold d-block text-nowrap"
+            <CopyToClipboard
+              :text="data.item.firstMiddleAndLastName"
+              @copy="textCopyToClipboard('Username')"
             >
-              {{ data.item.firstMiddleAndLastName }}
-            </b-link>
-            <b-badge
-              pill
-              :variant="`light-success`"
-              class="text-capitalize"
-            >
+              <b-link
+                class="font-weight-bold d-block text-nowrap"
+                id="usernamee"
+              >
+                {{ data.item.firstMiddleAndLastName }}
+              </b-link>
+            </CopyToClipboard>
+            <b-tooltip target="usernamee">Copy to clipboard</b-tooltip>
+
+            <b-badge pill :variant="`light-success`" class="text-capitalize">
               <small>{{ data.item.firstMiddleAndLastName }}</small>
             </b-badge>
-
           </b-media>
         </template>
 
+        <!-- Identification Number -->
         <template #cell(identificationNumber)="data">
-
-          <b-badge
-            :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }"
-            variant="primary"
-            class="text-capitalize"
+          <CopyToClipboard
+            :text="data.value"
+            @copy="textCopyToClipboard('User ID')"
           >
-            <span class="text-nowrap text-capitalize">{{ data.value }}</span>
-          </b-badge>
-
+            <b-badge
+              variant="primary"
+              class="text-capitalize"
+              id="user-idd"
+              style="cursor: pointer"
+            >
+              <span class="text-nowrap text-capitalize">{{ data.value }}</span>
+            </b-badge>
+          </CopyToClipboard>
+          <b-tooltip target="user-idd">Copy to clipboard</b-tooltip>
         </template>
 
+        <!-- Vat Identification number -->
+        <template #cell(vatIdentificationNumber)="data">
+          <CopyToClipboard
+            :text="data.value"
+            @copy="textCopyToClipboard('VAT ID')"
+          >
+            <span
+              class="text-nowrap text-capitalize"
+              id="vat-idd"
+              style="cursor: pointer"
+              >{{ data.value }}</span
+            >
+          </CopyToClipboard>
+          <b-tooltip target="vat-idd">Copy to clipboard</b-tooltip>
+        </template>
+
+        <!-- Address -->
+        <template #cell(address)="data">
+          <CopyToClipboard
+            :text="data.value"
+            @copy="textCopyToClipboard('Address')"
+          >
+            <span
+              class="text-nowrap text-capitalize"
+              id="user-address"
+              style="cursor: pointer"
+              >{{ data.value }}</span
+            >
+          </CopyToClipboard>
+          <b-tooltip target="user-address">Copy to clipboard</b-tooltip>
+        </template>
+
+        <!-- ID Card -->
         <template #cell(idcardNumber)="data">
-          <span class="text-nowrap text-capitalize">{{ data.value }}</span>
+          <CopyToClipboard
+            :text="data.value"
+            @copy="textCopyToClipboard('ID Card No.')"
+          >
+            <span
+              class="text-nowrap text-capitalize"
+              id="user-id-cardd"
+              style="cursor: pointer"
+              >{{ data.value }}</span
+            >
+          </CopyToClipboard>
+          <b-tooltip target="user-id-cardd">Copy to clipboard</b-tooltip>
         </template>
 
         <!-- Column: Actions -->
         <template #cell(actions)="data">
           <div class="d-flex">
-          <feather-icon
-              :id="`private-person-row-${data.item.id}-preview-icon`"
-              icon="EyeIcon"
+
+            <feather-icon
+              :id="`edit-${data.item.id}-preview-icon`"
+              icon="EditIcon"
               size="16"
-              class="mr-1 cursor-pointer"
+              class="mx-0"
+              style="cursor: pointer"
               @click="
                 $router.push({
-                  name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId }
+                  name: 'company-users-edit',
+                  params: { id: data.item.id, companyId: companyId },
                 })
               "
             />
-          <b-tooltip
-            title="View Details"
-            class="cursor-pointer"
-            :target="`private-person-row-${data.item.id}-preview-icon`"
-          />
+            <b-tooltip
+              title="Edit Details"
+              :target="`edit-${data.item.id}-preview-icon`"
+            />
 
-          <feather-icon
-            :id="`edit-${data.item.id}-preview-icon`"
-            icon="EditIcon"
-            size="16"
-            class="mx-0"
-            style="cursor: pointer"
-            @click="
-              $router.push({ name: 'company-users-edit', params: { id: data.item.id, companyId: companyId} })
-            "
-          />
-          <b-tooltip
-            title="Edit Details"
-            :target="`edit-${data.item.id}-preview-icon`"
-          />
+            <feather-icon
+              :id="`delete-${data.item.id}-preview-icon`"
+              icon="TrashIcon"
+              size="16"
+              class="ml-1"
+              style="cursor: pointer"
+              @click="UserDelete(data.item.id, refetchData)"
+            />
+            <b-tooltip
+              title="Delete"
+              :target="`delete-${data.item.id}-preview-icon`"
+            />
+          </div>
 
-          <feather-icon
-            :id="`delete-${data.item.id}-preview-icon`"
-            icon="TrashIcon"
-            size="16"
-            class="ml-1"
-            style="cursor: pointer"
-            @click="UserDelete(data.item.id,refetchData)"
-          />
-          <b-tooltip
-            title="Delete"
-            :target="`delete-${data.item.id}-preview-icon`"
-          />
-        </div>
-
-          <!-- <b-dropdown
-            variant="link"
-            no-caret
-            :right="$store.state.appConfig.isRTL"
-          >
-
-            <template #button-content>
-              <feather-icon
-                icon="MoreVerticalIcon"
-                size="16"
-                class="align-middle text-body"
-              /> 
-            </template>
-            <b-dropdown-item :to="{ name: 'comopany-users-view', params: { id: data.item.id, companyId: companyId } }">
-              <feather-icon icon="FileTextIcon" />
-              <span class="align-middle ml-50">Details</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item :to="{ name: 'company-users-edit', params: { id: data.item.id, companyId: companyId } }">
-              <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item @click="UserDelete(data.item.id,refetchData)">
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
-            </b-dropdown-item>
-          </b-dropdown> -->
         </template>
-
       </b-table>
       <div class="mx-2 mb-2">
         <b-row>
-
           <b-col
             cols="12"
             sm="6"
-            class="d-flex align-items-center justify-content-center justify-content-sm-start"
+            class="
+              d-flex
+              align-items-center
+              justify-content-center justify-content-sm-start
+            "
           >
-            <span class="text-muted">Showing {{ dataMeta.from }} to {{ dataMeta.to }} of {{ dataMeta.of }} entries</span>
+            <span class="text-muted"
+              >Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
+              {{ dataMeta.of }} entries</span
+            >
           </b-col>
           <!-- Pagination -->
           <b-col
             cols="12"
             sm="6"
-            class="d-flex align-items-center justify-content-center justify-content-sm-end"
+            class="
+              d-flex
+              align-items-center
+              justify-content-center justify-content-sm-end
+            "
           >
-
             <b-pagination
               v-if="totalUsers > 0"
               v-model="currentPage"
@@ -255,21 +249,13 @@
               next-class="next-item"
             >
               <template #prev-text>
-                <feather-icon
-                  icon="ChevronLeftIcon"
-                  size="18"
-                />
+                <feather-icon icon="ChevronLeftIcon" size="18" />
               </template>
               <template #next-text>
-                <feather-icon
-                  icon="ChevronRightIcon"
-                  size="18"
-                />
+                <feather-icon icon="ChevronRightIcon" size="18" />
               </template>
             </b-pagination>
-
           </b-col>
-
         </b-row>
       </div>
     </b-card>
@@ -278,20 +264,33 @@
 
 <script>
 import {
-  BCard, BRow, BCol, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
-  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip,
-} from 'bootstrap-vue'
-import vSelect from 'vue-select'
-import store from '@/store'
-import { ref, onUnmounted } from '@vue/composition-api'
-import { avatarText } from '@core/utils/filter'
-import useJwt from '@/auth/jwt/useJwt'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import router from '@/router'
-import UsersListFilters from './UsersListFilters.vue'
-import useUsersList from './useUsersList'
-import userStoreModule from '../userStoreModule'
-import UserListAddNew from './UserListAddNew.vue'
+  BCard,
+  BRow,
+  BCol,
+  BFormInput,
+  BButton,
+  BTable,
+  BMedia,
+  BAvatar,
+  BLink,
+  BBadge,
+  BDropdown,
+  BDropdownItem,
+  BPagination,
+  BTooltip,
+} from "bootstrap-vue";
+import vSelect from "vue-select";
+import store from "@/store";
+import { ref, onUnmounted } from "@vue/composition-api";
+import { avatarText } from "@core/utils/filter";
+import useJwt from "@/auth/jwt/useJwt";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import router from "@/router";
+import UsersListFilters from "./UsersListFilters.vue";
+import useUsersList from "./useUsersList";
+import userStoreModule from "../userStoreModule";
+import UserListAddNew from "./UserListAddNew.vue";
+import CopyToClipboard from "vue-copy-to-clipboard";
 
 export default {
   components: {
@@ -312,82 +311,97 @@ export default {
     BDropdownItem,
     BPagination,
     BTooltip,
-
+    CopyToClipboard,
     vSelect,
   },
-  props: ['addRecord'],
-  watch: { 
-    addRecord: function(newVal, oldVal) {
-      if(newVal){
-        this.triggerAddRecord()
+  props: ["addRecord"],
+  watch: {
+    addRecord: function (newVal, oldVal) {
+      if (newVal) {
+        this.triggerAddRecord();
       }
-      this.$emit('state', false)
-    }
+      this.$emit("state", false);
+    },
   },
   methods: {
+    //
+    textCopyToClipboard(val) {
+      this.$root.$emit("bv::hide::tooltip");
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: val + " copied",
+          icon: "DeleteIcon",
+          variant: "success",
+        },
+      });
+    },
+    //
     UserDelete(id, refetchData) {
-      const token = useJwt.getToken()
+      const token = useJwt.getToken();
       useJwt
         .DeleteCompanyUser(token, id)
-        .then(response => {
+        .then((response) => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'User Deleted Successfully',
-              icon: 'DeleteIcon',
-              variant: 'success',
+              title: "User Deleted Successfully",
+              icon: "DeleteIcon",
+              variant: "success",
             },
-          })
-          refetchData()
+          });
+          refetchData();
         })
-        .catch(error => {
+        .catch((error) => {
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: 'DeleteIcon',
-              variant: 'error',
+              icon: "DeleteIcon",
+              variant: "error",
             },
-          })
-        })
+          });
+        });
     },
-    triggerAddRecord(){
-      this.$refs.refAddUserBtn.click()
-    }
+    triggerAddRecord() {
+      this.$refs.refAddUserBtn.click();
+    },
   },
   setup() {
-    const USER_APP_STORE_MODULE_NAME = 'app-user'
+    const USER_APP_STORE_MODULE_NAME = "app-user";
 
     // Register module
-    if (!store.hasModule(USER_APP_STORE_MODULE_NAME)) store.registerModule(USER_APP_STORE_MODULE_NAME, userStoreModule)
+    if (!store.hasModule(USER_APP_STORE_MODULE_NAME))
+      store.registerModule(USER_APP_STORE_MODULE_NAME, userStoreModule);
 
     // UnRegister on leave
     onUnmounted(() => {
-      if (store.hasModule(USER_APP_STORE_MODULE_NAME)) store.unregisterModule(USER_APP_STORE_MODULE_NAME)
-    })
+      if (store.hasModule(USER_APP_STORE_MODULE_NAME))
+        store.unregisterModule(USER_APP_STORE_MODULE_NAME);
+    });
 
-    const isAddNewUserSidebarActive = ref(false)
+    const isAddNewUserSidebarActive = ref(false);
 
     const roleOptions = [
-      { label: 'Admin', value: 'admin' },
-      { label: 'Author', value: 'author' },
-      { label: 'Editor', value: 'editor' },
-      { label: 'Maintainer', value: 'maintainer' },
-      { label: 'Subscriber', value: 'subscriber' },
-    ]
+      { label: "Admin", value: "admin" },
+      { label: "Author", value: "author" },
+      { label: "Editor", value: "editor" },
+      { label: "Maintainer", value: "maintainer" },
+      { label: "Subscriber", value: "subscriber" },
+    ];
 
     const planOptions = [
-      { label: 'Basic', value: 'basic' },
-      { label: 'Company', value: 'company' },
-      { label: 'Enterprise', value: 'enterprise' },
-      { label: 'Team', value: 'team' },
-    ]
+      { label: "Basic", value: "basic" },
+      { label: "Company", value: "company" },
+      { label: "Enterprise", value: "enterprise" },
+      { label: "Team", value: "team" },
+    ];
 
     const statusOptions = [
-      { label: 'Pending', value: 'pending' },
-      { label: 'Active', value: 'active' },
-      { label: 'Inactive', value: 'inactive' },
-    ]
+      { label: "Pending", value: "pending" },
+      { label: "Active", value: "active" },
+      { label: "Inactive", value: "inactive" },
+    ];
 
     const {
       fetchUsers,
@@ -413,12 +427,11 @@ export default {
       roleFilter,
       planFilter,
       statusFilter,
-    } = useUsersList()
+    } = useUsersList();
 
-    companyId.value = router.currentRoute.params.id
+    companyId.value = router.currentRoute.params.id;
 
     return {
-
       // Sidebar
       isAddNewUserSidebarActive,
 
@@ -452,9 +465,9 @@ export default {
       roleFilter,
       planFilter,
       statusFilter,
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -464,12 +477,12 @@ export default {
 </style>
 
 <style lang="scss">
-@import '@core/scss/vue/libs/vue-select.scss';
-.privatePersonList th{
+@import "@core/scss/vue/libs/vue-select.scss";
+.privatePersonList th {
   position: relative;
   vertical-align: middle !important;
 }
-span.b-avatar-text span{
-  color: #ffc0cb!important;
+span.b-avatar-text span {
+  color: #ffc0cb !important;
 }
 </style>
