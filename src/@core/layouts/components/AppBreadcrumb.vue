@@ -3,7 +3,6 @@
     v-if="$route.meta.breadcrumb || $route.meta.pageTitle"
     class="content-header"
   >
-
     <!-- Content Left -->
     <b-col
       class="content-header-left mb-2"
