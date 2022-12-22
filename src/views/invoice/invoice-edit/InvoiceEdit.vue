@@ -23,7 +23,7 @@
     </b-alert>
     
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
-      <b-form @submit.prevent="invoiceEdit(invoiceData,'invoices')">
+      <b-form @submit.prevent="invoiceEdit(invoiceData,'save')">
         <b-row
           v-if="invoiceData"
           class="invoice-add"
@@ -64,26 +64,6 @@
              
             <div>
               <div class="accountType">
-                <div
-                  :class="`${VerifiedInvisible ?  'invisible': 'visible' } ml-1 d-flex align-items-center`"
-                >              
-                  <span class="mr-1">
-                    Verified:
-                  </span>
-                  <b-form-checkbox
-                    v-model="invoiceData.verified"
-                    :class="`custom-control-primary custom-switch-btn-1 text-center`"
-                    name="AccountTypeOptionToggle"
-                    switch
-                  >
-                    <span class="switch-icon-left">
-                      YES
-                    </span>
-                    <span class="switch-icon-right">
-                      NO
-                    </span>
-                  </b-form-checkbox>
-                </div>
                 <div class="d-flex align-items-center mr-1" style="gap: 10px;">
                   <b-form-radio
                     v-model="AccountTypeOption"
@@ -1201,19 +1181,21 @@ export default {
                     },
                   });
                   if(redirectPage == 'invoices'){
-                    return this.$router.push({
-                      name: "invoices", 
-                      params: { 
-                        id: 0 
-                      }
-                    })
-                  } else{
+                      return this.$router.push({
+                        name: "invoices", 
+                        params: { 
+                          id: 0 
+                        }
+                      })
+                  } else if (redirectPage == 'preview'){
                     return this.$router.push({ 
                       name: "apps-invoice-preview", 
                       params: { 
                         id: invoiceData.id 
                       }
                     })
+                  } else {
+                    return true
                   }
                 })
                 .catch((error) => {
@@ -1294,6 +1276,8 @@ export default {
       .then(response => {
         response.data.currency = response.data.currency.toLowerCase().trim() == 'lv' ? "лв." : response.data.currency.toLowerCase().trim() == 'bgn' ? "лв." : response.data.currency 
         invoiceData.value = response.data
+        invoiceData.value.tradeDiscountPercent = invoiceData.value.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
+        invoiceData.value.vatPercent = invoiceData.value.vatPercent ? invoiceData.value.vatPercent : 20
         VerifiedInvisible.value = invoiceData.value.verified
         // ? We are adding some extra data in response for data purpose
         // * Your response will contain this extra data
@@ -1667,7 +1651,7 @@ export default {
       if(companyPerson){
         let token = useJwt.getToken()
         useJwt
-          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {         
+          .SearchCompanyPerson(token, {         
             direction: 'desc',
             sortField: 'id',
             searchTerm: companyPerson
@@ -1727,7 +1711,7 @@ export default {
       if(companyPersonIdNumber){
         let token = useJwt.getToken()
         useJwt
-          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {         
+          .SearchCompanyPerson(token, {         
             direction: 'desc',
             sortField: 'id',
             searchTerm: companyPersonIdNumber

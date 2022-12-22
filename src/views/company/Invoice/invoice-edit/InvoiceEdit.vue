@@ -21,7 +21,7 @@
       </div>
     </b-alert>
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
-      <b-form @submit.prevent="invoiceEdit(invoiceData, 'invoices')">
+      <b-form @submit.prevent="invoiceEdit(invoiceData, 'save')">
         <b-row
           v-if="invoiceData"
           class="invoice-add"
@@ -62,26 +62,6 @@
              
             <div>
               <div class="accountType">
-                <div
-                  :class="`${VerifiedInvisible ?  'invisible': 'visible' } ml-1 d-flex align-items-center`"
-                >              
-                  <span class="mr-1">
-                    Verified:
-                  </span>
-                  <b-form-checkbox
-                    v-model="invoiceData.verified"
-                    :class="`custom-control-primary custom-switch-btn-1 text-center`"
-                    name="AccountTypeOptionToggle"
-                    switch
-                  >
-                    <span class="switch-icon-left">
-                      YES
-                    </span>
-                    <span class="switch-icon-right">
-                      NO
-                    </span>
-                  </b-form-checkbox>
-                </div>
                 <div class="d-flex align-items-center mr-1" style="gap: 10px;">
                   <b-form-radio
                     v-model="AccountTypeOption"
@@ -1196,7 +1176,6 @@ export default {
                   });
 
                   if(redirectPage == 'invoices'){
-                    if(response.data.verified){
                       return this.$router.push({
                         name: "CompanyView", 
                         params: { 
@@ -1204,16 +1183,7 @@ export default {
                           InvoiceId: 1
                         }
                       })
-                    } else{
-                      return this.$router.push({
-                          name: "CompanyView", 
-                          params: { 
-                            id: router.currentRoute.params.companyId,
-                            InvoiceId: 2
-                          }
-                      })
-                    }
-                  } else{
+                  } else if(redirectPage == 'preview'){
                     return this.$router.push({ 
                       name: 'company-invoice-preview', 
                       params: { 
@@ -1221,6 +1191,8 @@ export default {
                         companyId: router.currentRoute.params.companyId 
                       }
                     })
+                  } else {
+                    return true
                   }
                 })
                 .catch((error) => {
@@ -1300,7 +1272,9 @@ export default {
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
         response.data.currency = response.data.currency.toLowerCase().trim() == 'lv' ? "лв." : response.data.currency.toLowerCase().trim() == 'bgn' ? "лв." : response.data.currency 
-        invoiceData.value = response.data
+        invoiceData.value = response.data   
+        invoiceData.value.tradeDiscountPercent = invoiceData.value.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
+        invoiceData.value.vatPercent = invoiceData.value.vatPercent ? invoiceData.value.vatPercent : 20
         VerifiedInvisible.value = invoiceData.value.verified
         // ? We are adding some extra data in response for data purpose
         // * Your response will contain this extra data
@@ -1917,7 +1891,7 @@ background-color:$product-details-bg;
 .accountType{
   display: flex;
   gap: 10px;
-  justify-content: space-between;
+  justify-content: end;
   margin-bottom: 2rem;
 }
 .invoice-add-input span.title.mr-1 {

@@ -1118,7 +1118,7 @@ export default {
                   variant: "success",
                 },
               });
-              this.$router.push({ name: 'apps-invoice-preview', params: { id: response.data.id }})
+              this.$router.push({ name: 'apps-invoice-edit', params: { id: response.data.id }})
             })
             .catch((error) => {
               this.loading = false
@@ -1577,7 +1577,7 @@ export default {
       if(companyPerson){
         let token = useJwt.getToken()
         useJwt
-          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {         
+          .SearchCompanyPerson(token, {         
             direction: 'desc',
             sortField: 'id',
             searchTerm: companyPerson
@@ -1637,7 +1637,7 @@ export default {
       if(companyPersonIdNumber){
         let token = useJwt.getToken()
         useJwt
-          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {         
+          .SearchCompanyPerson(token, {         
             direction: 'desc',
             sortField: 'id',
             searchTerm: companyPersonIdNumber

@@ -1122,7 +1122,7 @@ export default {
                   variant: "success",
                 },
               });
-              this.$router.push({ name: 'company-invoice-preview', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+              this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
             })
             .catch((error) => {
               this.loading = false

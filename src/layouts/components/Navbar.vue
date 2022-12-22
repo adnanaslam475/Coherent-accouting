@@ -110,8 +110,8 @@
                   />
                 </b-avatar>
               </template>
-              <b-row class="justify-content-between">
-                <p class="media-heading ml-1">
+              <b-row class="justify-content-between m-0">
+                <p class="media-heading">
                   <span class="font-weight-bolder">
                     {{ notification.subject }}
                   </span>

@@ -1,269 +1,284 @@
 <template>
   <div>
-    <div class="row">
-      <!-- <input data-v-9a6e255c="" type="text" placeholder="Search..." class="d-inline-block mr-1 form-control col-4" style="margin-left: 15px" /> -->
-      <div class="input-group col-4 abc">
-        <!----><input
-          v-model="searchQuery"
-          type="text"
-          placeholder="Search Product"
-          class="search-product form-control"
-          @keyup="searchCompanies()"
-        />
-        <div class="input-group-append">
-          <div class="input-group-text" style="height: 38px; cursor: pointer">
-            <!-- #7367f0 -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14px"
-              height="14px"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-muted feather feather-search"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </div>
-        </div>
-        <!---->
-      </div>
-      <b-button
-        to="/company/create"
-        variant="primary"
-        class="float-right mb-1 col-2 ml-auto"
-        style="margin-right: 15px"
-        >Add Company
-      </b-button>
-    </div>
-    <b-table
-      :fields="fields"
-      :items="items"
-      responsive
-      class="mb-0"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      show-empty
-      empty-text="No matching records found"
-      empty-filtered-text
-      @sort-changed="checkStatus"
-    >
-      <template #empty="scope">
-        <div class="d-flex align-items-center justify-content-center">
-          <div class="mb-1 start-chat-icon">
-            <feather-icon icon="FolderIcon" size="40" />
-          </div>
-          <h5 class="sidebar-toggle start-chat-text">No records found</h5>
-        </div>
-      </template>
-
-      <template #cell(Country)="data">
-        <div>
-          <img
-            :src='"@/assets/flags/" + data.item.companyIsoAlpha2Country.toLowerCase() + ".png"'
-            style="width: 30px; height: 20px; margin-left: 10px"
-          >
-        </div>
-      </template>
-
-      <template #cell(companyName)="data">
-        <div class="d-flex align-items-center">
-          <div
-            v-if="data.item.companyName.indexOf(' ') > 0"
-            style="
-              margin-right: 8px;
-              border-radius: 50%;
-              color: white;
-              min-width: 32px;
-              min-height: 28px;
-              display: inline-flex;
-              justify-content: center;
-              align-items: center;
-            "
-            class="btn-primary"
-          >
-            <span
-              >{{ data.item.companyName.substr(0, 1)
-              }}{{
-                data.item.companyName
-                  .substr(data.item.companyName.indexOf(" ") + 1, 1)
-                  .toUpperCase()
-              }}</span
-            >
-          </div>
-          <div
-            v-else
-            style="
-              margin-right: 8px;
-              border-radius: 50%;
-              background-color: #7367f0;
-              color: white;
-              min-width: 32px;
-              min-height: 28px;
-              display: inline-flex;
-              justify-content: center;
-              align-items: center;
-            "
-          >
-            <span
-              >{{ data.item.companyName.substr(0, 1)
-              }}{{ data.item.companyName.substr(1, 1).toUpperCase() }}</span
-            >
-          </div>
-          <b-link style="min-width: max-content;" class="font-weight-bold" :to="{ name: 'CompanyView', params: { id: data.item.id } }"
-            >{{ data.item.companyName }}
-          </b-link>
-        </div>
-        <!-- <div>{{data.item.companyName}}</div> -->
-      </template>
-
-      <!-- Company Email Column -->
-      <template #cell(companyMail)="data">
-        <div>{{ data.item.companyMail }}</div>
-      </template>
-
-      <!-- Company Status Column -->
-      <template #cell(status)="data">
-        <div>{{ data.item.status }}</div>
-      </template>
-
-      <template #cell(companyOwnerFirstName)="data">
-        <div>{{ data.item.companyOwnerApi.companyOwnerName }}</div>
-      </template>
-
-      <template #cell(companyIdentificationNumber)="data">
-        <b-link class="font-weight-bold" :to="{ name: 'CompanyView', params: { id: data.item.id } }"
-          >{{ data.item.companyIdentificationNumber }}
-        </b-link>
-
-        <!-- <div>{{data.item.companyIdentificationNumber}}</div> -->
-      </template>
-
-      <template #cell(action)="data" style="text-align: center !important">
-        <div class="d-flex">
-          <feather-icon
-              :id="`invoice-row-${data.item.id}-preview-icon`"
-              icon="EyeIcon"
-              size="16"
-              class="mr-1 cursor-pointer"
-              @click="
-                $router.push({
-                  name: 'CompanyView', params: { id: data.item.id },
-                })
-              "
+    <b-tabs v-model="companyTab" align="center">
+      <b-tab>
+        <template #title>
+          <feather-icon icon="LayersIcon" />
+          <span style="font-size: 13px">Companies</span>
+        </template>
+        <div class="row">
+          <!-- <input data-v-9a6e255c="" type="text" placeholder="Search..." class="d-inline-block mr-1 form-control col-4" style="margin-left: 15px" /> -->
+          <div class="input-group col-4 abc">
+            <!----><input
+              v-model="searchQuery"
+              type="text"
+              placeholder="Search Product"
+              class="search-product form-control"
+              @keyup="searchCompanies()"
             />
-          <b-tooltip
-            title="View Company"
-            class="cursor-pointer"
-            :target="`invoice-row-${data.item.id}-preview-icon`"
-          />
-
-          <feather-icon
-            :id="`edit-${data.item.id}-preview-icon`"
-            icon="EditIcon"
-            size="16"
-            class="mx-0"
-            style="cursor: pointer"
-            @click="
-              $router.push({ name: 'EditCompany', params: { id: data.item.id } })
-            "
-          />
-          <b-tooltip
-            title="Edit Company"
-            :target="`edit-${data.item.id}-preview-icon`"
-          />
-
-          <feather-icon
-            :id="`delete-${data.item.id}-preview-icon`"
-            icon="TrashIcon"
-            size="16"
-            class="ml-1"
-            style="cursor: pointer"
-            @click="getCompanyIDtoDelete(data.item.id)"
-          />
-          <b-tooltip
-            title="Delete Company"
-            :target="`delete-${data.item.id}-preview-icon`"
-          />
+            <div class="input-group-append">
+              <div class="input-group-text" style="height: 38px; cursor: pointer">
+                <!-- #7367f0 -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14px"
+                  height="14px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-muted feather feather-search"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              </div>
+            </div>
+            <!---->
+          </div>
+          <b-button
+            to="/company/create"
+            variant="primary"
+            class="float-right mb-1 col-2 ml-auto"
+            style="margin-right: 15px"
+            >Add Company
+          </b-button>
         </div>
-      </template>
-    </b-table>
-
-    <div class="mx-2 mb-2 mt-2">
-      <b-row>
-        <b-col
-          cols="12"
-          sm="6"
-          class="
-            d-flex
-            align-items-center
-            justify-content-center justify-content-sm-start
-          "
+        <b-table
+          :fields="fields"
+          :items="items"
+          responsive
+          class="mb-0"
+          :sort-by.sync="sortBy"
+          :sort-desc.sync="sortDesc"
+          show-empty
+          empty-text="No matching records found"
+          empty-filtered-text
+          @sort-changed="checkStatus"
         >
-          <!-- <span class="text-muted"
-            >Showing {{ currentPage + 9 - 9 }} to {{ currentPage + 9 }} of
-            {{ this.totalRecords }} entries</span
-          > -->
-        </b-col>
-        <!-- Pagination -->
-        <b-col
-          cols="12"
-          sm="6"
-          class="
-            d-flex
-            align-items-center
-            justify-content-center justify-content-sm-end
-          "
-        >
-          <b-pagination
-            v-if="items.length > 0"
-            v-model="currentPage"
-            :total-rows="totalRecords"
-            :per-page="perPage"
-            first-number
-            last-number
-            class="mb-0 mt-1 mt-sm-0"
-            prev-class="prev-item"
-            next-class="next-item"
-            prev-text
-            @input="getNewRecord"
-          >
-            <template #prev-text>
-              <feather-icon icon="ChevronLeftIcon" size="18" />
-            </template>
-            <template #next-text>
-              <feather-icon icon="ChevronRightIcon" size="18" />
-            </template>
-          </b-pagination>
-        </b-col>
-      </b-row>
-    </div>
+          <template #empty="scope">
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="mb-1 start-chat-icon">
+                <feather-icon icon="FolderIcon" size="40" />
+              </div>
+              <h5 class="sidebar-toggle start-chat-text">No records found</h5>
+            </div>
+          </template>
 
-    <!-- delete Confirmation Modal -->
-    <b-modal
-      v-model="deleteModalShow"
-      title="Delete Company"
-      ok-title="Confirm"
-      cancel-title="Cancel"
-      @ok="deleteCompany(companyToDelete)"
-    >
-      <b-card-text class="text-center" style="font-size: 15px">
-        Are you sure you want to delete this company?
-      </b-card-text>
-      <b-card-text class="text-center" style="font-size: 15px">
-        It will delete all the data related to it.
-      </b-card-text>
-    </b-modal>
+          <template #cell(Country)="data">
+            <div>
+              <img
+                :src='"@/assets/flags/" + data.item.companyIsoAlpha2Country.toLowerCase() + ".png"'
+                style="width: 30px; height: 20px; margin-left: 10px"
+              >
+            </div>
+          </template>
+
+          <template #cell(companyName)="data">
+            <div class="d-flex align-items-center">
+              <div
+                v-if="data.item.companyName.indexOf(' ') > 0"
+                style="
+                  margin-right: 8px;
+                  border-radius: 50%;
+                  color: white;
+                  min-width: 32px;
+                  min-height: 28px;
+                  display: inline-flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+                class="btn-primary"
+              >
+                <span
+                  >{{ data.item.companyName.substr(0, 1)
+                  }}{{
+                    data.item.companyName
+                      .substr(data.item.companyName.indexOf(" ") + 1, 1)
+                      .toUpperCase()
+                  }}</span
+                >
+              </div>
+              <div
+                v-else
+                style="
+                  margin-right: 8px;
+                  border-radius: 50%;
+                  background-color: #7367f0;
+                  color: white;
+                  min-width: 32px;
+                  min-height: 28px;
+                  display: inline-flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+                <span
+                  >{{ data.item.companyName.substr(0, 1)
+                  }}{{ data.item.companyName.substr(1, 1).toUpperCase() }}</span
+                >
+              </div>
+              <b-link style="min-width: max-content;" class="font-weight-bold" :to="{ name: 'CompanyView', params: { id: data.item.id } }"
+                >{{ data.item.companyName }}
+              </b-link>
+            </div>
+            <!-- <div>{{data.item.companyName}}</div> -->
+          </template>
+
+          <!-- Company Email Column -->
+          <template #cell(companyMail)="data">
+            <div>{{ data.item.companyMail }}</div>
+          </template>
+
+          <!-- Company Status Column -->
+          <template #cell(status)="data">
+            <div>{{ data.item.status }}</div>
+          </template>
+
+          <template #cell(companyOwnerFirstName)="data">
+            <div>{{ data.item.companyOwnerApi.companyOwnerName }}</div>
+          </template>
+
+          <template #cell(companyIdentificationNumber)="data">
+            <b-link class="font-weight-bold" :to="{ name: 'CompanyView', params: { id: data.item.id } }"
+              >{{ data.item.companyIdentificationNumber }}
+            </b-link>
+
+            <!-- <div>{{data.item.companyIdentificationNumber}}</div> -->
+          </template>
+
+          <template #cell(action)="data" style="text-align: center !important">
+            <div class="d-flex">
+              <feather-icon
+                  :id="`invoice-row-${data.item.id}-preview-icon`"
+                  icon="EyeIcon"
+                  size="16"
+                  class="mr-1 cursor-pointer"
+                  @click="
+                    $router.push({
+                      name: 'CompanyView', params: { id: data.item.id },
+                    })
+                  "
+                />
+              <b-tooltip
+                title="View Company"
+                class="cursor-pointer"
+                :target="`invoice-row-${data.item.id}-preview-icon`"
+              />
+
+              <feather-icon
+                :id="`edit-${data.item.id}-preview-icon`"
+                icon="EditIcon"
+                size="16"
+                class="mx-0"
+                style="cursor: pointer"
+                @click="
+                  $router.push({ name: 'EditCompany', params: { id: data.item.id } })
+                "
+              />
+              <b-tooltip
+                title="Edit Company"
+                :target="`edit-${data.item.id}-preview-icon`"
+              />
+
+              <feather-icon
+                :id="`delete-${data.item.id}-preview-icon`"
+                icon="TrashIcon"
+                size="16"
+                class="ml-1"
+                style="cursor: pointer"
+                @click="getCompanyIDtoDelete(data.item.id)"
+              />
+              <b-tooltip
+                title="Delete Company"
+                :target="`delete-${data.item.id}-preview-icon`"
+              />
+            </div>
+          </template>
+        </b-table>
+
+        <div class="mx-2 mb-2 mt-2">
+          <b-row>
+            <b-col
+              cols="12"
+              sm="6"
+              class="
+                d-flex
+                align-items-center
+                justify-content-center justify-content-sm-start
+              "
+            >
+              <!-- <span class="text-muted"
+                >Showing {{ currentPage + 9 - 9 }} to {{ currentPage + 9 }} of
+                {{ this.totalRecords }} entries</span
+              > -->
+            </b-col>
+            <!-- Pagination -->
+            <b-col
+              cols="12"
+              sm="6"
+              class="
+                d-flex
+                align-items-center
+                justify-content-center justify-content-sm-end
+              "
+            >
+              <b-pagination
+                v-if="items.length > 0"
+                v-model="currentPage"
+                :total-rows="totalRecords"
+                :per-page="perPage"
+                first-number
+                last-number
+                class="mb-0 mt-1 mt-sm-0"
+                prev-class="prev-item"
+                next-class="next-item"
+                prev-text
+                @input="getNewRecord"
+              >
+                <template #prev-text>
+                  <feather-icon icon="ChevronLeftIcon" size="18" />
+                </template>
+                <template #next-text>
+                  <feather-icon icon="ChevronRightIcon" size="18" />
+                </template>
+              </b-pagination>
+            </b-col>
+          </b-row>
+        </div>
+
+        <!-- delete Confirmation Modal -->
+        <b-modal
+          v-model="deleteModalShow"
+          title="Delete Company"
+          ok-title="Confirm"
+          cancel-title="Cancel"
+          @ok="deleteCompany(companyToDelete)"
+        >
+          <b-card-text class="text-center" style="font-size: 15px">
+            Are you sure you want to delete this company?
+          </b-card-text>
+          <b-card-text class="text-center" style="font-size: 15px">
+            It will delete all the data related to it.
+          </b-card-text>
+        </b-modal>
+      </b-tab>
+      <b-tab>
+        <template #title>
+          <feather-icon icon="BookOpenIcon" />
+          <span style="font-size: 13px">Unfinished Vat Reports</span>
+        </template>
+        <crm-active-project/>
+      </b-tab>
+  </b-tabs>
   </div>
 </template>
 <script>
 import BCardCode from "@core/components/b-card-code/BCardCode.vue";
 import Swal from "sweetalert2";
-
+import CrmActiveProject from '../dashboard/crm/CrmActiveProject.vue'
 import {
   BCard,
   BRow,
@@ -282,6 +297,8 @@ import {
   BProgress,
   BModal,
   BCardText,
+  BTabs,
+  BTab
 } from "bootstrap-vue";
 
 import useJwt from "@/auth/jwt/useJwt";
@@ -310,6 +327,9 @@ export default {
     BTooltip,
     BModal,
     BCardText,
+    BTabs,
+    BTab,
+    CrmActiveProject
   },
 
   data() {
@@ -362,6 +382,7 @@ export default {
       totalRecords: "",
       totalPages: "",
       searchQuery: "",
+      companyTab: 0
     };
   },
   created() {

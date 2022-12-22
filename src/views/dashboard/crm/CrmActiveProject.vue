@@ -22,27 +22,29 @@
       >
         <b-media no-body>
           <b-media-aside>
-            <b-avatar rounded size="42" :variant="transactionData[index].avatarVariant">
-              <feather-icon size="18" :icon="transactionData[index].avatar" />
+            <b-avatar rounded size="42" :variant="transactionData[`${index > 4 ? index-5 : index }`].avatarVariant">
+              <feather-icon size="18" :icon="transactionData[`${index > 4 ? index-5 : index }`].avatar" />
             </b-avatar>
           </b-media-aside>
           <b-media-body>
             <b-link
-              :to="{ name: 'CompanyView', params: { id: transaction.id }}"
+              :to="{ name: 'CompanyView', params: { id: transaction.companyApi.id }}"
               class="font-weight-bold"
             >
               <h6 class="transaction-title">
-                {{ transaction.companyName }}
+                {{ transaction.companyApi.companyName }}
               </h6>
-              <small>{{ transaction.companyOwnerApi.companName }}</small>
+              <small>{{ transaction.companyApi.companyOwnerApi.companyOwnerName }}</small>
             </b-link>
           </b-media-body>
         </b-media>
         <div
           class="font-weight-bolder"
-          :class="transactionData[index].deduction ? 'text-danger' : 'text-success'"
+          :class="transactionData[`${index > 4 ? index-5 : index }`].deduction ? 'text-success' : 'text-success'"
         >
-          {{ transactionData[index].payment }}
+          <!-- {{ transactionData[`${index > 4 ? index-5 : index }`].payment }} -->
+
+          {{ formatDate(transaction.period) }}
         </div>
       </div>
     </b-card-body>
@@ -92,8 +94,20 @@ export default {
         }    
     })
 
+    const formatDate = (date) => {
+      var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+      return [year, month].join("/");
+        
+    }
     return{
-      activeProject
+      activeProject,
+      formatDate
     }
   },
   data() {
