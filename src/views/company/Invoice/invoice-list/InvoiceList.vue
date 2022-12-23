@@ -31,7 +31,7 @@
             }"
             @click="actionTab"
           >
-            Add Record
+            Add Invoice
           </b-button>
           <b-button
             variant="primary"

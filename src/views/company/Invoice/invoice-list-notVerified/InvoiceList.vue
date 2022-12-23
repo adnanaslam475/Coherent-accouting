@@ -39,7 +39,7 @@
               small
               variant="light"
             />
-            Add Multiple Files
+            Add Multiple Invoices
             <svg-icon
               width="20"
               height="20"

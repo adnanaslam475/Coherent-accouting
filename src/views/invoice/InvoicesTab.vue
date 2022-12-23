@@ -15,13 +15,13 @@
         />
 
       </b-tab>
-      <b-tab :style="`display: block !important; position: ${invoiceTab !=1 ? 'absolute' : 'relative' }; visibility: ${invoiceTab !=1 ? 'hidden' : 'visible' }; `">
+      <!-- <b-tab :style="`display: block !important; position: ${invoiceTab !=1 ? 'absolute' : 'relative' }; visibility: ${invoiceTab !=1 ? 'hidden' : 'visible' }; `">
         <template #title>
           <feather-icon icon="PenToolIcon" />
           <span>Create Invoice</span>
         </template>
         <AddInvoice />
-      </b-tab>
+      </b-tab> -->
       <b-tab>
         <template #title>
           <feather-icon icon="UsersIcon" />

@@ -314,6 +314,11 @@ const router = new VueRouter({
       component: () => import('@/views/invoice/invoice-preview/InvoicePreview.vue'),
     },
     {
+      path: '/invoice/add',
+      name: 'apps-invoice-add',
+      component: () => import('@/views/invoice/invoice-add/InvoiceAdd.vue'),
+    },
+    {
       path: '/invoice/edit/:id',
       name: 'apps-invoice-edit',
       component: () => import('@/views/invoice/invoice-edit/InvoiceEdit.vue'),
