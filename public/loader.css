@@ -314,4 +314,6 @@ font-size: 0.8vw;
 }
  
 /* custom-preview-table */
-
+.top-custom{
+  top: 18px;
+}

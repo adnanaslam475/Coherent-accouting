@@ -150,12 +150,23 @@
               #cell(action)="data"
               style="text-align: center !important"
             >
-              <b-row> 
-                <b-link @click="showImageDetail(data.item.binaryId,data.item.id, images1[data.item.id].type)">
-                  <feather-icon icon="EyeIcon" />
-                </b-link>
+            <div class="d-flex">
+             
+                <feather-icon 
+                  icon="EyeIcon" 
+                  size="16"
+                  class="mr-1"
+                  :id="`preview-${data.item.id}-icon`"
+                  style="cursor: pointer"
+                  @click="showImageDetail(data.item.binaryId,data.item.id, images1[data.item.id].type)" 
+                />
+                <b-tooltip
+                  title="Preview Document"
+                  :target="`preview-${data.item.id}-icon`"
+                />
+             
                 <!-- Dropdown -->
-                <b-dropdown
+                <!-- <b-dropdown
                   variant="link"
                   toggle-class="p-0"
                   no-caret
@@ -184,8 +195,48 @@
                     <feather-icon icon="DownloadIcon" />
                     <span class="align-middle ml-50">Download</span>
                   </b-dropdown-item>
-                </b-dropdown>
-              </b-row>
+                </b-dropdown> -->
+              
+                <feather-icon
+                  @click="editRecord(data)"
+                  size="16"
+                  class="mr-1"
+                  :id="`edit-${data.item.id}-icon`"
+                  icon="EditIcon"
+                  style="cursor: pointer" 
+                />
+                <b-tooltip
+                  title="Edit Document"
+                  :target="`edit-${data.item.id}-icon`"
+                />
+              
+                <feather-icon
+                  @click="deleteAsset(data.item.binaryId)"
+                  size="16"
+                  class="mr-1"
+                  :id="`delete-${data.item.id}-icon`"
+                  icon="TrashIcon"
+                  style="cursor: pointer" 
+                />
+                <b-tooltip
+                  title="Delete Document"
+                  :target="`delete-${data.item.id}-icon`"
+                />
+                <feather-icon
+                  v-if="images1[data.item.id]"
+                  @click="getImage(data.item.binaryId, data.item.id,1)"
+                  size="16"
+                  :href="images1[data.item.id].image"
+                  :id="`download-${data.item.id}-icon`"
+                  icon="DownloadIcon"
+                  style="cursor: pointer" 
+                />
+                <b-tooltip
+                  v-if="images1[data.item.id]"
+                  title="Download Document"
+                  :target="`download-${data.item.id}-icon`"
+                />
+              </div>
             </template>
         </b-table>
 
@@ -277,6 +328,7 @@ import {
   BDropdown,
   BDropdownItem,
   BLink,
+  BTooltip
 } from "bootstrap-vue";
 
 // Create component
@@ -304,6 +356,7 @@ export default {
     BDropdown,
     BDropdownItem,
     BLink,
+    BTooltip
   },
   directives: {
     Ripple,

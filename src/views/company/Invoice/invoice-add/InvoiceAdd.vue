@@ -695,7 +695,7 @@
                           </b-col>
                         </b-row>
                         <div
-                          class="d-flex justify-content-center align-items-center py-50 px-25"
+                          class="d-flex justify-content-center py-50 px-25 position-relative top-custom"
                         >
                           <feather-icon
                             size="16"
@@ -951,7 +951,7 @@
                 class="mb-75"
                 block
                 type="submit"
-                :disabled="invalid || loading"
+                :disabled="loading"
               >
                 <b-spinner v-if="loading" small variant="light" />
                 Preview
@@ -963,7 +963,7 @@
                 variant="outline-primary"
                 block
                 type="submit"
-                :disabled="invalid || loading"
+                :disabled="loading"
               >
                 <b-spinner v-if="loading" small variant="light" />
                 Save
@@ -989,6 +989,9 @@
 
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import {
+  required, email, confirmed, password,
+} from '@validations'
 import Logo from "@core/layouts/components/Logo.vue";
 import { ref, onUnmounted } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
@@ -1061,7 +1064,8 @@ export default {
     return {
       loading: false,
       supplierVat: [],
-      recipientVat: []
+      recipientVat: [],
+      required, email, confirmed, password,
     };
   },
   directives: {

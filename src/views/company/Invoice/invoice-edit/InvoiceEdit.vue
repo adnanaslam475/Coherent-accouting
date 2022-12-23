@@ -230,7 +230,7 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="supplierVat == 'true'" class="d-flex align-items-center mb-1">
+                      <div v-if="supplierVat" class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
                           Company Vat No:
                         </span>
@@ -429,7 +429,7 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="AccountTypeOption=='company' && recipientVat == 'true'" class="d-flex align-items-center mb-1">
+                      <div v-if="AccountTypeOption=='company' && recipientVat" class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
                           Company Vat No:
                         </span>
@@ -745,7 +745,7 @@
                           </b-col>
                         </b-row>
                         <div
-                          class="d-flex justify-content-center align-items-center py-50 px-25"
+                          class="d-flex justify-content-center py-50 px-25 position-relative top-custom"
                         >
                           <feather-icon
                             size="16"
@@ -1008,7 +1008,7 @@
                 variant="outline-primary"
                 class="mb-75"
                 block
-                :disabled="invalid || loading"
+                :disabled="loading"
                 @click="invoiceEdit(invoiceData,'preview')"
               >
                 <b-spinner v-if="loading" small variant="light" />
@@ -1020,7 +1020,7 @@
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 variant="outline-primary"
                 block
-                :disabled="invalid || loading"
+                :disabled="loading"
                 type="submit"
               >
               <b-spinner v-if="loading" small variant="light" />
@@ -1031,7 +1031,7 @@
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 variant="outline-primary"
                 block
-                :disabled="invalid || loading"
+                :disabled="loading"
                 type="button"
                 @click="invoiceVerify(invoiceData)"
               >
@@ -1057,6 +1057,9 @@
 
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import {
+  required, email, confirmed, password,
+} from '@validations'
 import Logo from '@core/layouts/components/Logo.vue'
 import { ref, onUnmounted } from '@vue/composition-api'
 import { heightTransition } from '@core/mixins/ui/transition'
@@ -1072,7 +1075,6 @@ import invoiceStoreModule from '../invoiceStoreModule'
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import TabList from "../../TabList.vue"
-import { required } from "@validations";
 export default {
   components: {
     BRow,
@@ -1122,8 +1124,7 @@ export default {
     return {
       invoiceID: null,
       loading: false,
-      supplierVat: [],
-      recipientVat: []
+      required, email, confirmed, password,
     };
   },
   mounted() {
@@ -1266,6 +1267,8 @@ export default {
       { value: 'INCOME', text: 'INCOME' },
       { value: 'EXPENSE', text: 'EXPENSE' },
     ]
+    var supplierVat = ref(false)
+    var recipientVat = ref(false)
     const VerifiedInvisible = ref(true)
     var InvoiceTypeOptionToggleValue = ref(null)
     var saleTypeOptionToggleValue = ref(null)
@@ -1275,6 +1278,8 @@ export default {
         invoiceData.value = response.data   
         invoiceData.value.tradeDiscountPercent = invoiceData.value.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
         invoiceData.value.vatPercent = invoiceData.value.vatPercent ? invoiceData.value.vatPercent : 20
+        supplierVat.value = invoiceData.value.supplierCompany.companyVatEic ? true : false
+        recipientVat.value = invoiceData.value.recipientCompany.companyVatEic ? true : false
         VerifiedInvisible.value = invoiceData.value.verified
         // ? We are adding some extra data in response for data purpose
         // * Your response will contain this extra data
@@ -1784,6 +1789,8 @@ export default {
 
     return {
       AccountTypeOption,
+      recipientVat,
+      supplierVat,
       AccountTypeOptionToggleValue,
       AccountTypeOptionToggle,
       InvoiceTypeOptionToggleValue,

@@ -179,6 +179,8 @@ export default {
 
 <style lang="scss">
 //
+@import "@core/scss/vue/libs/vue-flatpicker.scss";
+@import "@core/scss/vue/libs/chart-apex.scss";
 .nav-tabs .nav-link {
   padding: 0.36rem 0.78rem 0.47rem;
 }

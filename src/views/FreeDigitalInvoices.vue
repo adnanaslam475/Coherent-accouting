@@ -13,7 +13,7 @@
     </section>
     <!--/ search input -->
     <section class="invoice-add-wrapper">
-      <validation-observer ref="invoiceForm" #default="{ invalid }">
+      <validation-observer ref="previewForm" #default="{ invalid }">
         <b-form @submit.prevent="invoicePreview(invoiceData, AccountTypeOption)">
           <b-row class="invoice-add m-0">
             <!-- Col: Left (Invoice Container) -->
@@ -111,7 +111,7 @@
                             <validation-provider
                               #default="{ errors }"
                               name="supplierCompanyName"
-                              
+                              rules="required"
                             >
                               <b-form-input
                                 v-model="invoiceData.supplierCompany.companName"
@@ -611,11 +611,11 @@
                           <b-row class="flex-grow-1 px-1 invoice-add-transections">
                             <!-- Single Item Form Headers -->
                             <b-col cols="12" lg="1"> No. </b-col>
-                            <b-col cols="12" lg="2"> Item name or Service </b-col>
+                            <b-col cols="12" lg="4"> Item name or Service </b-col>
                             <b-col cols="12" lg="1"> Qty </b-col>
-                            <b-col cols="12" lg="2"> Measurement </b-col>
+                            <b-col cols="12" lg="1"> Measure </b-col>
                             <b-col cols="12" lg="2"> Single Price </b-col>
-                            <b-col cols="12" lg="2"> Currency </b-col>
+                            <b-col cols="12" lg="1"> Currency </b-col>
                             <b-col cols="12" lg="2"> Total Price </b-col>
                           </b-row>
                           <div class="form-item-action-col" />
@@ -644,7 +644,7 @@
                               
                             </b-col>
 
-                            <b-col cols="12" lg="2">
+                            <b-col cols="12" lg="4">
                               <label class="d-inline d-lg-none"
                                 >Item name or Service</label
                               >
@@ -679,9 +679,9 @@
                                 <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider>
                             </b-col>
-                            <b-col cols="12" lg="2">
+                            <b-col cols="12" lg="1">
                               <label class="d-inline d-lg-none"
-                                >Measurement</label
+                                >Measure</label
                               >
                               <validation-provider
                                 #default="{ errors }"
@@ -723,7 +723,7 @@
                                 <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider>
                             </b-col>
-                            <b-col cols="12" lg="2">
+                            <b-col cols="12" lg="1">
                               <label class="d-inline d-lg-none">Currency</label>
                               <validation-provider
                                 #default="{ errors }"
@@ -1022,7 +1022,7 @@
                   class="mb-75"
                   block
                   type="submit"
-                  :disabled="invalid || loading"
+                  :disabled="loading"
                 >
                   <b-spinner v-if="loading" small variant="light" />
                   Preview
@@ -1075,6 +1075,9 @@ import {
 } from "bootstrap-vue";
 import navbarAds from "./navbarAds.vue";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import {
+  required, email, confirmed, password,
+} from '@validations'
 import Logo from "@core/layouts/components/Logo.vue";
 import { ref, onUnmounted } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
@@ -1121,6 +1124,7 @@ export default {
       loading: false,
       supplierVat: [],
       recipientVat: [],
+      required, email, confirmed, password,
     };
   },
   directives: {
@@ -1143,13 +1147,6 @@ export default {
       this.invoiceData.transactions.push(
         JSON.parse(JSON.stringify(this.itemFormBlankItem))
       );
-
-      this.$nextTick(() => {
-        this.trAddHeight(this.$refs.row[0].offsetHeight);
-        setTimeout(() => {
-          this.$refs.form.style.overflow = null;
-        }, 350);
-      });
     },
     removeItem(index) {
       this.invoiceData.transactions.splice(index, 1);
@@ -1162,7 +1159,8 @@ export default {
       });
     },
     invoicePreview(invoiceData,AccountTypeOption) {
-      
+      this.$refs.previewForm.validate().then((success) => {
+          if (success) {
       if(AccountTypeOption == 'person'){
          invoiceData.recipientCompany.companName = invoiceData.recipientCompany.companyOwnerName
          invoiceData.recipientCompany.companyVatEic = ''
@@ -1179,7 +1177,8 @@ export default {
               invoiceData: invoiceData,
           },
       });
-
+    }
+      })
     }
   },
   setup() {

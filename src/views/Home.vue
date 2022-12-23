@@ -26,14 +26,6 @@
         </b-col>
       </b-col>
     </b-row>
-    <b-row class="match-height">
-      <b-col
-        xl="12"
-        md="12"
-      >
-        <Companies />
-      </b-col>
-    </b-row>
   </section>
 </template>
 

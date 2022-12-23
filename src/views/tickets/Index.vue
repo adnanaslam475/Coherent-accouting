@@ -17,7 +17,7 @@
     >
       <template style="text-align: center !important" #cell(action)="data">
         <!-- Dropdown -->
-        <b-dropdown
+        <!-- <b-dropdown
           variant="link"
           toggle-class="p-0"
           no-caret
@@ -34,7 +34,12 @@
             <feather-icon icon="EditIcon"/>
             <span class="align-middle ml-50">Edit</span>
           </b-dropdown-item>
-        </b-dropdown>
+        </b-dropdown> -->
+
+        <div class="cursor-pointer" @click="editTicket(data.item)">
+            <feather-icon icon="EditIcon"/>
+            <span class="align-middle ml-50">Edit</span>
+        </div>
         <!-- </b-button> -->
       </template>
     </b-table>
