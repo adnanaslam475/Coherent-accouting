@@ -507,16 +507,15 @@
                   <div
                     class="
                       d-flex
-                      justify-content-between
                       flex-sm-row flex-column
                       mb-sm-0 mb-1
                     "
                   >
-                    <h6>{{ graph.count }} Reports have been created</h6>
                     <small
-                      class="timeline-item-time text-nowrap ml-1 font-weight-bolder text-success"
+                      class="timeline-item-time text-nowrap mr-1 font-weight-bolder text-success"
                       >{{ graph.date.substr(0,7) }}</small
                     >
+                    <h6>{{ graph.count }} Reports have been created</h6>
                   </div>
                 </app-timeline-item>
               </app-timeline>
