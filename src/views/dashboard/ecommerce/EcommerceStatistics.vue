@@ -43,10 +43,18 @@
             </b-media-aside>
             <b-media-body class="my-auto">
               <h4 class="font-weight-bolder mb-0">
-                {{ item }}
+                {{ item }} 
               </h4>
-              <b-card-text class="font-small-3 mb-0 text-capitalize">
-                {{ name.replace(/([A-Z])/g, ' $1').trim() }}
+              <b-card-text class="font-small-3 mb-0 text-capitalize"  >
+                <p v-if="index == 0">{{ $t('company_info.total_invoices') }}</p>
+                <p v-if="index == 1">{{ $t('company_info.total_vat_reports') }}</p>
+                <p v-if="index == 2">{{ $t('company_info.total_yearly_reports') }}</p>
+                <p v-if="index == 3">{{ $t('dashboard_lbl.total_companies') }}</p>
+                <p v-if="index == 4">{{ $t('dashboard_lbl.total_sales_number') }}</p>
+                <p v-if="index == 5">{{ $t('dashboard_lbl.total_purchases_number') }}</p>
+               
+                <!-- {{ $t(name.replace(/([A-Z])/g, ' $1').trim()) }}   -->
+                
               </b-card-text>
             </b-media-body>
           </b-media>

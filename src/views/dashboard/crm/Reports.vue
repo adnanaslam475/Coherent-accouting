@@ -2,7 +2,7 @@
   <b-card-code no-body>
     <b-card-header>
       <div>
-        <b-card-title>Reports</b-card-title>
+        <b-card-title>{{ $t('dashboard_lbl.reports') }}</b-card-title>
       </div>
     </b-card-header>
     <b-card-body>
@@ -18,7 +18,7 @@
                 <span class="v-avatar__underlay"></span>
               </b-avatar>
             </b-media>
-            <span>Invoices</span>
+            <span>{{ $t("invoices") }}</span>
           </template>
           <vue-apex-charts
             type="bar"
@@ -38,7 +38,7 @@
                 <span class="v-avatar__underlay"></span>
               </b-avatar>
             </b-media>
-            <span class="text-center">Vat Reports</span>
+            <span class="text-center">{{$t('company_tabs.vat_reports')}}</span>
           </template>
         
           <vue-apex-charts

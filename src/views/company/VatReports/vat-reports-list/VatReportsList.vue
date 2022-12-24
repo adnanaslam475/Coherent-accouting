@@ -27,13 +27,13 @@
             }"
             @click="actionTab"
           >
-            Add Record
+          {{ $t("vat_reports.add_vat_report") }}
           </b-button>
 
           <!-- Generate Button -->
 
           <b-button v-b-modal.modal-prevent-closing variant="primary">
-            Generate
+            {{ $t("vat_reports.generate_vat_report") }}
           </b-button>
         </b-col>
 
@@ -193,6 +193,9 @@
       </template>
 
       <!-- Column: period-->
+      <template #head(period)>
+        {{ $t("vat_reports.period") }}
+      </template>
       <template #cell(period)="data">
         <span class="text-nowrap">
         {{ data.value.substr(0,7) }}
@@ -200,11 +203,17 @@
       </template>
 
       <!-- Column: nameAndAddress -->
+      <template #head(nameAndAddress)>
+        {{ $t("vat_reports.company_name_and_address") }}
+      </template>
       <template #cell(nameAndAddress)="data">
         {{ data.value }}
       </template>
 
       <!-- Column: cell-01 -->
+      <template #head(cell01)>
+        {{ $t("vat_reports.total_sum_base_taxes") }} 
+      </template>
       <template #cell(cell-01)="data">
         <span class="text-nowrap">
           {{ data.value }}
@@ -212,6 +221,9 @@
       </template>
 
       <!-- Column: cell-20 -->
+      <template #head(cell20)>
+        {{ $t("vat_reports.total_vat") }}
+      </template>
       <template #cell(cell-20)="data">
         <span class="text-nowrap">
           {{ data.value }}
@@ -219,6 +231,9 @@
       </template>
 
       <!-- Column: cell-30 -->
+      <template #head(cell30)>
+        {{ $t("vat_reports.base_tax_addition") }}
+      </template>
       <template #cell(cell-30)="data">
         <span class="text-nowrap">
           {{ data.value }}
@@ -226,6 +241,9 @@
       </template>
 
       <!-- Column: cell-31 -->
+      <template #head(cell31)>
+        {{ $t("vat_reports.with_full_tax_credit") }}
+      </template>
       <template #cell(cell-31)="data">
         <span class="text-nowrap">
           {{ data.value }}
@@ -233,6 +251,9 @@
       </template>
 
       <!-- Column: cell-40 -->
+      <template #head(cell40)>
+        {{ $t("vat_reports.total_tax_credit") }}
+      </template>
       <template #cell(cell-40)="data">
         <span class="text-nowrap">
           {{ data.value }}
@@ -240,6 +261,9 @@
       </template>
 
       <!-- Column: cell-50 -->
+      <template #head(cell50)>
+        {{ $t("vat_reports.vat_to_pay") }}
+      </template>
       <template #cell(cell-50)="data">
         <span class="text-nowrap">
           {{ data.value }}
@@ -247,6 +271,9 @@
       </template>
 
       <!-- Column: cell-60 -->
+      <template #head(cell60)>
+        {{ $t("vat_reports.vat_to_exclude") }}
+      </template>
       <template #cell(cell-60)="data">
         <span class="text-nowrap">
           {{ data.value }}
@@ -254,6 +281,9 @@
       </template>
 
       <!-- Column: cell-70 -->
+      <template #head(cell70)>
+        {{ $t("vat_reports.tax_to_pay") }}
+      </template>
       <template #cell(cell-70)="data">
         <span class="text-nowrap">
           {{ data.value }}
@@ -261,6 +291,9 @@
       </template>
 
       <!-- Column: cell-71 -->
+      <template #head(cell71)>
+        {{ $t("vat_reports.tax_to_pay_effective") }}
+      </template>
       <template #cell(cell-71)="data">
         <span class="text-nowrap">
           {{ data.value }}
@@ -268,6 +301,9 @@
       </template>
 
       <!-- Column: Actions -->
+      <template #head(actions)>
+        {{ $t("companies.actions") }}
+      </template>
       <template #cell(actions)="data">
         <div class="text-nowrap">
           <feather-icon

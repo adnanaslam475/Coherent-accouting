@@ -9,7 +9,11 @@
     "videos": "Videos",
     "prices": "Prices",
     "free_digital_invoices": "Free digital invoices",
-    "why_choose_use": "Why Choose Us"
+    "why_choose_use": "Why Choose Us",
+    "companies": "Companies",
+    "company_info": "Company Info",
+    "company_invoices": "Company Invoices",
+    "add_multiple_invoices": "Add Multiple Invoices"
   },
   "login": {
     "title": "Welcome to Coherent Accounting! \uD83D\uDC4B",
@@ -58,24 +62,24 @@
     "set_new_password": "Set New Password"
   },
   "reset_password_email": {
-    "email_sent_successfully" : "Email Sent Successfully.",
+    "email_sent_successfully": "Email Sent Successfully.",
     "description": "We have sent a reset password email at your entered registered email address. Please click on the 'RESET PASSWORD' on your email to proceed."
   },
   "verify_email": {
-    "email_sent_successfully" : "Verification Email Sent Successfully.",
+    "email_sent_successfully": "Verification Email Sent Successfully.",
     "description": "We are happy you signed up for Coherent Accounting. To start exploring the Coherent Accounting, please confirm your email address."
   },
   "navbar": {
-    "login" : "Login",
+    "login": "Login",
     "signup": "Sign up",
     "about": "About",
     "questions": "Questions",
-    "videos":"Videos",
-    "prices":"Prices",
-    "free_digital_invoices":"Free digital invoices",
+    "videos": "Videos",
+    "prices": "Prices",
+    "free_digital_invoices": "Free digital invoices",
     "why_choose_use": "Why Choose Us"
   },
-  "pricing":{
+  "pricing": {
     "title": "Pricing Plans",
     "description": " All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs.",
     "monthly": "Monthly",
@@ -84,10 +88,10 @@
     "month": "month",
     "year": "year",
     "plan": "Your current plan",
-    "popular" : "Popular",
+    "popular": "Popular",
     "upgrade": "Upgrade"
   },
-  "about":{
+  "about": {
     "title": "За нас",
     "label_abt_1": "Какво е Coherent Accaunting",
     "desc_abt_1": "Coherent Accaunting е еднситвената на пазара платформа за счетоводство предназначена за счетоводни кантори или счетоводители, водещи счетоводството на дадена фирма. Направена е от счетоводители с голям опит за счетоводители които искат да са по-продуктивни и да пестят време от ръчна работа.Платформата намалява ръчни труд с 85% и увеличава продуктивността.",
@@ -102,7 +106,7 @@
     "label_abt_6": "",
     "desc_abt_6": "Генериране на отчет чл. 117, ал. 1 от ЗДДС с един клик на бутон. Без нужда от импортиране или експортиране към друга система за счетоводство. Всичко което Ви трябва на едно място."
   },
-  "questions":{
+  "questions": {
     "title": "Често задавани въпорси",
     "question_qst_1": "Трябва ли да се инсталира програмата на компютъра на всеки счетоводител?",
     "answer_qst_1": "Не! Програмата е инсталирана на Калуд-а. Може да се достъпи от всеки който има достъп до интернет и компютър. Скоро и от мобилно приложение.",
@@ -121,7 +125,7 @@
     "question_qst_8": "Могат ли да се разчитат ръчно написани фактури?",
     "answer_qst_8": "ДА! Но коефециента на точност е нисък. Затова сме направили напълно безплатен модул за направя на дигитални фактури който да предоставите на вашите клиенти за да могат те да правят фактурите си безплатно. Без никакви допълнителни такси за Вас или вашия клиент. Нужо е само да си направят акаунт и да го ползват."
   },
-  "free_digital_invoices":{
+  "free_digital_invoices": {
     "title": "Безплатни фактури",
     "title_abt_1": "",
     "label_fdi_1": "Безплатен модул за направа на дигитални фактури, който можете да предоставите на вашите клиенти, за да не Ви дават ръчно написани фактури. По този наичн спестявате време на тях и на Вас.",
@@ -137,15 +141,91 @@
     "label_fdi_6": "Направете си акаунт напълно безплатно и ползвайте пълната фунционалност на системата за 2 месеца."
   },
   "why_choose_use": {
-		"title": "Why Choose Us",
-		"title_1": "Ние сме с най-нсики цени на пазара за подобни услуги.",
-		"title_2": "One-click Генериране на ДДС Деклар и списък с покупки и продажби. Във формат Txt и ексел файлове готови за пращане към НАП. Няма нужда да въвеждате всичко ръчно в програмата на НАП",
-		"title_3": "OCR обработка и разчитане на фактури за секунди.Без ограничение на бройката или размера за компания.",
-		"title_4": "Ние се грижим за природата и това да я пазим. Използвайки дигитални фактури, а не хартиени, ние спасяваме дърво всеки ден. Това е нашата мисия и цел. Включи се и ти.",
-		"title_5": "Достъпен UX. Лесен за научаване и свикване за работа. Лесни менюта и фунционалности, за разлика от други плаатформи с тежки менюта и сложност.",
-		"title_6": "Модерен дизайн и приятен за работа.",
-		"title_7": "Всичко нужно за един счетоводител на едно място. Без импорт и екпорт към други платформи.",
-		"title_8": "Автоматизирани изчисления."
+    "title": "Why Choose Us",
+    "title_1": "Ние сме с най-нсики цени на пазара за подобни услуги.",
+    "title_2": "One-click Генериране на ДДС Деклар и списък с покупки и продажби. Във формат Txt и ексел файлове готови за пращане към НАП. Няма нужда да въвеждате всичко ръчно в програмата на НАП",
+    "title_3": "OCR обработка и разчитане на фактури за секунди.Без ограничение на бройката или размера за компания.",
+    "title_4": "Ние се грижим за природата и това да я пазим. Използвайки дигитални фактури, а не хартиени, ние спасяваме дърво всеки ден. Това е нашата мисия и цел. Включи се и ти.",
+    "title_5": "Достъпен UX. Лесен за научаване и свикване за работа. Лесни менюта и фунционалности, за разлика от други плаатформи с тежки менюта и сложност.",
+    "title_6": "Модерен дизайн и приятен за работа.",
+    "title_7": "Всичко нужно за един счетоводител на едно място. Без импорт и екпорт към други платформи.",
+    "title_8": "Автоматизирани изчисления."
+  },
+  "companies": {
+    "unfinished_vat_reports": "Unfinished Vat Reports",
+    "add_company": "Add Company",
+    "country": "Country",
+    "company_name": "Company Name",
+    "email": "Email",
+    "status": "Status",
+    "owner_first_name": "Owner First Name",
+    "company_id": "Company ID",
+    "actions": "Actions"
+  },
+  "company_info": {
+    "edit": "Edit",
+    "delete": "Delete ",
+    "owner_name": "Owner Name",
+    "owner_egn": "Owner EGN",
+    "company_id": "Company ID",
+    "vat_number": "Vat Number",
+    "bank_account": "Bank Account",
+    "contact": "Contact",
+    "address": "Аddress",
+    "total_assets": "Total Assets",
+    "total_invoices": "Total Invoices",
+    "total_not_verified_invoices": "Total NotVerified Invoices",
+    "total_private_person": "Total Private Person",
+    "total_vat_reports": "Total Vat Reports",
+    "total_yearly_reports": "Total Yearly Reports",
+    "report_timeline": "Report Timeline",
+    "reports_have_been_created": "Reports have been created",
+    "invoices_per_month": "Invoices Per Month",
+    "invoices_per_day": "Invoices Per Day"
+  },
+  "company_tabs": {
+    "multiple_upload": "Multiple Uploads",
+    "vat_reports": "Vat Reports",
+    "yearly_reports": "Yearly Reports",
+    "company_documents": "Company Documents",
+    "clients_or_recipients": "Clients or Recipients"
+  },
+  "company_invoices": {
+    "add_invoice": "Add Invoice",
+    "add_from_file": "Add From File",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "search": "Search..",
+    "invoice_no": "Invoice Number",
+    "date_issued": "Date Issued",
+    "transaction_type": "Transaction Type",
+    "recipient_company": "Recipient Company",
+    "supplier_company": "Supplier Company",
+    "amount_non_vat": "Amount non Vat",
+    "total_amount": "Total Amount",
+    "vat_amount": "Vat Amount"
+  },
+  "vat_reports": {
+    "add_vat_report": "Add VAT Report",
+    "generate_vat_report": "Generate VAT Report",
+    "period": "Period",
+    "company_name_and_address": "Company Name and Address",
+    "total_sum_base_taxes": "Total Sum Base Taxes",
+    "total_vat": "Total Vat",
+    "base_tax_addition": "Base Tax and Addition",
+    "with_full_tax_credit": "With Full Tax Credit",
+    "total_tax_credit": "Total Tax Credit",
+    "vat_to_pay": "Vat To Pay",
+    "vat_to_exclude": "Vat to Exclude",
+    "tax_to_pay": "Tax to Pay",
+    "tax_to_pay_effective": "Tax to Pay Effective"
+  },
+  "dashboard_lbl": {
+    "statistics": "Statistics",
+    "total_companies": "Total Companies",
+    "total_sales_number": "Total Sales Number",
+    "total_purchases_number": "Total Purchases Number",
+    "reports": "Reports"
   },
   "home": "Home",
   "dashboard": "Dashboard",
@@ -155,5 +235,9 @@
   "my-plans": "My Plans",
   "settings": "Settings",
   "contacts": "Contacts",
-  "back_to_login": "Back to login"
+  "back_to_login": "Back to login",
+  "my_invoices" :"My Invoices",
+  "my_tickets":"My Tickets",
+  "my_profile":"My Profiles"
+
 }

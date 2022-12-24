@@ -60,18 +60,19 @@
                             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                             size="sm"
                             variant="primary"
+                            class="text-capitalize"
                             @click="editCompany()"
-                            >Edit
+                            > {{ $t('company_info.edit') }}
                           </b-button>
 
                           <b-button
                             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                             variant="danger"
                             size="sm"
-                            class="ml-1"
+                            class="ml-1 text-capitalize"
                             @click="deleteModalShow = !deleteModalShow"
                           >
-                            Delete
+                             {{ $t('company_info.delete') }}
                           </b-button>
                         </div>
                       </div>
@@ -85,7 +86,7 @@
                           style="margin-left: 8px; margin-right: -5px"
                         />
                         <div class="ml-1">
-                          <h6 class="mb-0">Owner Name</h6>
+                          <h6 class="mb-0">{{ $t('company_info.owner_name')}} </h6>
                           <CopyToClipboard
                             :text="companyOwnerName"
                             @copy="copyTextNoInput(1)"
@@ -108,7 +109,7 @@
                           style="margin-left: 8px; margin-right: -5px"
                         />
                         <div class="ml-1">
-                          <h6 class="mb-0">Owner EGN</h6>
+                          <h6 class="mb-0 text-capitalize"> {{ $t('company_info.owner_egn') }} </h6>
                           <CopyToClipboard
                             :text="companyOwnerEGN"
                             @copy="copyTextNoInput(2)"
@@ -155,7 +156,7 @@
                               points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
                             />
                           </svg>
-                          <span class="font-weight-bold">Company ID</span>
+                          <span class="font-weight-bold text-capitalize">{{ $t('company_info.company_id') }}</span>
                         </th>
                         <td class="pb-50 text-capitalize">
                           <CopyToClipboard
@@ -182,7 +183,7 @@
                       <tr>
                         <th class="pb-50">
                           <feather-icon icon="FlagIcon" class="mr-75" />
-                          <span class="font-weight-bold">Vat Number</span>
+                          <span class="font-weight-bold">{{ $t('company_info.vat_number') }}</span>
                         </th>
                         <td
                           v-if="companyRecord.companyVatNumber != null"
@@ -213,7 +214,7 @@
                       <tr>
                         <th class="pb-50">
                           <feather-icon icon="CreditCardIcon" class="mr-75" />
-                          <span class="font-weight-bold">Bank Account</span>
+                          <span class="font-weight-bold text-capitalize">{{$t('company_info.bank_account') }}</span>
                         </th>
                         <td
                         v-if="companyRecord.companyBankAccount != null"
@@ -259,7 +260,7 @@
                               d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
                             />
                           </svg>
-                          <span class="font-weight-bold">Contact</span>
+                          <span class="font-weight-bold text-capitalize">{{ $t('company_info.contact') }}</span>
                         </th>
                         <td class="pb-50">
                           <CopyToClipboard
@@ -286,7 +287,7 @@
                         <th class="pb-50">
                           <feather-icon icon="MapPinIcon" class="mr-75" />
 
-                          <span class="font-weight-bold">Address</span>
+                          <span class="font-weight-bold text-capitalize">{{ $t('company_info.address') }}</span>
                         </th>
                         <td class="pb-50">
                           <CopyToClipboard
@@ -329,7 +330,7 @@
                             />
                           </svg>
 
-                          <span class="font-weight-bold">Country</span>
+                          <span class="font-weight-bold text-capitalize">{{ $t('companies.country') }}</span>
                         </th>
                         <td class="pb-50">
                           {{ companyRecord.companyCountry }}
@@ -351,7 +352,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="AlignJustifyIcon" class="mr-50" />
-                <span class="font-weight-bold">Total Assets</span>
+                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_assets') }}</span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalAssets }}
@@ -360,7 +361,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="FileTextIcon" class="mr-50" />
-                <span class="font-weight-bold">Total Invoices</span>
+                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_invoices') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalInvoices }}
@@ -369,7 +370,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="AlertCircleIcon" class="mr-50" />
-                <span class="font-weight-bold">Total NotVerified Invoices</span>
+                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_not_verified_invoices')}}</span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalNotVerifiedInvoices }}
@@ -378,7 +379,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="AlertTriangleIcon" class="mr-50" />
-                <span class="font-weight-bold">Total Private Person</span>
+                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_private_person') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalPrivatePerson }}
@@ -387,7 +388,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="ListIcon" class="mr-50" />
-                <span class="font-weight-bold">Total Vat Reports</span>
+                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_vat_reports') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalVatReports }}
@@ -396,7 +397,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="FileIcon" class="mr-50" />
-                <span class="font-weight-bold">Total Yearly Reports</span>
+                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_yearly_reports') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalYearlyReports }}
@@ -467,16 +468,17 @@
     </b-modal>
 
     <b-row class="" style="margin-top: 2.5rem">
-      <b-col class="mb-1" cols="12">
+      <b-col class="mb-1" cols="6">
         <!-- Report time-line card -->
         <b-card
+          v-if="monthlyReportGraphDisplay.length > 0"
           no-body
           style="padding: 0px"
           class="mb-2"
         >
           <b-card-header style="padding: 1.5rem 1.5rem 1.52rem 1rem">
-            <b-card-title> Report Timeline </b-card-title>
-            <div v-if="monthlyReportGraphDisplay.length > 0" class="d-flex align-items-center">
+            <b-card-title> {{$t('company_info.report_timeline')}} </b-card-title>
+            <div class="d-flex align-items-center">
               <feather-icon
                 icon="RefreshCcwIcon"
                 size="17"
@@ -494,8 +496,9 @@
               />
             </div>
           </b-card-header>
-          <b-collapse v-if="monthlyReportGraphDisplay.length > 0" id="collapse-1" class="my-1" visible>
+          <b-collapse id="collapse-1" class="mt-1" visible>
             <b-card-body
+              v-if="monthlyReportGraph.length > 0"
               style="padding: 0px 15px"
             >
               <app-timeline>
@@ -507,36 +510,22 @@
                   <div
                     class="
                       d-flex
+                      justify-content-between
                       flex-sm-row flex-column
                       mb-sm-0 mb-1
                     "
                   >
+                    <h6>{{ graph.count }} {{$t('company_info.reports_have_been_created')}}</h6>
                     <small
-                      class="timeline-item-time text-nowrap mr-1 font-weight-bolder text-success"
+                      class="timeline-item-time text-nowrap text-muted ml-1"
                       >{{ graph.date.substr(0,7) }}</small
                     >
-                    <h6>{{ graph.count }} Reports have been created</h6>
                   </div>
                 </app-timeline-item>
               </app-timeline>
             </b-card-body>
           </b-collapse>
-          <b-card-body 
-            v-else    
-            class="m-0"
-            style="padding: 1rem 15px"
-          >
-          <div class="d-flex align-items-center justify-content-center">
-              <div class="mb-1 start-chat-icon">
-                <feather-icon icon="FolderIcon" size="40" />
-              </div>
-              <h5 class="sidebar-toggle start-chat-text">No records found</h5>
-            </div>
-          </b-card-body>
         </b-card>
-      </b-col>
-       <!-- Invoices Per Month -->
-      <b-col class="mb-1" cols="6">
         <ApexBarChart
           class="mb-1"
           chart-type="monthly"
@@ -549,9 +538,9 @@
           class="mb-1"
           chart-type="daily"
           title="Invoices Per Day"
-        />     
+        />
+        <!-- Invoices Per Month -->
       </b-col>
-
     </b-row>
   </div>
 </template>
