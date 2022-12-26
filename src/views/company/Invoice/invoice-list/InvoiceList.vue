@@ -31,24 +31,19 @@
             }"
             @click="actionTab"
           >
-            Add Invoice
+            {{ $t("company_invoices.add_invoice") }}
+            <!-- Add Invoice -->
           </b-button>
-          <b-button
-            variant="primary"
-            class="mr-1 position-relative p-set"
-          >
+          <b-button variant="primary" class="mr-1 position-relative p-set">
             <b-form-file
               v-model="file"
               class="file-input"
               @input="addfile(companyId)"
             />
 
-            <b-spinner
-              v-if="fileLoading"
-              small
-              variant="light"
-            />
-            Add From File
+            <b-spinner v-if="fileLoading" small variant="light" />
+            {{ $t("company_invoices.add_from_file") }}
+            <!-- Add From File -->
             <svg-icon
               width="20"
               height="20"
@@ -67,23 +62,22 @@
         </b-col>
 
         <!-- Search -->
-        <b-col
-          cols="12"
-          md="6"
-        >
+        <b-col cols="12" md="6">
           <div class="d-flex align-items-center justify-content-end">
             <div class="position-relative mr-1 filter-date">
               <flat-pickr
                 v-model="dateFrom"
                 class="form-control invoice-edit-input invoice-input-top"
-                placeholder="Start date"
+                :placeholder="$t('company_invoices.start_date')"
               />
-              <feather-icon v-if="dateFrom === ''"
+              <feather-icon
+                v-if="dateFrom === ''"
                 size="16"
                 icon="CalendarIcon"
                 class="cursor-pointer clear-all"
               />
-              <feather-icon v-else
+              <feather-icon
+                v-else
                 size="16"
                 icon="XIcon"
                 class="cursor-pointer clear-all"
@@ -101,15 +95,17 @@
               <flat-pickr
                 v-model="dateTo"
                 class="form-control invoice-edit-input invoice-input-top"
-                placeholder="End date"
+                :placeholder="$t('company_invoices.end_date')"
               />
 
-              <feather-icon v-if="dateTo === ''"
+              <feather-icon
+                v-if="dateTo === ''"
                 size="16"
                 icon="CalendarIcon"
                 class="cursor-pointer clear-all"
               />
-              <feather-icon v-else
+              <feather-icon
+                v-else
                 size="16"
                 icon="XIcon"
                 class="cursor-pointer clear-all"
@@ -127,7 +123,7 @@
               <b-form-input
                 v-model="searchQuery"
                 class="d-inline-block mr-1"
-                placeholder="Search..."
+                :placeholder="$t('company_invoices.search')"
               />
               <feather-icon
                 size="16"
@@ -156,25 +152,22 @@
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
-            <feather-icon
-              icon="FolderIcon"
-              size="20"
-            />
+            <feather-icon icon="FolderIcon" size="20" />
           </div>
-          <h5 class="sidebar-toggle start-chat-text">
-            No records found
-          </h5>
+          <h5 class="sidebar-toggle start-chat-text">No records found</h5>
         </div>
       </template>
 
       <template #head(invoiceStatus)>
-        <feather-icon
-          icon="TrendingUpIcon"
-          class="mx-auto"
-        />
+        <feather-icon icon="TrendingUpIcon" class="mx-auto" />
+        <!-- {{ $t('company_invoices.invoice_number') }} -->
       </template>
 
       <!-- Column: invoiceNumber -->
+      <template #head(invoiceNumber)>
+        {{ $t("company_invoices.invoice_no") }}
+      </template>
+
       <template #cell(invoiceNumber)="data">
         <b-link
           :to="{
@@ -190,10 +183,19 @@
       </template>
 
       <!-- Column: Issued Date -->
+      <template #head(invoiceDate)>
+        {{ $t("company_invoices.date_issued") }}
+      </template>
+
       <template #cell(invoiceDate)="data">
         <span class="text-nowrap">
           {{ data.item.dateIssued }}
         </span>
+      </template>
+
+      <!-- Column: Transaction type -->
+      <template #head(transactionType)>
+        {{ $t("company_invoices.transaction_type") }}
       </template>
 
       <template #cell(transactionType)="data">
@@ -204,10 +206,7 @@
           }"
           class="font-weight-bold"
         >
-          <span
-            :id="`transactionType-row-${data.item.id}`"
-            class="text-nowrap"
-          >
+          <span :id="`transactionType-row-${data.item.id}`" class="text-nowrap">
             <b-badge
               pill
               :variant="`${
@@ -222,16 +221,13 @@
       </template>
 
       <!-- Column: recipientCompany -->
+      <template #head(recipientCompanyName)>
+        {{ $t("company_invoices.recipient_company") }}
+      </template>
+
       <template #cell(recipientCompanyName)="data">
-        <span
-          :id="`recipientCompany-row-${data.item.id}`"
-          class="text-nowrap"
-        >
-          <b-badge
-            pill
-            :variant="`light-success`"
-            class="text-capitalize"
-          >
+        <span :id="`recipientCompany-row-${data.item.id}`" class="text-nowrap">
+          <b-badge pill :variant="`light-success`" class="text-capitalize">
             {{ data.item.recipientCompany.companName }}
           </b-badge>
         </span>
@@ -242,9 +238,7 @@
           <p class="mb-0">
             {{ data.item.recipientCompany.companName }}
           </p>
-          <p class="mb-0">
-            Eic: {{ data.item.recipientCompany.companyEic }}
-          </p>
+          <p class="mb-0">Eic: {{ data.item.recipientCompany.companyEic }}</p>
           <p class="mb-0">
             {{ data.item.recipientCompany.companyOwnerName }}
           </p>
@@ -262,16 +256,13 @@
       </template>
 
       <!-- Column: supplierCompany -->
+
+      <template #head(supplierCompanyName)>
+        {{ $t("company_invoices.supplier_company") }}
+      </template>
       <template #cell(supplierCompanyName)="data">
-        <span
-          :id="`supplierCompany-row-${data.item.id}`"
-          class="text-nowrap"
-        >
-          <b-badge
-            pill
-            :variant="`light-success`"
-            class="text-capitalize"
-          >
+        <span :id="`supplierCompany-row-${data.item.id}`" class="text-nowrap">
+          <b-badge pill :variant="`light-success`" class="text-capitalize">
             {{ data.item.supplierCompany.companName }}
           </b-badge>
         </span>
@@ -282,9 +273,7 @@
           <p class="mb-0">
             {{ data.item.supplierCompany.companName }}
           </p>
-          <p class="mb-0">
-            Eic: {{ data.item.supplierCompany.companyEic }}
-          </p>
+          <p class="mb-0">Eic: {{ data.item.supplierCompany.companyEic }}</p>
           <p class="mb-0">
             {{ data.item.supplierCompany.companyOwnerName }}
           </p>
@@ -302,43 +291,55 @@
       </template>
 
       <!-- Column: amount non vat -->
+      <template #head(amountNonVat)>
+        {{ $t("company_invoices.amount_non_vat") }}
+      </template>
       <template #cell(amountNonVat)="data">
         <span class="text-nowrap">
           <span
             v-if="
               data.item.currency === 'lv' ||
-                data.item.currency === 'лв' ||
-                data.item.currency === 'лв.'
+              data.item.currency === 'лв' ||
+              data.item.currency === 'лв.'
             "
-          >лв. {{ data.value }}</span>
+            >лв. {{ data.value }}</span
+          >
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
 
       <!-- Column: totalAmount -->
+      <template #head(totalAmount)>
+        {{ $t("company_invoices.total_amount") }}
+      </template>
       <template #cell(totalAmount)="data">
         <span class="text-nowrap">
           <span
             v-if="
               data.item.currency === 'lv' ||
-                data.item.currency === 'лв' ||
-                data.item.currency === 'лв.'
+              data.item.currency === 'лв' ||
+              data.item.currency === 'лв.'
             "
-          >лв. {{ data.value }}</span>
+            >лв. {{ data.value }}</span
+          >
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
 
       <!-- Column: vatAmount -->
+      <template #head(vatAmount)>
+        {{ $t("company_invoices.vat_amount") }}
+      </template>
       <template #cell(vatAmount)="data">
         <span class="text-nowrap">
           <span
             v-if="
               data.item.currency === 'lv' ||
-                data.item.currency === 'лв' ||
-                data.item.currency === 'лв.'
+              data.item.currency === 'лв' ||
+              data.item.currency === 'лв.'
             "
-          >лв. {{ data.value }}</span>
+            >лв. {{ data.value }}</span
+          >
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -351,6 +352,10 @@
       </template> -->
 
       <!-- Column: Actions -->
+      <template #head(actions)>
+            {{ $t('companies.actions') }}
+          </template>
+          
       <template #cell(actions)="data">
         <div class="text-nowrap">
           <feather-icon
@@ -435,18 +440,26 @@
         <b-col
           cols="12"
           sm="6"
-          class="d-flex align-items-center justify-content-center justify-content-sm-start"
+          class="
+            d-flex
+            align-items-center
+            justify-content-center justify-content-sm-start
+          "
         >
-          <span
-            class="text-muted"
-          >Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
-            {{ dataMeta.of }} entries</span>
+          <span class="text-muted"
+            >Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
+            {{ dataMeta.of }} entries</span
+          >
         </b-col>
         <!-- Pagination -->
         <b-col
           cols="12"
           sm="6"
-          class="d-flex align-items-center justify-content-center justify-content-sm-end"
+          class="
+            d-flex
+            align-items-center
+            justify-content-center justify-content-sm-end
+          "
         >
           <b-pagination
             v-if="totalInvoices > 0"
@@ -460,16 +473,10 @@
             next-class="next-item"
           >
             <template #prev-text>
-              <feather-icon
-                icon="ChevronLeftIcon"
-                size="18"
-              />
+              <feather-icon icon="ChevronLeftIcon" size="18" />
             </template>
             <template #next-text>
-              <feather-icon
-                icon="ChevronRightIcon"
-                size="18"
-              />
+              <feather-icon icon="ChevronRightIcon" size="18" />
             </template>
           </b-pagination>
         </b-col>
@@ -502,22 +509,22 @@ import {
   BCardHeader,
   BFormFile,
   BSpinner,
-} from 'bootstrap-vue'
-import { avatarText } from '@core/utils/filter'
-import vSelect from 'vue-select'
-import { onUnmounted } from '@vue/composition-api'
-import store from '@/store'
-import VueHtml2pdf from 'vue-html2pdf'
-import useJwt from '@/auth/jwt/useJwt'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import router from '@/router'
-import SvgIcon from '@jamescoyle/vue-icon'
-import { mdiTrayArrowUp } from '@mdi/js'
-import flatPickr from 'vue-flatpickr-component'
-import Ripple from 'vue-ripple-directive'
-import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
-import invoiceStoreModule from '../invoiceStoreModule'
-import useInvoicesList from './useInvoiceList'
+} from "bootstrap-vue";
+import { avatarText } from "@core/utils/filter";
+import vSelect from "vue-select";
+import { onUnmounted } from "@vue/composition-api";
+import store from "@/store";
+import VueHtml2pdf from "vue-html2pdf";
+import useJwt from "@/auth/jwt/useJwt";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import router from "@/router";
+import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiTrayArrowUp } from "@mdi/js";
+import flatPickr from "vue-flatpickr-component";
+import Ripple from "vue-ripple-directive";
+import InvoiceDownload from "../invoice-download/InvoiceDownload.vue";
+import invoiceStoreModule from "../invoiceStoreModule";
+import useInvoicesList from "./useInvoiceList";
 
 export default {
   directives: {
@@ -552,102 +559,104 @@ export default {
     SvgIcon,
     flatPickr,
   },
-  props: ['invoiceTab'],
+  props: ["invoiceTab"],
   data() {
     return {
       file: null,
       fileLoading: false,
       path: mdiTrayArrowUp,
-    }
+    };
   },
   methods: {
     state() {
-      return 1
+      return 1;
     },
     actionTab() {
-      this.$emit('state', this.state())
+      this.$emit("state", this.state());
     },
     onProgress(event) {
-      console.log(`Processed: ${event} / 100`)
+      console.log(`Processed: ${event} / 100`);
     },
     generatePDF(itemID) {
-      this.$refs[`invoicePdf${itemID}`].generatePdf()
+      this.$refs[`invoicePdf${itemID}`].generatePdf();
     },
     invoiceDelete(id, refetchData) {
-      const token = useJwt.getToken()
+      const token = useJwt.getToken();
       useJwt
         .DeleteCompanyInvoice(token, id)
-        .then(response => {
+        .then((response) => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Invoice Deleted Successfully',
-              icon: 'DeleteIcon',
-              variant: 'success',
+              title: "Invoice Deleted Successfully",
+              icon: "DeleteIcon",
+              variant: "success",
             },
-          })
-          refetchData()
+          });
+          refetchData();
         })
-        .catch(error => {
+        .catch((error) => {
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: 'DeleteIcon',
-              variant: 'error',
+              icon: "DeleteIcon",
+              variant: "error",
             },
-          })
-        })
+          });
+        });
     },
     addfile(companyId) {
-      this.fileLoading = true
-      const token = useJwt.getToken()
-      const formData = new FormData()
-      formData.append('file', this.file)
-      this.file = null
+      this.fileLoading = true;
+      const token = useJwt.getToken();
+      const formData = new FormData();
+      formData.append("file", this.file);
+      this.file = null;
       useJwt
         .addFileInvoice(token, companyId, formData)
-        .then(response => {
-          this.fileLoading = false
+        .then((response) => {
+          this.fileLoading = false;
           return this.$router.push({
-            name: 'company-invoice-add',
+            name: "company-invoice-add",
             params: {
               companyId,
               invoiceData: response.data,
             },
-          })
+          });
         })
-        .catch(error => {
-          this.fileLoading = false
+        .catch((error) => {
+          this.fileLoading = false;
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: 'DeleteIcon',
-              variant: 'error',
+              icon: "DeleteIcon",
+              variant: "error",
             },
-          })
-        })
+          });
+        });
     },
   },
   setup() {
-    const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
+    const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
 
     // Register module
-    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule)
+    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
+      store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule);
 
     // UnRegister on leave
     onUnmounted(() => {
-      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
-    })
+      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
+        store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
+    });
 
     const statusOptions = [
-      'Downloaded',
-      'Draft',
-      'Paid',
-      'Partial Payment',
-      'Past Due',
-    ]
+      "Downloaded",
+      "Draft",
+      "Paid",
+      "Partial Payment",
+      "Past Due",
+    ];
 
     const {
       fetchInvoices,
@@ -670,11 +679,11 @@ export default {
 
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
-    } = useInvoicesList()
+    } = useInvoicesList();
 
     companyId.value = router.currentRoute.params.companyId
       ? router.currentRoute.params.companyId
-      : router.currentRoute.params.id
+      : router.currentRoute.params.id;
 
     return {
       fetchInvoices,
@@ -701,9 +710,9 @@ export default {
       avatarText,
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -734,7 +743,7 @@ export default {
 .gap-2 {
   grid-gap: 25px;
 }
- 
+
 .invoice-preview-list .invoice-date-wrapper {
   display: flex;
   grid-gap: 10px;

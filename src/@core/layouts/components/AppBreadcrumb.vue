@@ -55,7 +55,8 @@
                 :active="item.active"
                 :to="item.to"
               >
-                {{ item.text }}
+              {{ $t(item.text) }}
+      
               </b-breadcrumb-item>
             </b-breadcrumb>
           </div>

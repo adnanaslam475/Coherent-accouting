@@ -3,7 +3,7 @@
 
   <b-card class="card-transaction" no-body style="height: calc( 100% - 2rem);">
     <b-card-header>
-      <b-card-title>Unfinished Vat Reports</b-card-title>
+      <b-card-title>{{ $t('companies.unfinished_vat_reports') }}</b-card-title>
     </b-card-header>
 
     <b-card-body>

@@ -9,7 +9,7 @@
     >
       <b-card-header style="padding: 1rem">
         <b-card-title>
-          {{ title }}
+          {{ $t('company_info.invoices_per_day')}} 
         </b-card-title>
 
         <div
@@ -70,7 +70,7 @@
     >
       <b-card-header style="padding: 1rem">
         <b-card-title>
-          {{ title }}
+          {{ $t('company_info.invoices_per_month')}} 
         </b-card-title>
 
         <div
@@ -218,16 +218,6 @@ export default {
         this.getInvoicesDay();
       }
     },
-    formatDate(date) {
-      var d = new Date(date),
-        month = "" + (d.getMonth() + 1),
-        day = "" + d.getDate(),
-        year = d.getFullYear();
-
-      if (month.length < 2) month = "0" + month;
-      if (day.length < 2) day = "0" + day;
-      return [year, month].join("-");
-    },
     getInvoicesMonth() {
       axios
         .get(
@@ -239,7 +229,7 @@ export default {
             (invoice) => invoice.count
           );
           this.barChart.chartOptions.xaxis.categories = response.data.map(
-            (invoice) => this.formatDate(invoice.date)
+            (invoice) => invoice.date
           );
           this.rangePicker = [
             this.barChart.chartOptions.xaxis.categories[

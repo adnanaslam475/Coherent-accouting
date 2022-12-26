@@ -5,7 +5,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="BriefcaseIcon" />
-          <span style="font-size: 13px">Company Info</span>
+          <span style="font-size: 13px" class="text-capitalize">{{ $t('lbl.company_info') }}</span> 
         </template>
         <CompanyInfo :company-tab="companyTab" @state="update($event)" />
       </b-tab>
@@ -14,7 +14,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="FileTextIcon" />
-          <span style="font-size: 13px">Invoices</span>
+          <span style="font-size: 13px" class="text-capitalize">{{ $t('invoices') }}</span>
         </template>
         <Invoice :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)" />
       </b-tab>
@@ -23,7 +23,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="FileIcon" />
-          <span style="font-size: 13px">Multiple Upload</span>
+          <span style="font-size: 13px" class="text-capitalize" >{{ $t('company_tabs.multiple_upload') }}</span>
         </template>
         <NotVerifiedInvoice />
       </b-tab>
@@ -32,7 +32,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="FlagIcon" />
-          <span style="font-size: 13px">Vat Reports</span>
+          <span style="font-size: 13px" class="text-capitalize">{{ $t('company_tabs.vat_reports') }} </span>
         </template>
         <VatReports
           :vat-reports-tab="vatReportsTab"
@@ -44,7 +44,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="FlagIcon" />
-          <span style="font-size: 13px">Yearly Reports</span>
+          <span style="font-size: 13px" class="text-capitalize">{{ $t('company_tabs.yearly_reports') }}</span>
         </template>
         <YearlyReport />
       </b-tab>
@@ -53,7 +53,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="FolderIcon" />
-          <span style="font-size: 13px">Company Documents</span>
+          <span style="font-size: 13px" class="text-capitalize">{{ $t('company_tabs.company_documents') }}</span>
         </template>
         <Document />
       </b-tab>
@@ -62,7 +62,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="UserIcon" />
-          <span style="font-size: 13px">Clients or Recipients</span>
+          <span style="font-size: 13px" class="text-capitalize">{{ $t('company_tabs.clients_or_recipients') }}</span>
         </template>
         <PrivatePersons
           :add-record="addRecord"
@@ -179,8 +179,6 @@ export default {
 
 <style lang="scss">
 //
-@import "@core/scss/vue/libs/vue-flatpicker.scss";
-@import "@core/scss/vue/libs/chart-apex.scss";
 .nav-tabs .nav-link {
   padding: 0.36rem 0.78rem 0.47rem;
 }

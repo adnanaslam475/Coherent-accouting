@@ -4,7 +4,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="LayersIcon" />
-          <span style="font-size: 13px">Companies</span>
+          <span style="font-size: 13px">{{ $t("lbl.companies") }}</span>
         </template>
         <div class="row">
           <!-- <input data-v-9a6e255c="" type="text" placeholder="Search..." class="d-inline-block mr-1 form-control col-4" style="margin-left: 15px" /> -->
@@ -17,7 +17,10 @@
               @keyup="searchCompanies()"
             />
             <div class="input-group-append">
-              <div class="input-group-text" style="height: 38px; cursor: pointer">
+              <div
+                class="input-group-text"
+                style="height: 38px; cursor: pointer"
+              >
                 <!-- #7367f0 -->
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -41,9 +44,9 @@
           <b-button
             to="/company/create"
             variant="primary"
-            class="float-right mb-1 col-2 ml-auto"
+            class="float-right mb-1 col-2 ml-auto text-capitalize"
             style="margin-right: 15px"
-            >Add Company
+            >{{ $t("companies.add_company") }}
           </b-button>
         </div>
         <b-table
@@ -67,6 +70,11 @@
             </div>
           </template>
 
+          <!-- Country Column-->
+          <template #head(Country)>
+            {{ $t("companies.country") }}
+          </template>
+
           <template #cell(Country)="data">
             <div>
               <img
@@ -74,6 +82,11 @@
                 style="width: 30px; height: 20px; margin-left: 10px"
               >
             </div>
+          </template>
+
+          <!--  Company Name Column-->
+          <template #head(companyName)>
+            {{ $t("companies.company_name") }}
           </template>
 
           <template #cell(companyName)="data">
@@ -120,7 +133,10 @@
                   }}{{ data.item.companyName.substr(1, 1).toUpperCase() }}</span
                 >
               </div>
-              <b-link style="min-width: max-content;" class="font-weight-bold" :to="{ name: 'CompanyView', params: { id: data.item.id } }"
+              <b-link
+                style="min-width: max-content"
+                class="font-weight-bold"
+                :to="{ name: 'CompanyView', params: { id: data.item.id } }"
                 >{{ data.item.companyName }}
               </b-link>
             </div>
@@ -128,40 +144,66 @@
           </template>
 
           <!-- Company Email Column -->
+          <template #head(companyMail)>
+            {{ $t("companies.email") }}
+          </template>
+
           <template #cell(companyMail)="data">
             <div>{{ data.item.companyMail }}</div>
           </template>
 
           <!-- Company Status Column -->
+          <template #head(status)>
+            {{ $t("companies.status") }}
+          </template>
+
           <template #cell(status)="data">
             <div>{{ data.item.status }}</div>
+          </template>
+
+          <!-- Company OwnerFirstName Column -->
+          <template #head(companyOwnerFirstName)>
+            {{ $t("companies.owner_first_name") }}
           </template>
 
           <template #cell(companyOwnerFirstName)="data">
             <div>{{ data.item.companyOwnerApi.companyOwnerName }}</div>
           </template>
 
+          <!-- Company companyIdentificationNumber Column -->
+          <template #head(companyIdentificationNumber)>
+            {{ $t("companies.company_id") }}
+          </template>
+
           <template #cell(companyIdentificationNumber)="data">
-            <b-link class="font-weight-bold" :to="{ name: 'CompanyView', params: { id: data.item.id } }"
+            <b-link
+              class="font-weight-bold"
+              :to="{ name: 'CompanyView', params: { id: data.item.id } }"
               >{{ data.item.companyIdentificationNumber }}
             </b-link>
 
             <!-- <div>{{data.item.companyIdentificationNumber}}</div> -->
           </template>
 
+          <!-- CActions Column -->
+          <template #head(action)>
+            {{ $t("companies.actions") }}
+          </template>
+
           <template #cell(action)="data" style="text-align: center !important">
             <div class="d-flex">
               <feather-icon
-                  :id="`invoice-row-${data.item.id}-preview-icon`"
-                  icon="EyeIcon"
-                  size="16"
-                  class="mr-1 cursor-pointer"
-                  @click="
-                    $router.push({
-                      name: 'CompanyView', params: { id: data.item.id },
-                    })
-                  "
-                />
+                :id="`invoice-row-${data.item.id}-preview-icon`"
+                icon="EyeIcon"
+                size="16"
+                class="mr-1 cursor-pointer"
+                @click="
+                  $router.push({
+                    name: 'CompanyView',
+                    params: { id: data.item.id },
+                  })
+                "
+              />
               <b-tooltip
                 title="View Company"
                 class="cursor-pointer"
@@ -175,7 +217,10 @@
                 class="mx-0"
                 style="cursor: pointer"
                 @click="
-                  $router.push({ name: 'EditCompany', params: { id: data.item.id } })
+                  $router.push({
+                    name: 'EditCompany',
+                    params: { id: data.item.id },
+                  })
                 "
               />
               <b-tooltip
@@ -268,17 +313,19 @@
       <b-tab>
         <template #title>
           <feather-icon icon="BookOpenIcon" />
-          <span style="font-size: 13px">Unfinished Vat Reports</span>
+          <span style="font-size: 13px"
+            >{{ $t("companies.unfinished_vat_reports") }}</span
+          >
         </template>
-        <crm-active-project/>
+        <crm-active-project />
       </b-tab>
-  </b-tabs>
+    </b-tabs>
   </div>
 </template>
 <script>
 import BCardCode from "@core/components/b-card-code/BCardCode.vue";
 import Swal from "sweetalert2";
-import CrmActiveProject from '../dashboard/crm/CrmActiveProject.vue'
+import CrmActiveProject from "../dashboard/crm/CrmActiveProject.vue";
 import {
   BCard,
   BRow,
@@ -298,7 +345,7 @@ import {
   BModal,
   BCardText,
   BTabs,
-  BTab
+  BTab,
 } from "bootstrap-vue";
 
 import useJwt from "@/auth/jwt/useJwt";
@@ -329,7 +376,7 @@ export default {
     BCardText,
     BTabs,
     BTab,
-    CrmActiveProject
+    CrmActiveProject,
   },
 
   data() {
@@ -355,7 +402,7 @@ export default {
           sortable: true,
         },
         {
-          key:'status',
+          key: "status",
           sortable: true,
         },
         // A regular column
@@ -382,7 +429,7 @@ export default {
       totalRecords: "",
       totalPages: "",
       searchQuery: "",
-      companyTab: 0
+      companyTab: 0,
     };
   },
   created() {
@@ -432,7 +479,7 @@ export default {
     },
 
     //deleting a company
-    deleteCompany(companyID) { 
+    deleteCompany(companyID) {
       const token = useJwt.getToken();
       useJwt
         .DeleteCompany(token, companyID)
@@ -478,7 +525,6 @@ export default {
         this.totalPages = Math.ceil(this.totalRecords / this.perPage);
         // console.log(this.totalPages);
       }
-
     },
 
     //
