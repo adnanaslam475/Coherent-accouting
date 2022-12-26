@@ -468,17 +468,16 @@
     </b-modal>
 
     <b-row class="" style="margin-top: 2.5rem">
-      <b-col class="mb-1" cols="6">
+      <b-col class="mb-1" cols="12">
         <!-- Report time-line card -->
         <b-card
-          v-if="monthlyReportGraphDisplay.length > 0"
           no-body
           style="padding: 0px"
           class="mb-2"
         >
           <b-card-header style="padding: 1.5rem 1.5rem 1.52rem 1rem">
             <b-card-title> {{$t('company_info.report_timeline')}} </b-card-title>
-            <div class="d-flex align-items-center">
+            <div v-if="monthlyReportGraphDisplay.length > 0" class="d-flex align-items-center">
               <feather-icon
                 icon="RefreshCcwIcon"
                 size="17"
@@ -496,9 +495,8 @@
               />
             </div>
           </b-card-header>
-          <b-collapse id="collapse-1" class="mt-1" visible>
+          <b-collapse v-if="monthlyReportGraphDisplay.length > 0" id="collapse-1" class="my-1" visible>
             <b-card-body
-              v-if="monthlyReportGraph.length > 0"
               style="padding: 0px 15px"
             >
               <app-timeline>
@@ -510,27 +508,42 @@
                   <div
                     class="
                       d-flex
-                      justify-content-between
                       flex-sm-row flex-column
                       mb-sm-0 mb-1
                     "
                   >
-                    <h6>{{ graph.count }} {{$t('company_info.reports_have_been_created')}}</h6>
                     <small
-                      class="timeline-item-time text-nowrap text-muted ml-1"
+                      class="timeline-item-time text-nowrap mr-1 font-weight-bolder text-success"
                       >{{ graph.date.substr(0,7) }}</small
                     >
+                    <h6>{{ graph.count }} {{$t('company_info.reports_have_been_created')}}</h6>
                   </div>
                 </app-timeline-item>
               </app-timeline>
             </b-card-body>
           </b-collapse>
+          <b-card-body 
+            v-else    
+            class="m-0"
+            style="padding: 1rem 15px"
+          >
+          <div class="d-flex align-items-center justify-content-center">
+              <div class="mb-1 start-chat-icon">
+                <feather-icon icon="FolderIcon" size="40" />
+              </div>
+              <h5 class="sidebar-toggle start-chat-text">
+                {{$t('company_info.no_record')}}
+              </h5>
+            </div>
+          </b-card-body>
         </b-card>
+      </b-col>
+      <b-col class="mb-1" cols="6">
         <ApexBarChart
-          class="mb-1"
-          chart-type="monthly"
-          title="Invoices Per Month"
-        />
+            class="mb-1"
+            chart-type="monthly"
+            title="Invoices Per Month"
+          />
       </b-col>
       <b-col class="mb-1" cols="6">
         <!-- Invoices Per Day -->
@@ -541,6 +554,7 @@
         />
         <!-- Invoices Per Month -->
       </b-col>
+
     </b-row>
   </div>
 </template>

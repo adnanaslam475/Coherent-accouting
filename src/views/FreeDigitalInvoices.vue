@@ -780,13 +780,20 @@
                             </b-col>
                           </b-row>
                           <div
-                            class="d-flex justify-content-center align-items-center py-50 px-25"
+                            class="d-flex justify-content-center py-50 px-25 position-relative top-custom"
                           >
                             <feather-icon
+                              v-if="invoiceData.transactions.length !== 1"
                               size="16"
                               icon="Trash2Icon"
                               class="cursor-pointer"
                               @click="removeItem(index)"
+                            />
+                            <feather-icon
+                              v-if="invoiceData.transactions.length == 1"
+                              size="16"
+                              icon="Trash2Icon"
+                              class="cursor-pointer invisible"
                             />
                           </div>
                         </div>

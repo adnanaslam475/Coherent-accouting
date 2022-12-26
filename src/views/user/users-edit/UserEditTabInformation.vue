@@ -15,7 +15,7 @@
           <validation-provider
             #default="validationContext"
             name="firstMiddleAndLastName"
-             
+            rules="required" 
           >
             <b-form-group
               label="Full Name"
@@ -39,7 +39,7 @@
           <validation-provider
             #default="validationContext"
             name="Address"
-             
+            rules="required" 
           >
             <b-form-group
               label="Address"
@@ -60,8 +60,7 @@
 
           <validation-provider
             #default="validationContext"
-            name="IdCardNumber"
-             
+            name="IdCardNumber"         
           >
             <b-form-group
               label="Id Card Number"
@@ -83,7 +82,7 @@
           <validation-provider
             #default="validationContext"
             name="IdentificationNumber"
-             
+            rules="required" 
           >
             <b-form-group
               label="Identification Number"
@@ -104,8 +103,7 @@
 
           <validation-provider
             #default="validationContext"
-            name="VatIdentificationNumber"
-             
+            name="VatIdentificationNumber"          
           >
             <b-form-group
               label="Vat Identification Number"
@@ -146,6 +144,7 @@ import {
   BRow, BCol, BForm, BFormGroup, BFormInput, BFormRadioGroup, BFormCheckboxGroup, BButton, BInputGroup, BInputGroupPrepend, BFormInvalidFeedback
 } from 'bootstrap-vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import { required, alphaNum, email } from '@validations'
 import flatPickr from 'vue-flatpickr-component'
 import { ref } from '@vue/composition-api'
 import vSelect from 'vue-select'
@@ -166,6 +165,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  data(){
+    return {
+      required, alphaNum, email
+    }
   },
   setup(props) {
 

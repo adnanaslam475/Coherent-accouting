@@ -9,7 +9,7 @@
     >
       <b-card-header style="padding: 1rem">
         <b-card-title>
-          {{ $t('company_info.invoices_per_day')}} 
+          {{ title }}
         </b-card-title>
 
         <div
@@ -23,18 +23,7 @@
             size="17"
             style="cursor: pointer"
           />
-          <label for="invoices-per-day"
-            ><feather-icon icon="CalendarIcon" size="17"
-          /></label>
 
-          <flat-pickr
-            id="invoices-per-day"
-            v-model="rangePicker"
-            :config="{ mode: 'range' }"
-            class="form-control flat-picker bg-transparent border-0 shadow-none"
-            placeholder="YYYY-MM-DD"
-            style="width: 200px; padding-left: 1.5rem; padding-right: 0.5rem"
-          />
           <feather-icon
             icon="ChevronDownIcon"
             size="24"
@@ -70,7 +59,7 @@
     >
       <b-card-header style="padding: 1rem">
         <b-card-title>
-          {{ $t('company_info.invoices_per_month')}} 
+          {{ title }}
         </b-card-title>
 
         <div
@@ -84,16 +73,7 @@
             size="17"
             style="cursor: pointer"
           />
-          <label for="invoices-per-month">
-          <feather-icon icon="CalendarIcon" size="17" /> </label>
-          <flat-pickr
-           id="invoices-per-month"
-            v-model="rangePicker"
-            :config="{ mode: 'range' }"
-            class="form-control flat-picker bg-transparent border-0 shadow-none"
-            placeholder="YYYY-MM-DD"
-            style="width: 200px; padding-left: 1.5rem; padding-right: 0.5rem"
-          />
+
           <feather-icon
             icon="ChevronDownIcon"
             size="24"
@@ -218,6 +198,17 @@ export default {
         this.getInvoicesDay();
       }
     },
+    formatDate(date) {
+      var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = "" + d.getFullYear();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+      if (year.length == 2) year = "00" + year;
+      return [year, month].join("-");
+    },
     getInvoicesMonth() {
       axios
         .get(
@@ -229,8 +220,11 @@ export default {
             (invoice) => invoice.count
           );
           this.barChart.chartOptions.xaxis.categories = response.data.map(
-            (invoice) => invoice.date
+            (invoice) => this.formatDate(invoice.date)
           );
+          // this.barChart.chartOptions.xaxis.categories.push(" ")
+          // this.barChart.chartOptions.xaxis.categories.push(" ")
+          // this.barChart.chartOptions.xaxis.categories.push(" ")
           this.rangePicker = [
             this.barChart.chartOptions.xaxis.categories[
               this.barChart.chartOptions.xaxis.categories.length - 1
@@ -261,3 +255,7 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+  @import "@core/scss/vue/libs/vue-flatpicker.scss";
+  @import "@core/scss/vue/libs/chart-apex.scss";
+</style>

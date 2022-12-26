@@ -181,7 +181,8 @@
     "report_timeline": "Report Timeline",
     "reports_have_been_created": "Reports have been created",
     "invoices_per_month": "Invoices Per Month",
-    "invoices_per_day": "Invoices Per Day"
+    "invoices_per_day": "Invoices Per Day",
+    "no_record": "No records found"
   },
   "company_tabs": {
     "multiple_upload": "Multiple Uploads",

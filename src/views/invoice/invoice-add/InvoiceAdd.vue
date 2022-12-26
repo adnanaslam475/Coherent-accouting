@@ -1,5 +1,6 @@
 <template>
   <section class="invoice-add-wrapper">
+    <TabList />
     <validation-observer ref="invoiceForm" #default="{ invalid }">
       <b-form @submit.prevent="invoiceAdd(invoiceData,AccountTypeOption)">
         <b-row class="invoice-add">
@@ -161,8 +162,7 @@
                           <validation-provider
                             #default="{ errors }"
                             name="supplierCompanyIdNumber"
-                            rules="required"
-                            
+                            rules="required"      
                           >
                             <b-form-input
                               v-model="invoiceData.supplierCompany.companyEic"
@@ -710,10 +710,17 @@
                           class="d-flex justify-content-center py-50 px-25 position-relative top-custom"
                         >
                           <feather-icon
+                            v-if="invoiceData.transactions.length !== 1"
                             size="16"
                             icon="Trash2Icon"
                             class="cursor-pointer"
                             @click="removeItem(index)"
+                          />
+                          <feather-icon
+                            v-if="invoiceData.transactions.length == 1"
+                            size="16"
+                            icon="Trash2Icon"
+                            class="cursor-pointer invisible"
                           />
                         </div>
                       </div>
@@ -1040,6 +1047,7 @@ import InvoiceSidebarAddNewCustomer from "../InvoiceSidebarAddNewCustomer.vue";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import router from '@/router'
+import TabList from "../TabList.vue"
 export default {
   components: {
     BRow,
@@ -1068,7 +1076,8 @@ export default {
     ValidationObserver,
     BFormRadio,
     BListGroup, 
-    BListGroupItem
+    BListGroupItem,
+    TabList
   },
   data() {
     return {

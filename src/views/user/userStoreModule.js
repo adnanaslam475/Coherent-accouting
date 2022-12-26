@@ -53,7 +53,7 @@ export default {
     addUser(ctx, userData) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`/account/api/user-person/create`, userData, config )
+          .post(`/account/api/user-person/create`, userData )
           .then(response => resolve(response))
           .catch(error => reject(error))
       })

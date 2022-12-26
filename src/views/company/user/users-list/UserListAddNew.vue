@@ -266,7 +266,7 @@ export default {
             toast({
               component: ToastificationContent,
               props: {
-                title: `${error.response.data.errorMessage}`,
+                title: `${error?.response?.data?.errorMessage ? error.response.data.errorMessage : error}`,
                 icon: 'AlertTriangleIcon',
                 variant: 'danger',
               },

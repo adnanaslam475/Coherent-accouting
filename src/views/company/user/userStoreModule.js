@@ -54,7 +54,7 @@ export default {
     addUser(ctx, queryParams) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`/account/api/person/create/${queryParams.id}`, queryParams.userData, config )
+          .post(`/account/api/person/create/${queryParams.id}`, queryParams.userData )
           .then(response => resolve(response))
           .catch(error => reject(error))
       })

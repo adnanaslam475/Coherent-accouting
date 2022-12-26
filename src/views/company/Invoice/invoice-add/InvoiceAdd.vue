@@ -712,10 +712,17 @@
                           class="d-flex justify-content-center py-50 px-25 position-relative top-custom"
                         >
                           <feather-icon
+                            v-if="invoiceData.transactions.length !== 1"
                             size="16"
                             icon="Trash2Icon"
                             class="cursor-pointer"
                             @click="removeItem(index)"
+                          />
+                          <feather-icon
+                            v-if="invoiceData.transactions.length == 1"
+                            size="16"
+                            icon="Trash2Icon"
+                            class="cursor-pointer invisible"
                           />
                         </div>
                       </div>
@@ -1222,7 +1229,27 @@ export default {
       verified: true
     });
 
+    let uploadValue = {
+        companyOwnerName: "",
+        companName: "",
+        companyEic: "",
+        companyVatEic: "",
+        companyAddress: "",
+    }
     invoiceData.value = router.currentRoute.params.invoiceData ? router.currentRoute.params.invoiceData : invoiceData.value
+    
+    if(router.currentRoute.params.invoiceData){
+      invoiceData.value.supplierCompany = invoiceData?.value?.supplierCompany ? invoiceData.value.supplierCompany : uploadValue
+      invoiceData.value.recipientCompany = invoiceData?.value?.recipientCompany ? invoiceData.value.recipientCompany : uploadValue
+      invoiceData.value.transactions = invoiceData?.value?.transactions?.length > 0 ? invoiceData.value.transactions : [JSON.parse(JSON.stringify(itemFormBlankItem))]
+      invoiceData.value.vatPercent = invoiceData?.value?.vatPercent ? invoiceData.value.vatPercent : 20
+      invoiceData.value.tradeDiscountPercent = invoiceData?.value?.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
+      invoiceData.value.transactionType = invoiceData?.value?.transactionType ? invoiceData.value.transactionType : "INCOME"
+      invoiceData.value.invoiceType = invoiceData?.value?.invoiceType ? invoiceData.value.invoiceType : "ORIGINAL"
+      invoiceData.value.saleType = invoiceData?.value?.saleType ? invoiceData.value.saleType : "SERVICE"
+      invoiceData.value.documentType = invoiceData?.value?.documentType ? invoiceData.value.documentType : "INVOICE"
+    }
+    
     invoiceData.value.currency = invoiceData?.value?.currency?.toLowerCase().trim() == 'lv' ? "лв." : invoiceData?.value?.currency?.toLowerCase().trim() == 'bgn' ? "лв." : invoiceData.value.currency
     invoiceData.value.verified = true 
 

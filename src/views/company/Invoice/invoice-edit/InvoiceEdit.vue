@@ -40,7 +40,7 @@
                     #default="{ errors }"
                     name="invoiceNumber"
                     vid="Invoice"
-                     
+                    rules="required"
                   >
                     <b-input-group
                       class="input-group-merge invoice-edit-input-group invoice-input-top"
@@ -546,7 +546,7 @@
                       <validation-provider
                         #default="{ errors }"
                         name="dateIssued"
-                        
+                        rules="required"
                       >
                         <!-- <flat-pickr
                           v-model="invoiceData.dateIssued"
@@ -763,10 +763,17 @@
                           class="d-flex justify-content-center py-50 px-25 position-relative top-custom"
                         >
                           <feather-icon
+                            v-if="invoiceData.transactions.length !== 1"
                             size="16"
                             icon="Trash2Icon"
                             class="cursor-pointer"
                             @click="removeItem(index)"
+                          />
+                          <feather-icon
+                            v-if="invoiceData.transactions.length == 1"
+                            size="16"
+                            icon="Trash2Icon"
+                            class="cursor-pointer invisible"
                           />
                         </div>
                       </div>
@@ -1042,7 +1049,7 @@
                 Save
               </b-button>
               <b-button
-                v-if="!VerifiedInvisible"
+                v-if="!invoiceData.verified"
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 variant="outline-primary"
                 block
@@ -1263,20 +1270,7 @@ export default {
       transactionTotalAmountNonVat: ""
     }
 
-    const invoiceData = ref({
-      id: null,
-      transactions:[],
-      supplierCompany: {
-        companName: '',
-      companyAddress: '',
-      companyEic: '',
-      },
-      recipientCompany: {
-        companName: '',
-      companyAddress: '',
-      companyEic: '',
-      }
-    })
+    const invoiceData = ref(null)
     
     const currencyOptions =  [
       { value: 'лв.', text: 'лв.' },
@@ -1289,18 +1283,36 @@ export default {
     ]
     var supplierVat = ref(false)
     var recipientVat = ref(false)
-    const VerifiedInvisible = ref(true)
+  
     var InvoiceTypeOptionToggleValue = ref(null)
     var saleTypeOptionToggleValue = ref(null)
+
+    let uploadValue = {
+        companyOwnerName: "",
+        companName: "",
+        companyEic: "",
+        companyVatEic: "",
+        companyAddress: "",
+    }
+
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
         response.data.currency = response?.data?.currency?.toLowerCase().trim() == 'lv' ? "лв." : response?.data?.currency?.toLowerCase().trim() == 'bgn' ? "лв." : response.data.currency 
-        invoiceData.value = response.data   
-        invoiceData.value.tradeDiscountPercent = invoiceData?.value?.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
+        
+        invoiceData.value = response.data
+           
+        invoiceData.value.supplierCompany = invoiceData?.value?.supplierCompany ? invoiceData.value.supplierCompany : uploadValue
+        invoiceData.value.recipientCompany = invoiceData?.value?.recipientCompany ? invoiceData.value.recipientCompany : uploadValue
+        invoiceData.value.transactions = invoiceData?.value?.transactions?.length > 0 ? invoiceData.value.transactions : [JSON.parse(JSON.stringify(itemFormBlankItem))]
         invoiceData.value.vatPercent = invoiceData?.value?.vatPercent ? invoiceData.value.vatPercent : 20
+        invoiceData.value.tradeDiscountPercent = invoiceData?.value?.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
+        invoiceData.value.transactionType = invoiceData?.value?.transactionType ? invoiceData.value.transactionType : "INCOME"
+        invoiceData.value.invoiceType = invoiceData?.value?.invoiceType ? invoiceData.value.invoiceType : "ORIGINAL"
+        invoiceData.value.saleType = invoiceData?.value?.saleType ? invoiceData.value.saleType : "SERVICE"
+        invoiceData.value.documentType = invoiceData?.value?.documentType ? invoiceData.value.documentType : "INVOICE"
+        
         supplierVat.value = invoiceData?.value?.supplierCompany?.companyVatEic ? true : false
         recipientVat.value = invoiceData?.value?.recipientCompany?.companyVatEic ? true : false
-        VerifiedInvisible.value = invoiceData?.value?.verified ? invoiceData.value.verified : VerifiedInvisible.value
         // ? We are adding some extra data in response for data purpose
         // * Your response will contain this extra data
         // ? [Purpose is to make it more API friendly and less static as possible]
@@ -1818,7 +1830,6 @@ export default {
       saleTypeOptionToggle,
       InvoiceTypeOptionToggle,
       invoiceData,
-      VerifiedInvisible,
       currencyOptions,
       transectionOptions,
       itemFormBlankItem,
