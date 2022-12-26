@@ -210,14 +210,21 @@
                         <span class="title mr-1">
                           Company Vat No:
                         </span>
-                        <b-input-group
-                          class="input-group invoice-edit-input-group"
+                        <validation-provider
+                            #default="{ errors }"
+                            name="supplierVatNumber"
+                            rules="required"
                         >
-                          <b-form-input
-                            v-model="invoiceData.supplierCompany.companyVatEic"
-                            autocomplete="off"
-                          />
-                        </b-input-group>
+                          <b-input-group
+                            class="input-group invoice-edit-input-group"
+                          >
+                            <b-form-input
+                              v-model="invoiceData.supplierCompany.companyVatEic"
+                              autocomplete="off"
+                            />
+                          </b-input-group>
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
                       </div>
                       <div class="d-flex align-items-center mb-1">
                           <span class="mr-1">
@@ -409,14 +416,21 @@
                         <span class="title mr-1">
                           Company Vat No:
                         </span>
-                        <b-input-group
-                          class="input-group invoice-edit-input-group"
-                        >
-                          <b-form-input
-                            v-model="invoiceData.recipientCompany.companyVatEic"
-                            autocomplete="off"
-                          />
-                        </b-input-group>
+                        <validation-provider
+                            #default="{ errors }"
+                            name="recipientVatNumber"
+                            rules="required"
+                          >
+                          <b-input-group
+                            class="input-group invoice-edit-input-group"
+                          >
+                            <b-form-input
+                              v-model="invoiceData.recipientCompany.companyVatEic"
+                              autocomplete="off"
+                            />
+                          </b-input-group>
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
                       </div>
                       <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
                         <span class="mr-1">
@@ -1091,7 +1105,6 @@ export default {
     },
     removeItem(index) {
       this.invoiceData.transactions.splice(index, 1);
-      this.trTrimHeight(this.$refs.row[0].offsetHeight);
     },
     initTrHeight() {
       this.trSetHeight(null);
@@ -1106,7 +1119,7 @@ export default {
          invoiceData.recipientCompany.companyVatEic = ''
       }
       
-      invoiceData.transactions.map(item =>{
+      invoiceData?.transactions?.map(item =>{
         item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
         return item
       })
@@ -1210,7 +1223,7 @@ export default {
     });
 
     invoiceData.value = router.currentRoute.params.invoiceData ? router.currentRoute.params.invoiceData : invoiceData.value
-    invoiceData.value.currency = invoiceData.value.currency.toLowerCase().trim() == 'lv' ? "лв." : invoiceData.value.currency.toLowerCase().trim() == 'bgn' ? "лв." : invoiceData.value.currency
+    invoiceData.value.currency = invoiceData?.value?.currency?.toLowerCase().trim() == 'lv' ? "лв." : invoiceData?.value?.currency?.toLowerCase().trim() == 'bgn' ? "лв." : invoiceData.value.currency
     invoiceData.value.verified = true 
 
     const currencyOptions =  [

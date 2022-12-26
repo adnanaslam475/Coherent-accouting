@@ -23,7 +23,7 @@
     </b-alert>
     
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
-      <b-form @submit.prevent="invoiceEdit(invoiceData,'save')">
+      <b-form @submit.prevent="invoiceEdit(invoiceData,'save',AccountTypeOption)">
         <b-row
           v-if="invoiceData"
           class="invoice-add"
@@ -236,14 +236,21 @@
                         <span class="title mr-1">
                           Company Vat No:
                         </span>
-                        <b-input-group
-                          class="input-group invoice-edit-input-group"
-                        >
-                          <b-form-input
-                            v-model="invoiceData.supplierCompany.companyVatEic"
-                            autocomplete="off"
-                          />
-                        </b-input-group>
+                        <validation-provider
+                            #default="{ errors }"
+                            name="supplierVatNumber"
+                            rules="required"
+                          >
+                          <b-input-group
+                            class="input-group invoice-edit-input-group"
+                          >
+                            <b-form-input
+                              v-model="invoiceData.supplierCompany.companyVatEic"
+                              autocomplete="off"
+                            />
+                          </b-input-group>
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
                       </div>
                       <div class="d-flex align-items-center mb-1">
                           <span class="mr-1">
@@ -435,14 +442,21 @@
                         <span class="title mr-1">
                           Company Vat No:
                         </span>
-                        <b-input-group
-                          class="input-group invoice-edit-input-group"
+                        <validation-provider
+                            #default="{ errors }"
+                            name="recipientVatNumber"
+                            rules="required"
                         >
-                          <b-form-input
-                            v-model="invoiceData.recipientCompany.companyVatEic"
-                            autocomplete="off"
-                          />
-                        </b-input-group>
+                          <b-input-group
+                            class="input-group invoice-edit-input-group"
+                          >
+                            <b-form-input
+                              v-model="invoiceData.recipientCompany.companyVatEic"
+                              autocomplete="off"
+                            />
+                          </b-input-group>
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
                       </div>
                       <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
                         <span class="mr-1">
@@ -1011,7 +1025,7 @@
                 class="mb-75"
                 block
                 :disabled="loading"
-                @click="invoiceEdit(invoiceData,'preview')"
+                @click="invoiceEdit(invoiceData,'preview',AccountTypeOption)"
               >
                 <b-spinner v-if="loading" small variant="light" />
                 Preview
@@ -1036,7 +1050,7 @@
                 block
                 :disabled="loading"
                 type="button"
-                @click="invoiceVerify(invoiceData)"
+                @click="invoiceVerify(invoiceData,AccountTypeOption)"
               >
               <b-spinner v-if="loading" small variant="light" />
                 Verify
@@ -1151,7 +1165,6 @@ export default {
     },
     removeItem(index) {
       this.invoiceData.transactions.splice(index, 1)
-      this.trTrimHeight(this.$refs.row[0].offsetHeight)
     },
     initTrHeight() {
       this.trSetHeight(null)
@@ -1159,8 +1172,14 @@ export default {
         this.trSetHeight(this.$refs.form ? this.$refs.form.scrollHeight : 0)
       })
     },
-    invoiceEdit(invoiceData,redirectPage) {
-      invoiceData.transactions.map(item =>{
+    invoiceEdit(invoiceData,redirectPage,AccountTypeOption) {
+      
+      if(AccountTypeOption == 'person'){
+         invoiceData.recipientCompany.companName = invoiceData.recipientCompany.companyOwnerName
+         invoiceData.recipientCompany.companyVatEic = ''
+      }
+
+      invoiceData?.transactions?.map(item =>{
         item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
         return item
       })
@@ -1214,9 +1233,9 @@ export default {
         }
       });
     },
-    invoiceVerify(invoiceData){
+    invoiceVerify(invoiceData,AccountTypeOption){
       invoiceData.verified = true
-      this.invoiceEdit(invoiceData,'invoices')
+      this.invoiceEdit(invoiceData,'invoices',AccountTypeOption)
     }
   },
   setup() {
@@ -1278,19 +1297,19 @@ export default {
     var recipientVat = ref(false)
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
-        response.data.currency = response.data.currency.toLowerCase().trim() == 'lv' ? "лв." : response.data.currency.toLowerCase().trim() == 'bgn' ? "лв." : response.data.currency 
+        response.data.currency = response?.data?.currency?.toLowerCase().trim() == 'lv' ? "лв." : response?.data?.currency?.toLowerCase().trim() == 'bgn' ? "лв." : response.data.currency 
         invoiceData.value = response.data
-        invoiceData.value.tradeDiscountPercent = invoiceData.value.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
-        invoiceData.value.vatPercent = invoiceData.value.vatPercent ? invoiceData.value.vatPercent : 20
-        supplierVat.value = invoiceData.value.supplierCompany.companyVatEic ? true : false
-        recipientVat.value = invoiceData.value.recipientCompany.companyVatEic ? true : false
-        VerifiedInvisible.value = invoiceData.value.verified
+        invoiceData.value.tradeDiscountPercent = invoiceData?.value?.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
+        invoiceData.value.vatPercent = invoiceData?.value?.vatPercent ? invoiceData.value.vatPercent : 20
+        supplierVat.value = invoiceData?.value?.supplierCompany?.companyVatEic ? true : false
+        recipientVat.value = invoiceData?.value?.recipientCompany?.companyVatEic ? true : false
+        VerifiedInvisible.value = invoiceData?.value?.verified ? invoiceData.value.verified : VerifiedInvisible.value
         // ? We are adding some extra data in response for data purpose
         // * Your response will contain this extra data
         // ? [Purpose is to make it more API friendly and less static as possible]
-        InvoiceTypeOptionToggleValue.value = invoiceData.value.invoiceType == "PROFORMA" ? true : false
-        saleTypeOptionToggleValue.value = invoiceData.value.saleType == "GOODS" ? true : false
-        invoiceData.value.transactions = response.data.transactions.map(item=>{
+        InvoiceTypeOptionToggleValue.value = invoiceData?.value?.invoiceType == "PROFORMA" ? true : false
+        saleTypeOptionToggleValue.value = invoiceData?.value?.saleType == "GOODS" ? true : false
+        invoiceData.value.transactions = response?.data?.transactions?.map(item=>{
           return item
         })
       })

@@ -227,16 +227,23 @@
                           class="d-flex align-items-center mb-1"
                         >
                           <span class="title mr-1"> Company Vat No: </span>
-                          <b-input-group
-                            class="input-group invoice-edit-input-group"
+                          <validation-provider
+                            #default="{ errors }"
+                            name="supplierVatNumber"
+                            rules="required"
                           >
-                            <b-form-input
-                              v-model="
-                                invoiceData.supplierCompany.companyVatEic
-                              "
-                              autocomplete="off"
-                            />
-                          </b-input-group>
+                            <b-input-group
+                              class="input-group invoice-edit-input-group"
+                            >
+                              <b-form-input
+                                v-model="
+                                  invoiceData.supplierCompany.companyVatEic
+                                "
+                                autocomplete="off"
+                              />
+                            </b-input-group>
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
                         </div>
                         <div class="d-flex align-items-center mb-1">
                           <span class="mr-1">
@@ -478,7 +485,12 @@
                           class="d-flex align-items-center mb-1"
                         >
                           <span class="title mr-1"> Company Vat No: </span>
-                          <b-input-group
+                          <validation-provider
+                            #default="{ errors }"
+                            name="recipientVatNumber"
+                            rules="required"
+                          >
+                            <b-input-group
                             class="input-group invoice-edit-input-group"
                           >
                             <b-form-input
@@ -487,7 +499,9 @@
                               "
                               autocomplete="off"
                             />
-                          </b-input-group>
+                            </b-input-group>
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
                         </div>
                         <div
                           v-if="AccountTypeOption == 'company'"
@@ -1122,8 +1136,6 @@ export default {
     return {
       knowledgeBaseSearchQuery: "",
       loading: false,
-      supplierVat: [],
-      recipientVat: [],
       required, email, confirmed, password,
     };
   },
@@ -1150,7 +1162,6 @@ export default {
     },
     removeItem(index) {
       this.invoiceData.transactions.splice(index, 1);
-      this.trTrimHeight(this.$refs.row[0].offsetHeight);
     },
     initTrHeight() {
       this.trSetHeight(null);
@@ -1166,7 +1177,7 @@ export default {
          invoiceData.recipientCompany.companyVatEic = ''
       }
       
-      invoiceData.transactions.map(item =>{
+      invoiceData?.transactions?.map(item =>{
         item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
         return item
       })
@@ -1247,10 +1258,18 @@ export default {
       verified: true
     });
 
-    invoiceData.value = router.currentRoute.params.invoiceData ? router.currentRoute.params.invoiceData : invoiceData.value
-    invoiceData.value.currency = invoiceData.value.currency.toLowerCase().trim() == 'lv' ? "лв." : invoiceData.value.currency.toLowerCase().trim() == 'bgn' ? "лв." : invoiceData.value.currency
-    invoiceData.value.verified = true 
-    invoiceData.value.transactions.map((item,index)=>{
+    var supplierVat = ref(false)
+    var recipientVat = ref(false)
+
+    invoiceData.value = router?.currentRoute?.params?.invoiceData ? router.currentRoute.params.invoiceData : invoiceData.value
+    invoiceData.value.currency = invoiceData?.value?.currency?.toLowerCase().trim() == 'lv' ? "лв." : invoiceData?.value?.currency?.toLowerCase().trim() == 'bgn' ? "лв." : invoiceData.value.currency
+    invoiceData.value.verified = true
+    invoiceData.value.tradeDiscountPercent = invoiceData?.value?.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
+    invoiceData.value.vatPercent = invoiceData?.value?.vatPercent ? invoiceData.value.vatPercent : 20
+    supplierVat.value = invoiceData?.value?.supplierCompany?.companyVatEic ? true : false
+    recipientVat.value = invoiceData?.value?.recipientCompany?.companyVatEic ? true : false
+        
+    invoiceData?.value?.transactions?.map((item,index)=>{
         item.index = index + 1
         return item
     })
@@ -1646,6 +1665,8 @@ export default {
 
     return {
       AccountTypeOption,
+      recipientVat,
+      supplierVat,
       AccountTypeOptionToggleValue,
       AccountTypeOptionToggle,
       InvoiceTypeOptionToggleValue,
