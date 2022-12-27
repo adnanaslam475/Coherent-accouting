@@ -306,7 +306,7 @@
               variant="outline-secondary"
               type="reset"
               class="mt-2"
-              @click="getUserDetail()"
+              @click.prevent="resetForm"
             >
               Reset
             </b-button>
@@ -431,11 +431,15 @@ export default {
       }
     },
     resetForm() {
-      this.optionsLocal = JSON.parse(JSON.stringify(this.generalData))
+      let resetForm = this.getUserDetail() 
+      if(resetForm){
+        this.userDetail = this.userDetailLocal 
+      }
     },
     async getUserDetail() {
       const data = await axios.get('account/api/user/who-am-i')
       this.userDetail = data.data
+      this.userDetailLocal = data.data
       this.country = {
         Country: this.userDetail.isoAlpha2Country,
         value: this.userDetail.isoAlpha2Country,
@@ -446,7 +450,6 @@ export default {
     },
     async getUserInfo() {
       const data = await axios.get(`account/api/user/${this.userDetail.email}`)
-      console.log('getUserInfo ', data.data)
     },
     populateCountries() {
       useJwt
@@ -514,12 +517,16 @@ export default {
   },
   setup() {
     const previewEl = ref(null)
+    const userDetailLocal = ref({
+      accountType: '',
+    })
     const userDetail = ref({
       accountType: '',
     })
     return {
       userDetail,
       previewEl,
+      userDetailLocal
     }
   },
 }
