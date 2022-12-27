@@ -40,6 +40,21 @@
         {{ $t("companies.actions") }}
       </template>
 
+    
+      <template style="text-align: center !important" #cell(status)="data">
+        <span
+          :id="`recipientCompany-row-${data.item.id}`"
+          class="text-nowrap"
+        >
+          <b-badge
+            pill
+            :variant="`${data.value.toLowerCase() == 'resolved' ? 'light-success' : 'light-warning' }`"
+            class="text-capitalize"
+          >
+            {{ data.value }}
+          </b-badge>
+        </span>
+      </template>
       <template style="text-align: center !important" #cell(action)="data">
         <!-- Dropdown -->
         <!-- <b-dropdown

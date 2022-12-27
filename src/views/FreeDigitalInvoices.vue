@@ -26,7 +26,7 @@
                       #default="{ errors }"
                       name="invoiceNumber"
                       vid="Invoice"
-                      
+                      rules="required"
                     >
                       <b-input-group
                         class="input-group-merge invoice-edit-input-group invoice-input-top"
@@ -151,7 +151,7 @@
                             <validation-provider
                               #default="{ errors }"
                               name="supplierCompanyAddress"
-                              
+                              rules="required"
                             >
                               <b-form-input
                                 v-model="
@@ -171,7 +171,7 @@
                             <validation-provider
                               #default="{ errors }"
                               name="supplierCompanyIdNumber"
-                              
+                              rules="required"
                             >
                               <b-form-input
                                 v-model="invoiceData.supplierCompany.companyEic"
@@ -210,7 +210,7 @@
                             <validation-provider
                               #default="{ errors }"
                               name="supplierCompanyOwner"
-                              
+                              rules="required"
                             >
                               <b-form-input
                                 v-model="
@@ -306,7 +306,7 @@
                                   ? 'recipientCompanyName'
                                   : 'personName'
                               "
-                              
+                              rules="required"
                             >
                               <b-form-input
                                 v-if="AccountTypeOption == 'company'"
@@ -371,7 +371,7 @@
                                   ? 'recipientCompanyAddress'
                                   : 'personAddress'
                               "
-                              
+                              rules="required"
                             >
                               <b-form-input
                                 v-model="
@@ -404,7 +404,7 @@
                                   ? 'recipientCompanyIdNumber'
                                   : 'personIdNumber'
                               "
-                              
+                              rules="required"
                             >
                               <b-form-input
                                 v-if="AccountTypeOption == 'company'"
@@ -591,7 +591,7 @@
                         <validation-provider
                           #default="{ errors }"
                           name="dateIssued"
-                          
+                          rules="required"
                         >
                           <flat-pickr
                             v-model="invoiceData.dateIssued"
