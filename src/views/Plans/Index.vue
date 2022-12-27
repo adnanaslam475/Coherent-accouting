@@ -6,14 +6,15 @@
     <!-- title text and switch button -->
     <div class="text-center">
       <h1>
-        Pricing Plans
+        {{  $t('pricing.title') }}
       </h1>
       <p class="mb-1 pb-75">
-        All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs.
+        {{  $t('pricing.description') }}
+        <!-- All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs. -->
       </p>
       <div class="d-flex align-items-center justify-content-center mb-1 pb-50">
         <h6 class="mr-1 mb-0">
-          Monthly
+          {{  $t('pricing.monthly') }}
         </h6>
         <b-form-checkbox
           id="priceSwitch"
@@ -25,7 +26,7 @@
           @input="tooglePlan"
         />
         <h6 class="ml-50 mb-0">
-          Annually
+          {{  $t('pricing.annually') }}
         </h6>
       </div>
     </div>
@@ -60,7 +61,7 @@
                 <!--/ img -->
                 <h3>{{ pricing.basicPlan.title }}</h3>
                 <b-card-text>
-                  {{ pricing.basicPlan.subtitle }}
+                  {{  $t('pricing.simple_start_for_everyone') }}
                 </b-card-text>
 
                 <!-- Plan fee -->
@@ -78,12 +79,12 @@
                     }}
 
                     </span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{  $t('pricing.month') }}</sub>
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ {{  annualBasic}} / year</small>
+                  >€ {{  annualBasic}} / {{  $t('pricing.year') }}</small>
                 </div>
 
                 <!-- plan benefit -->
@@ -92,7 +93,9 @@
                     v-for="(data,index) in pricing.basicPlan.planBenefits"
                     :key="index"
                   >
-                    {{ data }}
+                   <div v-if="index === 0">40 {{  $t('companiess') }}</div>
+                   <div v-else>{{ $t('pricing.'+data) }}</div>
+                    
                   </b-list-group-item>
                 </b-list-group>
                 <!--/ plan benefit -->
@@ -104,7 +107,7 @@
                   class="mt-2"
                   variant="outline-success"
                 >
-                  Your current plan
+                {{  $t('pricing.plan') }}
                 </b-button>
               </b-card>
             </b-col>
@@ -123,7 +126,7 @@
                     variant="light-primary"
                     pill
                   >
-                    Popular
+                  {{  $t('pricing.popular') }}
                   </b-badge>
                 </div>
                 <!-- img -->
@@ -135,7 +138,7 @@
                 />
                 <!--/ img -->
                 <h3>{{ pricing.beginnerPlan.title }}</h3>
-                <b-card-text>{{ pricing.beginnerPlan.subtitle }}</b-card-text>
+                <b-card-text>{{  $t('pricing.small_to_medium_businesses') }}</b-card-text>
 
                 <!-- plan price -->
                 <div class="annual-plan">
@@ -151,12 +154,12 @@
                       monthlyPlanShow ? monthlyBeginner : annualBeginnerMonth
                     }}
                     </span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/ {{  $t('pricing.month') }}</sub>
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ {{ annualBeginner  }} / year</small>
+                  >€ {{ annualBeginner  }} / {{  $t('pricing.year') }}</small>
                 </div>
 
                 <!-- plan benefit -->
@@ -165,7 +168,8 @@
                     v-for="(data,index) in pricing.beginnerPlan.planBenefits"
                     :key="index"
                   >
-                    {{ data }}
+                  <div v-if="index === 0">60 {{  $t('companiess') }}</div>
+                   <div v-else>{{ $t('pricing.'+data) }}</div>
                   </b-list-group-item>
                 </b-list-group>
                 <!--/ plan benefit -->
@@ -177,7 +181,7 @@
                   class="mt-2"
                   variant="primary"
                 >
-                  Upgrade
+                {{  $t('pricing.upgrade') }}
                 </b-button>
               </b-card>
             </b-col>
@@ -197,7 +201,7 @@
                 />
                 <!--/ img -->
                 <h3>{{ pricing.starterPlan.title }}</h3>
-                <b-card-text>{{ pricing.starterPlan.subtitle }}</b-card-text>
+                <b-card-text>{{  $t('pricing.big_organisations') }}</b-card-text>
 
                 <!-- annual plan -->
                 <div class="annual-plan">
@@ -213,12 +217,12 @@
                       monthlyPlanShow ? monthlyStarter : annualStarterMonth
                     }}
                     </span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{  $t('pricing.month') }}</sub>
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ {{ annualStarter }} / year</small>
+                  >€ {{ annualStarter }} / {{  $t('pricing.year') }}</small>
                 </div>
                 <!--/ annual plan -->
 
@@ -229,7 +233,8 @@
                   class="list-group-circle text-left"
                 >
                   <b-list-group-item>
-                    {{ data }}
+                    <div v-if="index === 0">100 {{  $t('companiess') }}</div>
+                   <div v-else>{{ $t('pricing.'+data) }}</div>
                   </b-list-group-item>
                 </b-list-group>
                 <!--/ plan benefit -->
@@ -241,7 +246,7 @@
                   class="mt-2"
                   variant="outline-primary"
                 >
-                  Upgrade
+                {{  $t('pricing.upgrade') }}
                 </b-button>
               </b-card>
             </b-col>
@@ -261,7 +266,7 @@
                 />
                 <!--/ img -->
                 <h3>{{ pricing.primaryPlan.title }}</h3>
-                <b-card-text>{{ pricing.primaryPlan.subtitle }}</b-card-text>
+                <b-card-text>{{  $t('pricing.big_organisations') }}</b-card-text>
 
                 <!-- annual plan -->
                 <div class="annual-plan">
@@ -277,12 +282,12 @@
                       monthlyPlanShow ? monthlyEnterprise : annualEnterpriseMonth
                     }}
                     </span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{  $t('pricing.month') }}</sub>
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ {{ annualEnterprise  }} / year</small>
+                  >€ {{ annualEnterprise  }} / {{  $t('pricing.year') }}</small>
                 </div>
                 <!--/ annual plan -->
 
@@ -293,7 +298,8 @@
                   class="list-group-circle text-left"
                 >
                   <b-list-group-item>
-                    {{ data }}
+                    <div v-if="index === 0">150 {{  $t('companiess') }}</div>
+                   <div v-else>{{ $t('pricing.'+data) }}</div>
                   </b-list-group-item>
                 </b-list-group>
                 <!--/ plan benefit -->
@@ -305,7 +311,7 @@
                   class="mt-2"
                   variant="outline-primary"
                 >
-                  Upgrade
+                {{  $t('pricing.upgrade') }}
                 </b-button>
               </b-card>
             </b-col>
@@ -325,7 +331,7 @@
                 />
                 <!--/ img -->
                 <h3>{{ pricing.platinumPlan.title }}</h3>
-                <b-card-text>{{ pricing.platinumPlan.subtitle }}</b-card-text>
+                <b-card-text>{{  $t('pricing.big_organisations') }}</b-card-text>
 
                 <!-- annual plan -->
                 <div class="annual-plan">
@@ -341,12 +347,12 @@
                       monthlyPlanShow ? monthlyPlatinum : annualPlatinumMonth
                     }}
                     </span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/month</sub>
+                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{  $t('pricing.month') }}</sub>
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ {{ annualPlatinum }} / year</small>
+                  >€ {{ annualPlatinum }} / {{  $t('pricing.year') }}</small>
                 </div>
                 <!--/ annual plan -->
 
@@ -357,7 +363,8 @@
                   class="list-group-circle text-left"
                 >
                   <b-list-group-item>
-                    {{ data }}
+                    <div v-if="index === 0">250 {{  $t('companiess') }}</div>
+                   <div v-else>{{ $t('pricing.'+data) }}</div>
                   </b-list-group-item>
                 </b-list-group>
                 <!--/ plan benefit -->
@@ -369,7 +376,7 @@
                   class="mt-2"
                   variant="outline-primary"
                 >
-                  Upgrade
+                {{  $t('pricing.upgrade') }}
                 </b-button>
               </b-card>
             </b-col>
@@ -445,12 +452,12 @@ export default {
             totalAnual: 39 * 12,
           },
           planBenefits: [
-            '40 Companies',
-            'Unlimited OCR Invoices',
-            'Unlimited Space',
-            'Unlimited Digital Invoices',
-            '1 click Monthly Vat Reports (incl. txt and excel)',
-            'Yearly Reports (excel)',
+            'companiess',
+            'unlimited_ocr_invoices',
+            'unlimited_space',
+            'unlimited_digital_invoices',
+            'click_monthly_vat_report',
+            'yearly_reports',
           ],
           popular: false,
         },
@@ -464,12 +471,12 @@ export default {
             totalAnual: 49 * 12,
           },
           planBenefits: [
-            '60 Companies',
-            'Unlimited OCR Invoices',
-            'Unlimited Space',
-            'Unlimited Digital Invoices',
-            '1 click Monthly Vat Reports (incl. txt and excel)',
-            'Yearly Reports (excel)',
+          'companiess',
+            'unlimited_ocr_invoices',
+            'unlimited_space',
+            'unlimited_digital_invoices',
+            'click_monthly_vat_report',
+            'yearly_reports',
           ],
           popular: true,
         },
@@ -483,12 +490,12 @@ export default {
             totalAnual: 69 * 12,
           },
           planBenefits: [
-            '100 Companies',
-            'Unlimited OCR Invoices',
-            'Unlimited Space',
-            'Unlimited Digital Invoices',
-            '1 click Monthly Vat Reports (incl. txt and excel)',
-            'Yearly Reports (excel)',
+          'companiess',
+            'unlimited_ocr_invoices',
+            'unlimited_space',
+            'unlimited_digital_invoices',
+            'click_monthly_vat_report',
+            'yearly_reports',
           ],
           popular: false,
         },
@@ -502,12 +509,12 @@ export default {
             totalAnual: 95 * 12,
           },
           planBenefits: [
-            '150 Companies',
-            'Unlimited OCR Invoices',
-            'Unlimited Space',
-            'Unlimited Digital Invoices',
-            '1 click Monthly Vat Reports (incl. txt and excel)',
-            'Yearly Reports (excel)',
+          'companiess',
+            'unlimited_ocr_invoices',
+            'unlimited_space',
+            'unlimited_digital_invoices',
+            'click_monthly_vat_report',
+            'yearly_reports',
           ],
           popular: false,
         },
@@ -521,12 +528,12 @@ export default {
             totalAnual: 149 * 12,
           },
           planBenefits: [
-            '250 Companies',
-            'Unlimited OCR Invoices',
-            'Unlimited Space',
-            'Unlimited Digital Invoices',
-            '1 click Monthly Vat Reports (incl. txt and excel)',
-            'Yearly Reports (excel)',
+          'companiess',
+            'unlimited_ocr_invoices',
+            'unlimited_space',
+            'unlimited_digital_invoices',
+            'click_monthly_vat_report',
+            'yearly_reports',
           ],
           popular: false,
         },

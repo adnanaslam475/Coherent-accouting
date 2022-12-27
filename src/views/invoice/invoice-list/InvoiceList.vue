@@ -25,7 +25,7 @@
             variant="primary"
             :to="{ name: 'apps-invoice-add'}"
           >
-            Add Invoice
+          {{ $t("company_invoices.add_invoice") }} 
           </b-button>
         </b-col>
 
@@ -39,7 +39,7 @@
               <flat-pickr
                 v-model="dateFrom"
                 class="form-control invoice-edit-input invoice-input-top"
-                placeholder="Start date"
+                :placeholder="$t('company_invoices.start_date')"
               />
 
               <feather-icon v-if="dateFrom === ''"
@@ -58,7 +58,7 @@
               <flat-pickr
                 v-model="dateTo"
                 class="form-control invoice-edit-input invoice-input-top"
-                placeholder="End date"
+                :placeholder="$t('company_invoices.end_date')"
               />
 
               <feather-icon v-if="dateTo === ''"
@@ -77,7 +77,7 @@
               <b-form-input
                 v-model="searchQuery"
                 class="d-inline-block mr-1"
-                placeholder="Search..."
+                :placeholder="$t('company_invoices.search')"
               />
               <feather-icon
                 size="16"
@@ -127,6 +127,9 @@
       </template>
 
       <!-- Column: invoiceNumber -->
+      <template #head(invoiceNumber)>
+        {{ $t("company_invoices.invoice_no") }}
+      </template>
       <template #cell(invoiceNumber)="data">
         <b-link
           :to="{ name: 'apps-invoice-preview', params: { id: data.item.id }}"
@@ -139,13 +142,20 @@
       </template>
 
       <!-- Column: Issued Date -->
+      <template #head(invoiceDate)>
+        {{ $t("company_invoices.date_issued") }}
+      </template>
       <template #cell(invoiceDate)="data">
         <span class="text-nowrap">
           {{ data.item.dateIssued }}
         </span>
       </template>
 
+
       <!-- Column: recipientCompany -->
+      <template #head(recipientCompanyName)>
+        {{ $t("company_invoices.recipient_company") }}
+      </template>
       <template #cell(recipientCompanyName)="data">
         <span
           :id="`recipientCompany-row-${data.item.id}`"
@@ -186,6 +196,10 @@
       </template>
 
       <!-- Column: supplierCompany -->
+      <template #head(supplierCompanyName)>
+        {{ $t("company_invoices.supplier_company") }}
+      </template>
+
       <template #cell(supplierCompanyName)="data">
 
         <span
@@ -227,6 +241,9 @@
       </template>
 
       <!-- Column: amount non vat -->
+      <template #head(amountNonVat)>
+        {{ $t("company_invoices.amount_non_vat") }}
+      </template>
       <template #cell(amountNonVat)="data">
         <span class="text-nowrap">
           <span v-if="data.item.currency == 'lv' || data.item.currency == 'лв' || data.item.currency == 'лв.'">лв. {{ data.value }}</span>
@@ -235,6 +252,9 @@
       </template>
 
       <!-- Column: totalAmount -->
+      <template #head(totalAmount)>
+        {{ $t("company_invoices.total_amount") }}
+      </template>
       <template #cell(totalAmount)="data">
         <span class="text-nowrap">
           <span v-if="data.item.currency == 'lv' || data.item.currency == 'лв' || data.item.currency == 'лв.'">лв. {{ data.value }}</span>
@@ -243,6 +263,9 @@
       </template>
 
       <!-- Column: vatAmount -->
+      <template #head(vatAmount)>
+        {{ $t("company_invoices.vat_amount") }}
+      </template>
       <template #cell(vatAmount)="data">
         <span class="text-nowrap">
           <span v-if="data.item.currency == 'lv' || data.item.currency == 'лв' || data.item.currency == 'лв.'">лв. {{ data.value }}</span>
@@ -258,6 +281,9 @@
       </template> -->
 
       <!-- Column: Actions -->
+      <template #head(actions)>
+            {{ $t('companies.actions') }}
+          </template>
       <template #cell(actions)="data">
 
         <div class="text-nowrap">

@@ -6,7 +6,7 @@
         <b-row>
           <!-- old password -->
           <b-col cols="6">
-            <b-form-group label="Old Password" label-for="old-password">
+            <b-form-group :label='$t("change_password.old_password")' label-for="old-password">
               <validation-provider
                 #default="{ errors }"
                 name="Password"
@@ -18,7 +18,7 @@
                   v-model="passwordValueOld"
                   :state="errors.length > 0 ? false : null"
                   :type="passwordFieldTypeOld"
-                  placeholder="Old Password"
+                  :placeholder='$t("change_password.old_password")'
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -102,9 +102,9 @@
           <!--        </b-col>-->
           <!--/ retype password -->
 
-          <!-- password -->
+          <!-- new password -->
           <b-col cols="6">
-            <b-form-group label="New Password" label-for="new-password">
+            <b-form-group :label='$t("change_password.new_password")' label-for="new-password">
               <validation-provider
                 #default="{ errors }"
                 name="New Password"
@@ -116,7 +116,7 @@
                   v-model="newPasswordValue"
                   :state="errors.length > 0 ? false : null"
                   :type="passwordFieldTypeNew"
-                  placeholder="New Password"
+                  :placeholder='$t("change_password.new_password")'
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -125,7 +125,7 @@
 
           <!-- confirm password -->
           <b-col cols="6">
-            <b-form-group label="Confirm New Password" label-for="ac-password">
+            <b-form-group :label='$t("change_password.confirm_new_password")' label-for="ac-password">
               <validation-provider
                 #default="{ errors }"
                 name="Confirm New Password"
@@ -136,7 +136,7 @@
                   v-model="RetypePassword"
                   :state="errors.length > 0 ? false : null"
                   :type="passwordFieldTypeRetype"
-                  placeholder="Confirm New Password"
+                  :placeholder='$t("change_password.new_password")'
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -151,7 +151,7 @@
               class="mt-1 mr-1"
               type="submit"
             >
-              Save changes
+            {{ $t("change_password.save_changes") }}
             </b-button>
           </b-col>
           <!--/ buttons -->

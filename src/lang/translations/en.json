@@ -13,7 +13,8 @@
     "companies": "Companies",
     "company_info": "Company Info",
     "company_invoices": "Company Invoices",
-    "add_multiple_invoices": "Add Multiple Invoices"
+    "add_multiple_invoices": "Add Multiple Invoices",
+    "list_invoices": "List Invoices"
   },
   "login": {
     "title": "Welcome to Coherent Accounting! \uD83D\uDC4B",
@@ -81,7 +82,7 @@
   },
   "pricing": {
     "title": "Pricing Plans",
-    "description": " All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs.",
+    "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs.",
     "monthly": "Monthly",
     "annually": "Annually",
     "free": "Free",
@@ -89,7 +90,15 @@
     "year": "year",
     "plan": "Your current plan",
     "popular": "Popular",
-    "upgrade": "Upgrade"
+    "upgrade": "Upgrade",
+    "simple_start_for_everyone": "A simple start for everyone",
+    "small_to_medium_businesses" : "For small to medium businesses", 
+    "big_organisations" : "Solutions for big organizations",
+    "unlimited_ocr_invoices" : "Unlimited OCR Invoices",
+    "unlimited_space" : "Unlimited Space",
+    "unlimited_digital_invoices" : "Unlimited Digital Invoices",
+    "click_monthly_vat_report" : "1 click Monthly Vat Reports (incl. txt and excel)",
+    "yearly_reports" : "Yearly Reports (excel)"
   },
   "about": {
     "title": "За нас",
@@ -228,6 +237,63 @@
     "total_purchases_number": "Total Purchases Number",
     "reports": "Reports"
   },
+  "company_documents":{
+    "add_asset": "Add Asset",
+    "media": "Media",
+    "notes": "Notes"
+  },
+  "my_profile_page":{
+    "general": "General",
+    "change_password":"Change Password",
+    "current_plan" : "Current Plan"
+  },
+  "change_password":{
+    "old_password":"Old Password",
+    "new_password":"New Password",
+    "confirm_new_password": "Confirm New Password",
+    "save_changes":"Save Changes"
+  },
+  "general":{
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "account_type": "Account Type",
+    "email_subscription" : "Email Subsciption",
+    "reset" : "Reset"
+
+  },
+  "current_plan":{
+    "my_plan" : "My Plan",
+    "your_current_plan_is":"Your Current Plan is ",
+    "status": "Status",
+    "active": "Active",
+    "in_active" : "Inactive",
+    "price": "Price",
+    "per_month": "Per Month",
+    "limit" : "Limit",
+    "we_need_your_attention": "We need your attention!",
+    "your_plan_expires_soon": "Your plan expires soon",
+    "enjoy_your_plan": "Enjoy your plan!",
+    "days": "Days",
+    "days_remaining": " days remaining until your plan requires update",
+    "your_plan_expired_on": "Your plan expired on ",
+    "update_plan" : "Update Plan",
+    "active_until" : "Active Until ",
+    "we_will_send_you_a_notification": "We will send you a notification upon Subscription expiration"
+  },
+  "clients_or_recipients":{
+    "add_user" : "Add User",
+    "user" : "User",
+    "identification_no" : "Identification Number",
+    "vat_id":"Vat Identification Number",
+    "id_card": "ID Card Number"
+  },
+  "tickets_page":{
+    "add_new_ticket" : "Add New Ticket",
+    "title" :"Title",
+    "content" : "Content",
+    "created_date" : "Created Date",
+    "answer" : "Answer"
+  },
   "home": "Home",
   "dashboard": "Dashboard",
   "invoices": "Invoices",
@@ -239,6 +305,8 @@
   "back_to_login": "Back to login",
   "my_invoices" :"My Invoices",
   "my_tickets":"My Tickets",
-  "my_profile":"My Profiles"
+  "my_profile":"My Profiles",
+  "companiess" :"Companies"
+  
 
 }

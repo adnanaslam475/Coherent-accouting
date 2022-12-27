@@ -7,7 +7,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="BookOpenIcon" />
-          <span>List Invoices</span>
+          <span> {{ $t('lbl.list_invoices') }}</span>
         </template>
         <ListInvoices
           :invoice-tab="invoiceTab"
@@ -25,7 +25,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="UsersIcon" />
-          <span>Clients or Recipients</span>
+          <span>{{ $t('company_tabs.clients_or_recipients') }}</span>
         </template>
         <privatePerson />
       </b-tab>

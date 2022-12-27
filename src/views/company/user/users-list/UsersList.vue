@@ -42,7 +42,7 @@
                 @click="isAddNewUserSidebarActive = true"
                 ref="refAddUserBtn"
               >
-                <span class="text-nowrap">Add User</span>
+                <span class="text-nowrap">{{  $t('clients_or_recipients.add_user') }}</span>
               </b-button>
             </div>
           </b-col>
@@ -78,6 +78,9 @@
         </template>
 
         <!-- Column: User -->
+        <template #head(firstMiddleAndLastName)>
+          {{  $t('clients_or_recipients.user') }}
+        </template>
         <template #cell(firstMiddleAndLastName)="data">
           <b-media vertical-align="center">
             <template #aside>
@@ -108,6 +111,10 @@
         </template>
 
         <!-- Identification Number -->
+        <template #head(identificationNumber)>
+          {{  $t('clients_or_recipients.identification_no') }}
+        </template>
+
         <template #cell(identificationNumber)="data">
           <CopyToClipboard
             :text="data.value"
@@ -126,6 +133,9 @@
         </template>
 
         <!-- Vat Identification number -->
+        <template #head(vatIdentificationNumber)>
+          {{  $t('clients_or_recipients.vat_id') }}
+        </template>
         <template #cell(vatIdentificationNumber)="data">
           <CopyToClipboard
             :text="data.value"
@@ -142,6 +152,9 @@
         </template>
 
         <!-- Address -->
+         <template #head(address)>
+          {{  $t('company_info.address') }}
+        </template>
         <template #cell(address)="data">
           <CopyToClipboard
             :text="data.value"
@@ -158,6 +171,9 @@
         </template>
 
         <!-- ID Card -->
+        <template #head(idcardNumber)>
+          {{  $t('clients_or_recipients.id_card') }}
+        </template>
         <template #cell(idcardNumber)="data">
           <CopyToClipboard
             :text="data.value"
@@ -174,6 +190,9 @@
         </template>
 
         <!-- Column: Actions -->
+        <template #head(actions)>
+          {{  $t('companies.actions') }}
+        </template>
         <template #cell(actions)="data">
           <div class="d-flex">
 

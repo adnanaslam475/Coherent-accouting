@@ -1,6 +1,6 @@
 <template>
   <b-card>
-    <b-card-title class="ml-3">My Plan</b-card-title>
+    <b-card-title class="ml-3">{{  $t('current_plan.my_plan') }}</b-card-title>
     <b-row>
       <!-- Plan image -->
       <b-col cols="6">
@@ -33,9 +33,9 @@
           v-if="daysLeft <= 5"
         >
           <p style="font-size: 1.125rem">
-            <b>We need your attention!</b>
+            <b>{{  $t('current_plan.we_need_your_attention') }}</b>
           </p>
-          <p style="font-size: 1rem">Your plan expires soon</p>
+          <p style="font-size: 1rem">{{  $t('current_plan.your_plan_expires_soon') }}</p>
         </b-alert>
         <b-alert
           show
@@ -44,20 +44,22 @@
           style="width: 95%; margin-left: 13px"
           v-else
         >
-          <h4 style="font-size: 1.125rem">Enjoy your plan!</h4>
+          <h4 style="font-size: 1.125rem">{{  $t('current_plan.enjoy_your_plan') }}</h4>
         </b-alert>
       </b-col>
       <!-- Plan Details -->
       <b-col cols="6">
         <h4 style="margin-bottom: 1rem">
-          Your Current Plan is
-          <span style="text-transform: capitalize; margin-right: 12px">{{
+          {{  $t('current_plan.your_current_plan_is') }}
+          <span style=" margin-right: 12px">
+          {{
             currentPlan.planName
-          }}</span>
+          }} 
+        </span>
         </h4>
         <!-- Status -->
         <p>
-          <b>Status: </b>
+          <b>{{  $t('current_plan.status') }} :</b>
           <span
             v-if="currentPlan.active === true"
             class="
@@ -71,9 +73,10 @@
               background-color: aliceblue;
               padding: 5px 10px;
               border-radius: 20px;
+              margin-left: 10px
             "
             ><span class="v-chip__underlay"></span>
-            <b>Active</b>
+            <b>{{  $t('current_plan.active') }}</b>
           </span>
           <span
             v-else
@@ -88,9 +91,10 @@
               background-color: rgba(234, 84, 85, 0.12) !important;
               padding: 5px 10px;
               border-radius: 20px;
+              margin-left: 10px
             "
             ><span class="v-chip__underlay"></span>
-            <b> Inactive</b>
+            <b> {{  $t('current_plan.in_active') }}</b>
           </span>
         </p>
       </b-col>
@@ -98,11 +102,11 @@
       <b-col cols="6">
         <div class="progress-wrapper">
           <div class="d-flex align-items-center justify-content-between">
-            <b-card-title>Days</b-card-title>
+            <b-card-title>{{  $t('current_plan.days') }}</b-card-title>
             <h5 v-if="daysUtilized <= planDays">
-              {{ daysUtilized }} of {{ planDays }} Days
+              {{ daysUtilized }} of {{ planDays }} {{  $t('current_plan.days') }}
             </h5>
-            <h5 v-else>{{ planDays }} of {{ planDays }} Days</h5>
+            <h5 v-else>{{ planDays }} of {{ planDays }} {{  $t('current_plan.days') }}</h5>
           </div>
           <!--          <h4 class="mb-0">-->
           <!--            {{ value1+'%' }}-->
@@ -110,29 +114,29 @@
           <b-progress v-model="daysUtilized" :max="planDays" />
 
           <p v-if="daysLeft < 0">
-            0 days remaining until your plan requires update
+            0 {{  $t('current_plan.days_remaining') }}
           </p>
           <p v-else>
-            {{ daysLeft }} days remaining until your plan requires update
+            {{ daysLeft }} {{  $t('current_plan.days_remaining') }}
           </p>
         </div>
       </b-col>
       <b-col cols="6" style="margin-top: -25px">
         <!-- Price -->
         <p style="margin-bottom: 0.7rem">
-          <b>Price:</b> {{ currentPlan.planMonthPrice }} € per Month
+          <b>{{  $t('current_plan.price') }} : </b> {{ currentPlan.planMonthPrice }} € {{  $t('current_plan.per_month') }}
         </p>
         <!-- limits -->
-        <p><b>Limit: </b>{{ currentPlan.companyLimit }} companies</p>
+        <p><b>{{  $t('current_plan.limit') }} : </b>{{ currentPlan.companyLimit }} {{  $t('lbl.companies') }}</p>
       </b-col>
 
       <b-col cols="6" v-if="daysLeft > 0">
-        <h4>Active until {{ currentPlan.validTo }}</h4>
-        <p>We will send you a notification upon Subscription expiration</p>
+        <h4>{{  $t('current_plan.active_until') }} {{ currentPlan.validTo }}</h4>
+        <p>   {{  $t('current_plan.we_will_send_you_a_notification') }}</p>
       </b-col>
       <b-col cols="6" v-else>
         <h4 class="text-danger">
-          Your plan expired on {{ currentPlan.validTo }}
+          {{  $t('current_plan.your_plan_expired_on') }} {{ currentPlan.validTo }}
         </h4>
       </b-col>
 
@@ -144,7 +148,7 @@
           class="mt-1 mr-1"
           type="submit"
         >
-          Update Plan
+        {{  $t('current_plan.update_plan') }}
         </b-button>
         <!-- <b-button
           v-ripple.400="'rgba(186, 191, 199, 0.15)'"

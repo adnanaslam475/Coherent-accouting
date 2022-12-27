@@ -14,7 +14,7 @@
             block
             @click="showForm = true"
           >
-            Add Asset
+            {{  $t('company_documents.add_asset') }}
           </b-button>
         </b-col>
       </b-col>
@@ -99,6 +99,9 @@
             </template>
 
             <!-- Media -->
+            <template #head(Media)>
+              {{  $t('company_documents.media') }}
+            </template>
             <template #cell(Media)="data">
               <div>
                 <!-- :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type])"-->
@@ -120,6 +123,9 @@
             </template>
 
             <!-- Notes -->
+            <template #head(notes)>
+              {{  $t('company_documents.notes') }}
+            </template>
             <template #cell(notes)="data">
               <b-row v-if="asset.id === data.item.id" class="w-100">
                 <b-col cols="10">
@@ -146,8 +152,11 @@
         </template>
 
         <!-- Action Buttons -->
+        <template #head(actions)>
+          {{  $t('companies.actions') }}
+        </template>
         <template
-              #cell(action)="data"
+              #cell(actions)="data"
               style="text-align: center !important"
             >
             <div class="d-flex">
@@ -456,8 +465,8 @@ export default {
           class: "w-100",
         },
         {
-          key: "action",
-          label: "Action",
+          key: "actions",
+          label: "Actions",
         },
       ],
     };
