@@ -39,9 +39,10 @@
         @submit.prevent="validationForm()"
       >
         <b-row>
+          <!-- First Name -->
           <b-col sm="6">
             <b-form-group
-              label="First Name"
+            :label='$t("general.first_name")'
               label-for="first-name"
             >
               <validation-provider
@@ -54,15 +55,16 @@
                   v-model="userDetail.firstName"
                   :state="errors.length > 0 ? false:null"
                   name="firstName"
-                  placeholder="First Name"
+                  :placeholder='$t("general.first_name")'
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
+          <!-- Last Name -->
           <b-col sm="6">
             <b-form-group
-              label="Last Name"
+            :label='$t("general.last_name")'
               label-for="last-name"
             >
               <validation-provider
@@ -75,15 +77,16 @@
                   v-model="userDetail.lastName"
                   :state="errors.length > 0 ? false:null"
                   name="lastName"
-                  placeholder="Last Name"
+                  :placeholder='$t("general.last_name")'
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
+          <!-- Account Type -->
           <b-col sm="6">
             <b-form-group
-              label="Account Type"
+            :label='$t("general.account_type")'
               label-for="account-type"
             >
               <validation-provider
@@ -102,6 +105,7 @@
             </b-form-group>
           </b-col>
 
+              <!-- Account Type === Company -->
           <b-col
             v-if="userDetail.accountType === 'COMPANY'"
             sm="6"
@@ -176,7 +180,7 @@
           </b-col>
           <b-col sm="6">
             <b-form-group
-              label="email"
+              label="Email"
               label-for="email"
             >
               <validation-provider
@@ -223,7 +227,7 @@
 
           <b-col sm="6">
             <b-form-group
-              label="Country"
+            :label='$t("companies.country")'
               label-for="country"
             >
               <validation-provider
@@ -262,9 +266,10 @@
             </b-form-group>
           </b-col>
 
+           <!-- Email Subscription -->
           <b-col sm="6">
             <b-form-group
-              label="Email Subscription"
+            :label='$t("general.email_subscription")'
               label-for="marketingConfirmed"
             >
               <validation-provider
@@ -299,7 +304,7 @@
               variant="primary"
               class="mt-2 mr-1"
             >
-              Save changes
+            {{ $t("change_password.save_changes") }}
             </b-button>
             <b-button
               v-ripple.400="'rgba(186, 191, 199, 0.15)'"
@@ -308,7 +313,7 @@
               class="mt-2"
               @click.prevent="resetForm"
             >
-              Reset
+             {{ $t("general.reset") }}
             </b-button>
           </b-col>
         </b-row>

@@ -13,7 +13,7 @@
           size="18"
           class="mr-50"
         />
-        <span class="font-weight-bold">General</span>
+        <span class="font-weight-bold"> {{ $t('my_profile_page.general') }} </span>
       </template>
       <account-setting-general
         v-if="options.general"
@@ -27,7 +27,7 @@
           size="18"
           class="mr-50"
         />
-        <span class="font-weight-bold">Change Password</span>
+        <span class="font-weight-bold">{{ $t('my_profile_page.change_password') }}</span>
       </template>
       <account-setting-password/>
     </b-tab>
@@ -38,7 +38,7 @@
           size="18"
           class="mr-50"
         />
-        <span class="font-weight-bold">Current Plan</span>
+        <span class="font-weight-bold">{{ $t('my_profile_page.current_plan') }}</span>
       </template>
       <AccountCurrentPlan />
     </b-tab>

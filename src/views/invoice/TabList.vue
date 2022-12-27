@@ -4,7 +4,7 @@
     <b-nav tabs align="center">
       <b-nav-item :to="{ name: 'invoices', params: { id: 0 }}" :active="invoiceTab !== 0">
         <feather-icon icon="BookOpenIcon" />
-        List Invoices
+        {{ $t('lbl.list_invoices') }}
       </b-nav-item>
       <!-- <b-nav-item :to="{ name: 'invoices', params: { id: 1 }}" :active="invoiceTab !== 0">
         <feather-icon icon="PenToolIcon" />
@@ -12,7 +12,7 @@
       </b-nav-item> -->
       <b-nav-item :to="{ name: 'invoices', params: { id: 2 }}" :active="invoiceTab !== 0">
         <feather-icon icon="UsersIcon" />
-        Clients or Recipients
+        {{ $t('company_tabs.clients_or_recipients') }}
       </b-nav-item>
     </b-nav>
   </div>

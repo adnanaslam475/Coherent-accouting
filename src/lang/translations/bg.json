@@ -102,11 +102,150 @@
 		"title_7": "Всичко нужно за един счетоводител на едно място. Без импорт и екпорт към други платформи.",
 		"title_8": "Автоматизирани изчисления."
 	},
-	"dashboard": "Табло",
-	"invoices": "Фактури",
-	"videos": "Видео",
-	"tickets": "Помощ",
-	"my-plans": "Моите планове",
-	"settings": "Настройки",
-	"contacts": "Контакти"
+	"companies": {
+    "unfinished_vat_reports": "Недовършени ДДС Отчети",
+    "add_company": "Добави фирма",
+    "country": "Държава",
+    "company_name": "Фирма",
+    "email": "Email",
+    "status": "Статус",
+    "owner_first_name": "МОЛ",
+    "company_id": "ЕИК",
+    "actions": "Действия"
+  },
+  "company_info": {
+    "edit": "Промени",
+    "delete": "Изтрий",
+    "owner_name": "МОЛ",
+    "owner_egn": "МОЛ ЕГН",
+    "company_id": "ЕИК",
+    "vat_number": "ДДС Номер",
+    "bank_account": "Банкова сметка",
+    "contact": "Контакти",
+    "address": "Адрес",
+    "total_assets": "Общо документи",
+    "total_invoices": "Общо Фактури",
+    "total_not_verified_invoices": "Общо непроверени фактури",
+    "total_private_person": "Общо Клиенти",
+    "total_vat_reports": "Общо ДДС Отчети",
+    "total_yearly_reports": "Общо Годишни отчети",
+    "report_timeline": "Отчети за периода",
+    "reports_have_been_created": "Отчети бяха създадени",
+    "invoices_per_month": "Фактури за месец",
+    "invoices_per_day": "Фактури за ден",
+    "no_record": "Не бяха намерени записи"
+  },
+  "company_tabs": {
+    "multiple_upload": "Много от файл",
+    "vat_reports": "ДДС Отчети",
+    "yearly_reports": "Годишни Отчети",
+    "company_documents": "Фирмени документи",
+    "clients_or_recipients": "Клиенти"
+  },
+  "company_invoices": {
+    "add_invoice": "Добави",
+    "add_from_file": "Добави от Файл",
+    "start_date": "От дата",
+    "end_date": "До дата",
+    "search": "Търси...",
+    "invoice_no": "Номер",
+    "date_issued": "Дата",
+    "transaction_type": "Тип",
+    "recipient_company": "Фирма Получател",
+    "supplier_company": "Фирма Доставчик",
+    "amount_non_vat": "Дан.Основа",
+    "total_amount": "Общо",
+    "vat_amount": "ДДС"
+  },
+  "vat_reports": {
+    "add_vat_report": "Добави",
+    "generate_vat_report": "Генерирай",
+    "period": "Период",
+    "company_name_and_address": "Фирма Име и адрес",
+    "total_sum_base_taxes": "Общо дан. Основа",
+    "total_vat": "ДДС",
+    "base_tax_addition": "Дан. Основа и допълн.",
+    "with_full_tax_credit": "С пълен дан.Кредит",
+    "total_tax_credit": "Общо дан.Кредит",
+    "vat_to_pay": "ДДС за плащане",
+    "vat_to_exclude": "ДДС за изваждане",
+    "tax_to_pay": "Даници за плащане",
+    "tax_to_pay_effective": "Ефект.Данъци"
+  },
+  "dashboard_lbl": {
+    "statistics": "Сатистики",
+    "total_companies": "Общо Фирми",
+    "total_sales_number": "Общо продажби",
+    "total_purchases_number": "Общо покупки",
+    "reports": "Отчети"
+  },
+  "company_documents":{
+    "add_asset": "Добави",
+    "media": "Файл",
+    "notes": "Бележки"
+  },
+  "my_profile_page":{
+    "general": "Общи",
+    "change_password":"Смени Парола",
+    "current_plan" : "Текущ План"
+  },
+  "change_password":{
+    "old_password":"Стара Парола",
+    "new_password":"Нова Парола",
+    "confirm_new_password": "Потвърди Нова парола",
+    "save_changes":"Запази"
+  },
+  "general":{
+    "first_name": "Име",
+    "last_name": "Фамилия",
+    "account_type": "Тип Акаунт",
+    "email_subscription" : "Имейл известия",
+    "reset" : "Изчисти"
+
+  },
+  "current_plan":{
+    "my_plan" : "Моят План",
+    "your_current_plan_is":"Вашият текущ План е:",
+    "status": "Статус",
+    "active": "Активен",
+    "in_active" : "Не Активен",
+    "price": "Цена",
+    "per_month": "На месец",
+    "limit" : "Лимит",
+    "we_need_your_attention": "Внимание!",
+    "your_plan_expires_soon": "Вашият план изтича скоро",
+    "enjoy_your_plan": "Насладете се на плана си!",
+    "days": "Дни",
+    "days_remaining": " Оставащи дни докато плана Ви изисква подновяване",
+    "your_plan_expired_on": "Your plan expired on ",
+    "update_plan" : "Промени",
+    "active_until" : "Активен до: ",
+    "we_will_send_you_a_notification": "Ние ще Ви уведомим когато плана Ви изтече"
+  },
+  "clients_or_recipients":{
+    "add_user" : "Добави",
+    "user" : "Клиент",
+    "identification_no" : "ЕГН",
+    "vat_id":"ДДС номер",
+    "id_card": "Номер лична карта"
+  },
+  "tickets_page":{
+    "add_new_ticket" : "Добави",
+    "title" :"Заглавие",
+    "content" : "Съдържание",
+    "created_date" : "Създаден на:",
+    "answer" : "Отговор"
+  },
+  "home": "Табло",
+  "dashboard": "Табло",
+  "invoices": "Фактури",
+  "videos": "Видео Уроци",
+  "tickets": "Тикети",
+  "my-plans": "Моите Планове",
+  "contacts": "Контакти",
+  "back_to_login": "Към Логин",
+  "my_invoices" :"Моите Фактури",
+  "my_tickets":"Моите Тикети",
+  "my_profile":"Моят Профил",
+  "companiess" :"Фирми"
 }

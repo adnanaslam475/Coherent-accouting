@@ -75,6 +75,7 @@
         :items="navMenuItems"
         class="navigation navigation-main"
       />
+      <!-- {{ $t('navMenuItems.title') }} -->
     </vue-perfect-scrollbar>
     <!-- /main menu content-->
   </div>
@@ -89,13 +90,59 @@ import useAppConfig from '@core/app-config/useAppConfig'
 import { $themeConfig } from '@themeConfig'
 import VerticalNavMenuItems from './components/vertical-nav-menu-items/VerticalNavMenuItems.vue'
 import useVerticalNavMenu from './useVerticalNavMenu'
+import  {i18n} from '@/main.js'
 
 export default {
+
   components: {
     VuePerfectScrollbar,
     VerticalNavMenuItems,
     BLink,
     BImg,
+  },
+  data(){
+    return {
+    navMenuItems : [{
+    title: 'dashboard',
+    route: 'home',
+    icon: 'HomeIcon',
+  },
+  {
+    title: 'companiess',
+    route: 'companies',
+    icon: 'BriefcaseIcon',
+  },
+  {
+    title: 'my_invoices',
+    route: 'invoices',
+    icon: 'FileTextIcon',
+  },
+  {
+    title: 'videos',
+    route: 'videos',
+    icon: 'VideoIcon',
+  },
+  {
+    title: 'my_tickets',
+    route: 'tickets',
+    icon: 'TagIcon',
+  },
+  {
+    title: 'my-plans',
+    route: 'my-plans',
+    icon: 'PackageIcon',
+  },
+  {
+    title: 'my_profile',
+    route: 'settings',
+    icon: 'UserIcon',
+  },
+  {
+    title: 'contacts',
+    route: 'contacts',
+    icon: 'BookIcon',
+  }]
+    }
   },
   props: {
     isVerticalMenuActive: {
@@ -132,6 +179,8 @@ export default {
 
     // App Name
     const { appName, appLogoImage } = $themeConfig.app
+
+    
 
     return {
       navMenuItems,

@@ -41,7 +41,7 @@
                 variant="primary"
                 @click="isAddNewUserSidebarActive = true"
               >
-                <span class="text-nowrap">Add User</span>
+                <span class="text-nowrap">{{  $t('clients_or_recipients.add_user') }}</span>
               </b-button>
             </div>
           </b-col>
@@ -77,6 +77,9 @@
         </template>
 
         <!-- Column: User -->
+        <template #head(firstMiddleAndLastName)>
+          {{  $t('clients_or_recipients.user') }}
+        </template>
         <template #cell(firstMiddleAndLastName)="data">
           <b-media vertical-align="center">
             <template #aside>
@@ -100,6 +103,9 @@
         </template>
 
          <!-- Identification Number -->
+         <template #head(identificationNumber)>
+          {{  $t('clients_or_recipients.identification_no') }}
+        </template>
         <template #cell(identificationNumber)="data">
           <CopyToClipboard :text="data.value"  @copy="textCopyToClipboard('User ID')">
             <b-badge variant="primary" class="text-capitalize" id="user-idd" style="cursor: pointer">
@@ -111,6 +117,9 @@
         </template>
 
         <!-- Vat Identification number -->
+        <template #head(vatIdentificationNumber)>
+          {{  $t('clients_or_recipients.vat_id') }}
+        </template>
         <template #cell(vatIdentificationNumber)="data">
           <CopyToClipboard :text="data.value" @copy="textCopyToClipboard('VAT ID')">
             <span class="text-nowrap text-capitalize" id="vat-idd" style="cursor: pointer">{{ data.value }}</span>
@@ -119,6 +128,9 @@
         </template>
 
         <!-- Address -->
+        <template #head(address)>
+          {{  $t('company_info.address') }}
+        </template>
         <template #cell(address)="data">
           <CopyToClipboard :text="data.value" @copy="textCopyToClipboard('Address')">
             <span class="text-nowrap text-capitalize" id="user-address" style="cursor: pointer">{{ data.value }}</span>
@@ -127,6 +139,9 @@
         </template>
 
         <!-- ID Card -->
+        <template #head(idcardNumber)>
+          {{  $t('clients_or_recipients.id_card') }}
+        </template>
         <template #cell(idcardNumber)="data">
           <CopyToClipboard :text="data.value" @copy="textCopyToClipboard('ID Card No.')">
             <span class="text-nowrap text-capitalize" id="user-id-cardd" style="cursor: pointer">{{ data.value }}</span>
@@ -135,6 +150,9 @@
         </template>
 
         <!-- Column: Actions -->
+        <template #head(actions)>
+          {{  $t('companies.actions') }}
+        </template>
         <template #cell(actions)="data">
           <div class="d-flex">
 

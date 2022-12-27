@@ -6,15 +6,41 @@
         variant="relief-primary"
         class="float-right mb-1 col-2 ml-auto"
         style="margin-right: 15px"
-      >Add New Ticket
+        >{{ $t("tickets_page.add_new_ticket") }}
       </b-button>
     </div>
-    <b-table
-      :fields="fields"
-      :items="items"
-      responsive
-      class="mb-0"
-    >
+    <b-table :fields="fields" :items="items" responsive class="mb-0">
+      <!-- Ticket Title -->
+      <template #head(title)>
+        {{ $t("tickets_page.title") }}
+      </template>
+
+      <!-- Ticket Content -->
+      <template #head(ticketContent)>
+        {{ $t("tickets_page.content") }}
+      </template>
+
+      <!-- Ticket Coreation Date -->
+      <template #head(creationDate)>
+        {{ $t("tickets_page.created_date") }}
+      </template>
+
+      <!-- Ticket Answer-->
+      <template #head(answer)>
+        {{ $t("tickets_page.answer") }}
+      </template>
+
+      <!-- Ticket Status -->
+      <template #head(status)>
+        {{ $t("companies.status") }}
+      </template>
+
+      <!-- Ticket Content -->
+      <template #head(action)>
+        {{ $t("companies.actions") }}
+      </template>
+
+    
       <template style="text-align: center !important" #cell(status)="data">
         <span
           :id="`recipientCompany-row-${data.item.id}`"
@@ -51,8 +77,8 @@
         </b-dropdown> -->
 
         <div class="cursor-pointer" @click="editTicket(data.item)">
-            <feather-icon icon="EditIcon"/>
-            <span class="align-middle ml-50">Edit</span>
+          <feather-icon icon="EditIcon" />
+          <span class="align-middle ml-50">Edit</span>
         </div>
         <!-- </b-button> -->
       </template>
@@ -62,14 +88,22 @@
         <b-col
           cols="12"
           sm="6"
-          class="d-flex align-items-center justify-content-center justify-content-sm-start"
+          class="
+            d-flex
+            align-items-center
+            justify-content-center justify-content-sm-start
+          "
         >
         </b-col>
         <!-- Pagination -->
         <b-col
           cols="12"
           sm="6"
-          class="d-flex align-items-center justify-content-center justify-content-sm-end"
+          class="
+            d-flex
+            align-items-center
+            justify-content-center justify-content-sm-end
+          "
         >
           <b-pagination
             v-model="currentPage"
@@ -84,16 +118,10 @@
             @input="getAllTickets"
           >
             <template #prev-text>
-              <feather-icon
-                icon="ChevronLeftIcon"
-                size="18"
-              />
+              <feather-icon icon="ChevronLeftIcon" size="18" />
             </template>
             <template #next-text>
-              <feather-icon
-                icon="ChevronRightIcon"
-                size="18"
-              />
+              <feather-icon icon="ChevronRightIcon" size="18" />
             </template>
           </b-pagination>
         </b-col>
@@ -115,10 +143,7 @@
           <b-form @submit.prevent="validationCreateTicket()">
             <b-row>
               <b-col sm="12">
-                <b-form-group
-                  label="Title"
-                  label-for="title"
-                >
+                <b-form-group label="Title" label-for="title">
                   <validation-provider
                     #default="{ errors }"
                     name="Title"
@@ -127,7 +152,7 @@
                   >
                     <b-form-input
                       v-model="ticket.title"
-                      :state="errors.length > 0 ? false:null"
+                      :state="errors.length > 0 ? false : null"
                       name="title"
                       placeholder="Title"
                     />
@@ -136,10 +161,7 @@
                 </b-form-group>
               </b-col>
               <b-col sm="12">
-                <b-form-group
-                  label="Description"
-                  label-for="last-name"
-                >
+                <b-form-group label="Description" label-for="last-name">
                   <validation-provider
                     #default="{ errors }"
                     name="Description"
@@ -175,10 +197,7 @@
           <b-form @submit.prevent="validationUpdateTicket()">
             <b-row>
               <b-col sm="12">
-                <b-form-group
-                  label="Title"
-                  label-for="title"
-                >
+                <b-form-group label="Title" label-for="title">
                   <validation-provider
                     #default="{ errors }"
                     name="Title"
@@ -195,10 +214,7 @@
                 </b-form-group>
               </b-col>
               <b-col sm="12">
-                <b-form-group
-                  label="Description"
-                  label-for="last-name"
-                >
+                <b-form-group label="Description" label-for="last-name">
                   <validation-provider
                     #default="{ errors }"
                     name="Description"
@@ -243,16 +259,15 @@ import {
   BForm,
   BFormGroup,
   BFormTextarea,
-} from 'bootstrap-vue'
-import axios from '@/libs/axios'
+} from "bootstrap-vue";
+import axios from "@/libs/axios";
 // eslint-disable-next-line import/extensions
-import BCardCode from '@core/components/b-card-code/BCardCode'
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
-import { required, min } from 'vee-validate/dist/rules'
+import BCardCode from "@core/components/b-card-code/BCardCode";
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
+import { required, min } from "vee-validate/dist/rules";
 
-extend('required', required)
-extend('min', min)
-
+extend("required", required);
+extend("min", min);
 
 export default {
   components: {
@@ -286,116 +301,121 @@ export default {
       ticket: {},
       fields: [
         {
-          key: 'title',
-          label: 'Title',
+          key: "title",
+          label: "Title",
         },
         {
-          key: 'ticketContent',
-          label: 'Content',
+          key: "ticketContent",
+          label: "Content",
         },
         {
-          key: 'creationDate',
-          label: 'Created Date',
-          tdClass: 'width-25',
+          key: "creationDate",
+          label: "Created Date",
+          tdClass: "width-25",
         },
         {
-          key: 'answer',
-          label: 'Answer',
+          key: "answer",
+          label: "Answer",
         },
         {
-          key: 'status',
-          label: 'Status',
+          key: "status",
+          label: "Status",
         },
         {
-          key: 'action',
-          label: 'Action',
+          key: "action",
+          label: "Action",
         },
       ],
       items: [],
       currentPage: 1,
-      perPage: '10',
-      totalRecords: '',
-      totalPages: '',
-      searchQuery: '',
+      perPage: "10",
+      totalRecords: "",
+      totalPages: "",
+      searchQuery: "",
       required,
-    }
+    };
   },
   mounted() {
-    this.getAllTickets()
+    this.getAllTickets();
   },
   methods: {
     // getting the list of all companies
     async getAllTickets() {
-      const data = await axios.get(`/account/api/ticket/list/${this.currentPage}/${this.perPage}?direction=desc&sortField=id`)
-      if (data.data.elements !== '') {
-        this.items = data.data.elements
-        this.totalRecords = data.data.totalElements
-        this.totalPages = Math.ceil(this.totalRecords / this.perPage)
+      const data = await axios.get(
+        `/account/api/ticket/list/${this.currentPage}/${this.perPage}?direction=desc&sortField=id`
+      );
+      if (data.data.elements !== "") {
+        this.items = data.data.elements;
+        this.totalRecords = data.data.totalElements;
+        this.totalPages = Math.ceil(this.totalRecords / this.perPage);
       }
     },
     async createTicket() {
-      const data = await axios.post('/account/api/ticket/create-ticket', this.ticket)
+      const data = await axios.post(
+        "/account/api/ticket/create-ticket",
+        this.ticket
+      );
       if (data.status === 201) {
-        await this.getAllTickets()
-        this.resetModal()
-        this.makeToast('success', 'Success', 'Ticket Created Successfully')
+        await this.getAllTickets();
+        this.resetModal();
+        this.makeToast("success", "Success", "Ticket Created Successfully");
       }
     },
     async updateTicket() {
-      const data = await axios.put(`/account/api/ticket/update-ticket/${this.ticket.id}`, this.ticket)
+      const data = await axios.put(
+        `/account/api/ticket/update-ticket/${this.ticket.id}`,
+        this.ticket
+      );
       if (data.status === 200) {
-        await this.getAllTickets()
-        this.resetModal()
-        this.makeToast('success', 'Success', 'Ticket Updated Successfully')
+        await this.getAllTickets();
+        this.resetModal();
+        this.makeToast("success", "Success", "Ticket Updated Successfully");
       }
     },
     resetModal() {
-      console.log('res')
-      this.ticket = {}
-      this.$bvModal.hide('ticket-create-modal')
-      this.$bvModal.hide('ticket-update-modal')
+      console.log("res");
+      this.ticket = {};
+      this.$bvModal.hide("ticket-create-modal");
+      this.$bvModal.hide("ticket-update-modal");
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
-      bvModalEvt.preventDefault()
+      bvModalEvt.preventDefault();
       // Trigger submit handler
-      this.handleSubmit()
+      this.handleSubmit();
     },
     handleSubmit() {
-      this.createTicket()
+      this.createTicket();
     },
     makeToast(variant = null, title = null, message = null) {
       this.$bvToast.toast(message, {
         title,
         variant,
         solid: false,
-      })
+      });
     },
     editTicket(ticket) {
-      this.ticket = ticket
-      this.$bvModal.show('ticket-update-modal')
+      this.ticket = ticket;
+      this.$bvModal.show("ticket-update-modal");
     },
     validationCreateTicket() {
-      this.$refs.simpleRules.validate()
-        .then(success => {
-          if (success) {
-            // eslint-disable-next-line
-            this.createTicket()
-          }
-        })
+      this.$refs.simpleRules.validate().then((success) => {
+        if (success) {
+          // eslint-disable-next-line
+          this.createTicket();
+        }
+      });
     },
     validationUpdateTicket() {
-      this.$refs.simpleRules.validate()
-        .then(success => {
-          if (success) {
-            // eslint-disable-next-line
-            this.updateTicket()
-          }
-        })
+      this.$refs.simpleRules.validate().then((success) => {
+        if (success) {
+          // eslint-disable-next-line
+          this.updateTicket();
+        }
+      });
     },
-
   },
-}
+};
 </script>
 <style scoped>
 .width-25 {
