@@ -434,7 +434,7 @@
         accountType: [
           { value: null, text: 'Please select account type', disabled: true },
           { value: 'COMPANY', text: 'COMPANY' },
-          { value: 'PERSONAL', text: 'PERSON' },
+          { value: 'PERSONAL', text: 'PERSONAL' },
         ],
         loading: false
       };

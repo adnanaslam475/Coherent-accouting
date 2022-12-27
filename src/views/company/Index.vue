@@ -12,7 +12,7 @@
             <!----><input
               v-model="searchQuery"
               type="text"
-              placeholder="Search Product"
+              placeholder="Search Company"
               class="search-product form-control"
               @keyup="searchCompanies()"
             />
@@ -325,7 +325,7 @@
 <script>
 import BCardCode from "@core/components/b-card-code/BCardCode.vue";
 import Swal from "sweetalert2";
-import CrmActiveProject from "../dashboard/crm/CrmActiveProject.vue";
+import CrmActiveProject from "./crm/CrmActiveProject.vue";
 import {
   BCard,
   BRow,

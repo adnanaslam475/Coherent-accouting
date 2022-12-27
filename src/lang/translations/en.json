@@ -160,6 +160,7 @@
     "status": "Status",
     "owner_first_name": "Owner First Name",
     "company_id": "Company ID",
+    "period": "Period",
     "actions": "Actions"
   },
   "company_info": {

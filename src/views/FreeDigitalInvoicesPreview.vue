@@ -197,7 +197,7 @@
               responsive
               :items="invoiceData.transactions"
               :fields="['no.','serviceOrItemDescription', 'qty', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"
-              class="custom-preview-table"            
+              class="custom-preview-table mb-0"            
             >
               <template #cell(no.)="data">
                   {{ data.item.index }}
@@ -337,10 +337,10 @@
               filename="invoice"
               :pdf-quality="2"
               :manual-pagination="false"
-              pdf-format="a4"
+              pdf-format="a3"
               :pdf-margin="10"
               pdf-orientation="portrait"
-              pdf-content-width="800px"
+              pdf-content-width="1125px"
               @progress="onProgress($event)"
               ref="html2Pdf"
             >
