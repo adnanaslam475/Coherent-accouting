@@ -311,7 +311,8 @@
     "content" : "Content",
     "created_date" : "Created Date",
     "answer" : "Answer",
-    "CREATED":"Created"
+    "CREATED":"Created",
+	"RESOLVED":"RESOLVED"
   },
   "add_invoice":{
     "invoice":"Invoice",

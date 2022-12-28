@@ -2,18 +2,23 @@
 	"app_logo_title": "Coherent Accounting",
 	"lbl": {
 		"login": "Вход",
-		"register": "Register",
+		"register": "Регистрирай се",
 		"sign_up": "Sign Up",
 		"pricing": "Цени",
 		"questions": "Въпроси",
 		"videos": "Видео",
 		"prices": "Цени",
 		"free_digital_invoices": "Безплатни дигитални фактури",
-		"why_choose_use": "Защо ние"
+		"why_choose_use": "Защо ние",
+		"companies": "Фирми",
+        "company_info": "Информация Фирма",
+        "company_invoices": "Фирмени Фактури",
+        "add_multiple_invoices": "Качване на много фактури",
+        "list_invoices": "Списък Фактури"
 	},
 	"login": {
 		"title": "Добре дошли в Coherent Accounting! 👋",
-		"subtitle": "Please sign-in to your account and start the adventure",
+		"subtitle": "Моля регистрирайте се и започнете приключението си",
 		"lbl_email": "Email",
 		"email_placeholder": "john@example.com",
 		"lbl_password": "парола",
@@ -24,8 +29,8 @@
 		"sign_in": "Sign in"
 	},
 	"register": {
-		"title": "Adventure starts here 🚀",
-		"subtitle": "Make your app management easy and fun!",
+		"title": "Приключението започва тук 🚀",
+		"subtitle": "Направете деня си по-лесен и забавен!",
 		"lbl_f_name": "Име",
 		"lbl_l_name": "Фамилия",
 		"lbl_c_accountType": "Акаунт тип",
@@ -35,12 +40,12 @@
 		"lbl_c_vatNumber": "ДДС номер",
 		"lbl_email": "Email",
 		"email_placeholder": "john@example.com",
-		"lbl_password": "Password",
+		"lbl_password": "Парола",
 		"lbl_country": "Държава",
 		"country_placeholder": "Моля изберете държава",
 		"i_agree_to": "Съгласявам се",
-		"lbl_privacy_term_link": "privacy policy & terms",
-		"lbl_submit": "Sign up",
+		"lbl_privacy_term_link": "Условия на Ползване",
+		"lbl_submit": "Регистрирай се",
 		"have_account": "Вече имате акаунт?",
 		"lbl_login_link": "Вече имате акаунт?"
 	},
@@ -104,6 +109,7 @@
 	},
 	"companies": {
     "unfinished_vat_reports": "Недовършени ДДС Отчети",
+	"search_company" : "Търси Фирма",
     "add_company": "Добави фирма",
     "country": "Държава",
     "company_name": "Фирма",
@@ -111,7 +117,10 @@
     "status": "Статус",
     "owner_first_name": "МОЛ",
     "company_id": "ЕИК",
-    "actions": "Действия"
+    "actions": "Действия",
+	"ACTIVE":"АКТИВНА",
+    "INAVTIVE" :"НЕАКТИВНА",
+    "period": "Период"
   },
   "company_info": {
     "edit": "Промени",
@@ -133,10 +142,14 @@
     "reports_have_been_created": "Отчети бяха създадени",
     "invoices_per_month": "Фактури за месец",
     "invoices_per_day": "Фактури за ден",
-    "no_record": "Не бяха намерени записи"
+    "no_record": "Не бяха намерени записи",
+	"create_invoice" : "Създай Фактура",
+    "create_vat_report" : "Създай ДДС Отчет",
+    "create_private_person" :"Добави Киент",
+    "create_yearly_report" : "Създай Годишен отчет"
   },
   "company_tabs": {
-    "multiple_upload": "Много от файл",
+    "multiple_upload": "Качване от файл",
     "vat_reports": "ДДС Отчети",
     "yearly_reports": "Годишни Отчети",
     "company_documents": "Фирмени документи",
@@ -155,7 +168,9 @@
     "supplier_company": "Фирма Доставчик",
     "amount_non_vat": "Дан.Основа",
     "total_amount": "Общо",
-    "vat_amount": "ДДС"
+    "vat_amount": "ДДС",
+	"EXPENSE":"РАЗХОД",
+    "INCOME":"ПРИХОД"
   },
   "vat_reports": {
     "add_vat_report": "Добави",
@@ -227,14 +242,66 @@
     "user" : "Клиент",
     "identification_no" : "ЕГН",
     "vat_id":"ДДС номер",
-    "id_card": "Номер лична карта"
+    "id_card": "Номер лична карта",
+	"show": "Покажи",
+	"full_name" : "Три Имена",
+	"add_new_user": "Добави нов",
+	"add": "Добави",
+    "cancel": "Изход"
   },
   "tickets_page":{
     "add_new_ticket" : "Добави",
     "title" :"Заглавие",
     "content" : "Съдържание",
     "created_date" : "Създаден на:",
-    "answer" : "Отговор"
+    "answer" : "Отговор",
+    "CREATED":"СЪЗДАДЕН",
+	"RESOLVED":"ОТГОВОРЕН"
+  },
+  "add_invoice":{
+    "invoice":"Фактура",
+    "company_address": "Фирмен Адрес",
+    "company_id_no": "ЕИК",
+    "company_owner": "МОЛ",
+    "company_vat": "ДДС ИН",
+    "person_name":"Име",
+    "person_address": "Адрес",
+    "person_id_no":"ЕГН/ЛНЧ",
+    "vat":"ДДС",
+    "yes":"ДА",
+    "no":"НЕ",
+    "supplier": "Доставчик",
+    "recipient": "Получател",
+    "ORIGINAL": "Оригинал",
+    "PROFORMA":"ПРОФОРМА",
+    "service": "Услуги",
+    "goods":"Стоки",
+    "date" :"Дата",
+    "company": "Фирма",
+    "person":"ч.лице",
+    "s_no": "№",
+    "item_service": "Продукт/услуга",
+    "service_item_description": "Продукт/услуга",
+    "qty" : "Кол.",
+    "measure": "Мярка",
+    "measurement":"Мярка",
+    "single_price" : "Ед.Цена",
+    "single_amount_transaction":"Ед.Цена",
+    "currency": "Валута",
+    "add_item":"Добави",
+    "total_price": "Общо",
+    "total_price_non_vat" : "Дан.Основа",
+    "discount_percent": "Отстъпка в %",
+    "discount_sum" : "Отстъпка сума",
+    "save": "Запази",
+    "preview": "Прегед",
+    "clear" : "Изчисти",
+    "name": "Име",
+    "id_no":"№",
+    "owner":"Собственик",
+    "vat_no":"ДДС №",
+    "transaction_total_nonVat": "Дан. Основа"
+
   },
   "home": "Табло",
   "dashboard": "Табло",
@@ -245,7 +312,10 @@
   "contacts": "Контакти",
   "back_to_login": "Към Логин",
   "my_invoices" :"Моите Фактури",
+  "View Company" : "Информация Фирма",
   "my_tickets":"Моите Тикети",
   "my_profile":"Моят Профил",
-  "companiess" :"Фирми"
+  "companiess" :"Фирми",
+  "download":"Свали",
+  "print": "Принтирай"
 }
