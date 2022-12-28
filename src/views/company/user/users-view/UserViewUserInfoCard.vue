@@ -159,7 +159,7 @@ export default {
       ])
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: 'Delete Invoice',
+          title: 'Delete Client',
           okVariant: 'primary',
           okTitle: 'Confirm',
           cancelTitle: 'Cancel',
