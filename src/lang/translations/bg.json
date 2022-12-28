@@ -179,13 +179,13 @@
     "company_name_and_address": "Фирма Име и адрес",
     "total_sum_base_taxes": "Общо дан. Основа",
     "total_vat": "ДДС",
-    "base_tax_addition": "Дан. Основа и допълн.",
-    "with_full_tax_credit": "С пълен дан.Кредит",
+    "base_tax_addition": "Дан. основа и допълн.",
+    "with_full_tax_credit": "С пълен дан. кредит",
     "total_tax_credit": "Общо дан.Кредит",
     "vat_to_pay": "ДДС за плащане",
     "vat_to_exclude": "ДДС за изваждане",
     "tax_to_pay": "Даници за плащане",
-    "tax_to_pay_effective": "Ефект.Данъци"
+    "tax_to_pay_effective": "Ефект. Данъци"
   },
   "dashboard_lbl": {
     "statistics": "Сатистики",
