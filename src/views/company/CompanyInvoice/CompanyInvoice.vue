@@ -185,7 +185,7 @@
           <!-- Invoice Description: Table -->
           <b-table-lite
             responsive
-            :items="invoiceData.transactions"
+            :items="invoiceData.transactions mb-0"
             :fields="['serviceOrItemDescription', 'quantity', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"            
           >
             <template #cell(singleAmountTransaction)="data">
@@ -308,10 +308,10 @@
             filename="invoice"
             :pdf-quality="2"
             :manual-pagination="false"
-            pdf-format="a4"
+            pdf-format="a3"
             :pdf-margin="10"
             pdf-orientation="portrait"
-            pdf-content-width="800px"
+            pdf-content-width="1125px"
             @progress="onProgress($event)"
             ref="html2Pdf"
           >

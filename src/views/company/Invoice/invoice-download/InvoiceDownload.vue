@@ -132,7 +132,7 @@
           <!-- Invoice Description: Table -->
           <b-table-lite
             responsive
-            class="custom-preview-table"
+            class="custom-preview-table mb-0"
             :items="invoiceData.transactions"
             :fields="['no.','serviceOrItemDescription', 'qty', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"            
           >

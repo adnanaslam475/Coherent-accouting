@@ -385,10 +385,10 @@
             filename="invoice"
             :pdf-quality="2"
             :manual-pagination="false"
-            pdf-format="a4"
+            pdf-format="a3"
             :pdf-margin="10"
             pdf-orientation="portrait"
-            pdf-content-width="800px"
+            pdf-content-width="1125px"
             @progress="onProgress($event)"
           >
             <section

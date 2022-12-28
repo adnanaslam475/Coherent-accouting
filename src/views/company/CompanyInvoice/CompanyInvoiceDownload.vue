@@ -119,7 +119,7 @@
       <b-card no-body class="invoice-preview-card">
         <!-- Invoice Description: Table -->
         <b-table-lite
-          class="invoice-table"
+          class="invoice-table mb-0"
           responsive
           :items="invoiceData.transactions"
           :fields="[

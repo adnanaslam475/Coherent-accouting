@@ -172,7 +172,8 @@
     "actions": "Actions",
     "search_company" : "Search Company...",
     "ACTIVE":"ACTIVE",
-    "INAVTIVE" :"INAVTIVE"
+    "INAVTIVE" :"INAVTIVE",
+    "period": "Period"
   },
   "company_info": {
     "edit": "Edit",
