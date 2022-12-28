@@ -9,7 +9,7 @@
     >
       <b-card-header style="padding: 1rem">
         <b-card-title>
-          {{ title }}
+          {{ $t('company_info.invoices_per_day')}} 
         </b-card-title>
 
         <div
@@ -59,7 +59,7 @@
     >
       <b-card-header style="padding: 1rem">
         <b-card-title>
-          {{ title }}
+          {{ $t('company_info.invoices_per_month')}} 
         </b-card-title>
 
         <div

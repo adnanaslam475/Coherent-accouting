@@ -214,7 +214,7 @@
               }`"
               class="text-capitalize"
             >
-              {{ data.value }}
+              {{ $t('company_invoices.'+ data.value) }}  
             </b-badge>
           </span>
         </b-link>

@@ -15,7 +15,7 @@
       <!-- Header -->
       <div class="d-flex justify-content-between align-items-center content-sidebar-header px-2 py-1">
         <h5 class="mb-0">
-          Add New User
+          {{ $t('clients_or_recipients.add_new_user') }}
         </h5>
 
         <feather-icon
@@ -46,7 +46,7 @@
             rules="required"
           >
             <b-form-group
-              label="Full Name"
+              :label="$t('clients_or_recipients.full_name')"
               label-for="firstMiddleAndLastName"
             >
               <b-form-input
@@ -55,7 +55,6 @@
                 autofocus
                 :state="getValidationState(validationContext)"
                 trim
-                placeholder="John Doe"
               />
 
               <b-form-invalid-feedback>
@@ -70,7 +69,7 @@
             rules="required"
           >
             <b-form-group
-              label="Address"
+              :label="$t('company_info.address')"
               label-for="address"
             >
               <b-form-input
@@ -91,7 +90,7 @@
             name="IdCardNumber"
           >
             <b-form-group
-              label="Id Card Number"
+              :label="$t('clients_or_recipients.id_card')"
               label-for="idcardNumber"
             >
               <b-form-input
@@ -113,7 +112,7 @@
             rules="required"
           >
             <b-form-group
-              label="Identification Number"
+            :label="$t('clients_or_recipients.identification_no')"
               label-for="identificationNumber"
             >
               <b-form-input
@@ -134,7 +133,7 @@
             name="VatIdentificationNumber"
           >
             <b-form-group
-              label="Vat Identification Number"
+             :label="$t('clients_or_recipients.vat_id')"
               label-for="vatIdentificationNumber"
             >
               <b-form-input
@@ -158,7 +157,7 @@
               class="mr-2"
               type="submit"
             >
-              Add
+            {{ $t('clients_or_recipients.add') }}
             </b-button>
             <b-button
               v-ripple.400="'rgba(186, 191, 199, 0.15)'"
@@ -166,7 +165,7 @@
               variant="outline-secondary"
               @click="hide"
             >
-              Cancel
+            {{ $t('clients_or_recipients.cancel') }}
             </b-button>
           </div>
 

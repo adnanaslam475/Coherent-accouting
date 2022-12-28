@@ -49,9 +49,9 @@
           <b-badge
             pill
             :variant="`${data.value.toLowerCase() == 'resolved' ? 'light-success' : 'light-warning' }`"
-            class="text-capitalize"
+            class="text-uppercase"
           >
-            {{ data.value }}
+            {{ $t('tickets_page.'+data.value) }}
           </b-badge>
         </span>
       </template>
@@ -78,7 +78,7 @@
 
         <div class="cursor-pointer" @click="editTicket(data.item)">
           <feather-icon icon="EditIcon" />
-          <span class="align-middle ml-50">Edit</span>
+          <span class="align-middle ml-50">{{ $t('company_info.edit') }}</span>
         </div>
         <!-- </b-button> -->
       </template>

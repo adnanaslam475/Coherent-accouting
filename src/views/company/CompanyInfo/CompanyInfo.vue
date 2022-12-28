@@ -423,7 +423,7 @@
                   },
                 }"
               >
-               Create Invoice
+               {{ $t('company_info.create_invoice') }} 
               </b-dropdown-item>
               <b-dropdown-item
                 :to="{
@@ -436,14 +436,14 @@
                 }"
               >
 
-                Create Vat Report
+              {{ $t('company_info.create_vat_report') }} 
               </b-dropdown-item>
               <b-dropdown-item
                 @click="actionTab"
-              >Create Private Person</b-dropdown-item>
+              > {{ $t('company_info.create_private_person') }} </b-dropdown-item>
               <b-dropdown-item
               >
-                Create Yearly Report
+              {{ $t('company_info.create_yearly_report') }} 
               </b-dropdown-item>
             </b-dropdown>
           </div>
