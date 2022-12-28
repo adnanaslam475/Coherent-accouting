@@ -4,7 +4,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="LayersIcon" />
-          <span style="font-size: 13px">{{ $t("lbl.companies") }}</span>
+          <span style="font-size: 13px">{{ $t("companiess") }}</span>
         </template>
         <div class="row">
           <!-- <input data-v-9a6e255c="" type="text" placeholder="Search..." class="d-inline-block mr-1 form-control col-4" style="margin-left: 15px" /> -->
@@ -12,7 +12,7 @@
             <!----><input
               v-model="searchQuery"
               type="text"
-              placeholder="Search Company"
+              :placeholder="$t('companies.search_company')"
               class="search-product form-control"
               @keyup="searchCompanies()"
             />
@@ -158,7 +158,7 @@
           </template>
 
           <template #cell(status)="data">
-            <div>{{ data.item.status }}</div>
+            <div>{{ $t('companies.'+data.item.status) }}</div>
           </template>
 
           <!-- Company OwnerFirstName Column -->

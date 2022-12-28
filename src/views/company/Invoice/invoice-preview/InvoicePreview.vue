@@ -43,7 +43,7 @@
           <b-card-header class="justify-content-center"> 
             <div class="d-flex align-items-center" style="gap: 15px">
               <h4 class="m-0">
-                Invoice Number:
+                {{ $t('company_invoices.invoice_no')}}:
               </h4>
               <p class="m-0 position-relative invoiceNumber">
                 {{ invoiceData.invoiceNumber }}
@@ -63,13 +63,13 @@
                   <h5 
                     class="m-0" 
                   >
-                    Supplier
+                  {{  $t('add_invoice.supplier') }}
                   </h5>
               </b-card-header>
               <b-card-body class="invoice-body">
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Name:
+                    {{  $t('add_invoice.name') }}:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companName }}
@@ -77,7 +77,7 @@
                 </div>
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Address:
+                    {{$t('company_info.address')}}:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyAddress }}
@@ -85,7 +85,7 @@
                 </div>
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    ID Number:
+                    {{  $t('add_invoice.id_no') }}:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyEic }}
@@ -93,7 +93,7 @@
                 </div>
                 <div class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Owner:
+                    {{  $t('add_invoice.owner') }}:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyOwnerName }}
@@ -101,7 +101,7 @@
                 </div>
                 <div v-if="invoiceData.supplierCompany.companyVatEic" class="invoice-date-wrapper">
                   <p class="invoice-date-title">
-                    Vat No:
+                    {{  $t('add_invoice.vat_no') }}:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.supplierCompany.companyVatEic }}
@@ -117,12 +117,12 @@
               class="invoice-preview invoice-card"
             > 
               <b-card-header class="justify-content-center invoice-header">
-                  <h5 class="m-0">Recipient</h5>
+                  <h5 class="m-0">{{  $t('add_invoice.recipient') }}</h5>
               </b-card-header>
               <b-card-body class="invoice-body">
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Name:
+                  {{  $t('add_invoice.name') }}:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companName }}
@@ -130,7 +130,8 @@
               </div>
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Address:
+                  {{$t('company_info.address')}}:
+
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyAddress }}
@@ -138,7 +139,7 @@
               </div>
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  ID Number:
+                  {{  $t('add_invoice.id_no') }}:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyEic }}
@@ -146,7 +147,7 @@
               </div>
               <div class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Owner:
+                  {{  $t('add_invoice.owner') }}:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyOwnerName }}
@@ -154,7 +155,7 @@
               </div>
               <div v-if="invoiceData.recipientCompany.companyVatEic" class="invoice-date-wrapper">
                 <p class="invoice-date-title">
-                  Vat No:
+                  {{  $t('add_invoice.vat_no') }}:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.recipientCompany.companyVatEic }}
@@ -172,7 +173,7 @@
             <b-card-header class="justify-content-end"> 
               <div class="invoice-date-wrapper invoice-middle-content">
                 <p class="invoice-date-title">
-                  Transaction Type:
+                  {{$t('company_invoices.transaction_type')}}:
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.transactionType }}
@@ -187,7 +188,7 @@
           <b-card-header class="justify-content-end"> 
             <div class="invoice-date-wrapper invoice-middle-content">
               <p class="invoice-date-title">
-                Date Issued:
+                {{$t('company_invoices.date_issued')}}:
               </p>
               <p class="invoice-date">
                 {{ invoiceData.dateIssued }}
@@ -207,16 +208,40 @@
             :items="invoiceData.transactions"
             :fields="['no.','serviceOrItemDescription', 'qty', 'measurement', 'singleAmountTransaction', 'transactionTotalAmountNonVat']"            
           >
+          <template #head(no.)>
+            {{  $t('add_invoice.s_no') }} 
+          </template>
             <template #cell(no.)="data">
                 {{ data.item.index }}
             </template>
+            
+            <template #head(serviceOrItemDescription)>
+              {{  $t('add_invoice.service_item_description') }}  
+              </template>
+
+              <template #head(qty)>
+              {{  $t('add_invoice.qty') }}  
+              </template>
+
             <template #cell(qty)="data">
                 {{ data.item.quantity }}
             </template>
+
+            <template #head(measurement)>
+              {{  $t('add_invoice.measurement') }}
+              </template>
+
+              <template #head(singleAmountTransaction)>
+              {{  $t('add_invoice.single_amount_transaction') }}
+              </template>
             <template #cell(singleAmountTransaction)="data"> 
                 <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.singleAmountTransaction }}</span>
                 <span v-else>{{ invoiceData.currency }} {{ data.item.singleAmountTransaction }}</span>
             </template>
+
+            <template #head(transactionTotalAmountNonVat)>
+              {{  $t('add_invoice.transaction_total_nonVat') }}
+              </template>
             <template #cell(transactionTotalAmountNonVat)="data">
                 <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{ data.item.transactionTotalAmountNonVat }}</span>
                 <span v-else>{{ invoiceData.currency }} {{ data.item.transactionTotalAmountNonVat }}</span>
@@ -240,8 +265,8 @@
                   order="2"
                   order-md="1"
                 >
-                <h1 class="invoiceTypeHeading">
-                  {{ invoiceData.invoiceType }}
+                <h1 class="invoiceTypeHeading text-uppercase">
+                  {{ $t('add_invoice.'+invoiceData.invoiceType) }} 
                 </h1>
                 </b-col>
   
@@ -256,7 +281,7 @@
                   <div class="invoice-total-wrapper">
                     <div class="invoice-total-item">
                       <p class="invoice-total-title">
-                        Total price NonVat:
+                        {{  $t('add_invoice.total_price_non_vat') }}:
                       </p>
                       <p class="invoice-total-amount">
                         <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.amountNonVat}}</span>
@@ -265,7 +290,7 @@
                     </div>
                     <div class="invoice-total-item">
                       <p class="invoice-total-title">
-                        VAT:
+                        {{  $t('add_invoice.vat') }}:
                       </p>
                       <p class="invoice-total-amount">
                         {{invoiceData.vatPercent}} %
@@ -273,7 +298,7 @@
                     </div>
                     <div class="invoice-total-item">
                       <p class="invoice-total-title">
-                        VAT Amount:
+                        {{  $t('company_invoices.vat_amount') }}:
                       </p>
                       <p class="invoice-total-amount">
                         <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.vatAmount}}</span>
@@ -282,7 +307,7 @@
                     </div>
                     <div class="invoice-total-item">
                       <p class="invoice-total-title">
-                        Discount Percent:
+                        {{  $t('add_invoice.discount_percent') }}:
                       </p>
                       <p class="invoice-total-amount">
                         {{invoiceData.tradeDiscountPercent}} %
@@ -290,7 +315,7 @@
                     </div>
                     <div class="invoice-total-item">
                       <p class="invoice-total-title">
-                        Discount Sum:
+                        {{  $t('add_invoice.discount_sum') }}:
                       </p>
                       <p class="invoice-total-amount">
                         <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.tradeDiscountAmount}}</span>
@@ -300,7 +325,7 @@
                     
                     <div class="invoice-total-item">
                       <p class="invoice-total-title font-weight-bolder custom-font mb-0">
-                        Total Price:
+                        {{  $t('add_invoice.total_price') }}:
                       </p>
                       <p class="invoice-total-amount font-weight-bolder custom-font mb-0">
                         <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' || invoiceData.currency.toLowerCase().trim() == 'bgn' || invoiceData.currency == 'лв' || invoiceData.currency == 'лв.'">лв. {{invoiceData.totalAmount}}</span>
@@ -330,7 +355,7 @@
             block
             @click="generatePDF()"
           >
-            Download
+          {{  $t('download') }}
           </b-button>
 
           <vue-html2pdf
@@ -382,7 +407,7 @@
             block
             @click="printInvoice"
           >
-            Print
+          {{  $t('print') }}
           </b-button>
 
           <!-- Button: Edit -->
@@ -393,7 +418,7 @@
             block
             :to="{ name: 'company-invoice-edit', params: { id: $route.params.id, companyId: $route.params.companyId  } }"
           >
-            Edit
+          {{$t('company_info.edit')}}
           </b-button>
         </b-card>
       </b-col>

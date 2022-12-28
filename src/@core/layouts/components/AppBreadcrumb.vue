@@ -55,7 +55,11 @@
                 :active="item.active"
                 :to="item.to"
               >
-              {{ $t(item.text) }}
+              <!-- {{ item }} -->
+              <span v-if="item.text === 'Companies'">
+              {{  $t('companiess') }}</span>
+              <span v-else> {{ $t(item.text) }}</span>
+             
       
               </b-breadcrumb-item>
             </b-breadcrumb>

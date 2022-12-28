@@ -127,7 +127,7 @@
           <b>{{  $t('current_plan.price') }} : </b> {{ currentPlan.planMonthPrice }} € {{  $t('current_plan.per_month') }}
         </p>
         <!-- limits -->
-        <p><b>{{  $t('current_plan.limit') }} : </b>{{ currentPlan.companyLimit }} {{  $t('lbl.companies') }}</p>
+        <p><b>{{  $t('current_plan.limit') }} : </b>{{ currentPlan.companyLimit }} {{ $t('companiess') }} </p>
       </b-col>
 
       <b-col cols="6" v-if="daysLeft > 0">

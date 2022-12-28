@@ -204,7 +204,9 @@
 
       <!-- Column: nameAndAddress -->
       <template #head(nameAndAddress)>
+        <span class="text-nowrap">
         {{ $t("vat_reports.company_name_and_address") }}
+        </span>
       </template>
       <template #cell(nameAndAddress)="data">
         {{ data.value }}

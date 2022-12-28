@@ -171,12 +171,15 @@
     "status": "Status",
     "owner_first_name": "Owner First Name",
     "company_id": "Company ID",
-    "period": "Period",
-    "actions": "Actions"
+    "actions": "Actions",
+    "search_company" : "Search Company...",
+    "ACTIVE":"ACTIVE",
+    "INAVTIVE" :"INAVTIVE",
+    "period": "Period"
   },
   "company_info": {
     "edit": "Edit",
-    "delete": "Delete ",
+    "delete": "Delete",
     "owner_name": "Owner Name",
     "owner_egn": "Owner EGN",
     "company_id": "Company ID",
@@ -194,7 +197,11 @@
     "reports_have_been_created": "Reports have been created",
     "invoices_per_month": "Invoices Per Month",
     "invoices_per_day": "Invoices Per Day",
-    "no_record": "No records found"
+    "no_record": "No records found",
+    "create_invoice" : "Create Invoice",
+    "create_vat_report" : "Create Vat Report",
+    "create_private_person" :"Create Private Person",
+    "create_yearly_report" : "Create Yearly Report"
   },
   "company_tabs": {
     "multiple_upload": "Multiple Uploads",
@@ -216,7 +223,9 @@
     "supplier_company": "Supplier Company",
     "amount_non_vat": "Amount non Vat",
     "total_amount": "Total Amount",
-    "vat_amount": "Vat Amount"
+    "vat_amount": "Vat Amount",
+    "EXPENSE":"EXPENSE",
+    "INCOME":"INCOME"
   },
   "vat_reports": {
     "add_vat_report": "Add VAT Report",
@@ -288,14 +297,66 @@
     "user" : "User",
     "identification_no" : "Identification Number",
     "vat_id":"Vat Identification Number",
-    "id_card": "ID Card Number"
+    "id_card": "ID Card Number",
+    "entries": "Entries",
+    "show": "Show",
+    "add_new_user": "Add New User",
+    "full_name" : "Full Name",
+    "add": "Add",
+    "cancel": "Cancel"
   },
   "tickets_page":{
     "add_new_ticket" : "Add New Ticket",
     "title" :"Title",
     "content" : "Content",
     "created_date" : "Created Date",
-    "answer" : "Answer"
+    "answer" : "Answer",
+    "CREATED":"Created"
+  },
+  "add_invoice":{
+    "invoice":"Invoice",
+    "company_address": "Company Address",
+    "company_id_no": "Company ID Number",
+    "company_owner": "Company Owner",
+    "company_vat": "Company VAT No",
+    "person_name":"Person Name",
+    "person_address": "Person Address",
+    "person_id_no":"Person ID Number",
+    "vat":"Vat",
+    "yes":"YES",
+    "no":"NO",
+    "supplier": "Supplier",
+    "recipient": "Recipient",
+    "ORIGINAL": "Original",
+    "PROFORMA":"Proforma",
+    "service": "Service",
+    "goods":"Goods",
+    "date" :"Date",
+    "company": "Company",
+    "person":"Person",
+    "s_no": "No.",
+    "item_service": "Item Name or Service",
+    "service_item_description": "Service or Item Description",
+    "qty" : "Qty",
+    "measure": "Measure",
+    "measurement":"Measurement",
+    "single_price" : "Single Price",
+    "single_amount_transaction":"Single Amount Transaction",
+    "currency": "Currency",
+    "add_item":"Add Item",
+    "total_price": "Total Price",
+    "total_price_non_vat" : "Total Price NonVat",
+    "discount_percent": "Discount Percent",
+    "discount_sum" : "Discount Sum",
+    "save": "Save",
+    "preview": "Preview",
+    "clear" : "Clear",
+    "name":"Name",
+    "id_no":"ID Number",
+    "owner":"Owner",
+    "vat_no":"Vat No",
+    "transaction_total_nonVat": "Transaction Total Amount Non VAT"
+
   },
   "home": "Home",
   "dashboard": "Dashboard",
@@ -309,7 +370,9 @@
   "my_invoices" :"My Invoices",
   "my_tickets":"My Tickets",
   "my_profile":"My Profiles",
-  "companiess" :"Companies"
+  "companiess" :"Companies",
+  "View Company" : "View Company",
+  "download":"Download",
+  "print": "Print"
   
-
 }

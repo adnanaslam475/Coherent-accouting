@@ -318,15 +318,15 @@
             </template>
             <b-dropdown-item @click="generatePDF(data.item.id)">
               <feather-icon icon="DownloadIcon" />
-              <span class="align-middle ml-50">Download</span>
+              <span class="align-middle ml-50">{{ $t('download') }}</span>
             </b-dropdown-item>
             <b-dropdown-item :to="{ name: 'apps-invoice-edit', params: { id: data.item.id } }">
               <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
+              <span class="align-middle ml-50">{{ $t('company_info.edit') }}</span>
             </b-dropdown-item>
             <b-dropdown-item @click="showMsgBoxTwo(data.item.id,refetchData)">
               <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
+              <span class="align-middle ml-50">{{ $t('company_info.delete') }}</span>
             </b-dropdown-item>
           </b-dropdown>
           <vue-html2pdf

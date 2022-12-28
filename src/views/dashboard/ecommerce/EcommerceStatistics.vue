@@ -5,7 +5,7 @@
     class="card-statistics"
   >
     <b-card-header>
-      <b-card-title>Statistics</b-card-title>
+      <b-card-title>{{ $t('dashboard_lbl.statistics') }}</b-card-title>
     </b-card-header>
     <b-card-body class="statistics-body dashboard-stats">
       <b-row>

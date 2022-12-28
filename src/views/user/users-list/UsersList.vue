@@ -18,7 +18,7 @@
             md="6"
             class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
           >
-            <label>Show</label>
+            <label>{{ $t('clients_or_recipients.show') }}</label>
             <v-select
               v-model="perPage"
               :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
@@ -26,7 +26,15 @@
               :clearable="false"
               class="per-page-selector d-inline-block mx-50"
             />
-            <label>Entries</label>
+            <label>{{ $t('clients_or_recipients.entries') }}</label>
+
+            <b-button
+                class="ml-1"
+                variant="primary"
+                @click="isAddNewUserSidebarActive = true"
+              >
+                <span class="text-nowrap">{{  $t('clients_or_recipients.add_user') }}</span>
+              </b-button>
           </b-col>
 
           <!-- Search -->
@@ -35,14 +43,9 @@
               <b-form-input
                 v-model="searchQuery"
                 class="d-inline-block mr-1"
-                placeholder="Search..."
+                :placeholder="$t('company_invoices.search')"
               />
-              <b-button
-                variant="primary"
-                @click="isAddNewUserSidebarActive = true"
-              >
-                <span class="text-nowrap">{{  $t('clients_or_recipients.add_user') }}</span>
-              </b-button>
+              
             </div>
           </b-col>
         </b-row>
