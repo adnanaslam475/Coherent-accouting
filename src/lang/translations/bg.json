@@ -26,7 +26,7 @@
 		"remember": "Запомни ме",
 		"pre_signup_link_txt": "Нов в платформата?",
 		"signup_link_txt": "Създай акаунт",
-		"sign_in": "Sign in"
+		"sign_in": "Влез"
 	},
 	"register": {
 		"title": "Приключението започва тук 🚀",
@@ -308,10 +308,10 @@
   "invoices": "Фактури",
   "videos": "Видео Уроци",
   "tickets": "Тикети",
-  "my-plans": "Моите Планове",
+  "my-plans": "Моят План",
   "contacts": "Контакти",
   "back_to_login": "Към Логин",
-  "my_invoices" :"Моите Фактури",
+  "my_invoices" :"Мои Фактури",
   "View Company" : "Информация Фирма",
   "my_tickets":"Моите Тикети",
   "my_profile":"Моят Профил",
