@@ -45,6 +45,8 @@
     "country_placeholder": "Please select your country",
     "i_agree_to": "I agree to",
     "lbl_privacy_term_link": "privacy policy & terms",
+    "lbl_privacy": "Terms and Conditions", 
+    "lbl_privacy_content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis, perferendis \n molestiae cumque eius quidem tempora natus sit consequuntur \n praesentium mollitia.",  
     "lbl_submit": "Sign up",
     "have_account": "Already have an account?",
     "lbl_login_link": "Already have an account?"

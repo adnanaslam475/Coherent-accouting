@@ -220,7 +220,7 @@
                 />
               
                 <feather-icon
-                  @click="deleteAsset(data.item.binaryId)"
+                  @click="showMsgBoxTwo(data.item.binaryId)"
                   size="16"
                   class="mr-1"
                   :id="`delete-${data.item.id}-icon`"
@@ -677,6 +677,33 @@ export default {
       }
     },
     //deleting an asset
+    showMsgBoxTwo(data) {
+      const h = this.$createElement
+        // Using HTML string
+        // More complex structure
+      const messageVNode = h('div', { class: ['bvModalFont'] }, [
+        h('p', { class: ['text-center card-text'] }, [
+          'Are you sure you want to delete this Document?',
+        ]),
+        h('p', { class: ['text-center card-text'] }, [
+          'It will delete all the data related to it.',
+        ])
+      ])
+      this.$bvModal
+        .msgBoxConfirm([messageVNode], {
+          title: 'Delete Invoice',
+          okVariant: 'primary',
+          okTitle: 'Confirm',
+          cancelTitle: 'Cancel',
+          hideHeaderClose: false,
+          centered: true,
+        })
+        .then(value => {
+          if(value){
+            this.deleteAsset(data)
+          }
+        })
+    },
     async deleteAsset(data) {
       const rec = JSON.parse(data);
       try {

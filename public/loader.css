@@ -317,3 +317,6 @@ font-size: 0.8vw;
 .top-custom{
   top: 18px;
 }
+.bvModalFont p{
+  font-size: 15px;
+}

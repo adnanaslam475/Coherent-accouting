@@ -292,7 +292,11 @@
                         v-model="gdpr"
                         name="checkbox-1"
                 >{{$t('register.i_agree_to')}}
-                  <b-link>{{ $t('register.lbl_privacy_term_link')}}</b-link>
+                  <b-link
+                    v-b-modal.modal-scrollable
+                  >
+                    {{ $t('register.lbl_privacy_term_link')}}
+                  </b-link>
                 </b-form-checkbox>
               </b-form-group>
 
@@ -326,6 +330,24 @@
       </b-col>
       <!-- /Register-->
     </b-row>
+    <b-modal
+      id="modal-scrollable"
+      scrollable
+      :title="$t('register.lbl_privacy')"
+      cancel-title="Close"
+      ok-title="Accept"
+      cancel-variant="outline-secondary"
+      centered
+      size="lg"
+      @ok="gdpr=true"
+    >
+      <b-card-text
+      >
+        <span style="white-space: break-spaces;">
+          {{$t('register.lbl_privacy_content')}}
+        </span>
+      </b-card-text>
+    </b-modal>
   </div>
 </template>
 
@@ -362,7 +384,8 @@
     BDropdownDivider,
     BAvatar,
     BNavItem,
-    BSpinner
+    BSpinner,
+    BModal
   } from "bootstrap-vue";
   import { required, email, password } from "@validations";
   import { togglePasswordVisibility } from "@core/mixins/ui/forms";
@@ -405,7 +428,8 @@
       ValidationObserver,
       vSelect,
       navbarAds,
-      BSpinner
+      BSpinner,
+      BModal
     },
     mixins: [togglePasswordVisibility],
     data() {

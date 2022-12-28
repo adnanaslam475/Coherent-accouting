@@ -352,7 +352,7 @@
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
             <b-dropdown-item
-              @click="vatReportDelete(data.item.id, refetchData)"
+              @click="showMsgBoxTwo(data.item.id, refetchData)"
             >
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
@@ -692,7 +692,33 @@ export default {
     actionTab() {
       this.$emit("state", this.state());
     },
-
+    showMsgBoxTwo(id,refetchData) {
+      const h = this.$createElement
+        // Using HTML string
+        // More complex structure
+      const messageVNode = h('div', { class: ['bvModalFont'] }, [
+        h('p', { class: ['text-center card-text'] }, [
+          'Are you sure you want to delete this Vat Report?',
+        ]),
+        h('p', { class: ['text-center card-text'] }, [
+          'It will delete all the data related to it.',
+        ])
+      ])
+      this.$bvModal
+        .msgBoxConfirm([messageVNode], {
+          title: 'Delete Invoice',
+          okVariant: 'primary',
+          okTitle: 'Confirm',
+          cancelTitle: 'Cancel',
+          hideHeaderClose: false,
+          centered: true,
+        })
+        .then(value => {
+          if(value){
+            this.vatReportDelete(id, refetchData)
+          }
+        })
+    },
     // Delete vat report
     vatReportDelete(id, refetchData) {
       const token = useJwt.getToken();

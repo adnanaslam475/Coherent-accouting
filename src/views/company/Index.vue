@@ -325,7 +325,7 @@
 <script>
 import BCardCode from "@core/components/b-card-code/BCardCode.vue";
 import Swal from "sweetalert2";
-import CrmActiveProject from "./crm/CrmActiveProject.vue";
+import CrmActiveProject from "./crm/unfinishedVatReports.vue";
 import {
   BCard,
   BRow,

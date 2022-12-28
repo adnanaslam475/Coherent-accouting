@@ -34,7 +34,7 @@
                 variant="outline-danger"
                 class="ml-1"
                 size="sm"
-                @click="UserDelete(userData.id)"
+                @click="showMsgBoxTwo(userData.id)"
               >
                 Delete
               </b-button>
@@ -145,6 +145,33 @@ export default {
     },
   },
   methods: {
+    showMsgBoxTwo(id,refetchData) {
+      const h = this.$createElement
+        // Using HTML string
+        // More complex structure
+      const messageVNode = h('div', { class: ['bvModalFont'] }, [
+        h('p', { class: ['text-center card-text'] }, [
+          'Are you sure you want to delete this Client?',
+        ]),
+        h('p', { class: ['text-center card-text'] }, [
+          'It will delete all the data related to it.',
+        ])
+      ])
+      this.$bvModal
+        .msgBoxConfirm([messageVNode], {
+          title: 'Delete Invoice',
+          okVariant: 'primary',
+          okTitle: 'Confirm',
+          cancelTitle: 'Cancel',
+          hideHeaderClose: false,
+          centered: true,
+        })
+        .then(value => {
+          if(value){
+            this.UserDelete(id, refetchData)
+          }
+        })
+    },
     UserDelete(id) {
       let token = useJwt.getToken()
       useJwt
@@ -154,7 +181,7 @@ export default {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `User Deleted Successfully`,
+              title: `Client Deleted Successfully`,
               icon: "DeleteIcon",
               variant: "success",
             },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <form-wizard
-          color="#7367F0"
+          color="#0A64BC"
           :title="null"
           :subtitle="null"
           shape="square"
@@ -1044,7 +1044,6 @@ export default {
 .vue-form-wizard .wizard-card-footer .wizard-footer-right .wizard-btn:after{
   content: ">";
     font-family: feather!important;
-    speak: none;
     font-style: normal;
     font-weight: 400;
     font-variant: normal;

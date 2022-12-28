@@ -1,10 +1,53 @@
 <template>
-  <div>
+  <div title="Unfinished vat reports">
+    <div class="row">
+      <!-- filter -->
+      <div class="input-group col-4 abc mb-1">
+        <input
+          v-model="filter"
+          type="text"
+          placeholder="Search Company"
+          class="search-product form-control"
+        />
+        <div class="input-group-append">
+          <div class="input-group-text" style="height: 38px; cursor: pointer">
+            <!-- #7367f0 -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14px"
+              height="14px"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-muted feather feather-search"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </div>
+        </div>
+        <!---->
+      </div>
+    </div>
+
     <b-table
-      :fields="fields"
-      :items="items"
+      striped
+      hover
       responsive
-      class="mb-0"
+      class="position-relative"
+      :per-page="perPage"
+      :current-page="currentPage"
+      :items="items"
+      :fields="fields"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      :sort-direction="sortDirection"
+      :filter="filter"
+      :filter-included-fields="filterOn"
+      @filtered="onFiltered"
       show-empty
       empty-text="No matching records found"
       empty-filtered-text
@@ -19,17 +62,13 @@
       </template>
 
       <!-- Country Column-->
-      <template #head(Country)>
-        {{ $t("companies.country") }}
+      <template #head(period)>
+        {{ $t("companies.period") }}
       </template>
-
-      <template #cell(Country)="data">
-        <div>
-          <img
-            :src='"@/assets/flags/" + data.item.companyApi.companyIsoAlpha2Country.toLowerCase() + ".png"'
-            style="width: 30px; height: 20px; margin-left: 10px"
-          />
-        </div>
+      <template #cell(period)="data">
+        <span class="text-success">
+          {{ data.value }}
+        </span>
       </template>
 
       <!--  Company Name Column-->
@@ -138,122 +177,110 @@
         <!-- <div>{{data.item.companyIdentificationNumber}}</div> -->
       </template>
 
-      <template #head(period)>
-        {{ $t("companies.period") }}
-      </template>
 
-      <template #cell(period)="data">
-          {{ data.value }}
-        <!-- <div>{{data.item.companyIdentificationNumber}}</div> -->
-      </template>
 
-      <template #head(action)>
-        {{ $t("companies.actions") }}
-      </template>
-
-      <template #cell(action)="data" style="text-align: center !important">
-        <div class="d-flex">
-          <feather-icon
-            :id="`invoice-row-${data.item.companyApi.id}-preview-icon`"
-            icon="EyeIcon"
-            size="16"
-            class="mr-1 cursor-pointer"
-            @click="
-              $router.push({
-                name: 'CompanyView',
-                params: { id: data.item.companyApi.id },
-              })
-            "
-          />
-          <b-tooltip
-            title="View Company"
-            class="cursor-pointer"
-            :target="`invoice-row-${data.item.companyApi.id}-preview-icon`"
-          />
-
-          <feather-icon
-            :id="`edit-${data.item.companyApi.id}-preview-icon`"
-            icon="EditIcon"
-            size="16"
-            class="mx-0"
-            style="cursor: pointer"
-            @click="
-              $router.push({
-                name: 'EditCompany',
-                params: { id: data.item.companyApi.id },
-              })
-            "
-          />
-          <b-tooltip
-            title="Edit Company"
-            :target="`edit-${data.item.id}-preview-icon`"
-          />
-        </div>
-      </template>
     </b-table>
+
+    <b-card-body class="d-flex justify-content-between flex-wrap pt-0">
+      <!-- page length -->
+      <b-form-group
+        label="Per Page"
+        label-cols="6"
+        label-align="left"
+        label-size="sm"
+        label-for="sortBySelect"
+        class="text-nowrap mb-md-0 mr-1"
+      >
+        <b-form-select
+          id="perPageSelect"
+          v-model="perPage"
+          size="sm"
+          inline
+          :options="pageOptions"
+        />
+      </b-form-group>
+
+      <!-- pagination -->
+      <div>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          first-number
+          last-number
+          prev-class="prev-item"
+          next-class="next-item"
+          class="mb-0"
+        >
+          <template #prev-text>
+            <feather-icon icon="ChevronLeftIcon" size="18" />
+          </template>
+          <template #next-text>
+            <feather-icon icon="ChevronRightIcon" size="18" />
+          </template>
+        </b-pagination>
+      </div>
+    </b-card-body>
   </div>
 </template>
 
 <script>
 import BCardCode from "@core/components/b-card-code/BCardCode.vue";
-import Swal from "sweetalert2";
 import {
-  BCard,
-  BRow,
-  BCol,
-  BFormInput,
-  BButton,
   BTable,
-  BMedia,
   BAvatar,
-  BLink,
   BBadge,
-  BDropdown,
-  BDropdownItem,
+  BFormGroup,
+  BFormSelect,
   BPagination,
+  BInputGroup,
+  BFormInput,
+  BInputGroupAppend,
+  BButton,
+  BCardBody,
+  BLink,
   BTooltip,
-  BProgress,
-  BModal,
-  BCardText,
-  BTabs,
-  BTab,
 } from "bootstrap-vue";
-
-import useJwt from "@/auth/jwt/useJwt";
-import axios from "@/libs/axios";
-import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 export default {
   components: {
     BCardCode,
     BTable,
-    BProgress,
-    BBadge,
-    BButton,
-    BLink,
-    BCard,
-    BRow,
-    BCol,
-    BFormInput,
-    BButton,
-    BTable,
-    BMedia,
     BAvatar,
-    BDropdown,
-    BDropdownItem,
+    BBadge,
+    BFormGroup,
+    BFormSelect,
     BPagination,
+    BInputGroup,
+    BFormInput,
+    BInputGroupAppend,
+    BButton,
+    BCardBody,
+    BLink,
     BTooltip,
-    BModal,
-    BCardText,
-    BTabs,
-    BTab,
   },
-
   data() {
     return {
+      perPage: 10,
+      pageOptions: [5, 10, 15],
+      totalRows: 1,
+      currentPage: 1,
+      sortBy: "",
+      sortDesc: false,
+      sortDirection: "asc",
+      filter: null,
+      filterOn: [],
+      infoModal: {
+        id: "info-modal",
+        title: "",
+        content: "",
+      },
       fields: [
         // A virtual column that doesn't exist in items
-        "Country",
+        {
+          key: "period",
+          sortable: false,
+        },
         // A column that needs custom formatting
         {
           key: "companyName",
@@ -280,36 +307,53 @@ export default {
           key: "companyIdentificationNumber",
           label: "Company ID",
           sortable: false,
-        },
-        {
-          key: "period",
-          sortable: false,
-        },
+        }
+
         // A virtual column made up from two fields
-        {
-          key: "action",
-          label: "Action",
-        },
+
       ],
+      /* eslint-disable global-require */
       items: [],
+      /* eslint-disable global-require */
     };
   },
-  created() {
-    this.getAllCompanies();
+  computed: {
+    sortOptions() {
+      // Create an options list from our fields
+      return this.fields
+        .filter((f) => f.sortable)
+        .map((f) => ({ text: f.label, value: f.key }));
+    },
+  },
+  mounted() {
+    // Set the initial number of items
+    this.totalRows = this.items.length;
   },
   methods: {
-    async getAllCompanies() {
-      axios
-        .get(
-          "/account/api/dashboard/companies-with-unfinished-month-vat-reports"
-        )
-        .then((response) => {
-          const projectsData = response.data;
-          if (projectsData?.length !== 0 && projectsData !== undefined) {
-            this.items = projectsData;
-          }
-        });
+    info(item, index, button) {
+      this.infoModal.title = `Row index: ${index}`;
+      this.infoModal.content = JSON.stringify(item, null, 2);
+      this.$root.$emit("bv::show::modal", this.infoModal.id, button);
     },
+    resetInfoModal() {
+      this.infoModal.title = "";
+      this.infoModal.content = "";
+    },
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
+  },
+  created() {
+    this.$http
+      .get("/account/api/dashboard/companies-with-unfinished-month-vat-reports")
+      .then((res) => {
+        this.items = res.data;
+      });
   },
 };
 </script>
+<style lang="scss">
+@import "@core/scss/vue/libs/vue-select.scss";
+</style>

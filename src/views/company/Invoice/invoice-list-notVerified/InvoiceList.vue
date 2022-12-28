@@ -370,7 +370,7 @@
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
-            <b-dropdown-item @click="invoiceDelete(data.item.id, refetchData)">
+            <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
             </b-dropdown-item>
@@ -545,6 +545,33 @@ export default {
     },
     generatePDF(itemID) {
       this.$refs[`invoicePdf${itemID}`].generatePdf();
+    },
+    showMsgBoxTwo(id,refetchData) {
+      const h = this.$createElement
+        // Using HTML string
+        // More complex structure
+      const messageVNode = h('div', { class: ['bvModalFont'] }, [
+        h('p', { class: ['text-center card-text'] }, [
+          'Are you sure you want to delete this Invoice?',
+        ]),
+        h('p', { class: ['text-center card-text'] }, [
+          'It will delete all the data related to it.',
+        ])
+      ])
+      this.$bvModal
+        .msgBoxConfirm([messageVNode], {
+          title: 'Delete Invoice',
+          okVariant: 'primary',
+          okTitle: 'Confirm',
+          cancelTitle: 'Cancel',
+          hideHeaderClose: false,
+          centered: true,
+        })
+        .then(value => {
+          if(value){
+            this.invoiceDelete(id, refetchData)
+          }
+        })
     },
     invoiceDelete(id, refetchData) {
       const token = useJwt.getToken();
