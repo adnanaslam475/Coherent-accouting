@@ -4,7 +4,7 @@
       <b-col cols="12">
         <b-card v-if="socialAccounts" class="card-transaction" no-body>
           <b-card-header>
-            <h3>{{ $t('contact_us') }}</h3>
+            <h3>{{ $t('social_accounts') }}</h3>
           </b-card-header>
 
           <b-card-body>
