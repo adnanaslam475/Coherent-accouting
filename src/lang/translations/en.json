@@ -370,11 +370,11 @@
   "back_to_login": "Back to login",
   "my_invoices" :"My Invoices",
   "my_tickets":"My Tickets",
-  "my_profile":"My Profiles",
+  "my_profile":"My Profile",
   "companiess" :"Companies",
   "View Company" : "View Company",
   "download":"Download",
   "print": "Print",
+  "logout":"Logout",
   "social_accounts": "Social Accounts"
-  
 }
