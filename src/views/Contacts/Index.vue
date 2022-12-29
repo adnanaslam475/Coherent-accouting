@@ -14,7 +14,12 @@
               class="transaction-item mb-0"
               style="padding-bottom: 4px; padding-block-end: 20px;"
             >
-              <b-media class="align-items-center"  no-body>
+              <b-media                     
+                tag="a"
+                :href="item.links.link" 
+                class="align-items-center flex-1"  
+                no-body
+              >
                 <b-media-aside style="align-self: unset !important;">
                     <b-img :src="item.logo" width="35" />
                 </b-media-aside>
@@ -24,8 +29,6 @@
                   </h4>
                   <small
                     v-if="item.links && item.links.link"
-                    tag="a"
-                    :href="item.links.link"
                     style="opacity: 1; color: #0A64BC; font-size: 1rem;"
                   >
                     {{ item.links.username }}
@@ -35,16 +38,20 @@
                 </b-media-body>
               </b-media>
               <div>
-                <b-media no-body>
+                <b-media 
+                  tag="a"
+                  :href="item.links.link" 
+                  no-body
+                >
                   <b-media-aside class="m-0">
                     <b-avatar
                       class="rounded-0"
                       size="48"
-                      :variant="item.connected ? 'light-warning' : 'light-info'"
+                      :variant="item.connected ? 'light-info' : 'light-info'"
                     >
                       <feather-icon
                         size="20"
-                        :icon="item.connected ? 'Trash2Icon' : 'LinkIcon'"
+                        :icon="item.connected ? 'LinkIcon' : 'LinkIcon'"
                       />
                     </b-avatar>
                   </b-media-aside>
@@ -89,7 +96,6 @@ import {
   BMediaAside,
   BMediaBody,
   BIcon,
-  BBtn,
 } from "bootstrap-vue";
 import Ripple from "vue-ripple-directive";
 import { codeVerticalIcon } from "@/views/forms/form-layout/code";
@@ -119,7 +125,6 @@ export default {
     BMediaAside,
     BMediaBody,
     BIcon,
-    BBtn,
   },
   directives: {
     Ripple,
@@ -131,7 +136,11 @@ export default {
         {
           logo: facebook,
           name: "Facebook",
-          connected: false,
+          links: {
+            username: "@CoherentAccounting",
+            link: "#",
+          },
+          connected: true,
         },
         {
           logo: twitter,
@@ -154,22 +163,38 @@ export default {
         {
           logo: google,
           name: "Google",
-          connected: false,
+          links: {
+            username: "@CoherentAccounting",
+            link: "#",
+          },
+          connected: true,
         },
         {
           logo: youtube,
           name: "Youtube",
-          connected: false,
+          links: {
+            username: "@CoherentAccounting",
+            link: "#",
+          },
+          connected: true,
         },
         {
           logo: gmail,
           name: "Gmail",
-          connected: false,
+          links: {
+            username: "@CoherentAccounting",
+            link: "#",
+          },
+          connected: true,
         },
         {
           logo: chat,
           name: "Chat",
-          connected: false,
+          links: {
+            username: "@CoherentAccounting",
+            link: "#",
+          },
+          connected: true,
         },
       ],
     };
