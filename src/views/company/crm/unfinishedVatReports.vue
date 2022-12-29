@@ -38,7 +38,6 @@
       hover
       responsive
       class="position-relative"
-      :per-page="perPage"
       :current-page="currentPage"
       :items="items"
       :fields="fields"
@@ -66,7 +65,7 @@
         {{ $t("companies.period") }}
       </template>
       <template #cell(period)="data">
-        <span class="text-success">
+        <span class="text-success font-weight-bolder">
           {{ data.value }}
         </span>
       </template>
@@ -181,24 +180,7 @@
 
     </b-table>
 
-    <b-card-body class="d-flex justify-content-between flex-wrap pt-0">
-      <!-- page length -->
-      <b-form-group
-        label="Per Page"
-        label-cols="6"
-        label-align="left"
-        label-size="sm"
-        label-for="sortBySelect"
-        class="text-nowrap mb-md-0 mr-1"
-      >
-        <b-form-select
-          id="perPageSelect"
-          v-model="perPage"
-          size="sm"
-          inline
-          :options="pageOptions"
-        />
-      </b-form-group>
+    <b-card-body class="d-flex justify-content-end flex-wrap pt-0">
 
       <!-- pagination -->
       <div>

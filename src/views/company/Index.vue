@@ -305,9 +305,6 @@
           <b-card-text class="text-center" style="font-size: 15px">
             Are you sure you want to delete this company?
           </b-card-text>
-          <b-card-text class="text-center" style="font-size: 15px">
-            It will delete all the data related to it.
-          </b-card-text>
         </b-modal>
       </b-tab>
       <b-tab>

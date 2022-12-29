@@ -701,10 +701,7 @@ export default {
       const messageVNode = h('div', { class: ['bvModalFont'] }, [
         h('p', { class: ['text-center card-text'] }, [
           'Are you sure you want to delete this Vat Report?',
-        ]),
-        h('p', { class: ['text-center card-text'] }, [
-          'It will delete all the data related to it.',
-        ])
+        ]) 
       ])
       this.$bvModal
         .msgBoxConfirm([messageVNode], {

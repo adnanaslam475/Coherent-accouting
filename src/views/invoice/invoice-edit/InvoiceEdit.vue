@@ -37,7 +37,7 @@
             >
               <b-card-header class="justify-content-center"> 
                 <div class="d-flex align-items-center mb-0">
-                  <h4 class="title mr-1 mb-0">Invoice</h4>
+                  <h4 class="title mr-1 mb-0">{{  $t('add_invoice.invoice') }}</h4>
                   <validation-provider
                     #default="{ errors }"
                     name="invoiceNumber"
@@ -72,7 +72,7 @@
                     value="company"
                     class="d-none"
                   >
-                    <h5>COMPANY</h5>
+                    <h5>{{  $t('add_invoice.company') }}</h5>
                   </b-form-radio>
                   <b-form-radio
                     v-model="AccountTypeOption"
@@ -81,7 +81,7 @@
                     value="person"
                     class="d-none"
                   >
-                    <h5>PERSON</h5>
+                    <h5>{{  $t('add_invoice.person') }}</h5>
                   </b-form-radio>
                   <b-form-checkbox
                     v-model="AccountTypeOptionToggleValue"
@@ -91,10 +91,10 @@
                     switch
                   >
                     <span class="switch-icon-left">
-                      Person
+                      {{  $t('add_invoice.person') }}
                     </span>
                     <span class="switch-icon-right">
-                      Company
+                      {{  $t('add_invoice.company') }}
                     </span>
                   </b-form-checkbox>
                 </div>
@@ -112,7 +112,7 @@
                         <h5 
                           class="m-0" 
                         >
-                          Supplier
+                        {{  $t('add_invoice.supplier') }}
                         </h5>
                     </b-card-header> 
                     <b-card-body class="invoice-body">
@@ -127,7 +127,7 @@
                           />
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                        <span class="title mr-1">Company Name: </span>
+                        <span class="title mr-1">{{  $t('companies.company_name') }}: </span>
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
@@ -159,7 +159,7 @@
                       </div>
                       <div class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
-                          Company Address:
+                          {{  $t('add_invoice.company_address') }}:
                         </span>
 
                         <b-input-group
@@ -180,7 +180,7 @@
                       </div>
                       <div class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
-                          Company ID Number:
+                          {{  $t('add_invoice.company_id_no') }}:
                         </span>
                         <b-input-group
                           class="input-group invoice-edit-input-group"
@@ -213,7 +213,7 @@
                         </b-input-group>
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                        <span class="title mr-1">Company Owner: </span>
+                        <span class="title mr-1">{{  $t('add_invoice.company_owner') }}: </span>
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
@@ -234,7 +234,7 @@
                       </div>
                       <div v-if="supplierVat" class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
-                          Company Vat No:
+                          {{  $t('add_invoice.company_vat') }}:
                         </span>
                         <validation-provider
                             #default="{ errors }"
@@ -254,7 +254,7 @@
                       </div>
                       <div class="d-flex align-items-center mb-1">
                           <span class="mr-1">
-                            Vat:
+                            {{  $t('add_invoice.vat') }}:
                           </span>
                           <b-form-checkbox
                             v-model="supplierVat"
@@ -263,10 +263,10 @@
                             switch
                           >
                             <span class="switch-icon-left">
-                              YES
+                              {{  $t('add_invoice.yes') }}
                             </span>
                             <span class="switch-icon-right">
-                              NO
+                              {{  $t('add_invoice.no') }}
                             </span>
                           </b-form-checkbox>
                       </div>
@@ -283,7 +283,7 @@
                         <h5 
                           class="m-0" 
                         >
-                          Recipient
+                        {{  $t('add_invoice.recipient') }}
                         </h5>
                     </b-card-header> 
                     <b-card-body class="invoice-body">
@@ -298,8 +298,8 @@
                           />
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                        <span v-if="AccountTypeOption=='company'" class="title mr-1">Company Name:</span> 
-                        <span v-if="AccountTypeOption=='person'" class="title mr-1">Person Name:</span>         
+                        <span v-if="AccountTypeOption=='company'" class="title mr-1">{{  $t('companies.company_name') }}:</span> 
+                        <span v-if="AccountTypeOption=='person'" class="title mr-1">{{  $t('add_invoice.person_name') }}:</span>         
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
@@ -349,8 +349,8 @@
                         </b-input-group>
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                        <span class="title mr-1" v-if="AccountTypeOption=='company'">Company Address:</span>
-                        <span class="title mr-1" v-if="AccountTypeOption=='person'">Person Address:</span>  
+                        <span class="title mr-1" v-if="AccountTypeOption=='company'">{{  $t('add_invoice.company_address') }}:</span>
+                        <span class="title mr-1" v-if="AccountTypeOption=='person'">{{  $t('add_invoice.person_address') }}:</span>  
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
@@ -368,8 +368,8 @@
                         </b-input-group>
                       </div>
                       <div class="d-flex align-items-center mb-1">
-                        <span class="title mr-1" v-if="AccountTypeOption=='company'">Company ID Number:</span>
-                        <span class="title mr-1" v-if="AccountTypeOption=='person'">Person ID Number:</span>  
+                        <span class="title mr-1" v-if="AccountTypeOption=='company'">{{  $t('add_invoice.company_id_no') }}:</span>
+                        <span class="title mr-1" v-if="AccountTypeOption=='person'">{{  $t('add_invoice.person_id_no') }}:</span>  
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
@@ -421,7 +421,7 @@
                         </b-input-group>
                       </div>
                       <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
-                        <span class="title mr-1">Company Owner: </span>
+                        <span class="title mr-1">{{  $t('add_invoice.company_owner') }}: </span>
                         <b-input-group
                           class="input-group invoice-edit-input-group"
                         >
@@ -440,7 +440,7 @@
                       </div>
                       <div v-if="AccountTypeOption=='company' && recipientVat" class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
-                          Company Vat No:
+                          {{  $t('add_invoice.company_vat') }}:
                         </span>
                         <validation-provider
                             #default="{ errors }"
@@ -460,7 +460,7 @@
                       </div>
                       <div v-if="AccountTypeOption=='company'" class="d-flex align-items-center mb-1">
                         <span class="mr-1">
-                          Vat:
+                          {{  $t('add_invoice.vat') }}:
                         </span>
                         <b-form-checkbox
                           v-model="recipientVat"
@@ -469,10 +469,10 @@
                           switch
                         >
                           <span class="switch-icon-left">
-                            YES
+                            {{  $t('add_invoice.yes') }}
                           </span>
                           <span class="switch-icon-right">
-                            NO
+                            {{  $t('add_invoice.no') }}
                           </span>
                         </b-form-checkbox>
                       </div>
@@ -490,7 +490,7 @@
                 <b-card-header class="justify-content-end"> 
                   <div class="mt-md-0 mt-2">
                     <div class="d-flex align-items-center mb-0">
-                      <span class="title mr-1"> Transaction type: </span>
+                      <span class="title mr-1"> {{$t('company_invoices.transaction_type')}}: </span>
                       <validation-provider
                       #default="{ errors }"
                       name="transectionType"
@@ -516,10 +516,10 @@
                 switch
               >
                 <span class="switch-icon-left">
-                  PROFORMA
+                  {{  $t('add_invoice.PROFORMA') }}
                 </span>
                 <span class="switch-icon-right">
-                  ORIGINAL
+                  {{  $t('add_invoice.ORIGINAL') }}
                 </span>
               </b-form-checkbox>
               <b-form-checkbox
@@ -530,10 +530,10 @@
                 switch
               >
                 <span class="switch-icon-left">
-                  GOODS
+                  {{  $t('add_invoice.goods') }}
                 </span>
                 <span class="switch-icon-right">
-                  SERVICE
+                  {{  $t('add_invoice.service') }}
                 </span>
               </b-form-checkbox>
               <b-card
@@ -543,7 +543,7 @@
                 <b-card-header class="justify-content-end"> 
                   <div class="mt-md-0 mt-2">
                     <div class="d-flex align-items-center mb-0">
-                      <span class="title mr-1"> Date: </span>
+                      <span class="title mr-1"> {{  $t('add_invoice.date') }}: </span>
                       <validation-provider
                         #default="{ errors }"
                         name="dateIssued"
@@ -605,13 +605,13 @@
                       <div class="d-none d-lg-flex bg-primary p-custom text-white">
                         <b-row class="flex-grow-1 px-1 invoice-add-transections">
                           <!-- Single Item Form Headers -->
-                          <b-col cols="12" lg="1"> No. </b-col>
-                          <b-col cols="12" lg="4"> Item name or Service </b-col>
-                          <b-col cols="12" lg="1"> Qty </b-col>
-                          <b-col cols="12" lg="1"> Measure </b-col>
-                          <b-col cols="12" lg="2"> Single Price </b-col>
-                          <b-col cols="12" lg="1"> Currency </b-col>
-                          <b-col cols="12" lg="2"> Total Price </b-col>
+                          <b-col cols="12" lg="1"> {{  $t('add_invoice.s_no') }} </b-col>
+                          <b-col cols="12" lg="4"> {{  $t('add_invoice.item_service') }} </b-col>
+                          <b-col cols="12" lg="1"> {{  $t('add_invoice.qty') }} </b-col>
+                          <b-col cols="12" lg="1"> {{  $t('add_invoice.measure') }} </b-col>
+                          <b-col cols="12" lg="2"> {{  $t('add_invoice.single_price') }} </b-col>
+                          <b-col cols="12" lg="1"> {{  $t('add_invoice.currency') }} </b-col>
+                          <b-col cols="12" lg="2"> {{  $t('add_invoice.total_price') }} </b-col>
                         </b-row>
                         <div class="form-item-action-col" />
                       </div>
@@ -790,7 +790,7 @@
                   @click="addNewItemInItemForm"
                   class="mb-2"
                 >
-                Add Item
+                {{  $t('add_invoice.add_item') }}
             </b-button>
             
             <b-card no-body class="invoice-add-card mb-1">  
@@ -809,7 +809,7 @@
                       order-md="1"
                     >
                     <h1 class="invoiceTypeHeading">
-                      {{ invoiceData.invoiceType }}
+                      {{ $t('add_invoice.'+invoiceData.invoiceType) }}
                     </h1>
                     </b-col>
 
@@ -823,7 +823,7 @@
                     >
                       <div class="invoice-total-wrapper">
                         <div class="invoice-total-item">
-                          <p class="invoice-total-title">Total price NonVat:</p>
+                          <p class="invoice-total-title">{{  $t('add_invoice.total_price_non_vat') }}:</p>
                           <p class="invoice-total-amount">
                             <validation-provider
                               #default="{ errors }"
@@ -847,7 +847,7 @@
                           </p>
                         </div>
                         <div class="invoice-total-item">
-                          <p class="invoice-total-title">VAT:</p>
+                          <p class="invoice-total-title">{{  $t('add_invoice.vat') }}:</p>
                           <p class="invoice-total-amount">
                             <validation-provider
                               #default="{ errors }"
@@ -878,7 +878,7 @@
                           </p>
                         </div>
                         <div class="invoice-total-item">
-                          <p class="invoice-total-title">VAT Amount:</p>
+                          <p class="invoice-total-title">{{  $t('company_invoices.vat_amount') }}:</p>
                           <p class="invoice-total-amount">
                             <validation-provider
                               #default="{ errors }"
@@ -902,7 +902,7 @@
                           </p>
                         </div>
                         <div class="invoice-total-item">
-                          <p class="invoice-total-title">Discount Percent:</p>
+                          <p class="invoice-total-title">{{  $t('add_invoice.discount_percent') }}:</p>
                           <p class="invoice-total-amount">
                             <validation-provider
                               #default="{ errors }"
@@ -933,7 +933,7 @@
                           </p>
                         </div>
                         <div class="invoice-total-item">
-                          <p class="invoice-total-title">Discount Sum:</p>
+                          <p class="invoice-total-title">{{  $t('add_invoice.discount_sum') }}:</p>
                           <p class="invoice-total-amount">
                             <validation-provider
                               #default="{ errors }"
@@ -969,7 +969,7 @@
                           </p>
                         </div>
                         <div class="invoice-total-item">
-                          <p class="invoice-total-title font-weight-bolder custom-font">Total Price:</p>
+                          <p class="invoice-total-title font-weight-bolder custom-font">{{  $t('add_invoice.total_price') }}:</p>
                           <p class="invoice-total-amount">
                             <validation-provider
                               #default="{ errors }"
@@ -1035,7 +1035,7 @@
                 @click="invoiceEdit(invoiceData,'preview',AccountTypeOption)"
               >
                 <b-spinner v-if="loading" small variant="light" />
-                Preview
+                {{  $t('add_invoice.preview') }}
               </b-button>
 
               <!-- Button: Print -->
@@ -1047,7 +1047,7 @@
                 type="submit"
               >
               <b-spinner v-if="loading" small variant="light" />
-                Save
+              {{  $t('add_invoice.save') }}
               </b-button>
    
               <b-button
@@ -1068,7 +1068,7 @@
                 type="button"
                 @click="clearForm"
               >
-                Clear
+              {{  $t('add_invoice.clear') }}
               </b-button>
             </b-card>
           </b-col>

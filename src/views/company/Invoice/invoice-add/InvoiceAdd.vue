@@ -237,10 +237,10 @@
                             switch
                           >
                             <span class="switch-icon-left">
-                              YES
+                              {{  $t('add_invoice.yes') }}
                             </span>
                             <span class="switch-icon-right">
-                              NO
+                              {{  $t('add_invoice.no') }}
                             </span>
                           </b-form-checkbox>
                       </div>
