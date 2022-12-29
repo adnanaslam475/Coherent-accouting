@@ -176,7 +176,7 @@
                   {{$t('company_invoices.transaction_type')}}:
                 </p>
                 <p class="invoice-date">
-                  {{ invoiceData.transactionType }}
+                  {{ $t('company_invoices.'+invoiceData.transactionType) }} 
                 </p>
               </div>
             </b-card-header>

@@ -237,10 +237,10 @@
                             switch
                           >
                             <span class="switch-icon-left">
-                              YES
+                              {{  $t('add_invoice.yes') }}
                             </span>
                             <span class="switch-icon-right">
-                              NO
+                              {{  $t('add_invoice.no') }}
                             </span>
                           </b-form-checkbox>
                       </div>
@@ -473,8 +473,9 @@
                       
                       <b-form-select
                           v-model="invoiceData.transactionType"
-                          :options="transectionOptions"
                         >
+                        <b-form-select-option value="EXPENSE">{{$t('company_invoices.EXPENSE')}}</b-form-select-option>
+                        <b-form-select-option value="INCOME">{{$t('company_invoices.INCOME')}}</b-form-select-option>         
                       </b-form-select>
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
@@ -1041,7 +1042,8 @@ import {
   BSpinner,
   BFormRadio,
   BListGroup, 
-  BListGroupItem
+  BListGroupItem,
+  BFormSelectOption
 } from "bootstrap-vue";
 import vSelect from "vue-select";
 import flatPickr from "vue-flatpickr-component";
@@ -1079,7 +1081,8 @@ export default {
     BFormRadio,
     BListGroup, 
     BListGroupItem,
-    TabList
+    TabList,
+    BFormSelectOption
   },
   data() {
     return {

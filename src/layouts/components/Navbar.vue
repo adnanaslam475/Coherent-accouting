@@ -199,7 +199,7 @@
             icon="UserIcon"
             class="mr-50"
           />
-          <span>My Profile</span>
+          <span>{{$t('my_profile')}}</span>
         </b-dropdown-item>
         <b-dropdown-divider />
         <b-dropdown-item
@@ -211,7 +211,7 @@
             icon="TagIcon"
             class="mr-50"
           />
-          <span>Tickets</span>
+          <span>{{$t('tickets')}}</span>
         </b-dropdown-item>
 
         <!--        <b-dropdown-item link-class="d-flex align-items-center">-->
@@ -270,7 +270,7 @@
             icon="LogOutIcon"
             class="mr-50"
           />
-          <span>Logout</span>
+          <span>{{$t('logout')}}</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
