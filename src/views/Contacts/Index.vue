@@ -4,7 +4,7 @@
       <b-col cols="12">
         <b-card v-if="socialAccounts" class="card-transaction" no-body>
           <b-card-header>
-            <h3>{{ $t('social_accounts') }}</h3>
+            <h3>{{ $t('contact_us') }}</h3>
           </b-card-header>
 
           <b-card-body>
@@ -15,7 +15,7 @@
               style="padding-bottom: 4px; padding-block-end: 20px;"
             >
               <b-media class="align-items-center"  no-body>
-                <b-media-aside style="align-items: unset !important;">
+                <b-media-aside style="align-self: unset !important;">
                     <b-img :src="item.logo" width="35" />
                 </b-media-aside>
                 <b-media-body>
@@ -40,7 +40,7 @@
                     <b-avatar
                       class="rounded-0"
                       size="48"
-                      :variant="item.connected ? 'light-info' : 'light-warning'"
+                      :variant="item.connected ? 'light-warning' : 'light-info'"
                     >
                       <feather-icon
                         size="20"
