@@ -5,18 +5,19 @@
       :title="null"
       :subtitle="null"
       shape="square"
-      finish-button-text="Create"
-      back-button-text="Previous"
+      :finish-button-text="$t('create_company.create')"
+      :next-button-text = "$t('create_company.next')"
+      :back-button-text="$t('create_company.previous')"
       class="mb-3"
       @on-complete="saveCompany()"
     >
       <!-- First Tab: Company Details -->
-      <tab-content title="Company Details" :before-change="validationForm">
+      <tab-content :title="$t('create_company.company_details')" :before-change="validationForm">
         <validation-observer ref="companyRules" tag="form">
           <b-row>
             <b-col cols="12" class="mb-2">
-              <h5 class="mb-0">Company Details</h5>
-              <small class="text-muted"> Enter Your Company Details </small>
+              <h5 class="mb-0"> {{$t('create_company.company_details')}}</h5>
+              <small class="text-muted">  {{$t('create_company.create_details')}} </small>
             </b-col>
           </b-row>
           <b-form-row>
@@ -24,7 +25,7 @@
             <b-col>
               <b-form-group
                 id="input-group-1"
-                label="Company Name"
+                :label= "$t('companies.company_name')"
                 label-for="company_name"
               >
                 <validation-provider
@@ -60,7 +61,7 @@
             <b-col>
               <b-form-group
                 id="input-group-2"
-                label="Company Identification Number"
+                :label= "$t('create_company.company_id')"
                 label-for="company_identification_number"
               >
                 <validation-provider
@@ -98,7 +99,7 @@
             <b-col>
               <b-form-group
                 id="input-group-3"
-                label="Company Address"
+                :label= "$t('add_invoice.company_address')"
                 label-for="company_address"
               >
                 <validation-provider
@@ -120,7 +121,7 @@
             <b-col>
               <b-form-group
                 id="input-group-4"
-                label="Country"
+                :label= "$t('register.lbl_country')"
                 label-for="country"
               >
                 <validation-provider
@@ -187,7 +188,7 @@
             <b-col>
               <b-form-group
                 id="input-group-5"
-                label="Owner Name"
+                :label= "$t('company_info.owner_name')"
                 label-for="owner_name"
               >
                 <validation-provider
@@ -209,7 +210,7 @@
             <b-col>
               <b-form-group
                 id="input-group-6"
-                label="Owner EGN"
+                :label= "$t('company_info.owner_egn')"
                 label-for="owner_egn"
               >
                 <validation-provider
@@ -235,7 +236,7 @@
             <b-col
               ><b-form-group
                 id="input-group-7"
-                label="Company Vat Number"
+                :label="$t('add_invoice.company_vat')"
                 label-for="company_vat_no"
               >
                 <validation-provider
@@ -263,26 +264,26 @@
                 value="accepted"
                 @change="vatHandled()"
               >
-                VAT
+              {{ $t('create_company.vat') }}
               </b-form-checkbox>
             </b-col>
           </b-form-row>
         </validation-observer>
       </tab-content>
       <!-- Second Tab: Account Details -->
-      <tab-content title="Account Details" :before-change="validationFormTab2">
+      <tab-content :title="$t('create_company.account_details')" :before-change="validationFormTab2">
         <validation-observer ref="accountRules" tag="form">
           <b-row>
             <b-col cols="12" class="mb-2">
-              <h5 class="mb-0">Account Details</h5>
-              <small class="text-muted"> Enter Your Account Details </small>
+              <h5 class="mb-0"> {{ $t('create_company.account_details') }}</h5>
+              <small class="text-muted"> {{ $t('create_company.create_acc_details') }} </small>
             </b-col>
           </b-row>
           <b-form-row>
             <b-col>
               <b-form-group
                 id="input-group-1"
-                label="Company Bank Account"
+                :label="$t('create_company.company_bank_account')"
                 label-for="company_bank_account"
               >
                 <b-form-input
@@ -297,7 +298,7 @@
             <b-col>
               <b-form-group
                 id="input-group-1"
-                label="Company Currency"
+                :label="$t('create_company.company_currency')"
                 label-for="company_currency"
               >
                 <validation-provider
@@ -362,7 +363,7 @@
             <b-col>
               <b-form-group
                 id="input-group-1"
-                label="Company Phone Number"
+                :label="$t('create_company.company_phone_no')"
                 label-for="company_phone"
               >
                 <validation-provider
@@ -384,7 +385,7 @@
             <b-col>
               <b-form-group
                 id="input-group-1"
-                label="Company Email"
+                :label="$t('create_company.company_email')"
                 label-for="company_email"
               >
                 <validation-provider
@@ -407,7 +408,7 @@
             <b-col
               ><b-form-group
                 id="input-group-1"
-                label="Company Financial Star of Year"
+                :label="$t('create_company.company_fin_year')"
                 label-for="company_fin_year"
               >
                 <validation-provider

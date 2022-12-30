@@ -120,7 +120,7 @@
                             style="cursor: pointer"
                             >{{ companyOwnerEGN }}</small
                           >
-                          <small v-else>NIL</small>
+                          <small v-else></small>
                         </CopyToClipboard>
 
                          
@@ -208,7 +208,7 @@
                             }}</b-tooltip>
                           
                         </td>
-                        <td v-else class="pb-50 text-capitalize">NIL</td>
+                        <td v-else class="pb-50 text-capitalize"></td>
                       </tr>
                        <!-- Company Bank Account -->
                       <tr>
@@ -239,7 +239,7 @@
                             copyToClipboard
                           }}</b-tooltip>
                         </td>
-                        <td v-else class="pb-50">NIL</td>
+                        <td v-else class="pb-50"></td>
                       </tr>
                        <!-- Company Phone -->
                       <tr>
