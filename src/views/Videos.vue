@@ -15,11 +15,15 @@
     <!--/ search input -->
    
     <b-row class="m-0">
-      <b-col md="6" sm="12">
-        <embed-types />
-      </b-col>
-      <b-col md="6" sm="12">
-        <embed-types />
+      <b-col
+        lg="4"
+        md="6"
+        sm="12"
+        cols="12"
+        v-for="(item,index) in $t('videos_content')"
+        :key="item.index"
+      >
+        <embed-types :item="item" />
       </b-col>
     </b-row>
     </div>
