@@ -80,7 +80,7 @@
     "signup": "Sign up",
     "about": "About",
     "questions": "Questions",
-    "videos": "Videos",
+    "videos": "Video lessons",
     "prices": "Prices",
     "free_digital_invoices": "Free digital invoices",
     "why_choose_use": "Why Choose Us"
@@ -108,7 +108,6 @@
     "trial": "Start with a 14-day FREE trial!",
     "full_access": "You will get full access to with all the features for 14 days.",
     "free_trial" : "Start 14-day FREE trial"
-
   },
   "about": {
     "title": "За нас",
@@ -300,7 +299,7 @@
     "enjoy_your_plan": "Enjoy your plan!",
     "days": "Days",
     "days_remaining": " days remaining until your plan requires update",
-    "your_plan_expired_on": "Your plan expired on ",
+    "your_plan_expired_on": "Your plan expires on ",
     "update_plan" : "Update Plan",
     "active_until" : "Active Until ",
     "we_will_send_you_a_notification": "We will send you a notification upon Subscription expiration"
@@ -417,7 +416,7 @@
   "home": "Home",
   "dashboard": "Dashboard",
   "invoices": "Invoices",
-  "videos": "Videos",
+  "videos": "Video lessons",
   "tickets": "Tickets",
   "my-plans": "My Plans",
   "settings": "Settings",
