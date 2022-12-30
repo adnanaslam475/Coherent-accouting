@@ -130,9 +130,9 @@
     <!-- basic modal -->
     <b-modal
       id="ticket-create-modal"
-      title="Add New Ticket"
-      ok-title="Submit"
-      cancel-title="Close"
+      :title="$t('update_tickets.add_ticket')"
+      :ok-title="$t('update_tickets.submit')"
+      :cancel-title="$t('update_tickets.close')"
       cancel-variant="outline-secondary"
       @ok="validationCreateTicket"
       @close="resetModal"
@@ -143,7 +143,7 @@
           <b-form @submit.prevent="validationCreateTicket()">
             <b-row>
               <b-col sm="12">
-                <b-form-group label="Title" label-for="title">
+                <b-form-group :label="$t('update_tickets.title')" label-for="title">
                   <validation-provider
                     #default="{ errors }"
                     name="Title"
@@ -161,7 +161,7 @@
                 </b-form-group>
               </b-col>
               <b-col sm="12">
-                <b-form-group label="Description" label-for="last-name">
+                <b-form-group :label="$t('update_tickets.description')" label-for="last-name">
                   <validation-provider
                     #default="{ errors }"
                     name="Description"
@@ -185,9 +185,9 @@
     </b-modal>
     <b-modal
       id="ticket-update-modal"
-      title="Update Ticket"
-      ok-title="Update"
-      cancel-title="Close"
+      :title="$t('update_tickets.update_ticket')"
+      :ok-title="$t('create_company.update')"
+      :cancel-title="$t('update_tickets.close')"
       cancel-variant="outline-secondary"
       @ok="validationUpdateTicket"
       @close="resetModal"
@@ -197,7 +197,7 @@
           <b-form @submit.prevent="validationUpdateTicket()">
             <b-row>
               <b-col sm="12">
-                <b-form-group label="Title" label-for="title">
+                <b-form-group :label="$t('update_tickets.title')" label-for="title">
                   <validation-provider
                     #default="{ errors }"
                     name="Title"
@@ -214,7 +214,7 @@
                 </b-form-group>
               </b-col>
               <b-col sm="12">
-                <b-form-group label="Description" label-for="last-name">
+                <b-form-group :label="$t('update_tickets.description')" label-for="last-name">
                   <validation-provider
                     #default="{ errors }"
                     name="Description"

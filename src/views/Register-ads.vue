@@ -15,7 +15,7 @@
       <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
           <b-card-title class="mb-1">
-            {{ $t('register.title')}}
+            {{ $t('register.title')}} 
           </b-card-title>
           <b-card-text class="mb-2">
             {{ $t('register.subtitle')}}
@@ -86,12 +86,16 @@
                   >
                     <b-form-select
                       v-model="account"
-                      :options="accountType"
                       id="register-accountType"
                       name="register-accountType"
                       :state="errors.length > 0 ? false:null"
+                     
                     >
+                       <b-form-select-option value="" disabled selected>{{ $t('register.select_account') }}</b-form-select-option>
+                       <b-form-select-option value="COMPANY">{{$t('register.company')}}</b-form-select-option>
+                       <b-form-select-option value="PERSONAL">{{$t('register.personal')}}</b-form-select-option>         
                     </b-form-select>
+
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
@@ -385,7 +389,8 @@
     BAvatar,
     BNavItem,
     BSpinner,
-    BModal
+    BModal,
+    BFormSelectOption
   } from "bootstrap-vue";
   import { required, email, password } from "@validations";
   import { togglePasswordVisibility } from "@core/mixins/ui/forms";
@@ -429,7 +434,8 @@
       vSelect,
       navbarAds,
       BSpinner,
-      BModal
+      BModal,
+      BFormSelectOption
     },
     mixins: [togglePasswordVisibility],
     data() {

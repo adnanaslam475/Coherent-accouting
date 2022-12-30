@@ -303,6 +303,19 @@
         <feather-icon icon="DownloadIcon" size="30" class="text-danger" />
       </b-link>
     </b-modal>
+
+     <!-- delete Confirmation Modal -->
+     <b-modal
+          v-model="deleteModalShow"
+          :title="$t('company_documents.delete_doc')"
+          :ok-title="$t('companies.confirm')"
+          :cancel-title="$t('clients_or_recipients.cancel')"
+          @ok="deleteAsset(documentToDelete)"
+        >
+          <b-card-text class="text-center" style="font-size: 15px">
+           {{ $t('company_documents.delete_confirmation') }} 
+          </b-card-text>
+        </b-modal>
   </div>
 </template>
 
@@ -337,7 +350,8 @@ import {
   BDropdown,
   BDropdownItem,
   BLink,
-  BTooltip
+  BTooltip,
+  BCardText,
 } from "bootstrap-vue";
 
 // Create component
@@ -365,7 +379,8 @@ export default {
     BDropdown,
     BDropdownItem,
     BLink,
-    BTooltip
+    BTooltip,
+    BCardText,
   },
   directives: {
     Ripple,
@@ -373,6 +388,8 @@ export default {
   data() {
     const self = this;
     return {
+      documentToDelete : '',
+      deleteModalShow : false,
       clickedImageType:'png',
       filesImages: {
         // eslint-disable-next-line global-require
@@ -678,28 +695,32 @@ export default {
     },
     //deleting an asset
     showMsgBoxTwo(data) {
-      const h = this.$createElement
-        // Using HTML string
-        // More complex structure
-      const messageVNode = h('div', { class: ['bvModalFont'] }, [
-        h('p', { class: ['text-center card-text'] }, [
-          'Are you sure you want to delete this Document?',
-        ]) 
-      ])
-      this.$bvModal
-        .msgBoxConfirm([messageVNode], {
-          title: 'Delete Document',
-          okVariant: 'primary',
-          okTitle: 'Confirm',
-          cancelTitle: 'Cancel',
-          hideHeaderClose: false,
-          centered: true,
-        })
-        .then(value => {
-          if(value){
-            this.deleteAsset(data)
-          }
-        })
+      this.deleteModalShow = !this.deleteModalShow;
+      this.documentToDelete = data;
+    
+
+      // const h = this.$createElement
+      //   // Using HTML string
+      //   // More complex structure
+      // const messageVNode = h('div', { class: ['bvModalFont'] }, [
+      //   h('p', { class: ['text-center card-text'] }, [
+      //     'Are you sure you want to delete this Document?',
+      //   ]) 
+      // ])
+      // this.$bvModal
+      //   .msgBoxConfirm([messageVNode], {
+      //     title: $t('companies.delete_company'),
+      //     okVariant: 'primary',
+      //     okTitle: 'Confirm',
+      //     cancelTitle: 'Cancel',
+      //     hideHeaderClose: false,
+      //     centered: true,
+      //   })
+      //   .then(value => {
+      //     if(value){
+      //       this.deleteAsset(data)
+      //     }
+      //   })
     },
     async deleteAsset(data) {
       const rec = JSON.parse(data);

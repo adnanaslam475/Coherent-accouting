@@ -34,7 +34,7 @@
     "lbl_f_name": "First Name",
     "lbl_l_name": "Last Name",
     "lbl_c_accountType": "Account Type",
-    "lbl_c_name": "Company name",
+    "lbl_c_name": "Company Name",
     "lbl_c_address": "Company address",
     "lbl_c_registrationNumber": "Company Registration Number",
     "lbl_c_vatNumber": "Vat Number",
@@ -49,7 +49,10 @@
     "lbl_privacy_content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis, perferendis \n molestiae cumque eius quidem tempora natus sit consequuntur \n praesentium mollitia.",  
     "lbl_submit": "Sign up",
     "have_account": "Already have an account?",
-    "lbl_login_link": "Already have an account?"
+    "lbl_login_link": "Already have an account?",
+    "company":"COMPANY",
+    "personal":"PERSONAL",
+    "select_account" : "Please select account type"
   },
   "forget": {
     "title": "Forgot Password?",
@@ -100,7 +103,12 @@
     "unlimited_space" : "Unlimited Space",
     "unlimited_digital_invoices" : "Unlimited Digital Invoices",
     "click_monthly_vat_report" : "1 click Monthly Vat Reports (incl. txt and excel)",
-    "yearly_reports" : "Yearly Reports (excel)"
+    "yearly_reports" : "Yearly Reports (excel)",
+    "still_not_convinced" : "Still not convinced? ",
+    "trial": "Start with a 14-day FREE trial!",
+    "full_access": "You will get full access to with all the features for 14 days.",
+    "free_trial" : "Start 14-day FREE trial"
+
   },
   "about": {
     "title": "За нас",
@@ -175,7 +183,10 @@
     "search_company" : "Search Company...",
     "ACTIVE":"ACTIVE",
     "INAVTIVE" :"INAVTIVE",
-    "period": "Period"
+    "period": "Period",
+    "delete_company" : "Delete Company",
+    "delete_confirmation" : "Are you sure you want to delete this company?",
+    "confirm" : "Confirm"
   },
   "company_info": {
     "edit": "Edit",
@@ -252,7 +263,9 @@
   "company_documents":{
     "add_asset": "Add Asset",
     "media": "Media",
-    "notes": "Notes"
+    "notes": "Notes",
+    "delete_doc" : "Delete Document",
+    "delete_confirmation" : "Are you sure you want to delete this document?"
   },
   "my_profile_page":{
     "general": "General",
@@ -359,6 +372,34 @@
     "transaction_total_nonVat": "Transaction Total Amount Non VAT"
 
   },
+  "create_company":{
+    "company_details" : "Company Details",
+    "account_details" : "Account Details",
+    "create_details" : "Enter Your Company Details",
+    "update_details" :"Update Your Company Details",
+    "create_acc_details":"Enter Your Account Details",
+    "update_acc_details" :"Update Your Account Details",
+    "company_id" :"Company Identification Numbers",
+    "company_status" : "Company Status",
+    "company_bank_account": "Company Bank Accounts",
+    "company_currency" : "Company Currency",
+    "company_phone_no" : "Company Phone Number",
+    "company_email" : "Company Email",
+    "company_fin_year" : "Company Financial Year",
+    "vat" : "VAT",
+    "next" : "Next",
+    "previous" : "Previous",
+    "create": "Create",
+    "update": "Update"
+  },
+  "update_tickets":{
+    "update_ticket": "Update Ticket",
+    "title" : "Title",
+    "description" : "Description",
+    "close" : "Close",
+    "add_ticket" : "Add Ticket",
+    "submit" : "Submit"
+  },
   "home": "Home",
   "dashboard": "Dashboard",
   "invoices": "Invoices",
@@ -373,6 +414,7 @@
   "my_profile":"My Profile",
   "companiess" :"Companies",
   "View Company" : "View Company",
+  "Edit Company": "Edit Company",
   "download":"Download",
   "print": "Print",
   "logout":"Logout",

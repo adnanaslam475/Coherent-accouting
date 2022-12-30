@@ -15,6 +15,13 @@ import './global-components'
 import '@/libs/portal-vue'
 import '@/libs/toastification'
 
+import TawkMessengerVue from '@tawk.to/tawk-messenger-vue-2';
+
+Vue.use(TawkMessengerVue, {
+    propertyId : '63adc524c2f1ac1e202abeb4',
+    widgetId : '1glfck6br'
+});
+
 // BSV Plugin Registration
 Vue.use(ToastPlugin)
 Vue.use(ModalPlugin)
