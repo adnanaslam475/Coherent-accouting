@@ -166,7 +166,6 @@
                 #default="{ errors }"
                 name="Vat Number"
                 vid="Vat Number"
-                rules="required"
               >
                 <b-form-input
                   v-model="userDetail.vatNumber"

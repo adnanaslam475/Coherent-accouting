@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-md-7 col-lg-8 col-xl-8 col-12">
+      <div class="col-md-12 col-lg-8 col-xl-8 col-12 mb-lg-0 mb-1">
         <!-- Company Details -->
         <div class="card border-primary">
           <!----><!---->
@@ -17,7 +17,7 @@
                     <div class="d-flex justify-content-start">
                       <span
                         class="b-avatar rounded"
-                        style="width: 104px; height: 104px"
+                        style="width: 6rem; height: 6rem;"
                       >
                         <feather-icon
                           icon="HomeIcon"
@@ -346,8 +346,8 @@
         </div>
       </div>
       <!-- Summary -->
-      <div class="col-md-5 col-lg-4 col-xl-4 col-12">
-        <b-card id="inner-card-body" class="border-primary ml-0 body-0 pr-3">
+      <div class="col-md-12 col-lg-4 col-xl-4 col-12">
+        <b-card id="inner-card-body" class="border-primary ml-0 body-0 pr-3 h-100">
           <table class="mt-2 mt-xl-0 w-100">
             <tr>
               <th class="pb-50">
@@ -535,14 +535,14 @@
           </b-card-body>
         </b-card>
       </b-col>
-      <b-col class="mb-1" cols="6">
+      <b-col class="mb-1" md="12" lg="6" cols="6">
         <ApexBarChart
             class="mb-1"
             chart-type="monthly"
             title="Invoices Per Month"
           />
       </b-col>
-      <b-col class="mb-1" cols="6">
+      <b-col class="mb-1" md="12" lg="6" cols="6">
         <!-- Invoices Per Day -->
         <ApexBarChart
           class="mb-1"

@@ -2,76 +2,14 @@
   <div>
     <b-row class="m-0">
       <b-col
-        md="4"
+        lg="4"
+        md="6"
         sm="12"
+        cols="12"
+        v-for="(item,index) in $t('videos_content')"
+        :key="item.index"
       >
-        <embed-types />
-      </b-col>
-      <b-col
-        md="4"
-        sm="12"
-      >
-        <embed-types />
-      </b-col>
-      <b-col
-        md="4"
-        sm="12"
-      >
-        <embed-types />
-      </b-col>
-      <b-col
-        md="4"
-        sm="12"
-      >
-        <embed-types />
-      </b-col>
-      <b-col
-        md="4"
-        sm="12"
-      >
-        <embed-types />
-      </b-col>
-      <b-col
-        md="4"
-        sm="12"
-      >
-        <embed-types />
-      </b-col>
-      <b-col
-        md="4"
-        sm="12"
-      >
-        <embed-types />
-      </b-col>
-      <b-col
-        md="4"
-        sm="12"
-      >
-        <embed-types />
-      </b-col>
-      <b-col
-        md="4"
-        sm="12"
-      >
-        <embed-types />
-      </b-col>
-      <b-col
-        md="4"
-        sm="12"
-      >
-        <embed-types />
-      </b-col>
-      <b-col
-        md="4"
-        sm="12"
-      >
-        <embed-types />
-      </b-col>
-      <b-col
-        md="4"
-        sm="12"
-      >
-        <embed-types />
+        <embed-types :item="item" />
       </b-col>
     </b-row>
   </div>
@@ -93,8 +31,7 @@ export default {
     BCard,
     BCardBody,
     navbarAds,
-  },
-
+  }
 }
 </script>
 <style lang="">

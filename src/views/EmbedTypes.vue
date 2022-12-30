@@ -4,11 +4,11 @@
       <b-embed
         type="iframe"
         aspect="16by9"
-        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
+        :src="item.video.link"
         allowfullscreen
       />
       <h4 class="text-primary mt-1">
-        Lorem ipsum dolor sit
+        {{ $t(`${item.video.title}`)}}
       </h4>
     </div>
 
@@ -24,6 +24,7 @@ import { BEmbed, BCardText } from "bootstrap-vue";
 import { codeTypes } from "./code";
 import axios from "axios";
 export default {
+  props: ["item"],
   components: {
     BCardCode,
     BEmbed,

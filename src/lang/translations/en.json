@@ -359,6 +359,20 @@
     "transaction_total_nonVat": "Transaction Total Amount Non VAT"
 
   },
+  "videos_content": [
+    {
+      "video": {
+        "link" : "https://www.youtube.com/embed/zpOULjyy-n8?rel=0",
+        "title" : "lorem ipsum dolor sit"
+      }
+    },
+    {
+      "video": {
+        "link" : "https://www.youtube.com/embed/zpOULjyy-n8?rel=0",
+        "title" : "lorem ipsum dolor sit"
+      }
+    }
+  ],
   "home": "Home",
   "dashboard": "Dashboard",
   "invoices": "Invoices",

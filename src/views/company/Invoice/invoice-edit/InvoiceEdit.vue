@@ -1238,8 +1238,12 @@ export default {
       });
     },
     invoiceVerify(invoiceData,AccountTypeOption){
-      invoiceData.verified = true
-      this.invoiceEdit(invoiceData,'invoices',AccountTypeOption)
+      this.$refs.invoiceEditForm.validate().then((success) => {
+        if (success) {
+          invoiceData.verified = true
+          this.invoiceEdit(invoiceData,'invoices',AccountTypeOption)
+        }
+      })
     }
   },
   setup() {

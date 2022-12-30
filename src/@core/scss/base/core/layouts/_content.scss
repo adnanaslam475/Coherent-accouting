@@ -378,6 +378,13 @@ html {
   }
 }
 
+@media only screen and (min-width: 992px) and (max-width: 1600px){
+  body{
+    font-size: $base-font-size-lg !important;
+    // font-size: $base-font-size;
+  }
+}
+
 .app-content.center-layout {
   overflow: hidden;
 }

@@ -93,15 +93,21 @@
                 :text="avatarText(data.item.firstMiddleAndLastName)"
               />
             </template>
+            <b-link 
+              :to="{
+                  name: 'apps-users-edit',
+                  params: { id: data.item.id },
+                }"
+              class="font-weight-bold d-block text-nowrap"
+            >
+              {{ data.item.firstMiddleAndLastName }}
+            </b-link>
             <CopyToClipboard :text="data.item.firstMiddleAndLastName"  @copy="textCopyToClipboard('Username')">
-              <b-link class="font-weight-bold d-block text-nowrap" id="usernamee">
-                {{ data.item.firstMiddleAndLastName }}
-              </b-link>
+              <b-badge :id="`username-${data.item.id}`" pill :variant="`light-success`" class="text-capitalize">
+                <small>{{ data.item.firstMiddleAndLastName }}</small>
+              </b-badge>
+              <b-tooltip :target="`username-${data.item.id}`">Copy to clipboard</b-tooltip>
             </CopyToClipboard>
-            <b-tooltip target="usernamee">Copy to clipboard</b-tooltip>
-            <b-badge pill :variant="`light-success`" class="text-capitalize">
-              <small>{{ data.item.firstMiddleAndLastName }}</small>
-            </b-badge>
           </b-media>
         </template>
 

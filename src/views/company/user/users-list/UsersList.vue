@@ -97,22 +97,26 @@
                 :text="avatarText(data.item.firstMiddleAndLastName)"
               />
             </template>
+
+              <b-link
+                class="font-weight-bold d-block text-nowrap"
+                :to="{
+                  name: 'company-users-edit',
+                  params: { id: data.item.id, companyId: companyId },
+                }"
+              >
+                {{ data.item.firstMiddleAndLastName }}
+              </b-link>
             <CopyToClipboard
               :text="data.item.firstMiddleAndLastName"
               @copy="textCopyToClipboard('Username')"
             >
-              <b-link
-                class="font-weight-bold d-block text-nowrap"
-                id="usernamee"
-              >
-                {{ data.item.firstMiddleAndLastName }}
-              </b-link>
-            </CopyToClipboard>
-            <b-tooltip target="usernamee">Copy to clipboard</b-tooltip>
+              <b-badge :id="`username-${data.item.id}`" pill :variant="`light-success`" class="text-capitalize">
+                <small>{{ data.item.firstMiddleAndLastName }}</small>
+              </b-badge>
+              <b-tooltip :target="`username-${data.item.id}`">Copy to clipboard</b-tooltip>
 
-            <b-badge pill :variant="`light-success`" class="text-capitalize">
-              <small>{{ data.item.firstMiddleAndLastName }}</small>
-            </b-badge>
+            </CopyToClipboard>
           </b-media>
         </template>
 
@@ -340,14 +344,6 @@ export default {
     vSelect,
   },
   props: ["addRecord"],
-  watch: {
-    addRecord: function (newVal, oldVal) {
-      if (newVal) {
-        this.triggerAddRecord();
-      }
-      this.$emit("state", false);
-    },
-  },
   methods: {
     //
     textCopyToClipboard(val) {
@@ -414,7 +410,13 @@ export default {
     },
     triggerAddRecord() {
       this.$refs.refAddUserBtn.click();
+      this.$emit("state", false);
     },
+  },
+  mounted() {
+    if(this.addRecord){
+      this.triggerAddRecord();
+    }
   },
   setup() {
     const USER_APP_STORE_MODULE_NAME = "app-user";

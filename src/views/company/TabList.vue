@@ -1,7 +1,7 @@
 <template>
 
     <div class="tabs tabs-hide-print">
-      <b-nav tabs align="left" style="font-size: 13px !important">
+      <b-nav tabs align="left" style="font-size: 0.8vw !important">
         <b-nav-item :to="{ name: 'CompanyView', params: { InvoiceId: 0, id: $route.params.companyId }}" :active="invoiceTab !== 0" >
           <feather-icon icon="BriefcaseIcon" />
           {{ $t('lbl.company_info') }}
@@ -32,12 +32,12 @@
         </b-nav-item>
         <b-nav-item class="ml-auto">
           <span v-if="companyNameLength < 25">
-            <h4 style="color: #0a64bc">
+            <h4 style="color: #0a64bc; font-size: 1vw;">
               <b>{{ companyName }}</b>
             </h4></span
           >
           <span v-else>
-            <h4 style="color: #0a64bc">
+            <h4 style="color: #0a64bc; font-size: 1vw;">
               <b>{{ companyName.substr(0, 24) }}</b>
             </h4></span
           >

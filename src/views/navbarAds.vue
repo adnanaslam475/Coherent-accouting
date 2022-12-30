@@ -17,7 +17,7 @@
         <div class="d-flex align-items-center">
           <b-link
               class="navbar-brand d-flex align-items-center"
-              to="/"
+              :to="{name : 'why-choose-us'}"
           >
             <span class="brand-logo nav-logo">
               <b-img

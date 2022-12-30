@@ -5,36 +5,37 @@
       <b-tab>
         <template #title>
           <feather-icon icon="BriefcaseIcon" />
-          <span style="font-size: 13px" class="text-capitalize">{{ $t('lbl.company_info') }}</span> 
+          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('lbl.company_info') }}</span> 
         </template>
-        <CompanyInfo :company-tab="companyTab" @state="update($event)" />
+        <CompanyInfo v-if="companyTab == 0" :company-tab="companyTab" @state="update($event)" />
       </b-tab>
 
       <!-- invoices tab -->
       <b-tab>
         <template #title>
           <feather-icon icon="FileTextIcon" />
-          <span style="font-size: 13px" class="text-capitalize">{{ $t('invoices') }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('invoices') }}</span>
         </template>
-        <Invoice :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)" />
+        <Invoice v-if="companyTab == 1" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)" />
       </b-tab>
 
       <!-- Multiple Uploads tab -->
       <b-tab>
         <template #title>
           <feather-icon icon="FileIcon" />
-          <span style="font-size: 13px" class="text-capitalize" >{{ $t('company_tabs.multiple_upload') }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize" >{{ $t('company_tabs.multiple_upload') }}</span>
         </template>
-        <NotVerifiedInvoice />
+        <NotVerifiedInvoice v-if="companyTab == 2" />
       </b-tab>
 
       <!-- Vat Reports tab -->
       <b-tab>
         <template #title>
           <feather-icon icon="FlagIcon" />
-          <span style="font-size: 13px" class="text-capitalize">{{ $t('company_tabs.vat_reports') }} </span>
+          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.vat_reports') }} </span>
         </template>
         <VatReports
+          v-if="companyTab == 3"
           :vat-reports-tab="vatReportsTab"
           @state="updateVatReportsTab($event)"
         />
@@ -44,42 +45,43 @@
       <b-tab>
         <template #title>
           <feather-icon icon="FlagIcon" />
-          <span style="font-size: 13px" class="text-capitalize">{{ $t('company_tabs.yearly_reports') }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.yearly_reports') }}</span>
         </template>
-        <YearlyReport />
+        <YearlyReport v-if="companyTab == 4" />
       </b-tab>
 
       <!-- Documents tab -->
       <b-tab>
         <template #title>
           <feather-icon icon="FolderIcon" />
-          <span style="font-size: 13px" class="text-capitalize">{{ $t('company_tabs.company_documents') }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.company_documents') }}</span>
         </template>
-        <Document />
+        <Document v-if="companyTab == 5" />
       </b-tab>
 
       <!--Private Person tab -->
       <b-tab>
         <template #title>
           <feather-icon icon="UserIcon" />
-          <span style="font-size: 13px" class="text-capitalize">{{ $t('company_tabs.clients_or_recipients') }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.clients_or_recipients') }}</span>
         </template>
         <PrivatePersons
+          v-if="companyTab == 6"
           :add-record="addRecord"
           @state="updateAddRecord($event)"
         />
       </b-tab>
 
       <!-- Name of company -->
-      <b-tab title-item-class="ml-auto " disabled>
+      <b-tab title-item-class="ml-auto" :title-link-class="'pb-0'" disabled>
         <template #title>
           <span v-if="companyNameLength < 25">
-            <h4 style="color: #0a64bc">
+            <h4 style="color: #0a64bc; font-size: 1vw;">
               <b>{{ companyName }}</b>
             </h4></span
           >
           <span v-else>
-            <h4 style="color: #0a64bc">
+            <h4 style="color: #0a64bc; font-size: 1vw;">
               <b>{{ companyName.substr(0, 24) }}</b>
             </h4></span
           >
