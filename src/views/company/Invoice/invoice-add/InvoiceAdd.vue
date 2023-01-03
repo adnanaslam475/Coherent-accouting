@@ -1123,6 +1123,7 @@ export default {
       });
     },
     invoiceAdd(invoiceData,AccountTypeOption) {
+      let ValidateVat = this.supplierVat == 'true' && invoiceData.transactionType == "EXPENSE"
 
       if(AccountTypeOption == 'person'){
          invoiceData.recipientCompany.companName = invoiceData.recipientCompany.companyOwnerName
@@ -1139,7 +1140,7 @@ export default {
           let token = useJwt.getToken()
           useJwt
             .addCompanyInvoice(token, router.currentRoute.params.companyId, invoiceData)
-            .then((response) => {
+            .then(async (response) => {
               this.loading = false
               this.$toast({
                 component: ToastificationContent,
@@ -1149,7 +1150,20 @@ export default {
                   variant: "success",
                 },
               });
-              this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+              if(ValidateVat){
+                let validateRegExp = invoiceData.supplierCompany.companyVatEic
+                validateRegExp = validateRegExp.replace(/\W|_/g, '');
+                let regExp = /(?:(AT)\s*(U\d{8}))|(?:(BE)\s*(0?\d{*}))|(?:(CZ)\s*(\d{8,10}))|(?:(DE)\s*(\d{9}))|(?:(CY)\s*(\d{8}[A-Z]))|(?:(DK)\s*(\d{8}))|(?:(EE)\s*(\d{9}))|(?:(GR)\s*(\d{9}))|(?:(ES|NIF:?)\s*([0-9A-Z]\d{7}[0-9A-Z]))|(?:(FI)\s*(\d{8}))|(?:(FR)\s*([0-9A-Z]{2}\d{9}))|(?:(GB)\s*((\d{9}|\d{12})~(GD|HA)\d{3}))|(?:(HU)\s*(\d{8}))|(?:(IE)\s*(\d[A-Z0-9\\+\\*]\d{5}[A-Z]))|(?:(IT)\s*(\d{11}))|(?:(LT)\s*((\d{9}|\d{12})))|(?:(LU)\s*(\d{8}))|(?:(LV)\s*(\d{11}))|(?:(MT)\s*(\d{8}))|(?:(NL)\s*(\d{9}B\d{2}))|(?:(PL)\s*(\d{10}))|(?:(PT)\s*(\d{9}))|(?:(SE)\s*(\d{12}))|(?:(SI)\s*(\d{8}))|(?:(SK)\s*(\d{10}))|(?:\D|^)(\d{11})(?:\D|$)|(?:(CHE)(-|\s*)(\d{3}\.\d{3}\.\d{3}))|(?:(SM)\s*(\d{5}))/gi
+                let result = regExp.test(validateRegExp);
+                if(result){
+                  this.showMsgBoxTwo(response.data.id,invoiceData)
+                } else{
+                  this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+                }
+                
+              } else {
+                this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+              }
             })
             .catch((error) => {
               this.loading = false
@@ -1164,6 +1178,59 @@ export default {
             });
         }
       });
+    },
+    showMsgBoxTwo(id,invoiceData) {
+      const h = this.$createElement
+        // Using HTML string
+        // More complex structure
+      const messageVNode = h('div', { class: ['bvModalFont'] }, [
+        h('p', { class: ['text-center card-text'] }, [
+          'Do You want to create a PROTOCOL as well?',
+        ])
+      ])
+      this.$bvModal
+        .msgBoxConfirm([messageVNode], {
+          title: 'Create protocol',
+          okVariant: 'primary',
+          okTitle: 'Yes',
+          cancelTitle: 'No',
+          hideHeaderClose: false,
+          centered: true,
+        })
+        .then(value => {
+            if(value){
+              this.loading = true
+              invoiceData.invoiceNumber = "1" + invoiceData.invoiceNumber
+              invoiceData.documentType = "PROTOCOL"
+              let token = useJwt.getToken()
+              useJwt
+                .addCompanyInvoice(token, router.currentRoute.params.companyId, invoiceData)
+                .then((response) => {
+                  this.loading = false
+                  
+                  this.$toast({
+                    component: ToastificationContent,
+                    props: {
+                      title: `Protocol Added Successfully`,
+                      icon: "EditIcon",
+                      variant: "success",
+                    },
+                  });
+                  this.$router.push({ name: 'company-invoice-edit', params: { id: id , companyId: router.currentRoute.params.companyId }})
+                })
+                .catch((error) => {
+                  this.loading = false
+                  this.$toast({
+                    component: ToastificationContent,
+                    props: {
+                      title: `${error.response.data.errorMessage}`,
+                      icon: "EditIcon",
+                      variant: "error",
+                    },
+                  });
+                });
+            }
+        })
     }
   },
   setup() {
