@@ -895,9 +895,9 @@ export default {
               self.$toast({
                 component: ToastificationContent,
                 props: {
-                  title: `Something Went Wrong`,
-                  icon: "EditIcon",
-                  variant: "error",
+                  title: `Error updating company info`,
+                  icon: 'AlertTriangleIcon',
+                  variant: 'danger',
                   timer: 1700,
 
                 },
@@ -917,11 +917,10 @@ export default {
           "Access-Control-Allow-Credentials": true,
           "Access-Control-Allow-Origin": "http://localhost:8080",
         },
-      });
-
-      if (data.data != "") {
-        this.companyRecord = data.data;
-        this.form = data.data;
+      })
+      .then((response) => {
+        this.companyRecord = response.data;
+        this.form = response.data;
         this.getCompanyName = this.companyRecord.companyName;
         this.getCompanyID = this.companyRecord.companyIdentificationNumber;
         this.getCompanyAddress = this.companyRecord.companyAddress;
@@ -945,7 +944,45 @@ export default {
         else{
           this.isStatusSelected = true;
         }
-      }
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching company info",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          });
+        });
+
+      // if (data.data != "") {
+      //   this.companyRecord = data.data;
+      //   this.form = data.data;
+      //   this.getCompanyName = this.companyRecord.companyName;
+      //   this.getCompanyID = this.companyRecord.companyIdentificationNumber;
+      //   this.getCompanyAddress = this.companyRecord.companyAddress;
+      //   this.getCompanyCountry = this.companyRecord.companyCountry;
+      //   this.getCompOwnerName =
+      //     this.companyRecord.companyOwnerApi.companyOwnerName;
+      //     this.getCompOwnerEgn =
+      //     this.companyRecord.companyOwnerApi.ownerEGN;
+      //     this.isVatCheck = this.companyRecord.companyVatAccepted;
+      //     this.getVatNumber = this.companyRecord.companyVatNumber;
+      //     this.getBankAccount = this.companyRecord.companyBankAccount;
+      //     this.getCompanyCurrency = this.companyRecord.companyCurrency;
+      //     this.getCompanyPhone = this.companyRecord.companyPhone;
+      //     this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
+      //   this.getCompanyEmail = this.companyRecord.companyMail;
+      //   this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;  
+      //   this.getCompanyStatus = this.companyRecord.status;
+      //   if(this.getCompanyStatus === null){
+      //     this.isStatusSelected = false;
+      //   }
+      //   else{
+      //     this.isStatusSelected = true;
+      //   }
+      // }
 
 
     },

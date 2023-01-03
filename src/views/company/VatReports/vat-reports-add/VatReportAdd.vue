@@ -1341,8 +1341,8 @@ export default {
                 component: ToastificationContent,
                 props: {
                   title: `Something Went Wrong`,
-                  icon: "EditIcon",
-                  variant: "error",
+                  icon: 'AlertTriangleIcon',
+                  variant: 'danger',
                 },
               });
             });

@@ -1262,6 +1262,7 @@ import { avatarText } from "@core/utils/filter";
 import Ripple from "vue-ripple-directive";
 
 import VatReportDownload from "../vat-report-download/VatReportDownload.vue";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 import VueHtml2pdf from "vue-html2pdf";
 import TabList from "../../TabList.vue"
@@ -1385,6 +1386,14 @@ margin: 100,
       .catch((error) => {
         if (error.response.status === 404) {
           vatReportData.value = undefined;
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching company info",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          });
         }
       });
 

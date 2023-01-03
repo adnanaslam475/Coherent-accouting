@@ -402,8 +402,8 @@ export default {
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: "DeleteIcon",
-              variant: "error",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
             },
           });
         });

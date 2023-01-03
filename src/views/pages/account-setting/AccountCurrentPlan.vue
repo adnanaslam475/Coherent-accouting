@@ -177,6 +177,8 @@ import {
 } from "bootstrap-vue";
 import Ripple from "vue-ripple-directive";
 import useJwt from "@/auth/jwt/useJwt";
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+
 
 export default {
   name: "AccountCurrentPlan",
@@ -230,7 +232,16 @@ export default {
 
           this.daysUtilized = this.planDays - this.daysLeft;
         })
-        .catch(() => {});
+        .catch(() => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Error fetching current plan`,
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          })
+        });
     },
   },
 

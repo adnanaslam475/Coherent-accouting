@@ -819,18 +819,18 @@ export default {
     },
     //
     async getCompanyInfo() {
-      const data = await axios.get(`/account/api/company/${this.companyID}`, {
+      axios.get(`/account/api/company/${this.companyID}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           "Access-Control-Allow-Credentials": true,
           "Access-Control-Allow-Origin": "http://localhost:8080",
         },
-      });
-      if (data.status === 200) {
-        this.companyRecord = data.data;
+      })
+      .then((response) => {
+        this.companyRecord = response.data;
         this.companyNameLength = this.companyRecord.companyName.length;
         this.companyOwnerName =
-          this.companyRecord.companyOwnerApi.companyOwnerName;
+        this.companyRecord.companyOwnerApi.companyOwnerName;
         this.companyOwnerEGN = this.companyRecord.companyOwnerApi.ownerEGN;
         this.companyName = this.companyRecord.companyName;
         this.companyAddress = this.companyRecord.companyAddress;
@@ -839,7 +839,18 @@ export default {
         this.compBANKACCOUNT = this.companyRecord.companyBankAccount;
         this.compCONTACT = this.companyRecord.companyPhone;
         this.compNAME = this.companyRecord.companyName;
-      }
+        })
+        .catch((error) => {
+          // console.log(error);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching company info",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          });
+        });
     },
     async getStatistics() {
       axios(

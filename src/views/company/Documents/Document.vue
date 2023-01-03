@@ -527,11 +527,11 @@ export default {
     //getting the list of assets
     async getAssets() {
       const self = this;
-      const response = await axios.get(
+      axios.get(
         `/account/api/asset/list/${router.currentRoute.params.id}/${this.currentPage}/${this.perPage}?sortField=id&direction=desc&type=ASSET`
-      );
-
-      // eslint-disable-next-line no-restricted-syntax
+      )
+      .then((response) => {
+          // eslint-disable-next-line no-restricted-syntax
       for (const item of response.data.elements) {
         const data = JSON.parse(item.binaryId);
 
@@ -550,6 +550,20 @@ export default {
       this.items = response.data.elements;
       this.totalRecords = response.data.totalElements;
       this.totalPages = Math.ceil(this.totalRecords / this.perPage);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching documents",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          });
+        });
+
+      
     },
     onResponse(r) {
       this.binary = JSON.parse(r);
