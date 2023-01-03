@@ -9,7 +9,6 @@
         <div class="text-center">
           <h1 class="text-primary text-center mt-5 mb-5">
             {{ $t('videos')}} 
-            <!-- lorem ipsom -->
           </h1>
         </div>
     </section>
