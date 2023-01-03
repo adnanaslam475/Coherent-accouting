@@ -75,14 +75,14 @@
       <!-- Name of company -->
       <b-tab title-item-class="ml-auto" :title-link-class="'pb-0'" disabled>
         <template #title>
-          <span v-if="companyNameLength < 25">
+          <span v-if="companyNameLength < 15">
             <h4 style="color: #0a64bc; font-size: 1vw;">
               <b>{{ companyName }}</b>
             </h4></span
           >
           <span v-else>
             <h4 style="color: #0a64bc; font-size: 1vw;">
-              <b>{{ companyName.substr(0, 24) }}</b>
+              <b>{{ companyName.substr(0, 16) }}</b>
             </h4></span
           >
         </template>
@@ -182,7 +182,7 @@ export default {
 <style lang="scss">
 //
 .nav-tabs .nav-link {
-  padding: 0.36rem 0.78rem 0.47rem;
+  padding: 0.36rem 0.65rem 0.47rem;
 }
 
 // .card-body {
@@ -190,5 +190,9 @@ export default {
 // }
 #main-card-body .card-body {
   padding: 0px;
+}
+
+.nav-tabs .nav-link svg {
+    margin-right: 0.3rem;
 }
 </style>

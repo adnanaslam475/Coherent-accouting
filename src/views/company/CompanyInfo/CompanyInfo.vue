@@ -7,7 +7,7 @@
           <!----><!---->
           <div class="card-body" style="padding: 0px">
             <!----><!---->
-            <div class="row" style="padding: 15px 0px 15px 15px">
+            <div class="row" style="padding: 15px 0px 10px 15px">
               <div
                 class="d-flex justify-content-between flex-column col-5"
                 style="padding-left: 0.5rem; padding-right: 0.5rem"
@@ -28,12 +28,12 @@
 
                       <div class="d-flex flex-column ml-1">
                         <div class="mb-1">
-                          <CopyToClipboard v-if="companyNameLength >= 43"
+                          <CopyToClipboard v-if="companyNameLength >= 34"
                             :text="compNAME"
                             @copy="copyTextNoInput(8)"
                           >
                           <h4  class="mb-0" style="cursor: pointer"  id="comp-name-copy">
-                            {{ companyName.substr(0, 44) }}
+                            {{ companyName.substr(0, 35) }}
                           </h4></CopyToClipboard>
 
                           <CopyToClipboard  v-else
@@ -55,7 +55,7 @@
                             companyRecord.companyMail
                           }}</span>
                         </div>
-                        <div class="d-flex flex-wrap">
+                        <div class="d-flex">
                           <b-button
                             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                             size="sm"
@@ -78,15 +78,15 @@
                       </div>
                     </div>
                     <div class="d-flex align-items-center mt-2">
-                      <div class="d-flex align-items-center mr-2">
+                      <div class="d-flex align-items-center">
                         <feather-icon
                           icon="UserIcon"
-                          width="25px"
-                          height="25px"
+                          width="18px"
+                          height="18px"
                           style="margin-left: 8px; margin-right: -5px"
                         />
                         <div class="ml-1">
-                          <h6 class="mb-0">{{ $t('company_info.owner_name')}} </h6>
+                          <p class="mb-0 font-weight-bold">{{ $t('company_info.owner_name')}} </p>
                           <CopyToClipboard
                             :text="companyOwnerName"
                             @copy="copyTextNoInput(1)"
@@ -101,15 +101,15 @@
                           }}</b-tooltip>
                         </div>
                       </div>
-                      <div class="d-flex align-items-center">
+                      <div class="d-flex align-items-center ml-auto">
                         <feather-icon
                           icon="InfoIcon"
-                          width="25px"
-                          height="25px"
+                          width="18px"
+                          height="18px"
                           style="margin-left: 8px; margin-right: -5px"
                         />
                         <div class="ml-1">
-                          <h6 class="mb-0 text-capitalize"> {{ $t('company_info.owner_egn') }} </h6>
+                          <p class="mb-0 text-capitalize font-weight-bold"> {{ $t('company_info.owner_egn') }} </p>
                           <CopyToClipboard
                             :text="companyOwnerEGN"
                             @copy="copyTextNoInput(2)"
@@ -140,7 +140,7 @@
                       <!-- Company ID -->
                       <tr>
                         <th class="pb-50">
-                          <svg
+                          <!-- <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="14px"
                             height="14px"
@@ -155,7 +155,9 @@
                             <polygon
                               points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
                             />
-                          </svg>
+                          </svg> -->
+                          <feather-icon icon="StarIcon" class="mr-75" />
+
                           <span class="font-weight-bold text-capitalize">{{ $t('company_info.company_id') }}</span>
                         </th>
                         <td class="pb-50 text-capitalize">
@@ -243,8 +245,8 @@
                       </tr>
                        <!-- Company Phone -->
                       <tr>
-                        <th>
-                          <svg
+                        <th class="pb-50">
+                          <!-- <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="14px"
                             height="14px"
@@ -259,7 +261,8 @@
                             <path
                               d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
                             />
-                          </svg>
+                          </svg> -->
+                          <feather-icon icon="PhoneIcon" class="mr-75" />
                           <span class="font-weight-bold text-capitalize">{{ $t('company_info.contact') }}</span>
                         </th>
                         <td class="pb-50">
@@ -302,7 +305,7 @@
                               cursor: pointer;
                             "
                           >
-                            {{ companyAddress.substr(0, 38) }}
+                            {{ companyAddress.substr(0, 34) }}
                           </p></CopyToClipboard>
                         </td>
                         <b-tooltip target="comp-address-copy">{{
@@ -352,7 +355,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="AlignJustifyIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_assets') }}</span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{$t('company_info.total_assets') }}</span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalAssets }}
@@ -361,7 +364,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="FileTextIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_invoices') }} </span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{$t('company_info.total_invoices') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalInvoices }}
@@ -370,7 +373,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="AlertCircleIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_not_verified_invoices')}}</span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{$t('company_info.total_not_verified_invoices')}}</span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalNotVerifiedInvoices }}
@@ -379,7 +382,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="AlertTriangleIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_private_person') }} </span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{$t('company_info.total_private_person') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalPrivatePerson }}
@@ -388,7 +391,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="ListIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_vat_reports') }} </span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{$t('company_info.total_vat_reports') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalVatReports }}
@@ -397,7 +400,7 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="FileIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize">{{$t('company_info.total_yearly_reports') }} </span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{$t('company_info.total_yearly_reports') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalYearlyReports }}
@@ -422,6 +425,7 @@
                       : $route.params.id,
                   },
                 }"
+                style="font-size: 0.9rem"
               >
                {{ $t('company_info.create_invoice') }} 
               </b-dropdown-item>
@@ -434,14 +438,17 @@
                       : $route.params.id,
                   },
                 }"
+                   style="font-size: 0.9rem"
               >
 
               {{ $t('company_info.create_vat_report') }} 
               </b-dropdown-item>
               <b-dropdown-item
                 @click="actionTab"
+                style="font-size: 0.9rem"
               > {{ $t('company_info.create_private_person') }} </b-dropdown-item>
               <b-dropdown-item
+              style="font-size: 0.9rem"
               >
               {{ $t('company_info.create_yearly_report') }} 
               </b-dropdown-item>
@@ -871,5 +878,16 @@ export default {
 
 #inner-card-body .card-body {
   padding: 18px 15px 15px 15px;
+}
+
+.company-info-table th{
+  width: 140px;
+}
+
+small {
+    font-size: 0.7rem !important;
+}
+.btn-sm{
+  padding: 0.486rem 0.7rem !important;
 }
 </style>
