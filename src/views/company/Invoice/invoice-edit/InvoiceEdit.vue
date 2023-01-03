@@ -1229,8 +1229,8 @@ export default {
                     component: ToastificationContent,
                     props: {
                       title: `${error.response.data.errorMessage}`,
-                      icon: "EditIcon",
-                      variant: "error",
+                      icon: 'AlertTriangleIcon',
+                      variant: 'danger',
                     },
                   });
                 });

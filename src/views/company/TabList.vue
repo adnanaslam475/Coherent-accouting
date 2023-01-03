@@ -31,14 +31,14 @@
           {{ $t('company_tabs.clients_or_recipients') }}
         </b-nav-item>
         <b-nav-item class="ml-auto">
-          <span v-if="companyNameLength < 25">
+          <span v-if="companyNameLength < 15">
             <h4 style="color: #0a64bc; font-size: 1vw;">
               <b>{{ companyName }}</b>
             </h4></span
           >
           <span v-else>
             <h4 style="color: #0a64bc; font-size: 1vw;">
-              <b>{{ companyName.substr(0, 24) }}</b>
+              <b>{{ companyName.substr(0, 16) }}</b>
             </h4></span
           >
              
@@ -99,8 +99,16 @@
     justify-content: center;
   }
 
-  .nav-tabs .nav-link{
+  /* .nav-tabs .nav-link{
     padding: 0.61rem 0.8rem !important;
-  }
+  } */
+
+  .nav-tabs .nav-link {
+  padding: 0.36rem 0.65rem 0.47rem;
+}
+
+  .nav-tabs .nav-link svg {
+    margin-right: 0.3rem;
+}
   </style>
   

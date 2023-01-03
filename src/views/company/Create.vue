@@ -954,9 +954,9 @@ export default {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `Something Went Wrong`,
-              icon: "EditIcon",
-              variant: "error",
+              title: `Error fetching countries list`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
           });
         });

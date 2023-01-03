@@ -265,6 +265,7 @@ import axios from "@/libs/axios";
 import BCardCode from "@core/components/b-card-code/BCardCode";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import { required, min } from "vee-validate/dist/rules";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 extend("required", required);
 extend("min", min);
@@ -341,14 +342,26 @@ export default {
   methods: {
     // getting the list of all companies
     async getAllTickets() {
-      const data = await axios.get(
+      axios.get(
         `/account/api/ticket/list/${this.currentPage}/${this.perPage}?direction=desc&sortField=id`
-      );
-      if (data.data.elements !== "") {
-        this.items = data.data.elements;
-        this.totalRecords = data.data.totalElements;
+      )
+      .then((response) => {
+        this.items = response.data.elements;
+        this.totalRecords = response.data.totalElements;
         this.totalPages = Math.ceil(this.totalRecords / this.perPage);
-      }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching tickets",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          });
+        });
+      
     },
     async createTicket() {
       const data = await axios.post(

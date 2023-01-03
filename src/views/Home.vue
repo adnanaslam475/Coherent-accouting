@@ -37,6 +37,8 @@ import EcommerceStatistics from './dashboard/ecommerce/EcommerceStatistics.vue'
 import CrmActiveProject from './dashboard/crm/CrmActiveProject.vue'
 import CrmReport from './dashboard/crm/Reports.vue'
 import Companies from '@/views/company/Index.vue'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+
 export default {
   components: {
     BCard,
@@ -64,6 +66,18 @@ export default {
       .then(response => {
         this.data.statisticsItems = response.data
       })
+      .catch((error)=>{
+        this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Error fetching statistics`,
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          })
+
+
+      });
 
   }
 }

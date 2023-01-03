@@ -496,8 +496,8 @@ export default {
             component: ToastificationContent,
             props: {
               title: `Something Went Wrong`,
-              icon: "EditIcon",
-              variant: "error",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
             },
           });
         });
@@ -505,7 +505,7 @@ export default {
 
     // getting the list of all companies
     async getAllCompanies() {
-      const data = await axios.get(
+      axios.get(
         `/account/api/company/list/${this.currentPage}/${this.perPage}?direction=${this.direction}&sortField=${this.sortField}`,
         {
           headers: {
@@ -514,14 +514,23 @@ export default {
             "Access-Control-Allow-Origin": "http://localhost:8080",
           },
         }
-      );
-
-      if (data.data.elements != "") {
-        this.items = data.data.elements;
-        this.totalRecords = data.data.totalElements;
+      )
+      .then((response) => {
+        this.items = response.data.elements;
+        this.totalRecords = response.data.totalElements;
         this.totalPages = Math.ceil(this.totalRecords / this.perPage);
-        // console.log(this.totalPages);
-      }
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching companies",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          });
+        });
+ 
     },
 
     //

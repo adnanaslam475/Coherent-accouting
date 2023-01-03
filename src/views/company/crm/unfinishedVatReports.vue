@@ -208,6 +208,8 @@
 
 <script>
 import BCardCode from "@core/components/b-card-code/BCardCode.vue";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+
 import {
   BTable,
   BAvatar,
@@ -332,7 +334,17 @@ export default {
       .get("/account/api/dashboard/companies-with-unfinished-month-vat-reports")
       .then((res) => {
         this.items = res.data;
-      });
+      })
+      .catch((error)=>{
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Error fetching vat reports`,
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          })
+        });
   },
 };
 </script>

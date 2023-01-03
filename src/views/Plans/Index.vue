@@ -397,6 +397,8 @@
 import {
   BFormCheckbox, BRow, BCol, BCard, BImg, BCardText, BListGroup, BListGroupItem, BButton, BBadge,
 } from 'bootstrap-vue'
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+
 import Ripple from 'vue-ripple-directive'
 import useJwt from "@/auth/jwt/useJwt";
 /* eslint-disable global-require */
@@ -614,7 +616,18 @@ export default {
           }
           
         }
-      });
+      })
+      .catch((error) => {
+        this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching prices",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          })
+        });
+     
     }
   },
 }

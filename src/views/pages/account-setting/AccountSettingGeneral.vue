@@ -478,8 +478,8 @@ export default {
                 component: ToastificationContent,
                 props: {
                   title: `${error}`,
-                  icon: 'EditIcon',
-                  variant: 'error',
+                  icon: 'AlertTriangleIcon',
+                  variant: 'danger',
                 },
               })
             })
@@ -489,9 +489,9 @@ export default {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `${error.errorMessage}`,
-              icon: 'EditIcon',
-              variant: 'error',
+              title: `Error fetching profile details`,
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
             },
           })
         })
