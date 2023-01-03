@@ -12,6 +12,8 @@
           
         >
          <!-- First Tab: Company Details -->
+		 <!-- First Tab: Company Details -->
+		 <!-- First Tab: Company Details -->
           <tab-content :title="$t('create_company.company_details')" :before-change="validationForm">
             <validation-observer ref="companyRules" tag="form">
               <b-row>
