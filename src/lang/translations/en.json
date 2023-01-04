@@ -413,6 +413,12 @@
       }
     }
   ],
+  "protocol":{
+    "title": "Create protocol",
+    "description" : "Do You want to create a PROTOCOL as well?",
+    "yes":"Yes",
+    "no":"No"
+  },
   "home": "Home",
   "dashboard": "Dashboard",
   "invoices": "Invoices",

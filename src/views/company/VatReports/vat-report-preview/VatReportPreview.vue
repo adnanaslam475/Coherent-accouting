@@ -1412,8 +1412,8 @@ margin: 100,
 </script>
     
   <style lang="scss">
-small {
-  font-size: 0.8rem;
+ small {
+  font-size: 0.8vw;
 }
 
 .vue-monthly-picker .input {

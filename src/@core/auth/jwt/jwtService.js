@@ -357,6 +357,10 @@ export default class JwtService {
     );
   }
 
+  getCompany(id) {
+    return this.axiosIns.get(`/account/api/company/${id}`);
+  }
+
   //Delete Company
   DeleteCompany(token, id) {
     return this.axiosIns.delete(

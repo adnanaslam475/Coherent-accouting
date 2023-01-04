@@ -896,7 +896,7 @@ export default {
 }
 
 small {
-    font-size: 0.7rem !important;
+    font-size: 0.8vw !important;
 }
 .btn-sm{
   padding: 0.486rem 0.7rem !important;

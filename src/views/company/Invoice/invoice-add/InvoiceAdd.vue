@@ -801,18 +801,13 @@
                             <validation-provider
                               #default="{ errors }"
                               name="vat"
-                              rules="required"
+                              :rules="vatPercentValidate ? 'required|vatPercentValid' : 'required'"
                             >
                               <b-input-group
                                 class="input-group-merge invoice-edit-input-group"
                               >
                                 <b-form-input
                                   v-model="invoiceData.vatPercent"
-                                  :value="
-                                    invoiceData.vatPercent
-                                      ? invoiceData.vatPercent
-                                      : 20
-                                  "
                                   step="any"
                                   type="number"
                                   class="text-right"
@@ -1012,7 +1007,7 @@
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import {
-  required, email, confirmed, password,
+  required, email, confirmed, password,regex,vatPercentValid
 } from '@validations'
 import Logo from "@core/layouts/components/Logo.vue";
 import { ref, onUnmounted } from "@vue/composition-api";
@@ -1089,7 +1084,8 @@ export default {
       loading: false,
       supplierVat: [],
       recipientVat: [],
-      required, email, confirmed, password,
+      vatPercentValidate: false,
+      required, email, confirmed, password,regex,vatPercentValid
     };
   },
   directives: {
@@ -1098,13 +1094,13 @@ export default {
   },
   mixins: [heightTransition],
   mounted() {
-    this.initTrHeight();
+    // this.initTrHeight();
   },
   created() {
-    window.addEventListener("resize", this.initTrHeight);
+    // window.addEventListener("resize", this.initTrHeight);
   },
   destroyed() {
-    window.removeEventListener("resize", this.initTrHeight);
+    // window.removeEventListener("resize", this.initTrHeight);
   },
   methods: {
     addNewItemInItemForm() {
@@ -1123,8 +1119,10 @@ export default {
       });
     },
     invoiceAdd(invoiceData,AccountTypeOption) {
-      let ValidateVat = this.supplierVat == 'true' && invoiceData.transactionType == "EXPENSE"
-
+      let regExp = /^((AT)(U\d{8})|(BE)(0\d{9})|(CY)(\d{8}[LX])|(CZ)(\d{8,10})|(DE)(\d{9})|(DK)(\d{8})|(EE)(\d{9})|(EL|GR)(\d{9})|(ES)([\dA-Z]\d{7}[\dA-Z])|(FI)(\d{8})|(FR)([\dA-Z]{2}\d{9})|(HU)(\d{8})|(IE)(\d{7}[A-Z]{2})|(IT)(\d{11})|(LT)(\d{9}|\d{12})|(LU)(\d{8})|(LV)(\d{11})|(MT)(\d{8})|(NL)(\d{9}(B\d{2}|BO2))|(PL)(\d{10})|(PT)(\d{9})|(RO)(\d{2,10})|(SE)(\d{12})|(SI)(\d{8})|(SK)(\d{10}))$/igm
+      let ValidateVatNumber = this.supplierVat == 'true' && invoiceData.transactionType == "EXPENSE"
+      let validateVat = this.recipientVat == 'true' && parseFloat(invoiceData.vatPercent) > 0
+ 
       if(AccountTypeOption == 'person'){
          invoiceData.recipientCompany.companName = invoiceData.recipientCompany.companyOwnerName
          invoiceData.recipientCompany.companyVatEic = ''
@@ -1134,6 +1132,22 @@ export default {
         item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
         return item
       })
+
+      if(validateVat){
+        let validateRegExp = invoiceData.recipientCompany.companyVatEic
+        validateRegExp = validateRegExp.replace(/\W|_/g, '');
+        let result = regExp.test(validateRegExp);
+        if(result){
+          if(!this.vatPercentValidate){
+            this.vatPercentValidate = true
+            return false
+          }
+        } else {
+          this.vatPercentValidate = false
+        }
+      } else{
+        this.vatPercentValidate = false
+      }
       this.$refs.invoiceForm.validate().then((success) => {
         if (success) {
           this.loading = true;
@@ -1150,17 +1164,15 @@ export default {
                   variant: "success",
                 },
               });
-              if(ValidateVat){
-                let validateRegExp = invoiceData.supplierCompany.companyVatEic
+              if(ValidateVatNumber){
+                let validateRegExp = response.data.supplierCompany.companyVatEic
                 validateRegExp = validateRegExp.replace(/\W|_/g, '');
-                let regExp = /(?:(AT)\s*(U\d{8}))|(?:(BE)\s*(0?\d{*}))|(?:(CZ)\s*(\d{8,10}))|(?:(DE)\s*(\d{9}))|(?:(CY)\s*(\d{8}[A-Z]))|(?:(DK)\s*(\d{8}))|(?:(EE)\s*(\d{9}))|(?:(GR)\s*(\d{9}))|(?:(ES|NIF:?)\s*([0-9A-Z]\d{7}[0-9A-Z]))|(?:(FI)\s*(\d{8}))|(?:(FR)\s*([0-9A-Z]{2}\d{9}))|(?:(GB)\s*((\d{9}|\d{12})~(GD|HA)\d{3}))|(?:(HU)\s*(\d{8}))|(?:(IE)\s*(\d[A-Z0-9\\+\\*]\d{5}[A-Z]))|(?:(IT)\s*(\d{11}))|(?:(LT)\s*((\d{9}|\d{12})))|(?:(LU)\s*(\d{8}))|(?:(LV)\s*(\d{11}))|(?:(MT)\s*(\d{8}))|(?:(NL)\s*(\d{9}B\d{2}))|(?:(PL)\s*(\d{10}))|(?:(PT)\s*(\d{9}))|(?:(SE)\s*(\d{12}))|(?:(SI)\s*(\d{8}))|(?:(SK)\s*(\d{10}))|(?:\D|^)(\d{11})(?:\D|$)|(?:(CHE)(-|\s*)(\d{3}\.\d{3}\.\d{3}))|(?:(SM)\s*(\d{5}))/gi
                 let result = regExp.test(validateRegExp);
                 if(result){
                   this.showMsgBoxTwo(response.data.id,invoiceData)
                 } else{
                   this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
-                }
-                
+                }  
               } else {
                 this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
               }
@@ -1170,7 +1182,7 @@ export default {
               this.$toast({
                 component: ToastificationContent,
                 props: {
-                  title: `${error.response.data.errorMessage}`,
+                  title: `${error?.response?.data?.errorMessage ? error.response.data.errorMessage : error}`,
                   icon: 'AlertTriangleIcon',
                   variant: 'danger',
                 },
@@ -1185,15 +1197,15 @@ export default {
         // More complex structure
       const messageVNode = h('div', { class: ['bvModalFont'] }, [
         h('p', { class: ['text-center card-text'] }, [
-          'Do You want to create a PROTOCOL as well?',
+          `${this.$t('protocol.description')}`,
         ])
       ])
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: 'Create protocol',
+          title: `${this.$t('protocol.title')}`,
           okVariant: 'primary',
-          okTitle: 'Yes',
-          cancelTitle: 'No',
+          okTitle: `${this.$t('protocol.yes')}`,
+          cancelTitle: `${this.$t('protocol.no')}`,
           hideHeaderClose: false,
           centered: true,
         })
@@ -1229,6 +1241,8 @@ export default {
                     },
                   });
                 });
+            } else {
+              this.$router.push({ name: 'company-invoice-edit', params: { id: id , companyId: router.currentRoute.params.companyId }})
             }
         })
     }
@@ -1318,6 +1332,20 @@ export default {
       invoiceData.value.invoiceType = invoiceData?.value?.invoiceType ? invoiceData.value.invoiceType : "ORIGINAL"
       invoiceData.value.saleType = invoiceData?.value?.saleType ? invoiceData.value.saleType : "SERVICE"
       invoiceData.value.documentType = invoiceData?.value?.documentType ? invoiceData.value.documentType : "INVOICE"
+    } else {
+      useJwt
+        .getCompany(router.currentRoute.params.companyId)
+        .then((response) => {
+          let Response = response.data;
+          invoiceData.value.supplierCompany.companyOwnerName = Response?.companyOwnerApi?.companyOwnerName
+          invoiceData.value.supplierCompany.companName = Response?.companyName
+          invoiceData.value.supplierCompany.companyEic = Response?.companyIdentificationNumber
+          invoiceData.value.supplierCompany.companyVatEic = Response?.companyVatNumber
+          invoiceData.value.supplierCompany.companyAddress = Response?.companyAddress
+        })
+        .catch((error) => {
+          // console.log(error);
+        });
     }
     
     invoiceData.value.currency = invoiceData?.value?.currency?.toLowerCase().trim() == 'lv' ? "лв." : invoiceData?.value?.currency?.toLowerCase().trim() == 'bgn' ? "лв." : invoiceData.value.currency
