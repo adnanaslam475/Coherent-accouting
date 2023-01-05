@@ -235,7 +235,9 @@
     "total_amount": "Общо",
     "vat_amount": "ДДС",
 	"EXPENSE":"РАЗХОД",
-    "INCOME":"ПРИХОД"
+    "INCOME":"ПРИХОД",
+	"delete_invoice" : "Изтриване на Фактура",
+    "delete_invoice_confirm" : "Сигурни ли сте че искате да изтриете тази фактура?"
   },
   "vat_reports": {
     "add_vat_report": "Добави",
@@ -250,7 +252,9 @@
     "vat_to_pay": "ДДС за плащане",
     "vat_to_exclude": "ДДС за изваждане",
     "tax_to_pay": "Даници за плащане",
-    "tax_to_pay_effective": "Ефект. данъци"
+    "tax_to_pay_effective": "Ефект. данъци",
+	 "delete_vat" : "Изтриване на ДДС Отчет",
+    "delete_vat_confirm" : "Сигурни ли сте че искате да изтриете този ДДС Отчет?"
   },
   "dashboard_lbl": {
     "statistics": "Сатистики",
@@ -315,7 +319,9 @@
 	"add_new_user": "Добави нов",
 	"full_name" : "Три имена",
 	"add": "Добави",
-    "cancel": "Изход"
+    "cancel": "Изход",
+	"delete_client": "Изтриване на клиент",
+    "delete_client_confirm":"Сигурни ли сте че искате да изтриете този клиент?"
   },
   "tickets_page":{
     "add_new_ticket" : "Добави",
