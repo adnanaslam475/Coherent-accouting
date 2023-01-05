@@ -801,7 +801,8 @@
                             <validation-provider
                               #default="{ errors }"
                               name="vat"
-                              :rules="vatPercentValidate ? 'required|vatPercentValid' : 'required'"
+                              ref="vatPercent"
+                              :rules="`${vatPercentValidate ? 'required|vatPercentValid' : 'required'}`"
                             >
                               <b-input-group
                                 class="input-group-merge invoice-edit-input-group"
@@ -1047,6 +1048,7 @@ import InvoiceSidebarAddNewCustomer from "../InvoiceSidebarAddNewCustomer.vue";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import router from '@/router'
+import { setTimeout } from "timers";
 export default {
   components: {
     BRow,
@@ -1084,7 +1086,6 @@ export default {
       loading: false,
       supplierVat: [],
       recipientVat: [],
-      vatPercentValidate: false,
       required, email, confirmed, password,regex,vatPercentValid
     };
   },
@@ -1140,16 +1141,21 @@ export default {
         if(result){
           if(!this.vatPercentValidate){
             this.vatPercentValidate = true
-            return false
-          }
+            setTimeout(()=>{
+              this.$refs.invoiceForm.validate()
+            }, 100)
+            return
+          }    
         } else {
           this.vatPercentValidate = false
         }
       } else{
         this.vatPercentValidate = false
       }
+
       this.$refs.invoiceForm.validate().then((success) => {
         if (success) {
+
           this.loading = true;
           let token = useJwt.getToken()
           useJwt
@@ -1171,10 +1177,10 @@ export default {
                 if(result){
                   this.showMsgBoxTwo(response.data.id,invoiceData)
                 } else{
-                  this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+                  // this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
                 }  
               } else {
-                this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+                // this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
               }
             })
             .catch((error) => {
@@ -1260,6 +1266,7 @@ export default {
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
     
+    var vatPercentValidate = ref(false)
     var AccountTypeOption = ref("company")
     var AccountTypeOptionToggleValue = false
     
@@ -1858,6 +1865,7 @@ export default {
     }
 
     return {
+      vatPercentValidate,
       AccountTypeOption,
       AccountTypeOptionToggleValue,
       AccountTypeOptionToggle,

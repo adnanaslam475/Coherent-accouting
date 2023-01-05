@@ -23,9 +23,9 @@ export const validatorCreditCard = creditnum => {
 
 export const validatorVatPercent = creditnum => {
   /* eslint-disable no-useless-escape */
-  const cRegExp = /[0]/
+  const cRegExp = /^0$/
   /* eslint-enable no-useless-escape */
-  const validCreditCard = cRegExp.test(creditnum)
+  const validCreditCard = cRegExp.test(parseFloat(creditnum))
   return validCreditCard
 }
 
