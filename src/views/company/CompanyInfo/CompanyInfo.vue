@@ -461,13 +461,13 @@
     <!-- modal -->
     <b-modal
       v-model="deleteModalShow"
-      title="Delete Company"
-      ok-title="Confirm"
-      cancel-title="Cancel"
+      :title="$t('companies.delete_company')"
+      :ok-title="$t('companies.confirm')"
+      :cancel-title="$t('clients_or_recipients.cancel')"
       @ok="deleteCompany()"
     >
       <b-card-text class="text-center" style="font-size: 15px">
-        Are you sure you want to delete this company?
+        {{ $t('companies.delete_confirmation') }}  
       </b-card-text>
     </b-modal>
 

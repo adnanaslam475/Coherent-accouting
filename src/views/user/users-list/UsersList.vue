@@ -276,6 +276,7 @@ import useUsersList from "./useUsersList";
 import userStoreModule from "../userStoreModule";
 import UserListAddNew from "./UserListAddNew.vue";
 import CopyToClipboard from "vue-copy-to-clipboard";
+import  {i18n} from '@/main.js'
 
 export default {
   components: {
@@ -319,15 +320,15 @@ export default {
         // More complex structure
       const messageVNode = h('div', { class: ['bvModalFont'] }, [
         h('p', { class: ['text-center card-text'] }, [
-          'Are you sure you want to delete this Client?',
+        i18n.tc('clients_or_recipients.delete_client_confirm'),
         ]) 
       ])
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: 'Delete Client',
+          title: i18n.tc('clients_or_recipients.delete_client'),
           okVariant: 'primary',
-          okTitle: 'Confirm',
-          cancelTitle: 'Cancel',
+          okTitle: i18n.tc('companies.confirm'),
+          cancelTitle: i18n.tc('clients_or_recipients.cancel'),
           hideHeaderClose: false,
           centered: true,
         })

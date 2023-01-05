@@ -456,6 +456,7 @@ import VueMonthlyPicker from "vue-monthly-picker";
 import axios from "@/libs/axios";
 import vatReportsStoreModule from "../vatReportsStoreModule";
 import useVatReportsList from "./useVatReportsList";
+import  {i18n} from '@/main.js'
 
 extend("required", {
   ...required,
@@ -700,15 +701,15 @@ export default {
         // More complex structure
       const messageVNode = h('div', { class: ['bvModalFont'] }, [
         h('p', { class: ['text-center card-text'] }, [
-          'Are you sure you want to delete this Vat Report?',
+        i18n.tc('vat_reports.delete_vat_confirm')
         ]) 
       ])
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: 'Delete Vat Report',
+          title: i18n.tc('vat_reports.delete_vat'),
           okVariant: 'primary',
-          okTitle: 'Confirm',
-          cancelTitle: 'Cancel',
+          okTitle: i18n.tc('companies.confirm'),
+          cancelTitle: i18n.tc('clients_or_recipients.cancel'),
           hideHeaderClose: false,
           centered: true,
         })

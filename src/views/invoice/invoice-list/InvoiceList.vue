@@ -417,6 +417,7 @@ import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
 import invoiceStoreModule from '../invoiceStoreModule'
 import useInvoicesList from './useInvoiceList'
 import Ripple from 'vue-ripple-directive'
+import  {i18n} from '@/main.js'
 
 export default {
   components: {
@@ -468,15 +469,15 @@ export default {
         // More complex structure
       const messageVNode = h('div', { class: ['bvModalFont'] }, [
         h('p', { class: ['text-center card-text'] }, [
-          'Are you sure you want to delete this Invoice?',
+        i18n.tc('company_invoices.delete_invoice_confirm'),
         ])
       ])
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: 'Delete Invoice',
+          title: i18n.tc('company_invoices.delete_invoice'),
           okVariant: 'primary',
-          okTitle: 'Confirm',
-          cancelTitle: 'Cancel',
+          okTitle: i18n.tc('companies.confirm'),
+          cancelTitle: i18n.tc('clients_or_recipients.cancel'),
           hideHeaderClose: false,
           centered: true,
         })

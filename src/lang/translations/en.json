@@ -235,7 +235,9 @@
     "total_amount": "Total Amount",
     "vat_amount": "Vat Amount",
     "EXPENSE":"EXPENSE",
-    "INCOME":"INCOME"
+    "INCOME":"INCOME",
+    "delete_invoice" : "Delete Invoice",
+    "delete_invoice_confirm" : "Are you sure you want to delete this Invoice?"
   },
   "vat_reports": {
     "add_vat_report": "Add VAT Report",
@@ -250,7 +252,9 @@
     "vat_to_pay": "Vat To Pay",
     "vat_to_exclude": "Vat to Exclude",
     "tax_to_pay": "Tax to Pay",
-    "tax_to_pay_effective": "Tax to Pay Effective"
+    "tax_to_pay_effective": "Tax to Pay Effective",
+    "delete_vat" : "Delete Vat Report",
+    "delete_vat_confirm" : "Are you sure you want to delete this Vat Report?"
   },
   "dashboard_lbl": {
     "statistics": "Statistics",
@@ -315,7 +319,9 @@
     "add_new_user": "Add New User",
     "full_name" : "Full Name",
     "add": "Add",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "delete_client": "Delete Client",
+    "delete_client_confirm":"Are you sure you want to delete this Client?"
   },
   "tickets_page":{
     "add_new_ticket" : "Add New Ticket",
