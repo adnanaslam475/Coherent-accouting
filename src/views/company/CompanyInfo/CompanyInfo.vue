@@ -28,20 +28,19 @@
 
                       <div class="d-flex flex-column ml-1">
                         <div class="mb-1">
-                          <CopyToClipboard v-if="companyNameLength >= 34"
+                          <!-- <CopyToClipboard v-if="companyNameLength >= 34"
                             :text="compNAME"
                             @copy="copyTextNoInput(8)"
                           >
                           <h4  class="mb-0" style="cursor: pointer"  id="comp-name-copy">
-                            {{ companyName.substr(0, 35) }}
-                          </h4></CopyToClipboard>
+                            {{ companyName.substr(0, 36) }}
+                          </h4></CopyToClipboard> -->
 
-                          <CopyToClipboard  v-else
+                          <CopyToClipboard
                             :text="compNAME"
                             @copy="copyTextNoInput(8)"
                           >
                           <h4
-                           
                             id="comp-name-copy"
                             class="mb-0"
                             style="cursor: pointer"
@@ -55,7 +54,7 @@
                             companyRecord.companyMail
                           }}</span>
                         </div>
-                        <div class="d-flex">
+                        <div class="d-flex flex-wrap">
                           <b-button
                             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                             size="sm"
@@ -78,7 +77,7 @@
                       </div>
                     </div>
                     <div class="d-flex align-items-center mt-2">
-                      <div class="d-flex align-items-center">
+                      <div class="d-flex align-items-center" style="margin-right: 5px">
                         <feather-icon
                           icon="UserIcon"
                           width="18px"
@@ -99,9 +98,9 @@
                           <b-tooltip target="comp-owner-copy">{{
                             copyToClipboard
                           }}</b-tooltip>
-                        </div>
+                        </div> 
                       </div>
-                      <div class="d-flex align-items-center ml-auto">
+                      <div class="d-flex align-items-center">
                         <feather-icon
                           icon="InfoIcon"
                           width="18px"
@@ -134,8 +133,8 @@
                 </div>
               </div>
               <div class="col-7">
-                <b-row>
-                  <b-col cols="12">
+                <b-row style="margin-right: 0rem">
+                  <b-col cols="12" style="padding-left: 0.7rem">
                     <table class="mt-2 mt-xl-0 w-100 company-info-table">
                       <!-- Company ID -->
                       <tr>
@@ -305,7 +304,7 @@
                               cursor: pointer;
                             "
                           >
-                            {{ companyAddress.substr(0, 34) }}
+                          {{ companyAddress.substr(0, 34) }}
                           </p></CopyToClipboard>
                         </td>
                         <b-tooltip target="comp-address-copy">{{
@@ -425,7 +424,6 @@
                       : $route.params.id,
                   },
                 }"
-                style="font-size: 0.9rem"
               >
                {{ $t('company_info.create_invoice') }} 
               </b-dropdown-item>
@@ -438,17 +436,14 @@
                       : $route.params.id,
                   },
                 }"
-                   style="font-size: 0.9rem"
               >
 
               {{ $t('company_info.create_vat_report') }} 
               </b-dropdown-item>
               <b-dropdown-item
                 @click="actionTab"
-                style="font-size: 0.9rem"
               > {{ $t('company_info.create_private_person') }} </b-dropdown-item>
               <b-dropdown-item
-              style="font-size: 0.9rem"
               >
               {{ $t('company_info.create_yearly_report') }} 
               </b-dropdown-item>
@@ -888,17 +883,7 @@ export default {
 }
 
 #inner-card-body .card-body {
-  padding: 18px 15px 15px 15px;
+  padding: 20px 15px 15px 15px;
 }
 
-.company-info-table th{
-  width: 140px;
-}
-
-small {
-    font-size: 0.8vw !important;
-}
-.btn-sm{
-  padding: 0.486rem 0.7rem !important;
-}
 </style>

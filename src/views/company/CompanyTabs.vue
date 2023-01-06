@@ -75,14 +75,9 @@
       <!-- Name of company -->
       <b-tab title-item-class="ml-auto" :title-link-class="'pb-0'" disabled>
         <template #title>
-          <span v-if="companyNameLength < 15">
+          <span>
             <h4 style="color: #0a64bc; font-size: 1vw;">
               <b>{{ companyName }}</b>
-            </h4></span
-          >
-          <span v-else>
-            <h4 style="color: #0a64bc; font-size: 1vw;">
-              <b>{{ companyName.substr(0, 16) }}</b>
             </h4></span
           >
         </template>

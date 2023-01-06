@@ -31,17 +31,11 @@
           {{ $t('company_tabs.clients_or_recipients') }}
         </b-nav-item>
         <b-nav-item class="ml-auto">
-          <span v-if="companyNameLength < 15">
+          <span>
             <h4 style="color: #0a64bc; font-size: 1vw;">
               <b>{{ companyName }}</b>
             </h4></span
-          >
-          <span v-else>
-            <h4 style="color: #0a64bc; font-size: 1vw;">
-              <b>{{ companyName.substr(0, 16) }}</b>
-            </h4></span
-          >
-             
+          >         
         </b-nav-item>
 
       </b-nav>
