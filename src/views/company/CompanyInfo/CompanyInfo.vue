@@ -865,7 +865,7 @@ export default {
       this.$emit('state', 
         {
           "state": this.state(),
-          "addRecord": true,
+          "addRecord": true
         }
       )
     }

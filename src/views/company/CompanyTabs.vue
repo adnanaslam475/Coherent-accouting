@@ -7,7 +7,7 @@
           <feather-icon icon="BriefcaseIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('lbl.company_info') }}</span> 
         </template>
-        <CompanyInfo v-if="companyTab == 0" :company-tab="companyTab" @state="update($event)" />
+        <CompanyInfo v-if="companyTab == 0 || infoActive" :company-tab="companyTab" @state="update($event)" />
       </b-tab>
 
       <!-- invoices tab -->
@@ -16,7 +16,7 @@
           <feather-icon icon="FileTextIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('invoices') }}</span>
         </template>
-        <Invoice v-if="companyTab == 1" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)" />
+        <Invoice v-if="companyTab == 1 || invoicesActive" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)" />
       </b-tab>
 
       <!-- Multiple Uploads tab -->
@@ -25,7 +25,7 @@
           <feather-icon icon="FileIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize" >{{ $t('company_tabs.multiple_upload') }}</span>
         </template>
-        <NotVerifiedInvoice v-if="companyTab == 2" />
+        <NotVerifiedInvoice v-if="companyTab == 2 || multipleUploadActive" />
       </b-tab>
 
       <!-- Vat Reports tab -->
@@ -35,7 +35,7 @@
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.vat_reports') }} </span>
         </template>
         <VatReports
-          v-if="companyTab == 3"
+          v-if="companyTab == 3 || vatReportsActive"
           :vat-reports-tab="vatReportsTab"
           @state="updateVatReportsTab($event)"
         />
@@ -47,7 +47,7 @@
           <feather-icon icon="FlagIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.yearly_reports') }}</span>
         </template>
-        <YearlyReport v-if="companyTab == 4" />
+        <YearlyReport v-if="companyTab == 4 || yearlyReportsActive" />
       </b-tab>
 
       <!-- Documents tab -->
@@ -56,7 +56,7 @@
           <feather-icon icon="FolderIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.company_documents') }}</span>
         </template>
-        <Document v-if="companyTab == 5" />
+        <Document v-if="companyTab == 5 || companyDocumentsActive" />
       </b-tab>
 
       <!--Private Person tab -->
@@ -66,7 +66,7 @@
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.clients_or_recipients') }}</span>
         </template>
         <PrivatePersons
-          v-if="companyTab == 6"
+          v-if="companyTab == 6 || privatePersonActive"
           :add-record="addRecord"
           @state="updateAddRecord($event)"
         />
@@ -131,11 +131,47 @@ export default {
       invoiceTab: 0,
       addRecord: false,
       vatReportsTab: 0,
+      infoActive: this.$route.params.InvoiceId && this.$route.params.InvoiceId !== 0 ? false : true,
+      invoicesActive: this.$route.params.InvoiceId == 1 ? true : false,
+      multipleUploadActive: this.$route.params.InvoiceId == 2 ? true : false,
+      vatReportsActive: this.$route.params.InvoiceId == 3 ? true : false,
+      yearlyReportsActive: this.$route.params.InvoiceId == 4 ? true : false,
+      companyDocumentsActive: this.$route.params.InvoiceId == 5 ? true : false,
+      privatePersonActive: this.$route.params.InvoiceId == 6 ? true : false,
     };
   },
   created() {
     this.companyID = this.$route.params.id;
     this.getCompanyInfo();
+  },
+  watch: {
+    companyTab: function(newValue, oldValue) {
+      switch(newValue) {
+        case 0:
+          this.infoActive = true
+          break;
+        case 1:
+          this.invoicesActive = true
+          break;
+        case 2:
+          this.multipleUploadActive = true
+          break;
+        case 3:
+          this.vatReportsActive = true
+          break;
+        case 4:
+          this.yearlyReportsActive = true
+          break;
+        case 5:
+          this.companyDocumentsActive = true
+          break;
+        case 6:
+          this.privatePersonActive = true
+          break;
+        default:
+
+      }
+    }
   },
   methods: {
     async getCompanyInfo() {
