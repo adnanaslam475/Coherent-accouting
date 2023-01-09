@@ -613,12 +613,15 @@
                             <validation-provider
                               #default="{ errors }"
                               name="transectionQuantity"
-                              rules="required"
+                              rules="required|qtyValid"
                             >
                               <b-form-input
                                 v-model="item.quantity"
                                 type="number"
                                 class="mb-0"
+                                placeholder="0"
+                                step="1"
+                                @input="populateValues(true)"
                               />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -647,7 +650,7 @@
                             <validation-provider
                               #default="{ errors }"
                               name="transectionSingleAmountTransaction"
-                              rules="required"
+                              rules="required|singlePriceValid"
                             >
                               <b-input-group
                                 class="input-group-merge invoice-edit-input-group"
@@ -662,6 +665,8 @@
                                   class="mb-0"
                                   step="any"
                                   placeholder="0.00"
+                                  @input="populateValues(true)"
+
                                 />
                               </b-input-group>
                               <small class="text-danger">{{ errors[0] }}</small>
@@ -699,8 +704,13 @@
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
 
-                                <b-form-input
+                                <!-- <b-form-input
                                   :value="(item.singleAmountTransaction * item.quantity).toFixed(2)"
+                                  disabled
+                                  class="mb-0"
+                                /> -->
+                                <b-form-input
+                                  v-model ="item.transactionTotalAmountNonVat"
                                   disabled
                                   class="mb-0"
                                 />
@@ -787,7 +797,7 @@
                                 </b-input-group-prepend>
 
                                 <b-form-input
-                                  :value="amountNonVat(invoiceData.transactions) ? amountNonVat(invoiceData.transactions) : 0"
+                                  v-model = invoiceData.amountNonVat
                                   disabled
                                 />
                               </b-input-group>
@@ -812,6 +822,7 @@
                                   step="any"
                                   type="number"
                                   class="text-right"
+                                  @input="populateValues(false)"
                                 />
 
                                 <b-input-group-append is-text>
@@ -836,8 +847,9 @@
                                 <b-input-group-prepend is-text>
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
+                                
                                 <b-form-input                    
-                                  :value="vatAmount(invoiceData.transactions,invoiceData.vatPercent)"
+                                  v-model="invoiceData.vatAmount"
                                   type="number"
                                   disabled
                                 />
@@ -857,16 +869,14 @@
                               <b-input-group
                                 class="input-group-merge invoice-edit-input-group"
                               >
+                                
+
                                 <b-form-input
                                   v-model="invoiceData.tradeDiscountPercent"
-                                  :value="
-                                    invoiceData.tradeDiscountPercent
-                                      ? invoiceData.tradeDiscountPercent
-                                      : 0
-                                  "
                                   step="any"
                                   type="number"
                                   class="text-right"
+                                  @input="populateValues(false)"
                                 />
 
                                 <b-input-group-append is-text>
@@ -892,7 +902,7 @@
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
 
-                                <b-form-input
+                                <!-- <b-form-input
                                   :value="
                                     tradeDiscountAmount(
                                       invoiceData.transactions,
@@ -906,6 +916,10 @@
                                         )
                                       : 0
                                   "
+                                  disabled
+                                /> -->
+                                <b-form-input
+                                  v-model="invoiceData.tradeDiscountAmount"
                                   disabled
                                 />
                               </b-input-group>
@@ -928,7 +942,7 @@
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
 
-                                <b-form-input
+                                <!-- <b-form-input
                                   :value="
                                     totalPrice(
                                       invoiceData.transactions,
@@ -942,6 +956,11 @@
                                         )
                                       : 0
                                   "
+                                  disabled
+                                  class="opacity-1 font-weight-bolder custom-font"
+                                /> -->
+                                <b-form-input
+                                  v-model="invoiceData.totalAmount"
                                   disabled
                                   class="opacity-1 font-weight-bolder custom-font"
                                 />
@@ -1008,7 +1027,7 @@
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import {
-  required, email, confirmed, password,regex,vatPercentValid
+  required, email, confirmed, password,regex,vatPercentValid,singlePriceValid,qtyValid
 } from '@validations'
 import Logo from "@core/layouts/components/Logo.vue";
 import { ref, onUnmounted } from "@vue/composition-api";
@@ -1084,9 +1103,7 @@ export default {
   data() {
     return {
       loading: false,
-      supplierVat: [],
-      recipientVat: [],
-      required, email, confirmed, password,regex,vatPercentValid
+      required, email, confirmed, password,regex,vatPercentValid,singlePriceValid,qtyValid
     };
   },
   directives: {
@@ -1129,11 +1146,6 @@ export default {
          invoiceData.recipientCompany.companyVatEic = ''
       }
       
-      invoiceData?.transactions?.map(item =>{
-        item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
-        return item
-      })
-
       if(validateVat){
         let validateRegExp = invoiceData.recipientCompany.companyVatEic
         validateRegExp = validateRegExp.replace(/\W|_/g, '');
@@ -1266,6 +1278,8 @@ export default {
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
     
+    var supplierVat = ref([])
+    var recipientVat = ref([])
     var vatPercentValidate = ref(false)
     var AccountTypeOption = ref("company")
     var AccountTypeOptionToggleValue = false
@@ -1283,7 +1297,7 @@ export default {
       singleAmountTransaction: 0.00,
       quantity: 0,
       measurement: "",
-      transactionTotalAmountNonVat: ""
+      transactionTotalAmountNonVat: 0
     };
 
     var invoiceData = ref({
@@ -1304,12 +1318,12 @@ export default {
         companyAddress: "",
       },
       currency: "лв.",
-      amountNonVat: "",
-      vatAmount:"",
+      amountNonVat: 0,
+      vatAmount: 0,
       vatPercent: 20,
       tradeDiscountPercent: 0,
-      tradeDiscountAmount: "",
-      totalAmount: "",
+      tradeDiscountAmount: 0,
+      totalAmount: 0,
 
       // ? Set single Item in form for adding data
       transactions: [JSON.parse(JSON.stringify(itemFormBlankItem))],
@@ -1332,13 +1346,16 @@ export default {
     if(router.currentRoute.params.invoiceData){
       invoiceData.value.supplierCompany = invoiceData?.value?.supplierCompany ? invoiceData.value.supplierCompany : uploadValue
       invoiceData.value.recipientCompany = invoiceData?.value?.recipientCompany ? invoiceData.value.recipientCompany : uploadValue
-      invoiceData.value.transactions = invoiceData?.value?.transactions?.length > 0 ? invoiceData.value.transactions : [JSON.parse(JSON.stringify(itemFormBlankItem))]
       invoiceData.value.vatPercent = invoiceData?.value?.vatPercent ? invoiceData.value.vatPercent : 20
       invoiceData.value.tradeDiscountPercent = invoiceData?.value?.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
+      invoiceData.value.tradeDiscountAmount = invoiceData?.value?.tradeDiscountAmount ? invoiceData.value.tradeDiscountAmount : 0
       invoiceData.value.transactionType = invoiceData?.value?.transactionType ? invoiceData.value.transactionType : "INCOME"
       invoiceData.value.invoiceType = invoiceData?.value?.invoiceType ? invoiceData.value.invoiceType : "ORIGINAL"
       invoiceData.value.saleType = invoiceData?.value?.saleType ? invoiceData.value.saleType : "SERVICE"
       invoiceData.value.documentType = invoiceData?.value?.documentType ? invoiceData.value.documentType : "INVOICE"
+      supplierVat.value = invoiceData?.value?.supplierCompany?.companyVatEic ? 'true' : 'false'
+      recipientVat.value = invoiceData?.value?.recipientCompany?.companyVatEic ? 'true' : 'false'
+      invoiceData.value.transactions = invoiceData?.value?.transactions?.length > 0 ? invoiceData.value.transactions : [JSON.parse(JSON.stringify(itemFormBlankItem))]
     } else {
       useJwt
         .getCompany(router.currentRoute.params.companyId)
@@ -1349,6 +1366,7 @@ export default {
           invoiceData.value.supplierCompany.companyEic = Response?.companyIdentificationNumber
           invoiceData.value.supplierCompany.companyVatEic = Response?.companyVatNumber
           invoiceData.value.supplierCompany.companyAddress = Response?.companyAddress
+          supplierVat.value = Response?.companyVatNumber ? 'true' : 'false'
         })
         .catch((error) => {
           // console.log(error);
@@ -1387,56 +1405,42 @@ export default {
         invoiceData.value.saleType = "SERVICE"
       }
     }
-    const vatAmount = (item, vatPercent)=> {
-      let amountNonVat = item.reduce((acc, ele) => {
-        return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
+
+    var populateValues = (isTransaction) => {
+      if(isTransaction){
+        invoiceData.value.transactions.map((item)=>{
+          item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
+          return item
+        })
+      }
+      
+      var amountNonVat = invoiceData.value.transactions.reduce((acc, ele) => {
+          return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
-      let totalVatAmount = parseFloat(amountNonVat) * (parseFloat(vatPercent)/100)
+      
+      amountNonVat = amountNonVat ? amountNonVat : 0
+      var vatPercent = invoiceData.value.vatPercent ? invoiceData.value.vatPercent : 0
+      var tradeDiscountPercent = invoiceData.value.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
+      
+      invoiceData.value.amountNonVat = parseFloat(amountNonVat).toFixed(2);
+
+      var totalVatAmount = parseFloat(amountNonVat) * (parseFloat(vatPercent)/100)
       invoiceData.value.vatAmount = parseFloat(totalVatAmount).toFixed(2);
-      return parseFloat(totalVatAmount).toFixed(2);
-    }
-
-    const amountNonVat = (item)=> {
-      let totalAmountNonVat = item.reduce((acc, ele) => {
-        return acc + parseFloat(ele.quantity) * parseFloat(ele.singleAmountTransaction);
-      }, 0);
-      invoiceData.value.amountNonVat = parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
-      return parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
-    }
-
-    const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent)=> {
-      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
-      vatPercent = vatPercent ? vatPercent : 0
-      let amountNonVat = item.reduce((acc, ele) => {
-        return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
-      }, 0);
-      let totaltradeDiscountAmount =
-        (parseFloat(tradeDiscountPercent) / 100) *
-        (parseFloat(amountNonVat) +
-          (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat));
-      invoiceData.value.tradeDiscountAmount = parseFloat(totaltradeDiscountAmount).toFixed(2);
-      return parseFloat(totaltradeDiscountAmount).toFixed(2);
-    }
-
-    const totalPrice = (item, vatPercent, tradeDiscountPercent)=> {
-      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
-      vatPercent = vatPercent ? vatPercent : 0
-      let amountNonVat = item.reduce((acc, ele) => {
-        return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
-      }, 0);
-      let tradeDiscountAmount =
-        (parseFloat(tradeDiscountPercent) / 100) *
-        (parseFloat(amountNonVat) +
-          (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat));
-
-      let totalPrice =
-        parseFloat(amountNonVat) +
-        (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat) -
-        tradeDiscountAmount;
+      
+      var tradeDiscountAmount =
+          (parseFloat(tradeDiscountPercent) / 100) *
+          (parseFloat(amountNonVat) +
+            (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat));
+      invoiceData.value.tradeDiscountAmount = parseFloat(tradeDiscountAmount).toFixed(2);
+                                        
+      var totalPrice =
+          parseFloat(amountNonVat) +
+          (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat) -
+          tradeDiscountAmount;
       invoiceData.value.totalAmount = parseFloat(totalPrice).toFixed(2);
-      return parseFloat(totalPrice).toFixed(2);
     }
-
+    
+    
     const clearForm = () => {
       invoiceData.value = {
         invoiceNumber: "",
@@ -1456,12 +1460,12 @@ export default {
           companyAddress: "",
         },
         currency: invoiceData.value.currency,
-        amountNonVat: "",
-        vatAmount:"",
+        amountNonVat: invoiceData.value.amountNonVat,
+        vatAmount: invoiceData.value.vatAmount,
         vatPercent: 20,
         tradeDiscountPercent: 0,
-        tradeDiscountAmount: "",
-        totalAmount: "",
+        tradeDiscountAmount: invoiceData.value.tradeDiscountAmount,
+        totalAmount: invoiceData.value.totalAmount,
 
         // ? Set single Item in form for adding data
         transactions: invoiceData.value.transactions,
@@ -1865,6 +1869,9 @@ export default {
     }
 
     return {
+      populateValues,
+      supplierVat,
+      recipientVat,
       vatPercentValidate,
       AccountTypeOption,
       AccountTypeOptionToggleValue,
@@ -1877,10 +1884,6 @@ export default {
       currencyOptions,
       transectionOptions,
       itemFormBlankItem,
-      vatAmount,
-      totalPrice,
-      amountNonVat,
-      tradeDiscountAmount,
       datalist,
       showSuggestions,
       SearchCompanyName,

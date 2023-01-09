@@ -663,12 +663,13 @@
                             <validation-provider
                               #default="{ errors }"
                               name="transectionQuantity"
-                              rules="required"
+                              rules="required|qtyValid"
                             >
                               <b-form-input
                                 v-model="item.quantity"
                                 type="number"
                                 class="mb-0"
+                                step="1"
                               />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -697,7 +698,7 @@
                             <validation-provider
                               #default="{ errors }"
                               name="transectionSingleAmountTransaction"
-                              rules="required"
+                              rules="required|singlePriceValid"
                             >
                               <b-input-group
                                 class="input-group-merge invoice-edit-input-group"
@@ -1080,7 +1081,7 @@
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import {
-  required, email, confirmed, password,
+  required, email, confirmed, password,singlePriceValid,qtyValid
 } from '@validations'
 import Logo from '@core/layouts/components/Logo.vue'
 import { ref, onUnmounted } from '@vue/composition-api'
@@ -1146,7 +1147,7 @@ export default {
     return {
       invoiceID: null,
       loading: false,
-      required, email, confirmed, password,
+      required, email, confirmed, password,singlePriceValid,qtyValid
     };
   },
   mounted() {
@@ -1414,12 +1415,12 @@ export default {
           companyAddress: "",
         },
         currency: invoiceData.value.currency,
-        amountNonVat: "",
-        vatAmount:"",
+        amountNonVat: invoiceData.value.amountNonVat,
+        vatAmount: invoiceData.value.vatAmount,
         vatPercent: 20,
         tradeDiscountPercent: 0,
-        tradeDiscountAmount: "",
-        totalAmount: "",
+        tradeDiscountAmount: invoiceData.value.tradeDiscountAmount,
+        totalAmount: invoiceData.value.totalAmount,
 
         // ? Set single Item in form for adding data
         transactions: invoiceData.value.transactions,

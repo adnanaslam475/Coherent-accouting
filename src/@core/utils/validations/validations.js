@@ -17,7 +17,7 @@ import ar from 'vee-validate/dist/locale/ar.json'
 import en from 'vee-validate/dist/locale/en.json'
 
 // eslint-disable-next-line object-curly-newline
-import { validatorPositive, validatorUrlValidator, validatorPassword, validatorCreditCard, validatorVatPercent } from './validators'
+import { validatorPositive, validatorUrlValidator, validatorPassword, validatorCreditCard, validatorVatPercent, validatorPrice, validatorQty } from './validators'
 
 // ////////////////////////////////////////////////////////
 // General
@@ -70,6 +70,16 @@ export const url = extend('url', {
 export const vatPercentValid = extend('vatPercentValid', {
   validate: validatorVatPercent,
   message: `Vat can't be greater than 0`,
+})
+
+export const singlePriceValid = extend('singlePriceValid', {
+  validate: validatorPrice,
+  message: `Single Price should be greater than 0`,
+})
+
+export const qtyValid = extend('qtyValid', {
+  validate: validatorQty,
+  message: `Qunatity should be greater than 0`,
 })
 
 // Install English and Arabic localizations.

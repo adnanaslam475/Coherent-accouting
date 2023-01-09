@@ -29,6 +29,22 @@ export const validatorVatPercent = creditnum => {
   return validCreditCard
 }
 
+export const validatorPrice = creditnum => {
+  /* eslint-disable no-useless-escape */
+  const cRegExp = /^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$/
+  /* eslint-enable no-useless-escape */
+  const validCreditCard = cRegExp.test(parseFloat(creditnum))
+  return validCreditCard
+}
+
+export const validatorQty = creditnum => {
+  /* eslint-disable no-useless-escape */
+  const cRegExp = /^[1-9][0-9]*$/
+  /* eslint-enable no-useless-escape */
+  const validCreditCard = cRegExp.test(parseFloat(creditnum))
+  return validCreditCard
+}
+
 export const validatorUrlValidator = val => {
   if (val === undefined || val === null || val.length === 0) {
     return true
