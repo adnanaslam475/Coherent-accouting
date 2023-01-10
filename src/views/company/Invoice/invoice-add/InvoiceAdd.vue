@@ -206,7 +206,7 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="supplierVat == 'true'" class="d-flex align-items-center mb-1">
+                      <div v-if="supplierVat" class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
                           {{  $t('add_invoice.company_vat') }}:
                         </span>
@@ -412,7 +412,7 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="AccountTypeOption=='company' && recipientVat == 'true'" class="d-flex align-items-center mb-1">
+                      <div v-if="AccountTypeOption=='company' && recipientVat" class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
                           {{  $t('add_invoice.company_vat') }}:
                         </span>
@@ -1138,8 +1138,8 @@ export default {
     },
     invoiceAdd(invoiceData,AccountTypeOption) {
       let regExp = /^((AT)(U\d{8})|(BE)(0\d{9})|(CY)(\d{8}[LX])|(CZ)(\d{8,10})|(DE)(\d{9})|(DK)(\d{8})|(EE)(\d{9})|(EL|GR)(\d{9})|(ES)([\dA-Z]\d{7}[\dA-Z])|(FI)(\d{8})|(FR)([\dA-Z]{2}\d{9})|(HU)(\d{8})|(IE)(\d{7}[A-Z]{2})|(IT)(\d{11})|(LT)(\d{9}|\d{12})|(LU)(\d{8})|(LV)(\d{11})|(MT)(\d{8})|(NL)(\d{9}(B\d{2}|BO2))|(PL)(\d{10})|(PT)(\d{9})|(RO)(\d{2,10})|(SE)(\d{12})|(SI)(\d{8})|(SK)(\d{10}))$/igm
-      let ValidateVatNumber = this.supplierVat == 'true' && invoiceData.transactionType == "EXPENSE"
-      let validateVat = this.recipientVat == 'true' && parseFloat(invoiceData.vatPercent) > 0
+      let ValidateVatNumber = this.supplierVat && invoiceData.transactionType == "EXPENSE"
+      let validateVat = this.recipientVat && parseFloat(invoiceData.vatPercent) > 0
  
       if(AccountTypeOption == 'person'){
          invoiceData.recipientCompany.companName = invoiceData.recipientCompany.companyOwnerName
@@ -1283,8 +1283,8 @@ export default {
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
     
-    var supplierVat = ref([])
-    var recipientVat = ref([])
+    var supplierVat = ref(false)
+    var recipientVat = ref(false)
     var vatPercentValidate = ref(false)
     var AccountTypeOption = ref("company")
     var AccountTypeOptionToggleValue = false
@@ -1358,8 +1358,8 @@ export default {
       invoiceData.value.invoiceType = invoiceData?.value?.invoiceType ? invoiceData.value.invoiceType : "ORIGINAL"
       invoiceData.value.saleType = invoiceData?.value?.saleType ? invoiceData.value.saleType : "SERVICE"
       invoiceData.value.documentType = invoiceData?.value?.documentType ? invoiceData.value.documentType : "INVOICE"
-      supplierVat.value = invoiceData?.value?.supplierCompany?.companyVatEic ? 'true' : 'false'
-      recipientVat.value = invoiceData?.value?.recipientCompany?.companyVatEic ? 'true' : 'false'
+      supplierVat.value = invoiceData?.value?.supplierCompany?.companyVatEic ? true : false
+      recipientVat.value = invoiceData?.value?.recipientCompany?.companyVatEic ? true : false
       invoiceData.value.transactions = invoiceData?.value?.transactions?.length > 0 ? invoiceData.value.transactions : [JSON.parse(JSON.stringify(itemFormBlankItem))]
     } else {
       useJwt
@@ -1371,7 +1371,7 @@ export default {
           invoiceData.value.supplierCompany.companyEic = Response?.companyIdentificationNumber
           invoiceData.value.supplierCompany.companyVatEic = Response?.companyVatNumber
           invoiceData.value.supplierCompany.companyAddress = Response?.companyAddress
-          supplierVat.value = Response?.companyVatNumber ? 'true' : 'false'
+          supplierVat.value = Response?.companyVatNumber ? true : false
         })
         .catch((error) => {
           // console.log(error);
