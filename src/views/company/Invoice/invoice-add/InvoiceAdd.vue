@@ -621,7 +621,7 @@
                                 class="mb-0"
                                 placeholder="0"
                                 step="1"
-                                @input="populateValues(true)"
+                                @input="populateValues()"
                               />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -665,7 +665,7 @@
                                   class="mb-0"
                                   step="any"
                                   placeholder="0.00"
-                                  @input="populateValues(true)"
+                                  @input="populateValues()"
 
                                 />
                               </b-input-group>
@@ -710,7 +710,7 @@
                                   class="mb-0"
                                 /> -->
                                 <b-form-input
-                                  v-model ="item.transactionTotalAmountNonVat"
+                                  :value="(parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)"
                                   disabled
                                   class="mb-0"
                                 />
@@ -822,7 +822,7 @@
                                   step="any"
                                   type="number"
                                   class="text-right"
-                                  @input="populateValues(false)"
+                                  @input="populateValues()"
                                 />
 
                                 <b-input-group-append is-text>
@@ -876,7 +876,7 @@
                                   step="any"
                                   type="number"
                                   class="text-right"
-                                  @input="populateValues(false)"
+                                  @input="populateValues()"
                                 />
 
                                 <b-input-group-append is-text>
@@ -1168,6 +1168,11 @@ export default {
       this.$refs.invoiceForm.validate().then((success) => {
         if (success) {
 
+        invoiceData.transactions.map((item)=>{
+          item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
+          return item
+        })
+
           this.loading = true;
           let token = useJwt.getToken()
           useJwt
@@ -1406,13 +1411,7 @@ export default {
       }
     }
 
-    var populateValues = (isTransaction) => {
-      if(isTransaction){
-        invoiceData.value.transactions.map((item)=>{
-          item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
-          return item
-        })
-      }
+    var populateValues = () => {
       
       var amountNonVat = invoiceData.value.transactions.reduce((acc, ele) => {
           return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
