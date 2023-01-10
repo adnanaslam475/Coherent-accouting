@@ -1189,10 +1189,10 @@ export default {
                 if(result){
                   this.showMsgBoxTwo(response.data.id,invoiceData)
                 } else{
-                  // this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+                  this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
                 }  
               } else {
-                // this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
+                this.$router.push({ name: 'company-invoice-edit', params: { id: response.data.id , companyId: router.currentRoute.params.companyId }})
               }
             })
             .catch((error) => {
