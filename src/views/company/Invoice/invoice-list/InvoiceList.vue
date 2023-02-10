@@ -214,7 +214,7 @@
               }`"
               class="text-capitalize"
             >
-              {{ $t('company_invoices.'+ data.value) }}  
+              {{ $t('company_invoices.'+ data.value) }}
             </b-badge>
           </span>
         </b-link>
@@ -353,16 +353,16 @@
 
       <!-- Column: Actions -->
       <template #head(actions)>
-            {{ $t('companies.actions') }}
-          </template>
-          
+        {{ $t('companies.actions') }}
+      </template>
+
       <template #cell(actions)="data">
         <div class="text-nowrap">
           <feather-icon
             :id="`invoice-row-${data.item.id}-preview-icon`"
             icon="EyeIcon"
             size="16"
-            class="mx-1 cursor-pointer"
+            class="mr-1 cursor-pointer"
             @click="
               $router.push({
                 name: 'company-invoice-preview',
@@ -409,6 +409,20 @@
               <span class="align-middle ml-50">Delete</span>
             </b-dropdown-item>
           </b-dropdown>
+
+          <!-- Duplicate -->
+          <feather-icon
+            :id="`invoice-row-${data.item.id}-duplicate-icon`"
+            icon="LayersIcon"
+            size="16"
+            class="mx-1 cursor-pointer"
+            @click="duplicateInvoice(data.item, refetchData)"
+          />
+          <b-tooltip
+            title="Duplicate Invoice"
+            class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-duplicate-icon`"
+          />
           <vue-html2pdf
             :show-layout="false"
             :float-layout="true"
@@ -436,7 +450,7 @@
       </template>
     </b-table>
     <div class="mx-2 mb-2">
-      <b-row>
+      <!-- <b-row>
         <b-col
           cols="12"
           sm="6"
@@ -450,9 +464,9 @@
             >Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
             {{ dataMeta.of }} entries</span
           >
-        </b-col>
-        <!-- Pagination -->
-        <b-col
+        </b-col> -->
+      <!-- Pagination -->
+      <!-- <b-col
           cols="12"
           sm="6"
           class="
@@ -479,8 +493,8 @@
               <feather-icon icon="ChevronRightIcon" size="18" />
             </template>
           </b-pagination>
-        </b-col>
-      </b-row>
+        </b-col> -->
+      <!-- </b-row> -->
     </div>
   </b-card>
 </template>
@@ -525,7 +539,7 @@ import Ripple from "vue-ripple-directive";
 import InvoiceDownload from "../invoice-download/InvoiceDownload.vue";
 import invoiceStoreModule from "../invoiceStoreModule";
 import useInvoicesList from "./useInvoiceList";
-import  {i18n} from '@/main.js'
+import { i18n } from "@/main.js";
 
 export default {
   directives: {
@@ -569,6 +583,16 @@ export default {
     };
   },
   methods: {
+    handleScroll() {
+      if (
+        window.scrollY + window.innerHeight >=
+        document.body.scrollHeight - 1
+      ) {
+        // console.log("Near to bottom");
+        this.perPage = this.perPage + 10;
+        this.refetchData();
+      }
+    },
     state() {
       return 1;
     },
@@ -581,29 +605,52 @@ export default {
     generatePDF(itemID) {
       this.$refs[`invoicePdf${itemID}`].generatePdf();
     },
-    showMsgBoxTwo(id,refetchData) {
-      const h = this.$createElement
-        // Using HTML string
-        // More complex structure
-      const messageVNode = h('div', { class: ['bvModalFont'] }, [ 
-        h('p', { class: ['text-center card-text'] }, [
-        i18n.tc('company_invoices.delete_invoice_confirm'),
-        ]) 
-      ])
+    showMsgBoxTwo(id, refetchData) {
+      const h = this.$createElement;
+      // Using HTML string
+      // More complex structure
+      const messageVNode = h("div", { class: ["bvModalFont"] }, [
+        h("p", { class: ["text-center card-text"] }, [
+          i18n.tc("company_invoices.delete_invoice_confirm"),
+        ]),
+      ]);
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: i18n.tc('company_invoices.delete_invoice'),
-          okVariant: 'primary',
-          okTitle: i18n.tc('companies.confirm'),
-          cancelTitle: i18n.tc('clients_or_recipients.cancel'),
+          title: i18n.tc("company_invoices.delete_invoice"),
+          okVariant: "primary",
+          okTitle: i18n.tc("companies.confirm"),
+          cancelTitle: i18n.tc("clients_or_recipients.cancel"),
           hideHeaderClose: false,
           centered: true,
         })
-        .then(value => {
-          if(value){
-            this.invoiceDelete(id, refetchData)
+        .then((value) => {
+          if (value) {
+            this.invoiceDelete(id, refetchData);
           }
-        })
+        });
+    },
+
+    // duplicating an invoice
+    duplicateInvoice(item, refetchData) {
+      let config = item;
+      config.invoiceNumber = Date.now();
+      config.id = "";
+      let companyID = this.$route.params.id;
+      let token = useJwt.getToken();
+      useJwt
+        .addCompanyInvoice(token, companyID, config)
+        .then(async (response) => {
+          this.loading = false;
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Invoice Duplicated Successfully`,
+              icon: "EditIcon",
+              variant: "success",
+            },
+          });
+          refetchData();
+        });
     },
     invoiceDelete(id, refetchData) {
       const token = useJwt.getToken();
@@ -661,6 +708,9 @@ export default {
           });
         });
     },
+  },
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll);
   },
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";

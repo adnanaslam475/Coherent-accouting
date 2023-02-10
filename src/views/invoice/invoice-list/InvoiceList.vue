@@ -487,6 +487,15 @@ export default {
           }
         })
     },
+
+    //loading more data on scroll
+    handleScroll(){
+      if((window.scrollY + window.innerHeight) >= (document.body.scrollHeight-1)){
+        // console.log("Near to bottom")
+        this.perPage = this.perPage + 10 ;
+        this.refetchData();
+      }
+    },
     invoiceDelete(id, refetchData) {
       const token = useJwt.getToken()
       useJwt
@@ -515,6 +524,11 @@ export default {
     },
 
   },
+
+  mounted(){
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
 
