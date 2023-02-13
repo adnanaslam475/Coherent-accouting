@@ -7,7 +7,7 @@
           <feather-icon icon="BriefcaseIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('lbl.company_info') }}</span> 
         </template>
-        <CompanyInfo v-if="companyTab == 0 || infoActive" :company-tab="companyTab" @state="update($event)" />
+        <CompanyInfo v-if="companyTab == 0 || infoActive" :company-tab="companyTab" @state="update($event)" :companyDetails="companyDetails"/>
       </b-tab>
 
       <!-- invoices tab -->
@@ -91,6 +91,7 @@
 </template>
 
 <script>
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import { BTabs, BTab, BCardText, BCol, BCard } from "bootstrap-vue";
 import CompanyInfo from "./CompanyInfo/CompanyInfo.vue";
 import Invoice from "./Invoice/invoice-list/InvoiceList.vue";
@@ -121,6 +122,7 @@ export default {
   },
   data() {
     return {
+      companyDetails:[],
       companyNameLength: "",
       companyName: "",
       companyID: "",
@@ -140,9 +142,11 @@ export default {
       privatePersonActive: this.$route.params.InvoiceId == 6 ? true : false,
     };
   },
-  created() {
+  mounted(){
     this.companyID = this.$route.params.id;
     this.getCompanyInfo();
+  },
+  created() {
   },
   watch: {
     companyTab: function(newValue, oldValue) {
@@ -175,19 +179,30 @@ export default {
   },
   methods: {
     async getCompanyInfo() {
-      const data = await axios.get(`/account/api/company/${this.companyID}`, {
+      axios.get(`/account/api/company/${this.companyID}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           "Access-Control-Allow-Credentials": true,
           "Access-Control-Allow-Origin": "http://localhost:8080",
         },
-      });
-      if (data.status === 200) {
-        let companyRecord = data.data;
+      })
+      .then((response) => {
+        let companyRecord = response.data;
+        this.companyDetails= companyRecord;
         this.companyName = companyRecord.companyName;
         this.companyNameLength = this.companyName.length;
-       
-      }
+      })
+      .catch((error) => {
+          // console.log(error);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching company info",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          });
+        });
     },
     update(value) {
       if (value.state) {

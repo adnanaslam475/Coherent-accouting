@@ -355,17 +355,17 @@
         </div>
       </template>
     </b-table>
-    <div class="mx-2 mb-2">
-      <b-row>
+    <!-- <div class="mx-2 mb-2"> -->
+      <!-- <b-row>
         <b-col
           cols="12"
           sm="6"
           class="d-flex align-items-center justify-content-center justify-content-sm-start"
         >
           <span class="text-muted">Showing {{ dataMeta.from }} to {{ dataMeta.to }} of {{ dataMeta.of }} entries</span>
-        </b-col>
+        </b-col> -->
         <!-- Pagination -->
-        <b-col
+        <!-- <b-col
           cols="12"
           sm="6"
           class="d-flex align-items-center justify-content-center justify-content-sm-end"
@@ -393,9 +393,9 @@
               />
             </template>
           </b-pagination>
-        </b-col>
-      </b-row>
-    </div>
+        </b-col> -->
+      <!-- </b-row> -->
+    <!-- </div> -->
   </b-card>
 
 </template>
@@ -490,10 +490,9 @@ export default {
 
     //loading more data on scroll
     handleScroll(){
-      if((window.scrollY + window.innerHeight) >= (document.body.scrollHeight-1)){
+      if((window.scrollY + window.innerHeight) > (document.body.scrollHeight-1)){
         // console.log("Near to bottom")
         this.perPage = this.perPage + 10 ;
-        this.refetchData();
       }
     },
     invoiceDelete(id, refetchData) {
@@ -525,7 +524,7 @@ export default {
 
   },
 
-  mounted(){
+  created(){
     window.addEventListener('scroll', this.handleScroll);
   },
   

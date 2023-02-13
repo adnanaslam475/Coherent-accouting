@@ -72,10 +72,10 @@ export default function useInvoicesList() {
         dateTo: dateTo.value
       })
       .then(response => {
-        const { elements, totalElements } = response.data
+        const { elements } = response.data
 
         callback(elements)
-        totalInvoices.value = totalElements
+        totalInvoices.value = elements.length;
       })
       .catch((err) => {
         toast({

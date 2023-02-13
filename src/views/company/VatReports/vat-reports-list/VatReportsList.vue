@@ -55,11 +55,12 @@
       id="modal-prevent-closing"
       ref="modal"
       title="Select Month"
-      ok-title="Submit"
+      :ok-title="loadModal"
       cancel-title="Close"
       @show="resetModal"
       @hidden="resetModal"
       @ok="handleOk"
+      :ok-disabled="modalDisabledMonth"
     >
       <form ref="form" @submit.stop.prevent="handleMonthSelected">
         <validation-observer ref="selectMonthRules" tag="form">
@@ -499,7 +500,9 @@ export default {
   props: ["vatReportsTab"],
   data() {
     return {
+      loadModal: "Submit",
       modalDisabled: true,
+      modalDisabledMonth: false,
       checkedAll: true,
       idsToSend: [],
       totalInvoicesForReport: "",
@@ -617,18 +620,23 @@ export default {
     //
     resetModal() {
       this.selectedMonthData.date = "";
+      this.modalDisabledMonth = false;
+      this.loadModal = "Submit";
     },
 
     //
     handleOk(bvModalEvent) {
       // Prevent modal from closing
       bvModalEvent.preventDefault();
+      this.loadModal = "Loading..."
+      this.modalDisabledMonth = true;
       // Trigger submit handler
       this.handleMonthSelected();
     },
 
     //
     handleMonthSelected() {
+     
       this.modalDisabled = true;
       this.invoicesForReport = [];
       this.$refs.selectMonthRules.validate().then((success) => {
@@ -650,9 +658,9 @@ export default {
           useJwt
             .InvoicesForVatReport(token, this.selectedMonthData)
             .then((response) => {
-              this.invoicesForReport = response.data.elements;
-
-              this.totalInvoicesForReport = response.data.totalElements;
+              let val = response.data;
+              this.invoicesForReport = val.elements;
+              this.totalInvoicesForReport = this.invoicesForReport.length;
               for (let i = 0; i < this.totalInvoicesForReport; i++) {
                 this.status[this.invoicesForReport[i].id] = "accepted";
               }

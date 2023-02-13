@@ -588,9 +588,7 @@ export default {
         window.scrollY + window.innerHeight >=
         document.body.scrollHeight - 1
       ) {
-        // console.log("Near to bottom");
         this.perPage = this.perPage + 10;
-        this.refetchData();
       }
     },
     state() {

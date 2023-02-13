@@ -45,13 +45,13 @@
                             class="mb-0"
                             style="cursor: pointer"
                           >
-                            {{ companyRecord.companyName }}
+                            {{ companyDetails.companyName }}
                           </h4></CopyToClipboard>
                           <b-tooltip target="comp-name-copy">{{
                             copyToClipboard
                           }}</b-tooltip>
                           <span class="card-text">{{
-                            companyRecord.companyMail
+                            companyDetails.companyMail
                           }}</span>
                         </div>
                         <div class="d-flex flex-wrap">
@@ -121,8 +121,6 @@
                           >
                           <small v-else></small>
                         </CopyToClipboard>
-
-                         
                           <b-tooltip target="comp-egn-copy">{{
                             copyToClipboard
                           }}</b-tooltip>
@@ -169,10 +167,9 @@
                             style="
                               width: fit-content;
                               margin: 0px;
-                              cursor: pointer;
-                            "
+                              cursor: pointer;"
                           >
-                            {{ companyRecord.companyIdentificationNumber }}
+                            {{ companyDetails.companyIdentificationNumber }}
                           </p></CopyToClipboard>
                         </td>
                         <b-tooltip target="comp-id-copy">{{
@@ -187,7 +184,7 @@
                           <span class="font-weight-bold">{{ $t('company_info.vat_number') }}</span>
                         </th>
                         <td
-                          v-if="companyRecord.companyVatNumber != null"
+                          v-if="companyDetails.companyVatNumber != null"
                           class="pb-50 text-capitalize"
                         >
                           <CopyToClipboard
@@ -202,7 +199,7 @@
                                 cursor: pointer;
                               "
                             >
-                              {{ companyRecord.companyVatNumber }}
+                              {{ companyDetails.companyVatNumber }}
                             </p></CopyToClipboard>
                             <b-tooltip target="comp-vat-copy">{{
                               copyToClipboard
@@ -218,7 +215,7 @@
                           <span class="font-weight-bold text-capitalize">{{$t('company_info.bank_account') }}</span>
                         </th>
                         <td
-                        v-if="companyRecord.companyBankAccount != null"
+                        v-if="companyDetails.companyBankAccount != null"
                           class="pb-50"
                         >
                         <CopyToClipboard 
@@ -234,7 +231,7 @@
                               cursor: pointer;
                             "
                           >
-                            {{ companyRecord.companyBankAccount }}
+                            {{ companyDetails.companyBankAccount }}
                           </p></CopyToClipboard>
                           <b-tooltip target="comp-account-copy">{{
                             copyToClipboard
@@ -277,7 +274,7 @@
                               cursor: pointer;
                             "
                           >
-                            {{ companyRecord.companyPhone }}
+                            {{ companyDetails.companyPhone }}
                           </p>
                           </CopyToClipboard>
                         </td>
@@ -335,7 +332,7 @@
                           <span class="font-weight-bold text-capitalize">{{ $t('companies.country') }}</span>
                         </th>
                         <td class="pb-50">
-                          {{ companyRecord.companyCountry }}
+                          {{ companyDetails.companyCountry }}
                         </td>
                       </tr>
                     </table>
@@ -704,9 +701,15 @@ export default {
       rangePicker: [],
     };
   },
+  props: ['companyDetails'],
+  mounted(){
+    setTimeout(() => {
+      this.getCompanyInfo();
+  }, 1200);
+
+  },
   created() {
     this.companyID = this.$route.params.id;
-    this.getCompanyInfo();
     this.getStatistics();
     this.getMonthReportGraph();
   },
@@ -813,39 +816,18 @@ export default {
       });
     },
     //
-    async getCompanyInfo() {
-      axios.get(`/account/api/company/${this.companyID}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Access-Control-Allow-Credentials": true,
-          "Access-Control-Allow-Origin": "http://localhost:8080",
-        },
-      })
-      .then((response) => {
-        this.companyRecord = response.data;
-        this.companyNameLength = this.companyRecord.companyName.length;
+    getCompanyInfo() {
+        this.companyNameLength = this.companyDetails.companyName.length;
         this.companyOwnerName =
-        this.companyRecord.companyOwnerApi.companyOwnerName;
-        this.companyOwnerEGN = this.companyRecord.companyOwnerApi.ownerEGN;
-        this.companyName = this.companyRecord.companyName;
-        this.companyAddress = this.companyRecord.companyAddress;
-        this.compID = this.companyRecord.companyIdentificationNumber;
-        this.compVAT = this.companyRecord.companyVatNumber;
-        this.compBANKACCOUNT = this.companyRecord.companyBankAccount;
-        this.compCONTACT = this.companyRecord.companyPhone;
-        this.compNAME = this.companyRecord.companyName;
-        })
-        .catch((error) => {
-          // console.log(error);
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: "Error fetching company info",
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
-            },
-          });
-        });
+        this.companyDetails.companyOwnerApi.companyOwnerName;
+        this.companyOwnerEGN = this.companyDetails.companyOwnerApi.ownerEGN;
+        this.companyName = this.companyDetails.companyName;
+        this.companyAddress = this.companyDetails.companyAddress;
+        this.compID = this.companyDetails.companyIdentificationNumber;
+        this.compVAT = this.companyDetails.companyVatNumber;
+        this.compBANKACCOUNT = this.companyDetails.companyBankAccount;
+        this.compCONTACT = this.companyDetails.companyPhone;
+        this.compNAME = this.companyDetails.companyName;
     },
     async getStatistics() {
       axios(
