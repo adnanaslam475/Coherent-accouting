@@ -55,7 +55,7 @@
           <b-button
             v-ripple.400="'rgba(113, 102, 240, 0.15)'"
             variant="outline-primary"
-            @click="refetchData"
+            @click="refreshList()"
           >
             <feather-icon icon="RefreshCcwIcon" />
           </b-button>
@@ -66,12 +66,13 @@
           <div class="d-flex align-items-center justify-content-end">
             <div class="position-relative mr-1 filter-date">
               <flat-pickr
-                v-model="dateFrom"
+                v-model="startDate"
                 class="form-control invoice-edit-input invoice-input-top"
                 :placeholder="$t('company_invoices.start_date')"
+        
               />
               <feather-icon
-                v-if="dateFrom === ''"
+                v-if="startDate === ''"
                 size="16"
                 icon="CalendarIcon"
                 class="cursor-pointer clear-all"
@@ -81,7 +82,7 @@
                 size="16"
                 icon="XIcon"
                 class="cursor-pointer clear-all"
-                @click="dateFrom = ''"
+                @click="startDate = ''"
               />
 
               <!-- <feather-icon
@@ -93,13 +94,13 @@
             </div>
             <div class="position-relative mr-1 filter-date">
               <flat-pickr
-                v-model="dateTo"
+                v-model="endDate"
                 class="form-control invoice-edit-input invoice-input-top"
                 :placeholder="$t('company_invoices.end_date')"
               />
 
               <feather-icon
-                v-if="dateTo === ''"
+                v-if="endDate === ''"
                 size="16"
                 icon="CalendarIcon"
                 class="cursor-pointer clear-all"
@@ -109,7 +110,7 @@
                 size="16"
                 icon="XIcon"
                 class="cursor-pointer clear-all"
-                @click="dateTo = ''"
+                @click="endDate = ''"
               />
 
               <!-- <feather-icon
@@ -124,6 +125,7 @@
                 v-model="searchQuery"
                 class="d-inline-block mr-1"
                 :placeholder="$t('company_invoices.search')"
+                @input="handleSearchSelect()"
               />
               <feather-icon
                 size="16"
@@ -139,7 +141,7 @@
 
     <b-table
       ref="refInvoiceListTable"
-      :items="fetchInvoices"
+      :items="isCheck === false ? fetchInvoices : invoices"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -148,6 +150,7 @@
       empty-text="No matching records found"
       :sort-desc.sync="isSortDirDesc"
       class="position-relative invoiceList"
+      id="company-invoices"
     >
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
@@ -214,7 +217,7 @@
               }`"
               class="text-capitalize"
             >
-              {{ $t('company_invoices.'+ data.value) }}
+              {{ $t("company_invoices." + data.value) }}
             </b-badge>
           </span>
         </b-link>
@@ -353,7 +356,7 @@
 
       <!-- Column: Actions -->
       <template #head(actions)>
-        {{ $t('companies.actions') }}
+        {{ $t("companies.actions") }}
       </template>
 
       <template #cell(actions)="data">
@@ -416,7 +419,7 @@
             icon="LayersIcon"
             size="16"
             class="mx-1 cursor-pointer"
-            @click="duplicateInvoice(data.item, refetchData)"
+            @click="duplicateInvoice(data.item)"
           />
           <b-tooltip
             title="Duplicate Invoice"
@@ -540,6 +543,8 @@ import InvoiceDownload from "../invoice-download/InvoiceDownload.vue";
 import invoiceStoreModule from "../invoiceStoreModule";
 import useInvoicesList from "./useInvoiceList";
 import { i18n } from "@/main.js";
+import { watch, ref } from "vue";
+import axios from "@/libs/axios";
 
 export default {
   directives: {
@@ -577,18 +582,173 @@ export default {
   props: ["invoiceTab"],
   data() {
     return {
+      startDate:'',
+      endDate:'',
+      perPageRecords: 10,
+      pageNum: 1,
+      isCheck: false,
       file: null,
       fileLoading: false,
       path: mdiTrayArrowUp,
     };
   },
+  watch: {
+    startDate: function() {
+      this.handleSearchSelect();
+      },
+    endDate: function() {
+       this.handleSearchSelect();
+    }
+},
+  mounted(){
+    setTimeout(() => {
+      this.isCheck = true;;
+  }, 1500);
+  },
   methods: {
+    async refreshList() {
+      this.isCheck = true;
+      let totalRecordss = this.invoices.length;
+      let Records = ((totalRecordss / 10) * 10);
+      this.pageNum = (Records/10);
+      if (totalRecordss < 10) {
+        Records = 10;
+        this.pageNum = 1;
+      }
+      let payLoadDates = {
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
+      };
+      let config = {
+        params: {
+          direction: this.isSortDirDesc ?'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+          searchTerm: this.searchQuery,
+        },
+      };
+      let config1 = {
+        params: {
+          direction: this.isSortDirDesc ?'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true"
+        },
+      };
+      
+      if((this.startDate === '') && (this.startDate  === '') && (this.searchQuery) === '') {
+        const data = await axios.get(
+        `/account/api/invoice/list/${this.companyId}/1/${Records}`,
+        config1
+      );
+        this.invoices = data.data.elements;
+      }
+      else{
+        const data1 = await axios.post(
+        `/account/api/invoice/search/${this.companyId}/1/${Records}`,
+        payLoadDates,
+        config
+      );
+      this.invoices = data1.data.elements;
+      }
+      var tableAreaBusy = document.getElementById("company-invoices");
+      tableAreaBusy.style.opacity = "1";
+
+    },
+
+    // Hadling DateSelects and Search field
+    async handleSearchSelect() {
+      var tableAreaBusy = document.getElementById("company-invoices");
+      tableAreaBusy.style.opacity = "0.5";
+      this.isCheck = true;
+      this.pageNum = 1;
+      this.perPageRecords = 10
+
+      let data1 = {
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
+      };
+      let config = {
+        params: {
+          direction:this.isSortDirDesc ?'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+          searchTerm: this.searchQuery,
+        },
+      };
+
+      const data = await axios.post(
+        `/account/api/invoice/search/${this.companyId}/1/${this.perPageRecords}`,
+        data1,
+        config
+      );
+
+      this.invoices = data.data.elements;
+      tableAreaBusy.style.opacity = "1";
+    },
+
+    async listInvoices() {
+      this.pageNum += 1;
+      let config = {
+        params: {
+          direction: this.isSortDirDesc ?'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+        },
+      };
+      const data = await axios.get(
+        `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
+        config
+      );
+
+      if (this.pageNum > 1) {
+        this.invoices.push(...data.data.elements);
+
+        if (data.data.elements === "") {
+          this.pageNum -= 1;
+        }
+      }
+    },
+
+    async searchInvoices() {
+      this.pageNum += 1;
+      let data1 = {
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
+      };
+      let config = {
+        params: {
+          direction: this.isSortDirDesc ?'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+          searchTerm: this.searchQuery,
+        },
+      };
+      const data = await axios.post(
+        `/account/api/invoice/search/${this.companyId}/${this.pageNum}/10`,
+        data1,
+        config
+      );
+
+      this.invoices.push(...data.data.elements);
+
+      let val = data.data.elements.length;
+      if (val === 0) {
+        this.pageNum -= 1;
+      }
+    },
+
     handleScroll() {
       if (
         window.scrollY + window.innerHeight >=
         document.body.scrollHeight - 1
       ) {
-        this.perPage = this.perPage + 10;
+        this.isCheck = "true";
+        if((this.startDate === '') && (this.endDate  === '') && (this.searchQuery) === '') {
+          this.listInvoices();     
+        } else {
+          this.searchInvoices();
+        }
+        // this.perPage = this.perPage + 10;
       }
     },
     state() {
@@ -629,7 +789,7 @@ export default {
     },
 
     // duplicating an invoice
-    duplicateInvoice(item, refetchData) {
+    duplicateInvoice(item) {
       let config = item;
       config.invoiceNumber = Date.now();
       config.id = "";
@@ -638,7 +798,6 @@ export default {
       useJwt
         .addCompanyInvoice(token, companyID, config)
         .then(async (response) => {
-          this.loading = false;
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -646,8 +805,13 @@ export default {
               icon: "EditIcon",
               variant: "success",
             },
+
           });
-          refetchData();
+          // refetchData();
+          var tableAreaBusy = document.getElementById("company-invoices");
+          tableAreaBusy.style.opacity = "0.5";
+          this.refreshList();
+          
         });
     },
     invoiceDelete(id, refetchData) {
@@ -663,15 +827,18 @@ export default {
               variant: "success",
             },
           });
-          refetchData();
+          // refetchData();
+          var tableAreaBusy = document.getElementById("company-invoices");
+          tableAreaBusy.style.opacity = "0.5";
+          this.refreshList();
         })
         .catch((error) => {
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
           });
         });
@@ -700,8 +867,8 @@ export default {
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
           });
         });
@@ -749,6 +916,7 @@ export default {
       statusFilter,
 
       refetchData,
+      invoices,
 
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
@@ -779,6 +947,7 @@ export default {
       refetchData,
 
       statusOptions,
+      invoices,
 
       avatarText,
       resolveInvoiceStatusVariantAndIcon,

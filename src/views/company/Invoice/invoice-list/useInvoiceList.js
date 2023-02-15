@@ -40,6 +40,7 @@ export default function useInvoicesList() {
   const isSortDirDesc = ref(true)
   const statusFilter = ref(null)
   const companyId = ref(null)
+  const invoices = ref(null);
 
   const dataMeta = computed(() => {
     const localItemsCount = refInvoiceListTable.value ? refInvoiceListTable.value.localItems.length : 0
@@ -51,12 +52,12 @@ export default function useInvoicesList() {
   })
 
   const refetchData = () => {
-    refInvoiceListTable.value.refresh()
+    // refInvoiceListTable.value.refresh()
   }
 
-  watch([currentPage, perPage, dateFrom, dateTo, searchQuery, statusFilter], () => {
-    refetchData()
-  })
+  // watch([currentPage, perPage, dateFrom, dateTo, searchQuery, statusFilter], () => {
+  //   refetchData()
+  // })
 
   const fetchInvoices = (ctx, callback) => {
     store
@@ -72,8 +73,8 @@ export default function useInvoicesList() {
         dateTo: dateTo.value
       })
       .then(response => {
-        const { elements } = response.data
-
+        const { elements } = response.data;
+        invoices.value = response.data.elements;
         callback(elements)
         totalInvoices.value = elements.length;
       })
@@ -134,5 +135,6 @@ export default function useInvoicesList() {
     resolveClientAvatarVariant,
 
     refetchData,
+    invoices
   }
 }

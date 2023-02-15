@@ -111,7 +111,7 @@
                 </b-avatar>
               </template>
               <b-row class="justify-content-between m-0">
-                <p class="media-heading">
+                <p class="media-heading notifWidth">
                   <span class="font-weight-bolder">
                     {{ notification.subject }}
                   </span>
@@ -530,3 +530,18 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.notifWidth{
+  width: 92%;
+}
+.header-navbar .navbar-container .dropdown-menu-media .media-list .media 
+{
+  padding: 0.9rem 1.7rem 0.9rem 1.28rem;
+}
+
+li.ps-container.scrollable-container.media-list.scroll-area.ps.ps--active-y{
+  width: unset;
+}
+
+</style>
