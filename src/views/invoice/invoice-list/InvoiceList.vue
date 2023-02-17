@@ -13,14 +13,14 @@
           md="5"
           class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
         >
-          <label>Entries</label>
+          <!-- <label>Entries</label>
           <v-select
             v-model="perPage"
             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
             :options="perPageOptions"
             :clearable="false"
             class="per-page-selector d-inline-block ml-50 mr-1"
-          />
+          /> -->
           <b-button
             variant="primary"
             :to="{ name: 'apps-invoice-add'}"
@@ -37,12 +37,12 @@
           <div class="d-flex align-items-center justify-content-end">
             <div class="position-relative mr-1 filter-date">
               <flat-pickr
-                v-model="dateFrom"
+                v-model="startDate"
                 class="form-control invoice-edit-input invoice-input-top"
                 :placeholder="$t('company_invoices.start_date')"
               />
 
-              <feather-icon v-if="dateFrom === ''"
+              <feather-icon v-if="startDate === ''"
                 size="16"
                 icon="CalendarIcon"
                 class="cursor-pointer clear-all"
@@ -51,17 +51,17 @@
                 size="16"
                 icon="XIcon"
                 class="cursor-pointer clear-all"
-                @click="dateFrom = ''"
+                @click="startDate = ''"
               />
             </div>
             <div class="position-relative mr-1 filter-date">
               <flat-pickr
-                v-model="dateTo"
+                v-model="endDate"
                 class="form-control invoice-edit-input invoice-input-top"
                 :placeholder="$t('company_invoices.end_date')"
               />
 
-              <feather-icon v-if="dateTo === ''"
+              <feather-icon v-if="endDate === ''"
                 size="16"
                 icon="CalendarIcon"
                 class="cursor-pointer clear-all"
@@ -70,7 +70,7 @@
                 size="16"
                 icon="XIcon"
                 class="cursor-pointer clear-all"
-                @click="dateTo = ''"
+                @click="endDate = ''"
               />
             </div>
             <div class="position-relative flex-1">
@@ -78,6 +78,7 @@
                 v-model="searchQuery"
                 class="d-inline-block mr-1"
                 :placeholder="$t('company_invoices.search')"
+                @input="handleSearchSelect()"
               />
               <feather-icon
                 size="16"
@@ -95,7 +96,7 @@
 
     <b-table
       ref="refInvoiceListTable"
-      :items="fetchInvoices"
+      :items="isCheck === false ? fetchInvoices : invoices"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -104,6 +105,7 @@
       empty-text="No matching records found"
       :sort-desc.sync="isSortDirDesc"
       class="position-relative invoiceList"
+      id="user-invoices"
     >
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
@@ -292,7 +294,7 @@
             :id="`invoice-row-${data.item.id}-preview-icon`"
             icon="EyeIcon"
             size="16"
-            class="mx-1 cursor-pointer"
+            class="mr-1 cursor-pointer"
             @click="$router.push({ name: 'apps-invoice-preview', params: { id: data.item.id }})"
           />
           <b-tooltip
@@ -329,6 +331,19 @@
               <span class="align-middle ml-50">{{ $t('company_info.delete') }}</span>
             </b-dropdown-item>
           </b-dropdown>
+           <!-- Duplicate -->
+           <feather-icon
+            :id="`invoice-row-${data.item.id}-duplicate-icon`"
+            icon="LayersIcon"
+            size="16"
+            class="mx-1 cursor-pointer"
+            @click="duplicateInvoice(data.item, refetchData)"
+          />
+          <b-tooltip
+            title="Duplicate Invoice"
+            class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-duplicate-icon`"
+          />
           <vue-html2pdf
             :show-layout="false"
             :float-layout="true"
@@ -355,6 +370,15 @@
         </div>
       </template>
     </b-table>
+
+       <!-- Loading spinner -->
+    <b-row class="text-center mb-2">
+      <b-col  cols="12">
+        <b-spinner v-if="loadMore"  large variant="primary" />
+        <div  v-else style="height: 30px"></div>
+      </b-col>
+    </b-row>
+
     <!-- <div class="mx-2 mb-2"> -->
       <!-- <b-row>
         <b-col
@@ -403,7 +427,7 @@
 <script>
 import {
   BCard, BRow, BCol, BCardBody, BFormInput, BButton, BTable, BMedia, BAvatar, BLink,
-  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip, BTableLite, BCardText, BAlert, VBToggle, BCardHeader,
+  BBadge, BDropdown, BDropdownItem, BPagination, BTooltip, BTableLite, BCardText, BAlert, VBToggle, BCardHeader, BSpinner
 } from 'bootstrap-vue'
 import { avatarText } from '@core/utils/filter'
 import vSelect from 'vue-select'
@@ -418,6 +442,8 @@ import invoiceStoreModule from '../invoiceStoreModule'
 import useInvoicesList from './useInvoiceList'
 import Ripple from 'vue-ripple-directive'
 import  {i18n} from '@/main.js'
+import { watch, ref } from "vue";
+import axios from "@/libs/axios";
 
 export default {
   components: {
@@ -445,12 +471,187 @@ export default {
     BCardHeader,
     InvoiceDownload,
     flatPickr,
+    BSpinner
   },
   directives: {
     Ripple,
   },
   props: ['invoiceTab'],
+  data(){
+    return {
+      loadMore: false,
+    startDate:'',
+    endDate:'',
+    perPageRecords: 10,
+    pageNum: 1,
+    isCheck: false
+    }
+  },
+  watch: {
+    startDate: function() {
+      this.handleSearchSelect();
+      },
+    endDate: function() {
+       this.handleSearchSelect();
+    }
+},
+mounted(){
+    setTimeout(() => {
+      this.isCheck = true;;
+  }, 1500);
+  },
   methods: {
+    async refreshList() {
+      this.isCheck = true;
+      let totalRecordss = this.invoices.length;
+      let Records = ((totalRecordss / 10) * 10);
+      this.pageNum = (Records/10);
+      if (totalRecordss < 10) {
+        Records = 10;
+        this.pageNum = 1;
+      }
+      let payLoadDates = {
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
+      };
+      let config = {
+        params: {
+          direction: this.isSortDirDesc ?'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+          searchTerm: this.searchQuery,
+        },
+      };
+      let config1 = {
+        params: {
+          direction: this.isSortDirDesc ?'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true"
+        },
+      };
+      
+      if((this.startDate === '') && (this.startDate  === '') && (this.searchQuery) === '') {
+        const data = await axios.get(
+        `/account/api/user-invoice/list/1/${Records}`,
+        config1
+      );
+        this.invoices = data.data.elements;
+      }
+      else{
+        const data1 = await axios.post(
+        `/account/api/user-invoice/search/1/${Records}`,
+        payLoadDates,
+        config
+      );
+      this.invoices = data1.data.elements;
+      }
+      var tableAreaBusy = document.getElementById("user-invoices");
+      tableAreaBusy.style.opacity = "1";
+
+    },
+
+    // Hadling DateSelects and Search field
+    async handleSearchSelect() {
+      var tableAreaBusy = document.getElementById("user-invoices");
+      tableAreaBusy.style.opacity = "0.5";
+      this.isCheck = true;
+      this.pageNum = 1;
+      this.perPageRecords = 10
+
+      let data1 = {
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
+      };
+      let config = {
+        params: {
+          direction:this.isSortDirDesc ?'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+          searchTerm: this.searchQuery,
+        },
+      };
+
+      const data = await axios.post(
+        `/account/api/user-invoice/search/1/${this.perPageRecords}`,
+        data1,
+        config
+      );
+
+      this.invoices = data.data.elements;
+      tableAreaBusy.style.opacity = "1";
+    },
+
+    async listInvoices() {
+      this.pageNum += 1;
+      let config = {
+        params: {
+          direction: this.isSortDirDesc ?'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+        },
+      };
+      const data = await axios.get(
+        `/account/api/user-invoice/list/${this.pageNum}/10`,
+        config
+      );
+
+      if (this.pageNum > 1) {
+        this.invoices.push(...data.data.elements);
+        this.loadMore = false;
+
+        if (data.data.elements === "") {
+          this.pageNum -= 1;
+        }
+      }
+    },
+
+    async searchInvoices() {
+      this.pageNum += 1;
+      let data1 = {
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
+      };
+      let config = {
+        params: {
+          direction: this.isSortDirDesc ?'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+          searchTerm: this.searchQuery,
+        },
+      };
+      const data = await axios.post(
+        `/account/api/user-invoice/search/${this.pageNum}/10`,
+        data1,
+        config
+      );
+
+      this.invoices.push(...data.data.elements);
+      this.loadMore = false;
+
+      let val = data.data.elements.length;
+      if (val === 0) {
+        this.pageNum -= 1;
+      }
+    },
+
+     //loading more data on scroll
+    handleScroll() {
+      if (
+        window.scrollY + window.innerHeight >=
+        document.body.scrollHeight - 1
+      ) {
+        this.loadMore = true;
+        setTimeout(() => {
+        this.isCheck = "true";
+        if((this.startDate === '') && (this.endDate  === '') && (this.searchQuery) === '') {
+          this.listInvoices();     
+        } else {
+          this.searchInvoices();
+        }
+        // this.perPage = this.perPage + 10;
+      }, 300);
+      }
+    },
     state() {
       return 1
     },
@@ -488,12 +689,39 @@ export default {
         })
     },
 
-    //loading more data on scroll
-    handleScroll(){
-      if((window.scrollY + window.innerHeight) > (document.body.scrollHeight-1)){
-        // console.log("Near to bottom")
-        this.perPage = this.perPage + 10 ;
-      }
+   
+    // handleScroll(){
+    //   if((window.scrollY + window.innerHeight) > (document.body.scrollHeight-1)){
+    //     // console.log("Near to bottom")
+    //     this.perPage = this.perPage + 10 ;
+    //   }
+    // },
+    // duplicating an invoice
+    duplicateInvoice(item, refetchData) {
+      let config = item;
+      console.log(item)
+      config.invoiceNumber = Date.now();
+      config.id = "";
+      // let companyID = this.$route.params.id;
+      let token = useJwt.getToken();
+      useJwt
+        .addInvoice(token, config)
+        .then(async (response) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Invoice Duplicated Successfully`,
+              icon: "EditIcon",
+              variant: "success",
+            },
+
+          });
+          // refetchData();
+          var tableAreaBusy = document.getElementById("user-invoices");
+          tableAreaBusy.style.opacity = "0.5";
+          this.refreshList();
+          
+        });
     },
     invoiceDelete(id, refetchData) {
       const token = useJwt.getToken()
@@ -508,7 +736,10 @@ export default {
               variant: 'success',
             },
           })
-          refetchData()
+          // refetchData();
+          var tableAreaBusy = document.getElementById("user-invoices");
+          tableAreaBusy.style.opacity = "0.5";
+          this.refreshList();
         })
         .catch(error => {
           this.$toast({
@@ -565,6 +796,7 @@ export default {
       statusFilter,
 
       refetchData,
+      invoices,
 
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
@@ -586,6 +818,7 @@ export default {
       refInvoiceListTable,
 
       statusFilter,
+      invoices,
 
       refetchData,
 

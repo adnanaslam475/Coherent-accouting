@@ -10,14 +10,14 @@
           md="6"
           class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
         >
-          <label>Entries</label>
+          <!-- <label>Entries</label>
           <v-select
             v-model="perPage"
             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
             :options="perPageOptions"
             :clearable="false"
             class="per-page-selector d-inline-block ml-50 mr-1"
-          />
+          /> -->
           <b-button
             variant="primary"
             class="mr-1"
@@ -452,8 +452,17 @@
         </div>
       </template>
     </b-table>
-    <div class="mx-2 mb-2">
-      <!-- <b-row>
+  
+    <!-- loading spinner -->
+    <b-row class="text-center mb-2">
+      <b-col  cols="12">
+        <b-spinner v-if="loadMore"  large variant="primary" />
+        <div  v-else style="height: 35px"></div>
+      </b-col>
+    </b-row>
+         
+  <!--   <div class="mx-2 mb-2">
+      <b-row>
         <b-col
           cols="12"
           sm="6"
@@ -496,9 +505,9 @@
               <feather-icon icon="ChevronRightIcon" size="18" />
             </template>
           </b-pagination>
-        </b-col> -->
-      <!-- </b-row> -->
-    </div>
+        </b-col>
+       </b-row>
+     </div> -->
   </b-card>
 </template>
 
@@ -582,6 +591,7 @@ export default {
   props: ["invoiceTab"],
   data() {
     return {
+      loadMore: false,
       startDate:'',
       endDate:'',
       perPageRecords: 10,
@@ -607,6 +617,8 @@ export default {
   },
   methods: {
     async refreshList() {
+      var tableAreaBusy = document.getElementById("company-invoices");
+      tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
       let totalRecordss = this.invoices.length;
       let Records = ((totalRecordss / 10) * 10);
@@ -650,7 +662,7 @@ export default {
       );
       this.invoices = data1.data.elements;
       }
-      var tableAreaBusy = document.getElementById("company-invoices");
+      // var tableAreaBusy = document.getElementById("company-invoices");
       tableAreaBusy.style.opacity = "1";
 
     },
@@ -702,8 +714,9 @@ export default {
 
       if (this.pageNum > 1) {
         this.invoices.push(...data.data.elements);
-
-        if (data.data.elements === "") {
+        this.loadMore = false;
+       
+        if (data.data.elements.length === 0) {
           this.pageNum -= 1;
         }
       }
@@ -730,6 +743,7 @@ export default {
       );
 
       this.invoices.push(...data.data.elements);
+      this.loadMore = false;
 
       let val = data.data.elements.length;
       if (val === 0) {
@@ -737,18 +751,22 @@ export default {
       }
     },
 
-    handleScroll() {
+    handleScroll() { 
       if (
         window.scrollY + window.innerHeight >=
         document.body.scrollHeight - 1
       ) {
-        this.isCheck = "true";
+        this.loadMore = true;
+        setTimeout(() => {
+          this.isCheck = "true";
         if((this.startDate === '') && (this.endDate  === '') && (this.searchQuery) === '') {
           this.listInvoices();     
         } else {
           this.searchInvoices();
         }
         // this.perPage = this.perPage + 10;
+        }, 300);
+       
       }
     },
     state() {
@@ -874,7 +892,7 @@ export default {
         });
     },
   },
-  mounted() {
+  created() {
     window.addEventListener("scroll", this.handleScroll);
   },
   setup() {

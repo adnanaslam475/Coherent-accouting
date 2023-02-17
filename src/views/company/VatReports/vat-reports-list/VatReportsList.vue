@@ -27,7 +27,7 @@
             }"
             @click="actionTab"
           >
-          {{ $t("vat_reports.add_vat_report") }}
+            {{ $t("vat_reports.add_vat_report") }}
           </b-button>
 
           <!-- Generate Button -->
@@ -171,6 +171,39 @@
       </b-button>
     </b-modal>
 
+    <!-- Add Assets -->
+    <b-modal
+      id="add-asset-modal"
+      ref="modal"
+      title="Add Asset"
+      ok-title="Add"
+      cancel-title="Close"
+      @ok="updateVatReport()"
+    >
+      <b-row>
+        <b-col class="pb-2" cols="12">
+          <b-input-group class="input-group-merge">
+            <b-form-textarea
+              v-model="notes"
+              placeholder="Add notes about binary file"
+              rows="5"
+            />
+          </b-input-group>
+        </b-col>
+        <b-col cols="12">
+          <file-pond
+            ref="pond"
+            required
+            name="file"
+            label-idle="Drop files here..."
+            :allow-multiple="false"
+            :files="myFiles"
+            :server="server"
+          />
+        </b-col>
+      </b-row>
+    </b-modal>
+
     <!-- Vat Reports Table -->
     <b-table
       ref="refVatReportsTable"
@@ -199,14 +232,14 @@
       </template>
       <template #cell(period)="data">
         <span class="text-nowrap">
-        {{ data.value.substr(0,7) }}
+          {{ data.value.substr(0, 7) }}
         </span>
       </template>
 
       <!-- Column: nameAndAddress -->
       <template #head(nameAndAddress)>
         <span class="text-nowrap">
-        {{ $t("vat_reports.company_name_and_address") }}
+          {{ $t("vat_reports.company_name_and_address") }}
         </span>
       </template>
       <template #cell(nameAndAddress)="data">
@@ -215,7 +248,7 @@
 
       <!-- Column: cell-01 -->
       <template #head(cell01)>
-        {{ $t("vat_reports.total_sum_base_taxes") }} 
+        {{ $t("vat_reports.total_sum_base_taxes") }}
       </template>
       <template #cell(cell-01)="data">
         <span class="text-nowrap">
@@ -354,64 +387,105 @@
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
-            <b-dropdown-item
-              @click="showMsgBoxTwo(data.item.id, refetchData)"
-            >
+            <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
             </b-dropdown-item>
           </b-dropdown>
+
+          <!-- assets check -->
+          <feather-icon
+            v-if="data.item.asset === null"
+            :id="`report-row-${data.item.id}-no-asset-icon`"
+            icon="DatabaseIcon"
+            size="16"
+            color="red"
+            class="mx-1 cursor-pointer"
+            v-b-modal.add-asset-modal
+            @click="
+              () => {
+                vatIdtoUpdate = data.item.id;
+                vatReport = data.item;
+              }
+            "
+          />
+          <!--  @click="gotoAddAsset()"  
+                $router.push({
+                name: 'CompanyView',
+                params: {id: companyID,  InvoiceId: 5 },
+                
+              }) -->
+          <feather-icon
+            v-else
+            :id="`report-row-${data.item.id}-asset-icon`"
+            icon="DatabaseIcon"
+            size="16"
+            color="green"
+            class="mx-1 cursor-pointer"
+          />
+          <b-tooltip
+            title="Add Asset"
+            class="cursor-pointer"
+            :target="`report-row-${data.item.id}-no-asset-icon`"
+          />
+
+          <b-tooltip
+            title="Assets"
+            class="cursor-pointer"
+            :target="`report-row-${data.item.id}-asset-icon`"
+          />
         </div>
       </template>
     </b-table>
 
     <!-- Pagination -->
     <div class="mx-2 mb-2">
-        <b-row>
-
-          <b-col
-            cols="12"
-            sm="6"
-            class="d-flex align-items-center justify-content-center justify-content-sm-start"
+      <b-row>
+        <b-col
+          cols="12"
+          sm="6"
+          class="
+            d-flex
+            align-items-center
+            justify-content-center justify-content-sm-start
+          "
+        >
+          <span class="text-muted"
+            >Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
+            {{ dataMeta.of }} entries</span
           >
-            <span class="text-muted">Showing {{ dataMeta.from }} to {{ dataMeta.to }} of {{ dataMeta.of }} entries</span>
-          </b-col>
-          <!-- Pagination -->
-          <b-col
-            cols="12"
-            sm="6"
-            class="d-flex align-items-center justify-content-center justify-content-sm-end"
+        </b-col>
+        <!-- Pagination -->
+        <b-col
+          cols="12"
+          sm="6"
+          class="
+            d-flex
+            align-items-center
+            justify-content-center justify-content-sm-end
+          "
+        >
+          <b-pagination
+            v-if="totalVatReports > 0"
+            v-model="currentPage"
+            :total-rows="totalVatReports"
+            :per-page="perPage"
+            first-number
+            last-number
+            class="mb-0 mt-1 mt-sm-0"
+            prev-class="prev-item"
+            next-class="next-item"
           >
-
-            <b-pagination
-              v-if="totalVatReports > 0"
-              v-model="currentPage"
-              :total-rows="totalVatReports"
-              :per-page="perPage"
-              first-number
-              last-number
-              class="mb-0 mt-1 mt-sm-0"
-              prev-class="prev-item"
-              next-class="next-item"
-            >
-              <template #prev-text>
-                <feather-icon
-                  icon="ChevronLeftIcon"
-                  size="18"
-                />
-              </template>
-              <template #next-text>
-                <feather-icon
-                  icon="ChevronRightIcon"
-                  size="18"
-                />
-              </template>
-            </b-pagination>
-
-          </b-col>
-
-        </b-row>
-      </div>
+            <template #prev-text>
+              <feather-icon icon="ChevronLeftIcon" size="18" />
+            </template>
+            <template #next-text>
+              <feather-icon icon="ChevronRightIcon" size="18" />
+            </template>
+          </b-pagination>
+        </b-col>
+      </b-row>
+    </div>
   </b-card>
 </template>
 
@@ -439,6 +513,8 @@ import {
   BCardHeader,
   BFormCheckbox,
   BSpinner,
+  BInputGroup,
+  BFormTextarea,
 } from "bootstrap-vue";
 import { avatarText } from "@core/utils/filter";
 import vSelect from "vue-select";
@@ -457,12 +533,26 @@ import VueMonthlyPicker from "vue-monthly-picker";
 import axios from "@/libs/axios";
 import vatReportsStoreModule from "../vatReportsStoreModule";
 import useVatReportsList from "./useVatReportsList";
-import  {i18n} from '@/main.js'
+import { i18n } from "@/main.js";
+import vueFilePond from "vue-filepond";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import "filepond/dist/filepond.min.css";
+// Import image preview plugin styles
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
+// Import image preview and file type validation plugins
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 
 extend("required", {
   ...required,
   message: "This field is mandatory",
 });
+
+// Create component
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview
+);
 
 export default {
   components: {
@@ -496,10 +586,22 @@ export default {
     ValidationProvider,
     ValidationObserver,
     VueMonthlyPicker,
+    BInputGroup,
+    BFormTextarea,
   },
   props: ["vatReportsTab"],
   data() {
+    const self = this;
     return {
+      vatIdtoUpdate: "",
+      vatReport: "",
+      binary:{},
+      // binary: {
+      //   binaryId: '',
+      //   companyId:''
+      // },
+      notes: "",
+      myFiles: [],
       loadModal: "Submit",
       modalDisabled: true,
       modalDisabledMonth: false,
@@ -537,6 +639,55 @@ export default {
         { key: "transactionType" },
         { key: "dateIssued" },
       ],
+      server: {
+        process: (
+          fieldName,
+          file,
+          metadata,
+          load,
+          error,
+          progress,
+          abort,
+          transfer,
+          options
+        ) => {
+         
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("companyId", router.currentRoute.params.id);
+
+          const request = new XMLHttpRequest();
+          const token = localStorage.getItem("accessToken");
+          request.open(
+            "POST",
+            `${axios.defaults.baseURL}/binaries/api/store-binary/${this.$route.params.id}`
+          );
+
+          request.setRequestHeader("Authorization", `Bearer ${token}`);
+          request.upload.onprogress = (e) => {
+            progress(e.lengthComputable, e.loaded, e.total);
+          };
+          // eslint-disable-next-line func-names
+          request.onload = function () {
+            if (request.status >= 200 && request.status < 300) {
+              console.log(request.response);
+              // this.onResponse(request.response);
+              self.binary = JSON.parse(request.response);
+              console.log(self.binary);
+              load(request.responseText);
+            } else {
+              error("oh no");
+            }
+          };
+          request.send(formData);
+          return {
+            abort: () => {
+              request.abort();
+              abort();
+            },
+          };
+        },
+      },
     };
   },
   created() {
@@ -546,6 +697,57 @@ export default {
   methods: {
     state() {
       return 1;
+    },
+
+    async updateVatReport() {
+      var config = this.vatReport;
+
+      // const postData = {};
+      // postData.binaryId = this.binary.binaryId;
+      // postData.notes = this.notes;
+      // postData.type = "ASSET";
+      // config.asset = postData;
+      // console.log(postData);
+
+      config.asset = {
+        binaryId: this.binary.binaryId,
+        notes: this.notes,
+        type: "ASSET",
+        id:0
+      };
+
+      await axios
+        .put("/account/api/report/update/" + this.vatIdtoUpdate, config)
+        .then(async (response) => {
+          if (response.status === 201 || response.status === 200) {
+            this.notes = "";
+            console.log("success");
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: "Vat updated successfully!",
+                icon: "DeleteIcon",
+                variant: "success",
+              },
+            });
+            this.refetchData();
+          }
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Something went wrong`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          });
+        });
+    },
+
+    onResponse(r) {
+      this.binary = JSON.parse(r);
+      console.log("binary file " + this.binary);
     },
 
     // getting zip file from backend
@@ -607,8 +809,8 @@ export default {
                 component: ToastificationContent,
                 props: {
                   title: `Something went wrong`,
-                  icon: 'AlertTriangleIcon',
-                  variant: 'danger',
+                  icon: "AlertTriangleIcon",
+                  variant: "danger",
                 },
               });
             });
@@ -628,7 +830,7 @@ export default {
     handleOk(bvModalEvent) {
       // Prevent modal from closing
       bvModalEvent.preventDefault();
-      this.loadModal = "Loading..."
+      this.loadModal = "Loading...";
       this.modalDisabledMonth = true;
       // Trigger submit handler
       this.handleMonthSelected();
@@ -636,7 +838,6 @@ export default {
 
     //
     handleMonthSelected() {
-     
       this.modalDisabled = true;
       this.invoicesForReport = [];
       this.$refs.selectMonthRules.validate().then((success) => {
@@ -703,29 +904,29 @@ export default {
     actionTab() {
       this.$emit("state", this.state());
     },
-    showMsgBoxTwo(id,refetchData) {
-      const h = this.$createElement
-        // Using HTML string
-        // More complex structure
-      const messageVNode = h('div', { class: ['bvModalFont'] }, [
-        h('p', { class: ['text-center card-text'] }, [
-        i18n.tc('vat_reports.delete_vat_confirm')
-        ]) 
-      ])
+    showMsgBoxTwo(id, refetchData) {
+      const h = this.$createElement;
+      // Using HTML string
+      // More complex structure
+      const messageVNode = h("div", { class: ["bvModalFont"] }, [
+        h("p", { class: ["text-center card-text"] }, [
+          i18n.tc("vat_reports.delete_vat_confirm"),
+        ]),
+      ]);
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: i18n.tc('vat_reports.delete_vat'),
-          okVariant: 'primary',
-          okTitle: i18n.tc('companies.confirm'),
-          cancelTitle: i18n.tc('clients_or_recipients.cancel'),
+          title: i18n.tc("vat_reports.delete_vat"),
+          okVariant: "primary",
+          okTitle: i18n.tc("companies.confirm"),
+          cancelTitle: i18n.tc("clients_or_recipients.cancel"),
           hideHeaderClose: false,
           centered: true,
         })
-        .then(value => {
-          if(value){
-            this.vatReportDelete(id, refetchData)
+        .then((value) => {
+          if (value) {
+            this.vatReportDelete(id, refetchData);
           }
-        })
+        });
     },
     // Delete vat report
     vatReportDelete(id, refetchData) {
@@ -748,8 +949,8 @@ export default {
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
           });
         });
@@ -812,6 +1013,9 @@ export default {
 </script>
 
   <style lang="scss" scoped>
+.filepond--root .filepond--credits {
+  display: none !important;
+}
 .per-page-selector {
   width: 90px;
 }
@@ -838,7 +1042,7 @@ export default {
 .gap-2 {
   grid-gap: 25px;
 }
- 
+
 .invoice-preview-list .invoice-date-wrapper {
   display: flex;
   grid-gap: 10px;

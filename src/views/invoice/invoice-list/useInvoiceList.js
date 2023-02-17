@@ -38,6 +38,7 @@ export default function useInvoicesList() {
   const sortBy = ref('id')
   const isSortDirDesc = ref(true)
   const statusFilter = ref(null)
+  const invoices = ref(null);
 
   const dataMeta = computed(() => {
     const localItemsCount = refInvoiceListTable.value ? refInvoiceListTable.value.localItems.length : 0
@@ -70,10 +71,10 @@ export default function useInvoicesList() {
 
       })
       .then(response => {
-        const { elements, totalElements } = response.data
-
+        const { elements } = response.data;
+        invoices.value = response.data.elements;
         callback(elements)
-        totalInvoices.value = totalElements
+        totalInvoices.value = elements.length;
       })
       .catch((err) => {
         toast({
@@ -132,5 +133,6 @@ export default function useInvoicesList() {
     resolveClientAvatarVariant,
 
     refetchData,
+    invoices
   }
 }
