@@ -153,8 +153,7 @@
                           display: flex;
                           align-items: center;
                           justify-content: left;
-                          grid-gap: 8px;
-                        "
+                          grid-gap: 8px;"
                       >
                         <img :src='"@/assets/flags/" + getCompanyISO.toLowerCase() + ".png"' style="width: 30px; height: 20px"/>
                         {{ getCompanyCountry }}
@@ -178,7 +177,6 @@
                   </v-select>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
-
               </b-form-group>
             </b-col>
           </b-form-row>
@@ -225,7 +223,6 @@
                     placeholder="Owner EGN"
                     type="number"
                     :formatter="formatOwnerEGN"
-                   
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -247,10 +244,12 @@
                   <b-form-input
                     id="vat_number"
                     v-model="form.vat_no"
-                    :state="errors.length > 0 ? false : null"
+                    :state="((errors.length > 0) || (vatIsValid === 0))  ? false : null"
                     placeholder="Company Vat Number"
-                  />
+                    @mousedown="()=>{ vatIsValid = 3}"                  />
                   <small class="text-danger">{{ errors[0] }}</small>
+                  <small class="text-danger" v-if="vatIsValid === 0">Company VAT Number is invalid</small>
+
                 </validation-provider>
               </b-form-group></b-col
             >
@@ -326,7 +325,6 @@
                           "
                         >
                           {{ form.company_currency }} 
-                         
                         </div>
                       </template>
                     <template #selected-option="option" v-else>
@@ -416,7 +414,6 @@
                   v-bind:name="$t('company_fin_year')"
                   rules="required"
                 >
-
                   <!-- <flat-pickr
                     id="company_fin_year"
                     class="form-control"
@@ -458,7 +455,6 @@
         </validation-observer>
       </tab-content>
     </form-wizard>
-
   </div>
 </template>
 
@@ -526,7 +522,8 @@ export default {
   },
   data() {
     return {
-      defaultCurrency:true,
+      vatIsValid: 3,
+      defaultCurrency: true,
       companyCountrySelected: "",
       companyCountryISOSelected: "",
       getCompanyISO: "",
@@ -847,14 +844,33 @@ export default {
     //validation check for company details
     validationForm() {
       return new Promise((resolve, reject) => {
-        this.$refs.companyRules.validate().then((success) => {
+        //  if vat
+         if(this.isVatCheck === true){
+          this.$refs.companyRules.validate().then((success) => {
+            const token = useJwt.getToken();
+           useJwt.validateVatNo(token, this.form.vat_no).then((response) => {
+            if (response.data.valid === true) this.vatIsValid = 1;
+            else this.vatIsValid = 0;
+            if (success && this.vatIsValid === 1) {
+              resolve(true);
+            } else {
+              reject();
+            }
+          })
+          .catch((error) => {});
+          });
+         }
+        //  no vat
+         else{
+          this.$refs.companyRules.validate().then((success) => {
           if (success) {
             resolve(true);
           } else {
             reject();
           }
         });
-      });
+      }
+    });
     },
     //
     vatHandled() {
@@ -873,14 +889,12 @@ export default {
         this.form.vat_no = "";
       }
 
-      if(this.defaultCurrency === true){
+      if (this.defaultCurrency === true) {
         currency = this.form.company_currency;
-      }
-      else{
+      } else {
         currency = this.form.company_currency.value;
       }
       var data = JSON.stringify({
-
         companyName: this.form.company_name,
         companyCountry: this.getCompanyCountry,
         companyIsoAlpha2Country: this.getCompanyISO,
@@ -925,7 +939,7 @@ export default {
           });
           return self.$router.push({
                   name: "companies",
-                })
+          });
         })
 
         .catch(function (error) {
@@ -942,7 +956,7 @@ export default {
           return self.$router.go();
         });
     },
-    //populating the list of countries 
+    //populating the list of countries
     populateCountries() {
       const token = useJwt.getToken();
       useJwt

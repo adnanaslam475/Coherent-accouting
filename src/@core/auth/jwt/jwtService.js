@@ -389,4 +389,16 @@ export default class JwtService {
       headers: headers,
     });
   }
+
+  //validate company-vat-number
+  validateVatNo(token, data){
+    let headers = {
+      Authorization: `${this.jwtConfig.tokenType} ${token}`,
+    };
+    return this.axiosIns.get(
+      `${this.jwtConfig.validateVat+'?vatNumber='+data}`,{
+       headers: headers
+      }
+    );
+  }
 }

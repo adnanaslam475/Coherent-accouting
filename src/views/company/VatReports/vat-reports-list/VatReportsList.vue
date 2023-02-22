@@ -178,7 +178,7 @@
       title="Add Asset"
       ok-title="Add"
       cancel-title="Close"
-      @ok="updateVatReport()"
+      @ok="createAsset()"
     >
       <b-row>
         <b-col class="pb-2" cols="12">
@@ -593,6 +593,7 @@ export default {
   data() {
     const self = this;
     return {
+      dataToSend:{},
       vatIdtoUpdate: "",
       vatReport: "",
       binary:{},
@@ -673,8 +674,9 @@ export default {
               console.log(request.response);
               // this.onResponse(request.response);
               self.binary = JSON.parse(request.response);
-              console.log(self.binary);
+              // console.log(self.binary);
               load(request.responseText);
+              // self.createAsset();
             } else {
               error("oh no");
             }
@@ -699,29 +701,26 @@ export default {
       return 1;
     },
 
+    // Updaing Vat-Reports Asset
     async updateVatReport() {
       var config = this.vatReport;
 
-      // const postData = {};
-      // postData.binaryId = this.binary.binaryId;
-      // postData.notes = this.notes;
-      // postData.type = "ASSET";
-      // config.asset = postData;
-      // console.log(postData);
+      // config.asset = {
+      //   binaryId: this.binary.binaryId,
+      //   notes: this.notes,
+      //   type: "ASSET",
+      //   id:0
+      // };
 
-      config.asset = {
-        binaryId: this.binary.binaryId,
-        notes: this.notes,
-        type: "ASSET",
-        id:0
-      };
+      config.asset = this.dataToSend;
+      // console.log(config);
 
       await axios
         .put("/account/api/report/update/" + this.vatIdtoUpdate, config)
         .then(async (response) => {
           if (response.status === 201 || response.status === 200) {
             this.notes = "";
-            console.log("success");
+            // console.log("success");
             this.$toast({
               component: ToastificationContent,
               props: {
@@ -748,6 +747,34 @@ export default {
     onResponse(r) {
       this.binary = JSON.parse(r);
       console.log("binary file " + this.binary);
+    },
+
+    async createAsset() {
+      const postData = {};
+      postData.binaryId = this.binary.binaryId;
+      postData.notes = this.notes;
+      postData.type = "ASSET";
+      postData.id = 0;
+      // console.log(postData);
+      
+      await axios
+        .post("/account/api/asset/create", postData)
+        .then(async (response) => {
+          if (response.status === 201 || response.status === 200) {
+            this.notes = "";
+            let val = JSON.parse(response.data.binaryId)
+            this.dataToSend.binaryId = val.binaryId;
+            this.dataToSend.notes = response.data.notes;
+            this.dataToSend.type = response.data.type;
+            this.dataToSend.id = response.data.id;
+            // console.log(this.dataToSend);
+            
+            this.updateVatReport();
+ 
+          }
+        })
+        .catch((error) => {  
+        });
     },
 
     // getting zip file from backend

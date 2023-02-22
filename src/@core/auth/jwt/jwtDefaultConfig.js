@@ -48,6 +48,8 @@ export default {
   GetUserCurrentPlan:'/account/api/user/plan/current-plan',
 
   wrongOldPasswordEndPoint: '/account/api/user/change-password',
+  validateVat:'/account/api/company-validate',
+
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>
   tokenType: 'Bearer',

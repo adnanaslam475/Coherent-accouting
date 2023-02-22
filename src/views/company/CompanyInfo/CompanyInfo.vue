@@ -812,7 +812,7 @@ export default {
     async editCompany() {
       await this.$router.push({
         name: "EditCompany",
-        params: { id: this.companyRecord.id },
+        params: { id: this.companyID },
       });
     },
     //
