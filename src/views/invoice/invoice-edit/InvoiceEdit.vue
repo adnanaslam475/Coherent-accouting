@@ -1012,6 +1012,245 @@
                 </b-row>
               </b-card-body>
             </b-card>
+
+            <!-- Bank Details Switch -->
+            <b-row>
+              <b-col>
+                <b-form-checkbox
+                  class="custom-control-primary custom-switch-btn-2 flex-1"
+                  name="AccountTypeOptionToggle"
+                  @change="
+                    () => {
+                      hasBankDetails = !hasBankDetails;
+                     
+                    }
+                  "
+                  switch
+                  :checked="hasBankDetails"
+                >
+                  <span class="switch-icon-left text-uppercase"> Bank </span>
+                  <span class="switch-icon-right text-uppercase">
+                    No Bank
+                  </span>
+                </b-form-checkbox>
+              </b-col>
+            </b-row>
+
+            <!-- Bank Details -->
+            <b-card no-body class="invoice-add-card mb-1 mt-1" v-if="hasBankDetails">
+              <b-card-body class="invoice-padding form-item-section p-2 border border-1 border-primary rounded">
+                <div>
+                  
+                  <b-form-row>
+                    <!-- Bank name -->
+                    <b-col>
+                      <span>Bank: </span>
+                      <validation-provider
+                        #default="{ errors }"
+                        name="bank"
+                        rules="required"
+                      >
+                        <v-select
+                          v-model="invoiceData.bankApi.name"
+                          :options="bankList"
+                          id="invoice-bank"
+                          name="invoice-bank"
+                          v-bind:placeholder="$t('Please select bank...')"
+                          :value="$store.state.selected"
+                          @input="selectBankName()"
+                        >
+                        
+                          <template #selected-option="option" v-if="(editMode && bankNameToSend !== '')">
+                            <div
+                              style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: left;
+                                grid-gap: 8px;"
+                            >
+                              {{ bankNameToSend }}
+                            </div>
+                          </template>
+                          <template #selected-option="option" v-else-if="(editMode && bankNameToSend === '')">
+                            <div
+                              style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: left;
+                                grid-gap: 8px;"
+                            >
+                              {{ option.name }}
+                            </div>
+                          </template>
+                          <template #selected-option="option" v-else >
+                            <div
+                              style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: left;
+                                grid-gap: 8px;"
+                            >
+                              {{ invoiceData.bankApi.name }}
+                            </div>
+                          </template>
+
+
+                          <template v-slot:option="option">
+                            <span
+                              style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: left;
+                                grid-gap: 8px; "
+                            >
+                              {{ option.name }}
+                            </span>
+                          </template>
+                        </v-select>
+                        <small class="text-danger">{{ errors[0] }}</small>
+                      </validation-provider>
+                    </b-col>
+                    <!-- bic  -->
+                    <b-col>
+                      <b-form-group
+                        id="input-group-1"
+                        label="BIC"
+                        label-for="BIC"
+                      >
+                        <validation-provider
+                          #default="{ errors }"
+                          name="BIC"
+                          rules="required"
+                        >
+                          <b-form-input
+                            id="invoice-bic"
+                            v-model="invoiceData.bankApi.bic"
+                            :state="errors.length > 0 ? false : null"
+                            placeholder="BIC..."
+                            style="background: #fcfcfc;
+                            height: 34px"
+                          />
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
+                      </b-form-group>
+                    </b-col>
+                    <!-- iban -->
+                    <b-col>
+                      <b-form-group
+                        id="input-group-1"
+                        label="IBAN"
+                        label-for="IBAN"
+                      >
+                        <validation-provider
+                          #default="{ errors }"
+                          name="IBAN"
+                          rules="required"
+                        >
+                          <b-form-input
+                            id="ivvoice-iban"
+                            v-model="invoiceData.bankApi.iban"
+                            :state="errors.length > 0 ? false : null"
+                            placeholder="IBAN..."
+                            style="background: #fcfcfc;
+                            height: 34px"
+                          />
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
+                      </b-form-group>
+                    </b-col>
+                  </b-form-row>
+                </div>
+              </b-card-body>
+            </b-card>
+
+            <b-row v-if="(invoiceData.vatPercent === 0) || (invoiceData.vatPercent === '0')" class="mt-2">
+                <b-col>
+                  <b-card
+                no-body
+                class=""
+                 >
+                  <b-card-body class="invoice-padding form-item-section p-2 rounded"> 
+                    <b-form-group
+                        id="input-group-4"
+                        label="Clause for Non Vat:"
+                        label-for="non-vat-clause"
+                      >
+                        <validation-provider
+                          #default="{ errors }"
+                          name="non-vat-clause"
+                          rules="required"
+                        >
+                          <v-select
+                            v-model="invoiceData.vatCondition"
+                            :options="noVatClause"
+                            id="non-vat-clause"
+                            name="non-vat-clause"
+                            v-bind:placeholder="
+                              $t('Please select non-vat clause..')
+                            "
+                           
+                            @input="selectVatClause()"
+                          >
+                            <template #selected-option="option" v-if="(editClauseMode && clauseToSend !== '')">
+                              <div
+                                style="
+                                  display: flex;
+                                  align-items: center;
+                                  justify-content: left;
+                                  grid-gap: 8px;"
+                              >
+                                {{ clauseToSend }}
+                              </div>
+                            </template> 
+                            <template #selected-option="option" v-else-if="(editClauseMode && clauseToSend === '')">
+                              <div
+                                style="
+                                  display: flex;
+                                  align-items: center;
+                                  justify-content: left;
+                                  grid-gap: 8px;"
+                              >
+                                {{ option.clause}}
+                              </div>
+                            </template>
+                            <template #selected-option="option" v-else>
+                              <div
+                                style="
+                                  display: flex;
+                                  align-items: center;
+                                  justify-content: left;
+                                  grid-gap: 8px;"
+                              >
+                                {{ invoiceData.vatCondition }}
+                              </div>
+                            </template>
+
+                            <template v-slot:option="option">
+                              <span
+                                style="
+                                  display: flex;
+                                  align-items: center;
+                                  justify-content: left;
+                                  grid-gap: 8px;
+                                "
+                              >
+                                {{ option.clause }}
+                              </span>
+                            </template>
+                          </v-select>
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
+                      </b-form-group>
+                    </b-card-body>
+              </b-card>
+                    </b-col>
+                    <b-col>
+                      </b-col>
+                      <b-col>
+                      </b-col>
+
+                 </b-row>
+
           </b-col>
 
           <!-- Right Col: Card -->
@@ -1093,7 +1332,7 @@ import Ripple from 'vue-ripple-directive'
 import store from '@/store'
 import router from '@/router'
 import {
-  BRow, BCol, BCard, BCardHeader, BCardBody, BButton, BCardText, BForm, BFormSelect, BFormGroup, BFormInput, BInputGroup, BInputGroupPrepend, BInputGroupAppend, BFormTextarea, BFormCheckbox, BPopover, BAlert, BLink, VBToggle,BSpinner, BFormRadio, BListGroup,BListGroupItem 
+  BFormRow,BRow, BCol, BCard, BCardHeader, BCardBody, BButton, BCardText, BForm, BFormSelect, BFormGroup, BFormInput, BInputGroup, BInputGroupPrepend, BInputGroupAppend, BFormTextarea, BFormCheckbox, BPopover, BAlert, BLink, VBToggle,BSpinner, BFormRadio, BListGroup,BListGroupItem 
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import flatPickr from 'vue-flatpickr-component'
@@ -1136,7 +1375,8 @@ export default {
     BFormRadio,
     BListGroup, 
     BListGroupItem,
-    TabList 
+    TabList ,
+    BFormRow
   },
   directives: {
     Ripple,
@@ -1153,20 +1393,58 @@ export default {
   },
   data() {
     return {
+      editClauseMode:false,
+      editMode:false,
+      clauseToSend:'',
+      bankNameToSend: "",
+      bankList: [
+        { name: "bank-01" },
+        { name: "bank-02" },
+        { name: "bank-03" },
+        { name: "bank-04" },
+        { name: "bank-05" },
+      ],
+      isBank: false,
+      noVatClause: [
+        { clause: "clause-01" },
+        { clause: "clause-02" },
+        { clause: "clause-03" },
+        { clause: "clause-04" },
+        { clause: "clause-05" },
+      ],
       loading: false,
       required, email, confirmed, password,singlePriceValid,qtyValid
     };
   },
   mounted() {
     this.initTrHeight()
+
   },
   created() {
-    window.addEventListener('resize', this.initTrHeight)
+    window.addEventListener('resize', this.initTrHeight); 
   },
   destroyed() {
     window.removeEventListener('resize', this.initTrHeight)
   },
   methods: {
+    selectVatClause(){
+      if(this.invoiceData.vatCondition === null){
+        this.clauseToSend = ''
+      }
+      else{
+      this.clauseToSend = this.invoiceData.vatCondition.clause;
+      }
+      this.editClauseMode = true;
+    },
+    selectBankName() {
+      if(this.invoiceData.bankApi.name === null) {
+        this.bankNameToSend = '';
+      }
+      else{
+      this.bankNameToSend = this.invoiceData.bankApi.name.name;
+      }
+      this.editMode = true;
+    },
     addNewItemInItemForm() {
       this.$refs.form.style.overflow = 'hidden'
       this.invoiceData.transactions.push(JSON.parse(JSON.stringify(this.itemFormBlankItem)))
@@ -1181,6 +1459,25 @@ export default {
       })
     },
     invoiceEdit(invoiceData,redirectPage,AccountTypeOption) {
+      if(this.bankNameToSend !== ''){
+        invoiceData.bankApi.name = this.bankNameToSend;
+      }
+      
+      if(this.clauseToSend !== ''){
+        invoiceData.vatCondition = this.clauseToSend;
+      }
+     
+      if (this.hasBankDetails === false) {
+        invoiceData.bankApi = {
+          name: "",
+          bic: "",
+          iban: "",
+        };
+      }
+
+      if (invoiceData.vatPercent !== 0) {
+        invoiceData.vatCondition = "";
+      }
       
       if(AccountTypeOption == 'person'){
          invoiceData.recipientCompany.companName = invoiceData.recipientCompany.companyOwnerName
@@ -1278,6 +1575,8 @@ export default {
     }
 
     const invoiceData = ref(null)
+
+    const hasBankDetails=ref(false);
     
     const currencyOptions =  [
       { value: 'лв.', text: 'лв.' },
@@ -1301,6 +1600,8 @@ export default {
         companyAddress: "",
     }
 
+    
+
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
         response.data.currency = response?.data?.currency?.toLowerCase().trim() == 'lv' ? "лв." : response?.data?.currency?.toLowerCase().trim() == 'bgn' ? "лв." : response.data.currency 
@@ -1309,13 +1610,21 @@ export default {
         invoiceData.value.supplierCompany = invoiceData?.value?.supplierCompany ? invoiceData.value.supplierCompany : uploadValue
         invoiceData.value.recipientCompany = invoiceData?.value?.recipientCompany ? invoiceData.value.recipientCompany : uploadValue
         invoiceData.value.transactions = invoiceData?.value?.transactions?.length > 0 ? invoiceData.value.transactions : [JSON.parse(JSON.stringify(itemFormBlankItem))]
-        invoiceData.value.vatPercent = invoiceData?.value?.vatPercent ? invoiceData.value.vatPercent : 20
+        // invoiceData.value.vatPercent = invoiceData?.value?.vatPercent ? invoiceData.value.vatPercent : 20
         invoiceData.value.tradeDiscountPercent = invoiceData?.value?.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
         invoiceData.value.transactionType = invoiceData?.value?.transactionType ? invoiceData.value.transactionType : "INCOME"
         invoiceData.value.invoiceType = invoiceData?.value?.invoiceType ? invoiceData.value.invoiceType : "ORIGINAL"
         invoiceData.value.saleType = invoiceData?.value?.saleType ? invoiceData.value.saleType : "SERVICE"
         invoiceData.value.documentType = invoiceData?.value?.documentType ? invoiceData.value.documentType : "INVOICE"
-    
+        if(invoiceData.value.bankApi === null){
+            invoiceData.value.bankApi={
+              name:'',
+              bic:'',
+              iban:''
+            }
+        }
+        
+       
         supplierVat.value = invoiceData?.value?.supplierCompany?.companyVatEic ? true : false
         recipientVat.value = invoiceData?.value?.recipientCompany?.companyVatEic ? true : false
         // ? We are adding some extra data in response for data purpose
@@ -1326,6 +1635,11 @@ export default {
         invoiceData.value.transactions = response?.data?.transactions?.map(item=>{
           return item
         })
+      
+        if(invoiceData.value.bankApi.name !== '' || invoiceData.value.bankApi.bic !== '' || invoiceData.value.bankApi.iban !== '' ){
+          hasBankDetails.value = true
+    }
+
       })
       .catch(error => {
         if (error.response.status === 404) {
@@ -1428,7 +1742,7 @@ export default {
         invoiceType: invoiceData.value.invoiceType,
         saleType: invoiceData.value.saleType,
         documentType: "INVOICE",
-        verified: invoiceData.value.verified
+        verified: invoiceData.value.verified,
       }
     }
     var datalist = ref([])
@@ -1825,6 +2139,7 @@ export default {
     }
 
     return {
+      hasBankDetails,
       AccountTypeOption,
       recipientVat,
       supplierVat,
@@ -1982,6 +2297,9 @@ background-color:$product-details-bg;
 }
 .invoice-input-middle .input-group.invoice-edit-input-group span{
   width: 100%;
+}
+.v-select{
+  margin-top: 3px !important;
 }
 
 </style>

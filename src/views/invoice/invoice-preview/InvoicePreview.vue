@@ -332,6 +332,74 @@
               </b-row>
             </b-card-body>
           </b-card>
+
+          <div class="mt-md-0 mt-2 flex-1" v-if="hasBankDetails">
+            <b-card
+              no-body
+              class="invoice-preview invoice-card"
+            > 
+              <b-card-header class="justify-content-center invoice-header" >
+                  <h5 
+                    class="m-0" 
+                  >
+                  Bank Details
+                  </h5>
+              </b-card-header>
+              <b-card-body class="invoice-body">
+                <b-row class="mt-1">
+                  <b-col>
+                <div class="invoice-date-wrapper" style="border-bottom: none;">
+                  <p class="invoice-date-title" style="width: 2rem !important;">
+                   Name :
+                  </p>
+                  <p class="invoice-date">
+                    {{ invoiceData.bankApi.name }}
+                  </p>
+                </div>
+              </b-col>
+            <b-col>
+                <div class="invoice-date-wrapper" style="border-bottom: none;">
+                  <p class="invoice-date-title" style="width: 2rem !important;">
+                   BIC:
+                  </p>
+                  <p class="invoice-date">
+                    {{ invoiceData.bankApi.bic }}
+                  </p>
+                </div>
+              </b-col>
+            <b-col>
+                <div class="invoice-date-wrapper" style="border-bottom: none;">
+                  <p class="invoice-date-title" style="width: 2rem !important;">
+                   IBAN:
+                  </p>
+                  <p class="invoice-date">
+                    {{ invoiceData.bankApi.iban }}
+                  </p>
+                </div>
+              </b-col>
+              </b-row>
+  
+              </b-card-body>
+            </b-card>
+
+            <div class="d-flex justify-content-between align-items-center" v-if="(invoiceData.vatPercent === '0') || (invoiceData.vatPercent === 0)" style="min-width: 200px">
+          <b-card
+            no-body
+            class="invoice-preview date-issued ml-0"
+          >
+            <b-card-header class="justify-content-end"> 
+              <div class="invoice-date-wrapper invoice-middle-content">
+                <p class="invoice-date-title">
+                  Non VAT Clause : 
+                </p>
+                <p class="invoice-date">
+                  {{ invoiceData.vatCondition }}
+                </p>
+              </div>
+            </b-card-header>
+          </b-card>
+          </div>
+          </div>
       </b-col>
 
       <!-- Right Col: Card -->
@@ -465,6 +533,8 @@ export default {
   },
   setup() {
     const invoiceData = ref(null)
+    const hasBankDetails = ref(false)
+
     
 
     // Invoice Description
@@ -488,6 +558,9 @@ export default {
           return item
         })
         invoiceData.value = response.data
+        if(invoiceData.value.bankApi.name !== '' || invoiceData.value.bankApi.bic !== '' || invoiceData.value.bankApi.iban !== '' ){
+          hasBankDetails.value = true
+        }
       })
       .catch(error => {
         if (error.response.status === 404) {
@@ -500,6 +573,7 @@ export default {
     }
 
     return {
+      hasBankDetails,
       invoiceData,
       printInvoice,
     }
