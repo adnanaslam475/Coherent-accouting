@@ -118,7 +118,7 @@
           <template #cell(isChecked)="data">
             <b-form-checkbox
               :id="'checkbox' + data.item.id"
-              v-model="status[data.item.id]"
+              v-model="status[data.index].value"
               name="checkbox-1"
               value="accepted"
               unchecked-value="not_accepted"
@@ -609,7 +609,10 @@ export default {
       checkedAll: true,
       idsToSend: [],
       totalInvoicesForReport: "",
-      status: [],
+      status: [{
+        id:'',
+        value:''
+      }],
       invoicesForReport: [],
       selectedMonthData: {
         companyId: "",
@@ -784,7 +787,7 @@ export default {
       });
       let j = 0;
       for (let i = 0; i < this.totalInvoicesForReport; i++) {
-        if (this.status[this.invoicesForReport[i].id] == "accepted") {
+        if (this.status[i].value == "accepted") {
           this.idsToSend[j] = this.invoicesForReport[i].id;
           j++;
         }
@@ -890,7 +893,11 @@ export default {
               this.invoicesForReport = val.elements;
               this.totalInvoicesForReport = this.invoicesForReport.length;
               for (let i = 0; i < this.totalInvoicesForReport; i++) {
-                this.status[this.invoicesForReport[i].id] = "accepted";
+                // this.status[this.invoicesForReport[i].id] = "accepted";
+                this.status[i]= {
+                  id: this.invoicesForReport[i].id,
+                  value: "accepted"
+                };
               }
 
               //

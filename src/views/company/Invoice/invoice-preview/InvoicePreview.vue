@@ -386,6 +386,7 @@
   
               </b-card-body>
             </b-card>
+          </div>
 
             <div class="d-flex justify-content-between align-items-center" v-if="(invoiceData.vatPercent === '0') || (invoiceData.vatPercent === 0)">
           <b-card
@@ -404,7 +405,7 @@
             </b-card-header>
           </b-card>
           </div>
-          </div>
+          
       </b-col>
 
       <!-- Right Col: Card -->
