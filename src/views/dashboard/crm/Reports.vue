@@ -6,28 +6,9 @@
       </div>
     </b-card-header>
     <b-card-body>
-      <b-tabs class="report-tabs" v-model="reportTab">
-        <b-tab active>
-          <template #title>
-            <b-media no-body>
-              <b-avatar
-                size="38"
-                class="text-primary bg-transparent position-relative"
-              >
-                <svg-icon class="mx-auto" type="mdi" :path="path"> </svg-icon>
-                <span class="v-avatar__underlay"></span>
-              </b-avatar>
-            </b-media>
-            <span>{{ $t("invoices") }}</span>
-          </template>
-          <vue-apex-charts
-            type="bar"
-            height="400"
-            :options="columnChart.chartOptions"
-            :series="columnChart.series"
-          />
-        </b-tab>
-        <b-tab :style="`display: block !important; position: ${reportTab !=1 ? 'absolute' : 'relative' }; visibility: ${reportTab !=1 ? 'hidden' : 'visible' }; `">
+      <b-tabs class="report-tabs" v-model="reportTab" >
+        <!-- Vat Reports Tab-->
+        <b-tab :style="`display: block !important; position: ${reportTab !=0 ? 'absolute' : 'relative' }; visibility: ${reportTab !=0 ? 'hidden' : 'visible' }; `">
           <template #title>
             <b-media no-body>
               <b-avatar
@@ -48,6 +29,29 @@
             :series="columnChart1.series"
           />
         </b-tab>
+
+        <!-- Invoices Tab -->
+        <b-tab >
+          <template #title>
+            <b-media no-body>
+              <b-avatar
+                size="38"
+                class="text-primary bg-transparent position-relative"
+              >
+                <svg-icon class="mx-auto" type="mdi" :path="path"> </svg-icon>
+                <span class="v-avatar__underlay"></span>
+              </b-avatar>
+            </b-media>
+            <span>{{ $t("invoices") }}</span>
+          </template>
+          <vue-apex-charts
+            type="bar"
+            height="400"
+            :options="columnChart.chartOptions"
+            :series="columnChart.series"
+          />
+        </b-tab>
+
       </b-tabs>
     </b-card-body>
   </b-card-code>

@@ -187,7 +187,7 @@
                             #default="{ errors }"
                             name="supplierCompanyIdNumber"
                             rules="required"
-                            
+
                           >
                             <b-form-input
                               v-model="invoiceData.supplierCompany.companyEic"
@@ -196,6 +196,7 @@
                               autocomplete="off"
                               @blur="hideSuggestionEic()"
                               @focus="ShowSuggestionEic(datalistEic)"
+                              @mousedown="()=>{ companyIDisInvalid = false}"  
                             />
                             <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
                               <b-list-group-item
@@ -207,6 +208,8 @@
                               </b-list-group-item>
                             </b-list-group>
                             <small class="text-danger">{{ errors[0] }}</small>
+                            <small class="text-danger" v-if="companyIDisInvalid">Company ID is not correct</small>
+
                           </validation-provider>
                         </b-input-group>
                       </div>
@@ -1386,6 +1389,7 @@ export default {
   },
   data() {
     return {
+      companyIDisInvalid:false,
       editClauseMode:false,
       editMode:false,
       clauseToSend:'',
@@ -1456,6 +1460,14 @@ export default {
     },
     invoiceEdit(invoiceData,redirectPage,AccountTypeOption) {
       
+      if(invoiceData.supplierCompany.companyEic !==  this.supplierID ){
+        this.companyIDisInvalid = true;
+      }
+
+      if(invoiceData.supplierCompany.companyEic ===  '' ){
+        this.companyIDisInvalid = false;
+      }
+      
       if(this.bankNameToSend !== ''){
         invoiceData.bankApi.name = this.bankNameToSend;
       }
@@ -1486,7 +1498,7 @@ if (invoiceData.vatPercent !== 0) {
       })
       
       this.$refs.invoiceEditForm.validate().then((success) => {
-        if (success) {
+        if (success && (this.companyIDisInvalid === false)) {
           this.loading = true;
           let token = useJwt.getToken()
           useJwt
@@ -1577,6 +1589,8 @@ if (invoiceData.vatPercent !== 0) {
     const invoiceData = ref(null)
 
     const hasBankDetails=ref(false);
+
+    const supplierID =  ref(null)
     
     const currencyOptions =  [
       { value: 'лв.', text: 'лв.' },
@@ -1608,6 +1622,9 @@ if (invoiceData.vatPercent !== 0) {
         response.data.currency = response?.data?.currency?.toLowerCase().trim() == 'lv' ? "лв." : response?.data?.currency?.toLowerCase().trim() == 'bgn' ? "лв." : response.data.currency 
         
         invoiceData.value = response.data
+      
+        supplierID.value = response.data.supplierCompany.companyEic
+        console.log("Supplier ID " + supplierID.value);
            
         invoiceData.value.supplierCompany = invoiceData?.value?.supplierCompany ? invoiceData.value.supplierCompany : uploadValue
         invoiceData.value.recipientCompany = invoiceData?.value?.recipientCompany ? invoiceData.value.recipientCompany : uploadValue
@@ -2140,6 +2157,7 @@ if (invoiceData.vatPercent !== 0) {
     }
 
     return {
+      supplierID,
       hasBankDetails,
       AccountTypeOption,
       recipientVat,
