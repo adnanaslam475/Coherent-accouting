@@ -424,6 +424,7 @@
                               fluid
                               class="mr-1"
                               v-if="showLogo"
+                              style="width: 80px; height: 80px"
                             />
                         </div>
                       </div>
@@ -442,38 +443,52 @@
                             >#{{ invoiceData.invoiceNumber }}</b
                           >
                         </p>
-                        <p class="tm_invoice_date tm_m0">
+
+                        <p class="tm_invoice_date tm_m0"> 
                           Date:
                           <b class="tm_primary_color">{{
                             invoiceData.dateIssued
                           }}</b>
                         </p>
+                        <p class="tm_invoice_date tm_m0"> 
+                          Transaction Type:
+                          <b class="tm_primary_color">{{
+                            invoiceData.transactionType
+                          }}</b>
+                        </p>
                       </div>
                     </div>
                     <div class="tm_invoice_head tm_mb10">
-                      <div class="tm_invoice_left">
+                      <div class="tm_invoice_left pr-5" style="width: 50%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">Invoice To:</b>
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.recipientCompany.companyOwnerName }}
+                         <b>Owner: </b> {{ invoiceData.recipientCompany.companyOwnerName }}
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.recipientCompany.companName }}
+                         <span style="width: 100px"><b>Name: </b></span> {{ invoiceData.recipientCompany.companName }}
                         </p>
-                        <p>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>Address: </b>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.recipientCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.recipientCompany.companyVatEic }}</p>
+                         
                       </div>
-                      <div class="tm_invoice_right tm_text_right">
+                      <div class="tm_invoice_right pr-3" style="width: 50%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">Pay To:</b>
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.supplierCompany.companyOwnerName }}
+                          <b>Owner: </b> {{ invoiceData.supplierCompany.companyOwnerName }}
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.supplierCompany.companName }}
+                          <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
                         </p>
-                        <p>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"> <b>Address: </b>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.supplierCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.supplierCompany.companyVatEic }}</p>
+
+
                       </div>
                     </div>
                     <div class="tm_table tm_style1 tm_mb30">
@@ -642,6 +657,7 @@
                               fluid
                               class="mr-1"
                               v-if="showLogo"
+                              style="width: 80px; height: 80px"
                             />
                           
                         </div>
@@ -669,33 +685,45 @@
                         <p class="tm_invoice_date tm_m0">
                           Date: <b>{{ invoiceData.dateIssued }}</b>
                         </p>
+                        <p class="tm_invoice_date tm_m0"> 
+                          Transaction Type:
+                          <b>{{
+                            invoiceData.transactionType
+                          }}</b>
+                        </p>
                       </div>
                       <div class="tm_invoice_seperator tm_accent_bg"></div>
                     </div>
                     <div class="tm_invoice_head tm_mb10" style="height: auto">
-                      <div class="tm_invoice_left">
+                      <div class="tm_invoice_left pr-5" style="width: 50%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">Invoice To:</b>
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.recipientCompany.companyOwnerName }}
+                         <b>Owner: </b> {{ invoiceData.recipientCompany.companyOwnerName }}
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.recipientCompany.companName }}
+                         <span style="width: 100px"><b>Name: </b></span> {{ invoiceData.recipientCompany.companName }}
                         </p>
-                        <p>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>Address: </b>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.recipientCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.recipientCompany.companyVatEic }}</p>
+                         
                       </div>
-                      <div class="tm_invoice_right tm_text_right">
+                      <div class="tm_invoice_right pr-3" style="width: 50%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">Pay To:</b>
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.supplierCompany.companyOwnerName }}
+                          <b>Owner: </b> {{ invoiceData.supplierCompany.companyOwnerName }}
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.supplierCompany.companName }}
+                          <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
                         </p>
-                        <p>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"> <b>Address: </b>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.supplierCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.supplierCompany.companyVatEic }}</p>
+
                       </div>
                     </div>
                     <div class="tm_table tm_style1">
@@ -873,6 +901,7 @@
                               fluid
                               class="mr-1"
                               v-if="showLogo"
+                              style="width: 80px; height: 80px"
                             />
                         </div>
                       </div>
@@ -892,32 +921,44 @@
                             >#{{ invoiceData.invoiceNumber }}</b
                           >
                         </p>
+                        <p class="tm_invoice_date tm_m0"> 
+                          Transaction Type:
+                          <b class="tm_primary_color">{{
+                            invoiceData.transactionType
+                          }}</b>
+                        </p>
                       </div>
                     </div>
                     <div class="tm_invoice_head tm_mb10">
-                      <div class="tm_invoice_left" style="width: 50%">
+                      <div class="tm_invoice_left pr-5" style="width: 50%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">Invoice To:</b>
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.recipientCompany.companyOwnerName }}
+                         <b>Owner: </b> {{ invoiceData.recipientCompany.companyOwnerName }}
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.recipientCompany.companName }}
+                         <span style="width: 100px"><b>Name: </b></span> {{ invoiceData.recipientCompany.companName }}
                         </p>
-                        <p>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>Address: </b>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.recipientCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.recipientCompany.companyVatEic }}</p>
+                         
                       </div>
-                      <div class="tm_invoice_right">
+                      <div class="tm_invoice_right pr-3" style="width: 50%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">Pay To:</b>
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.supplierCompany.companyOwnerName }}
+                          <b>Owner: </b> {{ invoiceData.supplierCompany.companyOwnerName }}
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.supplierCompany.companName }}
+                          <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
                         </p>
-                        <p>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"> <b>Address: </b>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.supplierCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.supplierCompany.companyVatEic }}</p>
+
                       </div>
                     </div>
                     <div class="tm_table tm_style1 tm_mb30">
@@ -1100,6 +1141,7 @@
                               fluid
                               class="mr-1"
                               v-if="showLogo"
+                               style="width: 80px; height: 80px"
                             />
                         </div>
                       </div>
@@ -1126,35 +1168,47 @@
                             invoiceData.dateIssued
                           }}</b>
                         </p>
+                        <p class="tm_invoice_date tm_m0"> 
+                          Transaction Type:
+                          <b class="tm_primary_color">{{
+                            invoiceData.transactionType
+                          }}</b>
+                        </p>
                         <div
                           class="tm_invoice_info_list_bg tm_accent_bg_10"
                         ></div>
                       </div>
                     </div>
                     <div class="tm_invoice_head tm_mb10">
-                      <div class="tm_invoice_left">
+                      <div class="tm_invoice_left pr-5" style="width: 50%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">Invoice To:</b>
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.recipientCompany.companyOwnerName }}
+                         <b>Owner: </b> {{ invoiceData.recipientCompany.companyOwnerName }}
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.recipientCompany.companName }}
+                         <span style="width: 100px"><b>Name: </b></span> {{ invoiceData.recipientCompany.companName }}
                         </p>
-                        <p>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>Address: </b>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.recipientCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.recipientCompany.companyVatEic }}</p>
+                         
                       </div>
-                      <div class="tm_invoice_right tm_text_right">
+                      <div class="tm_invoice_right pr-3" style="width: 50%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">Pay To:</b>
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.supplierCompany.companyOwnerName }}
+                          <b>Owner: </b> {{ invoiceData.supplierCompany.companyOwnerName }}
                         </p>
                         <p style="margin-bottom: 5px">
-                          {{ invoiceData.supplierCompany.companName }}
+                          <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
                         </p>
-                        <p>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"> <b>Address: </b>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.supplierCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.supplierCompany.companyVatEic }}</p>
+
                       </div>
                     </div>
                     <div class="tm_table tm_style1 tm_mb30">
@@ -1328,7 +1382,7 @@
           >
             <section class="invoice-pdf" slot="pdf-content">
               <div v-if="invoiceData">
-                <invoice-download :invoice-data="invoiceData"  />
+                <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
               </div>
               <b-alert
                 variant="danger"
@@ -1446,6 +1500,7 @@ export default {
     })
 
     
+
     store.dispatch('app-invoice/fetchInvoice', { id: router.currentRoute.params.id })
       .then(response => {
         response.data.transactions.map((item,index)=>{
@@ -1453,7 +1508,6 @@ export default {
           return item
         })
         invoiceData.value = response.data
-        // console.log(invoiceData.value);
 
         if (invoiceData.value.templateId === "1") {
           isTemplateOne.value = true;
@@ -1472,6 +1526,7 @@ export default {
           hasBankDetails.value = true
         }
       }
+
 
       if (invoiceData.value.logoId === "") {
           // isUploading.value = "Upload Logo here";
@@ -1499,13 +1554,12 @@ export default {
             })
             .catch();
         }
+
       })
       .catch(error => {
         if (error.response.status === 404) {
           invoiceData.value = undefined
         }
-        // invoiceData.value = undefined;
-        // console.log("error...");
       })
 
     const printInvoice = () => {
@@ -1538,7 +1592,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@core/scss/base/pages/app-invoice.scss";
+</style>
 
+<style lang="scss">
 @media print {
 
   // Global Styles
@@ -1686,7 +1742,9 @@ export default {
 .invoice-pdf .gap-2{
   gap: 15px;
 }
+</style>
 
+<style lang="scss" scoped>
 
 /*--------------------------------------------------------------
 >> TABLE OF CONTENTS:

@@ -6,7 +6,7 @@
       <b-form @submit.prevent="invoiceAdd(invoiceData, AccountTypeOption)">
         <b-row class="invoice-add">
           <!-- Col: Left (Invoice Container) -->
-          <b-col cols="12" xl="10" md="10" v-if="isOriginal">
+          <b-col cols="12" xl="10" md="10" v-if="isTemplateFive">
             <b-card no-body class="invoice-add">
               <b-card-header class="justify-content-center">
                 <div class="d-flex align-items-center mb-0">
@@ -1354,12 +1354,12 @@
 
           <!-- template 01 -->
           <b-col cols="12" xl="10" md="10" v-if="isTemplateOne">
-            <b-row class="ml-0">
+            <!-- <b-row class="ml-0">
               <b-col>
                 <a
                   @click="
                     () => {
-                      isOriginal = true;
+                      isTemplateFive = true;
                       isTemplateOne = false;
                       isTemplateTwo = false;
                       isTemplateThree = false;
@@ -1376,7 +1376,7 @@
                   < Back to Filled Details</a
                 >
               </b-col>
-            </b-row>
+            </b-row> -->
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div class="tm_invoice tm_style1" id="tm_download_section">
@@ -1389,7 +1389,22 @@
                               :src="logoToUpload"
                               fluid
                               class="mr-1"
+                              style="width: 80px; height: 80px; border: 1px solid black"
                               v-if="showLogo"
+                            />
+                            <feather-icon
+                            v-if="showLogo"
+                              size="16"
+                              icon="XSquareIcon"
+                              color="red"
+                              class="cursor-pointer"
+                              style="position: absolute; left: 70px; top: -7px;"
+                              @click="()=>{
+                                showLogo = false;
+                                logoToUpload = '';
+                                isUploading = 'Upload Logo here';
+                                invoiceData.logoId='';
+                              }"
                             />
                             <span>
                               <label for="invoiceLogo1">
@@ -1401,6 +1416,7 @@
                                     border-radius: 30px;
                                     font-weight: 700;
                                     color: black;
+                                    cursor: pointer
                                   "
                                 >
                                   {{ isUploading }}
@@ -2259,10 +2275,13 @@
                             }}{{ invoiceData.totalAmount }}
                           </p> -->
                           <br />
+                         
+                        </div>
+                        <div v-if="invoiceData.vatPercent === '0'">
                           <p
                             class="tm_m0 d-inline-flex"
                             style="margin-top: 10px"
-                            v-if="invoiceData.vatPercent === '0'"
+                            
                           >
                             <span style="width: 60px"
                               ><b>Non Vat Clause: </b></span
@@ -2334,9 +2353,233 @@
                             }}{{ invoiceData.totalAmount }} -->
                           </p>
                         </div>
+                        <b-row>
+                          <b-col
+                            cols="12"
+                            md="7"
+                            class="mt-md-6 d-flex ml-5 pl-4 pt-3"
+                            order="2"
+                            order-md="1"
+                          >
+                            <h1 class="invoiceTypeHeading">
+                              {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                            </h1>
+                          </b-col>
+                        </b-row>
                       </div>
                       <div class="tm_right_footer">
-                        <table>
+                        <div class="invoice-total-wrapper">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.total_price_non_vat") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="amountNonVat"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <b-form-input
+                                  v-model="invoiceData.amountNonVat"
+                                  disabled
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.vat") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="vat"
+                              ref="vatPercent"
+                              :rules="`${
+                                vatPercentValidate
+                                  ? 'required|vatPercentValid'
+                                  : 'required'
+                              }`"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.vatPercent"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+
+                                <b-input-group-append is-text>
+                                  <span>%</span>
+                                </b-input-group-append>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("company_invoices.vat_amount") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="vatPercent"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <b-form-input
+                                  v-model="invoiceData.vatAmount"
+                                  type="number"
+                                  disabled
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.discount_percent") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tradeDiscountPercent"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.tradeDiscountPercent"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+
+                                <b-input-group-append is-text>
+                                  <span>%</span>
+                                </b-input-group-append>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.discount_sum") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tradeDiscountAmount"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <!-- <b-form-input
+                                  :value="
+                                    tradeDiscountAmount(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                      ? tradeDiscountAmount(
+                                          invoiceData.transactions,
+                                          invoiceData.vatPercent,
+                                          invoiceData.tradeDiscountPercent
+                                        )
+                                      : 0
+                                  "
+                                  disabled
+                                /> -->
+                                <b-form-input
+                                  v-model="invoiceData.tradeDiscountAmount"
+                                  disabled
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p
+                            class="invoice-total-title font-weight-bolder custom-font"
+                          >
+                            {{ $t("add_invoice.total_price") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="totalPrice"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <!-- <b-form-input
+                                  :value="
+                                    totalPrice(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                      ? totalPrice(
+                                          invoiceData.transactions,
+                                          invoiceData.vatPercent,
+                                          invoiceData.tradeDiscountPercent
+                                        )
+                                      : 0
+                                  "
+                                  disabled
+                                  class="opacity-1 font-weight-bolder custom-font"
+                                /> -->
+                                <b-form-input
+                                  v-model="invoiceData.totalAmount"
+                                  disabled
+                                  class="opacity-1 font-weight-bolder custom-font"
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                      </div>
+                        
+                        <!-- <table>
                           <tbody>
                             <tr>
                               <td
@@ -2359,9 +2602,7 @@
                                 <span style="padding: 10px 10px 10px 0px"
                                   >Tax</span
                                 >
-                                <!-- <span class="tm_ternary_color"
-                                    >({{ invoiceData.vatPercent }}%)</span
-                                  > -->
+                                
                                 <span>
                                   <validation-provider
                                     #default="{ errors }"
@@ -2415,7 +2656,7 @@
                               </td>
                             </tr>
                           </tbody>
-                        </table>
+                        </table> -->
                       </div>
                     </div>
 
@@ -2491,12 +2732,12 @@
 
           <!-- template 02 -->
           <b-col cols="12" xl="10" md="10" v-if="isTemplateTwo">
-            <b-row class="ml-0">
+            <!-- <b-row class="ml-0">
               <b-col>
                 <a
                   @click="
                     () => {
-                      isOriginal = true;
+                      isTemplateFive = true;
                       isTemplateOne = false;
                       isTemplateTwo = false;
                       isTemplateThree = false;
@@ -2513,7 +2754,7 @@
                   < Back to Filled Details</a
                 >
               </b-col>
-            </b-row>
+            </b-row> -->
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div
@@ -2532,7 +2773,22 @@
                               :src="logoToUpload"
                               fluid
                               class="mr-1"
+                              style="width: 80px; height: 80px; border: 1px solid black"
                               v-if="showLogo"
+                            />
+                            <feather-icon
+                            v-if="showLogo"
+                              size="16"
+                              icon="XSquareIcon"
+                              color="red"
+                              class="cursor-pointer"
+                              style="position: absolute; left: 70px; top: 13px;"
+                              @click="()=>{
+                                showLogo = false;
+                                logoToUpload = '';
+                                isUploading = 'Upload Logo here';
+                                invoiceData.logoId='';
+                              }"
                             />
                             <span>
                               <label for="invoiceLogo2">
@@ -2543,6 +2799,7 @@
                                     padding: 10px;
                                     border-radius: 30px;
                                     color: white;
+                                    cursor: pointer
                                   "
                                 >
                                   {{ isUploading }}
@@ -3053,7 +3310,7 @@
                                       type="text"
                                       class="mb-0 text-left"
                                       disabled
-                                      style="background-color: #f5f6fa"
+                                      
                                     />
                                   </b-col>
 
@@ -3206,7 +3463,7 @@
                                           "
                                           disabled
                                           class="mb-0"
-                                          style="background-color: #f5f6fa"
+                                         
                                         />
                                       </b-input-group>
                                       <small class="text-danger">{{
@@ -3398,10 +3655,13 @@
                             </span>
                           </p>
                           <br />
+                         
+                        </div>
+                        <div  v-if="invoiceData.vatPercent === '0'">
                           <p
                             class="tm_m0 d-inline-flex"
                             style="margin-top: 10px"
-                            v-if="invoiceData.vatPercent === '0'"
+                           
                           >
                             <span style="width: 60px"
                               ><b>Non Vat Clause: </b></span
@@ -3471,9 +3731,228 @@
                             >
                           </p>
                         </div>
+                        <b-row>
+                          <b-col
+                            cols="12"
+                            md="7"
+                            class="mt-md-6 d-flex ml-5 pl-4 pt-3"
+                            order="2"
+                            order-md="1"
+                          >
+                            <h1 class="invoiceTypeHeading">
+                              {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                            </h1>
+                          </b-col>
+                        </b-row>
                       </div>
                       <div class="tm_right_footer">
-                        <table class="tm_mb15">
+                        <div class="invoice-total-wrapper">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.total_price_non_vat") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="amountNonVat"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <b-form-input
+                                  v-model="invoiceData.amountNonVat"
+                                  disabled
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.vat") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="vat"
+                              ref="vatPercent"
+                              :rules="`${
+                                vatPercentValidate
+                                  ? 'required|vatPercentValid'
+                                  : 'required'
+                              }`"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.vatPercent"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+
+                                <b-input-group-append is-text>
+                                  <span>%</span>
+                                </b-input-group-append>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("company_invoices.vat_amount") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="vatPercent"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <b-form-input
+                                  v-model="invoiceData.vatAmount"
+                                  type="number"
+                                  disabled
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.discount_percent") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tradeDiscountPercent"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.tradeDiscountPercent"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+
+                                <b-input-group-append is-text>
+                                  <span>%</span>
+                                </b-input-group-append>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.discount_sum") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tradeDiscountAmount"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <!-- <b-form-input
+                                  :value="
+                                    tradeDiscountAmount(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                      ? tradeDiscountAmount(
+                                          invoiceData.transactions,
+                                          invoiceData.vatPercent,
+                                          invoiceData.tradeDiscountPercent
+                                        )
+                                      : 0
+                                  "
+                                  disabled
+                                /> -->
+                                <b-form-input
+                                  v-model="invoiceData.tradeDiscountAmount"
+                                  disabled
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p
+                            class="invoice-total-title font-weight-bolder custom-font"
+                          >
+                            {{ $t("add_invoice.total_price") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="totalPrice"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <!-- <b-form-input
+                                  :value="
+                                    totalPrice(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                      ? totalPrice(
+                                          invoiceData.transactions,
+                                          invoiceData.vatPercent,
+                                          invoiceData.tradeDiscountPercent
+                                        )
+                                      : 0
+                                  "
+                                  disabled
+                                  class="opacity-1 font-weight-bolder custom-font"
+                                /> -->
+                                <b-form-input
+                                  v-model="invoiceData.totalAmount"
+                                  disabled
+                                  class="opacity-1 font-weight-bolder custom-font"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                      </div>
+                        <!-- <table class="tm_mb15">
                           <tbody>
                             <tr class="tm_gray_bg">
                               <td class="tm_width_3 tm_primary_color tm_bold">
@@ -3494,9 +3973,7 @@
                                 <span style="padding: 10px 10px 10px 0px"
                                   >Tax</span
                                 >
-                                <!-- <span class="tm_ternary_color"
-                                    >({{ invoiceData.vatPercent }}%)</span
-                                  > -->
+                                
                                 <span>
                                   <validation-provider
                                     #default="{ errors }"
@@ -3550,7 +4027,7 @@
                               </td>
                             </tr>
                           </tbody>
-                        </table>
+                        </table> -->
                       </div>
                     </div>
 
@@ -3691,12 +4168,12 @@
 
           <!-- template 03 -->
           <b-col cols="12" xl="10" md="10" v-if="isTemplateThree">
-            <b-row class="ml-0">
+            <!-- <b-row class="ml-0">
               <b-col>
                 <a
                   @click="
                     () => {
-                      isOriginal = true;
+                      isTemplateFive = true;
                       isTemplateOne = false;
                       isTemplateTwo = false;
                       isTemplateThree = false;
@@ -3713,7 +4190,7 @@
                   < Back to Filled Details</a
                 >
               </b-col>
-            </b-row>
+            </b-row> -->
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div
@@ -3753,7 +4230,22 @@
                               :src="logoToUpload"
                               fluid
                               class="mr-1"
+                              style="width: 80px; height: 80px; border: 1px solid black"
                               v-if="showLogo"
+                            />
+                            <feather-icon
+                            v-if="showLogo"
+                              size="16"
+                              icon="XSquareIcon"
+                              color="red"
+                              class="cursor-pointer"
+                              style="position: absolute; left: 70px; top: -7px;"
+                              @click="()=>{
+                                showLogo = false;
+                                logoToUpload = '';
+                                isUploading = 'Upload Logo here';
+                                invoiceData.logoId='';
+                              }"
                             />
                             <span>
                               <label for="invoiceLogo3">
@@ -3764,6 +4256,7 @@
                                     padding: 10px;
                                     border-radius: 30px;
                                     color: white;
+                                    cursor: pointer
                                   "
                                 >
                                   {{ isUploading }}
@@ -4605,10 +5098,13 @@
                           </p>
                           <br />
                           <!-- <p class="tm_m0">{{ bankNameToSend }}</p> -->
+                         
+                        </div>
+                        <div v-if="invoiceData.vatPercent === '0'">
                           <p
                             class="tm_m0 d-inline-flex"
                             style="margin-top: 10px"
-                            v-if="invoiceData.vatPercent === '0'"
+                           
                           >
                             <span style="width: 60px"
                               ><b>Non Vat Clause: </b></span
@@ -4680,9 +5176,232 @@
                             }}{{ invoiceData.totalAmount }} -->
                           </p>
                         </div>
+                        <b-row>
+                          <b-col
+                            cols="12"
+                            md="7"
+                            class="mt-md-6 d-flex ml-5 pl-4 pt-3"
+                            order="2"
+                            order-md="1"
+                          >
+                            <h1 class="invoiceTypeHeading">
+                              {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                            </h1>
+                          </b-col>
+                        </b-row>
                       </div>
                       <div class="tm_right_footer">
-                        <table>
+                        <div class="invoice-total-wrapper">
+                        <div class="invoice-total-item" style="justify-content: right">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.total_price_non_vat") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="amountNonVat"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <b-form-input
+                                  v-model="invoiceData.amountNonVat"
+                                  disabled
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item" style="justify-content: right">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.vat") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="vat"
+                              ref="vatPercent"
+                              :rules="`${
+                                vatPercentValidate
+                                  ? 'required|vatPercentValid'
+                                  : 'required'
+                              }`"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.vatPercent"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+
+                                <b-input-group-append is-text>
+                                  <span>%</span>
+                                </b-input-group-append>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item" style="justify-content: right">
+                          <p class="invoice-total-title">
+                            {{ $t("company_invoices.vat_amount") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="vatPercent"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <b-form-input
+                                  v-model="invoiceData.vatAmount"
+                                  type="number"
+                                  disabled
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item" style="justify-content: right">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.discount_percent") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tradeDiscountPercent"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.tradeDiscountPercent"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+
+                                <b-input-group-append is-text>
+                                  <span>%</span>
+                                </b-input-group-append>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item" style="justify-content: right">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.discount_sum") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tradeDiscountAmount"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <!-- <b-form-input
+                                  :value="
+                                    tradeDiscountAmount(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                      ? tradeDiscountAmount(
+                                          invoiceData.transactions,
+                                          invoiceData.vatPercent,
+                                          invoiceData.tradeDiscountPercent
+                                        )
+                                      : 0
+                                  "
+                                  disabled
+                                /> -->
+                                <b-form-input
+                                  v-model="invoiceData.tradeDiscountAmount"
+                                  disabled
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item" style="justify-content: right">
+                          <p
+                            class="invoice-total-title font-weight-bolder custom-font"
+                          >
+                            {{ $t("add_invoice.total_price") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="totalPrice"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <!-- <b-form-input
+                                  :value="
+                                    totalPrice(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                      ? totalPrice(
+                                          invoiceData.transactions,
+                                          invoiceData.vatPercent,
+                                          invoiceData.tradeDiscountPercent
+                                        )
+                                      : 0
+                                  "
+                                  disabled
+                                  class="opacity-1 font-weight-bolder custom-font"
+                                /> -->
+                                <b-form-input
+                                  v-model="invoiceData.totalAmount"
+                                  disabled
+                                  class="opacity-1 font-weight-bolder custom-font"
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                      </div>
+                        <!-- <table>
                           <tbody>
                             <tr>
                               <td
@@ -4705,9 +5424,7 @@
                                 <span style="padding: 10px 10px 10px 0px"
                                   >Tax</span
                                 >
-                                <!-- <span class="tm_ternary_color"
-                                    >({{ invoiceData.vatPercent }}%)</span
-                                  > -->
+                               
                                 <span>
                                   <validation-provider
                                     #default="{ errors }"
@@ -4761,8 +5478,8 @@
                               </td>
                             </tr>
                           </tbody>
-                        </table>
-                        <div class="tm_shape_3 tm_accent_bg_10"></div>
+                        </table> -->
+                        <div class="tm_shape_3 tm_accent_bg_10" style="z-index: -1"></div>
                       </div>
                     </div>
                     <!-- <div class="tm_table tm_style1 tm_mb30">
@@ -4904,12 +5621,12 @@
 
           <!-- template 04 -->
           <b-col cols="12" xl="10" md="10" v-if="isTemplateFour">
-            <b-row class="ml-0">
+            <!-- <b-row class="ml-0">
               <b-col>
                 <a
                   @click="
                     () => {
-                      isOriginal = true;
+                      isTemplateFive = true;
                       isTemplateOne = false;
                       isTemplateTwo = false;
                       isTemplateThree = false;
@@ -4926,7 +5643,7 @@
                   < Back to Filled Details</a
                 >
               </b-col>
-            </b-row>
+            </b-row> -->
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div
@@ -4969,7 +5686,22 @@
                               :src="logoToUpload"
                               fluid
                               class="mr-1"
+                              style="width: 80px; height: 80px; border: 1px solid black"
                               v-if="showLogo"
+                            />
+                            <feather-icon
+                            v-if="showLogo"
+                              size="16"
+                              icon="XSquareIcon"
+                              color="red"
+                              class="cursor-pointer"
+                              style="position: absolute; left: 70px; top: -7px;"
+                              @click="()=>{
+                                showLogo = false;
+                                logoToUpload = '';
+                                isUploading = 'Upload Logo here';
+                                invoiceData.logoId='';
+                              }"
                             />
                             <span>
                               <label for="invoiceLogo4">
@@ -4980,6 +5712,7 @@
                                     padding: 10px;
                                     border-radius: 30px;
                                     font-weight: 700px;
+                                    cursor: pointer
                                   "
                                 >
                                   {{ isUploading }}
@@ -5693,7 +6426,7 @@
                       {{ $t("add_invoice.add_item") }}
                     </b-button>
 
-                    <div class="tm_invoice_footer mb-4">
+                    <div class="tm_invoice_footer mb-4 pb-4">
                       <div class="tm_left_footer">
                         <div v-if="isBank">
                           <p class="tm_mb2">
@@ -5834,10 +6567,13 @@
                             </span>
                           </p>
                           <br />
+                        
+                        </div>
+                        <div v-if="invoiceData.vatPercent === '0'">
                           <p
                             class="tm_m0 d-inline-flex"
                             style="margin-top: 10px"
-                            v-if="invoiceData.vatPercent === '0'"
+                            
                           >
                             <span style="width: 60px"
                               ><b>Non Vat Clause: </b></span
@@ -5907,9 +6643,232 @@
                             >
                           </p>
                         </div>
+                        <b-row>
+                          <b-col
+                            cols="12"
+                            md="7"
+                            class="mt-md-6 d-flex ml-5 pl-4 pt-3"
+                            order="2"
+                            order-md="1"
+                          >
+                            <h1 class="invoiceTypeHeading">
+                              {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                            </h1>
+                          </b-col>
+                        </b-row>
                       </div>
                       <div class="tm_right_footer">
-                        <table>
+                        <div class="invoice-total-wrapper">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.total_price_non_vat") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="amountNonVat"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <b-form-input
+                                  v-model="invoiceData.amountNonVat"
+                                  disabled
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.vat") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="vat"
+                              ref="vatPercent"
+                              :rules="`${
+                                vatPercentValidate
+                                  ? 'required|vatPercentValid'
+                                  : 'required'
+                              }`"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.vatPercent"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+
+                                <b-input-group-append is-text>
+                                  <span>%</span>
+                                </b-input-group-append>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("company_invoices.vat_amount") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="vatPercent"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <b-form-input
+                                  v-model="invoiceData.vatAmount"
+                                  type="number"
+                                  disabled
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.discount_percent") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tradeDiscountPercent"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.tradeDiscountPercent"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+
+                                <b-input-group-append is-text>
+                                  <span>%</span>
+                                </b-input-group-append>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-title">
+                            {{ $t("add_invoice.discount_sum") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tradeDiscountAmount"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <!-- <b-form-input
+                                  :value="
+                                    tradeDiscountAmount(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                      ? tradeDiscountAmount(
+                                          invoiceData.transactions,
+                                          invoiceData.vatPercent,
+                                          invoiceData.tradeDiscountPercent
+                                        )
+                                      : 0
+                                  "
+                                  disabled
+                                /> -->
+                                <b-form-input
+                                  v-model="invoiceData.tradeDiscountAmount"
+                                  disabled
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                        <div class="invoice-total-item">
+                          <p
+                            class="invoice-total-title font-weight-bolder custom-font"
+                          >
+                            {{ $t("add_invoice.total_price") }}:
+                          </p>
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="totalPrice"
+                              rules="required"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-input-group-prepend is-text>
+                                  <span>{{ invoiceData.currency }}</span>
+                                </b-input-group-prepend>
+
+                                <!-- <b-form-input
+                                  :value="
+                                    totalPrice(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                      ? totalPrice(
+                                          invoiceData.transactions,
+                                          invoiceData.vatPercent,
+                                          invoiceData.tradeDiscountPercent
+                                        )
+                                      : 0
+                                  "
+                                  disabled
+                                  class="opacity-1 font-weight-bolder custom-font"
+                                /> -->
+                                <b-form-input
+                                  v-model="invoiceData.totalAmount"
+                                  disabled
+                                  class="opacity-1 font-weight-bolder custom-font"
+                                  style="background-color: #f5f6fa"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                      </div>
+                        <!-- <table>
                           <tbody>
                             <tr>
                               <td
@@ -5932,9 +6891,7 @@
                                 <span style="padding: 10px 10px 10px 0px"
                                   >Tax</span
                                 >
-                                <!-- <span class="tm_ternary_color"
-                                    >({{ invoiceData.vatPercent }}%)</span
-                                  > -->
+                               
                                 <span>
                                   <validation-provider
                                     #default="{ errors }"
@@ -5988,7 +6945,7 @@
                               </td>
                             </tr>
                           </tbody>
-                        </table>
+                        </table> -->
                       </div>
                     </div>
 
@@ -6218,7 +7175,7 @@
               <b>Template 03</b>
             </p>
 
-            <!-- template 3 -->
+            <!-- template 4 -->
             <b-img
               src="../../../../assets/images/templates/template-04-10.png"
               fluid
@@ -6231,6 +7188,21 @@
             ></b-img>
             <p class="text-center" style="padding-top: 5px">
               <b>Template 04</b>
+            </p>
+
+            <!-- template 5 -->
+            <b-img
+              src="../../../../assets/images/templates/template-05.png"
+              fluid
+              alt="template-01"
+              class="mt-0"
+              :style="`border: ${
+                isTemplateFive ? '2px solid #0A64BC' : ''
+              }; cursor: pointer`"
+              @click="switchTemplates(5)"
+            ></b-img>
+            <p class="text-center" style="padding-top: 5px">
+              <b>Template 05</b>
             </p>
           </b-col>
         </b-row>
@@ -6340,7 +7312,7 @@ export default {
       showLogo: false,
       isUploading: "Upload Logo here",
       logoToUpload: "",
-      isOriginal: true,
+      isTemplateFive: true,
       isTemplateOne: false,
       isTemplateTwo: false,
       isTemplateThree: false,
@@ -6451,32 +7423,42 @@ export default {
       this.$refs.invoiceForm.validate().then((success) => {
         if (success && this.companyIDisInvalid === false) {
           // this.isUploading = "Upload Logo here";
-          this.isOriginal = false;
+         
           if (val === 1) {
             this.isTemplateOne = true;
             this.isTemplateTwo = false;
             this.isTemplateThree = false;
             this.isTemplateFour = false;
+            this.isTemplateFive = false;
             this.invoiceData.templateId = 1;
           } else if (val === 2) {
             this.isTemplateOne = false;
             this.isTemplateTwo = true;
             this.isTemplateThree = false;
             this.isTemplateFour = false;
+            this.isTemplateFive = false;
             this.invoiceData.templateId = 2;
           } else if (val === 3) {
             this.isTemplateOne = false;
             this.isTemplateTwo = false;
             this.isTemplateThree = true;
             this.isTemplateFour = false;
+            this.isTemplateFive = false;
             this.invoiceData.templateId = 3;
           } else if (val === 4) {
             this.isTemplateOne = false;
             this.isTemplateTwo = false;
             this.isTemplateThree = false;
             this.isTemplateFour = true;
+            this.isTemplateFive = false;
             this.invoiceData.templateId = 4;
           } else {
+            this.isTemplateOne = false;
+            this.isTemplateTwo = false;
+            this.isTemplateThree = false;
+            this.isTemplateFour = false;
+            this.isTemplateFive = true;
+            this.invoiceData.templateId = 5;
           }
         } else {
           this.$toast({
@@ -6582,7 +7564,8 @@ export default {
           this.isTemplateOne === false &&
           this.isTemplateTwo === false &&
           this.isTemplateThree === false &&
-          this.isTemplateFour === false
+          this.isTemplateFour === false &&
+          this.isTemplateFive === false
         ) {
           this.$toast({
             component: ToastificationContent,

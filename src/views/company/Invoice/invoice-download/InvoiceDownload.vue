@@ -11,9 +11,11 @@
                   <div class="tm_logo">
                     <!-- <img src="./assets/img/logo.svg" alt="Logo" /> -->
                     <b-img
+                      :src="logoToUpload"
                       fluid
                       class="mr-1"
                       v-if="invoiceData.logoId !== null"
+                      style="width: 80px; height: 80px"
                     />
                   </div>
                 </div>
@@ -36,32 +38,44 @@
                     Date:
                     <b class="tm_primary_color">{{ invoiceData.dateIssued }}</b>
                   </p>
+                  <p class="tm_invoice_date tm_m0"> 
+                          Transaction Type:
+                          <b class="tm_primary_color">{{
+                            invoiceData.transactionType
+                          }}</b>
+                        </p>
                 </div>
               </div>
               <div class="tm_invoice_head tm_mb10">
-                <div class="tm_invoice_left">
+                <div class="tm_invoice_left pr-5" style="width: 50%">
                   <p class="tm_mb2">
                     <b class="tm_primary_color">Invoice To:</b>
                   </p>
                   <p style="margin-bottom: 5px">
-                    {{ invoiceData.recipientCompany.companyOwnerName }}
-                  </p>
-                  <p style="margin-bottom: 5px">
-                    {{ invoiceData.recipientCompany.companName }}
-                  </p>
-                  <p>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                         <b>Owner: </b> {{ invoiceData.recipientCompany.companyOwnerName }}
+                        </p>
+                        <p style="margin-bottom: 5px">
+                         <span style="width: 100px"><b>Name: </b></span> {{ invoiceData.recipientCompany.companName }}
+                        </p>
+                        <p style="margin-bottom: 5px"><b>Address: </b>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.recipientCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.recipientCompany.companyVatEic }}</p>
+                         
                 </div>
-                <div class="tm_invoice_right tm_text_right">
+                <div class="tm_invoice_right pr-3" style="width: 50%">
                   <p class="tm_mb2">
                     <b class="tm_primary_color">Pay To:</b>
                   </p>
                   <p style="margin-bottom: 5px">
-                    {{ invoiceData.supplierCompany.companyOwnerName }}
-                  </p>
-                  <p style="margin-bottom: 5px">
-                    {{ invoiceData.supplierCompany.companName }}
-                  </p>
-                  <p>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                          <b>Owner: </b> {{ invoiceData.supplierCompany.companyOwnerName }}
+                        </p>
+                        <p style="margin-bottom: 5px">
+                          <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
+                        </p>
+                        <p style="margin-bottom: 5px"> <b>Address: </b>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.supplierCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.supplierCompany.companyVatEic }}</p>
+
                 </div>
               </div>
               <div class="tm_table tm_style1 tm_mb30">
@@ -227,9 +241,11 @@
                 <div class="tm_invoice_left">
                   <div class="tm_logo">
                     <b-img
+                      :src="logoToUpload"
                       fluid
                       class="mr-1"
                       v-if="invoiceData.logoId !== null"
+                      style="width: 80px; height: 80px"
                     />
                   </div>
                 </div>
@@ -252,33 +268,45 @@
                   <p class="tm_invoice_date tm_m0">
                     Date: <b>{{ invoiceData.dateIssued }}</b>
                   </p>
+                  <p class="tm_invoice_date tm_m0"> 
+                          Transaction Type:
+                          <b >{{
+                            invoiceData.transactionType
+                          }}</b>
+                        </p>
                 </div>
-                <div class="tm_invoice_seperator tm_accent_bg"></div>
+                <div class="tm_invoice_seperator tm_accent_bg" style="width: 60.5%"></div>
               </div>
               <div class="tm_invoice_head tm_mb10" style="height: auto">
-                <div class="tm_invoice_left">
+                <div class="tm_invoice_left" style="width: 50%">
                   <p class="tm_mb2">
                     <b class="tm_primary_color">Invoice To:</b>
                   </p>
                   <p style="margin-bottom: 5px">
-                    {{ invoiceData.recipientCompany.companyOwnerName }}
-                  </p>
-                  <p style="margin-bottom: 5px">
-                    {{ invoiceData.recipientCompany.companName }}
-                  </p>
-                  <p>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                         <b>Owner: </b> {{ invoiceData.recipientCompany.companyOwnerName }}
+                        </p>
+                        <p style="margin-bottom: 5px">
+                         <span style="width: 100px"><b>Name: </b></span> {{ invoiceData.recipientCompany.companName }}
+                        </p>
+                        <p style="margin-bottom: 5px"><b>Address: </b>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.recipientCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.recipientCompany.companyVatEic }}</p>
+                         
                 </div>
-                <div class="tm_invoice_right tm_text_right">
+                <div class="tm_invoice_right pr-3" style="width: 50%">
                   <p class="tm_mb2">
                     <b class="tm_primary_color">Pay To:</b>
                   </p>
                   <p style="margin-bottom: 5px">
-                    {{ invoiceData.supplierCompany.companyOwnerName }}
-                  </p>
-                  <p style="margin-bottom: 5px">
-                    {{ invoiceData.supplierCompany.companName }}
-                  </p>
-                  <p>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                          <b>Owner: </b> {{ invoiceData.supplierCompany.companyOwnerName }}
+                        </p>
+                        <p style="margin-bottom: 5px">
+                          <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
+                        </p>
+                        <p style="margin-bottom: 5px"> <b>Address: </b>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.supplierCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.supplierCompany.companyVatEic }}</p>
+
                 </div>
               </div>
               <div class="tm_table tm_style1">
@@ -443,9 +471,11 @@
                 <div class="tm_invoice_left">
                   <div class="tm_logo">
                     <b-img
+                      :src="logoToUpload"
                       fluid
                       class="mr-1"
                       v-if="invoiceData.logoId !== null"
+                      style="width: 80px; height: 80px"
                     />
                   </div>
                 </div>
@@ -463,32 +493,44 @@
                       >#{{ invoiceData.invoiceNumber }}</b
                     >
                   </p>
+                  <p class="tm_invoice_date tm_m0"> 
+                          Transaction Type:
+                          <b class="tm_primary_color">{{
+                            invoiceData.transactionType
+                          }}</b>
+                        </p>
                 </div>
               </div>
               <div class="tm_invoice_head tm_mb10">
-                <div class="tm_invoice_left" style="width: 50%">
+                <div class="tm_invoice_left mr-5" style="width: 50%">
                   <p class="tm_mb2">
                     <b class="tm_primary_color">Invoice To:</b>
                   </p>
                   <p style="margin-bottom: 5px">
-                    {{ invoiceData.recipientCompany.companyOwnerName }}
-                  </p>
-                  <p style="margin-bottom: 5px">
-                    {{ invoiceData.recipientCompany.companName }}
-                  </p>
-                  <p>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                         <b>Owner: </b> {{ invoiceData.recipientCompany.companyOwnerName }}
+                        </p>
+                        <p style="margin-bottom: 5px">
+                         <span style="width: 100px"><b>Name: </b></span> {{ invoiceData.recipientCompany.companName }}
+                        </p>
+                        <p style="margin-bottom: 5px"><b>Address: </b>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.recipientCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.recipientCompany.companyVatEic }}</p>
+                         
                 </div>
-                <div class="tm_invoice_right">
+                <div class="tm_invoice_right mr-3" style="width: 50%">
                   <p class="tm_mb2">
                     <b class="tm_primary_color">Pay To:</b>
                   </p>
                   <p style="margin-bottom: 5px">
-                    {{ invoiceData.supplierCompany.companyOwnerName }}
-                  </p>
-                  <p style="margin-bottom: 5px">
-                    {{ invoiceData.supplierCompany.companName }}
-                  </p>
-                  <p>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                          <b>Owner: </b> {{ invoiceData.supplierCompany.companyOwnerName }}
+                        </p>
+                        <p style="margin-bottom: 5px">
+                          <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
+                        </p>
+                        <p style="margin-bottom: 5px"> <b>Address: </b>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.supplierCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.supplierCompany.companyVatEic }}</p>
+
                 </div>
               </div>
               <div class="tm_table tm_style1 tm_mb30">
@@ -666,14 +708,16 @@
                 />
               </svg>
             </div>
-            <div class="tm_invoice_in">
+            <div class="tm_invoice_in mt-2">
               <div class="tm_invoice_head tm_align_center tm_mb20">
                 <div class="tm_invoice_left">
                   <div class="tm_logo">
                     <b-img
+                      :src="logoToUpload"
                       fluid
                       class="mr-1"
                       v-if="invoiceData.logoId !== null"
+                      style="width: 80px; height: 80px"
                     />
                   </div>
                 </div>
@@ -698,33 +742,45 @@
                     Date:
                     <b class="tm_primary_color">{{ invoiceData.dateIssued }}</b>
                   </p>
+                  <p class="tm_invoice_date tm_m0"> 
+                          Transaction Type:
+                          <b class="tm_primary_color">{{
+                            invoiceData.transactionType
+                          }}</b>
+                        </p>
                   <div class="tm_invoice_info_list_bg tm_accent_bg_10"></div>
                 </div>
               </div>
               <div class="tm_invoice_head tm_mb10">
-                <div class="tm_invoice_left">
+                <div class="tm_invoice_left pr-5" style="width: 50%">
                   <p class="tm_mb2">
                     <b class="tm_primary_color">Invoice To:</b>
                   </p>
                   <p style="margin-bottom: 5px">
-                    {{ invoiceData.recipientCompany.companyOwnerName }}
-                  </p>
-                  <p style="margin-bottom: 5px">
-                    {{ invoiceData.recipientCompany.companName }}
-                  </p>
-                  <p>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                         <b>Owner: </b> {{ invoiceData.recipientCompany.companyOwnerName }}
+                        </p>
+                        <p style="margin-bottom: 5px">
+                         <span style="width: 100px"><b>Name: </b></span> {{ invoiceData.recipientCompany.companName }}
+                        </p>
+                        <p style="margin-bottom: 5px"><b>Address: </b>{{ invoiceData.recipientCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.recipientCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.recipientCompany.companyVatEic }}</p>
+                         
                 </div>
-                <div class="tm_invoice_right tm_text_right">
+                <div class="tm_invoice_right pr-3"  style="width: 50%">
                   <p class="tm_mb2">
                     <b class="tm_primary_color">Pay To:</b>
                   </p>
                   <p style="margin-bottom: 5px">
-                    {{ invoiceData.supplierCompany.companyOwnerName }}
-                  </p>
-                  <p style="margin-bottom: 5px">
-                    {{ invoiceData.supplierCompany.companName }}
-                  </p>
-                  <p>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                          <b>Owner: </b> {{ invoiceData.supplierCompany.companyOwnerName }}
+                        </p>
+                        <p style="margin-bottom: 5px">
+                          <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
+                        </p>
+                        <p style="margin-bottom: 5px"> <b>Address: </b>{{ invoiceData.supplierCompany.companyAddress }}</p>
+                        <p style="margin-bottom: 5px"><b>ID Number: </b> {{ invoiceData.supplierCompany.companyEic }}</p>
+                        <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic"><b>Vat Number: </b>  {{ invoiceData.supplierCompany.companyVatEic }}</p>
+
                 </div>
               </div>
               <div class="tm_table tm_style1 tm_mb30">
@@ -1278,6 +1334,9 @@ export default {
       type: Object,
       required: true,
     },
+    logoToUpload:{
+      type: String,
+    }
   },
 };
 </script>
