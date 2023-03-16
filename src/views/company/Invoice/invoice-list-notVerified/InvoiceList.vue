@@ -108,6 +108,12 @@
       </b-row>
     </div>
 
+    <b-row class="text-center text-danger">
+      <b-col>
+        <p style="font-size:1.05rem">If your invoice is not recognized, Please send it to email: <b>coherent-accountin@gmail.com</b> and we will make it work for <b>FREE</b> for you.</p>
+      </b-col>
+    </b-row>
+
     <b-table
       ref="refInvoiceListTable"
       :items="fetchInvoices"
