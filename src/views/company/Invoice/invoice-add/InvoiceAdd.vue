@@ -754,14 +754,14 @@
                             <validation-provider
                               #default="{ errors }"
                               name="transectionQuantity"
-                              rules="required|qtyValid"
+                              rules="required"
                             >
                               <b-form-input
                                 v-model="item.quantity"
                                 type="number"
                                 class="mb-0"
                                 placeholder="0"
-                                step="1"
+                                step="0.0000000001"
                                 @input="populateValues()"
                               />
                               <small class="text-danger">{{ errors[0] }}</small>
@@ -1599,6 +1599,7 @@
                             v-if="showSuggestions"
                             id="my-company_name"
                             class="input-suggesstions"
+                            style="width: 47%"
                           >
                             <b-list-group-item
                               v-for="data in datalist"
@@ -2092,14 +2093,14 @@
                                     <validation-provider
                                       #default="{ errors }"
                                       name="transectionQuantity"
-                                      rules="required|qtyValid"
+                                      rules="required"
                                     >
                                       <b-form-input
                                         v-model="item.quantity"
                                         type="number"
                                         class="mb-0"
                                         placeholder="0"
-                                        step="1"
+                                        step="0.0000000001"
                                         @input="populateValues()"
                                       />
                                       <small class="text-danger">{{
@@ -3471,14 +3472,14 @@
                                     <validation-provider
                                       #default="{ errors }"
                                       name="transectionQuantity"
-                                      rules="required|qtyValid"
+                                      rules="required"
                                     >
                                       <b-form-input
                                         v-model="item.quantity"
                                         type="number"
                                         class="mb-0"
                                         placeholder="0"
-                                        step="1"
+                                        step="0.0000000001"
                                         @input="populateValues()"
                                       />
                                       <small class="text-danger">{{
@@ -4846,14 +4847,14 @@
                                     <validation-provider
                                       #default="{ errors }"
                                       name="transectionQuantity"
-                                      rules="required|qtyValid"
+                                      rules="required"
                                     >
                                       <b-form-input
                                         v-model="item.quantity"
                                         type="number"
                                         class="mb-0"
                                         placeholder="0"
-                                        step="1"
+                                        step="0.0000000001"
                                         @input="populateValues()"
                                       />
                                       <small class="text-danger">{{
@@ -6262,14 +6263,14 @@
                                     <validation-provider
                                       #default="{ errors }"
                                       name="transectionQuantity"
-                                      rules="required|qtyValid"
+                                      rules="required"
                                     >
                                       <b-form-input
                                         v-model="item.quantity"
                                         type="number"
                                         class="mb-0"
                                         placeholder="0"
-                                        step="1"
+                                        step="0.0000000001"
                                         @input="populateValues()"
                                       />
                                       <small class="text-danger">{{
@@ -7190,6 +7191,7 @@ export default {
                   const filePath = reader.result;
                   self.logoToUpload = filePath;
                   self.showLogo = true;
+                  console.log(self.showLogo)
                   self.isUploading = "Change Logo";
                   // console.log(filePath);
                 };
@@ -7212,11 +7214,6 @@ export default {
 
     //
     switchTemplates(val) {
-      console.log(this.isBank);
-      // this.$refs.invoiceForm.validate().then((success) => {
-      //   if (success && this.companyIDisInvalid === false) {
-      // this.isUploading = "Upload Logo here";
-
       if (val === 1) {
         this.isTemplateOne = true;
         this.isTemplateTwo = false;
@@ -7253,17 +7250,7 @@ export default {
         this.isTemplateFive = true;
         this.invoiceData.templateId = 5;
       }
-      //   } else {
-      //     this.$toast({
-      //       component: ToastificationContent,
-      //       props: {
-      //         title: `Please fill all the fields first...`,
-      //         icon: "EditIcon",
-      //         variant: "danger",
-      //       },
-      //     });
-      //   }
-      // });
+      
     },
     selectVatClause() {
       if (this.invoiceData.vatCondition === null) {
@@ -7793,6 +7780,7 @@ export default {
     };
 
     const autoCompletefn = (item) => {
+      console.log(item.value);
       if (item.company_name) {
         invoiceData.value.supplierCompany.companName = item.company_name;
       }
@@ -7854,6 +7842,7 @@ export default {
     };
 
     const autoCompletefnEic = (item) => {
+
       if (item.company_name) {
         invoiceData.value.supplierCompany.companName = item.company_name;
       }

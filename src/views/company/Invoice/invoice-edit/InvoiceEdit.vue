@@ -788,13 +788,13 @@
                             <validation-provider
                               #default="{ errors }"
                               name="transectionQuantity"
-                              rules="required|qtyValid"
+                              rules="required"
                             >
                               <b-form-input
                                 v-model="item.quantity"
                                 type="number"
                                 class="mb-0"
-                                step="1"
+                                step="0.0000000001"
                               />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -2156,14 +2156,14 @@
                                     <validation-provider
                                       #default="{ errors }"
                                       name="transectionQuantity"
-                                      rules="required|qtyValid"
+                                      rules="required"
                                     >
                                       <b-form-input
                                         v-model="item.quantity"
                                         type="number"
                                         class="mb-0"
                                         placeholder="0"
-                                        step="1"
+                                        step="0.0000000001"
                                         @input="populateValues()"
                                       />
                                       <small class="text-danger">{{
@@ -3596,14 +3596,14 @@
                                     <validation-provider
                                       #default="{ errors }"
                                       name="transectionQuantity"
-                                      rules="required|qtyValid"
+                                      rules="required"
                                     >
                                       <b-form-input
                                         v-model="item.quantity"
                                         type="number"
                                         class="mb-0"
                                         placeholder="0"
-                                        step="1"
+                                        step="0.0000000001"
                                         @input="populateValues()"
                                       />
                                       <small class="text-danger">{{
@@ -5032,14 +5032,14 @@
                                     <validation-provider
                                       #default="{ errors }"
                                       name="transectionQuantity"
-                                      rules="required|qtyValid"
+                                      rules="required"
                                     >
                                       <b-form-input
                                         v-model="item.quantity"
                                         type="number"
                                         class="mb-0"
                                         placeholder="0"
-                                        step="1"
+                                        step="0.0000000001"
                                         @input="populateValues()"
                                       />
                                       <small class="text-danger">{{
@@ -6511,14 +6511,14 @@
                                     <validation-provider
                                       #default="{ errors }"
                                       name="transectionQuantity"
-                                      rules="required|qtyValid"
+                                      rules="required"
                                     >
                                       <b-form-input
                                         v-model="item.quantity"
                                         type="number"
                                         class="mb-0"
                                         placeholder="0"
-                                        step="1"
+                                        step="0.0000000001"
                                         @input="populateValues()"
                                       />
                                       <small class="text-danger">{{
