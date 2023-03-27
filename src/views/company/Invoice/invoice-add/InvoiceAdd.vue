@@ -131,6 +131,7 @@
                                 v-for="data in datalist"
                                 :key="data.eic"
                                 @click="autoCompletefn(data)"
+                                @mousedown="autoCompletefn(data)"
                               >
                                 {{ data.company_name }}
                               </b-list-group-item>
@@ -201,6 +202,7 @@
                                 v-for="data in datalistEic"
                                 :key="data.eic"
                                 @click="autoCompletefnEic(data)"
+                                @mousedown="autoCompletefnEic(data)"
                               >
                                 {{ data.eic }}
                               </b-list-group-item>
@@ -346,9 +348,12 @@
                               style="width: 100%"
                             >
                               <b-list-group-item
+                                button
                                 v-for="data in datalistRecipient"
                                 :key="data.eic"
                                 @click="autoCompletefnRecipient(data)"
+                                @mousedown="autoCompletefnRecipient(data)"
+                                
                               >
                                 {{ data.company_name }}
                               </b-list-group-item>
@@ -378,6 +383,7 @@
                                 v-for="data in datalistPerson"
                                 :key="data.eic"
                                 @click="autoCompletefnPerson(data)"
+                                @mousedown="autoCompletefnPerson(data)"
                               >
                                 {{ data.firstMiddleAndLastName }}
                               </b-list-group-item>
@@ -467,6 +473,7 @@
                                 v-for="data in datalistEicRecipient"
                                 :key="data.eic"
                                 @click="autoCompletefnEicRecipient(data)"
+                                @mousedown="autoCompletefnEicRecipient(data)"
                               >
                                 {{ data.eic }}
                               </b-list-group-item>
@@ -499,6 +506,8 @@
                                 v-for="data in datalistPersonIdNumber"
                                 :key="data.eic"
                                 @click="autoCompletefnPersonIdNumber(data)"
+                                @mousedown="autoCompletefnPersonIdNumber(data)"
+
                               >
                                 {{ data.identificationNumber }}
                               </b-list-group-item>
@@ -597,7 +606,11 @@
                         name="transectionType"
                         rules="required"
                       >
-                        <b-form-select v-model="invoiceData.transactionType">
+                        <b-form-select v-model="invoiceData.transactionType" @change="
+                                () => {
+                                  companyIDisInvalid = false;
+                                }
+                              ">
                           <b-form-select-option value="EXPENSE">{{
                             $t("company_invoices.EXPENSE")
                           }}</b-form-select-option>
@@ -1147,9 +1160,9 @@
                   switch
                   :checked="isBank"
                 >
-                  <span class="switch-icon-left text-uppercase"> Bank </span>
+                  <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
                   <span class="switch-icon-right text-uppercase">
-                    No Bank
+                    {{ $t("add_invoice.no_bank") }}
                   </span>
                 </b-form-checkbox>
               </b-col>
@@ -1164,7 +1177,7 @@
                   <b-form-row>
                     <!-- Bank name -->
                     <b-col>
-                      <span>Bank: </span>
+                      <span>{{ $t("add_invoice.bank") }}: </span>
                       <validation-provider
                         #default="{ errors }"
                         name="bank"
@@ -1385,7 +1398,7 @@
                                 () => {
                                   showLogo = false;
                                   logoToUpload = '';
-                                  isUploading = 'Upload Logo here';
+                                  isUploading =  i18n.tc('add_invoice.upload_logo');
                                   invoiceData.logoId = '';
                                 }
                               "
@@ -1420,7 +1433,7 @@
                       </div>
                       <div class="tm_invoice_right tm_text_right">
                         <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          Invoice
+                          {{ $t("add_invoice.invoice") }}
                         </div>
                       </div>
                     </div>
@@ -1428,7 +1441,8 @@
                       <div class="tm_invoice_seperator tm_gray_bg"></div>
                       <div class="tm_invoice_info_list">
                         <p class="tm_invoice_number tm_m0">
-                          Invoice No:
+                          <!-- Invoice No: -->
+                          {{ $t("add_invoice.invoice") }}:
                           <span
                             ><validation-provider
                               #default="{ errors }"
@@ -1453,7 +1467,8 @@
                           </span>
                         </p>
                         <p class="tm_invoice_date tm_m0">
-                          Date:
+                          <!-- Date: -->
+                          {{ $t("add_invoice.date") }}:
                           <span>
                             <validation-provider
                               #default="{ errors }"
@@ -1513,7 +1528,7 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier:</b>
+                          <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}:</b>
                         </p>
 
                         <validation-provider
@@ -1548,6 +1563,7 @@
                               v-for="data in datalistEic"
                               :key="data.eic"
                               @click="autoCompletefnEic(data)"
+                              @mousedown="autoCompletefnEic(data)"
                             >
                               {{ data.eic }}
                             </b-list-group-item>
@@ -1605,6 +1621,7 @@
                               v-for="data in datalist"
                               :key="data.eic"
                               @click="autoCompletefn(data)"
+                              @mousedown="autoCompletefn(data)"
                             >
                               {{ data.company_name }}
                             </b-list-group-item>
@@ -1652,8 +1669,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -1664,7 +1681,7 @@
                       >
                         <p class="tm_mb2">
                           <b class="tm_primary_color" style="margin-left: 3px"
-                            >Recipient:</b
+                            > {{ $t("add_invoice.recipient") }}:</b
                           >
                         </p>
 
@@ -1704,6 +1721,7 @@
                               v-for="data in datalistEicRecipient"
                               :key="data.eic"
                               @click="autoCompletefnEicRecipient(data)"
+                              @mousedown="autoCompletefnEicRecipient(data)"
                             >
                               {{ data.eic }}
                             </b-list-group-item>
@@ -1737,6 +1755,8 @@
                               v-for="data in datalistPersonIdNumber"
                               :key="data.eic"
                               @click="autoCompletefnPersonIdNumber(data)"
+                              @mousedown="autoCompletefnPersonIdNumber(data)"
+
                             >
                               {{ data.identificationNumber }}
                             </b-list-group-item>
@@ -1796,6 +1816,7 @@
                               v-for="data in datalistRecipient"
                               :key="data.eic"
                               @click="autoCompletefnRecipient(data)"
+                              @mousedown="autoCompletefnRecipient(data)"
                             >
                               {{ data.company_name }}
                             </b-list-group-item>
@@ -1826,6 +1847,7 @@
                               v-for="data in datalistPerson"
                               :key="data.eic"
                               @click="autoCompletefnPerson(data)"
+                              @mousedown="autoCompletefnPerson(data)"
                             >
                               {{ data.firstMiddleAndLastName }}
                             </b-list-group-item>
@@ -1883,8 +1905,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -1908,7 +1930,11 @@
                                 rules="required"
                               >
                                 <b-form-select
-                                  v-model="invoiceData.transactionType"
+                                  v-model="invoiceData.transactionType" @change="
+                                () => {
+                                  companyIDisInvalid = false;
+                                }
+                              "
                                 >
                                   <b-form-select-option value="EXPENSE">{{
                                     $t("company_invoices.EXPENSE")
@@ -2275,12 +2301,10 @@
                           switch
                           :checked="isBank"
                         >
-                          <span class="switch-icon-left text-uppercase">
-                            Bank
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            No Bank
-                          </span>
+                        <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
+                  <span class="switch-icon-right text-uppercase">
+                    {{ $t("add_invoice.no_bank") }}
+                  </span>
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
@@ -2360,7 +2384,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }}: </b></span
                             >
 
                             <span style="width: 200px">
@@ -2436,7 +2460,7 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>Non Vat Clause: </b></span
+                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider
@@ -2753,7 +2777,7 @@
                                 () => {
                                   showLogo = false;
                                   logoToUpload = '';
-                                  isUploading = 'Upload Logo here';
+                                  isUploading = i18n.tc('add_invoice.upload_logo');
                                   invoiceData.logoId = '';
                                 }
                               "
@@ -2789,7 +2813,7 @@
                         class="tm_invoice_right tm_text_right tm_mobile_hide"
                       >
                         <div class="tm_f50 tm_text_uppercase tm_white_color">
-                          Invoice
+                          {{ $t("add_invoice.invoice") }}
                         </div>
                       </div>
                       <div
@@ -2803,7 +2827,8 @@
                         style="margin-top: 5px; margin-bottom: 10px"
                       >
                         <p class="tm_invoice_number tm_m0">
-                          Invoice No:
+                          <!-- Invoice No: -->
+                          {{ $t("add_invoice.invoice") }}:
 
                           <span
                             ><validation-provider
@@ -2829,7 +2854,8 @@
                           </span>
                         </p>
                         <p class="tm_invoice_date tm_m0">
-                          Date:
+                          <!-- Date: -->
+                          {{ $t("add_invoice.date") }}:
 
                           <span>
                             <validation-provider
@@ -2891,7 +2917,7 @@
                     <div class="tm_invoice_head tm_mb10">
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier::</b>
+                          <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}:</b>
                         </p>
                         <validation-provider
                           #default="{ errors }"
@@ -2920,12 +2946,13 @@
                             v-if="showSuggestionsEic"
                             id="my-company_name"
                             class="input-suggesstions"
-                            style="width: 100%"
+                            style="width: 47%"
                           >
                             <b-list-group-item
                               v-for="data in datalistEic"
                               :key="data.eic"
                               @click="autoCompletefnEic(data)"
+                              @mousedown="autoCompletefnEic(data)"
                             >
                               {{ data.eic }}
                             </b-list-group-item>
@@ -2976,12 +3003,14 @@
                             v-if="showSuggestions"
                             id="my-company_name"
                             class="input-suggesstions"
-                            style="width: 100%"
+                            style="width: 47%"
                           >
                             <b-list-group-item
                               v-for="data in datalist"
                               :key="data.eic"
                               @click="autoCompletefn(data)"
+                              @mousedown="autoCompletefn(data)"
+
                             >
                               {{ data.company_name }}
                             </b-list-group-item>
@@ -3029,8 +3058,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -3041,7 +3070,7 @@
                       >
                         <p class="tm_mb2">
                           <b class="tm_primary_color" style="padding-left: 3px"
-                            >Recipient:</b
+                            > {{ $t("add_invoice.recipient") }}:</b
                           >
                         </p>
                         <!-- Company/Person Identification-->
@@ -3075,12 +3104,14 @@
                             v-if="showSuggestionsEicRecipient"
                             id="my-company_name"
                             class="input-suggesstions"
-                            style="width: 47%"
+                            style="width: 100%"
                           >
                             <b-list-group-item
                               v-for="data in datalistEicRecipient"
                               :key="data.eic"
                               @click="autoCompletefnEicRecipient(data)"
+                              @mousedown="autoCompletefnEicRecipient(data)"
+
                             >
                               {{ data.eic }}
                             </b-list-group-item>
@@ -3109,12 +3140,14 @@
                             v-if="showSuggestionsPersonIdNumber"
                             id="my-company_name"
                             class="input-suggesstions"
-                            style="width: 47%"
+                            style="width: 100%"
                           >
                             <b-list-group-item
                               v-for="data in datalistPersonIdNumber"
                               :key="data.eic"
                               @click="autoCompletefnPersonIdNumber(data)"
+                              @mousedown="autoCompletefnPersonIdNumber(data)"
+
                             >
                               {{ data.identificationNumber }}
                             </b-list-group-item>
@@ -3169,12 +3202,14 @@
                             v-if="showSuggestionsRecipient"
                             id="my-company_name"
                             class="input-suggesstions"
-                            style="width: 47%"
+                            style="width: 100%"
                           >
                             <b-list-group-item
                               v-for="data in datalistRecipient"
                               :key="data.eic"
                               @click="autoCompletefnRecipient(data)"
+                              @mousedown="autoCompletefnRecipient(data)"
+
                             >
                               {{ data.company_name }}
                             </b-list-group-item>
@@ -3206,6 +3241,7 @@
                               v-for="data in datalistPerson"
                               :key="data.eic"
                               @click="autoCompletefnPerson(data)"
+                              @mousedown="autoCompletefnPerson(data)"
                             >
                               {{ data.firstMiddleAndLastName }}
                             </b-list-group-item>
@@ -3263,8 +3299,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -3288,7 +3324,11 @@
                                 rules="required"
                               >
                                 <b-form-select
-                                  v-model="invoiceData.transactionType"
+                                  v-model="invoiceData.transactionType" @change="
+                                () => {
+                                  companyIDisInvalid = false;
+                                }
+                              "
                                 >
                                   <b-form-select-option value="EXPENSE">{{
                                     $t("company_invoices.EXPENSE")
@@ -3651,12 +3691,10 @@
                           switch
                           :checked="isBank"
                         >
-                          <span class="switch-icon-left text-uppercase">
-                            Bank
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            No Bank
-                          </span>
+                        <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
+                  <span class="switch-icon-right text-uppercase">
+                    {{ $t("add_invoice.no_bank") }}
+                  </span>
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
@@ -3736,7 +3774,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }}: </b></span
                             >
 
                             <span style="width: 200px">
@@ -3811,7 +3849,7 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>Non Vat Clause: </b></span
+                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider
@@ -4145,7 +4183,7 @@
                                 () => {
                                   showLogo = false;
                                   logoToUpload = '';
-                                  isUploading = 'Upload Logo here';
+                                  isUploading = i18n.tc('add_invoice.upload_logo');
                                   invoiceData.logoId = '';
                                 }
                               "
@@ -4182,7 +4220,8 @@
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_info_list">
                         <p class="tm_invoice_date tm_m0">
-                          Date:
+                          <!-- Date: -->
+                          {{ $t("add_invoice.date") }}:
 
                           <span>
                             <validation-provider
@@ -4199,7 +4238,8 @@
                           </span>
                         </p>
                         <p class="tm_invoice_number tm_m0">
-                          Invoice No:
+                          <!-- Invoice No: -->
+                          {{ $t("add_invoice.invoice") }}:
 
                           <span
                             ><validation-provider
@@ -4268,7 +4308,7 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier::</b>
+                          <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}:</b>
                         </p>
                         <validation-provider
                           #default="{ errors }"
@@ -4303,6 +4343,8 @@
                               v-for="data in datalistEic"
                               :key="data.eic"
                               @click="autoCompletefnEic(data)"
+                              @mousedown="autoCompletefnEic(data)"
+
                             >
                               {{ data.eic }}
                             </b-list-group-item>
@@ -4359,6 +4401,7 @@
                               v-for="data in datalist"
                               :key="data.eic"
                               @click="autoCompletefn(data)"
+                              @mousedown="autoCompletefn(data)"
                             >
                               {{ data.company_name }}
                             </b-list-group-item>
@@ -4406,8 +4449,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -4418,7 +4461,7 @@
                       >
                         <p class="tm_mb2">
                           <b class="tm_primary_color" style="padding-left: 3px"
-                            >Recipient:</b
+                            > {{ $t("add_invoice.recipient") }}:</b
                           >
                         </p>
 
@@ -4458,6 +4501,7 @@
                               v-for="data in datalistEicRecipient"
                               :key="data.eic"
                               @click="autoCompletefnEicRecipient(data)"
+                              @mousedown="autoCompletefnEicRecipient(data)"
                             >
                               {{ data.eic }}
                             </b-list-group-item>
@@ -4491,6 +4535,7 @@
                               v-for="data in datalistPersonIdNumber"
                               :key="data.eic"
                               @click="autoCompletefnPersonIdNumber(data)"
+                              @mousedown="autoCompletefnPersonIdNumber(data)"
                             >
                               {{ data.identificationNumber }}
                             </b-list-group-item>
@@ -4550,6 +4595,8 @@
                               v-for="data in datalistRecipient"
                               :key="data.eic"
                               @click="autoCompletefnRecipient(data)"
+                              @mousedown="autoCompletefnRecipient(data)"
+
                             >
                               {{ data.company_name }}
                             </b-list-group-item>
@@ -4580,6 +4627,7 @@
                               v-for="data in datalistPerson"
                               :key="data.eic"
                               @click="autoCompletefnPerson(data)"
+                              @mousedown="autoCompletefnPerson(data)"
                             >
                               {{ data.firstMiddleAndLastName }}
                             </b-list-group-item>
@@ -4637,8 +4685,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -4662,7 +4710,11 @@
                                 rules="required"
                               >
                                 <b-form-select
-                                  v-model="invoiceData.transactionType"
+                                  v-model="invoiceData.transactionType" @change="
+                                () => {
+                                  companyIDisInvalid = false;
+                                }
+                              "
                                 >
                                   <b-form-select-option value="EXPENSE">{{
                                     $t("company_invoices.EXPENSE")
@@ -5026,12 +5078,10 @@
                           switch
                           :checked="isBank"
                         >
-                          <span class="switch-icon-left text-uppercase">
-                            Bank
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            No Bank
-                          </span>
+                        <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
+                  <span class="switch-icon-right text-uppercase">
+                    {{ $t("add_invoice.no_bank") }}
+                  </span>
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
@@ -5111,7 +5161,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }}:</b></span
                             >
 
                             <span style="width: 200px">
@@ -5186,7 +5236,7 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>Non Vat Clause: </b></span
+                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider
@@ -5550,7 +5600,7 @@
                                 () => {
                                   showLogo = false;
                                   logoToUpload = '';
-                                  isUploading = 'Upload Logo here';
+                                  isUploading = i18n.tc('add_invoice.upload_logo');
                                   invoiceData.logoId = '';
                                 }
                               "
@@ -5584,7 +5634,7 @@
                       </div>
                       <div class="tm_invoice_right tm_text_right">
                         <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          Invoice
+                          {{ $t("add_invoice.invoice") }}
                         </div>
                       </div>
                     </div>
@@ -5594,7 +5644,8 @@
                       </div>
                       <div class="tm_invoice_info_list">
                         <p class="tm_invoice_number tm_m0" style="z-index: 9">
-                          Invoice No:
+                          <!-- Invoice No: -->
+                          {{ $t("add_invoice.invoice") }}:
 
                           <span
                             ><validation-provider
@@ -5620,7 +5671,8 @@
                           </span>
                         </p>
                         <p class="tm_invoice_date tm_m0" style="z-index: 9">
-                          Date:
+                          <!-- Date: -->
+                          {{ $t("add_invoice.date") }}:
 
                           <span>
                             <validation-provider
@@ -5684,7 +5736,7 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier:</b>
+                          <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}</b>
                         </p>
                         <validation-provider
                           #default="{ errors }"
@@ -5718,6 +5770,7 @@
                               v-for="data in datalistEic"
                               :key="data.eic"
                               @click="autoCompletefnEic(data)"
+                              @mousedown="autoCompletefnEic(data)"
                             >
                               {{ data.eic }}
                             </b-list-group-item>
@@ -5774,6 +5827,7 @@
                               v-for="data in datalist"
                               :key="data.eic"
                               @click="autoCompletefn(data)"
+                              @mousedown="autoCompletefn(data)"
                             >
                               {{ data.company_name }}
                             </b-list-group-item>
@@ -5822,8 +5876,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
 
                         <!-- Recipient -->
@@ -5835,7 +5889,7 @@
                         style="width: 47%"
                       >
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Recipient:</b>
+                          <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
                         </p>
 
                         <!-- Company/Person Identification-->
@@ -5874,6 +5928,7 @@
                               v-for="data in datalistEicRecipient"
                               :key="data.eic"
                               @click="autoCompletefnEicRecipient(data)"
+                              @mousedown="autoCompletefnEicRecipient(data)"
                             >
                               {{ data.eic }}
                             </b-list-group-item>
@@ -5907,6 +5962,7 @@
                               v-for="data in datalistPersonIdNumber"
                               :key="data.eic"
                               @click="autoCompletefnPersonIdNumber(data)"
+                              @mousedown="autoCompletefnPersonIdNumber(data)"
                             >
                               {{ data.identificationNumber }}
                             </b-list-group-item>
@@ -5966,6 +6022,7 @@
                               v-for="data in datalistRecipient"
                               :key="data.eic"
                               @click="autoCompletefnRecipient(data)"
+                              @mousedown="autoCompletefnRecipient(data)"
                             >
                               {{ data.company_name }}
                             </b-list-group-item>
@@ -5996,6 +6053,7 @@
                               v-for="data in datalistPerson"
                               :key="data.eic"
                               @click="autoCompletefnPerson(data)"
+                              @mousedown="autoCompletefnPerson(data)"
                             >
                               {{ data.firstMiddleAndLastName }}
                             </b-list-group-item>
@@ -6053,8 +6111,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -6078,7 +6136,11 @@
                                 rules="required"
                               >
                                 <b-form-select
-                                  v-model="invoiceData.transactionType"
+                                  v-model="invoiceData.transactionType" @change="
+                                () => {
+                                  companyIDisInvalid = false;
+                                }
+                              "
                                 >
                                   <b-form-select-option value="EXPENSE">{{
                                     $t("company_invoices.EXPENSE")
@@ -6444,12 +6506,10 @@
                           switch
                           :checked="isBank"
                         >
-                          <span class="switch-icon-left text-uppercase">
-                            Bank
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            No Bank
-                          </span>
+                        <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
+                  <span class="switch-icon-right text-uppercase">
+                    {{ $t("add_invoice.no_bank") }}
+                  </span>
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
@@ -6527,7 +6587,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }}:</b></span
                             >
 
                             <span style="width: 200px">
@@ -6602,7 +6662,7 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>Non Vat Clause: </b></span
+                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider
@@ -7064,6 +7124,8 @@ import ToastificationContent from "@core/components/toastification/Toastificatio
 import router from "@/router";
 import { setTimeout } from "timers";
 import axios from "@/libs/axios";
+import { i18n } from "@/main.js";
+
 
 export default {
   components: {
@@ -7103,7 +7165,7 @@ export default {
   data() {
     return {
       showLogo: false,
-      isUploading: "Upload Logo here",
+      isUploading: i18n.tc("add_invoice.upload_logo"),
       logoToUpload: "",
       isTemplateFive: true,
       isTemplateOne: false,
@@ -7156,7 +7218,7 @@ export default {
   methods: {
     //
     async updateLogo(e) {
-      this.isUploading = "Uploading...";
+      this.isUploading =  i18n.tc("add_invoice.uploading");
       let self = this;
       const formData = new FormData();
       formData.append("file", e.target.files[0]);
@@ -7191,8 +7253,8 @@ export default {
                   const filePath = reader.result;
                   self.logoToUpload = filePath;
                   self.showLogo = true;
-                  console.log(self.showLogo)
-                  self.isUploading = "Change Logo";
+                  console.log(self.showLogo);
+                  self.isUploading =  i18n.tc("add_invoice.change_logo");
                   // console.log(filePath);
                 };
               }
@@ -7200,7 +7262,7 @@ export default {
             .catch();
         } else {
           error("oh no");
-          self.isUploading = "Upload Logo here";
+          self.isUploading =  i18n.tc("add_invoice.upload_logo");
         }
       };
       request.send(formData);
@@ -7250,7 +7312,6 @@ export default {
         this.isTemplateFive = true;
         this.invoiceData.templateId = 5;
       }
-      
     },
     selectVatClause() {
       if (this.invoiceData.vatCondition === null) {
@@ -7289,18 +7350,23 @@ export default {
           name: "",
           bic: "",
           bank: "",
-        };
+        }; 
       }
 
       if (invoiceData.vatPercent !== "0") {
         invoiceData.vatCondition = "";
       }
 
-      if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
-        this.companyIDisInvalid = true;
-      }
+      // Company ID validation on the basis of transactionType
+      if (invoiceData.transactionType === "INCOME") {
+        if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
+          this.companyIDisInvalid = true;
+        }
 
-      if (invoiceData.supplierCompany.companyEic === "") {
+        if (invoiceData.supplierCompany.companyEic === "") {
+          this.companyIDisInvalid = false;
+        }
+      } else {
         this.companyIDisInvalid = false;
       }
 
@@ -7842,7 +7908,6 @@ export default {
     };
 
     const autoCompletefnEic = (item) => {
-
       if (item.company_name) {
         invoiceData.value.supplierCompany.companName = item.company_name;
       }
@@ -7904,6 +7969,7 @@ export default {
     };
 
     const autoCompletefnRecipient = (item) => {
+      console.log(item);
       if (item.company_name) {
         invoiceData.value.recipientCompany.companName = item.company_name;
       }

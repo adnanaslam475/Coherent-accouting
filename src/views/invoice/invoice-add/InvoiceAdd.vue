@@ -693,7 +693,7 @@
                             {{ $t("add_invoice.total_price") }}
                           </b-col>
                         </b-row>
-                        <div class="form-item-action-col" />
+                        <div class="form-item-action-col" ></div>
                       </div>
 
                       <!-- Form Input Fields OR content inside bordered area  -->
@@ -1131,9 +1131,9 @@
                   switch
                   :checked="isBank"
                 >
-                  <span class="switch-icon-left text-uppercase"> Bank </span>
+                  <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }}</span>
                   <span class="switch-icon-right text-uppercase">
-                    No Bank
+                    {{ $t("add_invoice.no_bank") }}
                   </span>
                 </b-form-checkbox>
               </b-col>
@@ -1148,7 +1148,7 @@
                   <b-form-row>
                     <!-- Bank name -->
                     <b-col>
-                      <span>Bank: </span>
+                      <span>{{ $t("add_invoice.bank") }}:</span>
                       <validation-provider
                         #default="{ errors }"
                         name="bank"
@@ -1404,7 +1404,7 @@
                       </div>
                       <div class="tm_invoice_right tm_text_right">
                         <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          Invoice
+                          {{ $t("add_invoice.invoice") }}
                         </div>
                       </div>
                     </div>
@@ -1412,7 +1412,7 @@
                       <div class="tm_invoice_seperator tm_gray_bg"></div>
                       <div class="tm_invoice_info_list">
                         <p class="tm_invoice_number tm_m0">
-                          Invoice No:
+                          {{ $t("add_invoice.invoice") }}:
                           <span
                             ><validation-provider
                               #default="{ errors }"
@@ -1437,7 +1437,7 @@
                           </span>
                         </p>
                         <p class="tm_invoice_date tm_m0">
-                          Date:
+                          {{ $t("add_invoice.date") }}:
                           <span>
                             <validation-provider
                               #default="{ errors }"
@@ -1497,7 +1497,7 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier:</b>
+                          <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
                         </p>
 
                         <validation-provider
@@ -1634,8 +1634,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }} </span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -1646,7 +1646,7 @@
                       >
                         <p class="tm_mb2">
                           <b class="tm_primary_color" style="margin-left: 3px"
-                            >Recipient:</b
+                            >{{ $t("add_invoice.recipient") }}:</b
                           >
                         </p>
 
@@ -1872,8 +1872,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -2262,10 +2262,10 @@
                           :checked="isBank"
                         >
                           <span class="switch-icon-left text-uppercase">
-                            Bank
+                            {{ $t("add_invoice.bank") }}
                           </span>
                           <span class="switch-icon-right text-uppercase">
-                            No Bank
+                            {{ $t("add_invoice.no_bank") }}
                           </span>
                         </b-form-checkbox>
                       </b-col>
@@ -2346,7 +2346,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }}: </b></span
                             >
 
                             <span style="width: 200px">
@@ -2422,7 +2422,7 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>Non Vat Clause: </b></span
+                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider
@@ -2810,7 +2810,7 @@
                         class="tm_invoice_right tm_text_right tm_mobile_hide"
                       >
                         <div class="tm_f50 tm_text_uppercase tm_white_color">
-                          Invoice
+                          {{ $t("add_invoice.invoice") }}
                         </div>
                       </div>
                       <div
@@ -2824,7 +2824,7 @@
                         style="margin-top: 5px; margin-bottom: 10px"
                       >
                         <p class="tm_invoice_number tm_m0">
-                          Invoice No:
+                          {{ $t("add_invoice.invoice") }}:
 
                           <span
                             ><validation-provider
@@ -2850,7 +2850,7 @@
                           </span>
                         </p>
                         <p class="tm_invoice_date tm_m0">
-                          Date:
+                          {{ $t("add_invoice.date") }}:
 
                           <span>
                             <validation-provider
@@ -2912,7 +2912,7 @@
                     <div class="tm_invoice_head tm_mb10">
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier:</b>
+                          <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
                         </p>
                         <validation-provider
                           #default="{ errors }"
@@ -3047,8 +3047,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -3059,7 +3059,7 @@
                       >
                         <p class="tm_mb2">
                           <b class="tm_primary_color" style="padding-left: 3px"
-                            >Recipient:</b
+                            >{{ $t("add_invoice.recipient") }}:</b
                           >
                         </p>
                         <!-- Company/Person Identification-->
@@ -3284,8 +3284,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }} </span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -3671,10 +3671,10 @@
                           :checked="isBank"
                         >
                           <span class="switch-icon-left text-uppercase">
-                            Bank
+                            {{ $t("add_invoice.bank") }}
                           </span>
                           <span class="switch-icon-right text-uppercase">
-                            No Bank
+                            {{ $t("add_invoice.no_bank") }}
                           </span>
                         </b-form-checkbox>
                       </b-col>
@@ -3755,7 +3755,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }}: </b></span
                             >
 
                             <span style="width: 200px">
@@ -3830,7 +3830,7 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>Non Vat Clause: </b></span
+                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider
@@ -4236,7 +4236,7 @@
                     <div class="tm_invoice_info tm_mb20 mt-3">
                       <div class="tm_invoice_info_list">
                         <p class="tm_invoice_date tm_m0">
-                          Date:
+                          {{ $t("add_invoice.date") }}:
 
                           <span>
                             <validation-provider
@@ -4253,7 +4253,7 @@
                           </span>
                         </p>
                         <p class="tm_invoice_number tm_m0">
-                          Invoice No:
+                          {{ $t("add_invoice.invoice") }}:
 
                           <span
                             ><validation-provider
@@ -4322,7 +4322,7 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier::</b>
+                          <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
                         </p>
                         <validation-provider
                           #default="{ errors }"
@@ -4458,8 +4458,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }} </span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -4470,7 +4470,7 @@
                       >
                         <p class="tm_mb2">
                           <b class="tm_primary_color" style="padding-left: 3px"
-                            >Recipient:</b
+                            >{{ $t("add_invoice.recipient") }}:</b
                           >
                         </p>
 
@@ -4696,8 +4696,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }}  </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -5082,10 +5082,10 @@
                           :checked="isBank"
                         >
                           <span class="switch-icon-left text-uppercase">
-                            Bank
+                            {{ $t("add_invoice.bank") }}
                           </span>
                           <span class="switch-icon-right text-uppercase">
-                            No Bank
+                            {{ $t("add_invoice.no_bank") }}
                           </span>
                         </b-form-checkbox>
                       </b-col>
@@ -5166,7 +5166,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }} : </b></span
                             >
 
                             <span style="width: 200px">
@@ -5241,7 +5241,7 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>Non Vat Clause: </b></span
+                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider
@@ -5652,7 +5652,7 @@
                       </div>
                       <div class="tm_invoice_right tm_text_right">
                         <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          Invoice
+                          {{ $t("add_invoice.invoice") }}
                         </div>
                       </div>
                     </div>
@@ -5662,7 +5662,7 @@
                       </div>
                       <div class="tm_invoice_info_list">
                         <p class="tm_invoice_number tm_m0" style="z-index: 9">
-                          Invoice No:
+                          {{ $t("add_invoice.invoice") }}:
 
                           <span
                             ><validation-provider
@@ -5688,7 +5688,7 @@
                           </span>
                         </p>
                         <p class="tm_invoice_date tm_m0" style="z-index: 9">
-                          Date:
+                          {{ $t("add_invoice.date") }}:
 
                           <span>
                             <validation-provider
@@ -5752,7 +5752,7 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier:</b>
+                          <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
                         </p>
                         <validation-provider
                           #default="{ errors }"
@@ -5889,8 +5889,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }} </span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
 
                         <!-- Recipient -->
@@ -5902,7 +5902,7 @@
                         style="width: 47%"
                       >
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Recipient:</b>
+                          <b class="tm_primary_color">{{ $t("add_invoice.recipient") }}:</b>
                         </p>
 
                         <!-- Company/Person Identification-->
@@ -6127,8 +6127,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -6516,10 +6516,10 @@
                           :checked="isBank"
                         >
                           <span class="switch-icon-left text-uppercase">
-                            Bank
+                            {{ $t("add_invoice.bank") }}
                           </span>
                           <span class="switch-icon-right text-uppercase">
-                            No Bank
+                            {{ $t("add_invoice.no_bank") }}
                           </span>
                         </b-form-checkbox>
                       </b-col>
@@ -6598,7 +6598,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }}: </b></span
                             >
 
                             <span style="width: 200px">
@@ -6673,7 +6673,7 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>Non Vat Clause: </b></span
+                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider

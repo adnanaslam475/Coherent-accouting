@@ -141,7 +141,7 @@
 
     <b-row class="text-center text-danger">
       <b-col>
-        <p style="font-size:1.05rem">If your invoice is not recognized, Please send it to email: <b>coherent-accountin@gmail.com</b> and we will make it work for <b>FREE</b> for you.</p>
+        <p style="font-size:1.05rem">{{ $t('add_invoice.not_recognised_01') }} <b>{{ $t('add_invoice.not_recognised_02') }}</b> {{ $t('add_invoice.not_recognised_03') }}</p>
       </b-col>
     </b-row>
 

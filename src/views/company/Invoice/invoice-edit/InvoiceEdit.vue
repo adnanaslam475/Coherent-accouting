@@ -612,9 +612,19 @@
                         rules="required"
                       >
                         <b-form-select
-                          v-model="invoiceData.transactionType"
-                          :options="transectionOptions"
+                          v-model="invoiceData.transactionType" 
+                          @change="
+                                () => {
+                                  companyIDisInvalid = false;
+                                }
+                              "
                         >
+                        <b-form-select-option value="EXPENSE">{{
+                            $t("company_invoices.EXPENSE")
+                          }}</b-form-select-option>
+                          <b-form-select-option value="INCOME">{{
+                            $t("company_invoices.INCOME")
+                          }}</b-form-select-option>
                         </b-form-select>
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
@@ -1161,7 +1171,7 @@
               </b-card-body>
             </b-card>
 
-            <!-- Bank Details Switch -->
+            <!-- bank Details Switch -->
             <b-row>
               <b-col>
                 <b-form-checkbox
@@ -1175,9 +1185,9 @@
                   switch
                   :checked="hasBankDetails"
                 >
-                  <span class="switch-icon-left text-uppercase"> Bank </span>
+                <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
                   <span class="switch-icon-right text-uppercase">
-                    No Bank
+                    {{ $t("add_invoice.no_bank") }}
                   </span>
                 </b-form-checkbox>
               </b-col>
@@ -1196,7 +1206,7 @@
                   <b-form-row>
                     <!-- Bank name -->
                     <b-col>
-                      <span>Bank: </span>
+                      <span>{{ $t("add_invoice.bank") }}: </span>
                       <validation-provider
                         #default="{ errors }"
                         name="bank"
@@ -1450,7 +1460,7 @@
                                 () => {
                                   showLogo = false;
                                   logoToUpload = '';
-                                  isUploading = 'Upload Logo here';
+                                  isUploading =  i18n.tc('add_invoice.upload_logo');
                                   invoiceData.logoId = '';
                                 }
                               "
@@ -1485,7 +1495,7 @@
                       </div>
                       <div class="tm_invoice_right tm_text_right">
                         <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          Invoice
+                          {{ $t("add_invoice.invoice") }}
                         </div>
                       </div>
                     </div>
@@ -1493,7 +1503,7 @@
                       <div class="tm_invoice_seperator tm_gray_bg"></div>
                       <div class="tm_invoice_info_list">
                         <p class="tm_invoice_number tm_m0">
-                          Invoice No:
+                          {{ $t("add_invoice.invoice") }}:
 
                           <span
                             ><validation-provider
@@ -1519,7 +1529,7 @@
                           </span>
                         </p>
                         <p class="tm_invoice_date tm_m0">
-                          Date:
+                          {{ $t("add_invoice.date") }}:
 
                           <span>
                             <validation-provider
@@ -1583,7 +1593,7 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier:</b>
+                          <b class="tm_primary_color">   {{ $t("add_invoice.supplier") }}</b>
                         </p>
 
                         <validation-provider
@@ -1722,8 +1732,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -1733,7 +1743,7 @@
                         style="width: 47%"
                       >
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Recipient:</b>
+                          <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
                         </p>
 
                         <!-- Company/Person Identification-->
@@ -1951,8 +1961,8 @@
                           switch
                           v-if="AccountTypeOption == 'company'"
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -1977,8 +1987,18 @@
                               >
                                 <b-form-select
                                   v-model="invoiceData.transactionType"
-                                  :options="transectionOptions"
+                                  @change="
+                                () => {
+                                  companyIDisInvalid = false;
+                                }
+                              "
                                 >
+                                <b-form-select-option value="EXPENSE">{{
+                            $t("company_invoices.EXPENSE")
+                          }}</b-form-select-option>
+                          <b-form-select-option value="INCOME">{{
+                            $t("company_invoices.INCOME")
+                          }}</b-form-select-option>
                                 </b-form-select>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -2338,12 +2358,10 @@
                           switch
                           :checked="hasBankDetails"
                         >
-                          <span class="switch-icon-left text-uppercase">
-                            Bank
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            No Bank
-                          </span>
+                        <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
+                  <span class="switch-icon-right text-uppercase">
+                    {{ $t("add_invoice.no_bank") }}
+                  </span>
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
@@ -2420,7 +2438,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }}: </b></span
                             >
 
                             <span style="width: 200px">
@@ -2882,7 +2900,7 @@
                                 () => {
                                   showLogo = false;
                                   logoToUpload = '';
-                                  isUploading = 'Upload Logo here';
+                                  isUploading =  i18n.tc('add_invoice.upload_logo');
                                   invoiceData.logoId = '';
                                 }
                               "
@@ -2918,7 +2936,7 @@
                         class="tm_invoice_right tm_text_right tm_mobile_hide"
                       >
                         <div class="tm_f50 tm_text_uppercase tm_white_color">
-                          Invoice
+                          {{ $t("add_invoice.invoice") }}
                         </div>
                       </div>
                       <div
@@ -2932,7 +2950,7 @@
                         style="margin-top: 5px; margin-bottom: 10px"
                       >
                         <p class="tm_invoice_number tm_m0">
-                          Invoice No:
+                          {{ $t("add_invoice.invoice") }}:
 
                           <span
                             ><validation-provider
@@ -2958,7 +2976,7 @@
                           </span>
                         </p>
                         <p class="tm_invoice_date tm_m0">
-                          Date:
+                          {{ $t("add_invoice.date") }}:
 
                           <span>
                             <validation-provider
@@ -3023,7 +3041,7 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier:</b>
+                          <b class="tm_primary_color">    {{ $t("add_invoice.supplier") }}:</b>
                         </p>
                         <validation-provider
                           #default="{ errors }"
@@ -3162,8 +3180,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -3173,7 +3191,7 @@
                         style="width: 47%"
                       >
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Recipient:</b>
+                          <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
                         </p>
                         <!-- Company/Person Identification-->
                         <validation-provider
@@ -3392,8 +3410,8 @@
                           switch
                           v-if="AccountTypeOption == 'company'"
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -3418,8 +3436,18 @@
                               >
                                 <b-form-select
                                   v-model="invoiceData.transactionType"
-                                  :options="transectionOptions"
+                                  @change="
+                                () => {
+                                  companyIDisInvalid = false;
+                                }
+                              "
                                 >
+                                <b-form-select-option value="EXPENSE">{{
+                            $t("company_invoices.EXPENSE")
+                          }}</b-form-select-option>
+                          <b-form-select-option value="INCOME">{{
+                            $t("company_invoices.INCOME")
+                          }}</b-form-select-option>
                                 </b-form-select>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -3776,12 +3804,10 @@
                           switch
                           :checked="hasBankDetails"
                         >
-                          <span class="switch-icon-left text-uppercase">
-                            Bank
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            No Bank
-                          </span>
+                        <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
+                  <span class="switch-icon-right text-uppercase">
+                    {{ $t("add_invoice.no_bank") }}
+                  </span>
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
@@ -3858,7 +3884,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }}:</b></span
                             >
 
                             <span style="width: 200px">
@@ -4335,7 +4361,7 @@
                                 () => {
                                   showLogo = false;
                                   logoToUpload = '';
-                                  isUploading = 'Upload Logo here';
+                                  isUploading =  i18n.tc('add_invoice.upload_logo');
                                   invoiceData.logoId = '';
                                 }
                               "
@@ -4372,7 +4398,7 @@
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_info_list">
                         <p class="tm_invoice_date tm_m0">
-                          Date:
+                          {{ $t("add_invoice.date") }}:
 
                           <span>
                             <validation-provider
@@ -4389,7 +4415,7 @@
                           </span>
                         </p>
                         <p class="tm_invoice_number tm_m0">
-                          Invoice No:
+                          {{ $t("add_invoice.invoice") }}:
 
                           <span
                             ><validation-provider
@@ -4461,7 +4487,7 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier:</b>
+                          <b class="tm_primary_color">    {{ $t("add_invoice.supplier") }}:</b>
                         </p>
                         <validation-provider
                           #default="{ errors }"
@@ -4598,8 +4624,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -4609,7 +4635,7 @@
                         style="width: 47%"
                       >
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Recipient:</b>
+                          <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
                         </p>
 
                         <!-- Company/Person Identification-->
@@ -4827,8 +4853,8 @@
                           switch
                           v-if="AccountTypeOption == 'company'"
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -4853,8 +4879,18 @@
                               >
                                 <b-form-select
                                   v-model="invoiceData.transactionType"
-                                  :options="transectionOptions"
+                                  @change="
+                                () => {
+                                  companyIDisInvalid = false;
+                                }
+                              "
                                 >
+                                <b-form-select-option value="EXPENSE">{{
+                            $t("company_invoices.EXPENSE")
+                          }}</b-form-select-option>
+                          <b-form-select-option value="INCOME">{{
+                            $t("company_invoices.INCOME")
+                          }}</b-form-select-option>
                                 </b-form-select>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -5213,12 +5249,10 @@
                           switch
                           :checked="hasBankDetails"
                         >
-                          <span class="switch-icon-left text-uppercase">
-                            Bank
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            No Bank
-                          </span>
+                        <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
+                  <span class="switch-icon-right text-uppercase">
+                    {{ $t("add_invoice.no_bank") }}
+                  </span>
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
@@ -5295,7 +5329,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }}: </b></span
                             >
 
                             <span style="width: 200px">
@@ -5802,7 +5836,7 @@
                                 () => {
                                   showLogo = false;
                                   logoToUpload = '';
-                                  isUploading = 'Upload Logo here';
+                                  isUploading =  i18n.tc('add_invoice.upload_logo');
                                   invoiceData.logoId = '';
                                 }
                               "
@@ -5836,7 +5870,7 @@
                       </div>
                       <div class="tm_invoice_right tm_text_right">
                         <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          Invoice
+                          {{ $t("add_invoice.invoice") }}
                         </div>
                       </div>
                     </div>
@@ -5846,7 +5880,7 @@
                       </div>
                       <div class="tm_invoice_info_list">
                         <p class="tm_invoice_number tm_m0" style="z-index: 9">
-                          Invoice No:
+                          {{ $t("add_invoice.invoice") }}:
 
                           <span
                             ><validation-provider
@@ -5875,7 +5909,7 @@
                           class="tm_invoice_date tm_m0"
                           style="z-index: 9; margin-right: 0px"
                         >
-                          Date:
+                        {{ $t("add_invoice.date") }}:
 
                           <span>
                             <validation-provider
@@ -5941,7 +5975,7 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Supplier:</b>
+                          <b class="tm_primary_color">    {{ $t("add_invoice.supplier") }}</b>
                         </p>
                         <validation-provider
                           #default="{ errors }"
@@ -6078,8 +6112,8 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -6089,7 +6123,7 @@
                         style="width: 47%"
                       >
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Recipient:</b>
+                          <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
                         </p>
 
                         <!-- Company/Person Identification-->
@@ -6307,8 +6341,8 @@
                           switch
                           v-if="AccountTypeOption == 'company'"
                         >
-                          <span class="switch-icon-left"> VAT </span>
-                          <span class="switch-icon-right"> NO VAT </span>
+                        <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -6332,8 +6366,18 @@
                               >
                                 <b-form-select
                                   v-model="invoiceData.transactionType"
-                                  :options="transectionOptions"
+                                  @change="
+                                () => {
+                                  companyIDisInvalid = false;
+                                }
+                              "
                                 >
+                                <b-form-select-option value="EXPENSE">{{
+                            $t("company_invoices.EXPENSE")
+                          }}</b-form-select-option>
+                          <b-form-select-option value="INCOME">{{
+                            $t("company_invoices.INCOME")
+                          }}</b-form-select-option>
                                 </b-form-select>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -6693,12 +6737,10 @@
                           switch
                           :checked="hasBankDetails"
                         >
-                          <span class="switch-icon-left text-uppercase">
-                            Bank
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            No Bank
-                          </span>
+                        <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
+                  <span class="switch-icon-right text-uppercase">
+                    {{ $t("add_invoice.no_bank") }}
+                  </span>
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
@@ -6773,7 +6815,7 @@
                           >
                             <span
                               style="padding: 10px 10px 0px 0px; width: 60px"
-                              ><b>Bank: </b></span
+                              ><b>{{ $t("add_invoice.bank") }}: </b></span
                             >
 
                             <span style="width: 200px">
@@ -7381,6 +7423,7 @@ import {
   BFormRadio,
   BListGroup,
   BListGroupItem,
+  BFormSelectOption
 } from "bootstrap-vue";
 import vSelect from "vue-select";
 import flatPickr from "vue-flatpickr-component";
@@ -7389,6 +7432,7 @@ import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import TabList from "../../TabList.vue";
 import axios from "@/libs/axios";
+import { i18n } from "@/main.js";
 
 export default {
   components: {
@@ -7423,6 +7467,7 @@ export default {
     BListGroupItem,
     TabList,
     BFormRow,
+    BFormSelectOption
   },
   directives: {
     Ripple,
@@ -7475,13 +7520,31 @@ export default {
   created() {
     window.addEventListener("resize", this.initTrHeight);
     this.invoiceID = this.$route.params.id;
+    this.getCompanyInfo(); 
   },
   destroyed() {
     window.removeEventListener("resize", this.initTrHeight);
   },
   methods: {
+    async getCompanyInfo(){
+      //getting company info
+      const data = await axios.get(`/account/api/company/` + this.$route.params.companyId, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+        },
+      })
+      .then((response) => {
+        this.supplierID = response.data.companyIdentificationNumber;
+        // console.log(this.supplierID);
+      })
+        .catch((error) => {
+      
+        });
+    },
+
     async updateLogo(e) {
-      this.isUploading = "Uploading...";
+      this.isUploading =  i18n.tc("add_invoice.uploading");
       let self = this;
       const formData = new FormData();
       formData.append("file", e.target.files[0]);
@@ -7498,7 +7561,7 @@ export default {
       request.onload = function () {
         if (request.status >= 200 && request.status < 300) {
           var val = JSON.parse(request.response);
-          // self.logoToUpload = val.binaryId;
+          // self.logoToupload = val.binaryId;
           self.invoiceData.logoId = val.binaryId;
 
           //  display the logo
@@ -7516,7 +7579,7 @@ export default {
                   const filePath = reader.result;
                   self.logoToUpload = filePath;
                   self.showLogo = true;
-                  self.isUploading = "Change Logo";
+                  self.isUploading =  i18n.tc("add_invoice.change_logo");;
                   // console.log(filePath);
                 };
               }
@@ -7524,7 +7587,7 @@ export default {
             .catch();
         } else {
           error("oh no");
-          self.isUploading = "Upload Logo here";
+          self.isUploading = i18n.tc("add_invoice.upload_logo");
         }
       };
       request.send(formData);
@@ -7537,9 +7600,6 @@ export default {
     },
 
     switchTemplates(val) {
-      // this.$refs.invoiceEditForm.validate().then((success) => {
-      //   if (success && this.companyIDisInvalid === false) {
-      // this.isUploading = "Upload Logo here";
       if (val === 1) {
         this.isTemplateOne = true;
         this.isTemplateTwo = false;
@@ -7576,21 +7636,10 @@ export default {
         this.isTemplateFive = true;
         this.invoiceData.templateId = 5;
       }
-      //   } else {
-      //     this.$toast({
-      //       component: ToastificationContent,
-      //       props: {
-      //         title: `Please fill all the fields first...`,
-      //         icon: "EditIcon",
-      //         variant: "danger",
-      //       },
-      //     });
-      //   }
-      // });
+      
     },
 
     selectVatClause() {
-      console.log(this.invoiceData.vatCondition);
       if (this.invoiceData.vatCondition === null) {
         this.clauseToSend = "";
       } else {
@@ -7622,11 +7671,16 @@ export default {
       });
     },
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
-      if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
-        this.companyIDisInvalid = true;
-      }
+      // Company ID validation on the basis of transactionType
+      if (invoiceData.transactionType === "INCOME") {
+        if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
+          this.companyIDisInvalid = true;
+        }
 
-      if (invoiceData.supplierCompany.companyEic === "") {
+        if (invoiceData.supplierCompany.companyEic === "") {
+          this.companyIDisInvalid = false;
+        }
+      } else {
         this.companyIDisInvalid = false;
       }
 
@@ -7829,8 +7883,6 @@ export default {
             : response.data.currency;
 
         invoiceData.value = response.data;
-        console.log(invoiceData.value);
-        console.log(invoiceData.value.templateId);
         if (invoiceData.value.templateId === "1") {
           isTemplateOne.value = true;
         } else if (invoiceData.value.templateId === "2") {
@@ -7838,25 +7890,20 @@ export default {
         } else if (invoiceData.value.templateId === "3") {
           isTemplateThree.value = true;
         } else if (invoiceData.value.templateId === "4") {
-          console.log("template4");
           isTemplateFour.value = true;
         } else {
-          console.log("original");
           isTemplateFive.value = true;
         }
 
-        supplierID.value = response.data.supplierCompany.companyEic;
-        console.log("Supplier ID " + supplierID.value);
+        // supplierID.value = response.data.supplierCompany.companyEic;
 
         if (
           invoiceData.value.logoId === "" ||
           invoiceData.value.logoId === null
         ) {
-          isUploading.value = "Upload Logo here";
+          isUploading.value = i18n.tc("add_invoice.upload_logo");
           showLogo.value = false;
-          console.log(showLogo.value);
         } else {
-          console.log(showLogo.value);
           // logoToUpload.value = invoiceData.value.logoId;
           axios
             .get(
@@ -7872,7 +7919,7 @@ export default {
                   const filePath = reader.result;
                   logoToUpload.value = filePath;
                   showLogo.value = true;
-                  isUploading.value = "Change Logo";
+                  isUploading.value = i18n.tc("add_invoice.change_logo");
                   // console.log(filePath);
                 };
               }
@@ -10093,8 +10140,8 @@ hr {
   transform: skewX(35deg);
   position: absolute;
   height: 100%;
-  width: 57.5%;
-  right: -60px;
+  width: 60%;
+  right: -75px;
   overflow: hidden;
   border: none;
 }

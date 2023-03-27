@@ -343,7 +343,7 @@
                   <h5 
                     class="m-0" 
                   >
-                  Bank Details
+                  {{ $t("add_invoice.bank_details") }}:
                   </h5>
               </b-card-header>
               <b-card-body class="invoice-body">
@@ -351,7 +351,7 @@
                   <b-col>
                 <div class="invoice-date-wrapper" style="border-bottom: none;">
                   <p class="invoice-date-title" style="width: 2rem !important;">
-                   Name :
+                    {{ $t("add_invoice.name") }}:
                   </p>
                   <p class="invoice-date">
                     {{ invoiceData.bankApi.name }}
@@ -392,7 +392,7 @@
             <b-card-header class="justify-content-end"> 
               <div class="invoice-date-wrapper invoice-middle-content">
                 <p class="invoice-date-title">
-                  Non VAT Clause : 
+                  {{ $t("add_invoice.non_vat_clause") }}: : 
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.vatCondition }}
@@ -425,7 +425,7 @@
                   </div>
                   <div class="tm_invoice_right tm_text_right">
                     <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                      Invoice
+                      {{ $t("add_invoice.invoice") }}:
                     </div>
                   </div>
                 </div>
@@ -433,81 +433,81 @@
                   <div class="tm_invoice_seperator tm_gray_bg"></div>
                   <div class="tm_invoice_info_list">
                     <p class="tm_invoice_number tm_m0">
-                      Invoice No:
+                      {{$t('company_invoices.invoice_no')}}:
                       <b class="tm_primary_color"
                         >#{{ invoiceData.invoiceNumber }}</b
                       >
                     </p>
 
                     <p class="tm_invoice_date tm_m0">
-                      Date:
+                      {{ $t("add_invoice.date") }}:
                       <b class="tm_primary_color">{{
                         invoiceData.dateIssued
                       }}</b>
                     </p>
                     <p class="tm_invoice_date tm_m0">
-                      Transaction Type:
-                      <b class="tm_primary_color">{{
-                        invoiceData.transactionType
-                      }}</b>
+                      {{ $t("company_invoices.transaction_type") }}:
+                      <b class="tm_primary_color">
+                       {{ $t('company_invoices.'+invoiceData.transactionType) }} 
+                      </b>
                     </p>
                   </div>
                 </div>
                 <div class="tm_invoice_head tm_mb10">
                   <div class="tm_invoice_left pr-5" style="width: 50%">
                     <p class="tm_mb2">
-                      <b class="tm_primary_color">Supplier:</b>
+                      <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
                     </p>
                    
                     <p style="margin-bottom: 5px">
-                      <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
+                      <b> {{  $t('add_invoice.name') }}: </b>{{ invoiceData.supplierCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Address: </b
+                      <b>  {{$t('company_info.address')}}: </b
                       >{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>ID Number: </b>
+                      <b> {{  $t('add_invoice.id_no') }}: </b>
                       {{ invoiceData.supplierCompany.companyEic }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Owner: </b>
+                      <b> {{  $t('add_invoice.owner') }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
                     <p
                       style="margin-bottom: 5px"
                       v-if="invoiceData.supplierCompany.companyVatEic"
                     >
-                      <b>Vat Number: </b>
+                      <b> {{  $t('add_invoice.vat_no') }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
                   </div>
                   <div class="tm_invoice_right pr-3" style="width: 50%">
                     <p class="tm_mb2">
-                      <b class="tm_primary_color">Recipient:</b>
+                      <b class="tm_primary_color">{{  $t('add_invoice.recipient') }}:</b>
                     </p>
                    
                     <p style="margin-bottom: 5px">
-                      <span style="width: 100px"><b>Name: </b></span>
+                      <span style="width: 100px"><b> {{  $t('add_invoice.name') }}:</b></span>
                       {{ invoiceData.recipientCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Address: </b
+                      <b>  {{$t('company_info.address')}}: </b
                       >{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>ID Number: </b>
+                      <b> {{  $t('add_invoice.id_no') }}: </b>
                       {{ invoiceData.recipientCompany.companyEic }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Owner: </b>
+                      <b> {{  $t('add_invoice.owner') }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
                     <p
                       style="margin-bottom: 5px"
                       v-if="invoiceData.recipientCompany.companyVatEic"
                     >
-                      <b>Vat Number: </b>
+                      <b> {{  $t('add_invoice.vat_no') }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
                   </div>
@@ -521,27 +521,27 @@
                             <th
                               class="tm_width_3 tm_semi_bold tm_primary_color tm_gray_bg"
                             >
-                              Item
+                            {{ $t("add_invoice.s_no") }}
                             </th>
                             <th
                               class="tm_width_4 tm_semi_bold tm_primary_color tm_gray_bg"
                             >
-                              Description
+                            {{ $t("add_invoice.service_item_description") }}
                             </th>
                             <th
                               class="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg"
                             >
-                              Price
+                            {{ $t("add_invoice.single_amount_transaction") }}
                             </th>
                             <th
                               class="tm_width_1 tm_semi_bold tm_primary_color tm_gray_bg"
                             >
-                              Qty
+                            {{ $t("add_invoice.qty") }}
                             </th>
                             <th
                               class="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg tm_text_right"
                             >
-                              Total
+                            {{ $t("add_invoice.transaction_total_nonVat") }}
                             </th>
                           </tr>
                         </thead>
@@ -575,7 +575,7 @@
                   <div class="tm_invoice_footer mt-2">
                     <div class="tm_left_footer">
                       <!-- <p class="tm_mb2">
-                            <b class="tm_primary_color">Payment info:</b>
+                            <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                           </p>
                           <p class="tm_m0">
                             Credit Card - 236***********928 <br />Amount:
@@ -585,7 +585,7 @@
 
                       <div v-if="invoiceData.bankApi !== null">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Payment info:</b>
+                          <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
                         <p class="tm_m0">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -594,7 +594,7 @@
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
                         <p class="tm_m0">
-                          <b>Bank Name: </b>{{ invoiceData.bankApi.name }}
+                          <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
                         <p
                           class="tm_m0"
@@ -605,7 +605,7 @@
                         >
                           <!-- <b>Amount: </b> {{ invoiceData.currency
                               }}{{ invoiceData.totalAmount }} -->
-                          <b>Non Vat Clause: </b> {{ invoiceData.vatCondition }}
+                          <b>{{ $t("add_invoice.non_vat_clause") }}:: </b> {{ invoiceData.vatCondition }}
                         </p>
                       </div>
                     </div>
@@ -616,7 +616,7 @@
                             <td
                               class="tm_width_3 tm_primary_color tm_border_none tm_bold"
                             >
-                              Subtotal
+                            {{ $t("add_invoice.sub_total") }} 
                             </td>
                             <td
                               class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_bold"
@@ -629,7 +629,7 @@
                             <td
                               class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
                             >
-                              Tax
+                            {{ $t("add_invoice.tax") }}
                               <span class="tm_ternary_color"
                                 >({{ invoiceData.vatPercent }}%)</span
                               >
@@ -645,7 +645,7 @@
                             <td
                               class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color"
                             >
-                              Grand Total
+                            {{ $t("add_invoice.grand_total") }}
                             </td>
                             <td
                               class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right"
@@ -687,7 +687,7 @@
                   </div>
                   <div class="tm_invoice_right tm_text_right tm_mobile_hide">
                     <div class="tm_f50 tm_text_uppercase tm_white_color">
-                      Invoice
+                      {{ $t("add_invoice.invoice") }}
                     </div>
                   </div>
                   <div class="tm_shape_bg tm_accent_bg tm_mobile_hide"></div>
@@ -699,14 +699,14 @@
                   </div>
                   <div class="tm_invoice_info_list tm_white_color">
                     <p class="tm_invoice_number tm_m0">
-                      Invoice No: <b>#{{ invoiceData.invoiceNumber }}</b>
+                      {{$t('company_invoices.invoice_no')}}: <b>#{{ invoiceData.invoiceNumber }}</b>
                     </p>
                     <p class="tm_invoice_date tm_m0">
-                      Date: <b>{{ invoiceData.dateIssued }}</b>
+                      {{ $t("add_invoice.date") }}: <b>{{ invoiceData.dateIssued }}</b>
                     </p>
                     <p class="tm_invoice_date tm_m0">
-                      Transaction Type:
-                      <b>{{ invoiceData.transactionType }}</b>
+                      {{ $t("company_invoices.transaction_type") }}:
+                      <b> {{ $t('company_invoices.'+invoiceData.transactionType) }} </b>
                     </p>
                   </div>
                   <div class="tm_invoice_seperator tm_accent_bg"></div>
@@ -714,58 +714,58 @@
                 <div class="tm_invoice_head tm_mb10" style="height: auto">
                   <div class="tm_invoice_left pr-5" style="width: 50%">
                     <p class="tm_mb2">
-                      <b class="tm_primary_color">Supplier:</b>
+                      <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
                     </p>
                     
                     <p style="margin-bottom: 5px">
-                      <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
+                      <b> {{  $t('add_invoice.name') }}: </b>{{ invoiceData.supplierCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Address: </b
+                      <b>  {{$t('company_info.address')}}: </b
                       >{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>ID Number: </b>
+                      <b> {{  $t('add_invoice.id_no') }}: </b>
                       {{ invoiceData.supplierCompany.companyEic }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Owner: </b>
+                      <b> {{  $t('add_invoice.owner') }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
                     <p
                       style="margin-bottom: 5px"
                       v-if="invoiceData.supplierCompany.companyVatEic"
                     >
-                      <b>Vat Number: </b>
+                      <b> {{  $t('add_invoice.vat_no') }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
                   </div>
                   <div class="tm_invoice_right pr-3" style="width: 50%">
                     <p class="tm_mb2">
-                      <b class="tm_primary_color">Recipient:</b>
+                      <b class="tm_primary_color">{{  $t('add_invoice.recipient') }}:</b>
                     </p>
                     
                     <p style="margin-bottom: 5px">
-                      <span style="width: 100px"><b>Name: </b></span>
+                      <span style="width: 100px"><b> {{  $t('add_invoice.name') }}: </b></span>
                       {{ invoiceData.recipientCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Address: </b
+                      <b>  {{$t('company_info.address')}}: </b
                       >{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>ID Number: </b>
+                      <b> {{  $t('add_invoice.id_no') }}: </b>
                       {{ invoiceData.recipientCompany.companyEic }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Owner: </b>
+                      <b> {{  $t('add_invoice.owner') }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
                     <p
                       style="margin-bottom: 5px"
                       v-if="invoiceData.recipientCompany.companyVatEic"
                     >
-                      <b>Vat Number: </b>
+                      <b> {{  $t('add_invoice.vat_no') }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
                   </div>
@@ -777,21 +777,21 @@
                         <thead>
                           <tr class="tm_accent_bg">
                             <th class="tm_width_3 tm_semi_bold tm_white_color">
-                              Item
+                              {{ $t("add_invoice.s_no") }}
                             </th>
                             <th class="tm_width_4 tm_semi_bold tm_white_color">
-                              Description
+                              {{ $t("add_invoice.service_item_description") }}
                             </th>
                             <th class="tm_width_2 tm_semi_bold tm_white_color">
-                              Price
+                              {{ $t("add_invoice.single_amount_transaction") }}
                             </th>
                             <th class="tm_width_1 tm_semi_bold tm_white_color">
-                              Qty
+                              {{ $t("add_invoice.qty") }}
                             </th>
                             <th
                               class="tm_width_2 tm_semi_bold tm_white_color tm_text_right"
                             >
-                              Total
+                            {{ $t("add_invoice.transaction_total_nonVat") }}
                             </th>
                           </tr>
                         </thead>
@@ -825,7 +825,7 @@
                     <div class="tm_left_footer">
                       <div v-if="invoiceData.bankApi !== null">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Payment info:</b>
+                          <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
                         <p class="tm_m0">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -834,7 +834,7 @@
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
                         <p class="tm_m0">
-                          <b>Bank Name: </b>{{ invoiceData.bankApi.name }}
+                          <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
                         <p
                           class="tm_m0"
@@ -845,7 +845,7 @@
                         >
                           <!-- <b>Amount: </b> {{ invoiceData.currency
                               }}{{ invoiceData.totalAmount }} -->
-                          <b>Non Vat Clause: </b> {{ invoiceData.vatCondition }}
+                          <b>{{ $t("add_invoice.non_vat_clause") }}:</b> {{ invoiceData.vatCondition }}
                         </p>
                       </div>
                     </div>
@@ -854,7 +854,7 @@
                         <tbody>
                           <tr class="tm_gray_bg">
                             <td class="tm_width_3 tm_primary_color tm_bold">
-                              Subtotal
+                              {{ $t("add_invoice.sub_total") }}
                             </td>
                             <td
                               class="tm_width_3 tm_primary_color tm_bold tm_text_right"
@@ -865,7 +865,7 @@
                           </tr>
                           <tr class="tm_gray_bg">
                             <td class="tm_width_3 tm_primary_color">
-                              Tax
+                              {{ $t("add_invoice.tax") }}
                               <span class="tm_ternary_color"
                                 >({{ invoiceData.vatPercent }}%)</span
                               >
@@ -881,7 +881,7 @@
                             <td
                               class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_white_color"
                             >
-                              Grand Total
+                            {{ $t("add_invoice.grand_total") }}
                             </td>
                             <td
                               class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_white_color tm_text_right"
@@ -953,80 +953,80 @@
                 <div class="tm_invoice_info tm_mb20 tm_temp_2">
                   <div class="tm_invoice_info_list">
                     <p class="tm_invoice_date tm_m0">
-                      Date:
+                      {{ $t("add_invoice.date") }}:
                       <b class="tm_primary_color">{{
                         invoiceData.dateIssued
                       }}</b>
                     </p>
                     <p class="tm_invoice_number tm_m0">
-                      Invoice No:
+                      {{$t('company_invoices.invoice_no')}}:
                       <b class="tm_primary_color"
                         >#{{ invoiceData.invoiceNumber }}</b
                       >
                     </p>
                     <p class="tm_invoice_date tm_m0">
-                      Transaction Type:
-                      <b class="tm_primary_color">{{
-                        invoiceData.transactionType
-                      }}</b>
+                      {{ $t("company_invoices.transaction_type") }}:
+                      <b class="tm_primary_color">
+                       {{ $t('company_invoices.'+invoiceData.transactionType) }} 
+                      </b>
                     </p>
                   </div>
                 </div>
                 <div class="tm_invoice_head tm_mb10">
                   <div class="tm_invoice_left pr-5" style="width: 50%">
                     <p class="tm_mb2">
-                      <b class="tm_primary_color">Supplier:</b>
+                      <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
                     </p>
                     
                     <p style="margin-bottom: 5px">
-                      <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
+                      <b> {{  $t('add_invoice.name') }}: </b>{{ invoiceData.supplierCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Address: </b
+                      <b>  {{$t('company_info.address')}}: </b
                       >{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>ID Number: </b>
+                      <b> {{  $t('add_invoice.id_no') }}: </b>
                       {{ invoiceData.supplierCompany.companyEic }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Owner: </b>
+                      <b> {{  $t('add_invoice.owner') }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
                     <p
                       style="margin-bottom: 5px"
                       v-if="invoiceData.supplierCompany.companyVatEic"
                     >
-                      <b>Vat Number: </b>
+                      <b> {{  $t('add_invoice.vat_no') }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
                   </div>
                   <div class="tm_invoice_right pr-3" style="width: 50%">
                     <p class="tm_mb2">
-                      <b class="tm_primary_color">Recipient:</b>
+                      <b class="tm_primary_color">{{  $t('add_invoice.recipient') }}:</b>
                     </p>
                    
                     <p style="margin-bottom: 5px">
-                      <span style="width: 100px"><b>Name: </b></span>
+                      <span style="width: 100px"><b> {{  $t('add_invoice.name') }}: </b></span>
                       {{ invoiceData.recipientCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Address: </b
+                      <b>  {{$t('company_info.address')}}: </b
                       >{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>ID Number: </b>
+                      <b> {{  $t('add_invoice.id_no') }}: </b>
                       {{ invoiceData.recipientCompany.companyEic }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Owner: </b>
+                      <b> {{  $t('add_invoice.owner') }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
                     <p
                       style="margin-bottom: 5px"
                       v-if="invoiceData.recipientCompany.companyVatEic"
                     >
-                      <b>Vat Number: </b>
+                      <b> {{  $t('add_invoice.vat_no') }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
                   </div>
@@ -1040,27 +1040,27 @@
                             <th
                               class="tm_width_3 tm_medium tm_white_color tm_accent_bg"
                             >
-                              Item
+                            {{ $t("add_invoice.s_no") }}
                             </th>
                             <th
                               class="tm_width_4 tm_medium tm_white_color tm_accent_bg"
                             >
-                              Description
+                            {{ $t("add_invoice.service_item_description") }}
                             </th>
                             <th
                               class="tm_width_2 tm_medium tm_white_color tm_accent_bg"
                             >
-                              Price
+                            {{ $t("add_invoice.single_amount_transaction") }}
                             </th>
                             <th
                               class="tm_width_1 tm_medium tm_white_color tm_accent_bg"
                             >
-                              Qty
+                            {{ $t("add_invoice.qty") }}
                             </th>
                             <th
                               class="tm_width_2 tm_medium tm_white_color tm_accent_bg tm_text_right"
                             >
-                              Total
+                            {{ $t("add_invoice.transaction_total_nonVat") }}
                             </th>
                           </tr>
                         </thead>
@@ -1094,7 +1094,7 @@
                     <div class="tm_left_footer">
                       <div v-if="invoiceData.bankApi !== null">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Payment info:</b>
+                          <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
                         <p class="tm_m0">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -1103,7 +1103,7 @@
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
                         <p class="tm_m0">
-                          <b>Bank Name: </b>{{ invoiceData.bankApi.name }}
+                          <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
                         <p
                           class="tm_m0"
@@ -1114,7 +1114,7 @@
                         >
                           <!-- <b>Amount: </b> {{ invoiceData.currency
                               }}{{ invoiceData.totalAmount }} -->
-                          <b>Non Vat Clause: </b> {{ invoiceData.vatCondition }}
+                          <b>{{ $t("add_invoice.non_vat_clause") }}:: </b> {{ invoiceData.vatCondition }}
                         </p>
                       </div>
                     </div>
@@ -1125,7 +1125,7 @@
                             <td
                               class="tm_width_3 tm_primary_color tm_border_none tm_bold"
                             >
-                              Subtotal
+                            {{ $t("add_invoice.sub_total") }}
                             </td>
                             <td
                               class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_bold"
@@ -1138,7 +1138,7 @@
                             <td
                               class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
                             >
-                              Tax
+                            {{ $t("add_invoice.tax") }}
                               <span class="tm_ternary_color"
                                 >({{ invoiceData.vatPercent }}%)</span
                               >
@@ -1154,7 +1154,7 @@
                             <td
                               class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color"
                             >
-                              Grand Total
+                            {{ $t("add_invoice.grand_total") }}
                             </td>
                             <td
                               class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right"
@@ -1227,7 +1227,7 @@
                   </div>
                   <div class="tm_invoice_right tm_text_right">
                     <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                      Invoice
+                      {{ $t("add_invoice.invoice") }}
                     </div>
                   </div>
                 </div>
@@ -1237,22 +1237,22 @@
                   </div>
                   <div class="tm_invoice_info_list">
                     <p class="tm_invoice_number tm_m0">
-                      Invoice No:
+                      {{$t('company_invoices.invoice_no')}}:
                       <b class="tm_primary_color"
                         >#{{ invoiceData.invoiceNumber }}</b
                       >
                     </p>
                     <p class="tm_invoice_date tm_m0">
-                      Date:
+                      {{ $t("add_invoice.date") }}:
                       <b class="tm_primary_color">{{
                         invoiceData.dateIssued
                       }}</b>
                     </p>
                     <p class="tm_invoice_date tm_m0">
-                      Transaction Type:
-                      <b class="tm_primary_color">{{
-                        invoiceData.transactionType
-                      }}</b>
+                      {{ $t("company_invoices.transaction_type") }}:
+                      <b class="tm_primary_color">
+                       {{ $t('company_invoices.'+invoiceData.transactionType) }} 
+                      </b>
                     </p>
                     <div class="tm_invoice_info_list_bg tm_accent_bg_10"></div>
                   </div>
@@ -1260,58 +1260,58 @@
                 <div class="tm_invoice_head tm_mb10">
                   <div class="tm_invoice_left pr-5" style="width: 50%">
                     <p class="tm_mb2">
-                      <b class="tm_primary_color">Supplier:</b>
+                      <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
                     </p>
                     
                     <p style="margin-bottom: 5px">
-                      <b>Name: </b>{{ invoiceData.supplierCompany.companName }}
+                      <b> {{  $t('add_invoice.name') }}: </b>{{ invoiceData.supplierCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Address: </b
+                      <b>  {{$t('company_info.address')}}: </b
                       >{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>ID Number: </b>
+                      <b> {{  $t('add_invoice.id_no') }}: </b>
                       {{ invoiceData.supplierCompany.companyEic }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Owner: </b>
+                      <b> {{  $t('add_invoice.owner') }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
                     <p
                       style="margin-bottom: 5px"
                       v-if="invoiceData.supplierCompany.companyVatEic"
                     >
-                      <b>Vat Number: </b>
+                      <b> {{  $t('add_invoice.vat_no') }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
                   </div>
                   <div class="tm_invoice_right pr-3" style="width: 50%">
                     <p class="tm_mb2">
-                      <b class="tm_primary_color">Recipient:</b>
+                      <b class="tm_primary_color">{{  $t('add_invoice.recipient') }}:</b>
                     </p>
                    
                     <p style="margin-bottom: 5px">
-                      <span style="width: 100px"><b>Name: </b></span>
+                      <span style="width: 100px"><b> {{  $t('add_invoice.name') }}: </b></span>
                       {{ invoiceData.recipientCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Address: </b
+                      <b>  {{$t('company_info.address')}}: </b
                       >{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>ID Number: </b>
+                      <b> {{  $t('add_invoice.id_no') }}: </b>
                       {{ invoiceData.recipientCompany.companyEic }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b>Owner: </b>
+                      <b> {{  $t('add_invoice.owner') }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
                     <p
                       style="margin-bottom: 5px"
                       v-if="invoiceData.recipientCompany.companyVatEic"
                     >
-                      <b>Vat Number: </b>
+                      <b> {{  $t('add_invoice.vat_no') }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
                   </div>
@@ -1324,27 +1324,27 @@
                           <th
                             class="tm_width_3 tm_semi_bold tm_primary_color tm_accent_bg_10"
                           >
-                            Item
+                          {{ $t("add_invoice.s_no") }}
                           </th>
                           <th
                             class="tm_width_4 tm_semi_bold tm_primary_color tm_accent_bg_10"
                           >
-                            Description
+                          {{ $t("add_invoice.service_item_description") }}
                           </th>
                           <th
                             class="tm_width_2 tm_semi_bold tm_primary_color tm_accent_bg_10"
                           >
-                            Price
+                          {{ $t("add_invoice.single_amount_transaction") }}
                           </th>
                           <th
                             class="tm_width_1 tm_semi_bold tm_primary_color tm_accent_bg_10"
                           >
-                            Qty
+                          {{ $t("add_invoice.qty") }}
                           </th>
                           <th
                             class="tm_width_2 tm_semi_bold tm_primary_color tm_accent_bg_10 tm_text_right"
                           >
-                            Total
+                             {{ $t("add_invoice.transaction_total_nonVat") }}
                           </th>
                         </tr>
                       </thead>
@@ -1377,7 +1377,7 @@
                     <div class="tm_left_footer">
                       <div v-if="invoiceData.bankApi !== null">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">Payment info:</b>
+                          <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
                         <p class="tm_m0">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -1386,7 +1386,7 @@
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
                         <p class="tm_m0">
-                          <b>Bank Name: </b>{{ invoiceData.bankApi.name }}
+                          <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
                         <p
                           class="tm_m0"
@@ -1397,7 +1397,7 @@
                         >
                           <!-- <b>Amount: </b> {{ invoiceData.currency
                               }}{{ invoiceData.totalAmount }} -->
-                          <b>Non Vat Clause: </b>{{ invoiceData.vatCondition }}
+                          <b>{{ $t("add_invoice.non_vat_clause") }}:: </b>{{ invoiceData.vatCondition }}
                         </p>
                       </div>
                     </div>
@@ -1408,7 +1408,7 @@
                             <td
                               class="tm_width_3 tm_primary_color tm_border_none tm_bold"
                             >
-                              Subtotal
+                            {{ $t("add_invoice.sub_total") }}
                             </td>
                             <td
                               class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_bold"
@@ -1421,7 +1421,7 @@
                             <td
                               class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
                             >
-                              Tax
+                            {{ $t("add_invoice.tax") }}
                               <span class="tm_ternary_color"
                                 >({{ invoiceData.vatPercent }}%)</span
                               >
@@ -1437,7 +1437,7 @@
                             <td
                               class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color"
                             >
-                              Grand Total
+                            {{ $t("add_invoice.grand_total") }}
                             </td>
                             <td
                               class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right"
