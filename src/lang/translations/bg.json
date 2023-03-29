@@ -374,7 +374,23 @@
     "id_no":"№",
     "owner":"Собственик",
     "vat_no":"ДДС №",
-    "transaction_total_nonVat": "Дан. основа"
+    "transaction_total_nonVat": "Дан. основа",
+	"no_vat":"Без ДДС",
+    "bank": "Банка",
+    "no_bank": "Без Банка",
+    "upload_logo":"Качи Лого",
+    "uploading":"Качване..",
+    "change_logo": "Смени лого",
+    "sub_total":"Общо",
+    "tax":"ДДС",
+    "grand_total":"Общо",
+    "bank_details": "Данни Банка",
+    "payment_info":"Данни за плащане",
+    "bank_name":"Име Банка",
+    "non_vat_clause":"Основание за неначисляване на ДДС",
+    "not_recognised_01":"Ако след качване на фактурата не се показват данни - моля изпратете я на адрес: ",
+    "not_recognised_02":"coherent-accountin@gmail.com ",
+    "not_recognised_03":"и ние ще я добавим безплатно за Вас."
 
   },
   "create_company":{
