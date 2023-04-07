@@ -372,7 +372,7 @@
     "clear" : "Изчисти",
     "name": "Име",
     "id_no":"ЕИК",
-    "owner":"Собственик",
+    "owner":"МОЛ",
     "vat_no":"ДДС №",
     "transaction_total_nonVat": "Дан. основа",
 	"no_vat":"Без ДДС",
