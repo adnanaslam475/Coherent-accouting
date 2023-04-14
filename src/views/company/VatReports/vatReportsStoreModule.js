@@ -15,7 +15,7 @@ export default {
 
       let token = useJwt.getToken()
       let axiosVatReports = axios.create({
-        baseURL: 'http://167.86.93.80:8765',
+        baseURL: 'https://coherent-accounting.com',
       })
 
       //searching a list of values
@@ -68,7 +68,7 @@ export default {
      fetchSingleVatReport(ctx, { id }) {
       let token = useJwt.getToken()
       let  axiosVatReports = axios.create({
-        baseURL: 'http://167.86.93.80:8765',
+        baseURL: 'https://coherent-accounting.com',
       })
       let config = {
         headers: {'Authorization': "Bearer "+token},
