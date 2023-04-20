@@ -1572,9 +1572,9 @@
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
-                        </p>
+                        </h6>
 
                         <validation-provider
                           #default="{ errors }"
@@ -1720,11 +1720,11 @@
                         class="tm_invoice_right tm_text_right"
                         style="width: 47%"
                       >
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color" style="margin-left: 3px"
                             >{{ $t("add_invoice.recipient") }}:</b
                           >
-                        </p>
+                        </h6>
 
                         <!-- Company/Person Identification-->
                         <validation-provider
@@ -3023,9 +3023,9 @@
 
                     <div class="tm_invoice_head tm_mb10">
                       <div class="tm_invoice_left" style="width: 47%">
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
-                        </p>
+                        </h6>
                         <validation-provider
                           #default="{ errors }"
                           name="supplierCompanyIdNumber"
@@ -3169,11 +3169,11 @@
                         class="tm_invoice_right tm_text_right"
                         style="width: 47%"
                       >
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color" style="padding-left: 3px"
                             >{{ $t("add_invoice.recipient") }}:</b
                           >
-                        </p>
+                        </h6>
                         <!-- Company/Person Identification-->
                         <validation-provider
                           #default="{ errors }"
@@ -4469,9 +4469,9 @@
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
-                        </p>
+                        </h6>
                         <validation-provider
                           #default="{ errors }"
                           name="supplierCompanyIdNumber"
@@ -4616,11 +4616,11 @@
                         class="tm_invoice_right tm_text_right"
                         style="width: 47%"
                       >
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color" style="padding-left: 3px"
                             >{{ $t("add_invoice.recipient") }}:</b
                           >
-                        </p>
+                        </h6>
 
                         <!-- Company/Person Identification-->
                         <validation-provider
@@ -5934,9 +5934,9 @@
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
-                        </p>
+                        </h6>
                         <validation-provider
                           #default="{ errors }"
                           name="supplierCompanyIdNumber"
@@ -6084,9 +6084,9 @@
                         class="tm_invoice_right tm_text_right"
                         style="width: 47%"
                       >
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color">{{ $t("add_invoice.recipient") }}:</b>
-                        </p>
+                        </h6>
 
                         <!-- Company/Person Identification-->
                         <validation-provider

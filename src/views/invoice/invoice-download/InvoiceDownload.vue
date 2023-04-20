@@ -47,9 +47,9 @@
               </div>
               <div class="tm_invoice_head tm_mb10">
                 <div class="tm_invoice_left pr-5" style="width: 50%">
-                  <p class="tm_mb2">
+                  <h5 class="tm_mb2">
                     <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
-                  </p>
+                  </h5>
 
                   <p style="margin-bottom: 5px">
                     <b> {{  $t('add_invoice.name') }}: </b>{{ invoiceData.supplierCompany.companName }}
@@ -75,9 +75,9 @@
                   </p>
                 </div>
                 <div class="tm_invoice_right pr-3" style="width: 50%">
-                  <p class="tm_mb2">
+                  <h5 class="tm_mb2">
                     <b class="tm_primary_color">{{ $t("add_invoice.recipient") }}:</b>
-                  </p>
+                  </h5>
 
                   <p style="margin-bottom: 5px">
                     <span style="width: 100px"><b> {{  $t('add_invoice.name') }}: </b></span>
@@ -431,9 +431,9 @@
               </div>
               <div class="tm_invoice_head tm_mb10" style="height: auto">
                 <div class="tm_invoice_left pr-3" style="width: 50%">
-                  <p class="tm_mb2">
+                  <h5 class="tm_mb2">
                     <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
-                  </p>
+                  </h5>
 
                   <p style="margin-bottom: 5px">
                     <b> {{  $t('add_invoice.name') }}: </b>{{ invoiceData.supplierCompany.companName }}
@@ -459,9 +459,9 @@
                   </p>
                 </div>
                 <div class="tm_invoice_right pr-3" style="width: 50%">
-                  <p class="tm_mb2">
+                  <h5 class="tm_mb2">
                     <b class="tm_primary_color">{{ $t("add_invoice.recipient") }}:</b>
-                  </p>
+                  </h5>
 
                   <p style="margin-bottom: 5px">
                     <span style="width: 100px"><b> {{  $t('add_invoice.name') }}: </b></span>
@@ -805,9 +805,9 @@
               </div>
               <div class="tm_invoice_head tm_mb10">
                 <div class="tm_invoice_left mr-5" style="width: 50%">
-                  <p class="tm_mb2">
+                  <h5 class="tm_mb2">
                     <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
-                  </p>
+                  </h5>
 
                   <p style="margin-bottom: 5px">
                     <b>{{  $t('add_invoice.name') }}: </b>{{ invoiceData.supplierCompany.companName }}
@@ -833,9 +833,9 @@
                   </p>
                 </div>
                 <div class="tm_invoice_right mr-3" style="width: 50%">
-                  <p class="tm_mb2">
+                  <h5 class="tm_mb2">
                     <b class="tm_primary_color">{{ $t("add_invoice.recipient") }}:</b>
-                  </p>
+                  </h5>
 
                   <p style="margin-bottom: 5px">
                     <span style="width: 100px"><b> {{  $t('add_invoice.name') }}: </b></span>
@@ -1216,9 +1216,9 @@
               </div>
               <div class="tm_invoice_head tm_mb10">
                 <div class="tm_invoice_left pr-5" style="width: 50%">
-                  <p class="tm_mb2">
+                  <h5 class="tm_mb2">
                     <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
-                  </p>
+                  </h5>
 
                   <p style="margin-bottom: 5px">
                     <b> {{  $t('add_invoice.name') }}:</b>{{ invoiceData.supplierCompany.companName }}
@@ -1244,9 +1244,9 @@
                   </p>
                 </div>
                 <div class="tm_invoice_right pr-3" style="width: 50%">
-                  <p class="tm_mb2">
+                  <h5 class="tm_mb2">
                     <b class="tm_primary_color">{{ $t("add_invoice.recipient") }}:</b>
-                  </p>
+                  </h5>
 
                   <p style="margin-bottom: 5px">
                     <span style="width: 100px"><b> {{  $t('add_invoice.name') }}: </b></span>

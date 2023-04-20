@@ -93,11 +93,40 @@
                 class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input invoice-input-middle mb-md-0"
               >
                 <div class="mt-md-0 mt-2 flex-1">
-                  <b-card no-body class="invoice-add invoice-card">
+                  <b-card no-body class="invoice-add invoice-card"
+                  :style="
+                      isBlue === true
+                        ? 'border: 1px solid #007aff !important'
+                        : isGreen === true
+                        ? 'border: 1px solid #8fce00 !important'
+                        : isPurple === true
+                        ? 'border: 1px solid #ad3978 !important'
+                        : isOrange === true
+                        ? 'border: 1px solid #FFA500 !important'
+                        : 'border:1px solid #f6d1ff !important'
+                    ">
                     <b-card-header
-                      class="justify-content-center invoice-header mb-1"
+                    class="justify-content-center invoice-header mb-1"
+                      :class="
+                        isBlue === true
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
                     >
-                      <h5 class="m-0">
+                    <h5
+                        class="m-0"
+                        :style="
+                          isGray === true
+                            ? 'color: black !important'
+                            : 'color: white !important'
+                        "
+                      >
                         {{ $t("add_invoice.supplier") }}
                       </h5>
                     </b-card-header>
@@ -295,11 +324,43 @@
                 </div>
 
                 <div class="mt-md-0 mt-2 flex-1">
-                  <b-card no-body class="invoice-add invoice-card">
-                    <b-card-header
+                  <b-card
+                    no-body
+                    class="invoice-add invoice-card"
+                    :style="
+                      isBlue === true
+                        ? 'border: 1px solid #007aff !important'
+                        : isGreen === true
+                        ? 'border: 1px solid #8fce00 !important'
+                        : isPurple === true
+                        ? 'border: 1px solid #ad3978 !important'
+                        : isOrange === true
+                        ? 'border: 1px solid #FFA500 !important'
+                        : 'border:1px solid #f6d1ff !important'
+                    "
+                  >
+                  <b-card-header
                       class="justify-content-center invoice-header mb-1"
+                      :class="
+                        isBlue === true
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
                     >
-                      <h5 class="m-0">
+                      <h5
+                        class="m-0"
+                        :style="
+                          isGray === true
+                            ? 'color: black !important'
+                            : 'color: white !important'
+                        "
+                      >
                         {{ $t("add_invoice.recipient") }}
                       </h5>
                     </b-card-header>
@@ -717,10 +778,40 @@
                   <b-row ref="row" class="pb-0 m-0">
                     <!-- Item Form -->
                     <!-- ? This will be in loop => So consider below markup for single item -->
-                    <b-col cols="12" class="p-0 border border-0">
+                    <b-col
+                      cols="12"
+                      class="p-0"
+                      :style="
+                        isBlue === true
+                          ? 'border: 1px solid #007aff'
+                          : isGreen === true
+                          ? 'border: 1px solid #8fce00'
+                          : isPurple === true
+                          ? 'border: 1px solid #ad3978'
+                          : isOrange === true
+                          ? 'border: 1px solid #FFA500'
+                          : 'border:1px solid #f6d1ff'
+                      "
+                    >
                       <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                       <div
-                        class="d-none d-lg-flex bg-primary p-custom text-white"
+                        class="d-none d-lg-flex p-custom"
+                        :class="
+                          isBlue === true
+                            ? 'tm_accent_bg'
+                            : isGreen === true
+                            ? 'green_bg'
+                            : isPurple === true
+                            ? 'purple_bg'
+                            : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
+                        "
+                        :style="
+                          isGray === true
+                            ? 'color: black !important'
+                            : 'color: white !important'
+                        "
                       >
                         <b-row
                           class="flex-grow-1 px-1 invoice-add-transections"
@@ -926,6 +1017,17 @@
               variant="primary"
               @click="addNewItemInItemForm"
               class="mb-2"
+              :style="
+                isBlue === true
+                  ? 'background-color: #007aff !important; color: white !important'
+                  : isGreen === true
+                  ? 'background-color: #8fce00 !important; color: white !important'
+                  : isPurple === true
+                  ? 'background-color: #ad3978 !important; color: white !important'
+                  : isOrange === true
+                  ? 'background-color: #FFA500 !important; color: white !important'
+                  : 'background-color: #f6d1ff !important; color: black !important'
+              "
             >
               {{ $t("add_invoice.add_item") }}
             </b-button>
@@ -1592,9 +1694,9 @@
                     <div class="tm_invoice_head tm_mb10" style="height: auto">
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color">   {{ $t("add_invoice.supplier") }}</b>
-                        </p>
+                        </h6>
 
                         <validation-provider
                           #default="{ errors }"
@@ -1742,9 +1844,9 @@
                         class="tm_invoice_right tm_text_right"
                         style="width: 47%"
                       >
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
-                        </p>
+                        </h6>
 
                         <!-- Company/Person Identification-->
                         <validation-provider
@@ -2909,12 +3011,27 @@
                               <label for="invoiceLogo2">
                                 <div
                                   style="
-                                    background-color: #007aff;
                                     border: 1px solid white;
                                     padding: 10px;
                                     border-radius: 30px;
-                                    color: white;
+
                                     cursor: pointer;
+                                  "
+                                  :class="
+                                    isBlue === true
+                                      ? 'tm_accent_bg'
+                                      : isGreen === true
+                                      ? 'green_bg'
+                                      : isPurple === true
+                                      ? 'purple_bg'
+                                      : isOrange === true
+                                      ? 'orange_bg'
+                                      : 'gray_bg'
+                                  "
+                                  :style="
+                                    isGray === true
+                                      ? 'color: black !important'
+                                      : 'color: white !important'
                                   "
                                 >
                                   {{ isUploading }}
@@ -2935,19 +3052,42 @@
                       <div
                         class="tm_invoice_right tm_text_right tm_mobile_hide"
                       >
-                        <div class="tm_f50 tm_text_uppercase tm_white_color">
+                      <div
+                          class="tm_f50 tm_text_uppercase"
+                          :style="
+                            isGray === true
+                              ? 'color: black !important'
+                              : 'color: white !important'
+                          "
+                        >
                           {{ $t("add_invoice.invoice") }}
                         </div>
                       </div>
                       <div
-                        class="tm_shape_bg tm_accent_bg tm_mobile_hide"
+                        class="tm_shape_bg tm_mobile_hide"
+                        :class="
+                          isBlue === true
+                            ? 'tm_accent_bg'
+                            : isGreen === true
+                            ? 'green_bg'
+                            : isPurple === true
+                            ? 'purple_bg'
+                            : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
+                        "
                       ></div>
                     </div>
                     <div class="tm_invoice_info tm_mb25">
                       <div class="tm_card_note tm_mobile_hide"></div>
                       <div
-                        class="tm_invoice_info_list tm_white_color"
+                        class="tm_invoice_info_list"
                         style="margin-top: 5px; margin-bottom: 10px"
+                        :style="
+                          isGray === true
+                            ? 'color: black !important'
+                            : 'color: white !important'
+                        "
                       >
                         <p class="tm_invoice_number tm_m0">
                           {{ $t("add_invoice.invoice") }}:
@@ -2994,7 +3134,20 @@
                         </p>
                       </div>
 
-                      <div class="tm_invoice_seperator tm_accent_bg"></div>
+                      <div
+                        class="tm_invoice_seperator tm_accent_bg"
+                        :class="
+                          isBlue === true
+                            ? 'tm_accent_bg'
+                            : isGreen === true
+                            ? 'green_bg'
+                            : isPurple === true
+                            ? 'purple_bg'
+                            : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
+                        "
+                      ></div>
                     </div>
 
                     <div class="accountType mb-1">
@@ -3040,9 +3193,9 @@
                     <div class="tm_invoice_head tm_mb10" style="height: auto">
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color">    {{ $t("add_invoice.supplier") }}:</b>
-                        </p>
+                        </h6>
                         <validation-provider
                           #default="{ errors }"
                           name="supplierCompanyIdNumber"
@@ -3190,9 +3343,9 @@
                         class="tm_invoice_right tm_text_right"
                         style="width: 47%"
                       >
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
-                        </p>
+                        </h6>
                         <!-- Company/Person Identification-->
                         <validation-provider
                           #default="{ errors }"
@@ -3508,7 +3661,22 @@
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div
                                 class="d-none d-lg-flex p-custom"
-                                style="background-color: #007aff"
+                                :class="
+                                  isBlue === true
+                                    ? 'tm_accent_bg'
+                                    : isGreen === true
+                                    ? 'green_bg'
+                                    : isPurple === true
+                                    ? 'purple_bg'
+                                    : isOrange === true
+                                    ? 'orange_bg'
+                                    : 'gray_bg'
+                                "
+                                :style="
+                                  isGray === true
+                                    ? 'color: black !important'
+                                    : 'color: white !important'
+                                "
                               >
                                 <b-row
                                   class="flex-grow-1 px-1 invoice-add-transections"
@@ -3517,49 +3685,49 @@
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.s_no") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="4"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.item_service") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.qty") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.measure") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="2"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.single_price") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.currency") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="2"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.total_price") }}
                                   </b-col>
@@ -3780,11 +3948,22 @@
                       @click="addNewItemInItemForm"
                       class="mb-2"
                       style="
-                        background-color: #007aff !important;
+                       
                         border: 1px solid white;
                         padding: 10px;
                         border-radius: 30px;
-                        color: white !important;
+                       
+                      "
+                      :style="
+                        isBlue === true
+                          ? 'background-color: #007aff !important; color: white !important'
+                          : isGreen === true
+                          ? 'background-color: #8fce00 !important; color: white !important'
+                          : isPurple === true
+                          ? 'background-color: #ad3978 !important; color: white !important'
+                          : isOrange === true
+                          ? 'background-color: #FFA500 !important; color: white !important'
+                          : 'background-color: #f6d1ff !important; color: black !important'
                       "
                     >
                       {{ $t("add_invoice.add_item") }}
@@ -4311,27 +4490,151 @@
                   id="tm_download_section"
                 >
                   <div class="tm_bars">
-                    <span class="tm_accent_bg"></span>
-                    <span class="tm_accent_bg"></span>
-                    <span class="tm_accent_bg"></span>
+                    <span
+                      :class="
+                        isBlue === true
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
+                    ></span>
+                    <span
+                      :class="
+                        isBlue === true
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
+                    ></span>
+                    <span
+                      :class="
+                        isBlue === true
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
+                    ></span>
                   </div>
                   <div class="tm_bars tm_type1">
-                    <span class="tm_accent_bg"></span>
-                    <span class="tm_accent_bg"></span>
-                    <span class="tm_accent_bg"></span>
+                    <span
+                      :class="
+                        isBlue === true
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
+                    ></span>
+                    <span
+                      :class="
+                        isBlue === true
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
+                    ></span>
+                    <span
+                      :class="
+                        isBlue === true
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
+                    ></span>
                   </div>
                   <div class="tm_shape">
-                    <div class="tm_shape_in tm_accent_bg"></div>
+                    <div
+                      class="tm_shape_in"
+                      :class="
+                        isBlue === true
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
+                    ></div>
                   </div>
                   <div class="tm_shape_2 tm_primary_color">
-                    <div class="tm_shape_2_in tm_accent_color"></div>
+                    <div
+                      class="tm_shape_2_in tm_accent_color"
+                      :style="
+                        isBlue === true
+                          ? 'color: #007aff;'
+                          : isGreen === true
+                          ? 'color: #8fce00'
+                          : isPurple === true
+                          ? 'color: #ad3978'
+                          : isOrange === true
+                          ? 'color: #FFA500'
+                          : 'color: #f6d1ff'
+                      "
+                    ></div>
                   </div>
                   <div class="tm_shape_2 tm_type1 tm_primary_color">
-                    <div class="tm_shape_2_in tm_accent_color"></div>
+                    <div
+                      class="tm_shape_2_in tm_accent_color"
+                      :style="
+                        isBlue === true
+                          ? 'color: #007aff;'
+                          : isGreen === true
+                          ? 'color: #8fce00'
+                          : isPurple === true
+                          ? 'color: #ad3978'
+                          : isOrange === true
+                          ? 'color: #FFA500'
+                          : 'color: #f6d1ff'
+                      "
+                    ></div>
                   </div>
                   <!-- <div class="tm_shape_4 tm_primary_bg"></div> -->
                   <div class="tm_shape tm_type1">
-                    <div class="tm_shape_in tm_accent_bg"></div>
+                    <div
+                      class="tm_shape_in"
+                      :class="
+                        isBlue === true
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
+                    ></div>
                   </div>
                   <div class="tm_invoice_in">
                     <div class="tm_invoice_head tm_align_center tm_mb20">
@@ -4370,12 +4673,28 @@
                               <label for="invoiceLogo3">
                                 <div
                                   style="
-                                    background-color: #007aff;
+                                    
                                     border: 1px solid white;
                                     padding: 10px;
                                     border-radius: 30px;
-                                    color: white;
+                                    
                                     cursor: pointer;
+                                  "
+                                  :class="
+                                    isBlue === true
+                                      ? 'tm_accent_bg'
+                                      : isGreen === true
+                                      ? 'green_bg'
+                                      : isPurple === true
+                                      ? 'purple_bg'
+                                      : isOrange === true
+                                      ? 'orange_bg'
+                                      : 'gray_bg'
+                                  "
+                                  :style="
+                                    isGray === true
+                                      ? 'color: black !important'
+                                      : 'color: white !important'
                                   "
                                 >
                                   {{ isUploading }}
@@ -4486,9 +4805,9 @@
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color">    {{ $t("add_invoice.supplier") }}:</b>
-                        </p>
+                        </h6>
                         <validation-provider
                           #default="{ errors }"
                           name="supplierCompanyIdNumber"
@@ -4634,9 +4953,9 @@
                         class="tm_invoice_right tm_text_right"
                         style="width: 47%"
                       >
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
-                        </p>
+                        </h6>
 
                         <!-- Company/Person Identification-->
                         <validation-provider
@@ -4951,7 +5270,22 @@
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div
                                 class="d-none d-lg-flex p-custom"
-                                style="background-color: #007aff"
+                                :class="
+                                  isBlue === true
+                                    ? 'tm_accent_bg'
+                                    : isGreen === true
+                                    ? 'green_bg'
+                                    : isPurple === true
+                                    ? 'purple_bg'
+                                    : isOrange === true
+                                    ? 'orange_bg'
+                                    : 'gray_bg'
+                                "
+                                :style="
+                                  isGray === true
+                                    ? 'color: black !important'
+                                    : 'color: white !important'
+                                "
                               >
                                 <b-row
                                   class="flex-grow-1 px-1 invoice-add-transections"
@@ -4960,49 +5294,49 @@
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.s_no") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="4"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.item_service") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.qty") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.measure") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="2"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.single_price") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.currency") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="2"
-                                    class="tm_semi_bold tm_primary_color text-white"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.total_price") }}
                                   </b-col>
@@ -5225,11 +5559,20 @@
                       @click="addNewItemInItemForm"
                       class="mb-2"
                       style="
-                        background-color: #007aff !important;
                         border: 1px solid white;
                         padding: 10px;
                         border-radius: 30px;
-                        color: white !important;
+                      "
+                       :style="
+                        isBlue === true
+                          ? 'background-color: #007aff !important; color: white !important'
+                          : isGreen === true
+                          ? 'background-color: #8fce00 !important; color: white !important'
+                          : isPurple === true
+                          ? 'background-color: #ad3978 !important; color: white !important'
+                          : isOrange === true
+                          ? 'background-color: #FFA500 !important; color: white !important'
+                          : 'background-color: #f6d1ff !important; color: black !important'
                       "
                     >
                       {{ $t("add_invoice.add_item") }}
@@ -5790,8 +6133,18 @@
                     >
                       <path
                         d="M850 0.889398H0V150.889H184.505C216.239 150.889 246.673 141.531 269.113 124.872L359.112 58.0565C381.553 41.3977 411.987 32.0391 443.721 32.0391H850V0.889398Z"
-                        fill="#007AFF"
-                        fill-opacity="0.1"
+                        :fill="
+                          isBlue === true
+                            ? '#007aff'
+                            : isGreen === true
+                            ? '#8fce00'
+                            : isPurple === true
+                            ? '#ad3978'
+                            : isOrange === true
+                            ? '#FFA500'
+                            : '#f6d1ff'
+                        "
+                        fill-opacity="1"
                       />
                     </svg>
                   </div>
@@ -5803,8 +6156,18 @@
                     >
                       <path
                         d="M0 150.889H850V0.889408H665.496C633.762 0.889408 603.327 10.2481 580.887 26.9081L490.888 93.7224C468.447 110.381 438.014 119.74 406.279 119.74H0V150.889Z"
-                        fill="#007AFF"
-                        fill-opacity="0.1"
+                        :fill="
+                          isBlue === true
+                            ? '#007aff'
+                            : isGreen === true
+                            ? '#8fce00'
+                            : isPurple === true
+                            ? '#ad3978'
+                            : isOrange === true
+                            ? '#FFA500'
+                            : '#f6d1ff'
+                        "
+                        fill-opacity="1"
                       />
                     </svg>
                   </div>
@@ -5845,8 +6208,8 @@
                               <label for="invoiceLogo4">
                                 <div
                                   style="
-                                    background-color: rgba(0, 122, 255, 0.1);
-                                    border: 1px solid grey;
+                                     background-color: white;
+                                    border: 1px solidwhite;
                                     padding: 10px;
                                     border-radius: 30px;
                                     font-weight: 700px;
@@ -5879,7 +6242,15 @@
                         <img src="assets/img/arrow_bg.svg" alt="" />
                       </div>
                       <div class="tm_invoice_info_list">
-                        <p class="tm_invoice_number tm_m0" style="z-index: 9">
+                        <p
+                          class="tm_invoice_number tm_m0"
+                          style="z-index: 9"
+                          :style="
+                            isGray === true
+                              ? 'color: black !important'
+                              : 'color: white !important'
+                          "
+                        >
                           {{ $t("add_invoice.invoice") }}:
 
                           <span
@@ -5907,7 +6278,12 @@
                         </p>
                         <p
                           class="tm_invoice_date tm_m0"
-                          style="z-index: 9; margin-right: 0px"
+                          style="z-index: 9"
+                          :style="
+                            isGray === true
+                              ? 'color: black !important'
+                              : 'color: white !important'
+                          "
                         >
                         {{ $t("add_invoice.date") }}:
 
@@ -5926,7 +6302,18 @@
                           </span>
                         </p>
                         <div
-                          class="tm_invoice_info_list_bg tm_accent_bg_10"
+                          class="tm_invoice_info_list_bg"
+                          :class="
+                            isBlue === true
+                              ? 'tm_accent_bg'
+                              : isGreen === true
+                              ? 'green_bg'
+                              : isPurple === true
+                              ? 'purple_bg'
+                              : isOrange === true
+                              ? 'orange_bg'
+                              : 'gray_bg'
+                          "
                         ></div>
                       </div>
                     </div>
@@ -5974,9 +6361,9 @@
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color">    {{ $t("add_invoice.supplier") }}</b>
-                        </p>
+                        </h6>
                         <validation-provider
                           #default="{ errors }"
                           name="supplierCompanyIdNumber"
@@ -6122,9 +6509,9 @@
                         class="tm_invoice_right tm_text_right"
                         style="width: 47%"
                       >
-                        <p class="tm_mb2">
+                        <h6 class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
-                        </p>
+                        </h6>
 
                         <!-- Company/Person Identification-->
                         <validation-provider
@@ -6438,7 +6825,22 @@
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div
                                 class="d-none d-lg-flex p-custom"
-                                style="background-color: rgba(0, 122, 255, 0.1)"
+                                :class="
+                                  isBlue === true
+                                    ? 'tm_accent_bg'
+                                    : isGreen === true
+                                    ? 'green_bg'
+                                    : isPurple === true
+                                    ? 'purple_bg'
+                                    : isOrange === true
+                                    ? 'orange_bg'
+                                    : 'gray_bg'
+                                "
+                                :style="
+                                  isGray === true
+                                    ? 'color: black !important'
+                                    : 'color: white !important'
+                                "
                               >
                                 <b-row
                                   class="flex-grow-1 px-1 invoice-add-transections"
@@ -6447,49 +6849,49 @@
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.s_no") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="4"
-                                    class="tm_semi_bold tm_primary_color"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.item_service") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.qty") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.measure") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="2"
-                                    class="tm_semi_bold tm_primary_color"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.single_price") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="tm_semi_bold tm_primary_color"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.currency") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
                                     lg="2"
-                                    class="tm_semi_bold tm_primary_color"
+                                    class="tm_semi_bold"
                                   >
                                     {{ $t("add_invoice.total_price") }}
                                   </b-col>
@@ -6713,11 +7115,20 @@
                       @click="addNewItemInItemForm"
                       class="mb-2"
                       style="
-                        background-color: rgba(0, 122, 255, 0.1) !important;
                         border: 1px solid black;
                         padding: 10px;
                         border-radius: 30px;
-                        color: black !important;
+                      "
+                      :style="
+                        isBlue === true
+                          ? 'background-color: #007aff !important; color: white !important'
+                          : isGreen === true
+                          ? 'background-color: #8fce00 !important; color: white !important'
+                          : isPurple === true
+                          ? 'background-color: #ad3978 !important; color: white !important'
+                          : isOrange === true
+                          ? 'background-color: #FFA500 !important; color: white !important'
+                          : 'background-color: #f6d1ff !important; color: black !important'
                       "
                     >
                       {{ $t("add_invoice.add_item") }}
@@ -7288,7 +7699,7 @@
                 @click="invoiceVerify(invoiceData, AccountTypeOption)"
               >
                 <b-spinner v-if="loading" small variant="light" />
-                Verify
+                {{ $t("add_invoice.verify") }}
               </b-button>
               <b-button
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
@@ -7300,6 +7711,60 @@
                 {{ $t("add_invoice.clear") }}
               </b-button>
             </b-card>
+
+            <!-- covers -->
+            <div class="row mb-2">
+              <div
+                class="ml-1 cursor-pointer"
+                style="
+                  height: 25px;
+                  width: 25px;
+                  background-color: #ad3978;
+                  margin-right: 16px;
+                "
+                @click="applyCover(1)"
+              ></div>
+              <div
+                class="cursor-pointer"
+                style="
+                  height: 25px;
+                  width: 25px;
+                  background-color: #007aff;
+                  margin-right: 16px;
+                "
+                @click="applyCover(2)"
+              ></div>
+              <div
+                class="cursor-pointer"
+                style="
+                  height: 25px;
+                  width: 25px;
+                  background-color: #8fce00;
+                  margin-right: 16px;
+                "
+                @click="applyCover(3)"
+              ></div>
+              <div
+                class="cursor-pointer"
+                style="
+                  height: 25px;
+                  width: 25px;
+                  background-color: #ffa500;
+                  margin-right: 16px;
+                "
+                @click="applyCover(4)"
+              ></div>
+              <div
+                class="cursor-pointer"
+                style="
+                  height: 25px;
+                  width: 25px;
+                  background-color: #f6d1ff;
+                  margin-right: 16px;
+                "
+                @click="applyCover(5)"
+              ></div>
+            </div>
 
             <!-- template 1 -->
             <b-img
@@ -7599,6 +8064,46 @@ export default {
       };
     },
 
+     //
+     applyCover(val) {
+      if (val === 1) {
+        this.isPurple = true;
+        this.isBlue = false;
+        this.isGreen = false;
+        this.isOrange = false;
+        this.isGray = false;
+        this.invoiceData.invoiceColor = "PURPLE";
+      } else if (val === 2) {
+        this.isPurple = false;
+        this.isBlue = true;
+        this.isGreen = false;
+        this.isOrange = false;
+        this.isGray = false;
+        this.invoiceData.invoiceColor = "BLUE";
+      } else if (val === 3) {
+        this.isPurple = false;
+        this.isBlue = false;
+        this.isGreen = true;
+        this.isOrange = false;
+        this.isGray = false;
+        this.invoiceData.invoiceColor = "GREEN";
+      } else if (val === 4) {
+        this.isPurple = false;
+        this.isBlue = false;
+        this.isGreen = false;
+        this.isOrange = true;
+        this.isGray = false;
+        this.invoiceData.invoiceColor = "ORANGE";
+      } else {
+        this.isPurple = false;
+        this.isBlue = false;
+        this.isGreen = false;
+        this.isOrange = false;
+        this.isGray = true;
+        this.invoiceData.invoiceColor = "GRAY";
+      }
+    },
+
     switchTemplates(val) {
       if (val === 1) {
         this.isTemplateOne = true;
@@ -7847,6 +8352,12 @@ export default {
 
     const logoToUpload = ref("");
 
+    const isBlue = ref(false);
+    const isPurple = ref(false);
+    const isGreen = ref(false);
+    const isOrange = ref(false);
+    const isGray = ref(false);
+
     const currencyOptions = [
       { value: "лв.", text: "лв." },
       { value: "$", text: "$" },
@@ -7894,6 +8405,18 @@ export default {
         } else {
           isTemplateFive.value = true;
         }
+
+        if(invoiceData.value.invoiceColor === 'BLUE')
+        isBlue.value = true
+        else if(invoiceData.value.invoiceColor === 'PURPLE')
+        isPurple.value = true
+        else if(invoiceData.value.invoiceColor === 'GREEN')
+        isGreen.value = true
+        else if(invoiceData.value.invoiceColor === 'ORANGE')
+        isOrange.value = true
+        else
+        isGray.value = true
+
 
         // supplierID.value = response.data.supplierCompany.companyEic;
 
@@ -8588,6 +9111,11 @@ export default {
       ShowSuggestionPersonIdNumber,
       clearForm,
       clearAll,
+      isGray,
+      isPurple,
+      isGreen,
+      isOrange,
+      isBlue,
     };
   },
 };
@@ -9583,6 +10111,22 @@ ul {
 .tm_accent_bg,
 .tm_accent_bg_hover:hover {
   background-color: #007aff;
+}
+
+.gray_bg {
+  background-color: #f6d1ff !important;
+}
+
+.purple_bg {
+  background-color: #ad3978 !important;
+}
+
+.green_bg {
+  background-color: #8fce00 !important;
+}
+
+.orange_bg {
+  background-color: #ffa500 !important;
 }
 
 .tm_accent_bg_10 {
