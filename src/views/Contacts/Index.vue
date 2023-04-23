@@ -133,39 +133,12 @@ export default {
     return {
       codeVerticalIcon,
       socialAccounts: [
-        {
+         {
           logo: facebook,
           name: "Facebook",
           links: {
             username: "@CoherentAccounting",
-            link: "#",
-          },
-          connected: true,
-        },
-        {
-          logo: twitter,
-          name: "Twitter",
-          links: {
-            username: "@CoherentAccounting",
-            link: "#",
-          },
-          connected: true,
-        },
-        {
-          logo: intagram,
-          name: "Instagram",
-          links: {
-            username: "@CoherentAccounting",
-            link: "#",
-          },
-          connected: true,
-        },
-        {
-          logo: google,
-          name: "Google",
-          links: {
-            username: "@CoherentAccounting",
-            link: "#",
+            link: "https://www.facebook.com/groups/245304978016906",
           },
           connected: true,
         },
@@ -174,7 +147,7 @@ export default {
           name: "Youtube",
           links: {
             username: "@CoherentAccounting",
-            link: "#",
+            link: "https://www.youtube.com/@CoherenntAccounting/about",
           },
           connected: true,
         },
@@ -183,7 +156,7 @@ export default {
           name: "Gmail",
           links: {
             username: "@CoherentAccounting",
-            link: "#",
+            link: "admin@coherent-accounting.com",
           },
           connected: true,
         },
@@ -191,7 +164,7 @@ export default {
           logo: chat,
           name: "Chat",
           links: {
-            username: "@CoherentAccounting",
+            username: "В долния десен ъгъл има син чат прозорец за бърза връзка с нас",
             link: "#",
           },
           connected: true,
