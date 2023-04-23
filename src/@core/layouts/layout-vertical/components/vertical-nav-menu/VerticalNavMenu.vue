@@ -112,11 +112,11 @@ export default {
     route: 'companies',
     icon: 'BriefcaseIcon',
   },
-  {
+  /**{
     title: 'my_invoices',
     route: 'invoices',
     icon: 'FileTextIcon',
-  },
+  },*/
   {
     title: 'videos',
     route: 'videos',
