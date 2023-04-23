@@ -425,14 +425,38 @@
   "videos_content": [
     {
       "video": {
-        "link" : "https://www.youtube.com/embed/zpOULjyy-n8?rel=0",
-        "title" : "lorem ipsum dolor sit"
+        "link" : "https://www.youtube.com/embed/U2omQ7aMCQs",
+        "title" : "Как да се регистрирам за БЕЗПЛАТНАТА платформа"
       }
     },
     {
       "video": {
-        "link" : "https://www.youtube.com/embed/zpOULjyy-n8?rel=0",
-        "title" : "lorem ipsum dolor sit"
+        "link" : "https://www.youtube.com/embed/jHTmB6qD74g",
+        "title" : "Създаване на фирмено досие за секунди"
+      }
+    },
+    {
+      "video": {
+        "link" : "https://www.youtube.com/embed/PjoTtfjMxqo",
+        "title" : "Бързи Copy and Paste бутони при фирмено досие"
+      }
+    },
+    {
+      "video": {
+        "link" : "https://www.youtube.com/embed/Z9O7AQhVrqw",
+        "title" : "Създаване на красиви дизайнерски фактури с опция за лого и избор на цвят"
+      }
+    },
+    {
+      "video": {
+        "link" : "https://www.youtube.com/embed/fNDQLuq4_40",
+        "title" : "Генериране на Отчети по чл. 117, ал. 1 от ЗДДС за секунди"
+      }
+    },
+    {
+      "video": {
+        "link" : "https://www.youtube.com/embed/U2omQ7aMCQs",
+        "title" : "Как се съхраняват фирмени документи за водене на фирма"
       }
     }
   ],
