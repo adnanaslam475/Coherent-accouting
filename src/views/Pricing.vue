@@ -76,22 +76,17 @@
                     <!-- {{
                       monthlyPlanShow ? pricing.basicPlan.monthlyPrice : pricing.basicPlan.yearlyPlan.perMonth
                     }} -->
-                    <!-- {{
+                    {{
                       monthlyPlanShow ? monthlyBasic : annualBasicMonth
-                    }} -->
-                    0
+                    }}
 
                     </span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{  $t('pricing.month') }}</sub>
                   </div>
-                  <!-- <small
-                    v-show="!monthlyPlanShow"
-                    class="annual-pricing text-muted"
-                  >€ {{  annualBasic}} / {{  $t('pricing.year') }}</small> -->
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ 0 / {{  $t('pricing.year') }}</small>
+                  >€ {{  annualBasic}} / {{  $t('pricing.year') }}</small>
                 </div>
 
                 <!-- plan benefit -->
@@ -156,21 +151,16 @@
                     <!-- {{
                       monthlyPlanShow ? pricing.beginnerPlan.monthlyPrice : pricing.beginnerPlan.yearlyPlan.perMonth
                     }} -->
-                    <!-- {{
+                    {{
                       monthlyPlanShow ? monthlyBeginner : annualBeginnerMonth
-                    }} -->
-                    0
+                    }}
                     </span>
                     <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{  $t('pricing.month') }}</sub>
                   </div>
-                  <!-- <small
-                    v-show="!monthlyPlanShow"
-                    class="annual-pricing text-muted"
-                  >€ {{ annualBeginner  }} / {{  $t('pricing.year') }}</small> -->
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                  >€ 0 / {{  $t('pricing.year') }}</small>
+                  >€ {{ annualBeginner  }} / {{  $t('pricing.year') }}</small>
                 </div>
 
                 <!-- plan benefit -->

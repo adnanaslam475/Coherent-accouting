@@ -13,31 +13,16 @@
       <!-- /Brand logo-->
 
       <!-- Left Text-->
-      <b-col
-        lg="8"
-        class="d-none d-lg-flex align-items-center p-5"
-      >
+      <b-col lg="8" class="d-none d-lg-flex align-items-center p-5">
         <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
-          <b-img
-            fluid
-            :src="imgUrl"
-            alt="Register V2"
-          />
+          <b-img fluid :src="imgUrl" alt="Register V2" />
         </div>
       </b-col>
       <!-- /Left Text-->
 
       <!-- Register-->
-      <b-col
-        lg="4"
-        class="d-flex align-items-center auth-bg px-2 p-lg-5"
-      >
-        <b-col
-          sm="8"
-          md="6"
-          lg="12"
-          class="px-xl-2 mx-auto"
-        >
+      <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
+        <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
           <b-card-title class="mb-1">
             Adventure starts here 🚀
           </b-card-title>
@@ -46,140 +31,65 @@
           </b-card-text>
 
           <!-- form -->
-          <validation-observer
-            ref="registerForm"
-            #default="{invalid}"
-          >
-            <b-form
-              class="auth-register-form mt-2"
-              @submit.prevent="register"
-            >
+          <validation-observer ref="registerForm" #default="{ invalid }">
+            <b-form class="auth-register-form mt-2" @submit.prevent="register">
               <!-- username -->
-              <b-form-group
-                label="First Name"
-                label-for="register-firstname"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  name="firstname"
-                  vid="firstname"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="register-firstname"
-                    v-model="firstname"
-                    name="register-firstname"
-                    :state="errors.length > 0 ? false:null"
-                    placeholder="John"
-                  />
+              <b-form-group label="First Name" label-for="register-firstname">
+                <validation-provider #default="{ errors }" name="firstname" vid="firstname" rules="required">
+                  <b-form-input id="register-firstname" v-model="firstname" name="register-firstname"
+                    :state="errors.length > 0 ? false : null" placeholder="John" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
-              <b-form-group
-                label="Last Name"
-                label-for="register-lastname"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  name="lastname"
-                  vid="lastname"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="register-lastname"
-                    v-model="lastname"
-                    name="register-lastname"
-                    :state="errors.length > 0 ? false:null"
-                    placeholder="Doe"
-                  />
+              <b-form-group label="Last Name" label-for="register-lastname">
+                <validation-provider #default="{ errors }" name="lastname" vid="lastname" rules="required">
+                  <b-form-input id="register-lastname" v-model="lastname" name="register-lastname"
+                    :state="errors.length > 0 ? false : null" placeholder="Doe" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
               <!-- email -->
-              <b-form-group
-                label="Email"
-                label-for="register-email"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  name="Email"
-                  vid="email"
-                  rules="required|email"
-                >
-                  <b-form-input
-                    id="register-email"
-                    v-model="userEmail"
-                    name="register-email"
-                    :state="errors.length > 0 ? false:null"
-                    placeholder="john@example.com"
-                  />
+              <b-form-group label="Email" label-for="register-email">
+                <validation-provider #default="{ errors }" name="Email" vid="email" rules="required|email">
+                  <b-form-input id="register-email" v-model="userEmail" name="register-email"
+                    :state="errors.length > 0 ? false : null" placeholder="john@example.com" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
               <!-- password -->
-              <b-form-group
-                label-for="register-password"
-                label="Password"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  name="Password"
-                  vid="password"
-                  rules="required"
-                >
-                  <b-input-group
-                    class="input-group-merge"
-                    :class="errors.length > 0 ? 'is-invalid':null"
-                  >
-                    <b-form-input
-                      id="register-password"
-                      v-model="password"
-                      class="form-control-merge"
-                      :type="passwordFieldType"
-                      :state="errors.length > 0 ? false:null"
-                      name="register-password"
-                      placeholder="············"
-                    />
+              <b-form-group label-for="register-password" label="Password">
+                <validation-provider #default="{ errors }" name="Password" vid="password" rules="required">
+                  <b-input-group class="input-group-merge" :class="errors.length > 0 ? 'is-invalid' : null">
+                    <b-form-input id="register-password" v-model="password" class="form-control-merge"
+                      :type="passwordFieldType" :state="errors.length > 0 ? false : null" name="register-password"
+                      placeholder="············" />
                     <b-input-group-append is-text>
-                      <feather-icon
-                        :icon="passwordToggleIcon"
-                        class="cursor-pointer"
-                        @click="togglePasswordVisibility"
-                      />
+                      <feather-icon :icon="passwordToggleIcon" class="cursor-pointer" @click="togglePasswordVisibility" />
                     </b-input-group-append>
                   </b-input-group>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
-              <b-form-group>
-                <b-form-checkbox
-                  id="register-privacy-policy"
-                  v-model="status"
-                  name="checkbox-1"
-                >
-                  I agree to
-                  <b-link>privacy policy & terms</b-link>
-                </b-form-checkbox>
-              </b-form-group>
+              <b-form-checkbox id="register-privacy-policy" v-model="status" name="checkbox-1">
+                I agree to
+                <b-link>privacy policy & terms</b-link>
+              </b-form-checkbox>
+              <small class="text-danger" v-if="!status">Please agree to the privacy policy and terms.</small>
 
-              <b-button
-                variant="primary"
-                block
-                type="submit"
-                :disabled="invalid"
-              >
+              <b-button variant="primary" block type="submit" @click="register" :disabled="!isFormValid">
                 Sign up
               </b-button>
+
             </b-form>
           </validation-observer>
 
           <p class="text-center mt-2">
             <span>Already have an account?</span>
-            <b-link :to="{name:'auth-login'}">
+            <b-link :to="{ name: 'auth-login' }">
               <span>&nbsp;Sign in instead</span>
             </b-link>
           </p>
@@ -188,7 +98,7 @@
 
         </b-col>
       </b-col>
-    <!-- /Register-->
+      <!-- /Register-->
     </b-row>
   </div>
 </template>
@@ -204,6 +114,8 @@ import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import useJwt from '@/auth/jwt/useJwt'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue';
+
 
 export default {
   components: {
@@ -222,6 +134,7 @@ export default {
     BInputGroup,
     BInputGroupAppend,
     // validations
+    ToastificationContent,
     ValidationProvider,
     ValidationObserver,
   },
@@ -240,8 +153,17 @@ export default {
     }
   },
   computed: {
+    isFormValid() {
+      return this.firstname !== '' && this.lastname !== '' && this.userEmail !== '' && this.password !== '' && this.status;
+    },
     passwordToggleIcon() {
       return this.passwordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon'
+    },
+    statusError() {
+      if (!this.status) {
+        return "Please agree to the privacy policy and terms.";
+      }
+      return "";
     },
     imgUrl() {
       if (store.state.appConfig.layout.skin === 'dark') {
@@ -253,45 +175,69 @@ export default {
     },
   },
   methods: {
-    register() {
-      this.$refs.registerForm.validate().then(success => {
-        if (success) {
-          useJwt.clientToken()            
-            .then(res => {
-                let token = res.data.access_token
-                useJwt.register(token,{
-                  firstname: this.firstname,
-                  lastname: this.lastname,
-                  email: this.userEmail,
-                  password: this.password,
-                  accountType: "COMPANY",
-                  companyAddress: "test",
-                  companyName: "test",
-                  companyRegistrationNumber: "test",
-                  country: "test",
-                  gdpr: true,
-                  identifier: "test",
-                  ipAddress: "test",
-                  isoAlpha2Country: "test"
-                })
-                  .then(response => {
-                    useJwt.setToken(response.data.accessToken)
-                    useJwt.setRefreshToken(response.data.refreshToken)
-                    localStorage.setItem('userData', JSON.stringify(response.data.userData))
-                    this.$ability.update(response.data.userData.ability)
-                    this.$router.push('/')
-                  })
-                  .catch(error => {
-                    this.$refs.registerForm.setErrors(error)
-                  })
+    async register() {
+  if (!this.status) {
+    this.$toast({
+      component: ToastificationContent,
+      props: {
+        title: 'Terms and Conditions',
+        message: 'You must agree to the terms and conditions to continue.',
+        icon: 'AlertTriangleIcon',
+        variant: 'warning',
+      },
+    });
+    return;
+  }
 
-            })
-            .catch(error => {
-              this.$refs.registerForm.setErrors(error)
-            })
-        }
+  const success = await this.$refs.registerForm.validate();
+  if (success) {
+    useJwt.clientToken()
+      .then(res => {
+        let token = res.data.access_token;
+        useJwt.register(token, {
+          firstname: this.firstname,
+          lastname: this.lastname,
+          email: this.userEmail,
+          password: this.password,
+          accountType: "COMPANY",
+          companyAddress: "test",
+          companyName: "test",
+          companyRegistrationNumber: "test",
+          country: "test",
+          gdpr: true,
+          identifier: "test",
+          ipAddress: "test",
+          isoAlpha2Country: "test"
+        })
+          .then(response => {
+            useJwt.setToken(response.data.accessToken);
+            useJwt.setRefreshToken(response.data.refreshToken);
+            localStorage.setItem('userData', JSON.stringify(response.data.userData));
+            this.$ability.update(response.data.userData.ability);
+            this.$router.push('/');
+          })
+          .catch(error => {
+            // Check if the error message indicates that the user already exists.
+            if (error.response && error.response.data && typeof error.response.data.message === 'string' && error.response.data.message.toLowerCase().includes('already exists')) {
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: 'Registration Error',
+                  message: 'This account already exists. Please sign in instead.',
+                  icon: 'AlertTriangleIcon',
+                  variant: 'warning',
+                },
+              });
+            } else {
+              this.$refs.registerForm.setErrors(error);
+            }
+          });
       })
-    },
+      .catch(error => {
+        this.$refs.registerForm.setErrors(error);
+      });
+  }
+},
   },
 }
 /* eslint-disable global-require */

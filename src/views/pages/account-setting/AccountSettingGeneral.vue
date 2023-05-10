@@ -111,7 +111,7 @@
             sm="6"
           >
             <b-form-group
-              label="Company Name"
+            :label='$t("register.lbl_c_name")'
               label-for="account-company"
             >
               <validation-provider
@@ -135,7 +135,7 @@
             sm="6"
           >
             <b-form-group
-              label="Company Address"
+            :label='$t("register.lbl_c_address")'
               label-for="company-address"
             >
               <validation-provider
@@ -159,7 +159,7 @@
             sm="6"
           >
             <b-form-group
-              label="Vat Number"
+            :label='$t("register.lbl_c_vatNumber")'
               label-for="vatNumber"
             >
               <validation-provider
@@ -204,7 +204,7 @@
             sm="6"
           >
             <b-form-group
-              label="Company Registration Number"
+            :label='$t("register.lbl_c_registrationNumber")'
               label-for="company-register-number"
             >
               <validation-provider

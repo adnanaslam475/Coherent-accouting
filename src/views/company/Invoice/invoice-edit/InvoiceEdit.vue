@@ -93,7 +93,7 @@
                 class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input invoice-input-middle mb-md-0"
               >
                 <div class="mt-md-0 mt-2 flex-1">
-                  <b-card no-body class="invoice-add invoice-card"
+                  <b-card no-body class="invoice-add invoice-card" 
                   :style="
                       isBlue === true
                         ? 'border: 1px solid #007aff !important'
@@ -573,7 +573,7 @@
                               <b-list-group-item
                                 v-for="data in datalistPersonIdNumber"
                                 :key="data.eic"
-                                @click="autoCompletefnPersonIdNumber(data)"
+                                   @click="autoCompletefnPersonIdNumber(data)"
                               >
                                 {{ data.identificationNumber }}
                               </b-list-group-item>
@@ -2957,7 +2957,26 @@
                           </div>
                         </div>
                       </div>
+                      
                     </div>
+                    <table style="width:50%; text-align: center; margin-left: 3rem; margin-right: auto; margin-top:-2rem;  border-collapse: collapse; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+    <tr style="background-color: #f2f2f2;">
+      <th style="padding: 10px;">Creator Name</th>
+      <th style="padding: 10px;">Recipient Name</th>
+      <th style="padding: 10px;">Creator Signature</th>
+      <th style="padding: 10px;">Recipient Signature</th>
+    </tr>
+    <tr>
+      <td style="padding: 30px;"></td>
+      <td style="padding: 30px;"></td>
+      <td style="padding: 30px;">
+       
+      </td>
+      <td style="padding: 30px;">
+        
+      </td>
+    </tr>
+</table>
                   </div>
                 </div>
               </div>
@@ -4475,6 +4494,24 @@
                         </div>
                       </div>
                     </div>
+                    <table style="width:50%; text-align: center; margin-left: 3rem; margin-right: auto; margin-top:-5rem;  border-collapse: collapse; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+    <tr style="background-color: #f2f2f2;">
+      <th style="padding: 10px;">Creator Name</th>
+      <th style="padding: 10px;">Recipient Name</th>
+      <th style="padding: 10px;">Creator Signature</th>
+      <th style="padding: 10px;">Recipient Signature</th>
+    </tr>
+    <tr>
+      <td style="padding: 30px;"></td>
+      <td style="padding: 30px;"></td>
+      <td style="padding: 30px;">
+       
+      </td>
+      <td style="padding: 30px;">
+        
+      </td>
+    </tr>
+</table>
                   </div>
                 </div>
               </div>
@@ -5750,6 +5787,7 @@
                                     </span>
                                   </template>
                                 </v-select>
+                                
                                 <small class="text-danger">{{
                                   errors[0]
                                 }}</small>
@@ -5758,6 +5796,8 @@
                           </p>
                           <br />
                         </div>
+                  
+
                         <div
                           v-if="
                             invoiceData.vatPercent === '0' ||
@@ -5866,6 +5906,7 @@
                           </b-col>
                         </b-row>
                       </div>
+                      
                       <div class="tm_right_footer">
                         <div class="invoice-total-wrapper">
                           <div
@@ -6056,6 +6097,7 @@
                               </validation-provider>
                             </p>
                           </div>
+                          
                           <div
                             class="invoice-total-item"
                             style="justify-content: right"
@@ -6097,12 +6139,14 @@
                                     style="background-color: #f5f6fa"
                                   />
                                 </b-input-group>
+                                
                                 <small class="text-danger">{{
                                   errors[0]
                                 }}</small>
                               </validation-provider>
                             </p>
                           </div>
+                          
                         </div>
 
                         <div
@@ -6110,12 +6154,38 @@
                           style="z-index: -1"
                         ></div>
                       </div>
+                      
+                      
                     </div>
+                    <table style="width:50%; text-align: center; margin-left: auto; margin-right: auto; margin-top: -5rem; border-collapse: collapse; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+    <tr style="background-color: #f2f2f2;">
+      <th style="padding: 10px;">Creator Name</th>
+      <th style="padding: 10px;">Recipient Name</th>
+      <th style="padding: 10px;">Creator Signature</th>
+      <th style="padding: 10px;">Recipient Signature</th>
+    </tr>
+    <tr>
+      <td style="padding: 30px;"></td>
+      <td style="padding: 30px;"></td>
+      <td style="padding: 30px;">
+       
+      </td>
+      <td style="padding: 30px;">
+        
+      </td>
+    </tr>
+</table>
+                    
                   </div>
+                  
                 </div>
+                
               </div>
+              
             </div>
           </b-col>
+
+
 
           <!-- template 04 -->
           <b-col cols="12" xl="10" md="10" v-if="isTemplateFour">
@@ -7656,7 +7726,26 @@
                     </div>
                     <!-- .tm_note -->
                   </div>
+                  <table style="width:50%; text-align: center; margin-left: 3rem; margin-right: auto; margin-top:-5rem;  border-collapse: collapse; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+    <tr style="background-color: #f2f2f2;">
+      <th style="padding: 10px;">Creator Name</th>
+      <th style="padding: 10px;">Recipient Name</th>
+      <th style="padding: 10px;">Creator Signature</th>
+      <th style="padding: 10px;">Recipient Signature</th>
+    </tr>
+    <tr>
+      <td style="padding: 30px;"></td>
+      <td style="padding: 30px;"></td>
+      <td style="padding: 30px;">
+       
+      </td>
+      <td style="padding: 30px;">
+        
+      </td>
+    </tr>
+</table>
                 </div>
+
               </div>
             </div>
           </b-col>
@@ -7714,57 +7803,12 @@
 
             <!-- covers -->
             <div class="row mb-2">
-              <div
-                class="ml-1 cursor-pointer"
-                style="
-                  height: 25px;
-                  width: 25px;
-                  background-color: #ad3978;
-                  margin-right: 16px;
-                "
-                @click="applyCover(1)"
-              ></div>
-              <div
-                class="cursor-pointer"
-                style="
-                  height: 25px;
-                  width: 25px;
-                  background-color: #007aff;
-                  margin-right: 16px;
-                "
-                @click="applyCover(2)"
-              ></div>
-              <div
-                class="cursor-pointer"
-                style="
-                  height: 25px;
-                  width: 25px;
-                  background-color: #8fce00;
-                  margin-right: 16px;
-                "
-                @click="applyCover(3)"
-              ></div>
-              <div
-                class="cursor-pointer"
-                style="
-                  height: 25px;
-                  width: 25px;
-                  background-color: #ffa500;
-                  margin-right: 16px;
-                "
-                @click="applyCover(4)"
-              ></div>
-              <div
-                class="cursor-pointer"
-                style="
-                  height: 25px;
-                  width: 25px;
-                  background-color: #f6d1ff;
-                  margin-right: 16px;
-                "
-                @click="applyCover(5)"
-              ></div>
-            </div>
+          <div class="ml-1 cursor-pointer color-button" style="background-color: #ad3978;" @click="applyCover(1)"></div>
+          <div class="cursor-pointer color-button" style="background-color: #007aff;" @click="applyCover(2)"></div>
+          <div class="cursor-pointer color-button" style="background-color: #8fce00;" @click="applyCover(3)"></div>
+          <div class="cursor-pointer color-button" style="background-color: #ffa500;" @click="applyCover(4)"></div>
+          <div class="cursor-pointer color-button" style="background-color: #f6d1ff;" @click="applyCover(5)"></div>
+        </div>
 
             <!-- template 1 -->
             <b-img
@@ -7977,6 +8021,7 @@ export default {
       qtyValid,
     };
   },
+  
   mounted() {
     this.initTrHeight();
   },
@@ -9222,6 +9267,20 @@ export default {
 
 .v-select {
   margin-top: 3px !important;
+}
+.color-button {
+      height: 25px;
+      width: 25px;
+      margin-right: 16px;
+    }
+
+    
+      @media (min-width: 1200px) { /* modify this based on when the issue occurs */
+  .color-button {
+    /* Example: increase the size of the buttons at larger viewport sizes */
+    height: 23px;
+    width: 23px;
+  }
 }
 
 /*--------------------------------------------------------------

@@ -103,15 +103,23 @@
 
             <!-- checkbox -->
             <b-form-group>
-              <b-form-checkbox
-                id="register-privacy-policy"
-                v-model="status"
-                name="checkbox-1"
-              >
-                I agree to
-                <b-link>privacy policy & terms</b-link>
-              </b-form-checkbox>
-            </b-form-group>
+      <validation-provider
+        #default="{ errors }"
+        name="Privacy Policy"
+        rules="required"
+      >
+        <b-form-checkbox
+          id="register-privacy-policy"
+          v-model="status"
+          :state="errors.length > 0 ? false:null"
+          name="checkbox-1"
+        >
+          I agree to
+          <b-link>privacy policy & terms</b-link>
+        </b-form-checkbox>
+        <small class="text-danger">{{ errors[0] }}</small>
+      </validation-provider>
+    </b-form-group>
 
             <!-- submit button -->
             <b-button
@@ -198,6 +206,8 @@ export default {
     BInputGroupAppend,
     BFormCheckbox,
     // validations
+    required,
+      email,
     ValidationProvider,
     ValidationObserver,
   },
