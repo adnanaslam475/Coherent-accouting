@@ -155,8 +155,8 @@ export default {
           logo: gmail,
           name: "Gmail",
           links: {
-            username: "@CoherentAccounting",
-            link: "admin@coherent-accounting.com",
+            username: "admin@coherent-accounting.com",
+            link: "#",
           },
           connected: true,
         },
