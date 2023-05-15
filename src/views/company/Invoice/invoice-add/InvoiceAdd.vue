@@ -7355,8 +7355,8 @@
               <div
                 class="ml-1 cursor-pointer"
                 style="
-                  height: 25px;
-                  width: 25px;
+                  height: 23px;
+                  width: 23px;
                   background-color: #ad3978;
                   margin-right: 16px;
                 "
@@ -7365,8 +7365,8 @@
               <div
                 class="cursor-pointer"
                 style="
-                  height: 25px;
-                  width: 25px;
+                  height: 23px;
+                  width: 23px;
                   background-color: #007aff;
                   margin-right: 16px;
                 "
@@ -7375,8 +7375,8 @@
               <div
                 class="cursor-pointer"
                 style="
-                  height: 25px;
-                  width: 25px;
+                  height: 23px;
+                  width: 23px;
                   background-color: #8fce00;
                   margin-right: 16px;
                 "
@@ -7385,8 +7385,8 @@
               <div
                 class="cursor-pointer"
                 style="
-                  height: 25px;
-                  width: 25px;
+                  height: 23px;
+                  width: 23px;
                   background-color: #ffa500;
                   margin-right: 16px;
                 "
@@ -7395,8 +7395,8 @@
               <div
                 class="cursor-pointer"
                 style="
-                  height: 25px;
-                  width: 25px;
+                  height: 23px;
+                  width: 23px;
                   background-color: #f6d1ff;
                   margin-right: 16px;
                 "
@@ -7801,6 +7801,8 @@ export default {
       });
     },
     invoiceAdd(invoiceData, AccountTypeOption) {
+      //assign the data of recipient and creator
+      //creator supplier company
       invoiceData.bankApi.name = this.bankNameToSend;
       invoiceData.vatCondition = this.clauseToSend;
       if (this.isBank === false) {
@@ -8103,7 +8105,7 @@ export default {
         name: "",
       },
       vatCondition: "",
-      invoiceColor: "",
+      invoiceColor: "BLUE",
     });
 
     const supplierID = ref(null);
@@ -8653,24 +8655,29 @@ export default {
     };
 
     const clearAll = (type) => {
-      if (type == "supplier") {
-        invoiceData.value.supplierCompany = {
-          companyOwnerName: "",
-          companName: "",
-          companyEic: "",
-          companyVatEic: "",
-          companyAddress: "",
-        };
-      } else if (type == "recipient") {
-        invoiceData.value.recipientCompany = {
-          companyOwnerName: "",
-          companName: "",
-          companyEic: "",
-          companyVatEic: "",
-          companyAddress: "",
-        };
-      }
+  if (type == "supplier") {
+    invoiceData.value.supplierCompany = {
+      companyOwnerName: "",
+      companName: "",
+      companyEic: "",
+      companyVatEic: "",
+      companyAddress: "",
     };
+    invoiceData.value.creatorName = "";  // Add this
+    invoiceData.value.creatorSignature = "";  // Add this if you have a signature
+  } else if (type == "recipient") {
+    invoiceData.value.recipientCompany = {
+      companyOwnerName: "",
+      companName: "",
+      companyEic: "",
+      companyVatEic: "",
+      companyAddress: "",
+    };
+    invoiceData.value.recipientName = "";  // Add this
+    invoiceData.value.recipientSignature = "";  // Add this if you have a signature
+  }
+};
+
 
     return {
       supplierID,
@@ -8802,6 +8809,20 @@ export default {
   gap: 10px;
   justify-content: end;
   margin-bottom: 2rem;
+}
+.cursor-pointer {
+      height: 25px;
+      width: 25px;
+      margin-right: 16px;
+    }
+
+    
+      @media (min-width: 1200px) { /* modify this based on when the issue occurs */
+  .cursor-pointer{
+    /* Example: increase the size of the buttons at larger viewport sizes */
+    height: 23px;
+    width: 23px;
+  }
 }
 .invoice-add-input span.title.mr-1 {
   width: 12rem !important;

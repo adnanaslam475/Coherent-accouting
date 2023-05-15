@@ -454,6 +454,41 @@
             border-color: $color_value;
             background-color: $color_value;
           }
+          &.tm_accent_bg_checkbox {
+            .custom-control-input:checked ~ .custom-control-label::before,
+            .custom-control-input:active ~ .custom-control-label::before {
+              border-color: #007aff;
+              background-color: #007aff;
+            }
+          }
+          &.green_bg_checkbox {
+            .custom-control-input:checked ~ .custom-control-label::before,
+            .custom-control-input:active ~ .custom-control-label::before {
+              border-color: #8fce00;
+              background-color: #8fce00;
+            }
+          }
+          &.purple_bg_checkbox {
+            .custom-control-input:checked ~ .custom-control-label::before,
+            .custom-control-input:active ~ .custom-control-label::before {
+              border-color: #ad3978;
+              background-color: #ad3978;
+            }
+          }
+          &.orange_bg_checkbox {
+            .custom-control-input:checked ~ .custom-control-label::before,
+            .custom-control-input:active ~ .custom-control-label::before {
+              border-color: #ffa500;
+              background-color: #ffa500;
+            }
+          }
+          &.gray_bg_checkbox {
+            .custom-control-input:checked ~ .custom-control-label::before,
+            .custom-control-input:active ~ .custom-control-label::before {
+              border-color: #f6d1ff;
+              background-color: #f6d1ff;
+            }
+          }
           &.custom-checkbox,
           &.custom-radio {
             .custom-control-input:checked ~ .custom-control-label::before,

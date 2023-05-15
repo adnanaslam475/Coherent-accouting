@@ -74,15 +74,20 @@
                 </validation-provider>
               </b-form-group>
 
-              <b-form-checkbox id="register-privacy-policy" v-model="status" name="checkbox-1">
-                I agree to
-                <b-link>privacy policy & terms</b-link>
-              </b-form-checkbox>
+              <validation-provider #default="{ errors }" name="termsAndConditions" vid="termsAndConditions"
+                rules="required|is:true">
+                <b-form-checkbox id="register-privacy-policy" v-model="status" name="checkbox-1">
+                  I agree to
+                  <b-link>privacy policy & terms</b-link>
+                </b-form-checkbox>
+                <small class="text-danger">{{ errors[0] }}</small>
+              </validation-provider>
               <small class="text-danger" v-if="!status">Please agree to the privacy policy and terms.</small>
 
-              <b-button variant="primary" block type="submit" @click="register" :disabled="!isFormValid">
+              <b-button variant="primary" block type="submit" @click="register" :disabled="!isFormValid || !status">
                 Sign up
               </b-button>
+
 
             </b-form>
           </validation-observer>
@@ -150,6 +155,7 @@ export default {
       // validation
       required,
       email,
+
     }
   },
   computed: {
@@ -176,68 +182,68 @@ export default {
   },
   methods: {
     async register() {
-  if (!this.status) {
-    this.$toast({
-      component: ToastificationContent,
-      props: {
-        title: 'Terms and Conditions',
-        message: 'You must agree to the terms and conditions to continue.',
-        icon: 'AlertTriangleIcon',
-        variant: 'warning',
-      },
-    });
-    return;
-  }
+      if (!this.status) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: 'Terms and Conditions',
+            message: 'You must agree to the terms and conditions to continue.',
+            icon: 'AlertTriangleIcon',
+            variant: 'warning',
+          },
+        });
+        return;
+      }
 
-  const success = await this.$refs.registerForm.validate();
-  if (success) {
-    useJwt.clientToken()
-      .then(res => {
-        let token = res.data.access_token;
-        useJwt.register(token, {
-          firstname: this.firstname,
-          lastname: this.lastname,
-          email: this.userEmail,
-          password: this.password,
-          accountType: "COMPANY",
-          companyAddress: "test",
-          companyName: "test",
-          companyRegistrationNumber: "test",
-          country: "test",
-          gdpr: true,
-          identifier: "test",
-          ipAddress: "test",
-          isoAlpha2Country: "test"
-        })
-          .then(response => {
-            useJwt.setToken(response.data.accessToken);
-            useJwt.setRefreshToken(response.data.refreshToken);
-            localStorage.setItem('userData', JSON.stringify(response.data.userData));
-            this.$ability.update(response.data.userData.ability);
-            this.$router.push('/');
+      const success = await this.$refs.registerForm.validate();
+      if (success) {
+        useJwt.clientToken()
+          .then(res => {
+            let token = res.data.access_token;
+            useJwt.register(token, {
+              firstname: this.firstname,
+              lastname: this.lastname,
+              email: this.userEmail,
+              password: this.password,
+              accountType: "COMPANY",
+              companyAddress: "test",
+              companyName: "test",
+              companyRegistrationNumber: "test",
+              country: "test",
+              gdpr: true,
+              identifier: "test",
+              ipAddress: "test",
+              isoAlpha2Country: "test"
+            })
+              .then(response => {
+                useJwt.setToken(response.data.accessToken);
+                useJwt.setRefreshToken(response.data.refreshToken);
+                localStorage.setItem('userData', JSON.stringify(response.data.userData));
+                this.$ability.update(response.data.userData.ability);
+                this.$router.push('/');
+              })
+              .catch(error => {
+                // Check if the error message indicates that the user already exists.
+                if (error.response && error.response.data && typeof error.response.data.message === 'string' && error.response.data.message.toLowerCase().includes('already exists')) {
+                  this.$toast({
+                    component: ToastificationContent,
+                    props: {
+                      title: 'Registration Error',
+                      message: 'This account already exists. Please sign in instead.',
+                      icon: 'AlertTriangleIcon',
+                      variant: 'warning',
+                    },
+                  });
+                } else {
+                  this.$refs.registerForm.setErrors(error);
+                }
+              });
           })
           .catch(error => {
-            // Check if the error message indicates that the user already exists.
-            if (error.response && error.response.data && typeof error.response.data.message === 'string' && error.response.data.message.toLowerCase().includes('already exists')) {
-              this.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: 'Registration Error',
-                  message: 'This account already exists. Please sign in instead.',
-                  icon: 'AlertTriangleIcon',
-                  variant: 'warning',
-                },
-              });
-            } else {
-              this.$refs.registerForm.setErrors(error);
-            }
+            this.$refs.registerForm.setErrors(error);
           });
-      })
-      .catch(error => {
-        this.$refs.registerForm.setErrors(error);
-      });
-  }
-},
+      }
+    },
   },
 }
 /* eslint-disable global-require */
