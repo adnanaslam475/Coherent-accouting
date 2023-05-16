@@ -102,48 +102,39 @@
             </b-form-group>
 
             <!-- checkbox -->
-            <b-form-group>
-      <validation-provider
-        #default="{ errors }"
-        name="Privacy Policy"
-        rules="required"
-      >
-        <b-form-checkbox
-          id="register-privacy-policy"
-          v-model="status"
-          :state="errors.length > 0 ? false:null"
-          name="checkbox-1"
-        >
-          I agree to
-          <b-link>privacy policy & terms</b-link>
-        </b-form-checkbox>
-        <small class="text-danger">{{ errors[0] }}</small>
-      </validation-provider>
-    </b-form-group>
+            <b-form-checkbox
+    id="register-privacy-policy"
+    v-model="status"
+    :state="errors.length > 0 ? false:null"
+    name="checkbox-1"
+>
+    I agree to
+    <b-link>privacy policy & terms</b-link>
+</b-form-checkbox>
+<small class="text-danger">{{ errors[0] }}</small>
+</validation-provider>
+</b-form-group>
 
-            <!-- submit button -->
-            <b-button
-              variant="primary"
-              block
-              type="submit"
-            >
-              Sign up
-            </b-button>
-          </b-form>
-        </validation-observer>
+<!-- submit button -->
+<b-button variant="primary" block type="submit" @click="register" :disabled="!status">
+  Sign up
+</b-button>
 
-        <b-card-text class="text-center mt-2">
-          <span>Already have an account? </span>
-          <b-link :to="{name:'auth-login-v1'}">
-            <span>Sign in instead</span>
-          </b-link>
-        </b-card-text>
+</b-form>
+</validation-observer>
 
-        <div class="divider my-2">
-          <div class="divider-text">
-            or
-          </div>
-        </div>
+<b-card-text class="text-center mt-2">
+  <span>Already have an account? </span>
+  <b-link :to="{name:'auth-login-v1'}">
+    <span>Sign in instead</span>
+  </b-link>
+</b-card-text>
+
+<div class="divider my-2">
+  <div class="divider-text">
+    or
+  </div>
+</div>
 
         <!-- social buttons -->
         <div class="auth-footer-btn d-flex justify-content-center">
@@ -213,17 +204,17 @@ export default {
   },
   mixins: [togglePasswordVisibility],
   data() {
-    return {
-      regEmail: '',
-      username: '',
-      password: '',
-      status: '',
+  return {
+    regEmail: '',
+    username: '',
+    password: '',
+    status: false, // initialize status as false
 
-      // validation rules
-      required,
-      email,
-    }
-  },
+    // validation rules
+    required,
+    email,
+  }
+},
   computed: {
     passwordToggleIcon() {
       return this.passwordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon'

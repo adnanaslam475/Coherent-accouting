@@ -342,6 +342,32 @@
                     </table>
                   </div>
                 </div>
+                <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+  <tr>
+    <td style="text-align: center; padding: 30px;">
+      <div style=" margin-bottom: 20px;">
+        {{ invoiceData.supplierCompany.companyOwnerName }}
+      </div>
+      <div style="height: 50px; border-bottom: 1px dashed black;">
+        <!-- Space for supplier's signature -->
+      </div>
+      <div style="margin-top: 10px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+    <td style="text-align: center; padding: 30px;">
+      <div style=" margin-bottom: 20px;">
+        {{ invoiceData.recipientCompany.companyOwnerName }}
+      </div>
+      <div style="height: 50px; border-bottom: 1px dashed black;">
+        <!-- Space for recipient's signature -->
+      </div>
+      <div style="margin-top: 10px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+  </tr>
+</table>
               </div>
             </div>
           </div>
@@ -739,7 +765,35 @@
                     </table>
                   </div>
                 </div>
+                <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+  <tr>
+    <td style="text-align: center; padding: 30px;">
+      <div style=" margin-bottom: 20px;">
+        {{ invoiceData.supplierCompany.companyOwnerName }}
+      </div>
+      <div style="height: 50px; border-bottom: 1px dashed black;">
+        <!-- Space for supplier's signature -->
+      </div>
+      <div style="margin-top: 10px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+    <td style="text-align: center; padding: 30px;">
+      <div style=" margin-bottom: 20px;">
+        {{ invoiceData.recipientCompany.companyOwnerName }}
+      </div>
+      <div style="height: 50px; border-bottom: 1px dashed black;">
+        <!-- Space for recipient's signature -->
+      </div>
+      <div style="margin-top: 10px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+  </tr>
+</table>
+                
               </div>
+
             </div>
           </div>
         </div>
@@ -1101,6 +1155,7 @@
                         {{ invoiceData.vatCondition }}
                       </p>
                     </div>
+        
                   </div>
                   <div class="tm_right_footer">
                     <table>
@@ -1240,10 +1295,42 @@
                         </tr>
                       </tbody>
                     </table>
+                    
 
-                    <div class="tm_shape_3 tm_accent_bg_10"></div>
+
+                    <div class="tm_shape_3 tm_accent_bg_10">
+                      
+                    </div>
+       
                   </div>
                 </div>
+                <table class="no-page-break" style="width: 80%; margin: auto; padding-top: 1rem; border-collapse: collapse;">
+  <tr>
+    <td style="text-align: center; padding: 15px;">
+      <div style="margin-bottom: 10px;">
+        {{ invoiceData.supplierCompany.companyOwnerName }}
+      </div>
+      <div style="height: 30px; border-bottom: 1px dashed black;">
+        <!-- Space for supplier's signature -->
+      </div>
+      <div style="margin-top: 5px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+    <td style="text-align: center; padding: 15px;">
+      <div style="margin-bottom: 10px;">
+        {{ invoiceData.recipientCompany.companyOwnerName }}
+      </div>
+      <div style="height: 30px; border-bottom: 1px dashed black;">
+        <!-- Space for recipient's signature -->
+      </div>
+      <div style="margin-top: 5px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+  </tr>
+</table>
+          
               </div>
             </div>
           </div>
@@ -1708,6 +1795,34 @@
                     </table>
                   </div>
                 </div>
+                <div class="no-page-break" style="width: 50%; float: left;">
+    <table style="width: 100%; margin: auto; padding-top: 1rem; border-collapse: collapse;">
+      <tr>
+        <td style="text-align: center; padding: 15px;">
+          <div style="border-bottom: 1px solid black; margin-bottom: 10px;">
+            {{ invoiceData.supplierCompany.companyOwnerName }}
+          </div>
+          <div style="height: 30px; border-bottom: 1px dashed black;">
+            <!-- Space for supplier's signature -->
+          </div>
+          <div style="margin-top: 5px;">
+            {{ new Date().toLocaleDateString() }}
+          </div>
+        </td>
+        <td style="text-align: center; padding: 15px;">
+          <div style="border-bottom: 1px solid black; margin-bottom: 10px;">
+            {{ invoiceData.recipientCompany.companyOwnerName }}
+          </div>
+          <div style="height: 30px; border-bottom: 1px dashed black;">
+            <!-- Space for recipient's signature -->
+          </div>
+          <div style="margin-top: 5px;">
+            {{ new Date().toLocaleDateString() }}
+          </div>
+        </td>
+      </tr>
+    </table>
+</div>
               </div>
             </div>
           </div>
@@ -2343,6 +2458,9 @@ export default {
 };
 </script>
 <style scoped>
+.no-page-break {
+        page-break-inside: avoid;
+    }
 .invoice-table th {
   font-size: 10px !important;
 }

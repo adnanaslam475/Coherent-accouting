@@ -787,6 +787,32 @@
                       </table>
                     </div>
                   </div>
+                  <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+  <tr>
+    <td style="text-align: center; padding: 30px;">
+      <div style=" margin-bottom: 20px;">
+        {{ invoiceData.supplierCompany.companyOwnerName }}
+      </div>
+      <div style="height: 50px; border-bottom: 1px dashed black;">
+        <!-- Space for supplier's signature -->
+      </div>
+      <div style="margin-top: 10px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+    <td style="text-align: center; padding: 30px;">
+      <div style=" margin-bottom: 20px;">
+        {{ invoiceData.recipientCompany.companyOwnerName }}
+      </div>
+      <div style="height: 50px; border-bottom: 1px dashed black;">
+        <!-- Space for recipient's signature -->
+      </div>
+      <div style="margin-top: 10px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+  </tr>
+</table>
                 </div>
               </div>
             </div>
@@ -1101,6 +1127,32 @@
                       </table>
                     </div>
                   </div>
+                  <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+  <tr>
+    <td style="text-align: center; padding: 30px;">
+      <div style=" margin-bottom: 20px;">
+        {{ invoiceData.supplierCompany.companyOwnerName }}
+      </div>
+      <div style="height: 50px; border-bottom: 1px dashed black;">
+        <!-- Space for supplier's signature -->
+      </div>
+      <div style="margin-top: 10px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+    <td style="text-align: center; padding: 30px;">
+      <div style=" margin-bottom: 20px;">
+        {{ invoiceData.recipientCompany.companyOwnerName }}
+      </div>
+      <div style="height: 50px; border-bottom: 1px dashed black;">
+        <!-- Space for recipient's signature -->
+      </div>
+      <div style="margin-top: 10px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+  </tr>
+</table>
                 </div>
               </div>
             </div>
@@ -1490,6 +1542,33 @@
                     </div>
                   </div>
                 </div>
+
+                <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+  <tr>
+    <td style="text-align: center; padding: 30px;">
+      <div style=" margin-bottom: 20px;">
+        {{ invoiceData.supplierCompany.companyOwnerName }}
+      </div>
+      <div style="height: 50px; border-bottom: 1px dashed black;">
+        <!-- Space for supplier's signature -->
+      </div>
+      <div style="margin-top: 10px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+    <td style="text-align: center; padding: 30px;">
+      <div style=" margin-bottom: 20px;">
+        {{ invoiceData.recipientCompany.companyOwnerName }}
+      </div>
+      <div style="height: 50px; border-bottom: 1px dashed black;">
+        <!-- Space for recipient's signature -->
+      </div>
+      <div style="margin-top: 10px;">
+        {{ new Date().toLocaleDateString() }}
+      </div>
+    </td>
+  </tr>
+</table>
               </div>
             </div>
           </div>
@@ -1822,8 +1901,39 @@
                           </tr>
                         </tbody>
                       </table>
+
+                     
                     </div>
+                    
                   </div>
+                  <div style="width: 50%; float: left;">
+  <table style="width: 100%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+    <tr>
+      <td style="text-align: center; padding: 30px;">
+        <div style=" margin-bottom: 20px;">
+          {{ invoiceData.supplierCompany.companyOwnerName }}
+        </div>
+        <div style="height: 50px; border-bottom: 1px dashed black;">
+          <!-- Space for supplier's signature -->
+        </div>
+        <div style="margin-top: 10px;">
+          {{ new Date().toLocaleDateString() }}
+        </div>
+      </td>
+      <td style="text-align: center; padding: 30px;">
+        <div style=" margin-bottom: 20px;">
+          {{ invoiceData.recipientCompany.companyOwnerName }}
+        </div>
+        <div style="height: 50px; border-bottom: 1px dashed black;">
+          <!-- Space for recipient's signature -->
+        </div>
+        <div style="margin-top: 10px;">
+          {{ new Date().toLocaleDateString() }}
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
                 </div>
               </div>
             </div>
