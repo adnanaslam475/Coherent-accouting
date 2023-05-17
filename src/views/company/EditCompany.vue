@@ -1,370 +1,231 @@
 <template>
   <div>
-    <form-wizard
-          color="#0A64BC"
-          :title="null"
-          :subtitle="null"
-          shape="square"
-          :finish-button-text="$t('create_company.update')"
-          :next-button-text = "$t('create_company.next')"
-          :back-button-text="$t('create_company.previous')"
-          class="mb-3"
-          
-        >
-         <!-- First Tab: Company Details -->
-		 <!-- First Tab: Company Details -->
-		 <!-- First Tab: Company Details -->
-          <tab-content :title="$t('create_company.company_details')" :before-change="validationForm">
-            <validation-observer ref="companyRules" tag="form">
-              <b-row>
-            <b-col
-              cols="12"
-              class="mb-2"
-            >
+    <form-wizard color="#0A64BC" :title="null" :subtitle="null" shape="square"
+      :finish-button-text="$t('create_company.update')" :next-button-text="$t('create_company.next')"
+      :back-button-text="$t('create_company.previous')" class="mb-3">
+      <!-- First Tab: Company Details -->
+      <!-- First Tab: Company Details -->
+      <!-- First Tab: Company Details -->
+      <tab-content :title="$t('create_company.company_details')" :before-change="validationForm">
+        <validation-observer ref="companyRules" tag="form">
+          <b-row>
+            <b-col cols="12" class="mb-2">
               <h5 class="mb-0">
-                {{$t('create_company.company_details')}}
+                {{ $t('create_company.company_details') }}
               </h5>
               <small class="text-muted">
-                {{$t('create_company.update_details')}}
+                {{ $t('create_company.update_details') }}
               </small>
             </b-col>
-            </b-row>
-            <b-form-row>
-                <!-- Company Name -->
-                <b-col>
-                  <b-form-group
-                    id="input-group-1"
-                    :label= "$t('companies.company_name')"
-                    label-for="company_name"
-                  >
-                    <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('company_name')"
-                      rules="required"
-                    >
-                      <b-form-input
-                        id="company_name"
-                        v-model="getCompanyName"
-                        :state="errors.length > 0 ? false : null"
-                      />
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </b-form-group>
-                </b-col>
-                <!-- Company ID -->
-                <b-col>
-                  <b-form-group
-                    id="input-group-2"
-                    :label= "$t('create_company.company_id')"
-                    label-for="company_identification_number"
-                  >
-                    <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('company_identification_number')"
-                      rules="required"
-                    >
-                      <b-form-input
-                        id="company_identification_number"
-                        v-model="getCompanyID"
-                        :state="errors.length > 0 ? false : null"
-                      />
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </b-form-group>
-                </b-col>
-              </b-form-row>
+          </b-row>
+          <b-form-row>
+            <!-- Company Name -->
+            <b-col>
+              <b-form-group id="input-group-1" :label="$t('companies.company_name')" label-for="company_name">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_name')" rules="required">
+                  <b-form-input id="company_name" v-model="getCompanyName" :state="errors.length > 0 ? false : null" />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+            <!-- Company ID -->
+            <b-col>
+              <b-form-group id="input-group-2" :label="$t('create_company.company_id')"
+                label-for="company_identification_number">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_identification_number')"
+                  rules="required">
+                  <b-form-input id="company_identification_number" v-model="getCompanyID"
+                    :state="errors.length > 0 ? false : null" />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+          </b-form-row>
 
-              <b-form-row>
-                <!-- Company Address -->
-                <b-col>
-                  <b-form-group
-                    id="input-group-3"
-                    :label= "$t('add_invoice.company_address')"
-                    label-for="company_address"
-                  >
-                    <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('company_address')"
-                      rules="required"
-                    >
-                      <b-form-input
-                        id="company_address"
-                        v-model="getCompanyAddress"
-                        :state="errors.length > 0 ? false : null"
-                      />
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </b-form-group>
-                </b-col>
-                <!-- Company Country -->
-                <b-col>
-                  <b-form-group
-                    id="input-group-4"
-                    :label= "$t('register.lbl_country')"
-                    label-for="country"
-                  >
-                    <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('country')"
-                      rules="required"
-                    >
-                      <v-select
-                        v-model="getCompanyCountry"
-                        :options="getCountries"
-                        :filterBy="
-                          (option, search) => {
-                            return (
-                              (option.country || '')
-                                .toLocaleLowerCase()
-                                .indexOf(search.toLocaleLowerCase()) > -1
-                            );
-                          }
-                        "
-                       
-                        id="company-country"
-                        name="country"
-                        v-bind:placeholder="$t('Please select your country')"
-                        :value="$store.state.selected"
-                        v-on:input="updateCountryStatus()"
-                      >
-                        
+          <b-form-row>
+            <!-- Company Address -->
+            <b-col>
+              <b-form-group id="input-group-3" :label="$t('add_invoice.company_address')" label-for="company_address">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_address')" rules="required">
+                  <b-form-input id="company_address" v-model="getCompanyAddress"
+                    :state="errors.length > 0 ? false : null" />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+            <!-- Company Country -->
+            <b-col>
+              <b-form-group id="input-group-4" :label="$t('register.lbl_country')" label-for="country">
+                <validation-provider #default="{ errors }" v-bind:name="$t('country')" rules="required">
+                  <v-select v-model="getCompanyCountry" :options="getCountries" :filterBy="(option, search) => {
+                      return (
+                        (option.country || '')
+                          .toLocaleLowerCase()
+                          .indexOf(search.toLocaleLowerCase()) > -1
+                      );
+                    }
+                    " id="company-country" name="country" v-bind:placeholder="$t('Please select your country')"
+                    :value="$store.state.selected" v-on:input="updateCountryStatus()">
 
-                        <template #selected-option="option" v-if="isCountrySelected === false">
-                          <div
-                            style="
+
+                    <template #selected-option="option" v-if="isCountrySelected === false">
+                      <div style="
                               display: flex;
                               align-items: center;
                               justify-content: left;
                               grid-gap: 8px;
-                            "
-                          >
-                          <img :src='"@/assets/flags/" + getCompanyISO.toLowerCase() + ".png"' style="width: 30px; height: 20px"/>
-                            {{ getCompanyCountry }}
-                          </div>
-                        </template>
+                            ">
+                        <img :src='"@/assets/flags/" + getCompanyISO.toLowerCase() + ".png"'
+                          style="width: 30px; height: 20px" />
+                        {{ getCompanyCountry }}
+                      </div>
+                    </template>
 
 
-                        <template #selected-option="option" v-else>
-                          <div
-                            style="
+                    <template #selected-option="option" v-else>
+                      <div style="
                               display: flex;
                               align-items: center;
                               justify-content: left;
                               grid-gap: 8px;
-                            "
-                          >
-                          <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"' style="width: 30px; height: 20px"/>
+                            ">
+                        <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"'
+                          style="width: 30px; height: 20px" />
 
-                            {{ option.country }}
-                          </div>
-                        </template>
+                        {{ option.country }}
+                      </div>
+                    </template>
 
 
-                        <template v-slot:option="option">
-                          <span
-                            style="
+                    <template v-slot:option="option">
+                      <span style="
                               display: flex;
                               align-items: center;
                               justify-content: left;
                               grid-gap: 8px;
-                            "
-                          >
-                          <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"' style="width: 30px; height: 20px"/>
+                            ">
+                        <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"'
+                          style="width: 30px; height: 20px" />
 
-                            {{ option.country }}
-                          </span>
-                        </template>
-                      </v-select>
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
+                        {{ option.country }}
+                      </span>
+                    </template>
+                  </v-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
 
-                    
-                  </b-form-group>
-                </b-col>
-              </b-form-row>
 
-              <b-form-row>
-                <!-- Company onwner name -->
-                <b-col>
-                  <b-form-group
-                    id="input-group-5"
-                    :label= "$t('company_info.owner_name')"
-                    label-for="owner_name"
-                  >
-                    <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('owner_name')"
-                      rules="required"
-                    >
-                      <b-form-input
-                        id="owner_name"
-                        v-model="getCompOwnerName"
-                        :state="errors.length > 0 ? false : null"
-                      />
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </b-form-group>
-                </b-col>
-                <!-- company egn -->
-                <b-col>
-                  <b-form-group
-                    id="input-group-6"
-                    :label= "$t('company_info.owner_egn')"
-                    label-for="owner_egn"
-                  >
-                    <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('owner_egn')"
-                      rules="required|digits:10"
-                    >
-                      <b-form-input
-                        id="owner_name"
-                        v-model="getCompOwnerEgn"
-                        :state="errors.length > 0 ? false : null"
-                        type="number"
-                    :formatter="formatOwnerEGN"
-                      />
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </b-form-group>
-                </b-col>
+              </b-form-group>
+            </b-col>
+          </b-form-row>
 
-                 
-              </b-form-row>
-              <b-form-row>
-                <b-col
-                v-if="isVatCheck === true"><b-form-group
-                    id="input-group-7"
-                    :label="$t('add_invoice.company_vat')"
-                    label-for="company_vat_no"
-                  >
-                    <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('company_vat_number')"
-                      rules="required"
-                    >
-                      <b-form-input
-                        id="owner_name"
-                        v-model="getVatNumber"
-                        :state="errors.length > 0 ? false : null"
-                      />
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </b-form-group></b-col
-                >
-                <!-- Company Status -->
-                <b-col>
-                  <b-form-group
-                    id="input-group-4"
-                    :label= "$t('create_company.company_status')"
-                    label-for="status"
-                  >
-                    <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('status')"
-                      rules="required"
-                    >
-                      <v-select
-                        v-model="getCompanyStatus"
-                        :options="statusOptions"
-                        :filterBy="
-                          (option, search) => {
-                            return (
-                              (option.status || '')
-                                .toLocaleLowerCase()
-                                .indexOf(search.toLocaleLowerCase()) > -1
-                            );
-                          }
-                        "
-                       
-                        id="company-status"
-                        name="country-status"
-                        v-bind:placeholder="$t('Please select company status')"
-                        :value="$store.state.selected"
-                        v-on:input="updateCompanyStatus()"
-                        
-                      >
-                        
+          <b-form-row>
+            <!-- Company onwner name -->
+            <b-col>
+              <b-form-group id="input-group-5" :label="$t('company_info.owner_name')" label-for="owner_name">
+                <validation-provider #default="{ errors }" v-bind:name="$t('owner_name')" rules="required">
+                  <b-form-input id="owner_name" v-model="getCompOwnerName" :state="errors.length > 0 ? false : null" />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+            <!-- company egn -->
+            <b-col>
+              <b-form-group id="input-group-6" :label="$t('company_info.owner_egn')" label-for="owner_egn">
+                <validation-provider #default="{ errors }" v-bind:name="$t('owner_egn')" rules="required|digits:10">
+                  <b-form-input id="owner_name" v-model="getCompOwnerEgn" :state="errors.length > 0 ? false : null"
+                    type="number" :formatter="formatOwnerEGN" />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
 
-                        <template #selected-option="option" v-if="(isStatusSelected === true)" >
-                          <div
-                            style="
+
+          </b-form-row>
+          <b-form-row>
+            <b-col v-if="isVatCheck === true"><b-form-group id="input-group-7" :label="$t('add_invoice.company_vat')"
+                label-for="company_vat_no">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_vat_number')" rules="required">
+                  <b-form-input id="owner_name" v-model="getVatNumber" :state="errors.length > 0 ? false : null" />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group></b-col>
+            <!-- Company Status -->
+            <b-col>
+              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
+                <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
+                  <v-select v-model="getCompanyStatus" :options="statusOptions" :filterBy="(option, search) => {
+                      return (
+                        (option.status || '')
+                          .toLocaleLowerCase()
+                          .indexOf(search.toLocaleLowerCase()) > -1
+                      );
+                    }
+                    " id="company-status" name="country-status"
+                    v-bind:placeholder="$t('Please select company status')" :value="$store.state.selected"
+                    v-on:input="updateCompanyStatus()">
+
+
+                    <template #selected-option="option" v-if="(isStatusSelected === true)">
+                      <div style="
                               display: flex;
                               align-items: center;
                               justify-content: left;
                               grid-gap: 8px;
-                            "
-                          >
-                            {{ getCompanyStatus }}
-                          </div>
-                        </template>
+                            ">
+                        {{ getCompanyStatus }}
+                      </div>
+                    </template>
 
 
-                        <template #selected-option="option" v-else>
-                          <div
-                            style="
+                    <template #selected-option="option" v-else>
+                      <div style="
                               display: flex;
                               align-items: center;
                               justify-content: left;
                               grid-gap: 8px;
-                            "
-                          >
+                            ">
 
-                            {{ option.status }}
-                          </div>
-                        </template>
+                        {{ option.status }}
+                      </div>
+                    </template>
 
 
-                        <template v-slot:option="option">
-                          <span
-                            style="
+                    <template v-slot:option="option">
+                      <span style="
                               display: flex;
                               align-items: center;
                               justify-content: left;
                               grid-gap: 8px;
-                            "
-                          >
+                            ">
 
-                            {{ option.status }}
-                          </span>
-                        </template>
-                      </v-select>
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
+                        {{ option.status }}
+                      </span>
+                    </template>
+                  </v-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
 
-                    
-                  </b-form-group>
-                </b-col>
-                <b-col  v-if="(isVatCheck === false)"></b-col>
-              </b-form-row>
-              <b-form-row>
-                <b-col>
-                  <b-form-checkbox 
-                    id="vat-checkbox"
-                    name="vat-checkbox"
-                    @change="vatHandled()"
-                   :checked="isVatCheck"
-                  
-                  >
-                  {{ $t('create_company.vat') }}
-                  </b-form-checkbox>
-                </b-col>
-              </b-form-row>
-            </validation-observer>
-            </tab-content>
 
-             <!-- Second Tab: Account Details -->
-          <tab-content 
-          :title="$t('create_company.account_details')"
-            :before-change="validationFormTab2"
-          >
-            <validation-observer ref="accountRules" tag="form">
-              <b-row>
-            <b-col
-              cols="12"
-              class="mb-2"
-             
-            >
+              </b-form-group>
+            </b-col>
+            <b-col v-if="(isVatCheck === false)"></b-col>
+          </b-form-row>
+          <b-form-row>
+            <b-col>
+              <b-form-checkbox id="vat-checkbox" name="vat-checkbox" @change="vatHandled()" :checked="isVatCheck">
+                {{ $t('create_company.vat') }}
+              </b-form-checkbox>
+            </b-col>
+          </b-form-row>
+        </validation-observer>
+      </tab-content>
+
+      <!-- Second Tab: Account Details -->
+      <tab-content :title="$t('create_company.account_details')" :before-change="validationFormTab2">
+        <validation-observer ref="accountRules" tag="form">
+          <b-row>
+            <b-col cols="12" class="mb-2">
               <h5 class="mb-0">
                 {{ $t('create_company.account_details') }}
               </h5>
@@ -372,144 +233,84 @@
                 {{ $t('create_company.update_acc_details') }}
               </small>
             </b-col>
-            </b-row>
-              <b-form-row>
-                <b-col>
-                  <b-form-group
-                    id="input-group-1"
-                    :label="$t('create_company.company_bank_account')"
-                    label-for="company_bank_account"
-                  >
-                    <b-form-input
-                      id="company_bank_account"
-                      v-model="getBankAccount"
-                      type="text"
-                      placeholder="Company Bank Account"
-                      autocomplete="off"
-                      required
-                    ></b-form-input> </b-form-group
-                ></b-col>
-                <b-col>
-                  <b-form-group
-                    id="input-group-1"
-                    :label="$t('create_company.company_currency')"
-                    label-for="company_currency"
-                  >
-                  <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('company_currency')"
-                      rules="required"
-                    >
-                    <v-select
-                      v-model="getCompanyCurrency"
-                      :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                      :options="currencies"
-                      :value="$store.state.selected"
-                      v-on:input="updateCurrencyStatus()"
-                    >
-                      <template #selected-option="option" v-if="isCurrencySelected === false">
-                        <div
-                          style="
+          </b-row>
+          <b-form-row>
+            <b-col>
+              <b-form-group id="input-group-1" :label="$t('create_company.company_bank_account')"
+                label-for="company_bank_account">
+                <b-form-input id="company_bank_account" v-model="getBankAccount" type="text"
+                  placeholder="Company Bank Account" autocomplete="off" required></b-form-input> </b-form-group></b-col>
+            <b-col>
+              <b-form-group id="input-group-1" :label="$t('create_company.company_currency')"
+                label-for="company_currency">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_currency')" rules="required">
+                  <v-select v-model="getCompanyCurrency" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                    :options="currencies" :value="$store.state.selected" v-on:input="updateCurrencyStatus()">
+                    <template #selected-option="option" v-if="isCurrencySelected === false">
+                      <div style="
                             display: flex;
                             align-items: center;
                             justify-content: left;
                             grid-gap: 8px;
-                          "
-                        >
-                          {{ getCompanyCurrency }} 
-                         
-                        </div>
-                      </template>
-                      <template #selected-option="option" v-else>
-                        <div
-                          style="
-                            display: flex;
-                            align-items: center;
-                            justify-content: left;
-                            grid-gap: 8px;
-                          "
-                        >
-                          {{ option.value }} - {{ option.name }} 
-                         
-                        </div>
-                      </template>
-                      <template v-slot:option="option">
-                        <span
-                          style="
-                            display: flex;
-                            align-items: center;
-                            justify-content: left;
-                            grid-gap: 8px;
-                          "
-                        >
-                          <!-- <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"' style="width: 30px; height: 20px"/> -->
-                          {{ option.value }} - {{ option.name }} 
-                         
-                        </span>
-                      </template>
-                    </v-select>
-                    <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </b-form-group>
-                </b-col>
-              </b-form-row>
-              <b-form-row>
-                <b-col>
-                  <b-form-group
-                    id="input-group-1"
-                    :label="$t('create_company.company_phone_no')"
-                    label-for="company_phone"
-                  >
-                    <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('company_phone')"
-                      rules="required"
-                    >
-                      <b-form-input
-                        id="company_phone"
-                        v-model="getCompanyPhone"
-                        :state="errors.length > 0 ? false : null"
-                      />
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </b-form-group>
-                </b-col>
+                          ">
+                        {{ getCompanyCurrency }}
 
-                <b-col>
-                  <b-form-group
-                    id="input-group-1"
-                    :label="$t('create_company.company_email')"
-                    label-for="company_email"
-                  >
-                    <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('company email')"
-                      rules="required|email"
-                    >
-                      <b-form-input
-                        id="company_email"
-                        v-model="getCompanyEmail"
-                        :state="errors.length > 0 ? false : null"
-                      />
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </b-form-group>
-                </b-col>
-              </b-form-row>
-              <b-form-row>
-                <b-col
-                  ><b-form-group
-                    id="input-group-1"
-                    :label="$t('create_company.company_fin_year')"
-                    label-for="company_fin_year"
-                  >
-                  
-                    <validation-provider
-                      #default="{ errors }"
-                      v-bind:name="$t('company_fin_year')"
-                      rules="required"
-                    >
-                      <!-- <flat-pickr
+                      </div>
+                    </template>
+                    <template #selected-option="option" v-else>
+                      <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: left;
+                            grid-gap: 8px;
+                          ">
+                        {{ option.value }} - {{ option.name }}
+
+                      </div>
+                    </template>
+                    <template v-slot:option="option">
+                      <span style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: left;
+                            grid-gap: 8px;
+                          ">
+                        <!-- <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"' style="width: 30px; height: 20px"/> -->
+                        {{ option.value }} - {{ option.name }}
+
+                      </span>
+                    </template>
+                  </v-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+          <b-form-row>
+            <b-col>
+              <b-form-group id="input-group-1" :label="$t('create_company.company_phone_no')" label-for="company_phone">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_phone')" rules="required">
+                  <b-form-input id="company_phone" v-model="getCompanyPhone" :state="errors.length > 0 ? false : null" />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+
+            <b-col>
+              <b-form-group id="input-group-1" :label="$t('create_company.company_email')" label-for="company_email">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company email')" rules="required|email">
+                  <b-form-input id="company_email" v-model="getCompanyEmail" :state="errors.length > 0 ? false : null" />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+          <b-form-row>
+            <b-col><b-form-group id="input-group-1" :label="$t('create_company.company_fin_year')"
+                label-for="company_fin_year">
+
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_fin_year')" rules="required">
+                  <!-- <flat-pickr
                         id="company_fin_year"
                         class="form-control"
                         v-model="getCompFinYear"
@@ -518,38 +319,45 @@
                         style="background-color: white !important;"
                       /> -->
 
-                      <div class="position-relative mr-1">
-                        <flat-pickr
-                        id="company_fin_year"
-                        class="form-control"
-                        v-model="getCompFinYear"
-                        :state="errors.length > 0 ? false : null"
-                        placeholder="Select date"
-                        style="background-color: white !important;"
-                      />
-                          <feather-icon
-                            v-if="getCompFinYear === ''"
-                            size="16"
-                            icon="CalendarIcon"
-                            class="cursor-pointer clear-all"
-                          />
-                          <feather-icon
-                            v-else
-                            size="16"
-                            icon="XIcon"
-                            class="cursor-pointer clear-all"
-                            @click="getCompFinYear = ''"
-                          />
-                        </div>
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </b-form-group></b-col
-                >
-                <b-col></b-col>
-              </b-form-row>
-            </validation-observer>
-          </tab-content>
-            </form-wizard>
+                  <div class="position-relative mr-1">
+                    <flat-pickr id="company_fin_year" class="form-control" v-model="getCompFinYear"
+                      :state="errors.length > 0 ? false : null" placeholder="Select date"
+                      style="background-color: white !important;" />
+                    <feather-icon v-if="getCompFinYear === ''" size="16" icon="CalendarIcon"
+                      class="cursor-pointer clear-all" />
+                    <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                      @click="getCompFinYear = ''" />
+                  </div>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group></b-col>
+            <b-col></b-col>
+          </b-form-row>
+        </validation-observer>
+      </tab-content>
+
+      <!-- Third Tab: Export:Details -->
+      <tab-content :title="$t('create_company.export_details')" :before-change="validationFormTab3">
+  <validation-observer ref="exportRules" tag="form">
+    <b-row>
+      <b-col>
+        <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
+  <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
+    <b-form-select id="platformPropertiesSelect" v-model="selectedPlatformProperty" :options="platformPropertiesOptions"></b-form-select>
+    <small class="text-danger">{{ errors[0] }}</small>
+  </validation-provider>
+  <div v-for="(value, label) in selectedPlatformProperties" :key="label">
+  <b-form-group :label="label">
+    <b-form-input v-model="selectedPlatformProperties[label]"></b-form-input>
+  </b-form-group>
+</div>
+</b-form-group>
+
+      </b-col>
+    </b-row> <!-- Closing tag for b-row added -->
+  </validation-observer>
+</tab-content>
+    </form-wizard>
   </div>
 </template>
 
@@ -618,8 +426,8 @@ export default {
   data() {
     return {
       isStatusSelected: '',
-      statusOptions:[
-      { status: "ACTIVE"},
+      statusOptions: [
+        { status: "ACTIVE" },
         { status: "INAVTIVE" },
       ],
       getCompanyStatus: "",
@@ -630,19 +438,19 @@ export default {
       getCompanyCountry: "",
       getCompOwnerName: "",
       getCompanyID: "",
-      getCompOwnerEgn:"",
-      getVatNumber: "", 
+      getCompOwnerEgn: "",
+      getVatNumber: "",
       isVatCheck: false,
       getBankAccount: "",
       getCompanyCurrency: "",
-      getCompanyPhone:"",
-      getCompFinYear:"",
-      getCompanyISO:"",
-      getCountries:[],
+      getCompanyPhone: "",
+      getCompFinYear: "",
+      getCompanyISO: "",
+      getCountries: [],
       isCountrySelected: false,
       isCurrencySelected: false,
-      companyCountrySelected : "",
-      companyCountryISOSelected : "",
+      companyCountrySelected: "",
+      companyCountryISOSelected: "",
       companyCurrencySelected: "",
       currencies: [
         { name: "Afghan Afghani", value: "AFN", symbol: "؋" },
@@ -663,7 +471,7 @@ export default {
         { name: "Bhutanese Ngultrum", value: "BTN", symbol: "Nu" },
         { name: "Bitcoin", value: "BTC", symbol: "฿" },
         { name: "Bolivian Boliviano", value: "BOB", symbol: "Bs" },
-        {name: "Bosnia-Herzegovina Convertible Mark",value: "BAM",symbol: "KM"},
+        { name: "Bosnia-Herzegovina Convertible Mark", value: "BAM", symbol: "KM" },
         { name: "Botswanan Pula", value: "BWP", symbol: "P" },
         { name: "Brazilian Real", value: "BRL", symbol: "R$" },
         { name: "British Pound Sterling", value: "GBP", symbol: "£" },
@@ -808,106 +616,125 @@ export default {
         { value: "YER", name: "Yemeni Rial", symbol: "﷼" },
         { value: "ZMK", name: "Zambian Kwacha", symbol: "ZK" },
       ],
+      platformProperties: [],
+    platformPropertiesOptions: [],  // Add this line
+    selectedPlatformProperty: null,
+    selectedPlatformProperties: [],  // new data property
+    platformPropertiesData: {},
+    exportProperties: {},
     };
   },
+  computed: {
+   platformPropertiesOptions() {
+     return this.platformProperties.map(({ key, item }) => ({
+       value: { key, item },
+       text: `${key}: ${item}`,
+     }));
+   },
+},
+
+
   methods: {
     //
-    formatOwnerEGN(e){
-     return String(e).substring(0,10);
-  },
+    formatOwnerEGN(e) {
+      return String(e).substring(0, 10);
+    },
     goBack() {
       return this.$router.go(-1);
     },
 
     //update companyInfo
     async updateCompanyInfo() {
-      let self = this;
-      if(this.isVatCheck === false){
-        this.getVatNumber = "";
-      }
-      if(this.isCountrySelected === true){
-        this.companyCountrySelected = this.getCompanyCountry.country;
-        this.companyCountryISOSelected = this.getCompanyCountry.isoAlpha2Country;
-        this.getCompanyCountry =  this.companyCountrySelected;
-        this.getCompanyISO =  this.companyCountryISOSelected;
-      }
-      if(this.isCurrencySelected === true){
-        this.companyCurrencySelected = this.getCompanyCurrency.value;
-        this.getCompanyCurrency = this.companyCurrencySelected;
-      }
-      if(this.isStatusSelected === false){
-        this.getCompanyStatus = this.getCompanyStatus.status;
-      }
-      var data = JSON.stringify({
-        companyAddress: this.getCompanyAddress,
-        companyCountry: this.getCompanyCountry,
-        companyIdentificationNumber: this.getCompanyID,
-        companyMail: this.getCompanyEmail,
-        companyName: this.getCompanyName,
-        companyBankAccount: this.getBankAccount,
-        companyCurrency: this.getCompanyCurrency,
-        companyFinancialStartOfYear:
-          this.getCompFinYear,
-        companyIsoAlpha2Country: this.getCompanyISO,
-        companyOwnerApi: {
-          companName: this.companyRecord.companyOwnerApi.companName,
-          companyAddress: this.companyRecord.companyOwnerApi.companyAddress,
-          companyEic: this.companyRecord.companyOwnerApi.companyEic,
-          companyOwnerName: this.getCompOwnerName,
-          companyVatEic: this.companyRecord.companyOwnerApi.companyVatEic,
-          ownerEGN: this.getCompOwnerEgn,
-        },
-        companyPhone: this.getCompanyPhone,
-        companyVatAccepted: this.isVatCheck,
-        companyVatNumber: this.getVatNumber,
-        id: this.companyID,
-        status:  this.getCompanyStatus
-      });
+  let self = this;
 
-      var config = {
-        method: "put",
-        url: "/account/api/company/update/" + this.companyID,
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          "Access-Control-Allow-Credentials": true,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:8080",
-        },
-        data: data,
-      };
+  if (this.isVatCheck === false) {
+    this.getVatNumber = "";
+  }
+  if (this.isCountrySelected === true) {
+    this.companyCountrySelected = this.getCompanyCountry.country;
+    this.companyCountryISOSelected = this.getCompanyCountry.isoAlpha2Country;
+    this.getCompanyCountry = this.companyCountrySelected;
+    this.getCompanyISO = this.companyCountryISOSelected;
+  }
+  if (this.isCurrencySelected === true) {
+    this.companyCurrencySelected = this.getCompanyCurrency.value;
+    this.getCompanyCurrency = this.companyCurrencySelected;
+  }
+  if (this.isStatusSelected === false) {
+    this.getCompanyStatus = this.getCompanyStatus.status;
+  }
 
-      const data1 = await axios(config)
-      .then(function (response) {
-  // console.log(JSON.stringify(response.data));
-        self.$toast({
-          component: ToastificationContent,
-          props: {
+  var data = JSON.stringify({
+    companyAddress: this.getCompanyAddress,
+    companyCountry: this.getCompanyCountry,
+    companyIdentificationNumber: this.getCompanyID,
+    companyMail: this.getCompanyEmail,
+    companyName: this.getCompanyName,
+    companyBankAccount: this.getBankAccount,
+    companyCurrency: this.getCompanyCurrency,
+    companyFinancialStartOfYear: this.getCompFinYear,
+    companyIsoAlpha2Country: this.getCompanyISO,
+    companyOwnerApi: {
+      companName: this.companyRecord.companyOwnerApi.companName,
+      companyAddress: this.companyRecord.companyOwnerApi.companyAddress,
+      companyEic: this.companyRecord.companyOwnerApi.companyEic,
+      companyOwnerName: this.getCompOwnerName,
+      companyVatEic: this.companyRecord.companyOwnerApi.companyVatEic,
+      ownerEGN: this.getCompOwnerEgn,
+    },
+    companyPhone: this.getCompanyPhone,
+    companyVatAccepted: this.isVatCheck,
+    companyVatNumber: this.getVatNumber,
+    id: this.companyID,
+    status: this.getCompanyStatus,
+    exportProperties: {
+      id: this.exportProperties.id,
+      keyValues: this.selectedPlatformProperties,
+      platform: this.selectedPlatformProperty
+    }
+  });
+
+  var config = {
+    method: "put",
+    url: "/account/api/company/update/" + this.companyID,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      "Access-Control-Allow-Credentials": true,
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "http://localhost:8080",
+    },
+    data: data,
+  };
+
+  await axios(config)
+    .then(function (response) {
+      self.$toast({
+        component: ToastificationContent,
+        props: {
           title: `Company Updated Successfully`,
-                  icon: "EditIcon",
-                  variant: "success",
-                },
-              });
-              return self.$router.go(-1);
-            })
-
-        .catch(function (error) {
-          console.log(error);
-              self.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: `Error updating company info`,
-                  icon: 'AlertTriangleIcon',
-                  variant: 'danger',
-                  timer: 1700,
-
-                },
-              });
-              setTimeout(() => {
+          icon: "EditIcon",
+          variant: "success",
+        },
+      });
+      return self.$router.go(-1);
+    })
+    .catch(function (error) {
+      console.log(error);
+      self.$toast({
+        component: ToastificationContent,
+        props: {
+          title: `Error updating company info`,
+          icon: 'AlertTriangleIcon',
+          variant: 'danger',
+          timer: 1700,
+        },
+      });
+      setTimeout(() => {
         self.$router.go();
       }, 1740);
-            })
-      
-    },
+    });
+},
+
 
     //getting company info
     async getCompanyInfo() {
@@ -918,156 +745,214 @@ export default {
           "Access-Control-Allow-Origin": "http://localhost:8080",
         },
       })
-      .then((response) => {
-        this.companyRecord = response.data;
-        this.form = response.data;
-        this.getCompanyName = this.companyRecord.companyName;
-        this.getCompanyID = this.companyRecord.companyIdentificationNumber;
-        this.getCompanyAddress = this.companyRecord.companyAddress;
-        this.getCompanyCountry = this.companyRecord.companyCountry;
-        this.getCompOwnerName =
-          this.companyRecord.companyOwnerApi.companyOwnerName;
+        .then((response) => {
+          this.companyRecord = response.data;
+          this.form = response.data;
+          this.getCompanyName = this.companyRecord.companyName;
+          this.getCompanyID = this.companyRecord.companyIdentificationNumber;
+          this.getCompanyAddress = this.companyRecord.companyAddress;
+          this.getCompanyCountry = this.companyRecord.companyCountry;
+          this.getCompOwnerName =
+            this.companyRecord.companyOwnerApi.companyOwnerName;
           this.getCompOwnerEgn =
-          this.companyRecord.companyOwnerApi.ownerEGN;
+            this.companyRecord.companyOwnerApi.ownerEGN;
           this.isVatCheck = this.companyRecord.companyVatAccepted;
           this.getVatNumber = this.companyRecord.companyVatNumber;
           this.getBankAccount = this.companyRecord.companyBankAccount;
           this.getCompanyCurrency = this.companyRecord.companyCurrency;
-          this.getCompanyPhone = this.companyRecord.companyPhone;
-          this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
+        this.getCompanyPhone = this.companyRecord.companyPhone;
+        this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
         this.getCompanyEmail = this.companyRecord.companyMail;
-        this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;  
+        this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;
         this.getCompanyStatus = this.companyRecord.status;
-        if(this.getCompanyStatus === null){
+        // for getting exportproperties
+        this.exportProperties = this.companyRecord.exportProperties || {};
+        if (this.exportProperties.platform) {
+          this.selectedPlatformProperty = this.exportProperties.platform;
+          this.selectedPlatformProperties = this.exportProperties.keyValues;
+        }
+        if (this.getCompanyStatus === null) {
           this.isStatusSelected = false;
         }
-        else{
+        else {
           this.isStatusSelected = true;
         }
-        })
-        .catch((error) => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: "Error fetching company info",
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
-            },
-          });
-        });
-
-      // if (data.data != "") {
-      //   this.companyRecord = data.data;
-      //   this.form = data.data;
-      //   this.getCompanyName = this.companyRecord.companyName;
-      //   this.getCompanyID = this.companyRecord.companyIdentificationNumber;
-      //   this.getCompanyAddress = this.companyRecord.companyAddress;
-      //   this.getCompanyCountry = this.companyRecord.companyCountry;
-      //   this.getCompOwnerName =
-      //     this.companyRecord.companyOwnerApi.companyOwnerName;
-      //     this.getCompOwnerEgn =
-      //     this.companyRecord.companyOwnerApi.ownerEGN;
-      //     this.isVatCheck = this.companyRecord.companyVatAccepted;
-      //     this.getVatNumber = this.companyRecord.companyVatNumber;
-      //     this.getBankAccount = this.companyRecord.companyBankAccount;
-      //     this.getCompanyCurrency = this.companyRecord.companyCurrency;
-      //     this.getCompanyPhone = this.companyRecord.companyPhone;
-      //     this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
-      //   this.getCompanyEmail = this.companyRecord.companyMail;
-      //   this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;  
-      //   this.getCompanyStatus = this.companyRecord.status;
-      //   if(this.getCompanyStatus === null){
-      //     this.isStatusSelected = false;
-      //   }
-      //   else{
-      //     this.isStatusSelected = true;
-      //   }
-      // }
-
-
-    },
-
-    //
-    updateCompanyStatus(){
-      this.isStatusSelected = false;
-    },
-
-
-
-    //
-    updateCountryStatus(){
-      this.isCountrySelected = true;
-    },
-
-    
-
-     //
-     updateCurrencyStatus(){
-      this.isCurrencySelected = true;
-     },
-  
-    //
-    async populateCountries() {
-      var config = {
-        method: "get",
-        url: "/account/api/countries",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          "Access-Control-Allow-Credentials": true,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:8080",
-        },
-      };
-
-      const data = await axios(config);
-
-      if (data.data != "") {
-        this.getCountries = data.data;
-      }
-    },
-
-    //validation check for account details
-    validationFormTab2() {
-      return new Promise((resolve, reject) => {
-        this.$refs.accountRules.validate().then((success) => {
-          if (success) {
-            this.updateCompanyInfo();
-          } else {
-            reject();
-          }
+      })
+      .catch((error) => {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: "Error fetching company info",
+            icon: 'AlertTriangleIcon',
+            variant: 'danger',
+          },
         });
       });
-    },
-    //validation check for company details
-    validationForm() {
-      return new Promise((resolve, reject) => {
-        this.$refs.companyRules.validate().then((success) => {
-          if (success) {
-            resolve(true);
-          } else {
-            reject(); 
-          }
-        });
+
+    // if (data.data != "") {
+    //   this.companyRecord = data.data;
+    //   this.form = data.data;
+    //   this.getCompanyName = this.companyRecord.companyName;
+    //   this.getCompanyID = this.companyRecord.companyIdentificationNumber;
+    //   this.getCompanyAddress = this.companyRecord.companyAddress;
+    //   this.getCompanyCountry = this.companyRecord.companyCountry;
+    //   this.getCompOwnerName =
+    //     this.companyRecord.companyOwnerApi.companyOwnerName;
+    //     this.getCompOwnerEgn =
+    //     this.companyRecord.companyOwnerApi.ownerEGN;
+    //     this.isVatCheck = this.companyRecord.companyVatAccepted;
+    //     this.getVatNumber = this.companyRecord.companyVatNumber;
+    //     this.getBankAccount = this.companyRecord.companyBankAccount;
+    //     this.getCompanyCurrency = this.companyRecord.companyCurrency;
+    //     this.getCompanyPhone = this.companyRecord.companyPhone;
+    //     this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
+    //   this.getCompanyEmail = this.companyRecord.companyMail;
+    //   this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;  
+    //   this.getCompanyStatus = this.companyRecord.status;
+    //   if(this.getCompanyStatus === null){
+    //     this.isStatusSelected = false;
+    //   }
+    //   else{
+    //     this.isStatusSelected = true;
+    //   }
+    // }
+
+
+  },
+
+  //
+  updateCompanyStatus() {
+    this.isStatusSelected = false;
+  },
+
+
+
+  //
+  updateCountryStatus() {
+    this.isCountrySelected = true;
+  },
+
+
+
+  //
+  updateCurrencyStatus() {
+    this.isCurrencySelected = true;
+  },
+
+  //
+  async populateCountries() {
+    var config = {
+      method: "get",
+      url: "/account/api/countries",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        "Access-Control-Allow-Credentials": true,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+      },
+    };
+
+    const data = await axios(config);
+
+    if (data.data != "") {
+      this.getCountries = data.data;
+    }
+  },
+  async getPlatformProperties() {
+var config = {
+  method: "get",
+  url: "/account/api/export/get-platforms-properties",
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    "Access-Control-Allow-Credentials": true,
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:8080",
+  },
+};
+
+const response = await axios(config);  // Here is the correction
+
+if (response.data != "") {
+  this.platformProperties = Object.keys(response.data);  // Only save keys
+  this.platformPropertiesData = response.data;  // Save whole data
+
+  // Update the platformPropertiesOptions here
+  this.platformPropertiesOptions = this.platformProperties.map(property => {
+    return {value: property, text: property}
+  });
+}
+},
+
+  //validation check for account details
+  validationFormTab2() {
+    return new Promise((resolve, reject) => {
+      this.$refs.accountRules.validate().then((success) => {
+        if (success) {
+          this.getPlatformProperties();
+          resolve(true);
+          // this.updateCompanyInfo();
+        } else {
+          reject();
+        }
       });
-    },
-
-    //
-    vatHandled(){
-      // this.isVatCheck = !this.isVatCheck; 
-      if(this.isVatCheck === true){
-        this.isVatCheck = false;
-      }
-      else{
-        this.isVatCheck = true;
-      }
-    },
+    });
+  },
+  //validation check for account details
+  validationFormTab3() {
+    return new Promise((resolve, reject) => {
+      this.$refs.exportRules.validate().then((success) => {
+        if (success) {
+          this.updateCompanyInfo();
+        } else {
+          reject();
+        }
+      });
+    });
+  },
+  //validation check for company details
+  validationForm() {
+    return new Promise((resolve, reject) => {
+      this.$refs.companyRules.validate().then((success) => {
+        if (success) {
+          resolve(true);
+        } else {
+          reject();
+        }
+      });
+    });
   },
 
-  created: function () {
-    this.companyID = this.$route.params.id;
-    this.getCompanyInfo();
-    this.populateCountries();
+  //
+  vatHandled() {
+    // this.isVatCheck = !this.isVatCheck; 
+    if (this.isVatCheck === true) {
+      this.isVatCheck = false;
+    }
+    else {
+      this.isVatCheck = true;
+    }
   },
+},
+watch: {
+  selectedPlatformProperty(newVal) {
+    if (this.platformPropertiesData && this.platformPropertiesData[newVal]) {
+      const properties = this.platformPropertiesData[newVal];
+      this.selectedPlatformProperties = properties.reduce((obj, property) => {
+        let [label, initialValue] = property.split('-');
+        obj[label] = initialValue || '';
+        return obj;
+      }, {});
+    } else {
+      this.selectedPlatformProperties = {};
+    }
+  },
+},
+
+created: function () {
+  this.companyID = this.$route.params.id;
+  this.getCompanyInfo();
+  this.populateCountries();
+},
 };
 </script>
 
@@ -1075,22 +960,22 @@ export default {
 /*  */
 
 @import '@core/scss/vue/libs/vue-wizard.scss';
-@import '@core/scss/vue/libs/vue-select.scss'; 
+@import '@core/scss/vue/libs/vue-select.scss';
 
 .vue-form-wizard .wizard-card-footer .wizard-footer-left .wizard-btn::before {
-    content: "<";
+  content: "<";
 }
 
-.vue-form-wizard .wizard-card-footer .wizard-footer-right .wizard-btn:after{
+.vue-form-wizard .wizard-card-footer .wizard-footer-right .wizard-btn:after {
   content: ">";
-    font-family: feather!important;
-    font-style: normal;
-    font-weight: 400;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    font-size: 1rem;
-    position: relative;
+  font-family: feather !important;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 1rem;
+  position: relative;
 }
 
 .vue-form-wizard .wizard-navigation .wizard-nav li:not(:first-child) a:before {
@@ -1098,8 +983,6 @@ export default {
 }
 
 .vs__open-indicator {
-    fill: rgba(60,60,60,.5);
+  fill: rgba(60, 60, 60, .5);
 }
-
-
 </style>

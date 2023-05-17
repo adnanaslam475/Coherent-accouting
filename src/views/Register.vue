@@ -39,7 +39,7 @@
             class="px-xl-2 mx-auto"
           >
             <b-card-title class="mb-1">
-              {{ $t('register.title')}}
+              {{ $t('register.title')}} 
             </b-card-title>
             <b-card-text class="mb-2">
               {{ $t('register.subtitle')}}
@@ -281,7 +281,7 @@
                   block
                   type="submit"
                   :disabled="invalid"
-                >{{ $t('register.lbl_submit')}}
+                >{{ $t('register.lbl_submit')}} testing
                 </b-button>
               </b-form>
             </validation-observer>
@@ -382,71 +382,67 @@
       },
     },
     methods: {
-      register() {
-        this.$refs.registerForm.validate().then(success => {
-          if (success) {
-            useJwt.clientToken()
-              .then(res => {
-                  let token = res.data.access_token
-                  useJwt.register(token,{
-                    firstname: this.firstname,
-                    lastname: this.lastname,
-                    email: this.userEmail,
-                    password: this.password,
-                    accountType: "COMPANY",
-                    companyAddress: this.companyAddress,
-                    companyName: this.companyName,
-                    companyRegistrationNumber: "test",
-                    country: this.country?.value,
-                    gdpr: this.gdpr,
-                    identifier: "test",
-                    ipAddress: "test",
-                    isoAlpha2Country: "test"
+  register() {
+    // Check if gdpr checkbox is checked
+    if (!this.gdpr) {
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: `Please agree to the privacy policy before registering.`,
+          icon: 'EditIcon',
+          variant: 'error',
+        },
+      })
+      return; // If not, show error message and stop execution
+    }
+
+    this.$refs.registerForm.validate().then(success => {
+      if (success) {
+        useJwt.clientToken()
+          .then(res => {
+              let token = res.data.access_token
+              useJwt.register(token,{
+                firstname: this.firstname,
+                lastname: this.lastname,
+                email: this.userEmail,
+                password: this.password,
+                accountType: "COMPANY",
+                companyAddress: this.companyAddress,
+                companyName: this.companyName,
+                companyRegistrationNumber: "test",
+                country: this.country?.value,
+                gdpr: this.gdpr,
+                identifier: "test",
+                ipAddress: "test",
+                isoAlpha2Country: "test"
+              })
+                .then(response => {
+                  localStorage.setItem('userData', JSON.stringify(response))
+                  this.$toast({
+                      component: ToastificationContent,
+                      props: {
+                      title: `Client Token and Create User APIs hit successfully`,
+                      icon: 'EditIcon',
+                      variant: 'success',
+                      },
                   })
-                    .then(response => {
-
-                      // useJwt.setToken(response.config.headers.Authorization)
-                      // useJwt.setRefreshToken(response.config.headers.Authorization)
-                      // localStorage.setItem('userData', JSON.stringify(response.data))
-                      // this.$ability.update(response.data)
-                      localStorage.setItem('userData', JSON.stringify(response))
-                      this.$toast({
-                          component: ToastificationContent,
-                          props: {
-                          title: `Client Token and Create User APIs hit successfully`,
-                          icon: 'EditIcon',
-                          variant: 'success',
-                          },
-                      })
-                      return this.$router.push('/')
-                    })
-                    .catch(error => {
-                         //   this.$refs.registerForm.setErrors(error)
-                        this.$toast({
-                            component: ToastificationContent,
-                            props: {
-                            title: `${error.response.data.errorMessage}`,
-                            icon: 'EditIcon',
-                            variant: 'error',
-                            },
-                        })
-                    })
-
-              })
-              .catch(error => {
-                // this.$refs.registerForm.setErrors(error)
-                this.$toast({
-                    component: ToastificationContent,
-                    props: {
-                    title: `${error.errorMessage}`,
-                    icon: 'EditIcon',
-                    variant: 'error',
-                    },
+                  return this.$router.push('/')
                 })
-              })
-          }
-        })
-      },
+                .catch(error => {
+                    this.$toast({
+                        component: ToastificationContent,
+                        props: {
+                        title: `${error.response.data.errorMessage}`,
+                        icon: 'EditIcon',
+                        variant: 'error',
+                        },
+                    })
+                })
+          })
+        }
+      })
+    },
+  },
       getImg(img){
           let defaultPath = require("../assets/flags/aw.png")
           let path = require("../assets/flags/"+ img +".png")
@@ -504,7 +500,7 @@
               })
       },
 
-    },
+    
     mounted(){
       this.populateCountries();
     }

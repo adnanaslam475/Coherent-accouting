@@ -1889,31 +1889,57 @@
 
                     </div>
                     <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-  <tr>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.supplierCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for supplier's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.recipientCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for recipient's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-  </tr>
-</table>
+    <tr>
+      <td style="text-align: center; padding: 30px;">
+        <div style="margin-bottom: 20px;">
+          <span
+            v-show="!editingSupplier"
+            @click="editingSupplier = true"
+            class="editable-text"
+          >
+            {{ invoiceData.supplierCompany.companyOwnerName }}
+          </span>
+          <input
+            v-show="editingSupplier"
+            type="text"
+            v-model="invoiceData.supplierCompany.companyOwnerName"
+            @blur="editingSupplier = false"
+            class="editable-input"
+          />
+        </div>
+        <div style="height: 50px; border-bottom: 1px dashed black;">
+          <!-- Space for supplier's signature -->
+        </div>
+        <div style="margin-top: 10px;">
+          {{ new Date().toLocaleDateString() }}
+        </div>
+      </td>
+      <td style="text-align: center; padding: 30px;">
+        <div style="margin-bottom: 20px;">
+          <span
+            v-show="!editingRecipient"
+            @click="editingRecipient = true"
+            class="editable-text"
+          >
+            {{ invoiceData.recipientCompany.companyOwnerName }}
+          </span>
+          <input
+            v-show="editingRecipient"
+            type="text"
+            v-model="invoiceData.recipientCompany.companyOwnerName"
+            @blur="editingRecipient = false"
+            class="editable-input"
+          />
+        </div>
+        <div style="height: 50px; border-bottom: 1px dashed black;">
+          <!-- Space for recipient's signature -->
+        </div>
+        <div style="margin-top: 10px;">
+          {{ new Date().toLocaleDateString() }}
+        </div>
+      </td>
+    </tr>
+  </table>
                   </div>
                 </div>
               </div>
@@ -2876,31 +2902,57 @@
                     </div>
 
                     <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-  <tr>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.supplierCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for supplier's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.recipientCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for recipient's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-  </tr>
-</table>
+    <tr>
+      <td style="text-align: center; padding: 30px;">
+        <div style="margin-bottom: 20px;">
+          <span
+            v-show="!editingSupplier"
+            @click="editingSupplier = true"
+            class="editable-text"
+          >
+            {{ invoiceData.supplierCompany.companyOwnerName }}
+          </span>
+          <input
+            v-show="editingSupplier"
+            type="text"
+            v-model="invoiceData.supplierCompany.companyOwnerName"
+            @blur="editingSupplier = false"
+            class="editable-input"
+          />
+        </div>
+        <div style="height: 50px; border-bottom: 1px dashed black;">
+          <!-- Space for supplier's signature -->
+        </div>
+        <div style="margin-top: 10px;">
+          {{ new Date().toLocaleDateString() }}
+        </div>
+      </td>
+      <td style="text-align: center; padding: 30px;">
+        <div style="margin-bottom: 20px;">
+          <span
+            v-show="!editingRecipient"
+            @click="editingRecipient = true"
+            class="editable-text"
+          >
+            {{ invoiceData.recipientCompany.companyOwnerName }}
+          </span>
+          <input
+            v-show="editingRecipient"
+            type="text"
+            v-model="invoiceData.recipientCompany.companyOwnerName"
+            @blur="editingRecipient = false"
+            class="editable-input"
+          />
+        </div>
+        <div style="height: 50px; border-bottom: 1px dashed black;">
+          <!-- Space for recipient's signature -->
+        </div>
+        <div style="margin-top: 10px;">
+          {{ new Date().toLocaleDateString() }}
+        </div>
+      </td>
+    </tr>
+  </table>
 
                   </div>
                 </div>
@@ -3956,31 +4008,57 @@
 
                     </div>
                     <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-  <tr>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.supplierCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for supplier's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.recipientCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for recipient's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-  </tr>
-</table>
+    <tr>
+      <td style="text-align: center; padding: 30px;">
+        <div style="margin-bottom: 20px;">
+          <span
+            v-show="!editingSupplier"
+            @click="editingSupplier = true"
+            class="editable-text"
+          >
+            {{ invoiceData.supplierCompany.companyOwnerName }}
+          </span>
+          <input
+            v-show="editingSupplier"
+            type="text"
+            v-model="invoiceData.supplierCompany.companyOwnerName"
+            @blur="editingSupplier = false"
+            class="editable-input"
+          />
+        </div>
+        <div style="height: 50px; border-bottom: 1px dashed black;">
+          <!-- Space for supplier's signature -->
+        </div>
+        <div style="margin-top: 10px;">
+          {{ new Date().toLocaleDateString() }}
+        </div>
+      </td>
+      <td style="text-align: center; padding: 30px;">
+        <div style="margin-bottom: 20px;">
+          <span
+            v-show="!editingRecipient"
+            @click="editingRecipient = true"
+            class="editable-text"
+          >
+            {{ invoiceData.recipientCompany.companyOwnerName }}
+          </span>
+          <input
+            v-show="editingRecipient"
+            type="text"
+            v-model="invoiceData.recipientCompany.companyOwnerName"
+            @blur="editingRecipient = false"
+            class="editable-input"
+          />
+        </div>
+        <div style="height: 50px; border-bottom: 1px dashed black;">
+          <!-- Space for recipient's signature -->
+        </div>
+        <div style="margin-top: 10px;">
+          {{ new Date().toLocaleDateString() }}
+        </div>
+      </td>
+    </tr>
+  </table>
 
 
 
@@ -4974,34 +5052,63 @@
                     </div>
                     <!-- .tm_note -->
                   </div>
-                  <div style="width: 50%; float: left;">
-  <table style="width: 100%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-    <tr>
-      <td style="text-align: center; padding: 30px;">
-        <div style=" margin-bottom: 20px;">
-          {{ invoiceData.supplierCompany.companyOwnerName }}
-        </div>
-        <div style="height: 50px; border-bottom: 1px dashed black;">
-          <!-- Space for supplier's signature -->
-        </div>
-        <div style="margin-top: 10px;">
-          {{ new Date().toLocaleDateString() }}
-        </div>
-      </td>
-      <td style="text-align: center; padding: 30px;">
-        <div style=" margin-bottom: 20px;">
-          {{ invoiceData.recipientCompany.companyOwnerName }}
-        </div>
-        <div style="height: 50px; border-bottom: 1px dashed black;">
-          <!-- Space for recipient's signature -->
-        </div>
-        <div style="margin-top: 10px;">
-          {{ new Date().toLocaleDateString() }}
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>
+                 
+                 
+    <table style="width: 50%; float: left; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+      <tr>
+        <td style="text-align: center; padding: 30px;">
+          <div style="border-bottom: 1px solid black; margin-bottom: 20px;">
+            <span
+              v-show="!editingSupplier"
+              @click="editingSupplier = true"
+              class="editable-text"
+              @dblclick="editingSupplier = false"
+            >
+              {{ invoiceData.supplierCompany.companyOwnerName }}
+            </span>
+            <input
+              v-show="editingSupplier"
+              type="text"
+              v-model="invoiceData.supplierCompany.companyOwnerName"
+              @blur="editingSupplier = false"
+              class="editable-input"
+            />
+          </div>
+          <div style="height: 50px; border-bottom: 1px dashed black;">
+            <!-- Space for supplier's signature -->
+          </div>
+          <div style="margin-top: 10px;">
+            {{ new Date().toLocaleDateString() }}
+          </div>
+        </td>
+        <td style="text-align: center; padding: 30px;">
+          <div style="border-bottom: 1px solid black; margin-bottom: 20px;">
+            <span
+              v-show="!editingRecipient"
+              @click="editingRecipient = true"
+              class="editable-text"
+              @dblclick="editingRecipient = false"
+            >
+              {{ invoiceData.recipientCompany.companyOwnerName }}
+            </span>
+            <input
+              v-show="editingRecipient"
+              type="text"
+              v-model="invoiceData.recipientCompany.companyOwnerName"
+              @blur="editingRecipient = false"
+              class="editable-input"
+            />
+          </div>
+          <div style="height: 50px; border-bottom: 1px dashed black;">
+            <!-- Space for recipient's signature -->
+          </div>
+          <div style="margin-top: 10px;">
+            {{ new Date().toLocaleDateString() }}
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 
 
 
@@ -5201,6 +5308,10 @@ export default {
       companyIDisInvalid: false,
       editClauseMode: false,
       editMode: false,
+      editingSupplier: false,
+      editingRecipient: false,
+      
+    
       clauseToSend: "",
       bankNameToSend: "",
       bankList: [
@@ -6386,6 +6497,24 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@core/scss/base/pages/app-invoice.scss";
+
+.editable-text {
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.editable-text:hover {
+  background-color: #f0f0f0;
+}
+
+.editable-input {
+  border: 1px solid #888;
+  transition: border 0.3s;
+}
+
+.editable-input:focus {
+  border-color: #007bff;
+}
 
 .flatpickr-input {
   background-color: white !important;
