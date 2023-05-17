@@ -394,6 +394,7 @@
     "verify":"verify"
     
   },
+
   "create_company":{
     "company_details" : "Company Details",
     "account_details" : "Account Details",
@@ -401,6 +402,7 @@
     "update_details" :"Update Your Company Details",
     "create_acc_details":"Enter Your Account Details",
     "update_acc_details" :"Update Your Account Details",
+    "export_details": "Export Details",
     "company_id" :"Company Identification Numbers",
     "company_status" : "Company Status",
     "company_bank_account": "Company Bank Accounts",
@@ -412,7 +414,19 @@
     "next" : "Next",
     "previous" : "Previous",
     "create": "Create",
-    "update": "Update"
+    "update": "Update",
+    "userName" : "User Name",
+    "incomeSalesServices":"Income Sales Services",
+    "products":"Products",
+    "goods":"Goods",
+    "expensesExternalServices":"Expenses External Services",
+    "taxPurchase":"Tax Purchase",
+    "clients":"Clients",
+    "taxSales":"Tax Sales",
+    "incomeSalesGoods":"Income Sales Goods",
+    "test":"Test"
+    
+
   },
   "update_tickets":{
     "update_ticket": "Update Ticket",
