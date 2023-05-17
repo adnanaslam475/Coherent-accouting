@@ -859,29 +859,32 @@ export default {
     }
   },
   async getPlatformProperties() {
-var config = {
-  method: "get",
-  url: "/account/api/export/get-platforms-properties",
-  headers: {
-    Authorization: "Bearer " + localStorage.getItem("accessToken"),
-    "Access-Control-Allow-Credentials": true,
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "http://localhost:8080",
-  },
-};
+  var config = {
+    method: "get",
+    url: "/account/api/export/get-platforms-properties",
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      "Access-Control-Allow-Credentials": true,
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "http://localhost:8080",
+    },
+  };
 
-const response = await axios(config);  // Here is the correction
+  const response = await axios(config);
 
-if (response.data != "") {
-  this.platformProperties = Object.keys(response.data);  // Only save keys
-  this.platformPropertiesData = response.data;  // Save whole data
+  if (response.data != "") {
+    this.platformProperties = Object.keys(response.data);
+    this.platformPropertiesData = response.data;
 
-  // Update the platformPropertiesOptions here
-  this.platformPropertiesOptions = this.platformProperties.map(property => {
-    return {value: property, text: property}
-  });
-}
+    this.platformPropertiesOptions = this.platformProperties.map(property => {
+      return {value: property, text: property}
+    });
+
+    // Trigger the watcher manually for the first time
+    this.selectedPlatformProperty = this.platformProperties[0];  // Set to the first platform
+  }
 },
+
 
   //validation check for account details
   validationFormTab2() {
