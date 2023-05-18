@@ -38,35 +38,38 @@
         id="nav-collapse"
         is-nav
       >
-        <b-navbar-nav
-          class="navbar-desktop"
-          type="dark"
-        >
-          <b-nav-item href="/login">
-            {{ $t("navbar.login") }}
-          </b-nav-item>
-          <b-nav-item href="/register">
-            {{ $t("navbar.signup") }}
-          </b-nav-item>
-          <b-nav-item href="/about">
-            {{ $t("navbar.about") }}
-          </b-nav-item>
-          <b-nav-item href="/questions">
-            {{ $t("navbar.questions") }}
-          </b-nav-item>
-          <b-nav-item href="/videos/advertisement">
-            {{ $t("navbar.videos") }}
-          </b-nav-item>
-          <b-nav-item href="/pricing">
-            {{ $t("navbar.prices") }}
-          </b-nav-item>
-          <b-nav-item href="/free-digital-invoices">
-            {{ $t("navbar.free_digital_invoices") }}
-          </b-nav-item>
-          <b-nav-item href="/why-choose-us">
-            {{ $t("navbar.why_choose_use") }}
-          </b-nav-item>
-        </b-navbar-nav>
+      <b-navbar-nav
+    class="navbar-desktop"
+    type="dark"
+>
+    <b-nav-item href="/login">
+        {{ $t("navbar.login") }}
+    </b-nav-item>
+    <b-nav-item href="/register">
+        {{ $t("navbar.signup") }}
+    </b-nav-item>
+    <b-nav-item href="/about">
+        {{ $t("navbar.about") }}
+    </b-nav-item>
+    <b-nav-item href="/questions">
+        {{ $t("navbar.questions") }}
+    </b-nav-item>
+    <b-nav-item href="/videos/advertisement">
+        {{ $t("navbar.videos") }}
+    </b-nav-item>
+    <b-nav-item href="/pricing">
+        {{ $t("navbar.prices") }}
+    </b-nav-item>
+    <b-nav-item href="/free-digital-invoices">
+        {{ $t("navbar.free_digital_invoices") }}
+    </b-nav-item>
+    <b-nav-item href="/why-choose-us">
+        {{ $t("navbar.why_choose_use") }}
+    </b-nav-item>
+    <b-nav-item href="/features">
+    {{ $t("lbl.features") }} 
+  </b-nav-item>
+</b-navbar-nav>
       </b-collapse>
     </b-navbar>
   </b-col>
@@ -101,6 +104,7 @@ export default {
     BImg,
     BLink
   },
+
   setup() {
     // App Name
     const { appName, appLogoImage } = $themeConfig.app

@@ -168,6 +168,14 @@ const router = new VueRouter({
         layout: 'full',
       },
     },
+    { path: '/features',
+    name: 'features',
+    component:()=> import('@/views/Features.vue'),
+    meta:{
+      layout:'full',
+    }
+  },
+   
     {
       path: '/error-404',
       name: 'error-404',

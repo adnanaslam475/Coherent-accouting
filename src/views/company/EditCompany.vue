@@ -880,10 +880,17 @@ export default {
       return {value: property, text: property}
     });
 
-    // Trigger the watcher manually for the first time
-    this.selectedPlatformProperty = this.platformProperties[0];  // Set to the first platform
+    // Get from localStorage if they exist, otherwise default to the first platform
+    this.selectedPlatformProperty = localStorage.getItem('selectedPlatformProperty') || this.platformProperties[0];
+    const selectedPlatformProperties = localStorage.getItem('selectedPlatformProperties');
+    if (selectedPlatformProperties) {
+      this.selectedPlatformProperties = JSON.parse(selectedPlatformProperties);
+    } else if (this.selectedPlatformProperty) {
+      this.selectedPlatformProperty = this.selectedPlatformProperty; // Trigger watcher
+    }
   }
 },
+
 
 
   //validation check for account details
@@ -945,11 +952,17 @@ watch: {
         obj[label] = initialValue || '';
         return obj;
       }, {});
+
+      // Save to localStorage
+      localStorage.setItem('selectedPlatformProperty', newVal);
+      localStorage.setItem('selectedPlatformProperties', JSON.stringify(this.selectedPlatformProperties));
     } else {
       this.selectedPlatformProperties = {};
     }
   },
 },
+
+
 
 created: function () {
   this.companyID = this.$route.params.id;
