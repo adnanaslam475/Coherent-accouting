@@ -221,9 +221,14 @@
     "company_documents": "Фирмени документи",
     "clients_or_recipients": "Клиенти"
   },
+  
   "company_invoices": {
     "add_invoice": "Добави",
     "add_from_file": "Добави от Файл",
+    "Export_invoice":"износ",
+    "Export_invoicess": "Експортиране",
+    "Cancel": " Отказ",
+    "cancel-title":"следващия",
     "start_date": "От дата",
     "end_date": "До дата",
     "search": "Търси...",
@@ -240,6 +245,11 @@
 	"delete_invoice" : "Изтриване на Фактура",
     "delete_invoice_confirm" : "Сигурни ли сте че искате да изтриете тази фактура?"
   },
+  "modal_labels": {
+    "ok": "Следващия",
+    "close": "Изход"
+},
+ 
   "vat_reports": {
     "add_vat_report": "Добави",
     "generate_vat_report": "Генерирай",

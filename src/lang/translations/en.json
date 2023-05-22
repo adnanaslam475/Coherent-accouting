@@ -224,7 +224,14 @@
   },
   "company_invoices": {
     "add_invoice": "Add Invoice",
+    "ok-title":"Exports",
     "add_from_file": "Add From File",
+    "update_invoice": "Update",
+    "Export_invoice":"Export", 
+    "Export_invoicess": "Export",
+    "Cancel": " Cancel ",
+    
+   
     "start_date": "Start Date",
     "end_date": "End Date",
     "search": "Search..",
@@ -241,6 +248,12 @@
     "delete_invoice" : "Delete Invoice",
     "delete_invoice_confirm" : "Are you sure you want to delete this Invoice?"
   },
+  "modal_labels": {
+    "ok": "Next",
+    "close": "Exit"
+},
+ 
+ 
   "vat_reports": {
     "add_vat_report": "Add VAT Report",
     "generate_vat_report": "Generate VAT Report",
@@ -334,6 +347,7 @@
     "CREATED":"Created",
 	"RESOLVED":"RESOLVED"
   },
+
   "add_invoice":{
     "invoice":"Invoice",
     "company_address": "Company Address",

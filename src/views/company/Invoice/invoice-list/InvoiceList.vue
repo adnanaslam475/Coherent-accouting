@@ -7,13 +7,13 @@
         <!-- Per Page -->
         <b-col cols="12" md="6" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
           <!-- <label>Entries</label>
-          <v-select
-            v-model="perPage"
-            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-            :options="perPageOptions"
-            :clearable="false"
-            class="per-page-selector d-inline-block ml-50 mr-1"
-          /> -->
+            <v-select
+              v-model="perPage" 
+              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+              :options="perPageOptions"
+              :clearable="false"
+              class="per-page-selector d-inline-block ml-50 mr-1"
+            /> -->
           <b-button variant="primary" class="mr-1" :to="{
             name: 'company-invoice-add',
             params: {
@@ -33,6 +33,57 @@
             <!-- Add From File -->
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
           </b-button>
+          <!--Add the third button name export-->
+          <!-- Export Invoice Button -->
+          <b-button variant="primary" class="mr-1" @click="showDatePickerModal">
+            {{ $t("company_invoices.Export_invoice") }}
+            <!-- Export Invoice -->
+          </b-button>
+
+          <!-- Date Picker Modal -->
+
+          <b-modal id="modal-prevent-closing-invoice" ref="export_model" title="Select Month"
+            :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" @show="resetModal"
+            @hidden="resetModal" @ok="handleOk" :ok-disabled="modalDisabledMonth">
+
+            <form ref="form" @submit.stop.prevent="handleMonthSelect">
+              <validation-observer ref="selectMonthRules" tag="form">
+                <validation-provider #default="{ errors }" :name="$t('month_selected')" rules="required">
+                  <vue-monthly-picker id="month_selected" v-model="selectedMonthData.date" name="month_selected"
+                    date-format="Y-MM" :month-labels="monthLabels" :class="errors.length > 0 ? 'is-invalid' : null"
+                    place-holder="Please Select: " />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </validation-observer>
+            </form>
+          </b-modal>
+
+
+          <b-modal id="modal-invoices-export" ref="modal_exportValue"
+            :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform ? companyinfo.exportProperties.platform : 'AJURE'"
+            title-class="w-100 text-center" :ok-title="$t('company_invoices.Export_invoicess')"
+            :cancel-title="$t('company_invoices.Cancel')" scrollable @ok="getExportFile()" :ok-disabled="modalDisabled"
+            class="p-3">
+            <form ref="form" @submit.stop.prevent="handleMonthSelect" class="border p-3 bg-light">
+              <!-- display exportDto data -->
+              <!-- display companyinfo.keyValues data -->
+              <div v-if="companyinfo && companyinfo.exportProperties" class="mb-3">
+                <div v-for="(value, key) in companyinfo.exportProperties.keyValues" :key="key" class="mb-2">
+                  <label :for="'input-' + key" class="form-label">{{ key }} :</label>
+                  <input :id="'input-' + key" class="form-control" v-model="companyinfo.exportProperties.keyValues[key]"
+                    readonly>
+                </div>
+              </div>
+              <div v-else>
+                <div>No data to display</div>
+              </div>
+            </form>
+          </b-modal>
+
+
+
+
+          <!-- Refresh button -->
           <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" @click="refreshList()">
             <feather-icon icon="RefreshCcwIcon" />
           </b-button>
@@ -48,11 +99,11 @@
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="startDate = ''" />
 
               <!-- <feather-icon
-                size="16"
-                icon="CalendarIcon"
-                class="cursor-pointer clear-all"
-                @click="dateFrom = ''"
-              /> -->
+                  size="16"
+                  icon="CalendarIcon"
+                  class="cursor-pointer clear-all"
+                  @click="dateFrom = ''"
+                /> -->
             </div>
             <div class="position-relative mr-1 filter-date">
               <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top"
@@ -62,16 +113,17 @@
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="endDate = ''" />
 
               <!-- <feather-icon
-                size="16"
-                icon="CalendarIcon"
-                class="cursor-pointer clear-all"
-                @click="dateTo = ''"
-              /> -->
+                  size="16"
+                  icon="CalendarIcon"
+                  class="cursor-pointer clear-all"
+                  @click="dateTo = ''"
+                /> -->
             </div>
             <div class="position-relative flex-1">
               <b-form-input v-model="searchQuery" class="d-inline-block mr-1" :placeholder="$t('company_invoices.search')"
                 @input="handleSearchSelect()" />
               <feather-icon size="16" icon="XIcon" class="cursor-pointer clear-all" @click="searchQuery = ''" />
+
             </div>
           </div>
         </b-col>
@@ -80,8 +132,11 @@
 
     <b-row class="text-center text-danger">
       <b-col>
-        <p style="font-size:1.05rem">{{ $t('add_invoice.not_recognised_01') }} <b>{{ $t('add_invoice.not_recognised_02')
-        }}</b> {{ $t('add_invoice.not_recognised_03') }}</p>
+        <p style="font-size: 1.05rem">
+          {{ $t("add_invoice.not_recognised_01") }}
+          <b>{{ $t("add_invoice.not_recognised_02") }}</b>
+          {{ $t("add_invoice.not_recognised_03") }}
+        </p>
       </b-col>
     </b-row>
 
@@ -409,6 +464,7 @@ import VueHtml2pdf from "vue-html2pdf";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import router from "@/router";
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiTrayArrowUp } from "@mdi/js";
 import flatPickr from "vue-flatpickr-component";
@@ -419,6 +475,8 @@ import useInvoicesList from "./useInvoiceList";
 import { i18n } from "@/main.js";
 import { watch, ref } from "vue";
 import axios from "@/libs/axios";
+import VueMonthlyPicker from "vue-monthly-picker";
+
 
 export default {
   directives: {
@@ -452,44 +510,299 @@ export default {
     BSpinner,
     SvgIcon,
     flatPickr,
+    'ValidationProvider': ValidationProvider,
+    'ValidationObserver': ValidationObserver,
+    VueMonthlyPicker,
   },
   props: ["invoiceTab"],
   data() {
     return {
       loadMore: false,
-      startDate: '',
-      endDate: '',
+      isExportModalVisible: false,
+      startDate: "",
+      endDate: "",
       perPageRecords: 10,
       pageNum: 1,
       isCheck: false,
+      exportModalFlag: false,
       file: null,
       fileLoading: false,
       path: mdiTrayArrowUp,
       observer: null,
+      loadModal: "Next",
+      modalDisabled: false,
+      modalDisabledMonth: false,
+      searchQuery: '', // assuming it's a string
+      isLoading: false, // assuming it's a boolean indicating a loading state
+      // other data properties...
+      companyinfo: null,
+      isSortDirDesc: null, // or any default value
+      sortBy: null, // or any default value
+      tableColumns: null, // or any default value
+      invoices: null,
+      exportDto: {
+        companyId: '',
+        date: '',
+        platformName: '',
+      },
+      invoicesForReport: [],
+      selectedMonthData: {
+        companyId: "85",
+        date: " ",
+        pageNumber: 1,
+        pageSize: 5000,
+        invoicesForReport: null,
+
+      },
+      companyID: "",
+      monthLabels: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      InvoicesTableColumns: [
+        { key: "isChecked", label: "" },
+        { key: "invoiceNumber" },
+        { key: "recipientCompanyName" },
+        { key: "supplierCompanyName" },
+        { key: "transactionType" },
+        { key: "dateIssued" },
+      ],
     };
   },
+
   watch: {
+    companyID(newVal) {
+      this.exportDto.companyId = newVal;
+    },
+    'selectedMonthData.date'(newVal) {
+      this.exportDto.date = newVal;
+    },
+    'companyinfo.exportProperties.platform'(newVal) {
+      this.exportDto.platformName = newVal || null;
+    },
+
     startDate: function () {
       this.handleSearchSelect();
     },
     endDate: function () {
       this.handleSearchSelect();
-    }
+    },
   },
   mounted() {
     setTimeout(() => {
       this.isCheck = true;
     }, 1500);
     this.observeScroll();
+    this.fetchInvoices();
   },
+  computed: {
+    modalDisabled() {
+      // your condition here...
+      return !this.exportDto || !this.companyinfo;
+    },
+  },
+
+
   methods: {
+    fetchInvoices() {
+      axios
+        .get("/your/api/endpoint") // Replace with your actual endpoint
+        .then((response) => {
+          this.selectedMonthData.invoicesForReport = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    exportModal() {
+  // Fetch the invoices first
+  this.fetchInvoices();
+
+  // Populate the exportDto object
+  this.exportDto.companyId = this.companyID;  // assuming companyID is correct
+  this.exportDto.date = this.selectedMonthData.date;
+  this.exportDto.platformName = this.companyinfo && this.companyinfo.exportProperties && this.companyinfo.exportProperties.platform ? this.companyinfo.exportProperties.platform : 'ajure';
+
+  // Only try to show the modal if exportDto is not null or undefined
+  if (this.exportDto) {
+    // Show the modal
+    this.$bvModal.show('export-info-modal');
+  } else {
+    console.log('exportDto is not defined!');
+  }
+
+  // Then get the export file
+  this.getExportFile();
+
+  // Toggle the visibility of the modal
+  this.isExportModalVisible = !this.isExportModalVisible;
+},
+
+
+    toggleExportModal() { // You can rename this method if this is the conflicting one
+      this.isExportModalVisible = !this.isExportModalVisible;
+    },
+    showDatePickerModal() {
+      this.$refs.export_model.show();
+    },
+    handleOk(bvModalEvent) {
+      // Prevent modal from closing
+      bvModalEvent.preventDefault();
+      // Trigger submit handler
+      this.handleMonthSelect();
+    },
+    getExportFile() {
+      this.$nextTick(() => {
+        this.$bvModal.show("modal-spinner");
+      });
+
+      if (!this.exportDto.companyId || !this.exportDto.date || !this.exportDto.platformName) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `Data is not complete`,
+            icon: "AlertTriangleIcon",
+            variant: "danger",
+          },
+        });
+        return;
+      }
+
+      axios.post(
+        `/api/export`,
+        this.exportDto,
+        {
+          responseType: "blob",
+          headers: {
+            Authorization: "Bearer " + encodeURIComponent(localStorage.getItem("accessToken")),
+            "Access-Control-Allow-Credentials": true,
+          },
+        }
+      )
+        .then((response) => {
+          if (response.status === 200) {
+            const reader = new FileReader();
+            reader.readAsDataURL(new Blob([response.data]));
+            reader.onload = () => {
+              const filePath = reader.result;
+              const a = document.createElement("a");
+              a.href = filePath;
+              // The filename can be set to whatever you want it to be.
+              // For example, you could use the date and platform name from the request:
+              a.download = `${this.exportDto.date}_${this.exportDto.platformName}.extension`; // replace 'extension' with the file's actual extension
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            };
+            reader.onerror = error => console.error('Error: ', error);
+          }
+
+          this.$nextTick(() => {
+            this.$bvModal.hide("modal-spinner");
+          });
+
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "The file has been downloaded",
+              icon: "DeleteIcon",
+              variant: "success",
+            },
+          });
+
+          this.$refs.modal_exportValue.hide(); // I've replaced 'show' with 'hide' here
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response) {
+            console.log('Error status:', error.response.status);
+            console.log('Error data:', error.response.data);
+          }
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Something went wrong`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          });
+
+          this.$nextTick(() => {
+            this.$bvModal.hide("modal-spinner");
+          });
+        });
+    },
+
+
+
+    resetModal() {
+      this.selectedMonthData.date = "";
+      this.modalDisabledMonth = false;
+      this.loadModal = "Next";
+    },
+
+    handleMonthSelect() {
+      this.$refs.selectMonthRules.validate().then((success) => {
+        if (success) {
+          this.loadModal = "Loading...";
+          this.modalDisabledMonth = true;
+          this.invoicesForReport = [];
+          let monthVal;
+          const tPeriod = this.selectedMonthData.date._i;
+
+          const year = tPeriod.substring(0, 4);
+          const month = tPeriod.substring(5, tPeriod.length);
+
+          if (month.length === 1) {
+            monthVal = `${year}-0${month}-01`;
+          } else {
+            monthVal = `${year}-${month}-01`;
+          }
+
+          this.selectedMonthData.date = monthVal;
+
+          let companyID = this.$route.params.id;
+          axios
+            .get(
+              `/account/api/company/${companyID}`,
+              {
+                headers: {
+                  Authorization: "Bearer " + localStorage.getItem("accessToken"),
+                  "Access-Control-Allow-Credentials": true,
+                },
+              }
+            )
+            .then((response) => {
+              console.log('Full response data:', response.data);  // Log the full response data
+              this.companyinfo = response.data;
+              console.log('Company info data:', this.companyinfo);  // Log the company info data
+              console.log('KeyValues data:', this.companyinfo.keyValues);  // Log the keyValues data
+              this.$refs.export_model.hide();
+              this.$refs.modal_exportValue.show();
+            });
+        }
+      });
+    },
+
+
     async refreshList() {
       var tableAreaBusy = document.getElementById("company-invoices");
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
       let totalRecordss = this.invoices.length;
-      let Records = ((totalRecordss / 10) * 10);
-      this.pageNum = (Records / 10);
+      let Records = (totalRecordss / 10) * 10;
+      this.pageNum = Records / 10;
       if (totalRecordss < 10) {
         Records = 10;
         this.pageNum = 1;
@@ -500,7 +813,7 @@ export default {
       };
       let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           sortField: this.sortBy,
           verified: "true",
           searchTerm: this.searchQuery,
@@ -508,20 +821,23 @@ export default {
       };
       let config1 = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           sortField: this.sortBy,
-          verified: "true"
+          verified: "true",
         },
       };
 
-      if ((this.startDate === '') && (this.startDate === '') && (this.searchQuery) === '') {
+      if (
+        this.startDate === "" &&
+        this.startDate === "" &&
+        this.searchQuery === ""
+      ) {
         const data = await axios.get(
           `/account/api/invoice/list/${this.companyId}/1/${Records}`,
           config1
         );
         this.invoices = data.data.elements;
-      }
-      else {
+      } else {
         const data1 = await axios.post(
           `/account/api/invoice/search/${this.companyId}/1/${Records}`,
           payLoadDates,
@@ -531,7 +847,6 @@ export default {
       }
       // var tableAreaBusy = document.getElementById("company-invoices");
       tableAreaBusy.style.opacity = "1";
-
     },
     observeScroll() {
       const options = {
@@ -542,7 +857,11 @@ export default {
 
       const observer = new IntersectionObserver(async (entries) => {
         if (entries[0].isIntersecting) {
-          if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
+          if (
+            this.startDate === "" &&
+            this.endDate === "" &&
+            this.searchQuery === ""
+          ) {
             await this.listInvoices();
           } else {
             await this.searchInvoices();
@@ -568,7 +887,7 @@ export default {
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
       this.pageNum = 1;
-      this.perPageRecords = 10
+      this.perPageRecords = 10;
 
       let data1 = {
         dateFrom: this.startDate,
@@ -576,7 +895,7 @@ export default {
       };
       let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           sortField: this.sortBy,
           verified: "true",
           searchTerm: this.searchQuery,
@@ -597,7 +916,7 @@ export default {
       this.pageNum += 1;
       let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           sortField: this.sortBy,
           verified: "true",
         },
@@ -625,7 +944,7 @@ export default {
       };
       let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           sortField: this.sortBy,
           verified: "true",
           searchTerm: this.searchQuery,
@@ -661,7 +980,11 @@ export default {
       if (scrollHeight - (scrollTop + clientHeight) <= 1) {
         this.loadMore = true;
         setTimeout(async () => {
-          if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
+          if (
+            this.startDate === "" &&
+            this.endDate === "" &&
+            this.searchQuery === ""
+          ) {
             await this.listInvoices();
           } else {
             await this.searchInvoices();
@@ -678,7 +1001,6 @@ export default {
         }, 300);
       }
     },
-
 
     state() {
       return 1;
@@ -734,13 +1056,11 @@ export default {
               icon: "EditIcon",
               variant: "success",
             },
-
           });
           // refetchData();
           var tableAreaBusy = document.getElementById("company-invoices");
           tableAreaBusy.style.opacity = "0.5";
           this.refreshList();
-
         });
     },
     invoiceDelete(id, refetchData) {
@@ -802,88 +1122,90 @@ export default {
           });
         });
     },
+
+    created() {
+      this.handleOk = this.handleOk.bind(this);
+    },
+    setup() {
+      const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
+
+      // Register module
+      if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
+        store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule);
+
+      // UnRegister on leave
+      onUnmounted(() => {
+        if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
+          store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
+      });
+
+      const statusOptions = [
+        "Downloaded",
+        "Draft",
+        "Paid",
+        "Partial Payment",
+        "Past Due",
+      ];
+
+      const {
+        fetchInvoices,
+        tableColumns,
+        perPage,
+        currentPage,
+        totalInvoices,
+        dataMeta,
+        perPageOptions,
+        searchQuery,
+        dateFrom,
+        dateTo,
+        sortBy,
+        isSortDirDesc,
+        refInvoiceListTable,
+        companyId,
+        statusFilter,
+
+        refetchData,
+        invoices,
+
+        resolveInvoiceStatusVariantAndIcon,
+        resolveClientAvatarVariant,
+      } = useInvoicesList();
+
+      companyId.value = router.currentRoute.params.companyId
+        ? router.currentRoute.params.companyId
+        : router.currentRoute.params.id;
+
+      return {
+        fetchInvoices,
+        tableColumns,
+        perPage,
+        currentPage,
+        totalInvoices,
+        dataMeta,
+        perPageOptions,
+        searchQuery,
+        dateFrom,
+        dateTo,
+        companyId,
+        sortBy,
+        isSortDirDesc,
+        refInvoiceListTable,
+
+        statusFilter,
+
+        refetchData,
+
+        statusOptions,
+        invoices,
+
+        avatarText,
+        resolveInvoiceStatusVariantAndIcon,
+        resolveClientAvatarVariant,
+      };
+
+    },
   },
-  created() {
-    //window.addEventListener("scroll", this.handleScroll);
-  },
-  setup() {
-    const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
-
-    // Register module
-    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
-      store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule);
-
-    // UnRegister on leave
-    onUnmounted(() => {
-      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
-        store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
-    });
-
-    const statusOptions = [
-      "Downloaded",
-      "Draft",
-      "Paid",
-      "Partial Payment",
-      "Past Due",
-    ];
-
-    const {
-      fetchInvoices,
-      tableColumns,
-      perPage,
-      currentPage,
-      totalInvoices,
-      dataMeta,
-      perPageOptions,
-      searchQuery,
-      dateFrom,
-      dateTo,
-      sortBy,
-      isSortDirDesc,
-      refInvoiceListTable,
-      companyId,
-      statusFilter,
-
-      refetchData,
-      invoices,
-
-      resolveInvoiceStatusVariantAndIcon,
-      resolveClientAvatarVariant,
-    } = useInvoicesList();
-
-    companyId.value = router.currentRoute.params.companyId
-      ? router.currentRoute.params.companyId
-      : router.currentRoute.params.id;
-
-    return {
-      fetchInvoices,
-      tableColumns,
-      perPage,
-      currentPage,
-      totalInvoices,
-      dataMeta,
-      perPageOptions,
-      searchQuery,
-      dateFrom,
-      dateTo,
-      companyId,
-      sortBy,
-      isSortDirDesc,
-      refInvoiceListTable,
-
-      statusFilter,
-
-      refetchData,
-
-      statusOptions,
-      invoices,
-
-      avatarText,
-      resolveInvoiceStatusVariantAndIcon,
-      resolveClientAvatarVariant,
-    };
-  },
-};
+}
 </script>
 
 <style lang="scss" scoped>
