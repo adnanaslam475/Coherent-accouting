@@ -60,7 +60,7 @@
 
 
           <b-modal id="modal-invoices-export" ref="modal_exportValue"
-            :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform ? companyinfo.exportProperties.platform : 'AJURE'"
+            :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE' ? companyinfo.exportProperties.platform : ''"
             title-class="w-100 text-center" :ok-title="$t('company_invoices.Export_invoicess')"
             :cancel-title="$t('company_invoices.Cancel')" scrollable @ok="getExportFile()" :ok-disabled="modalDisabled"
             class="p-3">
@@ -79,6 +79,7 @@
               </div>
             </form>
           </b-modal>
+
 
 
 
@@ -582,22 +583,19 @@ export default {
 
   watch: {
     companyID(newVal) {
+      console.log('companyID watcher triggered', newVal);
       this.exportDto.companyId = newVal;
     },
     'selectedMonthData.date'(newVal) {
+      console.log('selectedMonthData.date watcher triggered', newVal);
       this.exportDto.date = newVal;
     },
     'companyinfo.exportProperties.platform'(newVal) {
+      console.log('companyinfo.exportProperties.platform watcher triggered', newVal);
       this.exportDto.platformName = newVal || null;
     },
-
-    startDate: function () {
-      this.handleSearchSelect();
-    },
-    endDate: function () {
-      this.handleSearchSelect();
-    },
   },
+
   mounted() {
     setTimeout(() => {
       this.isCheck = true;
@@ -614,134 +612,125 @@ export default {
 
 
   methods: {
-    fetchInvoices() {
-      axios
-        .get("/your/api/endpoint") // Replace with your actual endpoint
-        .then((response) => {
-          this.selectedMonthData.invoicesForReport = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    async fetchInvoices() {
+      // try {
+      //   const response = await axios.get("/api/export", {
+      //     headers: {
+      //       'Authorization': 'Bearer ' + localStorage.getItem("accessToken"),
+      //       'Content-Type': 'application/json'
+      //  },
+      //});
+      // this.selectedMonthData.invoicesForReport = response.data;
+      //} catch (error) {
+      //   console.error(error);
+      // }
+      let token = useJwt.getToken();
+      useJwt
+        .export(token, exportDto)
+        .then(async (response) => {
+        }
+        )
+        .catch()
     },
 
-    exportModal() {
-  // Fetch the invoices first
-  this.fetchInvoices();
+    async exportModal() {
+      // Fetch the invoices first
+      await this.fetchInvoices();
 
-  // Populate the exportDto object
-  this.exportDto.companyId = this.companyID;  // assuming companyID is correct
-  this.exportDto.date = this.selectedMonthData.date;
-  this.exportDto.platformName = this.companyinfo && this.companyinfo.exportProperties && this.companyinfo.exportProperties.platform ? this.companyinfo.exportProperties.platform : 'ajure';
+      // Populate the exportDto object
+      console.log('exportModal method called', this.companyID, this.selectedMonthData.date, this.companyinfo);
+      this.exportDto.companyId = this.companyID;
+      this.exportDto.date = this.selectedMonthData.date;
+      this.exportDto.platformName = this.companyinfo && this.companyinfo.exportProperties && this.companyinfo.exportProperties.platform ? this.companyinfo.exportProperties.platform : 'Ajure';
+      // Validate if the required fields have a value
+      if (!this.exportDto.companyId || !this.exportDto.date || !this.exportDto.platformName) {
+        console.error('exportDto data is not complete!');
+        return;
+      }
 
-  // Only try to show the modal if exportDto is not null or undefined
-  if (this.exportDto) {
-    // Show the modal
-    this.$bvModal.show('export-info-modal');
-  } else {
-    console.log('exportDto is not defined!');
-  }
-
-  // Then get the export file
-  this.getExportFile();
-
-  // Toggle the visibility of the modal
-  this.isExportModalVisible = !this.isExportModalVisible;
-},
-
-
-    toggleExportModal() { // You can rename this method if this is the conflicting one
+      // Show the modal
+      this.$bvModal.show('export-info-modal');
+      // Then get the export file
+      await this.getExportFile();
+      // Toggle the visibility of the modal
       this.isExportModalVisible = !this.isExportModalVisible;
     },
+
+    toggleExportModal() {
+      this.isExportModalVisible = !this.isExportModalVisible;
+    },
+
     showDatePickerModal() {
       this.$refs.export_model.show();
     },
+
     handleOk(bvModalEvent) {
       // Prevent modal from closing
       bvModalEvent.preventDefault();
       // Trigger submit handler
       this.handleMonthSelect();
     },
-    getExportFile() {
+
+    async getExportFile() {
       this.$nextTick(() => {
         this.$bvModal.show("modal-spinner");
       });
 
-      if (!this.exportDto.companyId || !this.exportDto.date || !this.exportDto.platformName) {
+      this.exportDto.companyId = 85; // Set companyId to 85
+      this.exportDto.date = new Date().toISOString().split('T')[0]; // Set date to current date
+      this.exportDto.platformName = "AJURE"; // Set platformName to "AJURE"
+
+      try {
+        const response = await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+            'Content-Type': 'application/json'
+          },
+          responseType: 'blob', // Important for handling the binary response
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'data.csv'); // use the correct file extension
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        this.$nextTick(() => {
+          this.$bvModal.hide("modal-spinner");
+        });
+
         this.$toast({
           component: ToastificationContent,
           props: {
-            title: `Data is not complete`,
+            title: "The file has been downloaded",
+            icon: "DeleteIcon",
+            variant: "success",
+          },
+        });
+
+        this.$refs.modal_exportValue.hide();
+      } catch (error) {
+        console.error("Error:", error);
+        if (error.response) {
+          console.log('Error status:', error.response.status);
+          console.log('Error data:', error.response.data);
+        }
+
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `Something went wrong`,
             icon: "AlertTriangleIcon",
             variant: "danger",
           },
         });
-        return;
-      }
 
-      axios.post(
-        `/api/export`,
-        this.exportDto,
-        {
-          responseType: "blob",
-          headers: {
-            Authorization: "Bearer " + encodeURIComponent(localStorage.getItem("accessToken")),
-            "Access-Control-Allow-Credentials": true,
-          },
-        }
-      )
-        .then((response) => {
-          if (response.status === 200) {
-            const reader = new FileReader();
-            reader.readAsDataURL(new Blob([response.data]));
-            reader.onload = () => {
-              const filePath = reader.result;
-              const a = document.createElement("a");
-              a.href = filePath;
-              // The filename can be set to whatever you want it to be.
-              // For example, you could use the date and platform name from the request:
-              a.download = `${this.exportDto.date}_${this.exportDto.platformName}.extension`; // replace 'extension' with the file's actual extension
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-            };
-            reader.onerror = error => console.error('Error: ', error);
-          }
-
-          this.$nextTick(() => {
-            this.$bvModal.hide("modal-spinner");
-          });
-
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: "The file has been downloaded",
-              icon: "DeleteIcon",
-              variant: "success",
-            },
-          });
-
-          this.$refs.modal_exportValue.hide(); // I've replaced 'show' with 'hide' here
-        })
-        .catch((error) => {
-          console.error(error);
-          if (error.response) {
-            console.log('Error status:', error.response.status);
-            console.log('Error data:', error.response.data);
-          }
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Something went wrong`,
-              icon: "AlertTriangleIcon",
-              variant: "danger",
-            },
-          });
-
-          this.$nextTick(() => {
-            this.$bvModal.hide("modal-spinner");
-          });
+        this.$nextTick(() => {
+          this.$bvModal.hide("modal-spinner");
         });
+      }
     },
 
 
@@ -752,66 +741,53 @@ export default {
       this.loadModal = "Next";
     },
 
-    handleMonthSelect() {
-      this.$refs.selectMonthRules.validate().then((success) => {
-        if (success) {
-          this.loadModal = "Loading...";
-          this.modalDisabledMonth = true;
-          this.invoicesForReport = [];
-          let monthVal;
-          const tPeriod = this.selectedMonthData.date._i;
+    async handleMonthSelect() {
+      const success = await this.$refs.selectMonthRules.validate();
+      if (success) {
+        this.loadModal = "Loading...";
+        this.modalDisabledMonth = true;
+        this.invoicesForReport = [];
+        const tPeriod = this.selectedMonthData.date._i;
+        const year = tPeriod.substring(0, 4);
+        const month = tPeriod.substring(5, tPeriod.length);
+        this.selectedMonthData.date = month.length === 1 ? `${year}-0${month}-01` : `${year}-${month}-01`;
 
-          const year = tPeriod.substring(0, 4);
-          const month = tPeriod.substring(5, tPeriod.length);
-
-          if (month.length === 1) {
-            monthVal = `${year}-0${month}-01`;
-          } else {
-            monthVal = `${year}-${month}-01`;
-          }
-
-          this.selectedMonthData.date = monthVal;
-
-          let companyID = this.$route.params.id;
-          axios
-            .get(
-              `/account/api/company/${companyID}`,
-              {
-                headers: {
-                  Authorization: "Bearer " + localStorage.getItem("accessToken"),
-                  "Access-Control-Allow-Credentials": true,
-                },
-              }
-            )
-            .then((response) => {
-              console.log('Full response data:', response.data);  // Log the full response data
-              this.companyinfo = response.data;
-              console.log('Company info data:', this.companyinfo);  // Log the company info data
-              console.log('KeyValues data:', this.companyinfo.keyValues);  // Log the keyValues data
-              this.$refs.export_model.hide();
-              this.$refs.modal_exportValue.show();
-            });
+        let companyID = this.$route.params.id;
+        try {
+          const response = await axios.get(`/account/api/company/${companyID}`, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+              "Access-Control-Allow-Credentials": true,
+            },
+          });
+          this.companyinfo = response.data;
+          this.$refs.export_model.hide();
+          this.$refs.modal_exportValue.show();
+        } catch (error) {
+          console.log(error);
         }
-      });
+      }
     },
-
 
     async refreshList() {
       var tableAreaBusy = document.getElementById("company-invoices");
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
-      let totalRecordss = this.invoices.length;
+
+      const totalRecordss = this.invoices.length;
       let Records = (totalRecordss / 10) * 10;
       this.pageNum = Records / 10;
       if (totalRecordss < 10) {
         Records = 10;
         this.pageNum = 1;
       }
-      let payLoadDates = {
+
+      const payLoadDates = {
         dateFrom: this.startDate,
         dateTo: this.endDate,
       };
-      let config = {
+
+      const config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
           sortField: this.sortBy,
@@ -819,7 +795,8 @@ export default {
           searchTerm: this.searchQuery,
         },
       };
-      let config1 = {
+
+      const config1 = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
           sortField: this.sortBy,
@@ -827,27 +804,20 @@ export default {
         },
       };
 
-      if (
-        this.startDate === "" &&
-        this.startDate === "" &&
-        this.searchQuery === ""
-      ) {
-        const data = await axios.get(
-          `/account/api/invoice/list/${this.companyId}/1/${Records}`,
-          config1
-        );
-        this.invoices = data.data.elements;
-      } else {
-        const data1 = await axios.post(
-          `/account/api/invoice/search/${this.companyId}/1/${Records}`,
-          payLoadDates,
-          config
-        );
-        this.invoices = data1.data.elements;
+      try {
+        if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
+          const data = await axios.get(`/account/api/invoice/list/${this.companyId}/1/${Records}`, config1);
+          this.invoices = data.data.elements;
+        } else {
+          const data1 = await axios.post(`/account/api/invoice/search/${this.companyId}/1/${Records}`, payLoadDates, config);
+          this.invoices = data1.data.elements;
+        }
+        tableAreaBusy.style.opacity = "1";
+      } catch (error) {
+        console.log(error);
       }
-      // var tableAreaBusy = document.getElementById("company-invoices");
-      tableAreaBusy.style.opacity = "1";
     },
+
     observeScroll() {
       const options = {
         root: null,
@@ -857,17 +827,12 @@ export default {
 
       const observer = new IntersectionObserver(async (entries) => {
         if (entries[0].isIntersecting) {
-          if (
-            this.startDate === "" &&
-            this.endDate === "" &&
-            this.searchQuery === ""
-          ) {
+          if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
             await this.listInvoices();
           } else {
             await this.searchInvoices();
           }
 
-          // Check if there are no more invoices to load
           if (this.invoices.length === this.totalInvoices) {
             this.loadMore = false;
           } else {
@@ -879,10 +844,7 @@ export default {
       }, options);
 
       observer.observe(this.$refs.loadMoreObserver);
-    },
-
-    // Hadling DateSelects and Search field
-    async handleSearchSelect() {
+    }, async handleSearchSelect() {
       var tableAreaBusy = document.getElementById("company-invoices");
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;

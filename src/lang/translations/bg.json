@@ -267,6 +267,16 @@
 	 "delete_vat" : "Изтриване на ДДС Отчет",
     "delete_vat_confirm" : "Сигурни ли сте че искате да изтриете този ДДС Отчет?"
   },
+  
+  "invoiceTable": {
+    "isChecked": "Проверено",
+    "invoiceNumber": "Номер на фактура",
+    "recipientCompanyName": "Име на компанията получател",
+    "supplierCompanyName": "Име на фирмата доставчик",
+    "transactionType": "Тип транзакция",
+    "dateIssued": "Дата на издаване"
+  }, 
+  
   "dashboard_lbl": {
     "statistics": "Сатистики",
     "total_companies": "Общо Фирми",

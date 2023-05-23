@@ -5,28 +5,14 @@
       <!-- Table Top -->
       <b-row>
         <!-- Per Page -->
-        <b-col
-          cols="12"
-          md="6"
-          class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
-        >
+        <b-col cols="12" md="6" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
           <label>Entries</label>
-          <v-select
-            v-model="perPage"
-            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-            :options="perPageOptions"
-            :clearable="false"
-            class="per-page-selector d-inline-block ml-50 mr-1"
-          />
-          <b-button
-            class="mr-1"
-            variant="primary"
-            :to="{
-              name: 'company-vat-report-add',
-              params: { companyId: $route.params.id },
-            }"
-            @click="actionTab"
-          >
+          <v-select v-model="perPage" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :options="perPageOptions"
+            :clearable="false" class="per-page-selector d-inline-block ml-50 mr-1" />
+          <b-button class="mr-1" variant="primary" :to="{
+            name: 'company-vat-report-add',
+            params: { companyId: $route.params.id },
+          }" @click="actionTab">
             {{ $t("vat_reports.add_vat_report") }}
           </b-button>
 
@@ -35,49 +21,28 @@
           <b-button v-b-modal.modal-prevent-closing variant="primary">
             {{ $t("vat_reports.generate_vat_report") }}
           </b-button>
+
+
         </b-col>
 
         <!-- Search -->
         <b-col cols="12" md="6">
           <div class="d-flex align-items-center justify-content-end">
-            <b-form-input
-              v-model="searchQuery"
-              class="d-inline-block mr-1"
-              placeholder="Search..."
-            />
+            <b-form-input v-model="searchQuery" class="d-inline-block mr-1" placeholder="Search..." />
           </div>
         </b-col>
       </b-row>
     </div>
 
     <!-- Modal pop-up to select month -->
-    <b-modal
-      id="modal-prevent-closing"
-      ref="modal"
-      title="Select Month"
-      :ok-title="loadModal"
-      cancel-title="Close"
-      @show="resetModal"
-      @hidden="resetModal"
-      @ok="handleOk"
-      :ok-disabled="modalDisabledMonth"
-    >
+    <b-modal id="modal-prevent-closing" ref="modal" title="Select Month" :ok-title="loadModal" cancel-title="Close"
+      @show="resetModal" @hidden="resetModal" @ok="handleOk" :ok-disabled="modalDisabledMonth">
       <form ref="form" @submit.stop.prevent="handleMonthSelected">
         <validation-observer ref="selectMonthRules" tag="form">
-          <validation-provider
-            #default="{ errors }"
-            :name="$t('month_selected')"
-            rules="required"
-          >
-            <vue-monthly-picker
-              id="month_selected"
-              v-model="selectedMonthData.date"
-              name="month_selected"
-              date-format="Y-MM"
-              :month-labels="monthLabels"
-              :class="errors.length > 0 ? 'is-invalid' : null"
-              place-holder="Please Select: "
-            />
+          <validation-provider #default="{ errors }" :name="$t('month_selected')" rules="required">
+            <vue-monthly-picker id="month_selected" v-model="selectedMonthData.date" name="month_selected"
+              date-format="Y-MM" :month-labels="monthLabels" :class="errors.length > 0 ? 'is-invalid' : null"
+              place-holder="Please Select: " />
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </validation-observer>
@@ -85,27 +50,12 @@
     </b-modal>
 
     <!-- Modal pop-up containing the list of invoices for vat report -->
-    <b-modal
-      id="modal-invoices-for-report"
-      ref="modal"
-      title="Invoices for Vat Reports"
-      ok-title="Download Zip"
-      cancel-title="Close"
-      scrollable
-      @ok="getZipFile(refetchData)"
-      :ok-disabled="modalDisabled"
-    >
+    <b-modal id="modal-invoices-for-report" ref="modal" title="Invoices for Vat Reports" ok-title="Download Zip"
+      cancel-title="Close" scrollable @ok="getZipFile(refetchData)" :ok-disabled="modalDisabled">
       <form ref="form" @submit.stop.prevent="handleMonthSelected">
         <!-- invoices-for-vat-reports Table -->
-        <b-table
-          :items="invoicesForReport"
-          responsive
-          :fields="InvoicesTableColumns"
-          primary-key="id"
-          show-empty
-          empty-text="No matching records found"
-          class="position-relative invoiceList"
-        >
+        <b-table :items="invoicesForReport" responsive :fields="InvoicesTableColumns" primary-key="id" show-empty
+  empty-text="No matching records found" class="position-relative invoiceList">           
           <template #empty="scope">
             <div class="d-flex align-items-center justify-content-center">
               <div class="mb-1 start-chat-icon">
@@ -116,13 +66,8 @@
           </template>
 
           <template #cell(isChecked)="data">
-            <b-form-checkbox
-              :id="'checkbox' + data.item.id"
-              v-model="status[data.index].value"
-              name="checkbox-1"
-              value="accepted"
-              unchecked-value="not_accepted"
-            />
+            <b-form-checkbox :id="'checkbox' + data.item.id" v-model="status[data.index].value" name="checkbox-1"
+              value="accepted" unchecked-value="not_accepted" />
           </template>
 
           <!-- Invoice Number -->
@@ -172,51 +117,24 @@
     </b-modal>
 
     <!-- Add Assets -->
-    <b-modal
-      id="add-asset-modal"
-      ref="modal"
-      title="Add Asset"
-      ok-title="Add"
-      cancel-title="Close"
-      @ok="createAsset()"
-    >
+    <b-modal id="add-asset-modal" ref="modal" title="Add Asset" ok-title="Add" cancel-title="Close" @ok="createAsset()">
       <b-row>
         <b-col class="pb-2" cols="12">
           <b-input-group class="input-group-merge">
-            <b-form-textarea
-              v-model="notes"
-              placeholder="Add notes about binary file"
-              rows="5"
-            />
+            <b-form-textarea v-model="notes" placeholder="Add notes about binary file" rows="5" />
           </b-input-group>
         </b-col>
         <b-col cols="12">
-          <file-pond
-            ref="pond"
-            required
-            name="file"
-            label-idle="Drop files here..."
-            :allow-multiple="false"
-            :files="myFiles"
-            :server="server"
-          />
+          <file-pond ref="pond" required name="file" label-idle="Drop files here..." :allow-multiple="false"
+            :files="myFiles" :server="server" />
         </b-col>
       </b-row>
     </b-modal>
 
     <!-- Vat Reports Table -->
-    <b-table
-      ref="refVatReportsTable"
-      :items="fetchVatReports"
-      responsive
-      :fields="tableColumns"
-      primary-key="id"
-      :sort-by.sync="sortBy"
-      show-empty
-      empty-text="No matching records found"
-      :sort-desc.sync="isSortDirDesc"
-      class="position-relative invoiceList"
-    >
+    <b-table ref="refVatReportsTable" :items="fetchVatReports" responsive :fields="tableColumns" primary-key="id"
+      :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc"
+      class="position-relative invoiceList">
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
@@ -342,48 +260,28 @@
       </template>
       <template #cell(actions)="data">
         <div class="text-nowrap">
-          <feather-icon
-            :id="`report-row-${data.item.id}-preview-icon`"
-            icon="EyeIcon"
-            size="16"
-            class="mr-1 cursor-pointer"
-            @click="
+          <feather-icon :id="`report-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16"
+            class="mr-1 cursor-pointer" @click="
               $router.push({
                 name: 'company-vat-report-preview',
                 params: { id: data.item.id, companyId: companyID },
               })
-            "
-          />
-          <b-tooltip
-            title="Preview Report"
-            class="cursor-pointer"
-            :target="`report-row-${data.item.id}-preview-icon`"
-          />
+              " />
+          <b-tooltip title="Preview Report" class="cursor-pointer" :target="`report-row-${data.item.id}-preview-icon`" />
 
           <!-- Dropdown -->
-          <b-dropdown
-            variant="link"
-            toggle-class="p-0"
-            no-caret
-            :right="$store.state.appConfig.isRTL"
-          >
+          <b-dropdown variant="link" toggle-class="p-0" no-caret :right="$store.state.appConfig.isRTL">
             <template #button-content>
-              <feather-icon
-                icon="MoreVerticalIcon"
-                size="16"
-                class="align-middle text-body"
-              />
+              <feather-icon icon="MoreVerticalIcon" size="16" class="align-middle text-body" />
             </template>
             <!-- <b-dropdown-item @click="generatePDF(data.item.id)">
             <feather-icon icon="DownloadIcon" />
             <span class="align-middle ml-50">Download</span>
           </b-dropdown-item> -->
-            <b-dropdown-item
-              :to="{
-                name: 'company-vat-report-edit',
-                params: { companyId: companyID, id: data.item.id },
-              }"
-            >
+            <b-dropdown-item :to="{
+              name: 'company-vat-report-edit',
+              params: { companyId: companyID, id: data.item.id },
+            }">
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
@@ -394,46 +292,23 @@
           </b-dropdown>
 
           <!-- assets check -->
-          <feather-icon
-            v-if="data.item.asset === null"
-            :id="`report-row-${data.item.id}-no-asset-icon`"
-            icon="DatabaseIcon"
-            size="16"
-            color="red"
-            class="mx-1 cursor-pointer"
-            v-b-modal.add-asset-modal
-            @click="
-              () => {
+          <feather-icon v-if="data.item.asset === null" :id="`report-row-${data.item.id}-no-asset-icon`"
+            icon="DatabaseIcon" size="16" color="red" class="mx-1 cursor-pointer" v-b-modal.add-asset-modal @click="() => {
                 vatIdtoUpdate = data.item.id;
                 vatReport = data.item;
               }
-            "
-          />
+              " />
           <!--  @click="gotoAddAsset()"  
                 $router.push({
                 name: 'CompanyView',
                 params: {id: companyID,  InvoiceId: 5 },
                 
               }) -->
-          <feather-icon
-            v-else
-            :id="`report-row-${data.item.id}-asset-icon`"
-            icon="DatabaseIcon"
-            size="16"
-            color="green"
-            class="mx-1 cursor-pointer"
-          />
-          <b-tooltip
-            title="Add Asset"
-            class="cursor-pointer"
-            :target="`report-row-${data.item.id}-no-asset-icon`"
-          />
+          <feather-icon v-else :id="`report-row-${data.item.id}-asset-icon`" icon="DatabaseIcon" size="16" color="green"
+            class="mx-1 cursor-pointer" />
+          <b-tooltip title="Add Asset" class="cursor-pointer" :target="`report-row-${data.item.id}-no-asset-icon`" />
 
-          <b-tooltip
-            title="Assets"
-            class="cursor-pointer"
-            :target="`report-row-${data.item.id}-asset-icon`"
-          />
+          <b-tooltip title="Assets" class="cursor-pointer" :target="`report-row-${data.item.id}-asset-icon`" />
         </div>
       </template>
     </b-table>
@@ -441,41 +316,22 @@
     <!-- Pagination -->
     <div class="mx-2 mb-2">
       <b-row>
-        <b-col
-          cols="12"
-          sm="6"
-          class="
+        <b-col cols="12" sm="6" class="
             d-flex
             align-items-center
             justify-content-center justify-content-sm-start
-          "
-        >
-          <span class="text-muted"
-            >Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
-            {{ dataMeta.of }} entries</span
-          >
+          ">
+          <span class="text-muted">Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
+            {{ dataMeta.of }} entries</span>
         </b-col>
         <!-- Pagination -->
-        <b-col
-          cols="12"
-          sm="6"
-          class="
+        <b-col cols="12" sm="6" class="
             d-flex
             align-items-center
             justify-content-center justify-content-sm-end
-          "
-        >
-          <b-pagination
-            v-if="totalVatReports > 0"
-            v-model="currentPage"
-            :total-rows="totalVatReports"
-            :per-page="perPage"
-            first-number
-            last-number
-            class="mb-0 mt-1 mt-sm-0"
-            prev-class="prev-item"
-            next-class="next-item"
-          >
+          ">
+          <b-pagination v-if="totalVatReports > 0" v-model="currentPage" :total-rows="totalVatReports" :per-page="perPage"
+            first-number last-number class="mb-0 mt-1 mt-sm-0" prev-class="prev-item" next-class="next-item">
             <template #prev-text>
               <feather-icon icon="ChevronLeftIcon" size="18" />
             </template>
@@ -593,10 +449,10 @@ export default {
   data() {
     const self = this;
     return {
-      dataToSend:{},
+      dataToSend: {},
       vatIdtoUpdate: "",
       vatReport: "",
-      binary:{},
+      binary: {},
       // binary: {
       //   binaryId: '',
       //   companyId:''
@@ -610,8 +466,8 @@ export default {
       idsToSend: [],
       totalInvoicesForReport: "",
       status: [{
-        id:'',
-        value:''
+        id: '',
+        value: ''
       }],
       invoicesForReport: [],
       selectedMonthData: {
@@ -635,14 +491,6 @@ export default {
         "Nov",
         "Dec",
       ],
-      InvoicesTableColumns: [
-        { key: "isChecked", label: "" },
-        { key: "invoiceNumber" },
-        { key: "recipientCompanyName" },
-        { key: "supplierCompanyName" },
-        { key: "transactionType" },
-        { key: "dateIssued" },
-      ],
       server: {
         process: (
           fieldName,
@@ -655,7 +503,7 @@ export default {
           transfer,
           options
         ) => {
-         
+
           const formData = new FormData();
           formData.append("file", file);
           formData.append("companyId", router.currentRoute.params.id);
@@ -695,6 +543,18 @@ export default {
       },
     };
   },
+  computed: {
+  InvoicesTableColumns() {
+    return [
+      { key: "isChecked", label: this.$t('invoiceTable.isChecked') },
+      { key: "invoiceNumber", label: this.$t('invoiceTable.invoiceNumber') },
+      { key: "recipientCompanyName", label: this.$t('invoiceTable.recipientCompanyName') },
+      { key: "supplierCompanyName", label: this.$t('invoiceTable.supplierCompanyName') },
+      { key: "transactionType", label: this.$t('invoiceTable.transactionType') },
+      { key: "dateIssued", label: this.$t('invoiceTable.dateIssued') },
+    ];
+  }
+},
   created() {
     this.companyID = this.$route.params.id;
     this.selectedMonthData.companyId = this.companyID;
@@ -759,7 +619,7 @@ export default {
       postData.type = "ASSET";
       postData.id = 0;
       // console.log(postData);
-      
+
       await axios
         .post("/account/api/asset/create", postData)
         .then(async (response) => {
@@ -771,12 +631,12 @@ export default {
             this.dataToSend.type = response.data.type;
             this.dataToSend.id = response.data.id;
             // console.log(this.dataToSend);
-            
+
             this.updateVatReport();
- 
+
           }
         })
-        .catch((error) => {  
+        .catch((error) => {
         });
     },
 
@@ -894,7 +754,7 @@ export default {
               this.totalInvoicesForReport = this.invoicesForReport.length;
               for (let i = 0; i < this.totalInvoicesForReport; i++) {
                 // this.status[this.invoicesForReport[i].id] = "accepted";
-                this.status[i]= {
+                this.status[i] = {
                   id: this.invoicesForReport[i].id,
                   value: "accepted"
                 };
@@ -1046,10 +906,11 @@ export default {
 };
 </script>
 
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
 .filepond--root .filepond--credits {
   display: none !important;
 }
+
 .per-page-selector {
   width: 90px;
 }
@@ -1067,12 +928,14 @@ export default {
 }
 </style>
 
-  <style lang="scss">
+<style lang="scss">
 @import "@core/scss/vue/libs/vue-select.scss";
+
 .invoiceList th {
   position: relative;
   vertical-align: middle !important;
 }
+
 .gap-2 {
   grid-gap: 25px;
 }
@@ -1082,14 +945,14 @@ export default {
   grid-gap: 10px;
   justify-content: flex-start;
 }
+
 .invoice-preview-list .invoice-date-wrapper p.invoice-date-title {
   width: 12rem !important;
   min-width: max-content;
   font-size: 12px;
 }
-.invoice-preview-list
-  .invoice-date-wrapper.invoice-middle-content
-  p.invoice-date-title {
+
+.invoice-preview-list .invoice-date-wrapper.invoice-middle-content p.invoice-date-title {
   width: auto !important;
   min-width: max-content;
 }
@@ -1099,10 +962,12 @@ export default {
   grid-gap: 20px;
   justify-content: space-between;
 }
+
 .invoice-preview-list .invoice-date-title,
 .invoiceStat .invoice-total-item .invoice-total-title {
   font-weight: 500 !important;
 }
+
 .invoice-preview-list .invoice-date {
   font-weight: bold !important;
 }
@@ -1111,20 +976,24 @@ export default {
   font-weight: 500;
   font-size: 16px;
 }
+
 .card.invoice-card {
   border: 1px solid #ebe9f1;
   border-radius: 20px;
   overflow: hidden;
   height: calc(100% - 2rem);
 }
+
 .dark-layout .card.invoice-card {
   border-color: #3b4253 !important;
 }
+
 .card-header.invoice-header {
   padding: 0.75rem;
   border: 0;
   border-radius: 0;
 }
+
 .card-header.invoice-header h5 {
   color: #fff !important;
 }
@@ -1134,9 +1003,11 @@ export default {
   padding: 0.2rem 0 !important;
   border-bottom: 1px solid #ebe9f1;
 }
+
 .dark-layout .card-body.invoice-body .invoice-date-wrapper {
   border-color: #3b4253 !important;
 }
+
 .card-body.invoice-body.invoice-body-pdf {
   padding: 1rem;
   padding-top: 0;
@@ -1145,6 +1016,7 @@ export default {
 .flex-1 {
   flex: 1;
 }
+
 .invoice-pdf {
   background-color: #f8f8f8;
 }
@@ -1152,10 +1024,12 @@ export default {
 .dark-layout .invoice-pdf {
   background-color: #161d31;
 }
+
 .invoice-preview .invoice-date-wrapper .invoice-date-title,
 .invoice-preview .invoice-date-wrapper .invoice-date {
   margin-bottom: 0;
 }
+
 .invoice-pdf .gap-2 {
   gap: 15px;
 }

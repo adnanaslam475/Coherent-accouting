@@ -401,4 +401,15 @@ export default class JwtService {
       }
     );
   }
+
+  export(token, data) {
+    let headers = {
+      'Authorization': `Bearer ${token}`,
+      
+    };
+    return this.axiosIns.post(
+      `/api/export`, data, { headers: headers }
+    );
+  }
+  
 }

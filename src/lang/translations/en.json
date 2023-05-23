@@ -270,7 +270,37 @@
     "tax_to_pay_effective": "Tax to Pay Effective",
     "delete_vat" : "Delete Vat Report",
     "delete_vat_confirm" : "Are you sure you want to delete this Vat Report?"
+   
   },
+  
+    "invoiceTable": {
+      "isChecked": "Checked",
+      "invoiceNumber": "Invoice Number",
+      "recipientCompanyName": "Recipient Company Name",
+      "supplierCompanyName": "Supplier Company Name",
+      "transactionType": "Transaction Type",
+      "dateIssued": "Date Issued"
+    },  
+  
+    "invoice_details": {
+      "invoiceNumber": "Invoice Number",
+      "recipientCompanyName": "Recipient Company Name: {name}",
+      "supplierCompanyName": "Supplier Company Name: {name}",
+      "transactionType": "Transaction Type: {value}",
+      "dateIssued": "Date Issued: {value}"
+    },
+    "modal": {
+      "title": "Invoices for Vat Report",
+      "okTitle": "Download Zip",
+      "cancelTitle": "Close",
+      "emptyText": "No matching records found",
+      "noRecords": "No records found",
+      "invoiceNumber": "Invoice Number: {value}",
+      "recipientCompanyName": "Recipient Company Name: {name}",
+      "supplierCompanyName": "Supplier Company Name: {name}",
+      "transactionType": "Transaction Type: {value}"
+    },
+  
   "dashboard_lbl": {
     "statistics": "Statistics",
     "total_companies": "Total Companies",
