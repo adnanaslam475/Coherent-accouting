@@ -412,7 +412,10 @@
     "not_recognised_01":"Ако след качване на фактурата не се показват данни - моля изпратете я на адрес: ",
     "not_recognised_02":"admin@coherent-accounting.com ",
     "not_recognised_03":"и ние ще я добавим безплатно за Вас.",
-    "verify":"Одобри"
+    "verify":"Одобри",
+    "CREDIT_NOTIFICATION": "Кредитно известие",
+    "DEBIT_NOTIFICATION": "Известие за дебит",
+    "select_notification":"Изберете Известие"
 
   },
   "create_company":{
@@ -516,5 +519,10 @@
   "download":"Свали",
   "print": "Принтирай",
   "logout":"Logout",
-  "social_accounts": "Social Accounts"
+  "social_accounts": "Social Accounts",
+  "unlimited_ocr_invoices":"Неограничени OCR фактури",
+  "unlimited_space" : "Неограничено пространство",
+  "unlimited_digital_invoices" : "Неограничени цифрови фактури",
+  "click_monthly_vat_report" : "1 щракнете върху Месечни отчети за ДДС (вкл. txt и excel)",
+  "yearly_reports" : "Годишни отчети (excel)"
 }

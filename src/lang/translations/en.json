@@ -437,7 +437,11 @@
     "not_recognised_01":"If your invoice is not recognized, Please send it to email: ",
     "not_recognised_02":"coherent-accountin@gmail.com ",
     "not_recognised_03":"and we will make it work for FREE for you.",
-    "verify":"verify"
+    "verify":"verify",
+      "CREDIT_NOTIFICATION": "Credit Notification",
+      "DEBIT_NOTIFICATION": "Debit Notification",
+      "select_notification":"Select Notification"
+    
     
   },
 
@@ -544,5 +548,12 @@
   "download":"Download",
   "print": "Print",
   "logout":"Logout",
-  "social_accounts": "Social Accounts"
+  "social_accounts": "Social Accounts",
+  "unlimited_ocr_invoices":"Unlimited OCR Invoices",
+  "unlimited_space" : "Unlimited Space",
+  "unlimited_digital_invoices" : "Unlimited Digital Invoices",
+  "click_monthly_vat_report" : "1 click Monthly Vat Reports (incl. txt and excel)",
+  "yearly_reports" : "Yearly Reports (excel)"
+  
+
 }

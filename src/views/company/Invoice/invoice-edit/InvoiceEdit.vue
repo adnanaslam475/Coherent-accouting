@@ -1028,12 +1028,25 @@
                           </div>
                         </div>
                       </div>
-                      <div class="tm_invoice_right tm_text_right">
-                        <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          {{ $t("add_invoice.invoice") }}
-                        </div>
-                      </div>
-                    </div>
+                      <div class="d-flex justify-content-between align-items-center px-3">
+    <b-form-select v-model="selectedNotification"
+                   :options="notificationOptions"
+                   class="my-3">
+      <template #first>
+        <b-form-select-option :value="null" disabled>
+          {{ $t("add_invoice.select_notification") }}
+        </b-form-select-option>
+      </template>
+    </b-form-select>
+    <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice." + selectedNotification) }}</div>
+  </div>
+
+
+
+
+
+</div>
+                  
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_seperator tm_gray_bg"></div>
                       <div class="tm_invoice_info_list">
@@ -2001,13 +2014,29 @@
                         </div>
                       </div>
                       <div class="tm_invoice_right tm_text_right tm_mobile_hide">
-                        <div class="tm_f50 tm_text_uppercase" :style="isGray === true
-                          ? 'color: black !important'
-                          : 'color: white !important'
-                          ">
-                          {{ $t("add_invoice.invoice") }}
-                        </div>
-                      </div>
+  <div class="tm_f50 tm_text_uppercase" 
+      :style="isGray === true
+              ? 'color: black !important'
+              : 'color: white !important'">
+    <div class="d-flex justify-content-between customClassName">
+      <b-form-select v-model="selectedNotification"
+                    :options="notificationOptions"
+                    class="customClassName maxWidthDropdown">
+        <template #first>
+          <b-form-select-option :value="null" disabled>
+            {{ $t("add_invoice.select_notification") }}
+          </b-form-select-option>
+        </template>
+      </b-form-select>
+      <span class="ml-3 text-uppercase font-weight-bold customClassName" v-if="selectedNotification">{{ $t("add_invoice." + selectedNotification) }}</span>
+    </div>
+  </div>
+</div>
+
+
+
+
+
                       <div class="tm_shape_bg tm_mobile_hide" :class="isBlue === true
                         ? 'tm_accent_bg'
                         : isGreen === true
@@ -4149,11 +4178,18 @@
                           </div>
                         </div>
                       </div>
-                      <div class="tm_invoice_right tm_text_right">
-                        <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          {{ $t("add_invoice.invoice") }}
-                        </div>
-                      </div>
+                      <div class="d-flex justify-content-between align-items-center px-3">
+  <b-form-select v-model="selectedNotification"
+                 :options="['CREDIT_NOTIFICATION', 'DEBIT_NOTIFICATION']"
+                 class="my-3">
+    <template #first>
+      <b-form-select-option :value="null" disabled>
+        {{ $t("add_invoice.select_notification") }}
+      </b-form-select-option>
+    </template>
+  </b-form-select>
+  <span class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice." + selectedNotification) }}</span>
+</div>
                     </div>
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_seperator">
@@ -5310,7 +5346,11 @@ export default {
       editMode: false,
       editingSupplier: false,
       editingRecipient: false,
-      
+      notifications: [
+      { value: 'CREDIT_NOTIFICATION', text: 'Credit Notification' },
+      { value: 'DEBIT_NOTIFICATION', text: 'Debit Notification' }
+    ],
+    selectedNotification: null,
     
       clauseToSend: "",
       bankNameToSend: "",
@@ -5348,6 +5388,20 @@ export default {
   },
   destroyed() {
     window.removeEventListener("resize", this.initTrHeight);
+  },
+  computed: {
+    dropdownStyle() {
+      return this.isGray === true ? {'color': 'black'} : {'color': 'white'}
+    },
+    notificationOptions() {
+      return [
+        'CREDIT_NOTIFICATION',
+        'DEBIT_NOTIFICATION'
+      ].map(notification => ({
+        text: this.$t('add_invoice.' + notification),
+        value: notification
+      }))
+    }
   },
   methods: {
     async getCompanyInfo() {
@@ -6497,7 +6551,16 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@core/scss/base/pages/app-invoice.scss";
-
+.customClassName {
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-left:20px;
+   
+}
+.maxWidthDropdown {
+    max-width: 250px; /* Replace with your desired width */
+}
 .editable-text {
   cursor: pointer;
   transition: background-color 0.3s;

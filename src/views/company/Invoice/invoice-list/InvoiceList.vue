@@ -531,7 +531,7 @@ export default {
       path: mdiTrayArrowUp,
       observer: null,
       loadModal: "Next",
-      modalDisabled: false,
+        
       modalDisabledMonth: false,
       searchQuery: '', // assuming it's a string
       isLoading: false, // assuming it's a boolean indicating a loading state
@@ -672,66 +672,74 @@ export default {
     },
 
     async getExportFile() {
-      this.$nextTick(() => {
-        this.$bvModal.show("modal-spinner");
-      });
+  this.$nextTick(() => {
+    this.$bvModal.show("modal-spinner");
+  });
 
-      this.exportDto.companyId = 85; // Set companyId to 85
-      this.exportDto.date = new Date().toISOString().split('T')[0]; // Set date to current date
-      this.exportDto.platformName = "AJURE"; // Set platformName to "AJURE"
+  this.exportDto.companyId = 85; // Set companyId to 85
+  this.exportDto.date = new Date().toISOString().split('T')[0]; // Set date to current date
+  this.exportDto.platformName = "AJURE"; // Set platformName to "AJURE"
 
-      try {
-        const response = await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-            'Content-Type': 'application/json'
-          },
-          responseType: 'blob', // Important for handling the binary response
-        });
+  try {
+    const response = await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+        'Content-Type': 'application/json'
+      },
+      responseType: 'blob',
+    });
 
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'data.csv'); // use the correct file extension
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+    // Prepare the data string to be written to the file
+    const exportDataString = `companyId: ${this.exportDto.companyId}, date: "${this.exportDto.date}", platformName: "${this.exportDto.platformName}"`;
 
-        this.$nextTick(() => {
-          this.$bvModal.hide("modal-spinner");
-        });
+    // Create a new blob with the content of the exportDto
+    const exportDataBlob = new Blob([exportDataString], {type : 'text/plain'});
 
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: "The file has been downloaded",
-            icon: "DeleteIcon",
-            variant: "success",
-          },
-        });
+    const url = window.URL.createObjectURL(exportDataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'data.txt'); // download as .txt
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
 
-        this.$refs.modal_exportValue.hide();
-      } catch (error) {
-        console.error("Error:", error);
-        if (error.response) {
-          console.log('Error status:', error.response.status);
-          console.log('Error data:', error.response.data);
-        }
+    this.$nextTick(() => {
+      this.$bvModal.hide("modal-spinner");
+    });
 
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: `Something went wrong`,
-            icon: "AlertTriangleIcon",
-            variant: "danger",
-          },
-        });
+    this.$toast({
+      component: ToastificationContent,
+      props: {
+        title: "The file has been downloaded",
+        icon: "DeleteIcon",
+        variant: "success",
+      },
+    });
 
-        this.$nextTick(() => {
-          this.$bvModal.hide("modal-spinner");
-        });
-      }
-    },
+    this.$refs.modal_exportValue.hide();
+  } catch (error) {
+    console.error("Error:", error);
+    if (error.response) {
+      console.log('Error status:', error.response.status);
+      console.log('Error data:', error.response.data);
+    }
+
+    this.$toast({
+      component: ToastificationContent,
+      props: {
+        title: `Something went wrong`,
+        icon: "AlertTriangleIcon",
+        variant: "danger",
+      },
+    });
+
+    this.$nextTick(() => {
+      this.$bvModal.hide("modal-spinner");
+    });
+  }
+},
+
+
 
 
 
