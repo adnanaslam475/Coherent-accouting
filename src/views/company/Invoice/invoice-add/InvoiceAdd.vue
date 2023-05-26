@@ -34,10 +34,22 @@
                     </b-input-group>
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
+                  <div class="d-flex justify-content-between align-items-center px-3">
+                        <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
+                          <template #first>
+                            <b-form-select-option :value="null" disabled>
+                              {{ $t("add_invoice.select_notification") }}
+                            </b-form-select-option>
+                          </template>
+                        </b-form-select>
+                        <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
+                          + selectedNotification) }}</div>
+                      </div>
                 </div>
               </b-card-header>
             </b-card>
             <div>
+              
               <div class="accountType">
                 <b-form-radio
                   v-model="AccountTypeOption"
@@ -1547,10 +1559,16 @@
                           </div>
                         </div>
                       </div>
-                      <div class="tm_invoice_right tm_text_right">
-                        <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          {{ $t("add_invoice.invoice") }}
-                        </div>
+                      <div class="d-flex justify-content-between align-items-center px-3">
+                        <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
+                          <template #first>
+                            <b-form-select-option :value="null" disabled>
+                              {{ $t("add_invoice.select_notification") }}
+                            </b-form-select-option>
+                          </template>
+                        </b-form-select>
+                        <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
+                          + selectedNotification) }}</div>
                       </div>
                     </div>
                     <div class="tm_invoice_info tm_mb20">
@@ -2954,18 +2972,22 @@
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="tm_invoice_right tm_text_right tm_mobile_hide"
-                      >
-                        <div
-                          class="tm_f50 tm_text_uppercase"
-                          :style="
-                            isGray === true
-                              ? 'color: black !important'
-                              : 'color: white !important'
-                          "
-                        >
-                          {{ $t("add_invoice.invoice") }}
+                      <div class="tm_invoice_right tm_text_right tm_mobile_hide">
+                        <div class="tm_f50 tm_text_uppercase" :style="isGray === true
+                          ? 'color: black !important'
+                          : 'color: white !important'">
+                          <div class="d-flex justify-content-between customClassName">
+                            <b-form-select v-model="selectedNotification" :options="notificationOptions"
+                              class="customClassName maxWidthDropdown">
+                              <template #first>
+                                <b-form-select-option :value="null" disabled>
+                                  {{ $t("add_invoice.select_notification") }}
+                                </b-form-select-option>
+                              </template>
+                            </b-form-select>
+                            <span class="ml-3 text-uppercase font-weight-bold customClassName"
+                              v-if="selectedNotification">{{ $t("add_invoice." + selectedNotification) }}</span>
+                          </div>
                         </div>
                       </div>
                       <div
@@ -4543,7 +4565,17 @@
                           </div>
                         </div>
                       </div>
-                      <div class="tm_invoice_right tm_text_right"></div>
+                      <div class="d-flex justify-content-between align-items-center px-3">
+                        <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
+                          <template #first>
+                            <b-form-select-option :value="null" disabled>
+                              {{ $t("add_invoice.select_notification") }}
+                            </b-form-select-option>
+                          </template>
+                        </b-form-select>
+                        <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
+                          + selectedNotification) }}</div>
+                      </div>
                     </div>
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_info_list">
@@ -5974,10 +6006,16 @@
                           </div>
                         </div>
                       </div>
-                      <div class="tm_invoice_right tm_text_right">
-                        <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          {{ $t("add_invoice.invoice") }}
-                        </div>
+                      <div class="d-flex justify-content-between align-items-center px-3">
+                        <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
+                          <template #first>
+                            <b-form-select-option :value="null" disabled>
+                              {{ $t("add_invoice.select_notification") }}
+                            </b-form-select-option>
+                          </template>
+                        </b-form-select>
+                        <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
+                          + selectedNotification) }}</div>
                       </div>
                     </div>
                     <div class="tm_invoice_info tm_mb20">
@@ -7297,6 +7335,7 @@
                               </validation-provider>
                             </p>
                           </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -7305,6 +7344,7 @@
                       <p class="tm_mb2"></p>
                       <ul class="tm_m0 tm_note_list"></ul>
                     </div>
+                    
                   </div>
                 </div>
               </div>
@@ -7591,6 +7631,11 @@ export default {
       isTemplateThree: false,
       isTemplateFour: false,
       companyIDisInvalid: false,
+      notifications: [
+        { value: 'CREDIT_NOTIFICATION', text: 'Credit Notification' },
+        { value: 'DEBIT_NOTIFICATION', text: 'Debit Notification' }
+      ],
+      selectedNotification: null,
       clauseToSend: "",
       bankNameToSend: "",
       bankList: [
@@ -7632,6 +7677,20 @@ export default {
   },
   destroyed() {
     // window.removeEventListener("resize", this.initTrHeight);
+  },
+  computed: {
+    dropdownStyle() {
+      return this.isGray === true ? { 'color': 'black' } : { 'color': 'white' }
+    },
+    notificationOptions() {
+      return [
+        'CREDIT_NOTIFICATION',
+        'DEBIT_NOTIFICATION'
+      ].map(notification => ({
+        text: this.$t('add_invoice.' + notification),
+        value: notification
+      }))
+    }
   },
   methods: {
     //
@@ -8748,6 +8807,18 @@ export default {
 // @import "assets/css/style.css";
 @import "@core/scss/vue/libs/vue-select.scss";
 @import "@core/scss/vue/libs/vue-flatpicker.scss";
+.customClassName {
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+
+}
+
+.maxWidthDropdown {
+  max-width: 250px;
+  /* Replace with your desired width */
+}
 .invoice-add-wrapper {
   .add-new-client-header {
     padding: $options-padding-y $options-padding-x;
