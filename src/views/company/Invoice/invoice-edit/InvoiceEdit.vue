@@ -33,6 +33,17 @@
                     </b-input-group>
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
+                  <div class="d-flex justify-content-between align-items-center px-3">
+                        <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
+                          <template #first>
+                            <b-form-select-option :value="null" disabled>
+                              {{ $t("add_invoice.select_notification") }}
+                            </b-form-select-option>
+                          </template>
+                        </b-form-select>
+                        <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
+                          + selectedNotification) }}</div>
+                      </div>
                 </div>
               </b-card-header>
             </b-card>
@@ -1028,25 +1039,26 @@
                           </div>
                         </div>
                       </div>
+
+
                       <div class="d-flex justify-content-between align-items-center px-3">
-    <b-form-select v-model="selectedNotification"
-                   :options="notificationOptions"
-                   class="my-3">
-      <template #first>
-        <b-form-select-option :value="null" disabled>
-          {{ $t("add_invoice.select_notification") }}
-        </b-form-select-option>
-      </template>
-    </b-form-select>
-    <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice." + selectedNotification) }}</div>
-  </div>
+                        <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
+                          <template #first>
+                            <b-form-select-option :value="null" disabled>
+                              {{ $t("add_invoice.select_notification") }}
+                            </b-form-select-option>
+                          </template>
+                        </b-form-select>
+                        <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
+                          + selectedNotification) }}</div>
+                      </div>
 
 
 
 
 
-</div>
-                  
+                    </div>
+
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_seperator tm_gray_bg"></div>
                       <div class="tm_invoice_info_list">
@@ -1244,7 +1256,7 @@
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
-                          <validation-provider #default="{ errors }" name="recipientCompanyOwner" rules="required">
+                        <validation-provider #default="{ errors }" name="recipientCompanyOwner" rules="required">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
                             placeholder="Recipient Company Owner Name...." />
@@ -1902,57 +1914,41 @@
 
                     </div>
                     <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-    <tr>
-      <td style="text-align: center; padding: 30px;">
-        <div style="margin-bottom: 20px;">
-          <span
-            v-show="!editingSupplier"
-            @click="editingSupplier = true"
-            class="editable-text"
-          >
-            {{ invoiceData.supplierCompany.companyOwnerName }}
-          </span>
-          <input
-            v-show="editingSupplier"
-            type="text"
-            v-model="invoiceData.supplierCompany.companyOwnerName"
-            @blur="editingSupplier = false"
-            class="editable-input"
-          />
-        </div>
-        <div style="height: 50px; border-bottom: 1px dashed black;">
-          <!-- Space for supplier's signature -->
-        </div>
-        <div style="margin-top: 10px;">
-          {{ new Date().toLocaleDateString() }}
-        </div>
-      </td>
-      <td style="text-align: center; padding: 30px;">
-        <div style="margin-bottom: 20px;">
-          <span
-            v-show="!editingRecipient"
-            @click="editingRecipient = true"
-            class="editable-text"
-          >
-            {{ invoiceData.recipientCompany.companyOwnerName }}
-          </span>
-          <input
-            v-show="editingRecipient"
-            type="text"
-            v-model="invoiceData.recipientCompany.companyOwnerName"
-            @blur="editingRecipient = false"
-            class="editable-input"
-          />
-        </div>
-        <div style="height: 50px; border-bottom: 1px dashed black;">
-          <!-- Space for recipient's signature -->
-        </div>
-        <div style="margin-top: 10px;">
-          {{ new Date().toLocaleDateString() }}
-        </div>
-      </td>
-    </tr>
-  </table>
+                      <tr>
+                        <td style="text-align: center; padding: 30px;">
+                          <div style="margin-bottom: 20px;">
+                            <span v-show="!editingSupplier" @click="editingSupplier = true" class="editable-text">
+                              {{ invoiceData.supplierCompany.companyOwnerName }}
+                            </span>
+                            <input v-show="editingSupplier" type="text"
+                              v-model="invoiceData.supplierCompany.companyOwnerName" @blur="editingSupplier = false"
+                              class="editable-input" />
+                          </div>
+                          <div style="height: 50px; border-bottom: 1px dashed black;">
+                            <!-- Space for supplier's signature -->
+                          </div>
+                          <div style="margin-top: 10px;">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                        <td style="text-align: center; padding: 30px;">
+                          <div style="margin-bottom: 20px;">
+                            <span v-show="!editingRecipient" @click="editingRecipient = true" class="editable-text">
+                              {{ invoiceData.recipientCompany.companyOwnerName }}
+                            </span>
+                            <input v-show="editingRecipient" type="text"
+                              v-model="invoiceData.recipientCompany.companyOwnerName" @blur="editingRecipient = false"
+                              class="editable-input" />
+                          </div>
+                          <div style="height: 50px; border-bottom: 1px dashed black;">
+                            <!-- Space for recipient's signature -->
+                          </div>
+                          <div style="margin-top: 10px;">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -2014,24 +2010,23 @@
                         </div>
                       </div>
                       <div class="tm_invoice_right tm_text_right tm_mobile_hide">
-  <div class="tm_f50 tm_text_uppercase" 
-      :style="isGray === true
-              ? 'color: black !important'
-              : 'color: white !important'">
-    <div class="d-flex justify-content-between customClassName">
-      <b-form-select v-model="selectedNotification"
-                    :options="notificationOptions"
-                    class="customClassName maxWidthDropdown">
-        <template #first>
-          <b-form-select-option :value="null" disabled>
-            {{ $t("add_invoice.select_notification") }}
-          </b-form-select-option>
-        </template>
-      </b-form-select>
-      <span class="ml-3 text-uppercase font-weight-bold customClassName" v-if="selectedNotification">{{ $t("add_invoice." + selectedNotification) }}</span>
-    </div>
-  </div>
-</div>
+                        <div class="tm_f50 tm_text_uppercase" :style="isGray === true
+                          ? 'color: black !important'
+                          : 'color: white !important'">
+                          <div class="d-flex justify-content-between customClassName">
+                            <b-form-select v-model="selectedNotification" :options="notificationOptions"
+                              class="customClassName maxWidthDropdown">
+                              <template #first>
+                                <b-form-select-option :value="null" disabled>
+                                  {{ $t("add_invoice.select_notification") }}
+                                </b-form-select-option>
+                              </template>
+                            </b-form-select>
+                            <span class="ml-3 text-uppercase font-weight-bold customClassName"
+                              v-if="selectedNotification">{{ $t("add_invoice." + selectedNotification) }}</span>
+                          </div>
+                        </div>
+                      </div>
 
 
 
@@ -2931,57 +2926,41 @@
                     </div>
 
                     <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-    <tr>
-      <td style="text-align: center; padding: 30px;">
-        <div style="margin-bottom: 20px;">
-          <span
-            v-show="!editingSupplier"
-            @click="editingSupplier = true"
-            class="editable-text"
-          >
-            {{ invoiceData.supplierCompany.companyOwnerName }}
-          </span>
-          <input
-            v-show="editingSupplier"
-            type="text"
-            v-model="invoiceData.supplierCompany.companyOwnerName"
-            @blur="editingSupplier = false"
-            class="editable-input"
-          />
-        </div>
-        <div style="height: 50px; border-bottom: 1px dashed black;">
-          <!-- Space for supplier's signature -->
-        </div>
-        <div style="margin-top: 10px;">
-          {{ new Date().toLocaleDateString() }}
-        </div>
-      </td>
-      <td style="text-align: center; padding: 30px;">
-        <div style="margin-bottom: 20px;">
-          <span
-            v-show="!editingRecipient"
-            @click="editingRecipient = true"
-            class="editable-text"
-          >
-            {{ invoiceData.recipientCompany.companyOwnerName }}
-          </span>
-          <input
-            v-show="editingRecipient"
-            type="text"
-            v-model="invoiceData.recipientCompany.companyOwnerName"
-            @blur="editingRecipient = false"
-            class="editable-input"
-          />
-        </div>
-        <div style="height: 50px; border-bottom: 1px dashed black;">
-          <!-- Space for recipient's signature -->
-        </div>
-        <div style="margin-top: 10px;">
-          {{ new Date().toLocaleDateString() }}
-        </div>
-      </td>
-    </tr>
-  </table>
+                      <tr>
+                        <td style="text-align: center; padding: 30px;">
+                          <div style="margin-bottom: 20px;">
+                            <span v-show="!editingSupplier" @click="editingSupplier = true" class="editable-text">
+                              {{ invoiceData.supplierCompany.companyOwnerName }}
+                            </span>
+                            <input v-show="editingSupplier" type="text"
+                              v-model="invoiceData.supplierCompany.companyOwnerName" @blur="editingSupplier = false"
+                              class="editable-input" />
+                          </div>
+                          <div style="height: 50px; border-bottom: 1px dashed black;">
+                            <!-- Space for supplier's signature -->
+                          </div>
+                          <div style="margin-top: 10px;">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                        <td style="text-align: center; padding: 30px;">
+                          <div style="margin-bottom: 20px;">
+                            <span v-show="!editingRecipient" @click="editingRecipient = true" class="editable-text">
+                              {{ invoiceData.recipientCompany.companyOwnerName }}
+                            </span>
+                            <input v-show="editingRecipient" type="text"
+                              v-model="invoiceData.recipientCompany.companyOwnerName" @blur="editingRecipient = false"
+                              class="editable-input" />
+                          </div>
+                          <div style="height: 50px; border-bottom: 1px dashed black;">
+                            <!-- Space for recipient's signature -->
+                          </div>
+                          <div style="margin-top: 10px;">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
 
                   </div>
                 </div>
@@ -3157,7 +3136,21 @@
                           </div>
                         </div>
                       </div>
+
                       <div class="tm_invoice_right tm_text_right"></div>
+                      <div class="d-flex justify-content-start align-items-center px-3" style="margin-right:2rem ;">
+    <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
+        <template #first>
+            <b-form-select-option :value="null" disabled>
+                {{ $t("add_invoice.select_notification") }}
+            </b-form-select-option>
+        </template>
+    </b-form-select>
+    <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice." + selectedNotification) }}</div>
+</div>
+
+
+
                     </div>
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_info_list">
@@ -4037,57 +4030,41 @@
 
                     </div>
                     <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-    <tr>
-      <td style="text-align: center; padding: 30px;">
-        <div style="margin-bottom: 20px;">
-          <span
-            v-show="!editingSupplier"
-            @click="editingSupplier = true"
-            class="editable-text"
-          >
-            {{ invoiceData.supplierCompany.companyOwnerName }}
-          </span>
-          <input
-            v-show="editingSupplier"
-            type="text"
-            v-model="invoiceData.supplierCompany.companyOwnerName"
-            @blur="editingSupplier = false"
-            class="editable-input"
-          />
-        </div>
-        <div style="height: 50px; border-bottom: 1px dashed black;">
-          <!-- Space for supplier's signature -->
-        </div>
-        <div style="margin-top: 10px;">
-          {{ new Date().toLocaleDateString() }}
-        </div>
-      </td>
-      <td style="text-align: center; padding: 30px;">
-        <div style="margin-bottom: 20px;">
-          <span
-            v-show="!editingRecipient"
-            @click="editingRecipient = true"
-            class="editable-text"
-          >
-            {{ invoiceData.recipientCompany.companyOwnerName }}
-          </span>
-          <input
-            v-show="editingRecipient"
-            type="text"
-            v-model="invoiceData.recipientCompany.companyOwnerName"
-            @blur="editingRecipient = false"
-            class="editable-input"
-          />
-        </div>
-        <div style="height: 50px; border-bottom: 1px dashed black;">
-          <!-- Space for recipient's signature -->
-        </div>
-        <div style="margin-top: 10px;">
-          {{ new Date().toLocaleDateString() }}
-        </div>
-      </td>
-    </tr>
-  </table>
+                      <tr>
+                        <td style="text-align: center; padding: 30px;">
+                          <div style="margin-bottom: 20px;">
+                            <span v-show="!editingSupplier" @click="editingSupplier = true" class="editable-text">
+                              {{ invoiceData.supplierCompany.companyOwnerName }}
+                            </span>
+                            <input v-show="editingSupplier" type="text"
+                              v-model="invoiceData.supplierCompany.companyOwnerName" @blur="editingSupplier = false"
+                              class="editable-input" />
+                          </div>
+                          <div style="height: 50px; border-bottom: 1px dashed black;">
+                            <!-- Space for supplier's signature -->
+                          </div>
+                          <div style="margin-top: 10px;">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                        <td style="text-align: center; padding: 30px;">
+                          <div style="margin-bottom: 20px;">
+                            <span v-show="!editingRecipient" @click="editingRecipient = true" class="editable-text">
+                              {{ invoiceData.recipientCompany.companyOwnerName }}
+                            </span>
+                            <input v-show="editingRecipient" type="text"
+                              v-model="invoiceData.recipientCompany.companyOwnerName" @blur="editingRecipient = false"
+                              class="editable-input" />
+                          </div>
+                          <div style="height: 50px; border-bottom: 1px dashed black;">
+                            <!-- Space for recipient's signature -->
+                          </div>
+                          <div style="margin-top: 10px;">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
 
 
 
@@ -4177,19 +4154,20 @@
                             </span>
                           </div>
                         </div>
+                        
                       </div>
                       <div class="d-flex justify-content-between align-items-center px-3">
-  <b-form-select v-model="selectedNotification"
-                 :options="['CREDIT_NOTIFICATION', 'DEBIT_NOTIFICATION']"
-                 class="my-3">
-    <template #first>
-      <b-form-select-option :value="null" disabled>
-        {{ $t("add_invoice.select_notification") }}
-      </b-form-select-option>
-    </template>
-  </b-form-select>
-  <span class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice." + selectedNotification) }}</span>
-</div>
+                        <b-form-select v-model="selectedNotification"
+                          :options="['CREDIT_NOTIFICATION', 'DEBIT_NOTIFICATION']" class="my-3">
+                          <template #first>
+                            <b-form-select-option :value="null" disabled>
+                              {{ $t("add_invoice.select_notification") }}
+                            </b-form-select-option>
+                          </template>
+                        </b-form-select>
+                        <span class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{
+                          $t("add_invoice." + selectedNotification) }}</span>
+                      </div>
                     </div>
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_seperator">
@@ -4274,6 +4252,7 @@
                           </span>
                         </b-form-checkbox>
                       </div>
+
                     </div>
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
@@ -4712,6 +4691,8 @@
                         </div>
                       </b-card-body>
                     </b-card>
+                    
+                    
 
                     <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="addNewItemInItemForm"
                       class="mb-2" style="
@@ -4928,6 +4909,7 @@
                             <p class="invoice-total-title">
                               {{ $t("add_invoice.total_price_non_vat") }}:
                             </p>
+
                             <p class="invoice-total-amount">
                               <validation-provider #default="{ errors }" name="amountNonVat" rules="required">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
@@ -5072,6 +5054,7 @@
                             </p>
                           </div>
                         </div>
+                        
                       </div>
                     </div>
 
@@ -5088,72 +5071,52 @@
                     </div>
                     <!-- .tm_note -->
                   </div>
-                 
-                 
-    <table style="width: 50%; float: left; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-      <tr>
-        <td style="text-align: center; padding: 30px;">
-          <div style="border-bottom: 1px solid black; margin-bottom: 20px;">
-            <span
-              v-show="!editingSupplier"
-              @click="editingSupplier = true"
-              class="editable-text"
-              @dblclick="editingSupplier = false"
-            >
-              {{ invoiceData.supplierCompany.companyOwnerName }}
-            </span>
-            <input
-              v-show="editingSupplier"
-              type="text"
-              v-model="invoiceData.supplierCompany.companyOwnerName"
-              @blur="editingSupplier = false"
-              class="editable-input"
-            />
-          </div>
-          <div style="height: 50px; border-bottom: 1px dashed black;">
-            <!-- Space for supplier's signature -->
-          </div>
-          <div style="margin-top: 10px;">
-            {{ new Date().toLocaleDateString() }}
-          </div>
-        </td>
-        <td style="text-align: center; padding: 30px;">
-          <div style="border-bottom: 1px solid black; margin-bottom: 20px;">
-            <span
-              v-show="!editingRecipient"
-              @click="editingRecipient = true"
-              class="editable-text"
-              @dblclick="editingRecipient = false"
-            >
-              {{ invoiceData.recipientCompany.companyOwnerName }}
-            </span>
-            <input
-              v-show="editingRecipient"
-              type="text"
-              v-model="invoiceData.recipientCompany.companyOwnerName"
-              @blur="editingRecipient = false"
-              class="editable-input"
-            />
-          </div>
-          <div style="height: 50px; border-bottom: 1px dashed black;">
-            <!-- Space for recipient's signature -->
-          </div>
-          <div style="margin-top: 10px;">
-            {{ new Date().toLocaleDateString() }}
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
 
 
-
-
-
+                  <table style="width: 50%; float: left; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+                    <tr>
+                      <td style="text-align: center; padding: 30px;">
+                        <div style="border-bottom: 1px solid black; margin-bottom: 20px;">
+                          <span v-show="!editingSupplier" @click="editingSupplier = true" class="editable-text"
+                            @dblclick="editingSupplier = false">
+                            {{ invoiceData.supplierCompany.companyOwnerName }}
+                          </span>
+                          <input v-show="editingSupplier" type="text"
+                            v-model="invoiceData.supplierCompany.companyOwnerName" @blur="editingSupplier = false"
+                            class="editable-input" />
+                        </div>
+                        <div style="height: 50px; border-bottom: 1px dashed black;">
+                          <!-- Space for supplier's signature -->
+                        </div>
+                        <div style="margin-top: 10px;">
+                          {{ new Date().toLocaleDateString() }}
+                        </div>
+                      </td>
+                      <td style="text-align: center; padding: 30px;">
+                        <div style="border-bottom: 1px solid black; margin-bottom: 20px;">
+                          <span v-show="!editingRecipient" @click="editingRecipient = true" class="editable-text"
+                            @dblclick="editingRecipient = false">
+                            {{ invoiceData.recipientCompany.companyOwnerName }}
+                          </span>
+                          <input v-show="editingRecipient" type="text"
+                            v-model="invoiceData.recipientCompany.companyOwnerName" @blur="editingRecipient = false"
+                            class="editable-input" />
+                        </div>
+                        <div style="height: 50px; border-bottom: 1px dashed black;">
+                          <!-- Space for recipient's signature -->
+                        </div>
+                        <div style="margin-top: 10px;">
+                          {{ new Date().toLocaleDateString() }}
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
 
               </div>
+
             </div>
+        
           </b-col>
 
           <!-- Right Col: Card -->
@@ -5347,11 +5310,11 @@ export default {
       editingSupplier: false,
       editingRecipient: false,
       notifications: [
-      { value: 'CREDIT_NOTIFICATION', text: 'Credit Notification' },
-      { value: 'DEBIT_NOTIFICATION', text: 'Debit Notification' }
-    ],
-    selectedNotification: null,
-    
+        { value: 'CREDIT_NOTIFICATION', text: 'Credit Notification' },
+        { value: 'DEBIT_NOTIFICATION', text: 'Debit Notification' }
+      ],
+      selectedNotification: null,
+
       clauseToSend: "",
       bankNameToSend: "",
       bankList: [
@@ -5391,7 +5354,7 @@ export default {
   },
   computed: {
     dropdownStyle() {
-      return this.isGray === true ? {'color': 'black'} : {'color': 'white'}
+      return this.isGray === true ? { 'color': 'black' } : { 'color': 'white' }
     },
     notificationOptions() {
       return [
@@ -6551,16 +6514,20 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@core/scss/base/pages/app-invoice.scss";
+
 .customClassName {
-    font-size: 20px;
-    align-items: center;
-    justify-content: center;
-    margin-left:20px;
-   
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+
 }
+
 .maxWidthDropdown {
-    max-width: 250px; /* Replace with your desired width */
+  max-width: 250px;
+  /* Replace with your desired width */
 }
+
 .editable-text {
   cursor: pointer;
   transition: background-color 0.3s;
@@ -9544,4 +9511,5 @@ hr {
   .tm_pagebreak {
     page-break-before: always;
   }
-}</style>
+}
+</style>

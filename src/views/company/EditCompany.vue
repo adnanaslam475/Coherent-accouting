@@ -624,15 +624,13 @@ export default {
     exportProperties: {},
     };
   },
-  computed: {
-   platformPropertiesOptions() {
-     return this.platformProperties.map(({ key, item }) => ({
-       value: { key, item },
-       text: `${key}: ${item}`,
-     }));
-   },
+ computed: {
+  platformPropertiesOptions() {
+    const keysToKeep = ['micro_invest', 'ajure'];
+    const filteredProperties = this.platformProperties.filter(property => keysToKeep.includes(property));
+    return filteredProperties.map(property => ({ value: property, text: property }));
+  },
 },
-
 
   methods: {
     //
