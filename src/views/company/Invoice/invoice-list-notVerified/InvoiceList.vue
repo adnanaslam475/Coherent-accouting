@@ -23,7 +23,7 @@
         <!-- Progressbar -->
         <b-col cols="12" md="2">
           <template>
-            <div v-if="multiplefileLoading" class="progress-item">
+            <div class="progress-item">
               <h5>{{ progressStatus }}</h5>
               <!-- <VProgressLinear v-model="skill" color="primary" height="10">
                 <template #default="{ progressCount }">
