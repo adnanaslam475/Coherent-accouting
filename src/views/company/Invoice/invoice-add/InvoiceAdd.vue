@@ -31,35 +31,58 @@
             <div>
               <!-- Account Type -->
               <div class="d-flex justify-content-between align-items-center mb-2 accountType">
-                <b-form-checkbox v-model="AccountTypeScheduleOptionToggleValue" @change="
-                  AccountTypeScheduleOptionToggle(AccountTypeScheduleOptionToggleValue)
-                  " class="custom-control-primary custom-switch-btn mr-auto" name="AccountTypeScheduleOptionToggle" switch>
-                  <span class="switch-icon-left">
-                    {{ $t("add_invoice.scheduled") }}
-                  </span>
-                  <span class="switch-icon-right">
-                    {{ $t("add_invoice.scheduled") }}
-                  </span>
+                <b-form-checkbox v-model="scheduleOptionToggleValue" @change=" AccountTypeScheduleOptionToggle(scheduleOptionToggleValue)" class="custom-control-primary custom-switch-btn mr-2" name="AccountTypeScheduleOptionToggle" switch>
+                  <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
+                  <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
                 </b-form-checkbox>
-                <b-card no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                <b-card no-body class="invoice-preview date-issued mb-0 ml-0">
                   <b-card-header class="justify-content-end">
                     <div class="mt-md-0 mt-2">
                       <div class="d-flex align-items-center mb-0">
                         <span class="title mr-1">
-                          {{ $t("company_invoices.transaction_type") }}:
+                          {{ $t("add_invoice.schedule_type") }}:
+                        </span>
+                        <validation-provider #default="{ errors }" name="scheduleType" rules="required">
+                          <b-form-select :disabled="!scheduleOptionToggleValue" v-model="invoiceData.scheduleType" @change="() => { companyIDisInvalid = false; }">
+                            <b-form-select-option value="DAILY">{{ $t("add_invoice.DAILY") }}</b-form-select-option>
+                            <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY") }}</b-form-select-option>
+                          </b-form-select>
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
+                      </div>
+                    </div>
+                  </b-card-header>
+                </b-card>
+                <b-card v-if="invoiceData.scheduleType == 'MONTHLY'" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                  <b-card-header class="justify-content-end">
+                    <div class="mt-md-0 mt-2">
+                      <div class="d-flex align-items-center mb-0">
+                        <span class="title mr-1">
+                          {{ $t("add_invoice.select_date") }}:
                         </span>
                         <validation-provider #default="{ errors }" name="transectionType" rules="required">
-                          <b-form-select v-model="invoiceData.transactionType" @change="() => {
-                            companyIDisInvalid = false;
-                          }
-                            ">
-                            <b-form-select-option value="EXPENSE">{{
-                              $t("company_invoices.EXPENSE")
-                            }}</b-form-select-option>
-                            <b-form-select-option value="INCOME">{{
-                              $t("company_invoices.INCOME")
-                            }}</b-form-select-option>
+                          <b-form-select v-model="invoiceData.dayOfMonth" @change="() => { companyIDisInvalid = false; }">
+                            <b-form-select-option :value="date" v-for="date in dates" :key="index">{{ date }}</b-form-select-option>
                           </b-form-select>
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
+                      </div>
+                    </div>
+                  </b-card-header>
+                </b-card>
+                <b-card style="width: 660px" v-if="invoiceData.scheduleType == 'DAILY'" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                  <b-card-header class="justify-content-start">
+                    <div class="w-100 mt-md-0 mt-2">
+                      <div class="d-flex align-items-center mb-0">
+                        <span class="title mr-1">
+                          {{ $t("add_invoice.select_days") }}:
+                        </span>
+                        <validation-provider #default="{ errors }" name="transectionType" rules="required">
+                          <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                            <b-form-checkbox-group v-model="invoiceData.dayOfWeek" @change="() => { companyIDisInvalid = false; }" size="lg" :options="day" v-for="day in days" :key="index" :aria-describedby="ariaDescribedby">
+                              <b-form-checkbox value="day" inline>{{ day }}</b-form-checkbox>
+                            </b-form-checkbox-group>
+                          </b-form-group>
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </div>
@@ -170,14 +193,7 @@
                         </span>
                         <b-input-group class="input-group invoice-edit-input-group">
                           <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required">
-                            <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="
-                              SearchCompanyEic(
-                                invoiceData.supplierCompany.companyEic
-                              )
-                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)" @mousedown="() => {
-    companyIDisInvalid = false;
-  }
-    " />
+                            <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)" list="my-company_name" autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)" @mousedown="() => { companyIDisInvalid = false; }" />
                             <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions" style="width: 100%">
                               <b-list-group-item v-for="data in datalistEic" :key="data.eic" @click="autoCompletefnEic(data)" @mousedown="autoCompletefnEic(data)">
                                 {{ data.eic }}
@@ -316,28 +332,14 @@
                             ? 'recipientCompanyIdNumber'
                             : 'personIdNumber'
                             " rules="required">
-                            <b-form-input v-if="AccountTypeOption == 'company'" v-model="invoiceData.recipientCompany.companyEic" @input="
-                              SearchCompanyEicRecipient(
-                                invoiceData.recipientCompany.companyEic
-                              )
-                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()" @focus="
-    ShowSuggestionEicRecipient(datalistEicRecipient)
-    " />
+                            <b-form-input v-if="AccountTypeOption == 'company'" v-model="invoiceData.recipientCompany.companyEic" @input="SearchCompanyEicRecipient(invoiceData.recipientCompany.companyEic)" list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()" @focus="ShowSuggestionEicRecipient(datalistEicRecipient)" />
                             <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name" class="input-suggesstions" style="width: 100%">
                               <b-list-group-item v-for="data in datalistEicRecipient" :key="data.eic" @click="autoCompletefnEicRecipient(data)" @mousedown="autoCompletefnEicRecipient(data)">
                                 {{ data.eic }}
                               </b-list-group-item>
                             </b-list-group>
 
-                            <b-form-input v-if="AccountTypeOption == 'person'" v-model="invoiceData.recipientCompany.companyEic" @input="
-                              SearchCompanyPersonIdNumber(
-                                invoiceData.recipientCompany.companyEic
-                              )
-                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()" @focus="
-    ShowSuggestionPersonIdNumber(
-      datalistPersonIdNumber
-    )
-    " />
+                            <b-form-input v-if="AccountTypeOption == 'person'" v-model="invoiceData.recipientCompany.companyEic" @input="SearchCompanyPersonIdNumber(invoiceData.recipientCompany.companyEic)" list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()" @focus="ShowSuggestionPersonIdNumber(datalistPersonIdNumber)" />
                             <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name" class="input-suggesstions" style="width: 100%">
                               <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic" @click="autoCompletefnPersonIdNumber(data)" @mousedown="autoCompletefnPersonIdNumber(data)">
                                 {{ data.identificationNumber }}
@@ -4394,6 +4396,9 @@ export default {
       isTemplateThree: false,
       isTemplateFour: false,
       companyIDisInvalid: false,
+      scheduleOptionToggleValue: false,
+      dates: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+      days: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
       clauseToSend: "",
       bankNameToSend: "",
       bankList: [
@@ -5060,6 +5065,7 @@ export default {
       invoiceData.value = {
         invoiceNumber: "",
         dateIssued: "",
+        dueDate: "",
         supplierCompany: {
           companyOwnerName: "",
           companName: "",
