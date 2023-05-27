@@ -388,6 +388,8 @@
     "service": "Service",
     "goods": "Goods",
     "date": "Date",
+    "due_date": "Due Date",
+    "scheduled": "Scheduled",
     "company": "Company",
     "person": "Person",
     "s_no": "No.",
