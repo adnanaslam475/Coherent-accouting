@@ -483,7 +483,7 @@ export default {
             component: ToastificationContent,
             props: {
               title:
-                'You will see your invoices in "Not verified invoices" tab of the company',
+                'Ще намерите фактурите в таб "Качване от Файл" на фирмата',
               icon: "EditIcon",
               variant: "success",
             },
