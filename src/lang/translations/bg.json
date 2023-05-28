@@ -371,7 +371,7 @@
     "due_date": "Краен срок",
     "scheduled": "Планиран",
     "schedule_type": "Планиран тип",
-    "DAILY": "ЕЖЕДНЕВНО",
+    "WEEKLY": "СЕДМИЧНО",
     "MONTHLY": "МЕСЕЧНО",
     "select_date": "Изберете Дата",
     "select_days": "Изберете дни",
