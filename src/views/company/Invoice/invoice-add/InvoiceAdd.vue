@@ -20,8 +20,7 @@
                         <feather-icon icon="HashIcon" />
                       </b-input-group-prepend>
 
-                      <b-form-input v-if="!invoiceNumberVal" id="invoice-data-id" v-model="invoiceData.invoiceNumber" />
-                      <b-form-input v-if="invoiceNumberVal" id="invoice-data-id" v-model="invoiceNumberVal" />
+                      <b-form-input id="invoice-data-id" v-model="invoiceData.invoiceNumber" />
                     </b-input-group>
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
@@ -31,7 +30,8 @@
             <div>
               <!-- Account Type -->
               <div class="d-flex justify-content-between align-items-center mb-2 accountType">
-                <b-form-checkbox v-model="scheduleOptionToggleValue" @change=" AccountTypeScheduleOptionToggle(scheduleOptionToggleValue)" class="custom-control-primary custom-switch-btn mr-2" name="AccountTypeScheduleOptionToggle" switch>
+                <!-- @change="scheduleTypeOptionToggle(scheduleOptionToggleValue)"                 -->
+                <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn mr-2" name="invoiceData.scheduled" switch>
                   <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
                   <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
                 </b-form-checkbox>
@@ -43,46 +43,10 @@
                           {{ $t("add_invoice.schedule_type") }}:
                         </span>
                         <validation-provider #default="{ errors }" name="scheduleType" rules="required">
-                          <b-form-select :disabled="!scheduleOptionToggleValue" v-model="invoiceData.scheduleType" @change="() => { companyIDisInvalid = false; }">
-                            <b-form-select-option value="DAILY">{{ $t("add_invoice.DAILY") }}</b-form-select-option>
+                          <b-form-select :disabled="!invoiceData.scheduled" v-model="invoiceData.cronScheduleApi.scheduleType" @change="() => { companyIDisInvalid = false; }">
+                            <b-form-select-option value="WEEKLY">{{ $t("add_invoice.WEEKLY") }}</b-form-select-option>
                             <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY") }}</b-form-select-option>
                           </b-form-select>
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </div>
-                    </div>
-                  </b-card-header>
-                </b-card>
-                <b-card v-if="invoiceData.scheduleType == 'MONTHLY'" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
-                  <b-card-header class="justify-content-end">
-                    <div class="mt-md-0 mt-2">
-                      <div class="d-flex align-items-center mb-0">
-                        <span class="title mr-1">
-                          {{ $t("add_invoice.select_date") }}:
-                        </span>
-                        <validation-provider #default="{ errors }" name="transectionType" rules="required">
-                          <b-form-select v-model="invoiceData.dayOfMonth" @change="() => { companyIDisInvalid = false; }">
-                            <b-form-select-option :value="date" v-for="date in dates" :key="index">{{ date }}</b-form-select-option>
-                          </b-form-select>
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </div>
-                    </div>
-                  </b-card-header>
-                </b-card>
-                <b-card style="width: 660px" v-if="invoiceData.scheduleType == 'DAILY'" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
-                  <b-card-header class="justify-content-start">
-                    <div class="w-100 mt-md-0 mt-2">
-                      <div class="d-flex align-items-center mb-0">
-                        <span class="title mr-1">
-                          {{ $t("add_invoice.select_days") }}:
-                        </span>
-                        <validation-provider #default="{ errors }" name="transectionType" rules="required">
-                          <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
-                            <b-form-checkbox-group v-model="invoiceData.dayOfWeek" @change="() => { companyIDisInvalid = false; }" size="lg" :options="day" v-for="day in days" :key="index" :aria-describedby="ariaDescribedby">
-                              <b-form-checkbox value="day" inline>{{ day }}</b-form-checkbox>
-                            </b-form-checkbox-group>
-                          </b-form-group>
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </div>
@@ -102,10 +66,10 @@
                         <span class="title mr-1">
                           {{ $t("add_invoice.due_date") }}:
                         </span>
-                        <validation-provider #default="{ errors }" name="dueDate" rules="required">
-                          <flat-pickr v-model="invoiceData.dueDate" class="form-control invoice-edit-input invoice-input-top" />
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
+                        <!-- <validation-provider #default="{ errors }" name="dueDate" rules="required"> -->
+                        <flat-pickr v-model="invoiceData.dueDate" class="form-control invoice-edit-input invoice-input-top" />
+                        <!-- <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider> -->
                       </div>
                     </div>
                   </b-card-header>
@@ -121,7 +85,45 @@
                   </span>
                 </b-form-checkbox>
               </div>
-
+              <!-- Schedule Type -->
+              <div class="d-flex justify-content-between align-items-center mb-2 accountType">
+                <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'MONTHLY' && invoiceData.scheduled" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                  <b-card-header class="justify-content-end">
+                    <div class="mt-md-0 mt-2">
+                      <div class="d-flex align-items-center mb-0">
+                        <span class="title mr-1">
+                          {{ $t("add_invoice.select_date") }}:
+                        </span>
+                        <!-- <validation-provider #default="{ errors }" name="invoiceData.cronScheduleApi.dayOfMonth" rules="required"> -->
+                          <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth" @change="() => { companyIDisInvalid = false; }">
+                            <b-form-select-option :value="date" v-for="date in dates" :key="index">{{ date }}</b-form-select-option>
+                          </b-form-select>
+                          <!-- <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider> -->
+                      </div>
+                    </div>
+                  </b-card-header>
+                </b-card>
+                <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'WEEKLY' && invoiceData.scheduled" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                  <b-card-header class="justify-content-start">
+                    <div class="w-100 mt-md-0 mt-2">
+                      <div class="d-flex align-items-center mb-0">
+                        <span class="title mr-1">
+                          {{ $t("add_invoice.select_days") }}:
+                        </span>
+                        <!-- <validation-provider #default="{ errors }" name="invoiceData.cronScheduleApi.dayOfWeek" rules="required"> -->
+                        <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                          <b-form-checkbox-group v-model="invoiceData.cronScheduleApi.dayOfWeek" @change="() => { companyIDisInvalid = false; }" size="lg" :options="day" v-for="day in days" :key="index" :aria-describedby="ariaDescribedby">
+                            <b-form-checkbox :value="day" inline>{{ day }}</b-form-checkbox>
+                          </b-form-checkbox-group>
+                        </b-form-group>
+                        <!-- <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider> -->
+                      </div>
+                    </div>
+                  </b-card-header>
+                </b-card>
+              </div>
               <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input invoice-input-middle mb-md-0">
                 <div class="mt-md-0 mt-2 flex-1">
                   <b-card no-body class="invoice-add invoice-card" :style="isBlue === true
@@ -4858,6 +4860,17 @@ export default {
       }
     };
 
+    /*--  Schedule Type  */
+    // var scheduleTypeOption = ref("schedule");
+    // var scheduleTypeOptionToggleValue = false;
+    // let scheduleTypeOptionToggle = (value) => {
+    //   if (value) {
+    //     scheduleTypeOption.value = "schedule";
+    //   } else {
+    //     scheduleTypeOption.value = "schedule";
+    //   }
+    // };
+
     const itemFormBlankItem = {
       serviceOrItemDescription: "",
       singleAmountTransaction: 0.0,
@@ -4913,6 +4926,13 @@ export default {
       },
       vatCondition: "",
       invoiceColor: "BLUE",
+      scheduled: false,
+      cronScheduleApi: {
+        dayOfMonth: "",
+        dayOfWeek: "",
+        scheduleType: ""
+      },
+      dueDate: "",
     });
 
     const supplierID = ref(null);
@@ -5486,13 +5506,12 @@ export default {
       }
     };
 
-    const invoiceNumberVal = ref(null);
     axios.get('/account/api/invoice/get-next-number/' + `${router.currentRoute.params.companyId}`)
       .then(response => {
         const invoiceNumberValue = response.data
         console.log(invoiceNumberValue);
         if (invoiceNumberValue?.length !== 0 && invoiceNumberValue !== undefined) {
-          invoiceNumberVal.value = invoiceNumberValue;
+          invoiceData.value.invoiceNumber = invoiceNumberValue;
         }
       });
     return {
@@ -5509,7 +5528,6 @@ export default {
       saleTypeOptionToggleValue,
       saleTypeOptionToggle,
       invoiceData,
-      invoiceNumberVal,
       currencyOptions,
       transectionOptions,
       itemFormBlankItem,

@@ -42,8 +42,7 @@
         <b-col cols="12" md="6">
           <div class="d-flex align-items-center justify-content-end">
             <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="startDate" class="form-control invoice-edit-input invoice-input-top"
-                :placeholder="$t('company_invoices.start_date')" />
+              <flat-pickr v-model="startDate" class="form-control invoice-edit-input invoice-input-top" :placeholder="$t('company_invoices.start_date')" />
               <feather-icon v-if="startDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="startDate = ''" />
 
@@ -55,8 +54,7 @@
               /> -->
             </div>
             <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top"
-                :placeholder="$t('company_invoices.end_date')" />
+              <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top" :placeholder="$t('company_invoices.end_date')" />
 
               <feather-icon v-if="endDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="endDate = ''" />
@@ -69,8 +67,7 @@
               /> -->
             </div>
             <div class="position-relative flex-1">
-              <b-form-input v-model="searchQuery" class="d-inline-block mr-1" :placeholder="$t('company_invoices.search')"
-                @input="handleSearchSelect()" />
+              <b-form-input v-model="searchQuery" class="d-inline-block mr-1" :placeholder="$t('company_invoices.search')" @input="handleSearchSelect()" />
               <feather-icon size="16" icon="XIcon" class="cursor-pointer clear-all" @click="searchQuery = ''" />
             </div>
           </div>
@@ -85,9 +82,7 @@
       </b-col>
     </b-row>
 
-    <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns"
-      responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found"
-      :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList" id="company-invoices">
+    <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList" id="company-invoices">
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
@@ -268,15 +263,13 @@
 
       <template #cell(actions)="data">
         <div class="text-nowrap">
-          <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16"
-            class="mr-1 cursor-pointer" @click="
-              $router.push({
-                name: 'company-invoice-preview',
-                params: { id: data.item.id, companyId: companyId },
-              })
-              " />
-          <b-tooltip title="Preview Invoice" class="cursor-pointer"
-            :target="`invoice-row-${data.item.id}-preview-icon`" />
+          <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16" class="mr-1 cursor-pointer" @click="
+            $router.push({
+              name: 'company-invoice-preview',
+              params: { id: data.item.id, companyId: companyId },
+            })
+            " />
+          <b-tooltip title="Preview Invoice" class="cursor-pointer" :target="`invoice-row-${data.item.id}-preview-icon`" />
 
           <!-- Dropdown -->
           <b-dropdown variant="link" toggle-class="p-0" no-caret dropleft :right="$store.state.appConfig.isRTL">
@@ -301,14 +294,9 @@
           </b-dropdown>
 
           <!-- Duplicate -->
-          <feather-icon :id="`invoice-row-${data.item.id}-duplicate-icon`" icon="LayersIcon" size="16"
-            class="mx-1 cursor-pointer" @click="duplicateInvoice(data.item)" />
-          <b-tooltip title="Duplicate Invoice" class="cursor-pointer"
-            :target="`invoice-row-${data.item.id}-duplicate-icon`" />
-          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true"
-            :ref="`invoicePdf${data.item.id}`" :preview-modal="false" :paginate-elements-by-height="1100"
-            filename="invoice" :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10"
-            pdf-orientation="portrait" pdf-content-width="1125px" @progress="onProgress($event)">
+          <feather-icon :id="`invoice-row-${data.item.id}-duplicate-icon`" icon="LayersIcon" size="16" class="mx-1 cursor-pointer" @click="duplicateInvoice(data.item)" />
+          <b-tooltip title="Duplicate Invoice" class="cursor-pointer" :target="`invoice-row-${data.item.id}-duplicate-icon`" />
+          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :ref="`invoicePdf${data.item.id}`" :preview-modal="false" :paginate-elements-by-height="1100" filename="invoice" :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px" @progress="onProgress($event)">
             <section slot="pdf-content" class="invoice-pdf invoice-preview-list">
               <invoice-download :invoice-data="data.item" />
             </section>
@@ -603,7 +591,9 @@ export default {
           verified: "true",
         },
       };
+      // console.log(this.companyId, this.companyID, companyId.value, router.currentRoute.params.id)
       const data = await axios.get(
+        // `/account/api/invoice/list/${companyId.value}/${this.pageNum}/10`,
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
         config
       );
