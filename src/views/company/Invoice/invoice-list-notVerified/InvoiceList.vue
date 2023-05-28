@@ -5,7 +5,7 @@
       <!-- Table Top -->
       <b-row>
         <!-- Per Page -->
-        <b-col cols="12" md="5" class="d-flex align-items-center justify-content-start mb-1 mb-md-0 pr-0">
+        <b-col cols="12" md="7" class="d-flex align-items-center justify-content-start mb-1 mb-md-0 pr-0">
           <label>Entries</label>
           <v-select v-model="perPage" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :options="perPageOptions" :clearable="false" class="per-page-selector d-inline-block ml-50 mr-1" />
           <b-button variant="primary" class="mr-1 position-relative p-set">
@@ -18,26 +18,16 @@
           <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" @click="refetchData">
             <feather-icon icon="RefreshCcwIcon" />
           </b-button>
-        </b-col>
-
-        <!-- Progressbar -->
-        <b-col cols="12" md="2" class="px-0">
-          <template>
-            <div class="progress-item">
-              <h5 class="text-center">{{ progressStatus }}</h5>
-              <!-- <VProgressLinear v-model="skill" color="primary" height="10">
-                <template #default="{ progressCount }">
-                  <strong>{{ Math.ceil(progressCount) }}%</strong>
-                </template>
-              </VProgressLinear> -->
-              <b-progress v-if="progressCount == 100" :value="progressCount" :max="100" variant="success" show-value>
-                <b-progress-bar :value="progressCount" :label="`${((progressCount / 100) * 100).toFixed(2)}%`"></b-progress-bar>
-              </b-progress>
-              <b-progress v-else :value="progressCount" :max="100" variant="primary" show-value>
-                <b-progress-bar :value="progressCount" :label="`${((progressCount / 100) * 100).toFixed(2)}%`"></b-progress-bar>
-              </b-progress>
-            </div>
-          </template>
+          <!-- Progressbar -->
+          <div class="progress-item d-flex flex-column w-50 ml-2">
+            <h5 class="text-center">{{ progressStatus }}</h5>
+            <b-progress v-if="progressCount == 100" :value="progressCount" :max="100" variant="success" show-value>
+              <b-progress-bar :value="progressCount" :label="`${((progressCount / 100) * 100).toFixed(2)}%`"></b-progress-bar>
+            </b-progress>
+            <b-progress v-else :value="progressCount" :max="100" variant="primary" show-value>
+              <b-progress-bar :value="progressCount" :label="`${((progressCount / 100) * 100).toFixed(2)}%`"></b-progress-bar>
+            </b-progress>
+          </div>
         </b-col>
 
         <!-- Search -->

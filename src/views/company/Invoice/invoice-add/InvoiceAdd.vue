@@ -85,8 +85,8 @@
                   </span>
                 </b-form-checkbox>
               </div>
-              <!-- Schedule Type -->
-              <div class="d-flex justify-content-between align-items-center mb-2 accountType">
+             <!-- Schedule Type -->
+              <div class="d-flex justify-content-between align-items-center mb-2 schedule-type">
                 <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'MONTHLY' && invoiceData.scheduled" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
                   <b-card-header class="justify-content-end">
                     <div class="mt-md-0 mt-2">
@@ -94,12 +94,12 @@
                         <span class="title mr-1">
                           {{ $t("add_invoice.select_date") }}:
                         </span>
-                        <!-- <validation-provider #default="{ errors }" name="invoiceData.cronScheduleApi.dayOfMonth" rules="required"> -->
-                          <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth" @change="() => { companyIDisInvalid = false; }">
-                            <b-form-select-option :value="date" v-for="date in dates" :key="index">{{ date }}</b-form-select-option>
+                        <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
+                          <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth" @change="() => { companyIDisInvalid = false; }" :options="dates">
+                            <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{ date.text }}</b-form-select-option>
                           </b-form-select>
-                          <!-- <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider> -->
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
                       </div>
                     </div>
                   </b-card-header>
@@ -111,14 +111,14 @@
                         <span class="title mr-1">
                           {{ $t("add_invoice.select_days") }}:
                         </span>
-                        <!-- <validation-provider #default="{ errors }" name="invoiceData.cronScheduleApi.dayOfWeek" rules="required"> -->
-                        <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
-                          <b-form-checkbox-group v-model="invoiceData.cronScheduleApi.dayOfWeek" @change="() => { companyIDisInvalid = false; }" size="lg" :options="day" v-for="day in days" :key="index" :aria-describedby="ariaDescribedby">
-                            <b-form-checkbox :value="day" inline>{{ day }}</b-form-checkbox>
-                          </b-form-checkbox-group>
-                        </b-form-group>
-                        <!-- <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider> -->
+                        <validation-provider #default="{ errors }" name="dayOfWeek" rules="required">
+                          <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                            <b-form-radio-group class="d-flex" name="dayOfWeek" v-model="invoiceData.cronScheduleApi.dayOfWeek" @change="() => { companyIDisInvalid = false; }" :options="days" :aria-describedby="ariaDescribedby">
+                              <!-- <b-form-radio :value="day.value" name="dayOfWeek" inline>{{ day.text }}</b-form-radio> -->
+                            </b-form-radio-group>
+                          </b-form-group>
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
                       </div>
                     </div>
                   </b-card-header>
@@ -4340,6 +4340,7 @@ import {
   BFormRow,
   BImg,
   BFormFile,
+  BFormRadioGroup,
 } from "bootstrap-vue";
 import vSelect from "vue-select";
 import flatPickr from "vue-flatpickr-component";
@@ -4386,6 +4387,7 @@ export default {
     BFormRow,
     BImg,
     BFormFile,
+    BFormRadioGroup,
   },
   data() {
     return {
@@ -4399,8 +4401,9 @@ export default {
       isTemplateFour: false,
       companyIDisInvalid: false,
       scheduleOptionToggleValue: false,
-      dates: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-      days: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+      scheduleTypes: ["WEEKLY", "MONTHLY"],
+      dates: [{ value: null, text: 'Please select an option' }, { value: 1, text: "1" }, { value: 2, text: "2" }, { value: 3, text: "3" }, { value: 4, text: "4" }, { value: 5, text: "5" }, { value: 6, text: "6" }, { value: 7, text: "7" }, { value: 8, text: "8" }, { value: 9, text: "9" }, { value: 10, text: "10" }, { value: 11, text: "11" }, { value: 12, text: "12" }, { value: 13, text: "13" }, { value: 14, text: "14" }, { value: 15, text: "15" }, { value: 16, text: "16" }, { value: 17, text: "17" }, { value: 18, text: "18" }, { value: 19, text: "19" }, { value: 20, text: "20" }, { value: 21, text: "21" }, { value: 22, text: "22" }, { value: 23, text: "23" }, { value: 24, text: "24" }, { value: 25, text: "25" }, { value: 26, text: "26" }, { value: 27, text: "27" }, { value: 28, text: "28" }, { value: 29, text: "29" }, { value: 30, text: "30" }, { value: 31, text: "31" }],
+      days: [{ text: "MON", value: "MON" }, { text: "TUE", value: "TUE" }, { text: "WED", value: "WED" }, { text: "THU", value: "THU" }, { text: "FRI", value: "FRI" }, { text: "SAT", value: "SAT" }, { text: "SUN", value: "SUN" }],
       clauseToSend: "",
       bankNameToSend: "",
       bankList: [
