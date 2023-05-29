@@ -498,7 +498,8 @@ export default {
       let config1 = {
         params: {
           direction: this.isSortDirDesc ? 'desc' : 'asc',
-          sortField: this.sortBy,
+          // sortField: this.sortBy,
+          sortField: 'id',
           verified: "true"
         },
       };
@@ -587,11 +588,13 @@ export default {
       let config = {
         params: {
           direction: this.isSortDirDesc ? 'desc' : 'asc',
-          sortField: this.sortBy,
+          // sortField: this.sortBy,
+          sortField: 'id',
           verified: "true",
         },
       };
       // console.log(this.companyId, this.companyID, companyId.value, router.currentRoute.params.id)
+      this.companyId = router.currentRoute.params.id;
       const data = await axios.get(
         // `/account/api/invoice/list/${companyId.value}/${this.pageNum}/10`,
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
@@ -617,11 +620,13 @@ export default {
       let config = {
         params: {
           direction: this.isSortDirDesc ? 'desc' : 'asc',
-          sortField: this.sortBy,
+          // sortField: this.sortBy,
+          sortField: 'id',
           verified: "true",
           searchTerm: this.searchQuery,
         },
       };
+      this.companyId = router.currentRoute.params.id;
       const data = await axios.post(
         `/account/api/invoice/search/${this.companyId}/${this.pageNum}/10`,
         data1,

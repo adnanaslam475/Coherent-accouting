@@ -603,8 +603,13 @@ export default {
       //} catch (error) {
       //   console.error(error);
       // }
-      let token = useJwt.getToken();
-      console.log(exportDto);
+      let token = useJwt.getToken(), exportDto = {
+        companyId: '',
+        date: '',
+        platformName: '',
+      };
+      exportDto.companyId = router.currentRoute.params.id;
+      // let exportDto.companyId = router.currentRoute.params.companyId;
       useJwt
         .export(token, exportDto)
         .then(async (response) => {
@@ -794,9 +799,11 @@ export default {
 
       try {
         if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
+          this.companyId = router.currentRoute.params.id;
           const data = await axios.get(`/account/api/invoice/list/${this.companyId}/1/${Records}`, config1);
           this.invoices = data.data.elements;
         } else {
+          this.companyId = router.currentRoute.params.id;
           const data1 = await axios.post(`/account/api/invoice/search/${this.companyId}/1/${Records}`, payLoadDates, config);
           this.invoices = data1.data.elements;
         }
@@ -851,7 +858,7 @@ export default {
           searchTerm: this.searchQuery,
         },
       };
-
+      this.companyId = router.currentRoute.params.id;
       const data = await axios.post(
         `/account/api/invoice/search/${this.companyId}/1/${this.perPageRecords}`,
         data1,
@@ -867,10 +874,12 @@ export default {
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: this.sortBy,
+          // sortField: this.sortBy,
+          sortField: 'id',
           verified: "true",
         },
       };
+      this.companyId = router.currentRoute.params.id;
       const data = await axios.get(
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
         config
@@ -900,6 +909,7 @@ export default {
           searchTerm: this.searchQuery,
         },
       };
+      this.companyId = router.currentRoute.params.id;
       const data = await axios.post(
         `/account/api/invoice/search/${this.companyId}/${this.pageNum}/10`,
         data1,

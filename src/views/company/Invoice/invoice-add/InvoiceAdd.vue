@@ -19,7 +19,6 @@
                       <b-input-group-prepend is-text>
                         <feather-icon icon="HashIcon" />
                       </b-input-group-prepend>
-
                       <b-form-input id="invoice-data-id" v-model="invoiceData.invoiceNumber" />
                     </b-input-group>
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -74,9 +73,7 @@
                     </div>
                   </b-card-header>
                 </b-card>
-                <b-form-checkbox v-model="AccountTypeOptionToggleValue" @change="
-                  AccountTypeOptionToggle(AccountTypeOptionToggleValue)
-                  " class="custom-control-primary custom-switch-btn" name="AccountTypeOptionToggle" switch>
+                <b-form-checkbox v-model="AccountTypeOptionToggleValue" @change="AccountTypeOptionToggle(AccountTypeOptionToggleValue)" class="custom-control-primary custom-switch-btn" name="AccountTypeOptionToggle" switch>
                   <span class="switch-icon-left">
                     {{ $t("add_invoice.person") }}
                   </span>
@@ -85,7 +82,8 @@
                   </span>
                 </b-form-checkbox>
               </div>
-             <!-- Schedule Type -->
+
+              <!-- Schedule Type -->
               <div class="d-flex justify-content-between align-items-center mb-2 schedule-type">
                 <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'MONTHLY' && invoiceData.scheduled" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
                   <b-card-header class="justify-content-end">
@@ -111,14 +109,17 @@
                         <span class="title mr-1">
                           {{ $t("add_invoice.select_days") }}:
                         </span>
-                        <validation-provider #default="{ errors }" name="dayOfWeek" rules="required">
-                          <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
-                            <b-form-radio-group class="d-flex" name="dayOfWeek" v-model="invoiceData.cronScheduleApi.dayOfWeek" @change="() => { companyIDisInvalid = false; }" :options="days" :aria-describedby="ariaDescribedby">
-                              <!-- <b-form-radio :value="day.value" name="dayOfWeek" inline>{{ day.text }}</b-form-radio> -->
+                        <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
+                        <div class="d-block">
+                          <b-form-group class="d-flex w-100 mb-0" v-slot="{ ariaDescribedby }">
+                            <b-form-radio-group v-model="invoiceData.cronScheduleApi.dayOfWeek" @change="toggleDaySelected()" :options="days" class="d-flex" :aria-describedby="ariaDescribedby">
+                              <!-- <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index">{{ day.text }}</b-form-radio> -->
                             </b-form-radio-group>
                           </b-form-group>
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
+                          <small class="text-danger d-flex w-100 pl-1" v-if="daySelected">The dayOfWeek field is required</small>
+                        </div>
+                        <!-- <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider> -->
                       </div>
                     </div>
                   </b-card-header>
@@ -289,20 +290,13 @@
                               SearchCompanyNameRecipient(
                                 invoiceData.recipientCompany.companName
                               )
-                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()" @focus="
-    ShowSuggestionRecipient(datalistRecipient)
-    " />
+                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()" @focus="ShowSuggestionRecipient(datalistRecipient)" />
                             <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions" style="width: 100%">
                               <b-list-group-item button v-for="data in datalistRecipient" :key="data.eic" @click="autoCompletefnRecipient(data)" @mousedown="autoCompletefnRecipient(data)">
                                 {{ data.company_name }}
                               </b-list-group-item>
                             </b-list-group>
-                            <b-form-input v-if="AccountTypeOption == 'person'" v-model="invoiceData.recipientCompany.companyOwnerName
-                              " @input="
-    SearchCompanyPerson(
-      invoiceData.recipientCompany.companyOwnerName
-    )
-    " list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()" @focus="ShowSuggestionPerson(datalistPerson)" />
+                            <b-form-input v-if="AccountTypeOption == 'person'" v-model="invoiceData.recipientCompany.companyOwnerName" @input="SearchCompanyPerson(invoiceData.recipientCompany.companyOwnerName)" list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()" @focus="ShowSuggestionPerson(datalistPerson)" />
                             <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions" style="width: 100%">
                               <b-list-group-item v-for="data in datalistPerson" :key="data.eic" @click="autoCompletefnPerson(data)" @mousedown="autoCompletefnPerson(data)">
                                 {{ data.firstMiddleAndLastName }}
@@ -477,10 +471,7 @@
                             : isOrange === true
                               ? 'orange_bg'
                               : 'gray_bg'
-                        " :style="isGray === true
-    ? 'color: black !important'
-    : 'color: white !important'
-    ">
+                        " :style="isGray === true ? 'color: black !important' : 'color: white !important'">
                         <b-row class="flex-grow-1 px-1 invoice-add-transections">
                           <!-- Single Item Form Headers -->
                           <b-col cols="12" lg="1">
@@ -1019,14 +1010,7 @@
                         </h6>
 
                         <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required">
-                          <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="
-                            SearchCompanyEic(
-                              invoiceData.supplierCompany.companyEic
-                            )
-                            " list="my-company_name" autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)" @mousedown="() => {
-    companyIDisInvalid = false;
-  }
-    " style="margin-bottom: 5px" />
+                          <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)" list="my-company_name" autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)" @mousedown="() => { companyIDisInvalid = false; }" style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEic" :key="data.eic" @click="autoCompletefnEic(data)" @mousedown="autoCompletefnEic(data)">
                               {{ data.eic }}
@@ -4404,6 +4388,7 @@ export default {
       scheduleTypes: ["WEEKLY", "MONTHLY"],
       dates: [{ value: null, text: 'Please select an option' }, { value: 1, text: "1" }, { value: 2, text: "2" }, { value: 3, text: "3" }, { value: 4, text: "4" }, { value: 5, text: "5" }, { value: 6, text: "6" }, { value: 7, text: "7" }, { value: 8, text: "8" }, { value: 9, text: "9" }, { value: 10, text: "10" }, { value: 11, text: "11" }, { value: 12, text: "12" }, { value: 13, text: "13" }, { value: 14, text: "14" }, { value: 15, text: "15" }, { value: 16, text: "16" }, { value: 17, text: "17" }, { value: 18, text: "18" }, { value: 19, text: "19" }, { value: 20, text: "20" }, { value: 21, text: "21" }, { value: 22, text: "22" }, { value: 23, text: "23" }, { value: 24, text: "24" }, { value: 25, text: "25" }, { value: 26, text: "26" }, { value: 27, text: "27" }, { value: 28, text: "28" }, { value: 29, text: "29" }, { value: 30, text: "30" }, { value: 31, text: "31" }],
       days: [{ text: "MON", value: "MON" }, { text: "TUE", value: "TUE" }, { text: "WED", value: "WED" }, { text: "THU", value: "THU" }, { text: "FRI", value: "FRI" }, { text: "SAT", value: "SAT" }, { text: "SUN", value: "SUN" }],
+      daySelected: false,
       clauseToSend: "",
       bankNameToSend: "",
       bankList: [
@@ -4613,6 +4598,9 @@ export default {
         this.trSetHeight(this.$refs.form.scrollHeight);
       });
     },
+    toggleDaySelected() {
+      this.daySelected = !this.daySelected;
+    },
     invoiceAdd(invoiceData, AccountTypeOption) {
       //assign the data of recipient and creator
       //creator supplier company
@@ -4655,7 +4643,15 @@ export default {
           invoiceData.recipientCompany.companyOwnerName;
         invoiceData.recipientCompany.companyVatEic = "";
       }
-
+      console.log(invoiceData.cronScheduleApi.dayOfWeek, invoiceData.scheduled);
+      if (invoiceData.cronScheduleApi.dayOfWeek) {
+        this.daySelected = false;
+      } else {
+        this.daySelected = true;
+      }
+      // if (invoiceData.scheduled === false) {
+      //   invoiceData.cronScheduleApi = "NO";
+      // }
       if (validateVat) {
         let validateRegExp = invoiceData.recipientCompany.companyVatEic;
         validateRegExp = validateRegExp.replace(/\W|_/g, "");
@@ -5088,7 +5084,6 @@ export default {
       invoiceData.value = {
         invoiceNumber: "",
         dateIssued: "",
-        dueDate: "",
         supplierCompany: {
           companyOwnerName: "",
           companName: "",
@@ -5117,6 +5112,13 @@ export default {
         invoiceType: invoiceData.value.invoiceType,
         documentType: "INVOICE",
         verified: invoiceData.value.verified,
+        scheduled: false,
+        dueDate: "",
+        cronScheduleApi: {
+          dayOfMonth: "",
+          dayOfWeek: "",
+          scheduleType: ""
+        },
       };
     };
     var datalist = ref([]);
