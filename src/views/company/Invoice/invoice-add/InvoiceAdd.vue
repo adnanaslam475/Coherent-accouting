@@ -4599,7 +4599,7 @@ export default {
       });
     },
     toggleDaySelected() {
-      this.daySelected = !this.daySelected;
+      this.daySelected = false;
     },
     invoiceAdd(invoiceData, AccountTypeOption) {
       //assign the data of recipient and creator
@@ -4643,7 +4643,7 @@ export default {
           invoiceData.recipientCompany.companyOwnerName;
         invoiceData.recipientCompany.companyVatEic = "";
       }
-      console.log(invoiceData.cronScheduleApi.dayOfWeek, invoiceData.scheduled);
+      // console.log(invoiceData.cronScheduleApi.dayOfWeek, invoiceData.scheduled);
       if (invoiceData.cronScheduleApi.dayOfWeek) {
         this.daySelected = false;
       } else {

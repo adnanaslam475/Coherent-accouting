@@ -5352,6 +5352,9 @@ export default {
         this.trSetHeight(this.$refs.form ? this.$refs.form.scrollHeight : 0);
       });
     },
+    toggleDaySelected() {
+      this.daySelected = false;
+    },
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
       // Company ID validation on the basis of transactionType
       if (invoiceData.transactionType === "INCOME") {
@@ -5397,7 +5400,11 @@ export default {
         ).toFixed(2);
         return item;
       });
-
+   if (invoiceData.cronScheduleApi.dayOfWeek) {
+        this.daySelected = false;
+      } else {
+        this.daySelected = true;
+      }
       this.$refs.invoiceEditForm.validate().then((success) => {
         if (success && this.companyIDisInvalid === false) {
           if (
