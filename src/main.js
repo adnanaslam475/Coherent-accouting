@@ -18,8 +18,8 @@ import '@/libs/toastification'
 import TawkMessengerVue from '@tawk.to/tawk-messenger-vue-2';
 
 Vue.use(TawkMessengerVue, {
-    propertyId : '63adc524c2f1ac1e202abeb4',
-    widgetId : '1glfck6br'
+  propertyId: '63adc524c2f1ac1e202abeb4',
+  widgetId: '1glfck6br'
 });
 
 // BSV Plugin Registration
@@ -37,6 +37,17 @@ export const i18n = new VueI18n({
   fallbackLocale: 'en',
   messages
 });
+// Vuetify
+// import 'vuetify/styles'
+// import { createVuetify } from 'vuetify'
+// import * as components from 'vuetify/lib/components'
+// import * as directives from 'vuetify/lib/directives'
+
+// const vuetify = createVuetify({
+//   components,
+//   directives,
+// })
+// Vue.use(vuetify)
 // import core styles
 require('@core/scss/core.scss')
 

@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="app"
-    class="h-100"
-    :class="[skinClasses]"
-  >
+  <div id="app" class="h-100" :class="[skinClasses]">
     <component :is="layout">
       <router-view />
     </component>
@@ -102,7 +98,7 @@ export default {
       skinClasses,
     }
   },
-  created () {
+  created() {
     if (!localStorage.getItem('user_token')) {
       useJwt.login({
         grant_type: "password",
@@ -115,5 +111,5 @@ export default {
       })
     }
   }
-}
+}  
 </script>
