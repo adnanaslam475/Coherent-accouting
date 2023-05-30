@@ -1,6 +1,6 @@
 <template>
   <!-- Table Container Card -->
-  <b-card no-body>
+  <b-card no-body class="h-100">
     <div class="m-2">
       <!-- Table Top -->
       <b-row>
@@ -60,7 +60,7 @@
       </b-col>
     </b-row>
     {{ JSON.stringify(fetchInvoices) }}
-    <b-table ref="refInvoiceListTable" :items="fetchInvoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList">
+    <b-table ref="refInvoiceListTable" sticky-header :items="fetchInvoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList">
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
@@ -277,7 +277,7 @@
         </div>
       </template>
     </b-table>
-    <div class="mx-2 mb-2">
+    <!-- <div class="mx-2 mb-2">
       <b-row>
         <b-col cols="12" sm="6" class="
             d-flex
@@ -286,9 +286,9 @@
           ">
           <span class="text-muted">Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
             {{ dataMeta.of }} entries</span>
-        </b-col>
-        <!-- Pagination -->
-        <b-col cols="12" sm="6" class="
+        </b-col> -->
+    <!-- Pagination -->
+    <!-- <b-col cols="12" sm="6" class="
             d-flex
             align-items-center
             justify-content-center justify-content-sm-end
@@ -303,7 +303,7 @@
           </b-pagination>
         </b-col>
       </b-row>
-    </div>
+    </div> -->
   </b-card>
 </template>
 

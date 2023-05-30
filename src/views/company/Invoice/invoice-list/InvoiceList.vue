@@ -131,7 +131,7 @@
     <!-- {{ JSON.stringify(fetchInvoices) }}
     {{ (JSON.stringify(invoices)) }} -->
     <!-- {{ tableColumns }} -->
-    <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList" id="company-invoices">
+    <b-table ref="refInvoiceListTable" sticky-header :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100" id="company-invoices">
 
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
@@ -580,8 +580,8 @@ export default {
     setTimeout(() => {
       this.isCheck = true;
     }, 1500);
-    this.observeScroll();
     this.fetchInvoices();
+    this.observeScroll();
   },
   computed: {
     modalDisabled() {
@@ -592,32 +592,31 @@ export default {
 
 
   methods: {
-    /* async fetchInvoices() {
-       // try {
-       //   const response = await axios.get("/api/export", {
-       //     headers: {
-       //       'Authorization': 'Bearer ' + localStorage.getItem("accessToken"),
-       //       'Content-Type': 'application/json'
-       //  },
-       //});
-       // this.selectedMonthData.invoicesForReport = response.data;
-       //} catch (error) {
-       //   console.error(error);
-       // }
-       let token = useJwt.getToken();
-       let exportDto = {
-         companyId: '',
-         date: '',
-         platformName: '',
-       };
-       //       exportDto.companyId = router.currentRoute.params.id;
-       useJwt
-         .export(token, exportDto)
-         .then(async (response) => {
-         }
-         )
-         .catch()
-     },*/
+    /*async fetchInvoices() {
+      // try {
+      //   const response = await axios.get("/api/export", {
+      //     headers: {
+      //       'Authorization': 'Bearer ' + localStorage.getItem("accessToken"),
+      //       'Content-Type': 'application/json'
+      //  },
+      //});
+      // this.selectedMonthData.invoicesForReport = response.data;
+      //} catch (error) {
+      //   console.error(error);
+      // }
+      let token = useJwt.getToken();
+      // let exportDto = {
+      //   companyId: '',
+      //   date: '',
+      //   platformName: '',
+      // };
+      useJwt
+        .export(token, exportDto)
+        .then(async (response) => {
+        }
+        )
+        .catch()
+    },*/
     async exportModal() {
       // Fetch the invoices first
       console.log(this.fetchInvoices());
@@ -658,13 +657,17 @@ export default {
     },
 
     async getExportFile() {
+      console.log(this.invoices);
       this.$nextTick(() => {
         this.$bvModal.show("modal-spinner");
       });
 
-      this.exportDto.companyId = 85; // Set companyId to 85
+      // this.exportDto.companyId = 85; // Set companyId to 85
+      // this.exportDto.date = new Date().toISOString().split('T')[0]; // Set date to current date
+      // this.exportDto.platformName = "AJURE"; // Set platformName to "AJURE"
+      this.exportDto.companyId = router.currentRoute.params.id; // Set companyId to 85
       this.exportDto.date = new Date().toISOString().split('T')[0]; // Set date to current date
-      this.exportDto.platformName = "AJURE"; // Set platformName to "AJURE"
+      this.exportDto.platformName = this.exportDto.platformName; // Set platformName to "AJURE"
 
       try {
         const response = await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
@@ -752,6 +755,7 @@ export default {
             },
           });
           this.companyinfo = response.data;
+          console.log(this.companyinfo);
           this.$refs.export_model.hide();
           this.$refs.modal_exportValue.show();
         } catch (error) {
@@ -827,14 +831,12 @@ export default {
           } else {
             await this.searchInvoices();
           }
-          if (this.invoices) {
-            if (this.invoices.length === this.totalInvoices) {
+          if (this.invoices.length === this.totalInvoices) {
+            this.loadMore = false;
+          } else {
+            setTimeout(() => {
               this.loadMore = false;
-            } else {
-              setTimeout(() => {
-                this.loadMore = false;
-              }, 300);
-            }
+            }, 300);
           }
         }
       }, options);
@@ -873,6 +875,7 @@ export default {
     },
 
     async listInvoices() {
+      console.log(this, this.invoices);
       this.pageNum += 1;
       let config = {
         params: {
@@ -888,11 +891,11 @@ export default {
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
         config
       );
-      // this.invoices = data.data.elements;
-      // console.log(data, this.invoices);
+      console.log(data, this.invoices);
       if (this.pageNum > 1) {
-        console.log(data, this.invoices);
+        console.log(data, this.invoices, this.pageNum);
         this.invoices.push(...data.data.elements);
+        console.log(this.invoices);
         this.loadMore = false;
         if (data.data.elements.length === 0) {
           this.pageNum -= 1;
@@ -931,6 +934,7 @@ export default {
     },
 
     async handleScroll() {
+      console.log(this.invoices, this.totalInvoices);
       // Check if the user has scrolled to the bottom
       const scrollHeight = Math.max(
         document.body.scrollHeight,
@@ -1095,6 +1099,7 @@ export default {
     },
   },
   created() {
+    window.addEventListener("scroll", this.handleScroll);
     this.handleOk = this.handleOk.bind(this);
   },
 

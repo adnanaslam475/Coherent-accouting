@@ -52,12 +52,12 @@ export default function useInvoicesList() {
   })
 
   const refetchData = () => {
-    // refInvoiceListTable.value.refresh()
+    refInvoiceListTable.value.refresh()
   }
 
-  // watch([currentPage, perPage, dateFrom, dateTo, searchQuery, statusFilter], () => {
-  //   refetchData()
-  // })
+  watch([currentPage, perPage, dateFrom, dateTo, searchQuery, statusFilter], () => {
+    refetchData()
+  })
 
   const fetchInvoices = (ctx, callback) => {
     store
@@ -76,10 +76,13 @@ export default function useInvoicesList() {
         console.log(response)
         const { elements } = response.data;
         invoices.value = response.data.elements;
-        callback(elements)
-        totalInvoices.value = elements.length;
+        if (callback) {
+          callback(elements)
+          totalInvoices.value = elements.length;
+        }
       })
       .catch((err) => {
+        console.log(err);
         toast({
           component: ToastificationContent,
           props: {
