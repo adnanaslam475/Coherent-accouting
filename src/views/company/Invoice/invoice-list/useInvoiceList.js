@@ -13,19 +13,19 @@ export default function useInvoicesList() {
 
   // Table Handlers
   const tableColumns = [
-    { key: 'invoiceNumber', sortable: true},
+    { key: 'invoiceNumber', sortable: true },
     { key: 'invoiceDate', label: "date Issued", sortable: true },
     { key: 'transactionType', sortable: true },
-    { key: 'recipientCompanyName', label: "recipient Company", sortable: true},
-    { key: 'supplierCompanyName', label: "supplier Company" , sortable: true },
+    { key: 'recipientCompanyName', label: "recipient Company", sortable: true },
+    { key: 'supplierCompanyName', label: "supplier Company", sortable: true },
     { key: 'amountNonVat', sortable: true },
     { key: 'totalAmount', sortable: true },
     { key: 'vatAmount', sortable: true },
-    
+
     // { key: 'vatPercent', sortable: true, formatter: val => `${val}%` },
     // { key: 'tradeDiscountAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
     // { key: 'tradeDiscountPercent', sortable: true, formatter: val => `${val}%` },
-    
+
     // { key: 'currency', sortable: true },
     { key: 'actions' },
   ]
@@ -65,7 +65,7 @@ export default function useInvoicesList() {
         sortField: sortBy.value,
         direction: isSortDirDesc.value,
         verified: true,
-        currentPage : currentPage.value,
+        currentPage: currentPage.value,
         perPage: perPage.value,
         q: searchQuery.value,
         companyId: companyId.value,
@@ -73,6 +73,7 @@ export default function useInvoicesList() {
         dateTo: dateTo.value
       })
       .then(response => {
+        console.log(response)
         const { elements } = response.data;
         invoices.value = response.data.elements;
         callback(elements)

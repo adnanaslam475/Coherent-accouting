@@ -128,8 +128,11 @@
         </p>
       </b-col>
     </b-row>
-
+    <!-- {{ JSON.stringify(fetchInvoices) }}
+    {{ (JSON.stringify(invoices)) }} -->
+    <!-- {{ tableColumns }} -->
     <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList" id="company-invoices">
+
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
@@ -150,13 +153,8 @@
       </template>
 
       <template #cell(invoiceNumber)="data">
-        <b-link :to="{
-          name: 'company-invoice-preview',
-          params: { id: data.item.id, companyId: companyId },
-        }" class="font-weight-bold">
-          <span class="text-nowrap">
-            {{ data.value }}
-          </span>
+        <b-link :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId }, }" class="font-weight-bold">
+          <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
 
@@ -177,13 +175,9 @@
       </template>
 
       <template #cell(transactionType)="data">
-        <b-link :to="{
-          name: 'company-invoice-preview',
-          params: { id: data.item.id, companyId: companyId },
-        }" class="font-weight-bold">
+        <b-link :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId }, }" class="font-weight-bold">
           <span :id="`transactionType-row-${data.item.id}`" class="text-nowrap">
-            <b-badge pill :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'
-              }`" class="text-capitalize">
+            <b-badge pill :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'}`" class="text-capitalize">
               {{ $t("company_invoices." + data.value) }}
             </b-badge>
           </span>
@@ -198,6 +192,7 @@
       <template #cell(recipientCompanyName)="data">
         <span :id="`recipientCompany-row-${data.item.id}`" class="text-nowrap">
           <b-badge pill :variant="`light-success`" class="text-capitalize">
+            <!-- {{ data.item.recipientCompany }} -->
             {{ data.item.recipientCompany.companName }}
           </b-badge>
         </span>
@@ -309,6 +304,7 @@
       </template>
 
       <template #cell(actions)="data">
+
         <div class="text-nowrap">
           <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16" class="mr-1 cursor-pointer" @click="
             $router.push({
@@ -444,7 +440,6 @@ import VueHtml2pdf from "vue-html2pdf";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import router from "@/router";
-import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiTrayArrowUp } from "@mdi/js";
 import flatPickr from "vue-flatpickr-component";
@@ -455,6 +450,7 @@ import useInvoicesList from "./useInvoiceList";
 import { i18n } from "@/main.js";
 import { watch, ref } from "vue";
 import axios from "@/libs/axios";
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import VueMonthlyPicker from "vue-monthly-picker";
 
 
@@ -518,8 +514,8 @@ export default {
       companyinfo: null,
       isSortDirDesc: null, // or any default value
       sortBy: null, // or any default value
-      tableColumns: null, // or any default value
-      invoices: null,
+      // tableColumns: null, // or any default value
+      // invoices: null,
       exportDto: {
         companyId: '',
         date: '',
@@ -532,7 +528,6 @@ export default {
         pageNumber: 1,
         pageSize: 5000,
         invoicesForReport: null,
-
       },
       companyID: "",
       monthLabels: [
@@ -561,6 +556,12 @@ export default {
   },
 
   watch: {
+    startDate: function () {
+      this.handleSearchSelect();
+    },
+    endDate: function () {
+      this.handleSearchSelect();
+    },
     companyID(newVal) {
       console.log('companyID watcher triggered', newVal);
       this.exportDto.companyId = newVal;
@@ -591,35 +592,35 @@ export default {
 
 
   methods: {
-    async fetchInvoices() {
-      // try {
-      //   const response = await axios.get("/api/export", {
-      //     headers: {
-      //       'Authorization': 'Bearer ' + localStorage.getItem("accessToken"),
-      //       'Content-Type': 'application/json'
-      //  },
-      //});
-      // this.selectedMonthData.invoicesForReport = response.data;
-      //} catch (error) {
-      //   console.error(error);
-      // }
-      let token = useJwt.getToken(), exportDto = {
-        companyId: '',
-        date: '',
-        platformName: '',
-      };
-      exportDto.companyId = router.currentRoute.params.id;
-      // let exportDto.companyId = router.currentRoute.params.companyId;
-      useJwt
-        .export(token, exportDto)
-        .then(async (response) => {
-        }
-        )
-        .catch()
-    },
-
+    /* async fetchInvoices() {
+       // try {
+       //   const response = await axios.get("/api/export", {
+       //     headers: {
+       //       'Authorization': 'Bearer ' + localStorage.getItem("accessToken"),
+       //       'Content-Type': 'application/json'
+       //  },
+       //});
+       // this.selectedMonthData.invoicesForReport = response.data;
+       //} catch (error) {
+       //   console.error(error);
+       // }
+       let token = useJwt.getToken();
+       let exportDto = {
+         companyId: '',
+         date: '',
+         platformName: '',
+       };
+       //       exportDto.companyId = router.currentRoute.params.id;
+       useJwt
+         .export(token, exportDto)
+         .then(async (response) => {
+         }
+         )
+         .catch()
+     },*/
     async exportModal() {
       // Fetch the invoices first
+      console.log(this.fetchInvoices());
       await this.fetchInvoices();
 
       // Populate the exportDto object
@@ -669,7 +670,8 @@ export default {
         const response = await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
           },
           responseType: 'blob',
         });
@@ -723,10 +725,6 @@ export default {
         });
       }
     },
-
-
-
-
 
     resetModal() {
       this.selectedMonthData.date = "";
@@ -783,7 +781,8 @@ export default {
       const config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: this.sortBy,
+          // sortField: this.sortBy,
+          sortField: 'id',
           verified: "true",
           searchTerm: this.searchQuery,
         },
@@ -792,7 +791,8 @@ export default {
       const config1 = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: this.sortBy,
+          // sortField: this.sortBy,
+          sortField: 'id',
           verified: "true",
         },
       };
@@ -827,19 +827,22 @@ export default {
           } else {
             await this.searchInvoices();
           }
-
-          if (this.invoices.length === this.totalInvoices) {
-            this.loadMore = false;
-          } else {
-            setTimeout(() => {
+          if (this.invoices) {
+            if (this.invoices.length === this.totalInvoices) {
               this.loadMore = false;
-            }, 300);
+            } else {
+              setTimeout(() => {
+                this.loadMore = false;
+              }, 300);
+            }
           }
         }
       }, options);
 
       observer.observe(this.$refs.loadMoreObserver);
-    }, async handleSearchSelect() {
+    },
+
+    async handleSearchSelect() {
       var tableAreaBusy = document.getElementById("company-invoices");
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
@@ -880,15 +883,17 @@ export default {
         },
       };
       this.companyId = router.currentRoute.params.id;
+      this.invoices = [];
       const data = await axios.get(
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
         config
       );
-
+      // this.invoices = data.data.elements;
+      // console.log(data, this.invoices);
       if (this.pageNum > 1) {
+        console.log(data, this.invoices);
         this.invoices.push(...data.data.elements);
         this.loadMore = false;
-
         if (data.data.elements.length === 0) {
           this.pageNum -= 1;
         }
@@ -965,15 +970,19 @@ export default {
     state() {
       return 1;
     },
+
     actionTab() {
       this.$emit("state", this.state());
     },
+
     onProgress(event) {
       console.log(`Processed: ${event} / 100`);
     },
+
     generatePDF(itemID) {
       this.$refs[`invoicePdf${itemID}`].generatePdf();
     },
+
     showMsgBoxTwo(id, refetchData) {
       const h = this.$createElement;
       // Using HTML string
@@ -1023,6 +1032,7 @@ export default {
           this.refreshList();
         });
     },
+
     invoiceDelete(id, refetchData) {
       const token = useJwt.getToken();
       useJwt
@@ -1052,6 +1062,7 @@ export default {
           });
         });
     },
+
     addfile(companyId) {
       this.fileLoading = true;
       const token = useJwt.getToken();
@@ -1082,89 +1093,90 @@ export default {
           });
         });
     },
-
-    created() {
-      this.handleOk = this.handleOk.bind(this);
-    },
-    setup() {
-      const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
-
-      // Register module
-      if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
-        store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule);
-
-      // UnRegister on leave
-      onUnmounted(() => {
-        if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
-          store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
-      });
-
-      const statusOptions = [
-        "Downloaded",
-        "Draft",
-        "Paid",
-        "Partial Payment",
-        "Past Due",
-      ];
-
-      const {
-        fetchInvoices,
-        tableColumns,
-        perPage,
-        currentPage,
-        totalInvoices,
-        dataMeta,
-        perPageOptions,
-        searchQuery,
-        dateFrom,
-        dateTo,
-        sortBy,
-        isSortDirDesc,
-        refInvoiceListTable,
-        companyId,
-        statusFilter,
-
-        refetchData,
-        invoices,
-
-        resolveInvoiceStatusVariantAndIcon,
-        resolveClientAvatarVariant,
-      } = useInvoicesList();
-
-      companyId.value = router.currentRoute.params.companyId
-        ? router.currentRoute.params.companyId
-        : router.currentRoute.params.id;
-
-      return {
-        fetchInvoices,
-        tableColumns,
-        perPage,
-        currentPage,
-        totalInvoices,
-        dataMeta,
-        perPageOptions,
-        searchQuery,
-        dateFrom,
-        dateTo,
-        companyId,
-        sortBy,
-        isSortDirDesc,
-        refInvoiceListTable,
-
-        statusFilter,
-
-        refetchData,
-
-        statusOptions,
-        invoices,
-
-        avatarText,
-        resolveInvoiceStatusVariantAndIcon,
-        resolveClientAvatarVariant,
-      };
-
-    },
   },
+  created() {
+    this.handleOk = this.handleOk.bind(this);
+  },
+
+  setup() {
+    const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
+
+    // Register module
+    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
+      store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule);
+
+    // UnRegister on leave
+    onUnmounted(() => {
+      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
+        store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
+    });
+
+    const statusOptions = [
+      "Downloaded",
+      "Draft",
+      "Paid",
+      "Partial Payment",
+      "Past Due",
+    ];
+
+    const {
+      fetchInvoices,
+      tableColumns,
+      perPage,
+      currentPage,
+      totalInvoices,
+      dataMeta,
+      perPageOptions,
+      searchQuery,
+      dateFrom,
+      dateTo,
+      sortBy,
+      isSortDirDesc,
+      refInvoiceListTable,
+      companyId,
+      statusFilter,
+
+      refetchData,
+      invoices,
+
+      resolveInvoiceStatusVariantAndIcon,
+      resolveClientAvatarVariant,
+    } = useInvoicesList();
+
+    companyId.value = router.currentRoute.params.companyId
+      ? router.currentRoute.params.companyId
+      : router.currentRoute.params.id;
+    console.log(companyId, tableColumns);
+    return {
+      fetchInvoices,
+      tableColumns,
+      perPage,
+      currentPage,
+      totalInvoices,
+      dataMeta,
+      perPageOptions,
+      searchQuery,
+      dateFrom,
+      dateTo,
+      companyId,
+      sortBy,
+      isSortDirDesc,
+      refInvoiceListTable,
+
+      statusFilter,
+
+      refetchData,
+
+      statusOptions,
+      invoices,
+
+      avatarText,
+      resolveInvoiceStatusVariantAndIcon,
+      resolveClientAvatarVariant,
+    };
+
+  },
+
 }
 </script>
 
