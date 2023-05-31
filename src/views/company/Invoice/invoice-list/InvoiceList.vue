@@ -43,7 +43,6 @@
           <!-- Date Picker Modal -->
 
           <b-modal id="modal-prevent-closing-invoice" ref="export_model" title="Select Month" :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" @show="resetModal" @hidden="resetModal" @ok="handleOk" :ok-disabled="modalDisabledMonth">
-
             <form ref="form" @submit.stop.prevent="handleMonthSelect">
               <validation-observer ref="selectMonthRules" tag="form">
                 <validation-provider #default="{ errors }" :name="$t('month_selected')" rules="required">
@@ -53,7 +52,6 @@
               </validation-observer>
             </form>
           </b-modal>
-
 
           <b-modal id="modal-invoices-export" ref="modal_exportValue" :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE' ? companyinfo.exportProperties.platform : ''" title-class="w-100 text-center" :ok-title="$t('company_invoices.Export_invoicess')" :cancel-title="$t('company_invoices.Cancel')" scrollable @ok="getExportFile()" :ok-disabled="modalDisabled" class="p-3">
             <form ref="form" @submit.stop.prevent="handleMonthSelect" class="border p-3 bg-light">
@@ -71,10 +69,6 @@
             </form>
           </b-modal>
 
-
-
-
-
           <!-- Refresh button -->
           <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" @click="refreshList()">
             <feather-icon icon="RefreshCcwIcon" />
@@ -88,7 +82,6 @@
               <flat-pickr v-model="startDate" class="form-control invoice-edit-input invoice-input-top" :placeholder="$t('company_invoices.start_date')" />
               <feather-icon v-if="startDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="startDate = ''" />
-
               <!-- <feather-icon
                   size="16"
                   icon="CalendarIcon"
@@ -98,10 +91,8 @@
             </div>
             <div class="position-relative mr-1 filter-date">
               <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top" :placeholder="$t('company_invoices.end_date')" />
-
               <feather-icon v-if="endDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="endDate = ''" />
-
               <!-- <feather-icon
                   size="16"
                   icon="CalendarIcon"
@@ -112,7 +103,6 @@
             <div class="position-relative flex-1">
               <b-form-input v-model="searchQuery" class="d-inline-block mr-1" :placeholder="$t('company_invoices.search')" @input="handleSearchSelect()" />
               <feather-icon size="16" icon="XIcon" class="cursor-pointer clear-all" @click="searchQuery = ''" />
-
             </div>
           </div>
         </b-col>
@@ -128,9 +118,7 @@
         </p>
       </b-col>
     </b-row>
-    <!-- {{ JSON.stringify(fetchInvoices) }}
-    {{ (JSON.stringify(invoices)) }} -->
-    <!-- {{ tableColumns }} -->
+
     <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100" id="company-invoices">
 
       <template #empty="scope">
@@ -204,7 +192,6 @@
           <p class="mb-0">
             {{ data.item.recipientCompany.companyOwnerName }}
           </p>
-
           <!-- <p class="mb-0">
             Company Vat Eic: {{ data.item.recipientCompany.companyVatEic }}
           </p>
@@ -236,7 +223,6 @@
           <p class="mb-0">
             {{ data.item.supplierCompany.companyOwnerName }}
           </p>
-
           <!-- <p class="mb-0">
             Company Vat Eic: {{ data.item.supplierCompany.companyVatEic }}
           </p>
@@ -579,8 +565,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.isCheck = true;
-    }, 1500);
-    this.fetchInvoices();
+    }, 100);
     this.observeScroll();
   },
   computed: {
@@ -679,12 +664,17 @@ export default {
           responseType: 'blob',
         }).then(function (response) {
           const blobData = response.data;
-          console.log(blobData)
+
+          console.log(blobData.type)
           const exportDataBlob = new Blob([blobData], { type: blobData.type });
           const url = window.URL.createObjectURL(exportDataBlob);
           const link = document.createElement('a');
           link.href = url;
-          link.setAttribute('download', `${router.currentRoute.params.id}.zip`); // download as .txt
+          if (blobData.type == 'application/zip') {
+            link.setAttribute('download', `${router.currentRoute.params.id}.zip`); // download as .zip
+          } else {
+            link.setAttribute('download', `${router.currentRoute.params.id}.txt`); // download as .txt
+          }
           document.body.appendChild(link);
           link.click();
           link.remove();
@@ -838,6 +828,7 @@ export default {
         if (entries[0].isIntersecting) {
           if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
             await this.listInvoices();
+            console.log(this.listInvoices());
           } else {
             await this.searchInvoices();
           }
@@ -883,9 +874,10 @@ export default {
       this.invoices = data.data.elements;
       tableAreaBusy.style.opacity = "1";
     },
-
+    removeDuplicates(arr) {
+      return arr.filter((item, index) => arr.indexOf(item) === index);
+    },
     async listInvoices() {
-      console.log(this, this.invoices);
       this.pageNum += 1;
       let config = {
         params: {
@@ -903,9 +895,8 @@ export default {
       );
       console.log(data, this.invoices);
       if (this.pageNum > 1) {
-        console.log(data, this.invoices, this.pageNum);
         this.invoices.push(...data.data.elements);
-        console.log(this.invoices);
+        // this.removeDuplicates(this.invoices);
         this.loadMore = false;
         if (data.data.elements.length === 0) {
           this.pageNum -= 1;
@@ -965,6 +956,7 @@ export default {
             this.searchQuery === ""
           ) {
             await this.listInvoices();
+
           } else {
             await this.searchInvoices();
           }
@@ -1161,7 +1153,7 @@ export default {
     companyId.value = router.currentRoute.params.companyId
       ? router.currentRoute.params.companyId
       : router.currentRoute.params.id;
-    console.log(companyId, tableColumns);
+
     return {
       fetchInvoices,
       tableColumns,

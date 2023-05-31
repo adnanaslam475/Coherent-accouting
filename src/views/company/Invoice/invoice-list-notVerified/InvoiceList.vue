@@ -59,7 +59,7 @@
         <p style="font-size:1.05rem">{{ $t('add_invoice.not_recognised_01') }} <b>{{ $t('add_invoice.not_recognised_02') }}</b> {{ $t('add_invoice.not_recognised_03') }}</p>
       </b-col>
     </b-row>
-    {{ JSON.stringify(fetchInvoices) }}
+
     <b-table ref="refInvoiceListTable" :items="fetchInvoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList">
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
