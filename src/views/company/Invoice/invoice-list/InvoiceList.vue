@@ -131,7 +131,7 @@
     <!-- {{ JSON.stringify(fetchInvoices) }}
     {{ (JSON.stringify(invoices)) }} -->
     <!-- {{ tableColumns }} -->
-    <b-table ref="refInvoiceListTable" sticky-header :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100" id="company-invoices">
+    <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100" id="company-invoices">
 
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
@@ -677,21 +677,31 @@ export default {
             'Access-Control-Allow-Origin': '*'
           },
           responseType: 'blob',
+        }).then(function (response) {
+          const blobData = response.data;
+          console.log(blobData)
+          const exportDataBlob = new Blob([blobData], { type: blobData.type });
+          const url = window.URL.createObjectURL(exportDataBlob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', `${router.currentRoute.params.id}.zip`); // download as .txt
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
         });
-
         // Prepare the data string to be written to the file
-        const exportDataString = `companyId: ${this.exportDto.companyId}, date: "${this.exportDto.date}", platformName: "${this.exportDto.platformName}"`;
+        // const exportDataString = `companyId: ${this.exportDto.companyId}, date: "${this.exportDto.date}", platformName: "${this.exportDto.platformName}"`;
 
-        // Create a new blob with the content of the exportDto
-        const exportDataBlob = new Blob([exportDataString], { type: 'text/plain' });
+        // Create a new blob with the content of the exportDto        
+        // const exportDataBlob = new Blob([exportDataString], { type: contentType });
 
-        const url = window.URL.createObjectURL(exportDataBlob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'data.txt'); // download as .txt
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+        // const url = window.URL.createObjectURL(exportDataBlob);
+        // const link = document.createElement('a');
+        // link.href = url;
+        // link.setAttribute('download', `${this.exportDto.companyId}.zip`); // download as .txt
+        // document.body.appendChild(link);
+        // link.click();
+        // link.remove();
 
         this.$nextTick(() => {
           this.$bvModal.hide("modal-spinner");

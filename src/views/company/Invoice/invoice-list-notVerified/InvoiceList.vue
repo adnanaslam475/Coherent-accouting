@@ -60,7 +60,7 @@
       </b-col>
     </b-row>
     {{ JSON.stringify(fetchInvoices) }}
-    <b-table ref="refInvoiceListTable" sticky-header :items="fetchInvoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList">
+    <b-table ref="refInvoiceListTable" :items="fetchInvoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList">
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
