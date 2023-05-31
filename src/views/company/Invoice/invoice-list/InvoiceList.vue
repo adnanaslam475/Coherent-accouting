@@ -565,7 +565,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.isCheck = true;
-    }, 100);
+    }, 1500);
     this.observeScroll();
   },
   computed: {
@@ -888,12 +888,12 @@ export default {
         },
       };
       this.companyId = router.currentRoute.params.id;
-      this.invoices = [];
+      // this.invoices = [];
       const data = await axios.get(
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
         config
       );
-      console.log(data, this.invoices);
+      console.log(data, this.invoices, this.pageNum);
       if (this.pageNum > 1) {
         this.invoices.push(...data.data.elements);
         // this.removeDuplicates(this.invoices);
