@@ -451,6 +451,7 @@ export default {
   directives: {
     Ripple,
   },
+
   components: {
     BCard,
     BRow,
@@ -483,7 +484,9 @@ export default {
     'ValidationObserver': ValidationObserver,
     VueMonthlyPicker,
   },
+
   props: ["invoiceTab"],
+
   data() {
     return {
       loadMore: false,
@@ -499,7 +502,6 @@ export default {
       path: mdiTrayArrowUp,
       observer: null,
       loadModal: "Next",
-
       modalDisabledMonth: false,
       searchQuery: '', // assuming it's a string
       isLoading: false, // assuming it's a boolean indicating a loading state
@@ -507,8 +509,6 @@ export default {
       companyinfo: null,
       isSortDirDesc: null, // or any default value
       sortBy: null, // or any default value
-      // tableColumns: null, // or any default value
-      // invoices: null,
       exportDto: {
         companyId: '',
         date: '',
@@ -549,42 +549,55 @@ export default {
   },
 
   watch: {
+
     startDate: function () {
       this.handleSearchSelect();
     },
+
     endDate: function () {
       this.handleSearchSelect();
     },
+
     companyID(newVal) {
       console.log('companyID watcher triggered', newVal);
       this.exportDto.companyId = newVal;
     },
+
     'selectedMonthData.date'(newVal) {
       console.log('selectedMonthData.date watcher triggered', newVal);
       this.exportDto.date = newVal;
     },
+
     'companyinfo.exportProperties.platform'(newVal) {
       console.log('companyinfo.exportProperties.platform watcher triggered', newVal);
       this.exportDto.platformName = newVal || null;
     },
+
   },
 
   mounted() {
+
     setTimeout(() => {
       this.isCheck = true;
     }, 1500);
+    // this.fetchInvoices();
     this.observeScroll();
   },
+
   computed: {
+
     modalDisabled() {
       // your condition here...
       return !this.exportDto || !this.companyinfo;
     },
+
   },
 
 
   methods: {
-    /*async fetchInvoices() {
+
+    /*
+    async fetchInvoices() {
       // try {
       //   const response = await axios.get("/api/export", {
       //     headers: {
@@ -597,22 +610,23 @@ export default {
       //   console.error(error);
       // }
       let token = useJwt.getToken();
-      // let exportDto = {
-      //   companyId: '',
-      //   date: '',
-      //   platformName: '',
-      // };
+      let exportDto = {
+        companyId: '',
+        date: '',
+        platformName: '',
+      };
       useJwt
         .export(token, exportDto)
         .then(async (response) => {
         }
         )
         .catch()
-    },*/
+    },
+    */
+
     async exportModal() {
       // Fetch the invoices first
       await this.fetchInvoices();
-
       // Populate the exportDto object
       console.log('exportModal method called', this.companyID, this.selectedMonthData.date, this.companyinfo);
       this.exportDto.companyId = this.companyID;
@@ -623,7 +637,6 @@ export default {
         console.error('exportDto data is not complete!');
         return;
       }
-
       // Show the modal
       this.$bvModal.show('export-info-modal');
       // Then get the export file
@@ -651,11 +664,9 @@ export default {
       this.$nextTick(() => {
         this.$bvModal.show("modal-spinner");
       });
-
       this.exportDto.companyId = router.currentRoute.params.id; // Set companyId to 85
       this.exportDto.date = new Date().toISOString().split('T')[0]; // Set date to current date
       this.exportDto.platformName = this.exportDto.platformName; // Set platformName to "AJURE"
-
       try {
         const response = await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
           headers: {
@@ -679,11 +690,9 @@ export default {
           link.click();
           link.remove();
         });
-
         this.$nextTick(() => {
           this.$bvModal.hide("modal-spinner");
         });
-
         this.$toast({
           component: ToastificationContent,
           props: {
@@ -692,7 +701,6 @@ export default {
             variant: "success",
           },
         });
-
         this.$refs.modal_exportValue.hide();
       } catch (error) {
         console.error("Error:", error);
@@ -700,7 +708,6 @@ export default {
           console.log('Error status:', error.response.status);
           console.log('Error data:', error.response.data);
         }
-
         this.$toast({
           component: ToastificationContent,
           props: {
@@ -709,7 +716,6 @@ export default {
             variant: "danger",
           },
         });
-
         this.$nextTick(() => {
           this.$bvModal.hide("modal-spinner");
         });
@@ -781,7 +787,6 @@ export default {
           verified: "true",
         },
       };
-
       try {
         if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
           this.companyId = router.currentRoute.params.id;
@@ -804,8 +809,8 @@ export default {
         rootMargin: "0px",
         threshold: 1.0,
       };
-
       const observer = new IntersectionObserver(async (entries) => {
+        this.loadMore = true;
         if (entries[0].isIntersecting) {
           if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
             await this.listInvoices();
@@ -821,7 +826,6 @@ export default {
           }
         }
       }, options);
-
       observer.observe(this.$refs.loadMoreObserver);
     },
 
@@ -869,12 +873,18 @@ export default {
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
         config
       );
-      if (this.pageNum > 1) {
-        this.invoices.push(...data.data.elements);
-        this.loadMore = false;
-        if (data.data.elements.length === 0) {
-          this.pageNum -= 1;
+      console.log(data.data.elements.length, this.totalInvoices);
+      if (data.data.elements.length > 1) {
+        this.loadMore = true;
+        if (this.pageNum > 1) {
+          this.invoices.push(...data.data.elements);
+          if (data.data.elements.length === 0) {
+            this.pageNum -= 1;
+          }
         }
+      } else {
+        this.loadMore = false;
+        return false;
       }
     },
 
@@ -898,10 +908,8 @@ export default {
         data1,
         config
       );
-
       this.invoices.push(...data.data.elements);
       this.loadMore = false;
-
       let val = data.data.elements.length;
       if (val === 0) {
         this.pageNum -= 1;
@@ -919,7 +927,6 @@ export default {
         document.documentElement.scrollTop
       );
       const clientHeight = document.documentElement.clientHeight;
-
       if (scrollHeight - (scrollTop + clientHeight) <= 1) {
         this.loadMore = true;
         setTimeout(async () => {
@@ -929,11 +936,9 @@ export default {
             this.searchQuery === ""
           ) {
             await this.listInvoices();
-
           } else {
             await this.searchInvoices();
           }
-
           // Check if there are no more invoices to load
           if (this.invoices.length === this.totalInvoices) {
             this.loadMore = false;
@@ -1073,24 +1078,22 @@ export default {
         });
     },
   },
+
   created() {
-    window.addEventListener("scroll", this.handleScroll);
+    // window.addEventListener("scroll", this.handleScroll);
     this.handleOk = this.handleOk.bind(this);
   },
 
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
-
     // Register module
     if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
       store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule);
-
     // UnRegister on leave
     onUnmounted(() => {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
-
     const statusOptions = [
       "Downloaded",
       "Draft",
@@ -1098,7 +1101,6 @@ export default {
       "Partial Payment",
       "Past Due",
     ];
-
     const {
       fetchInvoices,
       tableColumns,
@@ -1120,11 +1122,7 @@ export default {
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
     } = useInvoicesList();
-
-    companyId.value = router.currentRoute.params.companyId
-      ? router.currentRoute.params.companyId
-      : router.currentRoute.params.id;
-
+    companyId.value = router.currentRoute.params.companyId ? router.currentRoute.params.companyId : router.currentRoute.params.id;
     return {
       fetchInvoices,
       tableColumns,
@@ -1148,7 +1146,6 @@ export default {
       avatarText,
       resolveClientAvatarVariant,
     };
-
   },
 
 }

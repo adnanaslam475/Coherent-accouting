@@ -21,11 +21,9 @@ export default function useInvoicesList() {
     { key: 'amountNonVat', sortable: true },
     { key: 'totalAmount', sortable: true },
     { key: 'vatAmount', sortable: true },
-
     // { key: 'vatPercent', sortable: true, formatter: val => `${val}%` },
     // { key: 'tradeDiscountAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
     // { key: 'tradeDiscountPercent', sortable: true, formatter: val => `${val}%` },
-
     // { key: 'currency', sortable: true },
     { key: 'actions' },
   ]

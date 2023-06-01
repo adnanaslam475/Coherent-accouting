@@ -403,8 +403,8 @@ export default {
     BSpinner,
     BProgress,
     BProgressBar,
-    // VProgressLinear,
     flatPickr,
+    // VProgressLinear,
   },
 
   props: ["invoiceTab"],
@@ -495,9 +495,9 @@ export default {
         );
         this.invoices = data1.data.elements;
       }
-      // var tableAreaBusy = document.getElementById("company-invoices-not-verified");
-      tableAreaBusy.style.opacity = "1";
 
+      tableAreaBusy.style.opacity = "1";
+      this.loadMore = false;
     },
 
     observeScroll() {
@@ -508,6 +508,7 @@ export default {
       };
 
       const observer = new IntersectionObserver(async (entries) => {
+        this.loadMore = true;
         if (entries[0].isIntersecting) {
           if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
             await this.listInvoices();
@@ -564,23 +565,29 @@ export default {
       this.pageNum += 1;
       let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
-          sortField: this.sortBy,
+          direction: this.isSortDirDesc ? "desc" : "asc",
+          // sortField: this.sortBy,
+          sortField: 'id',
           verified: "true",
         },
       };
+      this.companyId = router.currentRoute.params.id;
       const data = await axios.get(
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
         config
       );
-
-      if (this.pageNum > 1) {
-        this.invoices.push(...data.data.elements);
-        this.loadMore = false;
-
-        if (data.data.elements.length === 0) {
-          this.pageNum -= 1;
+      console.log(data.data.elements.length, this.totalInvoices);
+      if (data.data.elements.length > 1) {
+        this.loadMore = true;
+        if (this.pageNum > 1) {
+          this.invoices.push(...data.data.elements);
+          if (data.data.elements.length === 0) {
+            this.pageNum -= 1;
+          }
         }
+      } else {
+        this.loadMore = false;
+        return false;
       }
     },
 
@@ -786,7 +793,7 @@ export default {
   },
 
   created() {
-    window.addEventListener("scroll", this.handleScroll);
+    // window.addEventListener("scroll", this.handleScroll);
   },
 
   setup() {
