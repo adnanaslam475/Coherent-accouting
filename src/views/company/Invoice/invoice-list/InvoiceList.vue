@@ -1,8 +1,8 @@
 <template>
-  <!-- Table Container Card -->
+  <!--  Table Container Card Starts  -->
   <b-card no-body>
     <div class="m-2">
-      <!-- Table Top -->
+      <!--  Table Top Starts  -->
       <b-row>
         <!-- Per Page -->
         <b-col cols="12" md="6" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
@@ -107,8 +107,10 @@
           </div>
         </b-col>
       </b-row>
+      <!--  Table Top Ends  -->
     </div>
 
+    <!--  Error Message Starts  -->
     <b-row class="text-center text-danger">
       <b-col>
         <p style="font-size: 1.05rem">
@@ -118,7 +120,9 @@
         </p>
       </b-col>
     </b-row>
+    <!--  Error Message Starts  -->
 
+    <!--  Table Starts  -->
     <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100" id="company-invoices">
 
       <template #empty="scope">
@@ -333,8 +337,9 @@
         </div>
       </template>
     </b-table>
+    <!--  Table Ends  -->
 
-    <!-- loading spinner -->
+    <!--  Loading Spinner Starts  -->
     <b-row class="text-center mb-2">
       <b-col cols="12">
         <b-spinner v-if="loadMore" large variant="primary" />
@@ -342,6 +347,7 @@
         <div ref="loadMoreObserver"></div>
       </b-col>
     </b-row>
+    <!--  Loading Spinner Ends  -->
 
     <!--   <div class="mx-2 mb-2">
       <b-row>
@@ -391,6 +397,7 @@
        </b-row>
      </div> -->
   </b-card>
+  <!--  Table Container Card Ends  -->
 </template>
 
 <script>
@@ -604,7 +611,6 @@ export default {
     },*/
     async exportModal() {
       // Fetch the invoices first
-      console.log(this.fetchInvoices());
       await this.fetchInvoices();
 
       // Populate the exportDto object
@@ -642,14 +648,10 @@ export default {
     },
 
     async getExportFile() {
-      console.log(this.invoices);
       this.$nextTick(() => {
         this.$bvModal.show("modal-spinner");
       });
 
-      // this.exportDto.companyId = 85; // Set companyId to 85
-      // this.exportDto.date = new Date().toISOString().split('T')[0]; // Set date to current date
-      // this.exportDto.platformName = "AJURE"; // Set platformName to "AJURE"
       this.exportDto.companyId = router.currentRoute.params.id; // Set companyId to 85
       this.exportDto.date = new Date().toISOString().split('T')[0]; // Set date to current date
       this.exportDto.platformName = this.exportDto.platformName; // Set platformName to "AJURE"
@@ -664,8 +666,6 @@ export default {
           responseType: 'blob',
         }).then(function (response) {
           const blobData = response.data;
-
-          console.log(blobData.type)
           const exportDataBlob = new Blob([blobData], { type: blobData.type });
           const url = window.URL.createObjectURL(exportDataBlob);
           const link = document.createElement('a');
@@ -679,19 +679,6 @@ export default {
           link.click();
           link.remove();
         });
-        // Prepare the data string to be written to the file
-        // const exportDataString = `companyId: ${this.exportDto.companyId}, date: "${this.exportDto.date}", platformName: "${this.exportDto.platformName}"`;
-
-        // Create a new blob with the content of the exportDto        
-        // const exportDataBlob = new Blob([exportDataString], { type: contentType });
-
-        // const url = window.URL.createObjectURL(exportDataBlob);
-        // const link = document.createElement('a');
-        // link.href = url;
-        // link.setAttribute('download', `${this.exportDto.companyId}.zip`); // download as .txt
-        // document.body.appendChild(link);
-        // link.click();
-        // link.remove();
 
         this.$nextTick(() => {
           this.$bvModal.hide("modal-spinner");
@@ -745,7 +732,6 @@ export default {
         const year = tPeriod.substring(0, 4);
         const month = tPeriod.substring(5, tPeriod.length);
         this.selectedMonthData.date = month.length === 1 ? `${year}-0${month}-01` : `${year}-${month}-01`;
-
         let companyID = this.$route.params.id;
         try {
           const response = await axios.get(`/account/api/company/${companyID}`, {
@@ -755,7 +741,6 @@ export default {
             },
           });
           this.companyinfo = response.data;
-          console.log(this.companyinfo);
           this.$refs.export_model.hide();
           this.$refs.modal_exportValue.show();
         } catch (error) {
@@ -768,7 +753,6 @@ export default {
       var tableAreaBusy = document.getElementById("company-invoices");
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
-
       const totalRecordss = this.invoices.length;
       let Records = (totalRecordss / 10) * 10;
       this.pageNum = Records / 10;
@@ -776,12 +760,10 @@ export default {
         Records = 10;
         this.pageNum = 1;
       }
-
       const payLoadDates = {
         dateFrom: this.startDate,
         dateTo: this.endDate,
       };
-
       const config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
@@ -791,7 +773,6 @@ export default {
           searchTerm: this.searchQuery,
         },
       };
-
       const config1 = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
@@ -828,7 +809,6 @@ export default {
         if (entries[0].isIntersecting) {
           if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
             await this.listInvoices();
-            console.log(this.listInvoices());
           } else {
             await this.searchInvoices();
           }
@@ -851,7 +831,6 @@ export default {
       this.isCheck = true;
       this.pageNum = 1;
       this.perPageRecords = 10;
-
       let data1 = {
         dateFrom: this.startDate,
         dateTo: this.endDate,
@@ -874,9 +853,7 @@ export default {
       this.invoices = data.data.elements;
       tableAreaBusy.style.opacity = "1";
     },
-    removeDuplicates(arr) {
-      return arr.filter((item, index) => arr.indexOf(item) === index);
-    },
+
     async listInvoices() {
       this.pageNum += 1;
       let config = {
@@ -888,15 +865,12 @@ export default {
         },
       };
       this.companyId = router.currentRoute.params.id;
-      // this.invoices = [];
       const data = await axios.get(
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
         config
       );
-      console.log(data, this.invoices, this.pageNum);
       if (this.pageNum > 1) {
         this.invoices.push(...data.data.elements);
-        // this.removeDuplicates(this.invoices);
         this.loadMore = false;
         if (data.data.elements.length === 0) {
           this.pageNum -= 1;
@@ -935,7 +909,6 @@ export default {
     },
 
     async handleScroll() {
-      console.log(this.invoices, this.totalInvoices);
       // Check if the user has scrolled to the bottom
       const scrollHeight = Math.max(
         document.body.scrollHeight,
@@ -1142,10 +1115,8 @@ export default {
       refInvoiceListTable,
       companyId,
       statusFilter,
-
       refetchData,
       invoices,
-
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
     } = useInvoicesList();
@@ -1165,20 +1136,16 @@ export default {
       searchQuery,
       dateFrom,
       dateTo,
-      companyId,
       sortBy,
       isSortDirDesc,
       refInvoiceListTable,
-
+      companyId,
       statusFilter,
-
       refetchData,
-
-      statusOptions,
       invoices,
-
-      avatarText,
       resolveInvoiceStatusVariantAndIcon,
+      statusOptions,
+      avatarText,
       resolveClientAvatarVariant,
     };
 

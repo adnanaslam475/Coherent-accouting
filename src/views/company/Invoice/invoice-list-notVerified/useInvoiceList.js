@@ -13,19 +13,19 @@ export default function useInvoicesList() {
 
   // Table Handlers
   const tableColumns = [
-    { key: 'invoiceNumber', sortable: true},
+    { key: 'invoiceNumber', sortable: true },
     { key: 'invoiceDate', label: "date Issued", sortable: true },
     { key: 'transactionType', sortable: true },
-    { key: 'recipientCompanyName', label: "recipient Company", sortable: true},
-    { key: 'supplierCompanyName', label: "supplier Company" , sortable: true },
+    { key: 'recipientCompanyName', label: "recipient Company", sortable: true },
+    { key: 'supplierCompanyName', label: "supplier Company", sortable: true },
     { key: 'amountNonVat', sortable: true },
     { key: 'totalAmount', sortable: true },
     { key: 'vatAmount', sortable: true },
-    
+
     // { key: 'vatPercent', sortable: true, formatter: val => `${val}%` },
     // { key: 'tradeDiscountAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
     // { key: 'tradeDiscountPercent', sortable: true, formatter: val => `${val}%` },
-    
+
     // { key: 'currency', sortable: true },
     { key: 'actions' },
   ]
@@ -40,6 +40,7 @@ export default function useInvoicesList() {
   const isSortDirDesc = ref(true)
   const statusFilter = ref(null)
   const companyId = ref(null)
+  const invoices = ref(null);
 
   const dataMeta = computed(() => {
     const localItemsCount = refInvoiceListTable.value ? refInvoiceListTable.value.localItems.length : 0
@@ -64,7 +65,7 @@ export default function useInvoicesList() {
         sortField: sortBy.value,
         direction: isSortDirDesc.value,
         verified: false,
-        currentPage : currentPage.value,
+        currentPage: currentPage.value,
         perPage: perPage.value,
         q: searchQuery.value,
         companyId: companyId.value,
@@ -72,10 +73,12 @@ export default function useInvoicesList() {
         dateTo: dateTo.value
       })
       .then(response => {
-        const { elements, totalElements } = response.data
-
-        callback(elements)
-        totalInvoices.value = totalElements
+        const { elements } = response.data
+        invoices.value = response.data.elements;
+        if (callback) {
+          callback(elements)
+          totalInvoices.value = elements.length;
+        }
       })
       .catch((err) => {
         toast({
@@ -129,10 +132,9 @@ export default function useInvoicesList() {
     refInvoiceListTable,
     companyId,
     statusFilter,
-
     resolveInvoiceStatusVariantAndIcon,
     resolveClientAvatarVariant,
-
     refetchData,
+    invoices,
   }
 }

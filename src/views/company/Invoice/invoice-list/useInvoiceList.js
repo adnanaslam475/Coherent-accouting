@@ -73,7 +73,6 @@ export default function useInvoicesList() {
         dateTo: dateTo.value
       })
       .then(response => {
-        console.log(response)
         const { elements } = response.data;
         invoices.value = response.data.elements;
         if (callback) {
@@ -134,10 +133,8 @@ export default function useInvoicesList() {
     refInvoiceListTable,
     companyId,
     statusFilter,
-
     resolveInvoiceStatusVariantAndIcon,
     resolveClientAvatarVariant,
-
     refetchData,
     invoices
   }

@@ -1,9 +1,11 @@
 <template>
-  <!-- Table Container Card -->
+  <!--  Table Container Card Starts  -->
   <b-card no-body class="h-100">
     <div class="m-2">
-      <!-- Table Top -->
+
+      <!--  Table Top Starts  -->
       <b-row>
+
         <!-- Per Page -->
         <b-col cols="12" md="7" class="d-flex align-items-center justify-content-start mb-1 mb-md-0 pr-0">
           <label>Entries</label>
@@ -15,7 +17,7 @@
             <!-- Add Multiple Invoices -->
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path1" />
           </b-button>
-          <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" @click="refetchData">
+          <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" @click="refreshList()">
             <feather-icon icon="RefreshCcwIcon" />
           </b-button>
           <!-- Progressbar -->
@@ -51,7 +53,10 @@
             </div>
           </div>
         </b-col>
+
       </b-row>
+      <!--  Table Top Ends  -->
+
     </div>
 
     <b-row class="text-center text-danger">
@@ -60,7 +65,8 @@
       </b-col>
     </b-row>
 
-    <b-table ref="refInvoiceListTable" :items="fetchInvoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList">
+    <!--  Table Starts  -->
+    <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList" id="company-invoices-not-verified">
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
@@ -277,6 +283,18 @@
         </div>
       </template>
     </b-table>
+    <!--  Table Ends  -->
+
+    <!--  Loading Spinner Starts  -->
+    <b-row class="text-center mb-2">
+      <b-col cols="12">
+        <b-spinner v-if="!loadMore" large variant="primary" />
+        <div v-else style="height: 35px"></div>
+        <div ref="loadMoreObserver"></div>
+      </b-col>
+    </b-row>
+    <!--  Loading Spinner Ends  -->
+
     <!-- <div class="mx-2 mb-2">
       <b-row>
         <b-col cols="12" sm="6" class="
@@ -305,6 +323,7 @@
       </b-row>
     </div> -->
   </b-card>
+  <!--  Table Container Card Ends  -->
 </template>
 
 <script>
@@ -345,6 +364,7 @@ import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import router from "@/router";
 import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiTrayArrowUp } from "@mdi/js";
 import { mdiCloudUploadOutline } from "@mdi/js";
 import flatPickr from "vue-flatpickr-component";
 import InvoiceDownload from "../invoice-download/InvoiceDownload.vue";
@@ -386,30 +406,262 @@ export default {
     // VProgressLinear,
     flatPickr,
   },
+
   props: ["invoiceTab"],
+
   data() {
     return {
+      loadMore: false,
+      startDate: '',
+      endDate: '',
+      perPageRecords: 10,
+      pageNum: 1,
+      isCheck: false,
+      file: null,
+      fileLoading: false,
+      path: mdiTrayArrowUp,
+      observer: null,
       multiplefile: null,
       multiplefileLoading: false,
       path1: mdiCloudUploadOutline,
     };
   },
+
+  watch: {
+    startDate: function () {
+      this.handleSearchSelect();
+    },
+    endDate: function () {
+      this.handleSearchSelect();
+    }
+  },
+
   directives: {
     Ripple,
   },
+
+  mounted() {
+    setTimeout(() => {
+      this.isCheck = true;
+    }, 1500);
+    this.observeScroll();
+  },
+
   methods: {
+
+    async refreshList() {
+      var tableAreaBusy = document.getElementById("company-invoices-not-verified");
+      tableAreaBusy.style.opacity = "0.5";
+      this.isCheck = true;
+      let totalRecordss = this.invoices.length;
+      let Records = ((totalRecordss / 10) * 10);
+      this.pageNum = (Records / 10);
+      if (totalRecordss < 10) {
+        Records = 10;
+        this.pageNum = 1;
+      }
+      let payLoadDates = {
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
+      };
+      let config = {
+        params: {
+          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+          searchTerm: this.searchQuery,
+        },
+      };
+      let config1 = {
+        params: {
+          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true"
+        },
+      };
+
+      if ((this.startDate === '') && (this.startDate === '') && (this.searchQuery) === '') {
+        const data = await axios.get(
+          `/account/api/invoice/list/${this.companyId}/1/${Records}`,
+          config1
+        );
+        this.invoices = data.data.elements;
+      }
+      else {
+        const data1 = await axios.post(
+          `/account/api/invoice/search/${this.companyId}/1/${Records}`,
+          payLoadDates,
+          config
+        );
+        this.invoices = data1.data.elements;
+      }
+      // var tableAreaBusy = document.getElementById("company-invoices-not-verified");
+      tableAreaBusy.style.opacity = "1";
+
+    },
+
+    observeScroll() {
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
+      };
+
+      const observer = new IntersectionObserver(async (entries) => {
+        if (entries[0].isIntersecting) {
+          if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
+            await this.listInvoices();
+          } else {
+            await this.searchInvoices();
+          }
+
+          // Check if there are no more invoices to load
+          if (this.invoices.length === this.totalInvoices) {
+            this.loadMore = false;
+          } else {
+            setTimeout(() => {
+              this.loadMore = false;
+            }, 300);
+          }
+        }
+      }, options);
+
+      observer.observe(this.$refs.loadMoreObserver);
+    },
+
+    // Hadling DateSelects and Search field
+    async handleSearchSelect() {
+      var tableAreaBusy = document.getElementById("company-invoices-not-verified");
+      tableAreaBusy.style.opacity = "0.5";
+      this.isCheck = true;
+      this.pageNum = 1;
+      this.perPageRecords = 10
+
+      let data1 = {
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
+      };
+      let config = {
+        params: {
+          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+          searchTerm: this.searchQuery,
+        },
+      };
+
+      const data = await axios.post(
+        `/account/api/invoice/search/${this.companyId}/1/${this.perPageRecords}`,
+        data1,
+        config
+      );
+
+      this.invoices = data.data.elements;
+      tableAreaBusy.style.opacity = "1";
+    },
+
+    async listInvoices() {
+      this.pageNum += 1;
+      let config = {
+        params: {
+          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+        },
+      };
+      const data = await axios.get(
+        `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
+        config
+      );
+
+      if (this.pageNum > 1) {
+        this.invoices.push(...data.data.elements);
+        this.loadMore = false;
+
+        if (data.data.elements.length === 0) {
+          this.pageNum -= 1;
+        }
+      }
+    },
+
+    async searchInvoices() {
+      this.pageNum += 1;
+      let data1 = {
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
+      };
+      let config = {
+        params: {
+          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          sortField: this.sortBy,
+          verified: "true",
+          searchTerm: this.searchQuery,
+        },
+      };
+      const data = await axios.post(
+        `/account/api/invoice/search/${this.companyId}/${this.pageNum}/10`,
+        data1,
+        config
+      );
+
+      this.invoices.push(...data.data.elements);
+      this.loadMore = false;
+
+      let val = data.data.elements.length;
+      if (val === 0) {
+        this.pageNum -= 1;
+      }
+    },
+
+    async handleScroll() {
+      // Check if the user has scrolled to the bottom
+      const scrollHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+      const scrollTop = Math.max(
+        document.body.scrollTop,
+        document.documentElement.scrollTop
+      );
+      const clientHeight = document.documentElement.clientHeight;
+
+      if (scrollHeight - (scrollTop + clientHeight) <= 1) {
+        this.loadMore = true;
+        setTimeout(async () => {
+          if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
+            await this.listInvoices();
+          } else {
+            await this.searchInvoices();
+          }
+
+          // Check if there are no more invoices to load
+          if (this.invoices.length === this.totalInvoices) {
+            this.loadMore = false;
+          } else {
+            setTimeout(() => {
+              this.loadMore = false;
+            }, 300);
+          }
+        }, 300);
+      }
+    },
+
     state() {
       return 1;
     },
+
     actionTab() {
       this.$emit("state", this.state());
     },
+
     onProgress(event) {
       console.log(`Processed: ${event} / 100`);
     },
+
     generatePDF(itemID) {
       this.$refs[`invoicePdf${itemID}`].generatePdf();
     },
+
     showMsgBoxTwo(id, refetchData) {
       const h = this.$createElement
       // Using HTML string
@@ -434,6 +686,34 @@ export default {
           }
         })
     },
+
+    // duplicating an invoice
+    duplicateInvoice(item) {
+      let config = item;
+      config.invoiceNumber = Date.now();
+      config.id = "";
+      let companyID = this.$route.params.id;
+      let token = useJwt.getToken();
+      useJwt
+        .addCompanyInvoice(token, companyID, config)
+        .then(async (response) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Invoice Duplicated Successfully`,
+              icon: "EditIcon",
+              variant: "success",
+            },
+
+          });
+          // refetchData();
+          var tableAreaBusy = document.getElementById("company-invoices-not-verified");
+          tableAreaBusy.style.opacity = "0.5";
+          this.refreshList();
+
+        });
+    },
+
     invoiceDelete(id, refetchData) {
       const token = useJwt.getToken();
       useJwt
@@ -460,6 +740,7 @@ export default {
           });
         });
     },
+
     addMultiplefile(event) {
       const self = this;
       this.multiplefile = event.target.files;
@@ -501,7 +782,13 @@ export default {
           });
         });
     },
+
   },
+
+  created() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
+
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
 
@@ -539,6 +826,7 @@ export default {
       refInvoiceListTable,
       companyId,
       statusFilter,
+      invoices,
       refetchData,
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
@@ -578,6 +866,7 @@ export default {
       isSortDirDesc,
       refInvoiceListTable,
       statusFilter,
+      invoices,
       refetchData,
       statusOptions,
       avatarText,
