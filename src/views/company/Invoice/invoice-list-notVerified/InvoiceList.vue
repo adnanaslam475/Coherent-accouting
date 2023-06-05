@@ -771,7 +771,7 @@ export default {
             component: ToastificationContent,
             props: {
               title:
-                'Ще намерите фактурите в таб "Качване от Файл" на фирмата',
+                'Ще намерите фактурите в таб "Масов OCR" на фирмата',
               icon: "EditIcon",
               variant: "success",
             },

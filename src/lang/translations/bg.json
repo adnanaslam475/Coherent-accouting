@@ -216,7 +216,7 @@
     "create_yearly_report": "Създай годишен отчет"
   },
   "company_tabs": {
-    "multiple_upload": "Качване от файл",
+    "multiple_upload": "Масов OCR",
     "vat_reports": "ДДС Отчети",
     "yearly_reports": "Годишни отчети",
     "company_documents": "Фирмени документи",
