@@ -224,7 +224,7 @@
   },
   "company_invoices": {
     "add_invoice": "Добави",
-    "add_from_file": "Добави от Файл",
+    "add_from_file": "OCR от Файл",
     "Export_invoice": "Експорт",
     "Export_invoicess": "Експортиране",
     "Cancel": " Отказ",
