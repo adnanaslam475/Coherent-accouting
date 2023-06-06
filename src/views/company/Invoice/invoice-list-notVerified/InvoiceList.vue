@@ -468,7 +468,7 @@ export default {
         params: {
           direction: this.isSortDirDesc ? 'desc' : 'asc',
           sortField: this.sortBy,
-          verified: "true",
+          verified: "false",
           searchTerm: this.searchQuery,
         },
       };
@@ -476,7 +476,7 @@ export default {
         params: {
           direction: this.isSortDirDesc ? 'desc' : 'asc',
           sortField: this.sortBy,
-          verified: "true"
+          verified: "false"
         },
       };
 
@@ -546,7 +546,7 @@ export default {
         params: {
           direction: this.isSortDirDesc ? 'desc' : 'asc',
           sortField: this.sortBy,
-          verified: "true",
+          verified: "false",
           searchTerm: this.searchQuery,
         },
       };
@@ -568,7 +568,7 @@ export default {
           direction: this.isSortDirDesc ? "desc" : "asc",
           // sortField: this.sortBy,
           sortField: 'id',
-          verified: "true",
+          verified: "false",
         },
       };
       this.companyId = router.currentRoute.params.id;
@@ -601,7 +601,7 @@ export default {
         params: {
           direction: this.isSortDirDesc ? 'desc' : 'asc',
           sortField: this.sortBy,
-          verified: "true",
+          verified: "false",
           searchTerm: this.searchQuery,
         },
       };
