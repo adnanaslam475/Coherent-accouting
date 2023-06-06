@@ -507,7 +507,7 @@ export default {
       isLoading: false, // assuming it's a boolean indicating a loading state
       // other data properties...
       companyinfo: null,
-      isSortDirDesc: null, // or any default value
+      isSortDirDesc: true, // or any default value
       sortBy: null, // or any default value
       exportDto: {
         companyId: '',
