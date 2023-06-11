@@ -498,7 +498,6 @@
                       cols="30" rows="5"
                       placeholder="Message">
                     </textarea>
-                    <input type="file" value="FIle" name="file_img" @change="uploadFile" ref="file">
                     <input type="submit" value="Send">
                   </form>
                 </div>
@@ -1984,7 +1983,8 @@
           <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
             :paginate-elements-by-height="1100" filename="invoice" :pdf-quality="2" :manual-pagination="false"
             pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
-            @progress="onProgress($event)" ref="html2Pdf">
+            @progress="onProgress($event)" @beforeDownload="beforeDownload($event)"
+            @hasDownloaded="hasDownloaded($event)" ref="html2Pdf">
             <section class="invoice-pdf" slot="pdf-content">
               <div v-if="invoiceData">
                 <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
@@ -2002,10 +2002,11 @@
             </section>
           </vue-html2pdf>
 
-          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="false" :preview-modal="false"
+          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
             :paginate-elements-by-height="1100" filename="attachinvoice" :pdf-quality="2" :manual-pagination="false"
             pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
-            @progress="onProgress($event)" ref="html2Pdfnew">
+            @progress="onProgress($event)" @beforeDownload="beforeDownload($event)"
+            @hasDownloaded="hasDownloaded($event)" ref="html2Pdfnew">
             <section class="invoice-pdf" id="new-invoice" slot="pdf-content">
               <div v-if="invoiceData">
                 <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
@@ -2075,6 +2076,7 @@ import InvoiceDownload from "../invoice-download/InvoiceDownload.vue";
 import VueHtml2pdf from "vue-html2pdf";
 import TabList from "../../TabList.vue";
 import axios from "@/libs/axios";
+import Vue from 'vue';
 
 export default {
   directives: {
@@ -2097,6 +2099,10 @@ export default {
     BCardHeader,
     InvoiceDownload,
     TabList,
+  },
+  mounted() {
+    // Make sure the component is mounted before accessing the reference
+    Vue.use(VueHtml2pdf);
   },
   setup() {
     const invoiceData = ref(null);
@@ -2244,6 +2250,10 @@ export default {
     onProgress(event) {
       console.log(`Processed: ${event} / 100`);
     },
+    async hasDownloaded(event){
+      console.log(" Lineeeee...... ", event);
+      this.attachPDFToFile(event)
+    },
     showModal() {
         this.$refs['my-modal'].show()
       },
@@ -2265,52 +2275,43 @@ export default {
     generatePDF() {
       this.$refs.html2Pdf.generatePdf();
     },
-    selectSendEmail() {
+    async beforeDownload ({ html2pdf, options, pdfContent }) {
+            await html2pdf().set(options).from(pdfContent).toPdf().get('pdf').then((pdf) => {
+              const blob = new Blob([pdf], { type: 'application/pdf' });
+              console.log(" New Coming before here...... ", pdf, blob);
+            }).save();
+        },
+    async selectSendEmail() {
       this.sendEmail = false;
       this.$refs['my-modal'].show();
       this.message = `Здравейте!
-                    Моля да намерите прикачена Фактура № ${this.invoiceData.invoiceNumber} от дата: ${this.invoiceData.dateIssued} г. 
+Моля да намерите прикачена Фактура № ${this.invoiceData.invoiceNumber} от дата: ${this.invoiceData.dateIssued} г. 
                     
-                    Екипът на Coherent Accounting Ви пожелава успешен ден!
+Екипът на Coherent Accounting Ви пожелава успешен ден!
 
-                    *Моля, не отговаряйте на това съобщение! То е автоматично генерирано. Ако имате въпроси, моля свържете се с фирмата доставчик изпратения документ.
+*Моля, не отговаряйте на това съобщение! То е автоматично генерирано. Ако имате въпроси, моля свържете се с фирмата доставчик изпратения документ.
 
-                    Copyright © 2023 Coherent Accounting, All rights reserved.`;
-      this.name = `Фактура с Номер: ${this.invoiceData.invoiceNumber} от : ${this.invoiceData.supplierCompany.companName}`;   
-      const pdfContent = `
-        <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="false" :preview-modal="false"
-            :paginate-elements-by-height="1100" filename="attachinvoice" :pdf-quality="2" :manual-pagination="false"
-            pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
-            @progress="onProgress($event)" ref="html2Pdfnew">
-            <section class="invoice-pdf" id="new-invoice" slot="pdf-content">
-              <div v-if="invoiceData">
-                <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
-              </div>
-              <b-alert variant="danger" :show="invoiceData === undefined">
-                <h4 class="alert-heading">Error fetching invoice data</h4>
-                <div class="alert-body">
-                  No invoice found with this invoice id. Check
-                  <b-link class="alert-link" :to="{ name: 'apps-invoice-list' }">
-                    Invoice List
-                  </b-link>
-                  for other invoices.
-                </div>
-              </b-alert>
-            </section>
-          </vue-html2pdf>
-      `;    
-      const contentFromRef = this.$refs.html2Pdfnew.generatePdf({}, (pdfData) => {
-        console.log(" Coming data is here.... ");
-      });
-      console.log("Under under New Data set ", contentFromRef);
-      const blob123 = new Blob([contentFromRef], { type: 'application/pdf' });
-      const file123 = new File([contentFromRef], { type: 'application/pdf' });
-      console.log(" New Data set ", blob123, file123);
-      let data = Object.assign({}, this.$refs.html2Pdfnew.$el.innerHTML);
-      console.log(" new pdf data is ", data);
-        //this.fileToByteArray(data, function (byteArrayData) {
+Copyright © 2023 Coherent Accounting, All rights reserved.`;
+      this.name = `Фактура с Номер: ${this.invoiceData.invoiceNumber} от : ${this.invoiceData.supplierCompany.companName}`;       
+      //const newpdfContent123 = this.$refs.html2Pdf.$el.innerHTML;
+      //console.log(" New DONDNDNNDDN ", newpdfContent123, this.$el, this.$refs.html2Pdf);
+      this.$refs.html2Pdfnew.generatePdf()
+      //these are important data
+      //let data = Object.assign({}, this.$refs.html2Pdfnew.$el.innerHTML);
+      //console.log(" new pdf data is ", data);
+      //const newblob123 = new Blob([data], { type: 'application/pdf' });
+        //this.fileToByteArray(newblob123, function (byteArrayData) {
           //console.log(" New BYYYY TTT ARRAAAYYYY ", byteArrayData);
       //});
+    },
+    attachPDFToFile(pdfBlob) {
+      this.file = new File([pdfBlob], 'document.pdf');
+      // Perform operations with the file as needed
+      // For demonstration purposes, we'll just log a message
+      console.log('PDF attached to file:', this.file);
+      this.fileToByteArray(this.file, function (byteArrayData) {
+        console.log(" hrhthththththhtthth ", byteArrayData);
+      })
     },
     downloadPDF(pdfData) {
       const blob = new Blob([pdfData], { type: 'application/pdf' });
@@ -2320,9 +2321,6 @@ export default {
     handleFileUpload(e){
     this.file = e.target.files[0];
     console.log("Invoice Data ", this.file );
-  },
-  mounted() {
-    Vue.use(VueHtml2pdf);
   },
       createBase64Image(fileObject) {
         const reader = new FileReader();
@@ -2356,10 +2354,8 @@ export default {
                 this.email = e.target.email.value;
                 console.log("Target Values", e.target.email.value, this.invoiceData.invoiceNumber);
                 //this.$refs.html2Pdf.generatePdf('<h1>Your PDF Content</h1>', this.savePDF);
-                //this.sendEmailFromAPI(e.target.email.value, e.target.message.value, e.target.name.value, this.invoiceData.invoiceNumber);
+                this.sendEmailFromAPI(e.target.email.value, e.target.message.value, e.target.name.value, this.invoiceData.invoiceNumber);
                 this.$refs['my-modal'].hide();
-                const file = this.$refs.invoiceInput.files[0];
-                console.log(" FIle data is here... ", file);
             },
              savePDF(pdfData) {
               const file = new File([pdfData], 'invoice.pdf', { type: 'application/pdf' });
@@ -2400,7 +2396,7 @@ export default {
       const formData = new FormData();
        console.log(" New file generating data... ", this.file);
        //const fileDataArray =  this.fileToByteArray(this.file, function (byteArrayData) {
-        const fileDataArray =  this.fileToByteArray(this.newpdfblob, function (byteArrayData) {
+        const fileDataArray =  this.fileToByteArray(this.file, function (byteArrayData) {
           console.log("byteArrayData  jdajdas ... ", byteArrayData);
           // Use the byte array as needed
             byteArray.push(byteArrayData);
