@@ -472,7 +472,38 @@
             </b-row>
           </b-card-body>
         </b-card>
-
+            <template>
+              <b-modal ref="my-modal" hide-footer title="Using Component Methods">
+                <div class="d-block text-center">
+                  <form @submit.prevent="onSubmit" class="add-form">
+                    <label>Title</label>
+                    <input 
+                      type="text" 
+                      v-model="name"
+                      name="name"
+                      value="Title"
+                      placeholder="Your Title"
+                    >
+                    <label>Email</label>
+                    <input 
+                      type="email" 
+                      v-model="email"
+                      name="email"
+                      placeholder="Your Email"
+                      >
+                    <label>Message</label>
+                    <textarea 
+                      name="message"
+                      v-model="message"
+                      cols="30" rows="5"
+                      placeholder="Message">
+                    </textarea>
+                    <input type="file" value="FIle" name="file_img" @change="uploadFile" ref="file">
+                    <input type="submit" value="Send">
+                  </form>
+                </div>
+              </b-modal>
+            </template>
         <div class="mt-md-0 mt-2 flex-1" v-if="hasBankDetails">
           <b-card no-body class="invoice-preview invoice-card">
             <b-card-header class="justify-content-center invoice-header">
@@ -1971,6 +2002,27 @@
             </section>
           </vue-html2pdf>
 
+          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="false" :preview-modal="false"
+            :paginate-elements-by-height="1100" filename="attachinvoice" :pdf-quality="2" :manual-pagination="false"
+            pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
+            @progress="onProgress($event)" ref="html2Pdfnew">
+            <section class="invoice-pdf" id="new-invoice" slot="pdf-content">
+              <div v-if="invoiceData">
+                <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
+              </div>
+              <b-alert variant="danger" :show="invoiceData === undefined">
+                <h4 class="alert-heading">Error fetching invoice data</h4>
+                <div class="alert-body">
+                  No invoice found with this invoice id. Check
+                  <b-link class="alert-link" :to="{ name: 'apps-invoice-list' }">
+                    Invoice List
+                  </b-link>
+                  for other invoices.
+                </div>
+              </b-alert>
+            </section>
+          </vue-html2pdf>
+
           <!-- Button: Print -->
           <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block
             @click="printInvoice">
@@ -1986,6 +2038,11 @@
             },
           }">
             {{ $t("company_info.edit") }}
+          </b-button>
+
+           <!-- Button: Edit -->
+          <b-button v-b-modal.modal-1 v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block @click="selectSendEmail()">
+            {{ $t("add_invoice.send_email") }}
           </b-button>
         </b-card>
       </b-col>
@@ -2118,7 +2175,7 @@ export default {
             invoiceData.value.bankApi.bic !== "" ||
             invoiceData.value.bankApi.iban !== ""
           ) {
-            hasBankDetails.value = true; 
+            hasBankDetails.value = true;
           }
         }
 
@@ -2175,15 +2232,222 @@ export default {
       isGreen,
       isOrange,
       isBlue,
+      sendEmail: false,
+      name: '',
+      email: '',
+      message: '',
+      file: '',
+      newpdfblob: ''
     };
   },
   methods: {
     onProgress(event) {
       console.log(`Processed: ${event} / 100`);
     },
+    showModal() {
+        this.$refs['my-modal'].show()
+      },
+      hideModal() {
+        this.$refs['my-modal'].hide()
+      },
+      toggleModal() {
+        // We pass the ID of the button that we want to return focus to
+        // when the modal has hidden
+        this.$refs['my-modal'].toggle('#toggle-btn')
+      },
+      uploadFile() {
+        this.file = this.$refs.file.files[0];
+        console.log(" File Uploading data ", this.file);
+        this.fileToByteArray(this.file, function (byteArrayData) {
+          console.log(" File Byte ARray ", byteArrayData);
+      });
+      },
     generatePDF() {
       this.$refs.html2Pdf.generatePdf();
     },
+    selectSendEmail() {
+      this.sendEmail = false;
+      this.$refs['my-modal'].show();
+      this.message = `Здравейте!
+                    Моля да намерите прикачена Фактура № ${this.invoiceData.invoiceNumber} от дата: ${this.invoiceData.dateIssued} г. 
+                    
+                    Екипът на Coherent Accounting Ви пожелава успешен ден!
+
+                    *Моля, не отговаряйте на това съобщение! То е автоматично генерирано. Ако имате въпроси, моля свържете се с фирмата доставчик изпратения документ.
+
+                    Copyright © 2023 Coherent Accounting, All rights reserved.`;
+      this.name = `Фактура с Номер: ${this.invoiceData.invoiceNumber} от : ${this.invoiceData.supplierCompany.companName}`;   
+      const pdfContent = `
+        <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="false" :preview-modal="false"
+            :paginate-elements-by-height="1100" filename="attachinvoice" :pdf-quality="2" :manual-pagination="false"
+            pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
+            @progress="onProgress($event)" ref="html2Pdfnew">
+            <section class="invoice-pdf" id="new-invoice" slot="pdf-content">
+              <div v-if="invoiceData">
+                <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
+              </div>
+              <b-alert variant="danger" :show="invoiceData === undefined">
+                <h4 class="alert-heading">Error fetching invoice data</h4>
+                <div class="alert-body">
+                  No invoice found with this invoice id. Check
+                  <b-link class="alert-link" :to="{ name: 'apps-invoice-list' }">
+                    Invoice List
+                  </b-link>
+                  for other invoices.
+                </div>
+              </b-alert>
+            </section>
+          </vue-html2pdf>
+      `;    
+      const contentFromRef = this.$refs.html2Pdfnew.generatePdf({}, (pdfData) => {
+        console.log(" Coming data is here.... ");
+      });
+      console.log("Under under New Data set ", contentFromRef);
+      const blob123 = new Blob([contentFromRef], { type: 'application/pdf' });
+      const file123 = new File([contentFromRef], { type: 'application/pdf' });
+      console.log(" New Data set ", blob123, file123);
+      let data = Object.assign({}, this.$refs.html2Pdfnew.$el.innerHTML);
+      console.log(" new pdf data is ", data);
+        //this.fileToByteArray(data, function (byteArrayData) {
+          //console.log(" New BYYYY TTT ARRAAAYYYY ", byteArrayData);
+      //});
+    },
+    downloadPDF(pdfData) {
+      const blob = new Blob([pdfData], { type: 'application/pdf' });
+      consol.log(" blob data is here... ", blob);
+      //saveAs(blob, 'invoice.pdf');
+    },
+    handleFileUpload(e){
+    this.file = e.target.files[0];
+    console.log("Invoice Data ", this.file );
+  },
+  mounted() {
+    Vue.use(VueHtml2pdf);
+  },
+      createBase64Image(fileObject) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          this.userObject.imgPersonal = e.target.result;
+        };
+        reader.readAsBinaryString(fileObject)
+        console.log("file object", fileObject);
+      },
+      async fileToByteArray(file, callback) {
+        var reader = new FileReader();
+        reader.onloadend = function (e) {
+          if (e.target.readyState === FileReader.DONE) {
+            var arrayBuffer = e.target.result;
+            var uint8Array = new Uint8Array(arrayBuffer);
+            var byteArray = Array.from(uint8Array);
+            callback(byteArray);
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      },
+     onSubmit(e){
+                e.preventDefault()
+                console.log("fdfgdfgdfgfdg", this.name)
+                //const content = this.getHTMLContent(); // Replace with your HTML content
+                //this.$refs.html2Pdf.generatePdf().then((pdfBlob) => {
+                  // Perform actions with the generated PDF blob (e.g., send via email)
+                  //this.sendEmailWithAttachment(pdfBlob);
+                //});
+                this.email = e.target.email.value;
+                console.log("Target Values", e.target.email.value, this.invoiceData.invoiceNumber);
+                //this.$refs.html2Pdf.generatePdf('<h1>Your PDF Content</h1>', this.savePDF);
+                //this.sendEmailFromAPI(e.target.email.value, e.target.message.value, e.target.name.value, this.invoiceData.invoiceNumber);
+                this.$refs['my-modal'].hide();
+                const file = this.$refs.invoiceInput.files[0];
+                console.log(" FIle data is here... ", file);
+            },
+             savePDF(pdfData) {
+              const file = new File([pdfData], 'invoice.pdf', { type: 'application/pdf' });
+              const url = URL.createObjectURL(file);
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = file.name;
+              link.click();
+              console.log(" URL FILE ", url);
+              URL.revokeObjectURL(url);
+              console.log(" URL 222 FILE ", url);
+            },
+            sendEmailWithAttachment(pdfBlob) {
+              // Your logic to send email with the PDF attachment
+              // ...
+              console.log(pdfBlob);
+            },
+            getHTMLContent() {
+              // Replace with your code to get the HTML content for the PDF generation
+              // ...
+              // Example HTML content
+              const htmlContent = `
+                <html>
+                  <head>
+                    <title>PDF Content</title>
+                  </head>
+                  <body>
+                    <h1>PDF Content</h1>
+                    <p>This is the content of the PDF.</p>
+                  </body>
+                </html>
+              `;
+              return htmlContent;
+            },
+     async sendEmailFromAPI(emailData, messageData, nameData, invoiceNumber) {
+      //sending Email info
+      const byteArray = [];
+      const formData = new FormData();
+       console.log(" New file generating data... ", this.file);
+       //const fileDataArray =  this.fileToByteArray(this.file, function (byteArrayData) {
+        const fileDataArray =  this.fileToByteArray(this.newpdfblob, function (byteArrayData) {
+          console.log("byteArrayData  jdajdas ... ", byteArrayData);
+          // Use the byte array as needed
+            byteArray.push(byteArrayData);
+         //return byteArrayData;
+         console.log("under function data ", byteArray, emailData, messageData, nameData);
+          const response = axios.post("account/api/invoice/send-to-email", {
+            "file": byteArrayData,
+            "invoiceNumber": invoiceNumber,
+            "toEmail": emailData,
+            "message": messageData,
+            "title": nameData
+          }, {
+            headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+              'Content-Type': 'application/json'
+            },
+            responseType: 'blob',
+          });
+        });
+     setInterval(
+      console.log(" Byte Code Generate ", byteArray)
+      ,3000);
+      //console.log(" Byte Code Generate ", fileDataArray, byteArray);
+              //console.log(" New Messages Data is here... ", this.message);
+      const token = localStorage.getItem("accessToken");
+      //try {
+        //const response = await axios.post("account/api/invoice/send-to-email", {
+          //"file": byteArray,
+          //"toEmail": "javeedraza25@gmail.com",
+          //"message": "zzzzzzzz",
+          //"title": "zazaza"
+        //}, {
+          //headers: {
+            //'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+            //'Content-Type': 'application/json'
+          //},
+          //responseType: 'blob',
+        //});
+      //} catch (error) {
+
+      //}
+      
+    },       
+    sendEmailData(e){
+    e.preventDefault() // Prevent page from reloading.
+    // console.log(" New data here ");
+  },
   },
 };
 </script>
@@ -5245,5 +5509,47 @@ hr {
     right: -90px !important;
     overflow: hidden;
   }
+}
+</style>
+
+<style scoped>
+* {box-sizing: border-box;}
+
+.container {
+  display: block;
+  margin:auto;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 50%;
+}
+
+label {
+  float: left;
+}
+
+input[type=text], [type=email], textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
 }
 </style>

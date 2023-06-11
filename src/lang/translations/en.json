@@ -438,7 +438,8 @@
     "verify": "verify",
     "CREDIT_NOTIFICATION": "Credit Notification",
     "DEBIT_NOTIFICATION": "Debit Notification",
-    "select_notification": "Select Notification"
+    "select_notification": "Select Notification",
+    "send_email": "send email"
   },
   "create_company": {
     "company_details": "Company Details",
