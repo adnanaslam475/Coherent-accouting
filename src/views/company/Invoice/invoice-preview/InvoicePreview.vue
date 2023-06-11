@@ -2118,7 +2118,7 @@ export default {
             invoiceData.value.bankApi.bic !== "" ||
             invoiceData.value.bankApi.iban !== ""
           ) {
-            hasBankDetails.value = true;
+            hasBankDetails.value = true; 
           }
         }
 
