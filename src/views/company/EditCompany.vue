@@ -625,11 +625,12 @@ export default {
     };
   },
  computed: {
-  platformPropertiesOptions() {
-    const keysToKeep = ['micro_invest', 'ajure'];
-    const filteredProperties = this.platformProperties.filter(property => keysToKeep.includes(property));
-    return filteredProperties.map(property => ({ value: property, text: property }));
-  },
+  //platformPropertiesOptions() {
+    //const keysToKeep = ['micro_invest', 'ajure'];
+    //const filteredProperties = this.platformProperties.filter(property => keysToKeep.includes(property));
+    //console.log("Selected Data ", filteredProperties);
+    //return filteredProperties.map(property => ({ value: property, text: property }));
+  //},
 },
 
   methods: {
@@ -873,9 +874,15 @@ export default {
   if (response.data != "") {
     this.platformProperties = Object.keys(response.data);
     this.platformPropertiesData = response.data;
-
+    console.log( "platformPropertiesOptions ",  this.platformProperties);
     this.platformPropertiesOptions = this.platformProperties.map(property => {
-      return {value: property, text: property}
+      console.log("Proprty data ", property);
+      if(property == "MICRO_INVEST" || property == "AJURE"){
+      return {value: property, text: property,}
+      }else{
+        //['micro_invest', 'ajure'];
+        return {value: false, text: property};
+      }
     });
 
     // Get from localStorage if they exist, otherwise default to the first platform
