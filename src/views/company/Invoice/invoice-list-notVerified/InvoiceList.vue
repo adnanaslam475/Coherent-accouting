@@ -444,7 +444,7 @@ export default {
     setTimeout(() => {
       this.isCheck = true;
     }, 1500);
-    this.observeScroll();
+    //this.observeScroll();
   },
 
   methods: {
@@ -735,6 +735,7 @@ export default {
             },
           });
           refetchData();
+          this.refreshList();
         })
         .catch((error) => {
           this.$toast({
