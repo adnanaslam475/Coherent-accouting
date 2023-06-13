@@ -1,72 +1,41 @@
 <template>
   <div>
-    <form-wizard
-      color="#0A64BC"
-      :title="null"
-      :subtitle="null"
-      shape="square"
-      :finish-button-text="$t('create_company.update')"
-      :next-button-text="$t('create_company.next')"
-      :back-button-text="$t('create_company.previous')"
-      class="mb-3"
-    >
+    <form-wizard color="#0A64BC" :title="null" :subtitle="null" shape="square"
+      :finish-button-text="$t('create_company.update')" :next-button-text="$t('create_company.next')"
+      :back-button-text="$t('create_company.previous')" class="mb-3">
       <!-- First Tab: Company Details -->
       <!-- First Tab: Company Details -->
       <!-- First Tab: Company Details -->
-      <tab-content
-        :title="$t('create_company.company_details')"
-        :before-change="validationForm"
-      >
+      <tab-content :title="$t('create_company.company_details')" :before-change="validationForm">
         <validation-observer ref="companyRules" tag="form">
           <b-row>
             <b-col cols="12" class="mb-2">
               <h5 class="mb-0">
-                {{ $t("create_company.company_details") }}
+                {{ $t('create_company.company_details') }}
               </h5>
               <small class="text-muted">
-                {{ $t("create_company.update_details") }}
+                {{ $t('create_company.update_details') }}
               </small>
             </b-col>
           </b-row>
           <b-form-row>
             <!-- Company Name -->
             <b-col>
-              <b-form-group
-                id="input-group-1"
-                :label="$t('companies.company_name')"
-                label-for="company_name"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('company_name')"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="company_name"
-                    v-model="getCompanyName"
-                    :state="errors.length > 0 ? false : null"
-                  />
+              <b-form-group id="input-group-1" :label="$t('companies.company_name')" label-for="company_name">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_name')" rules="required">
+                  <b-form-input id="company_name" v-model="getCompanyName" :state="errors.length > 0 ? false : null" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
             <!-- Company ID -->
             <b-col>
-              <b-form-group
-                id="input-group-2"
-                :label="$t('create_company.company_id')"
-                label-for="company_identification_number"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('company_identification_number')"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="company_identification_number"
-                    v-model="getCompanyID"
-                    :state="errors.length > 0 ? false : null"
-                  />
+              <b-form-group id="input-group-2" :label="$t('create_company.company_id')"
+                label-for="company_identification_number">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_identification_number')"
+                  rules="required">
+                  <b-form-input id="company_identification_number" v-model="getCompanyID"
+                    :state="errors.length > 0 ? false : null" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -76,118 +45,67 @@
           <b-form-row>
             <!-- Company Address -->
             <b-col>
-              <b-form-group
-                id="input-group-3"
-                :label="$t('add_invoice.company_address')"
-                label-for="company_address"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('company_address')"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="company_address"
-                    v-model="getCompanyAddress"
-                    :state="errors.length > 0 ? false : null"
-                  />
+              <b-form-group id="input-group-3" :label="$t('add_invoice.company_address')" label-for="company_address">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_address')" rules="required">
+                  <b-form-input id="company_address" v-model="getCompanyAddress"
+                    :state="errors.length > 0 ? false : null" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
             <!-- Company Country -->
             <b-col>
-              <b-form-group
-                id="input-group-4"
-                :label="$t('register.lbl_country')"
-                label-for="country"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('country')"
-                  rules="required"
-                >
-                  <v-select
-                    v-model="getCompanyCountry"
-                    :options="getCountries"
-                    :filterBy="
-                      (option, search) => {
-                        return (
-                          (option.country || '')
-                            .toLocaleLowerCase()
-                            .indexOf(search.toLocaleLowerCase()) > -1
-                        );
-                      }
-                    "
-                    id="company-country"
-                    name="country"
-                    v-bind:placeholder="$t('Please select your country')"
-                    :value="$store.state.selected"
-                    v-on:input="updateCountryStatus()"
-                  >
-                    <template
-                      #selected-option="option"
-                      v-if="isCountrySelected === false"
-                    >
-                      <div
-                        style="
-                          display: flex;
-                          align-items: center;
-                          justify-content: left;
-                          grid-gap: 8px;
-                        "
-                      >
-                        <img
-                          :src="
-                            '@/assets/flags/' +
-                            getCompanyISO.toLowerCase() +
-                            '.png'
-                          "
-                          style="width: 30px; height: 20px"
-                        />
+              <b-form-group id="input-group-4" :label="$t('register.lbl_country')" label-for="country">
+                <validation-provider #default="{ errors }" v-bind:name="$t('country')" rules="required">
+                  <v-select v-model="getCompanyCountry" :options="getCountries" :filterBy="(option, search) => {
+                    return (
+                      (option.country || '')
+                        .toLocaleLowerCase()
+                        .indexOf(search.toLocaleLowerCase()) > -1
+                    );
+                  }
+                    " id="company-country" name="country" v-bind:placeholder="$t('Please select your country')"
+                    :value="$store.state.selected" v-on:input="updateCountryStatus()">
+
+
+                    <template #selected-option="option" v-if="isCountrySelected === false">
+                      <div style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: left;
+                              grid-gap: 8px;
+                            ">
+                        <img :src='"@/assets/flags/" + getCompanyISO.toLowerCase() + ".png"'
+                          style="width: 30px; height: 20px" />
                         {{ getCompanyCountry }}
                       </div>
                     </template>
 
+
                     <template #selected-option="option" v-else>
-                      <div
-                        style="
-                          display: flex;
-                          align-items: center;
-                          justify-content: left;
-                          grid-gap: 8px;
-                        "
-                      >
-                        <img
-                          :src="
-                            '@/assets/flags/' +
-                            option.isoAlpha2Country.toLowerCase() +
-                            '.png'
-                          "
-                          style="width: 30px; height: 20px"
-                        />
+                      <div style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: left;
+                              grid-gap: 8px;
+                            ">
+                        <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"'
+                          style="width: 30px; height: 20px" />
 
                         {{ option.country }}
                       </div>
                     </template>
 
+
                     <template v-slot:option="option">
-                      <span
-                        style="
-                          display: flex;
-                          align-items: center;
-                          justify-content: left;
-                          grid-gap: 8px;
-                        "
-                      >
-                        <img
-                          :src="
-                            '@/assets/flags/' +
-                            option.isoAlpha2Country.toLowerCase() +
-                            '.png'
-                          "
-                          style="width: 30px; height: 20px"
-                        />
+                      <span style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: left;
+                              grid-gap: 8px;
+                            ">
+                        <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"'
+                          style="width: 30px; height: 20px" />
 
                         {{ option.country }}
                       </span>
@@ -195,6 +113,8 @@
                   </v-select>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
+
+
               </b-form-group>
             </b-col>
           </b-form-row>
@@ -202,157 +122,98 @@
           <b-form-row>
             <!-- Company onwner name -->
             <b-col>
-              <b-form-group
-                id="input-group-5"
-                :label="$t('company_info.owner_name')"
-                label-for="owner_name"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('owner_name')"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="owner_name"
-                    v-model="getCompOwnerName"
-                    :state="errors.length > 0 ? false : null"
-                  />
+              <b-form-group id="input-group-5" :label="$t('company_info.owner_name')" label-for="owner_name">
+                <validation-provider #default="{ errors }" v-bind:name="$t('owner_name')" rules="required">
+                  <b-form-input id="owner_name" v-model="getCompOwnerName" :state="errors.length > 0 ? false : null" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
             <!-- company egn -->
             <b-col>
-              <b-form-group
-                id="input-group-6"
-                :label="$t('company_info.owner_egn')"
-                label-for="owner_egn"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('owner_egn')"
-                  rules="required|digits:10"
-                >
-                  <b-form-input
-                    id="owner_name"
-                    v-model="getCompOwnerEgn"
-                    :state="errors.length > 0 ? false : null"
-                    type="number"
-                    :formatter="formatOwnerEGN"
-                  />
+              <b-form-group id="input-group-6" :label="$t('company_info.owner_egn')" label-for="owner_egn">
+                <validation-provider #default="{ errors }" v-bind:name="$t('owner_egn')" rules="required|digits:10">
+                  <b-form-input id="owner_name" v-model="getCompOwnerEgn" :state="errors.length > 0 ? false : null"
+                    type="number" :formatter="formatOwnerEGN" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
+
+
           </b-form-row>
           <b-form-row>
-            <b-col v-if="isVatCheck === true"
-              ><b-form-group
-                id="input-group-7"
-                :label="$t('add_invoice.company_vat')"
-                label-for="company_vat_no"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('company_vat_number')"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="owner_name"
-                    v-model="getVatNumber"
-                    :state="errors.length > 0 ? false : null"
-                  />
+            <b-col v-if="isVatCheck === true"><b-form-group id="input-group-7" :label="$t('add_invoice.company_vat')"
+                label-for="company_vat_no">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_vat_number')" rules="required">
+                  <b-form-input id="owner_name" v-model="getVatNumber" :state="errors.length > 0 ? false : null" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
-              </b-form-group></b-col
-            >
+              </b-form-group></b-col>
             <!-- Company Status -->
             <b-col>
-              <b-form-group
-                id="input-group-4"
-                :label="$t('create_company.company_status')"
-                label-for="status"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('status')"
-                  rules="required"
-                >
-                  <v-select
-                    v-model="getCompanyStatus"
-                    :options="statusOptions"
-                    :filterBy="
-                      (option, search) => {
-                        return (
-                          (option.status || '')
-                            .toLocaleLowerCase()
-                            .indexOf(search.toLocaleLowerCase()) > -1
-                        );
-                      }
-                    "
-                    id="company-status"
-                    name="country-status"
-                    v-bind:placeholder="$t('Please select company status')"
-                    :value="$store.state.selected"
-                    v-on:input="updateCompanyStatus()"
-                  >
-                    <template
-                      #selected-option="option"
-                      v-if="isStatusSelected === true"
-                    >
-                      <div
-                        style="
-                          display: flex;
-                          align-items: center;
-                          justify-content: left;
-                          grid-gap: 8px;
-                        "
-                      >
+              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
+                <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
+                  <v-select v-model="getCompanyStatus" :options="statusOptions" :filterBy="(option, search) => {
+                    return (
+                      (option.status || '')
+                        .toLocaleLowerCase()
+                        .indexOf(search.toLocaleLowerCase()) > -1
+                    );
+                  }
+                    " id="company-status" name="country-status" v-bind:placeholder="$t('Please select company status')"
+                    :value="$store.state.selected" v-on:input="updateCompanyStatus()">
+
+
+                    <template #selected-option="option" v-if="(isStatusSelected === true)">
+                      <div style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: left;
+                              grid-gap: 8px;
+                            ">
                         {{ getCompanyStatus }}
                       </div>
                     </template>
 
+
                     <template #selected-option="option" v-else>
-                      <div
-                        style="
-                          display: flex;
-                          align-items: center;
-                          justify-content: left;
-                          grid-gap: 8px;
-                        "
-                      >
+                      <div style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: left;
+                              grid-gap: 8px;
+                            ">
+
                         {{ option.status }}
                       </div>
                     </template>
 
+
                     <template v-slot:option="option">
-                      <span
-                        style="
-                          display: flex;
-                          align-items: center;
-                          justify-content: left;
-                          grid-gap: 8px;
-                        "
-                      >
+                      <span style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: left;
+                              grid-gap: 8px;
+                            ">
+
                         {{ option.status }}
                       </span>
                     </template>
                   </v-select>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
+
+
               </b-form-group>
             </b-col>
-            <b-col v-if="isVatCheck === false"></b-col>
+            <b-col v-if="(isVatCheck === false)"></b-col>
           </b-form-row>
           <b-form-row>
             <b-col>
-              <b-form-checkbox
-                id="vat-checkbox"
-                name="vat-checkbox"
-                @change="vatHandled()"
-                :checked="isVatCheck"
-              >
-                {{ $t("create_company.vat") }}
+              <b-form-checkbox id="vat-checkbox" name="vat-checkbox" @change="vatHandled()" :checked="isVatCheck">
+                {{ $t('create_company.vat') }}
               </b-form-checkbox>
             </b-col>
           </b-form-row>
@@ -360,93 +221,62 @@
       </tab-content>
 
       <!-- Second Tab: Account Details -->
-      <tab-content
-        :title="$t('create_company.account_details')"
-        :before-change="validationFormTab2"
-      >
+      <tab-content :title="$t('create_company.account_details')" :before-change="validationFormTab2">
         <validation-observer ref="accountRules" tag="form">
           <b-row>
             <b-col cols="12" class="mb-2">
               <h5 class="mb-0">
-                {{ $t("create_company.account_details") }}
+                {{ $t('create_company.account_details') }}
               </h5>
               <small class="text-muted">
-                {{ $t("create_company.update_acc_details") }}
+                {{ $t('create_company.update_acc_details') }}
               </small>
             </b-col>
           </b-row>
           <b-form-row>
             <b-col>
-              <b-form-group
-                id="input-group-1"
-                :label="$t('create_company.company_bank_account')"
-                label-for="company_bank_account"
-              >
-                <b-form-input
-                  id="company_bank_account"
-                  v-model="getBankAccount"
-                  type="text"
-                  placeholder="Company Bank Account"
-                  autocomplete="off"
-                  required
-                ></b-form-input> </b-form-group
-            ></b-col>
+              <b-form-group id="input-group-1" :label="$t('create_company.company_bank_account')"
+                label-for="company_bank_account">
+                <b-form-input id="company_bank_account" v-model="getBankAccount" type="text"
+                  placeholder="Company Bank Account" autocomplete="off" required></b-form-input> </b-form-group></b-col>
             <b-col>
-              <b-form-group
-                id="input-group-1"
-                :label="$t('create_company.company_currency')"
-                label-for="company_currency"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('company_currency')"
-                  rules="required"
-                >
-                  <v-select
-                    v-model="getCompanyCurrency"
-                    :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                    :options="currencies"
-                    :value="$store.state.selected"
-                    v-on:input="updateCurrencyStatus()"
-                  >
-                    <template
-                      #selected-option="option"
-                      v-if="isCurrencySelected === false"
-                    >
-                      <div
-                        style="
-                          display: flex;
-                          align-items: center;
-                          justify-content: left;
-                          grid-gap: 8px;
-                        "
-                      >
+              <b-form-group id="input-group-1" :label="$t('create_company.company_currency')"
+                label-for="company_currency">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_currency')" rules="required">
+                  <v-select v-model="getCompanyCurrency" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                    :options="currencies" :value="$store.state.selected" v-on:input="updateCurrencyStatus()">
+                    <template #selected-option="option" v-if="isCurrencySelected === false">
+                      <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: left;
+                            grid-gap: 8px;
+                          ">
                         {{ getCompanyCurrency }}
+
                       </div>
                     </template>
                     <template #selected-option="option" v-else>
-                      <div
-                        style="
-                          display: flex;
-                          align-items: center;
-                          justify-content: left;
-                          grid-gap: 8px;
-                        "
-                      >
+                      <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: left;
+                            grid-gap: 8px;
+                          ">
                         {{ option.value }} - {{ option.name }}
+
                       </div>
                     </template>
                     <template v-slot:option="option">
-                      <span
-                        style="
-                          display: flex;
-                          align-items: center;
-                          justify-content: left;
-                          grid-gap: 8px;
-                        "
-                      >
+                      <span style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: left;
+                            grid-gap: 8px;
+                          ">
                         <!-- <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"' style="width: 30px; height: 20px"/> -->
                         {{ option.value }} - {{ option.name }}
+
                       </span>
                     </template>
                   </v-select>
@@ -457,59 +287,28 @@
           </b-form-row>
           <b-form-row>
             <b-col>
-              <b-form-group
-                id="input-group-1"
-                :label="$t('create_company.company_phone_no')"
-                label-for="company_phone"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('company_phone')"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="company_phone"
-                    v-model="getCompanyPhone"
-                    :state="errors.length > 0 ? false : null"
-                  />
+              <b-form-group id="input-group-1" :label="$t('create_company.company_phone_no')" label-for="company_phone">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_phone')" rules="required">
+                  <b-form-input id="company_phone" v-model="getCompanyPhone" :state="errors.length > 0 ? false : null" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
 
             <b-col>
-              <b-form-group
-                id="input-group-1"
-                :label="$t('create_company.company_email')"
-                label-for="company_email"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('company email')"
-                  rules="required|email"
-                >
-                  <b-form-input
-                    id="company_email"
-                    v-model="getCompanyEmail"
-                    :state="errors.length > 0 ? false : null"
-                  />
+              <b-form-group id="input-group-1" :label="$t('create_company.company_email')" label-for="company_email">
+                <validation-provider #default="{ errors }" v-bind:name="$t('company email')" rules="required|email">
+                  <b-form-input id="company_email" v-model="getCompanyEmail" :state="errors.length > 0 ? false : null" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
           </b-form-row>
           <b-form-row>
-            <b-col
-              ><b-form-group
-                id="input-group-1"
-                :label="$t('create_company.company_fin_year')"
-                label-for="company_fin_year"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('company_fin_year')"
-                  rules="required"
-                >
+            <b-col><b-form-group id="input-group-1" :label="$t('create_company.company_fin_year')"
+                label-for="company_fin_year">
+
+                <validation-provider #default="{ errors }" v-bind:name="$t('company_fin_year')" rules="required">
                   <!-- <flat-pickr
                         id="company_fin_year"
                         class="form-control"
@@ -520,77 +319,42 @@
                       /> -->
 
                   <div class="position-relative mr-1">
-                    <flat-pickr
-                      id="company_fin_year"
-                      class="form-control"
-                      v-model="getCompFinYear"
-                      :state="errors.length > 0 ? false : null"
-                      placeholder="Select date"
-                      style="background-color: white !important"
-                    />
-                    <feather-icon
-                      v-if="getCompFinYear === ''"
-                      size="16"
-                      icon="CalendarIcon"
-                      class="cursor-pointer clear-all"
-                    />
-                    <feather-icon
-                      v-else
-                      size="16"
-                      icon="XIcon"
-                      class="cursor-pointer clear-all"
-                      @click="getCompFinYear = ''"
-                    />
+                    <flat-pickr id="company_fin_year" class="form-control" v-model="getCompFinYear"
+                      :state="errors.length > 0 ? false : null" placeholder="Select date"
+                      style="background-color: white !important;" />
+                    <feather-icon v-if="getCompFinYear === ''" size="16" icon="CalendarIcon"
+                      class="cursor-pointer clear-all" />
+                    <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                      @click="getCompFinYear = ''" />
                   </div>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
-              </b-form-group></b-col
-            >
+              </b-form-group></b-col>
             <b-col></b-col>
           </b-form-row>
         </validation-observer>
       </tab-content>
 
       <!-- Third Tab: Export:Details -->
-      <tab-content
-        :title="$t('create_company.export_details')"
-        :before-change="validationFormTab3"
-      >
+      <tab-content :title="$t('create_company.export_details')" :before-change="validationFormTab3">
         <validation-observer ref="exportRules" tag="form">
           <b-row>
-           
             <b-col>
-              <b-form-group
-                id="input-group-4"
-                :label="$t('create_company.company_status')"
-                label-for="status"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  v-bind:name="$t('status')"
-                  rules="required"
-                >
-                  <b-form-select
-                    id="platformPropertiesSelect"
-                    v-model="selectedPlatformProperty"
-                    :options="modifiedArray"
-                  ></b-form-select>
+              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
+                <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
+                  <b-form-select id="platformPropertiesSelect" v-model="selectedPlatformProperty"
+                    :options="modifiedArray"></b-form-select>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
-                <div
-                  v-for="(value, label) in selectedPlatformProperties"
-                  :key="label"
-                >
+                <div v-for="(value, label) in selectedPlatformProperties" :key="label">
                   <b-form-group :label="label">
-                    <b-form-input
-                      v-model="selectedPlatformProperties[label]"
-                    ></b-form-input>
+                    <b-form-input v-model="selectedPlatformProperties[label]"></b-form-input>
                   </b-form-group>
                 </div>
               </b-form-group>
+
             </b-col>
-          </b-row>
-          <!-- Closing tag for b-row added -->
+          </b-row> <!-- Closing tag for b-row added -->
         </validation-observer>
       </tab-content>
     </form-wizard>
@@ -626,6 +390,7 @@ import "flatpickr/dist/flatpickr.css";
 import { extend } from "vee-validate";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
+
 extend("required", {
   ...required,
   message: "This field is mandatory",
@@ -660,8 +425,11 @@ export default {
   },
   data() {
     return {
-      isStatusSelected: "",
-      statusOptions: [{ status: "ACTIVE" }, { status: "INAVTIVE" }],
+      isStatusSelected: '',
+      statusOptions: [
+        { status: "ACTIVE" },
+        { status: "INAVTIVE" },
+      ],
       getCompanyStatus: "",
       companyRecord: [],
       getCompanyName: "",
@@ -703,11 +471,7 @@ export default {
         { name: "Bhutanese Ngultrum", value: "BTN", symbol: "Nu" },
         { name: "Bitcoin", value: "BTC", symbol: "฿" },
         { name: "Bolivian Boliviano", value: "BOB", symbol: "Bs" },
-        {
-          name: "Bosnia-Herzegovina Convertible Mark",
-          value: "BAM",
-          symbol: "KM",
-        },
+        { name: "Bosnia-Herzegovina Convertible Mark", value: "BAM", symbol: "KM" },
         { name: "Botswanan Pula", value: "BWP", symbol: "P" },
         { name: "Brazilian Real", value: "BRL", symbol: "R$" },
         { name: "British Pound Sterling", value: "GBP", symbol: "£" },
@@ -853,23 +617,18 @@ export default {
         { value: "ZMK", name: "Zambian Kwacha", symbol: "ZK" },
       ],
       platformProperties: [],
-      platformPropertiesOptions: [], // Add this line
+      platformPropertiesOptions: [],  // Add this line
       selectedPlatformProperty: null,
-      selectedPlatformProperties: [], // new data property
+      selectedPlatformProperties: [],  // new data property
       platformPropertiesData: {},
       exportProperties: {},
     };
   },
   computed: {
     platformPropertiesOptions() {
-      const keysToKeep = ["micro_invest", "ajure"];
-      const filteredProperties = this.platformProperties.filter((property) =>
-        keysToKeep.includes(property)
-      );
-      return filteredProperties.map((property) => ({
-        value: property,
-        text: property,
-      }));
+      const keysToKeep = ['micro_invest', 'ajure'];
+      const filteredProperties = this.platformProperties.filter(property => keysToKeep.includes(property));
+      return filteredProperties.map(property => ({ value: property, text: property }));
     },
     modifiedArray() {
       const arr = [...this.platformPropertiesOptions]; // Create a copy of the input array
@@ -917,8 +676,7 @@ export default {
       }
       if (this.isCountrySelected === true) {
         this.companyCountrySelected = this.getCompanyCountry.country;
-        this.companyCountryISOSelected =
-          this.getCompanyCountry.isoAlpha2Country;
+        this.companyCountryISOSelected = this.getCompanyCountry.isoAlpha2Country;
         this.getCompanyCountry = this.companyCountrySelected;
         this.getCompanyISO = this.companyCountryISOSelected;
       }
@@ -956,8 +714,8 @@ export default {
         exportProperties: {
           id: this.exportProperties.id,
           keyValues: this.selectedPlatformProperties,
-          platform: this.selectedPlatformProperty,
-        },
+          platform: this.selectedPlatformProperty
+        }
       });
 
       var config = {
@@ -990,8 +748,8 @@ export default {
             component: ToastificationContent,
             props: {
               title: `Error updating company info`,
-              icon: "AlertTriangleIcon",
-              variant: "danger",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
               timer: 1700,
             },
           });
@@ -1001,16 +759,16 @@ export default {
         });
     },
 
+
     //getting company info
     async getCompanyInfo() {
-      const data = await axios
-        .get(`/account/api/company/` + this.companyID, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
-            "Access-Control-Allow-Credentials": true,
-            "Access-Control-Allow-Origin": "http://localhost:8080",
-          },
-        })
+      const data = await axios.get(`/account/api/company/` + this.companyID, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+      })
         .then((response) => {
           this.companyRecord = response.data;
           this.form = response.data;
@@ -1020,7 +778,8 @@ export default {
           this.getCompanyCountry = this.companyRecord.companyCountry;
           this.getCompOwnerName =
             this.companyRecord.companyOwnerApi.companyOwnerName;
-          this.getCompOwnerEgn = this.companyRecord.companyOwnerApi.ownerEGN;
+          this.getCompOwnerEgn =
+            this.companyRecord.companyOwnerApi.ownerEGN;
           this.isVatCheck = this.companyRecord.companyVatAccepted;
           this.getVatNumber = this.companyRecord.companyVatNumber;
           this.getBankAccount = this.companyRecord.companyBankAccount;
@@ -1038,7 +797,8 @@ export default {
           }
           if (this.getCompanyStatus === null) {
             this.isStatusSelected = false;
-          } else {
+          }
+          else {
             this.isStatusSelected = true;
           }
         })
@@ -1047,8 +807,8 @@ export default {
             component: ToastificationContent,
             props: {
               title: "Error fetching company info",
-              icon: "AlertTriangleIcon",
-              variant: "danger",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
             },
           });
         });
@@ -1071,7 +831,7 @@ export default {
       //     this.getCompanyPhone = this.companyRecord.companyPhone;
       //     this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
       //   this.getCompanyEmail = this.companyRecord.companyMail;
-      //   this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;
+      //   this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;  
       //   this.getCompanyStatus = this.companyRecord.status;
       //   if(this.getCompanyStatus === null){
       //     this.isStatusSelected = false;
@@ -1080,6 +840,8 @@ export default {
       //     this.isStatusSelected = true;
       //   }
       // }
+
+
     },
 
     //
@@ -1087,10 +849,14 @@ export default {
       this.isStatusSelected = false;
     },
 
+
+
     //
     updateCountryStatus() {
       this.isCountrySelected = true;
     },
+
+
 
     //
     updateCurrencyStatus() {
@@ -1134,28 +900,22 @@ export default {
         this.platformProperties = Object.keys(response.data);
         this.platformPropertiesData = response.data;
 
-        this.platformPropertiesOptions = this.platformProperties.map(
-          (property) => {
-            return { value: property, text: property };
-          }
-        );
+        this.platformPropertiesOptions = this.platformProperties.map(property => {
+          return { value: property, text: property }
+        });
 
         // Get from localStorage if they exist, otherwise default to the first platform
-        this.selectedPlatformProperty =
-          localStorage.getItem("selectedPlatformProperty") ||
-          this.platformProperties[0];
-        const selectedPlatformProperties = localStorage.getItem(
-          "selectedPlatformProperties"
-        );
+        this.selectedPlatformProperty = localStorage.getItem('selectedPlatformProperty') || this.platformProperties[0];
+        const selectedPlatformProperties = localStorage.getItem('selectedPlatformProperties');
         if (selectedPlatformProperties) {
-          this.selectedPlatformProperties = JSON.parse(
-            selectedPlatformProperties
-          );
+          this.selectedPlatformProperties = JSON.parse(selectedPlatformProperties);
         } else if (this.selectedPlatformProperty) {
           this.selectedPlatformProperty = this.selectedPlatformProperty; // Trigger watcher
         }
       }
     },
+
+
 
     //validation check for account details
     validationFormTab2() {
@@ -1198,10 +958,11 @@ export default {
 
     //
     vatHandled() {
-      // this.isVatCheck = !this.isVatCheck;
+      // this.isVatCheck = !this.isVatCheck; 
       if (this.isVatCheck === true) {
         this.isVatCheck = false;
-      } else {
+      }
+      else {
         this.isVatCheck = true;
       }
     },
@@ -1211,22 +972,21 @@ export default {
       if (this.platformPropertiesData && this.platformPropertiesData[newVal]) {
         const properties = this.platformPropertiesData[newVal];
         this.selectedPlatformProperties = properties.reduce((obj, property) => {
-          let [label, initialValue] = property.split("-");
-          obj[label] = initialValue || "";
+          let [label, initialValue] = property.split('-');
+          obj[label] = initialValue || '';
           return obj;
         }, {});
 
         // Save to localStorage
-        localStorage.setItem("selectedPlatformProperty", newVal);
-        localStorage.setItem(
-          "selectedPlatformProperties",
-          JSON.stringify(this.selectedPlatformProperties)
-        );
+        localStorage.setItem('selectedPlatformProperty', newVal);
+        localStorage.setItem('selectedPlatformProperties', JSON.stringify(this.selectedPlatformProperties));
       } else {
         this.selectedPlatformProperties = {};
       }
     },
   },
+
+
 
   created: function () {
     this.companyID = this.$route.params.id;
@@ -1239,8 +999,8 @@ export default {
 <style lang="scss">
 /*  */
 
-@import "@core/scss/vue/libs/vue-wizard.scss";
-@import "@core/scss/vue/libs/vue-select.scss";
+@import '@core/scss/vue/libs/vue-wizard.scss';
+@import '@core/scss/vue/libs/vue-select.scss';
 
 .vue-form-wizard .wizard-card-footer .wizard-footer-left .wizard-btn::before {
   content: "<";
@@ -1263,6 +1023,6 @@ export default {
 }
 
 .vs__open-indicator {
-  fill: rgba(60, 60, 60, 0.5);
+  fill: rgba(60, 60, 60, .5);
 }
 </style>
