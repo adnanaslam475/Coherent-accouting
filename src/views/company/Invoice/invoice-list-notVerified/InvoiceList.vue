@@ -10,14 +10,14 @@
           md="7"
           class="d-flex align-items-center justify-content-start mb-1 mb-md-0 pr-0"
         >
-          <label>Entries</label>
+          <!-- <label>Entries</label>
           <v-select
             v-model="perPage"
             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
             :options="perPageOptions"
             :clearable="false"
             class="per-page-selector d-inline-block ml-50 mr-1"
-          />
+          /> -->
           <b-button variant="primary" class="mr-1 position-relative p-set">
             <b-form-file
               ref="imageUploader"
