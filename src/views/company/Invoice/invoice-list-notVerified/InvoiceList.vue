@@ -735,7 +735,6 @@ export default {
             },
           });
           refetchData();
-          this.refreshList();
         })
         .catch((error) => {
           this.$toast({
