@@ -5392,11 +5392,13 @@ export default {
       this.daySelected = false;
     },
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
+      if(invoiceData.cronScheduleApi !== null){
       if (invoiceData.cronScheduleApi.dayOfWeek) {
         this.isWeekSelected = false
       }
       else{
         this.isWeekSelected = true
+      }
       }
       
 
@@ -5449,12 +5451,13 @@ export default {
           invoiceData.cronScheduleApi = null;
         
       }else {
-        
+          if(invoiceData.cronScheduleApi !== null){
         if (invoiceData.cronScheduleApi.dayOfWeek) {
           this.daySelected = false;
         } else {
           this.daySelected = true;
         }
+          }
       }
       this.$refs.invoiceEditForm.validate().then((success) => {
         if (success && this.companyIDisInvalid === false  && this.isWeekSelected === false) {
@@ -6384,6 +6387,7 @@ export default {
       isGreen,
       isOrange,
       isBlue,
+      isWeekSelected
     };
   },
 };
