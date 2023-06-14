@@ -55,8 +55,15 @@
                   name="invoiceData.scheduled" switch>
                   <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
                   <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
+                </b-form-checkbox> -->
+                <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn fmr-2" name="invoiceData.scheduled" @change="() => {
+                  isScheduled = !isScheduled;
+                }
+                  " switch :checked="isScheduled">
+                   <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
+                  <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
                 </b-form-checkbox>
-                <b-card no-body class="invoice-preview date-issued mb-0 ml-0">
+                <b-card no-body class="invoice-preview date-issued mb-0 ml-0" >
                   <b-card-header class="justify-content-end">
                     <div class="mt-md-0 mt-2">
                       <div class="d-flex align-items-center mb-0">
@@ -74,12 +81,10 @@
                     </div>
                   </b-card-header>
                 </b-card>
-                <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="company" class="d-none">
-                  <h5>{{ $t("add_invoice.company") }}</h5>
-                </b-form-radio>
-                <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="person" class="d-none">
-                  <h5>{{ $t("add_invoice.person") }}</h5>
-                </b-form-radio>
+
+              
+
+
                 <b-card no-body class="invoice-preview date-issued mb-0 ml-auto">
                   <b-card-header class="justify-content-end">
                     <div class="mt-md-0 mt-2">
@@ -108,6 +113,24 @@
                     {{ $t("add_invoice.company") }}
                   </span>
                 </b-form-checkbox>
+
+
+
+                <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="company" class="d-none">
+                  <h5>{{ $t("add_invoice.company") }}</h5>
+                </b-form-radio>
+                <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="person" class="d-none">
+                  <h5>{{ $t("add_invoice.person") }}</h5>
+                </b-form-radio>
+
+
+
+
+
+
+
+               
+
               </div>
               <!-- Schedule Type -->
               <div class="d-flex justify-content-between align-items-center mb-2 schedule-type"
@@ -140,7 +163,7 @@
                         <span class="title mr-1">
                           {{ $t("add_invoice.select_days") }}:
                         </span>
-                        <validation-provider #default="{ errors }" name="dayOfWeek" rules="required">
+                        <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
                           <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
                             <b-form-radio-group class="d-flex" v-model="invoiceData.cronScheduleApi.dayOfWeek"
                               :aria-describedby="ariaDescribedby">
@@ -148,8 +171,8 @@
                                 @change="() => { companyIDisInvalid = false; }">{{ day.text }}</b-form-radio>
                             </b-form-radio-group>
                           </b-form-group>
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
+                          <small class="text-danger" v-if='isWeekSelected'>Day of Week field is required</small>
+                        <!-- </validation-provider> -->
                       </div>
                     </div>
                   </b-card-header>
@@ -5403,6 +5426,7 @@ export default {
         { name: "Булбанк" },
       ],
       isBank: false,
+      isScheduled: false,
       noVatClause: [
         { clause: "чл.113, ал.9 от ЗДДС" },
         { clause: "чл.86, ал.3 във вр. с 21, ал.5 от ЗДДС" },
@@ -5638,12 +5662,23 @@ export default {
       this.daySelected = false;
     },
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
+      if(invoiceData.cronScheduleApi !== null){
+      if (invoiceData.cronScheduleApi.dayOfWeek) {
+        this.isWeekSelected = false
+      }
+      else{
+        this.isWeekSelected = true
+      }
+      }
+      
+
+
+ 
       // Company ID validation on the basis of transactionType
       if (invoiceData.transactionType === "INCOME") {
         if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
           this.companyIDisInvalid = true;
         }
-
         if (invoiceData.supplierCompany.companyEic === "") {
           this.companyIDisInvalid = false;
         }
@@ -5688,7 +5723,7 @@ export default {
         this.daySelected = true;
       }
       this.$refs.invoiceEditForm.validate().then((success) => {
-        if (success && this.companyIDisInvalid === false) {
+        if (success && this.companyIDisInvalid === false  && this.isWeekSelected === false) {
           if (
             success &&
             this.isTemplateOne === false &&
@@ -5991,10 +6026,18 @@ export default {
           }
         }
         console.log(invoiceData.value.scheduled, invoiceData.value.cronScheduleApi)
-        if (invoiceData.value.scheduled) {
+        // if(invoiceData.value.scheduled){
+        //   alert('scheduled');
+        // }else {
+        //   alert("notScheduled");
+        // }
+        if (invoiceData.value.cronScheduleApi.dayOfWeek) {
+          //  alert(invoiceData.value.cronScheduleApi.dayOfWeek);
           invoiceData.cronScheduleApi.scheduleType = invoiceData.value.cronScheduleApi.scheduleType;
           invoiceData.cronScheduleApi.dayOfMonth = invoiceData.value.cronScheduleApi.dayOfMonth;
           invoiceData.cronScheduleApi.dayOfWeek = invoiceData.value.cronScheduleApi.dayOfWeek;
+
+         
         }
       })
       .catch((error) => {
@@ -6151,6 +6194,8 @@ export default {
     };
     var datalist = ref([]);
     var showSuggestions = ref(false);
+
+    var isWeekSelected = ref(false)
 
     const SearchCompanyName = (companyName) => {
       if (companyName.length > 0) {
@@ -6605,6 +6650,7 @@ export default {
       isGreen,
       isOrange,
       isBlue,
+      isWeekSelected
     };
   },
 };
