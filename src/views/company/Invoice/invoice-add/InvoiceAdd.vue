@@ -33,20 +33,8 @@
                 <!-- <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn mr-2" name="invoiceData.scheduled" switch>
                   <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
                   <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
-                </b-form-checkbox> -->
-
-                <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn fmr-2" name="invoiceData.scheduled" @change="() => {
-                  isScheduled = !isScheduled;
-                }
-                  " switch :checked="isScheduled">
-                   <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
-                  <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
                 </b-form-checkbox>
-
-
-
-
-                <b-card no-body class="invoice-preview date-issued mb-0 ml-0" v-if="isScheduled">
+                <b-card no-body class="invoice-preview date-issued mb-0 ml-0">
                   <b-card-header class="justify-content-end">
                     <div class="mt-md-0 mt-2">
                       <div class="d-flex align-items-center mb-0">
@@ -64,10 +52,13 @@
                     </div>
                   </b-card-header>
                 </b-card>
-
-               
-
-               <b-card no-body class="invoice-preview date-issued mb-0">
+                <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="company" class="d-none">
+                  <h5>{{ $t("add_invoice.company") }}</h5>
+                </b-form-radio>
+                <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="person" class="d-none">
+                  <h5>{{ $t("add_invoice.person") }}</h5>
+                </b-form-radio>
+                <b-card no-body class="invoice-preview date-issued mb-0">
                   <b-card-header class="justify-content-end">
                     <div class="mt-md-0 mt-2">
                       <div class="d-flex align-items-center mb-0">
@@ -90,21 +81,6 @@
                     {{ $t("add_invoice.company") }}
                   </span>
                 </b-form-checkbox>
-
-
-
-
-
-
-
-                <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="company" class="d-none">
-                  <h5>{{ $t("add_invoice.company") }}</h5>
-                </b-form-radio>
-                <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="person" class="d-none">
-                  <h5>{{ $t("add_invoice.person") }}</h5>
-                </b-form-radio>
-                
-                
               </div>
 
 
@@ -153,9 +129,6 @@
                   </b-card-header>
                 </b-card>
               </div>
-               
-              </div>
-
 
 
               
@@ -4433,7 +4406,6 @@ export default {
         { name: "bank-05" },
       ],
       isBank: false,
-      isScheduled: false,
       noVatClause: [
         { clause: "clause-01" },
         { clause: "clause-02" },
@@ -4637,8 +4609,6 @@ export default {
       this.daySelected = false;
     },
     invoiceAdd(invoiceData, AccountTypeOption) {
-     
-      
       //assign the data of recipient and creator
       //creator supplier company
       invoiceData.bankApi.name = this.bankNameToSend;
@@ -4650,7 +4620,6 @@ export default {
           bank: "",
         };
       }
-     
 
       if (invoiceData.vatPercent !== "0") {
         invoiceData.vatCondition = "";
@@ -4668,6 +4637,7 @@ export default {
       } else {
         this.companyIDisInvalid = false;
       }
+
       let regExp =
         /^((AT)(U\d{8})|(BE)(0\d{9})|(CY)(\d{8}[LX])|(CZ)(\d{8,10})|(DE)(\d{9})|(DK)(\d{8})|(EE)(\d{9})|(EL|GR)(\d{9})|(ES)([\dA-Z]\d{7}[\dA-Z])|(FI)(\d{8})|(FR)([\dA-Z]{2}\d{9})|(HU)(\d{8})|(IE)(\d{7}[A-Z]{2})|(IT)(\d{11})|(LT)(\d{9}|\d{12})|(LU)(\d{8})|(LV)(\d{11})|(MT)(\d{8})|(NL)(\d{9}(B\d{2}|BO2))|(PL)(\d{10})|(PT)(\d{9})|(RO)(\d{2,10})|(SE)(\d{12})|(SI)(\d{8})|(SK)(\d{10}))$/gim;
       let ValidateVatNumber =
@@ -4681,15 +4651,10 @@ export default {
         invoiceData.recipientCompany.companyVatEic = "";
       }
       // console.log(invoiceData.cronScheduleApi.dayOfWeek, invoiceData.scheduled);
-      
-      if (this.isScheduled) {
-         if (invoiceData.cronScheduleApi.dayOfWeek) {
-          this.daySelected = false;
-        } else {
-          this.daySelected = true;
-        }
-      }else {
-         invoiceData.cronScheduleApi = null;
+      if (invoiceData.cronScheduleApi.dayOfWeek) {
+        this.daySelected = false;
+      } else {
+        this.daySelected = true;
       }
       // if (invoiceData.scheduled === false) {
       //   invoiceData.cronScheduleApi = "NO";
