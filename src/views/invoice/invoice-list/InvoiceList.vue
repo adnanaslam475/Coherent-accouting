@@ -5,7 +5,11 @@
       <!--  Table Top Starts  -->
       <b-row>
         <!-- Per Page -->
-        <b-col cols="12" md="6" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
+        <b-col
+          cols="12"
+          md="6"
+          class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
+        >
           <!-- <label>Entries</label>
             <v-select
               v-model="perPage"
@@ -14,62 +18,137 @@
               :clearable="false"
               class="per-page-selector d-inline-block ml-50 mr-1"
             /> -->
-          <b-button variant="primary" class="mr-1" :to="{
-            name: 'company-invoice-add',
-            params: {
-              companyId: $route.params.companyId
-                ? $route.params.companyId
-                : $route.params.id,
-            },
-          }" @click="actionTab">
+          <b-button
+            variant="primary"
+            class="mr-1"
+            :to="{
+              name: 'company-invoice-add',
+              params: {
+                companyId: $route.params.companyId
+                  ? $route.params.companyId
+                  : $route.params.id,
+              },
+            }"
+            @click="actionTab"
+          >
             {{ $t("company_invoices.add_invoice") }}
             <!-- Add Invoice -->
           </b-button>
-          <b-button variant="primary" class="mr-1 position-relative p-set">
-            <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" />
+          <b-button
+            variant="primary"
+            class="mr-1 position-relative p-set"
+          >
+            <b-form-file
+              v-model="file"
+              class="file-input"
+              @input="addfile(companyId)"
+            />
 
-            <b-spinner v-if="fileLoading" small variant="light" />
+            <b-spinner
+              v-if="fileLoading"
+              small
+              variant="light"
+            />
             {{ $t("company_invoices.add_from_file") }}
             <!-- Add From File -->
-            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
+            <svg-icon
+              width="20"
+              height="20"
+              class="file-upload"
+              type="mdi"
+              :path="path"
+            />
           </b-button>
           <!--Add the third button name export-->
           <!-- Export Invoice Button -->
-          <b-button variant="primary" class="mr-1" @click="showDatePickerModal">
+          <b-button
+            variant="primary"
+            class="mr-1"
+            @click="showDatePickerModal"
+          >
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>
 
           <!-- Date Picker Modal -->
 
-          <b-modal id="modal-prevent-closing-invoice" ref="export_model" title="Select Month"
-            :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" :ok-disabled="modalDisabledMonth"
-            @show="resetModal" @hidden="resetModal" @ok="handleOk">
-            <form ref="form" @submit.stop.prevent="handleMonthSelect">
-              <validation-observer ref="selectMonthRules" tag="form">
-                <validation-provider #default="{ errors }" :name="$t('month_selected')" rules="required">
-                  <vue-monthly-picker id="month_selected" v-model="selectedMonthData.date" name="month_selected"
-                    date-format="Y-MM" :month-labels="monthLabels" :class="errors.length > 0 ? 'is-invalid' : null"
-                    place-holder="Please Select: " />
+          <b-modal
+            id="modal-prevent-closing-invoice"
+            ref="export_model"
+            title="Select Month"
+            :ok-title="$t('modal_labels.ok')"
+            :cancel-title="$t('modal_labels.close')"
+            :ok-disabled="modalDisabledMonth"
+            @show="resetModal"
+            @hidden="resetModal"
+            @ok="handleOk"
+          >
+            <form
+              ref="form"
+              @submit.stop.prevent="handleMonthSelect"
+            >
+              <validation-observer
+                ref="selectMonthRules"
+                tag="form"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  :name="$t('month_selected')"
+                  rules="required"
+                >
+                  <vue-monthly-picker
+                    id="month_selected"
+                    v-model="selectedMonthData.date"
+                    name="month_selected"
+                    date-format="Y-MM"
+                    :month-labels="monthLabels"
+                    :class="errors.length > 0 ? 'is-invalid' : null"
+                    place-holder="Please Select: "
+                  />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </validation-observer>
             </form>
           </b-modal>
 
-          <b-modal id="modal-invoices-export" ref="modal_exportValue"
+          <b-modal
+            id="modal-invoices-export"
+            ref="modal_exportValue"
             :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE' ? companyinfo.exportProperties.platform : ''"
-            title-class="w-100 text-center" :ok-title="$t('company_invoices.Export_invoicess')"
-            :cancel-title="$t('company_invoices.Cancel')" scrollable :ok-disabled="modalDisabled" class="p-3"
-            @ok="getExportFile()">
-            <form ref="form" class="border p-3 bg-light" @submit.stop.prevent="handleMonthSelect">
+            title-class="w-100 text-center"
+            :ok-title="$t('company_invoices.Export_invoicess')"
+            :cancel-title="$t('company_invoices.Cancel')"
+            scrollable
+            :ok-disabled="modalDisabled"
+            class="p-3"
+            @ok="getExportFile()"
+          >
+            <form
+              ref="form"
+              class="border p-3 bg-light"
+              @submit.stop.prevent="handleMonthSelect"
+            >
               <!-- display exportDto data -->
               <!-- display companyinfo.keyValues data -->
-              <div v-if="companyinfo && companyinfo.exportProperties" class="mb-3">
-                <div v-for="(value, key) in companyinfo.exportProperties.keyValues" :key="key" class="mb-2">
-                  <label :for="'input-' + key" class="form-label">{{ key }} :</label>
-                  <input :id="'input-' + key" v-model="companyinfo.exportProperties.keyValues[key]" class="form-control"
-                    readonly>
+              <div
+                v-if="companyinfo && companyinfo.exportProperties"
+                class="mb-3"
+              >
+                <div
+                  v-for="(value, key) in companyinfo.exportProperties.keyValues"
+                  :key="key"
+                  class="mb-2"
+                >
+                  <label
+                    :for="'input-' + key"
+                    class="form-label"
+                  >{{ key }} :</label>
+                  <input
+                    :id="'input-' + key"
+                    v-model="companyinfo.exportProperties.keyValues[key]"
+                    class="form-control"
+                    readonly
+                  >
                 </div>
               </div>
               <div v-else>
@@ -79,19 +158,40 @@
           </b-modal>
 
           <!-- Refresh button -->
-          <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" @click="refreshList()">
+          <b-button
+            v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+            variant="outline-primary"
+            @click="refreshList()"
+          >
             <feather-icon icon="RefreshCcwIcon" />
           </b-button>
         </b-col>
 
         <!-- Search -->
-        <b-col cols="12" md="6">
+        <b-col
+          cols="12"
+          md="6"
+        >
           <div class="d-flex align-items-center justify-content-end">
             <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="startDate" class="form-control invoice-edit-input invoice-input-top"
-                :placeholder="$t('company_invoices.start_date')" />
-              <feather-icon v-if="startDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
-              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="startDate = ''" />
+              <flat-pickr
+                v-model="startDate"
+                class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.start_date')"
+              />
+              <feather-icon
+                v-if="startDate === ''"
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+              />
+              <feather-icon
+                v-else
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="startDate = ''"
+              />
               <!-- <feather-icon
                   size="16"
                   icon="CalendarIcon"
@@ -100,10 +200,24 @@
                 /> -->
             </div>
             <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top"
-                :placeholder="$t('company_invoices.end_date')" />
-              <feather-icon v-if="endDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
-              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="endDate = ''" />
+              <flat-pickr
+                v-model="endDate"
+                class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.end_date')"
+              />
+              <feather-icon
+                v-if="endDate === ''"
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+              />
+              <feather-icon
+                v-else
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="endDate = ''"
+              />
               <!-- <feather-icon
                   size="16"
                   icon="CalendarIcon"
@@ -112,9 +226,18 @@
                 /> -->
             </div>
             <div class="position-relative flex-1">
-              <b-form-input v-model="searchQuery" class="d-inline-block mr-1" :placeholder="$t('company_invoices.search')"
-                @input="handleSearchSelect()" />
-              <feather-icon size="16" icon="XIcon" class="cursor-pointer clear-all" @click="searchQuery = ''" />
+              <b-form-input
+                v-model="searchQuery"
+                class="d-inline-block mr-1"
+                :placeholder="$t('company_invoices.search')"
+                @input="handleSearchSelect()"
+              />
+              <feather-icon
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="searchQuery = ''"
+              />
             </div>
           </div>
         </b-col>
@@ -134,17 +257,30 @@
     </b-row>
     <!--  Error Message Starts  -->
 
-    <div>
+    <div
+
+    >
       <!--  Table Starts  -->
-      <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" id="company-invoices"
-        :fields="tableColumns" responsive primary-key="Math.floor(100000 + Math.random() * 900000)" :sort-by.sync="sortBy"
-        show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc"
-        class="position-relative invoiceList h-100">
+      <b-table
+        ref="refInvoiceListTable"
+        :items="isCheck === false ? fetchInvoices : invoices"
+        id="company-invoices"
+        :fields="tableColumns"
+        responsive
+        primary-key="Math.floor(100000 + Math.random() * 900000)"
+        :sort-by.sync="sortBy"
+        show-empty
+        empty-text="No matching records found"
+:sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100"
+      >
 
         <template #empty="scope">
           <div class="d-flex align-items-center justify-content-center">
             <div class="mb-1 start-chat-icon">
-              <feather-icon icon="FolderIcon" size="20" />
+              <feather-icon
+                icon="FolderIcon"
+                size="20"
+              />
             </div>
             <h5 class="sidebar-toggle start-chat-text">
               No records found
@@ -153,7 +289,10 @@
         </template>
 
         <template #head(invoiceStatus)>
-          <feather-icon icon="TrendingUpIcon" class="mx-auto" />
+          <feather-icon
+            icon="TrendingUpIcon"
+            class="mx-auto"
+          />
           <!-- {{ $t('company_invoices.invoice_number') }} -->
         </template>
 
@@ -163,9 +302,11 @@
         </template>
 
         <template #cell(invoiceNumber)="data">
-          <b-link :key="data.id + Math.floor(100000 + Math.random() * 900000)"
+          <b-link
+            :key="data.id + Math.floor(100000 + Math.random() * 900000)"
             :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId }, }"
-            class="font-weight-bold">
+            class="font-weight-bold"
+          >
             <span class="text-nowrap">{{ data.value }}</span>
           </b-link>
         </template>
@@ -176,7 +317,10 @@
         </template>
 
         <template #cell(invoiceDate)="data">
-          <span :key="data.id + Math.floor(100000 + Math.random() * 900000)" class="text-nowrap">
+          <span
+            :key="data.id + Math.floor(100000 + Math.random() * 900000)"
+            class="text-nowrap"
+          >
             {{ data.item.dateIssued }}
           </span>
         </template>
@@ -187,12 +331,20 @@
         </template>
 
         <template #cell(transactionType)="data">
-          <b-link :key="data.id + Math.floor(100000 + Math.random() * 900000)"
+          <b-link
+            :key="data.id + Math.floor(100000 + Math.random() * 900000)"
             :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId }, }"
-            class="font-weight-bold">
-            <span :id="`transactionType-row-${data.item.id}`" class="text-nowrap">
-              <b-badge pill :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'}`"
-                class="text-capitalize">
+            class="font-weight-bold"
+          >
+            <span
+              :id="`transactionType-row-${data.item.id}`"
+              class="text-nowrap"
+            >
+              <b-badge
+                pill
+                :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'}`"
+                class="text-capitalize"
+              >
                 {{ $t("company_invoices." + data.value) }}
               </b-badge>
             </span>
@@ -205,14 +357,24 @@
         </template>
 
         <template #cell(recipientCompanyName)="data">
-          <span :id="`recipientCompany-row-${data.item.id}`" :key="data.id + Math.floor(100000 + Math.random() * 900000)"
-            class="text-nowrap">
-            <b-badge pill :variant="`light-success`" class="text-capitalize">
+          <span
+            :id="`recipientCompany-row-${data.item.id}`"
+            :key="data.id + Math.floor(100000 + Math.random() * 900000)"
+            class="text-nowrap"
+          >
+            <b-badge
+              pill
+              :variant="`light-success`"
+              class="text-capitalize"
+            >
               <!-- {{ data.item.recipientCompany }} -->
               {{ data.item.recipientCompany.companName }}
             </b-badge>
           </span>
-          <b-tooltip :target="`recipientCompany-row-${data.item.id}`" placement="top">
+          <b-tooltip
+            :target="`recipientCompany-row-${data.item.id}`"
+            placement="top"
+          >
             <p class="mb-0">
               {{ data.item.recipientCompany.companName }}
             </p>
@@ -240,13 +402,23 @@
           {{ $t("company_invoices.supplier_company") }}
         </template>
         <template #cell(supplierCompanyName)="data">
-          <span :id="`supplierCompany-row-${data.item.id}`" :key="data.id + Math.floor(100000 + Math.random() * 900000)"
-            class="text-nowrap">
-            <b-badge pill :variant="`light-success`" class="text-capitalize">
+          <span
+            :id="`supplierCompany-row-${data.item.id}`"
+            :key="data.id + Math.floor(100000 + Math.random() * 900000)"
+            class="text-nowrap"
+          >
+            <b-badge
+              pill
+              :variant="`light-success`"
+              class="text-capitalize"
+            >
               {{ data.item.supplierCompany.companName }}
             </b-badge>
           </span>
-          <b-tooltip :target="`supplierCompany-row-${data.item.id}`" placement="top">
+          <b-tooltip
+            :target="`supplierCompany-row-${data.item.id}`"
+            placement="top"
+          >
             <p class="mb-0">
               {{ data.item.supplierCompany.companName }}
             </p>
@@ -273,11 +445,16 @@
           {{ $t("company_invoices.amount_non_vat") }}
         </template>
         <template #cell(amountNonVat)="data">
-          <span :key="data.id + Math.floor(100000 + Math.random() * 900000)" class="text-nowrap">
-            <span v-if="data.item.currency === 'lv' ||
-              data.item.currency === 'лв' ||
-              data.item.currency === 'лв.'
-              ">лв. {{ data.value }}</span>
+          <span
+            :key="data.id + Math.floor(100000 + Math.random() * 900000)"
+            class="text-nowrap"
+          >
+            <span
+              v-if="data.item.currency === 'lv' ||
+                data.item.currency === 'лв' ||
+                data.item.currency === 'лв.'
+              "
+            >лв. {{ data.value }}</span>
             <span v-else>{{ data.item.currency }} {{ data.value }}</span>
           </span>
         </template>
@@ -287,11 +464,16 @@
           {{ $t("company_invoices.total_amount") }}
         </template>
         <template #cell(totalAmount)="data">
-          <span :key="data.id + Math.floor(100000 + Math.random() * 900000)" class="text-nowrap">
-            <span v-if="data.item.currency === 'lv' ||
-              data.item.currency === 'лв' ||
-              data.item.currency === 'лв.'
-              ">лв. {{ data.value }}</span>
+          <span
+            :key="data.id + Math.floor(100000 + Math.random() * 900000)"
+            class="text-nowrap"
+          >
+            <span
+              v-if="data.item.currency === 'lv' ||
+                data.item.currency === 'лв' ||
+                data.item.currency === 'лв.'
+              "
+            >лв. {{ data.value }}</span>
             <span v-else>{{ data.item.currency }} {{ data.value }}</span>
           </span>
         </template>
@@ -301,11 +483,16 @@
           {{ $t("company_invoices.vat_amount") }}
         </template>
         <template #cell(vatAmount)="data">
-          <span :key="data.id + Math.floor(100000 + Math.random() * 900000)" class="text-nowrap">
-            <span v-if="data.item.currency === 'lv' ||
-              data.item.currency === 'лв' ||
-              data.item.currency === 'лв.'
-              ">лв. {{ data.value }}</span>
+          <span
+            :key="data.id + Math.floor(100000 + Math.random() * 900000)"
+            class="text-nowrap"
+          >
+            <span
+              v-if="data.item.currency === 'lv' ||
+                data.item.currency === 'лв' ||
+                data.item.currency === 'лв.'
+              "
+            >лв. {{ data.value }}</span>
             <span v-else>{{ data.item.currency }} {{ data.value }}</span>
           </span>
         </template>
@@ -324,30 +511,53 @@
 
         <template #cell(actions)="data">
 
-          <div :key="data.id + Math.floor(100000 + Math.random() * 900000)" class="text-nowrap">
-            <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16"
-              class="mr-1 cursor-pointer" @click="
+          <div
+            :key="data.id + Math.floor(100000 + Math.random() * 900000)"
+            class="text-nowrap"
+          >
+            <feather-icon
+              :id="`invoice-row-${data.item.id}-preview-icon`"
+              icon="EyeIcon"
+              size="16"
+              class="mr-1 cursor-pointer"
+              @click="
                 $router.push({
                   name: 'company-invoice-preview',
                   params: { id: data.item.id, companyId: companyId },
                 })
-                " />
-            <b-tooltip title="Preview Invoice" class="cursor-pointer"
-              :target="`invoice-row-${data.item.id}-preview-icon`" />
+              "
+            />
+            <b-tooltip
+              title="Preview Invoice"
+              class="cursor-pointer"
+              :target="`invoice-row-${data.item.id}-preview-icon`"
+            />
 
             <!-- Dropdown -->
-            <b-dropdown variant="link" toggle-class="p-0" no-caret dropleft :right="$store.state.appConfig.isRTL">
+            <b-dropdown
+              variant="link"
+              toggle-class="p-0"
+              no-caret
+              dropleft
+              :right="$store.state.appConfig.isRTL"
+            >
               <template #button-content>
-                <feather-icon icon="MoreVerticalIcon" size="16" class="align-middle text-body" />
+                <feather-icon
+                  icon="MoreVerticalIcon"
+                  size="16"
+                  class="align-middle text-body"
+                />
               </template>
               <b-dropdown-item @click="generatePDF(data.item.id)">
                 <feather-icon icon="DownloadIcon" />
                 <span class="align-middle ml-50">Download</span>
               </b-dropdown-item>
-              <b-dropdown-item :to="{
-                name: 'company-invoice-edit',
-                params: { id: data.item.id, companyId: companyId },
-              }">
+              <b-dropdown-item
+                :to="{
+                  name: 'company-invoice-edit',
+                  params: { id: data.item.id, companyId: companyId },
+                }"
+              >
                 <feather-icon icon="EditIcon" />
                 <span class="align-middle ml-50">Edit</span>
               </b-dropdown-item>
@@ -358,15 +568,35 @@
             </b-dropdown>
 
             <!-- Duplicate -->
-            <feather-icon :id="`invoice-row-${data.item.id}-duplicate-icon`" icon="LayersIcon" size="16"
-              class="mx-1 cursor-pointer" @click="duplicateInvoice(data.item)" />
-            <b-tooltip title="Duplicate Invoice" class="cursor-pointer"
-              :target="`invoice-row-${data.item.id}-duplicate-icon`" />
-            <vue-html2pdf :ref="`invoicePdf${data.item.id}`" :show-layout="false" :float-layout="true"
-              :enable-download="true" :preview-modal="false" :paginate-elements-by-height="1100" filename="invoice"
-              :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait"
-              pdf-content-width="1125px" @progress="onProgress($event)">
-              <section slot="pdf-content" class="invoice-pdf invoice-preview-list">
+            <feather-icon
+              :id="`invoice-row-${data.item.id}-duplicate-icon`"
+              icon="LayersIcon"
+              size="16"
+              class="mx-1 cursor-pointer"
+              @click="duplicateInvoice(data.item)"
+            />
+            <b-tooltip
+              title="Duplicate Invoice"
+              class="cursor-pointer"
+              :target="`invoice-row-${data.item.id}-duplicate-icon`"
+            />
+            <vue-html2pdf
+              :ref="`invoicePdf${data.item.id}`"
+              :show-layout="false"
+              :float-layout="true"
+              :enable-download="true"
+              :preview-modal="false"
+              :paginate-elements-by-height="1100"
+              filename="invoice"
+              :pdf-quality="2"
+              :manual-pagination="false"
+              pdf-format="a3"
+:pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px" @progress="onProgress($event)"
+            >
+              <section
+                slot="pdf-content"
+                class="invoice-pdf invoice-preview-list"
+              >
                 <invoice-download :invoice-data="data.item" />
               </section>
             </vue-html2pdf>
@@ -379,8 +609,15 @@
     <!--  Loading Spinner Starts  -->
     <b-row class="text-center mb-2">
       <b-col cols="12">
-        <b-spinner v-if="loadMore" large variant="primary" />
-        <div v-else style="height: 35px" />
+        <b-spinner
+          v-if="loadMore"
+          large
+          variant="primary"
+        />
+        <div
+          v-else
+          style="height: 35px"
+        />
         <div ref="loadMoreObserver" />
       </b-col>
     </b-row>
@@ -630,7 +867,7 @@ export default {
 
   created() {
     window.addEventListener("scroll", this.handleScroll);
-    // this.handleOk = this.handleOk.bind(this)
+   // this.handleOk = this.handleOk.bind(this)
   },
 
   methods: {
@@ -874,7 +1111,7 @@ export default {
 
       if (
         scrollContainer.scrollTop + scrollContainer.clientHeight
-        >= scrollContainer.scrollHeight - scrollThreshold
+          >= scrollContainer.scrollHeight - scrollThreshold
       ) {
         // Call your event or perform desired action
         await this.myEventOnScrollDown()
@@ -1063,9 +1300,6 @@ export default {
 
     // duplicating an invoice
     duplicateInvoice(item) {
-      console.log('here is the payload ========>', item)
-      return
-
       const config = item
       config.invoiceNumber = Date.now()
       config.id = ''
