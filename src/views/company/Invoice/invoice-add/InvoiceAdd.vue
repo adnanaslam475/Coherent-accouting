@@ -30,7 +30,8 @@
               <!-- Account Type -->
               <div class="d-flex justify-content-between align-items-center mb-2 accountType">
                 <!-- @change="scheduleTypeOptionToggle(scheduleOptionToggleValue)"                 -->
-                <!-- <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn mr-2" name="invoiceData.scheduled" switch>
+                <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn mr-2"
+                  name="invoiceData.scheduled" switch>
                   <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
                   <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
                 </b-form-checkbox>
@@ -42,7 +43,9 @@
                           {{ $t("add_invoice.schedule_type") }}:
                         </span>
                         <validation-provider #default="{ errors }" name="scheduleType" rules="required">
-                          <b-form-select :disabled="!invoiceData.scheduled" v-model="invoiceData.cronScheduleApi.scheduleType" @change="() => { companyIDisInvalid = false; }">
+                          <b-form-select :disabled="!invoiceData.scheduled"
+                            v-model="invoiceData.cronScheduleApi.scheduleType"
+                            @change="() => { companyIDisInvalid = false; }">
                             <b-form-select-option value="WEEKLY">{{ $t("add_invoice.WEEKLY") }}</b-form-select-option>
                             <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY") }}</b-form-select-option>
                           </b-form-select>
@@ -66,31 +69,29 @@
                           {{ $t("add_invoice.due_date") }}:
                         </span>
                         <!-- <validation-provider #default="{ errors }" name="dueDate" rules="required"> -->
-                <flat-pickr v-model="invoiceData.dueDate" class="form-control invoice-edit-input invoice-input-top" />
-                <!-- <small class="text-danger">{{ errors[0] }}</small>
+                        <flat-pickr v-model="invoiceData.dueDate"
+                          class="form-control invoice-edit-input invoice-input-top" />
+                        <!-- <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider> -->
+                      </div>
+                    </div>
+                  </b-card-header>
+                </b-card>
+                <b-form-checkbox v-model="AccountTypeOptionToggleValue"
+                  @change="AccountTypeOptionToggle(AccountTypeOptionToggleValue)"
+                  class="custom-control-primary custom-switch-btn" name="AccountTypeOptionToggle" switch>
+                  <span class="switch-icon-left">
+                    {{ $t("add_invoice.person") }}
+                  </span>
+                  <span class="switch-icon-right">
+                    {{ $t("add_invoice.company") }}
+                  </span>
+                </b-form-checkbox>
               </div>
-            </div>
-            </b-card-header>
-            </b-card>
-            <b-form-checkbox v-model="AccountTypeOptionToggleValue"
-              @change="AccountTypeOptionToggle(AccountTypeOptionToggleValue)"
-              class="custom-control-primary custom-switch-btn" name="AccountTypeOptionToggle" switch>
-              <span class="switch-icon-left">
-                {{ $t("add_invoice.person") }}
-              </span>
-              <span class="switch-icon-right">
-                {{ $t("add_invoice.company") }}
-              </span>
-            </b-form-checkbox>
-            </div>
-
-
-
-            <div class="d-flex justify-content-between align-items-center mb-2 accountType">
 
               <!-- Schedule Type -->
-              <div class="d-flex justify-content-between align-items-center schedule-type" v-if="invoiceData.scheduled">
+              <div class="d-flex justify-content-between align-items-center mb-2 schedule-type"
+                v-if='invoiceData.scheduled'>
                 <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'MONTHLY'" no-body
                   class="invoice-preview date-issued mb-0 ml-0 mr-auto">
                   <b-card-header class="justify-content-end">
@@ -138,9 +139,6 @@
                   </b-card-header>
                 </b-card>
               </div>
-
-
-
               <div
                 class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input invoice-input-middle mb-md-0">
                 <div class="mt-md-0 mt-2 flex-1">
@@ -1196,11 +1194,12 @@
                               SearchCompanyPersonIdNumber(
                                 invoiceData.recipientCompany.companyEic
                               )
-                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()" @focus="
-    ShowSuggestionPersonIdNumber(
-      datalistPersonIdNumber
-    )
-    " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
+                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()"
+                            @focus="
+                              ShowSuggestionPersonIdNumber(
+                                datalistPersonIdNumber
+                              )
+                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
@@ -2051,11 +2050,12 @@
                               SearchCompanyPersonIdNumber(
                                 invoiceData.recipientCompany.companyEic
                               )
-                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()" @focus="
-    ShowSuggestionPersonIdNumber(
-      datalistPersonIdNumber
-    )
-    " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
+                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()"
+                            @focus="
+                              ShowSuggestionPersonIdNumber(
+                                datalistPersonIdNumber
+                              )
+                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                             class="input-suggesstions" style="width: 100%">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
@@ -2998,11 +2998,12 @@
                               SearchCompanyPersonIdNumber(
                                 invoiceData.recipientCompany.companyEic
                               )
-                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()" @focus="
-    ShowSuggestionPersonIdNumber(
-      datalistPersonIdNumber
-    )
-    " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
+                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()"
+                            @focus="
+                              ShowSuggestionPersonIdNumber(
+                                datalistPersonIdNumber
+                              )
+                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
@@ -3876,11 +3877,12 @@
                               SearchCompanyPersonIdNumber(
                                 invoiceData.recipientCompany.companyEic
                               )
-                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()" @focus="
-    ShowSuggestionPersonIdNumber(
-      datalistPersonIdNumber
-    )
-    " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
+                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()"
+                            @focus="
+                              ShowSuggestionPersonIdNumber(
+                                datalistPersonIdNumber
+                              )
+                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
