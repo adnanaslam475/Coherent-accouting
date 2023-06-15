@@ -51,37 +51,56 @@
             <div>
               <!-- Account Type -->
               <div class="d-flex justify-content-between align-items-center mb-2 accountType">
-                <!-- <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn mr-2" name="invoiceData.scheduled" switch>
-                  <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
-                  <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
-                </b-form-checkbox> -->
-                <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn fmr-2" name="invoiceData.scheduled" @change="() => {
-                  isScheduled = !isScheduled;
-                }
-                  " switch :checked="isScheduled">
-                   <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
-                  <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
-                </b-form-checkbox>
-                <b-card no-body class="invoice-preview date-issued mb-0 ml-0" >
-                  <b-card-header class="justify-content-end">
-                    <div class="mt-md-0 mt-2">
-                      <div class="d-flex align-items-center mb-0">
-                        <span class="title mr-1">
-                          {{ $t("add_invoice.schedule_type") }}:
-                        </span>
-                        <validation-provider #default="{ errors }" name="scheduleType" rules="required" v-if="invoiceData.cronScheduleApi">
-                          <b-form-select :disabled="!invoiceData.scheduled" v-model="invoiceData.cronScheduleApi.scheduleType" @change="() => { companyIDisInvalid = false; }">
-                            <b-form-select-option value="WEEKLY">{{ $t("add_invoice.WEEKLY") }}</b-form-select-option>
-                            <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY") }}</b-form-select-option>
-                          </b-form-select>
-                          <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider>
-                      </div>
-                    </div>
-                  </b-card-header>
-                </b-card>
+                
 
-              
+
+
+
+                
+               
+                    <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn fmr-2" name="invoiceData.scheduled" @change="() => {
+                      isScheduled = !isScheduled;
+                    }
+                      " switch :checked="isScheduled">
+                      <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
+                      <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
+                    </b-form-checkbox>
+                  <div v-if="isScheduled">
+                    <b-card no-body class="invoice-preview date-issued mb-0 ml-0" v-if="isScheduled">
+                      <b-card-header class="justify-content-end">
+                        <div class="mt-md-0 mt-2">
+                          <div class="d-flex align-items-center mb-0">
+                            <span class="title mr-1">
+                              {{ $t("add_invoice.schedule_type") }}:
+                            </span>
+                            <validation-provider #default="{ errors }" rules="required" >
+                              <b-form-select v-if="checkSchedule" v-model="invoiceData.cronScheduleApi.scheduleType" @change="() => { companyIDisInvalid = false; }">
+                                <b-form-select-option value="WEEKLY">{{ $t("add_invoice.WEEKLY") }}</b-form-select-option>
+                                <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY") }}</b-form-select-option>
+                              </b-form-select>
+                               <b-form-select v-if="!checkSchedule" @change="setOffScheduleType">
+                                <b-form-select-option value="WEEKLY">{{ $t("add_invoice.WEEKLY") }}</b-form-select-option>
+                                <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY") }}</b-form-select-option>
+                              </b-form-select>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </div>
+                        </div>
+                      </b-card-header>
+                    </b-card>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 <b-card no-body class="invoice-preview date-issued mb-0 ml-auto">
@@ -119,12 +138,6 @@
 
 
 
-
-
-
-
-               
-
               </div>
                <div class="d-flex justify-content-between align-items-center mb-2 accountType">
 
@@ -138,7 +151,7 @@
                           {{ $t("add_invoice.select_date") }}:
                         </span>
                         <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
-                          <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth" @change="() => { companyIDisInvalid = false; }" :options="dates">
+                          <b-form-select v-if="checkSchedule" v-model="invoiceData.cronScheduleApi.dayOfMonth" @change="() => { companyIDisInvalid = false; }" :options="dates">
                             <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{ date.text }}</b-form-select-option>
                           </b-form-select>
                           <small class="text-danger">{{ errors[0] }}</small>
@@ -147,6 +160,7 @@
                     </div>
                   </b-card-header>
                 </b-card>
+
                 <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'WEEKLY' && invoiceData.scheduled" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
                   <b-card-header class="justify-content-start">
                     <div class="w-100 mt-md-0 mt-2">
@@ -169,7 +183,65 @@
                   </b-card-header>
                 </b-card>
               </div>
+
+
+
+
+
+
+              <div class="d-flex justify-content-between align-items-center schedule-type" v-if="isScheduledTypeOffCaseMonthly">
+                 <b-card v-if="!checkSchedule" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                  <b-card-header class="justify-content-end">
+                    <div class="mt-md-0 mt-2">
+                      <div class="d-flex align-items-center mb-0">
+                        <span class="title mr-1">
+                          {{ $t("add_invoice.select_date") }}:
+                        </span>
+                        <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
+                          <b-form-select v-model="offCaseScheduleDayOfMonth"  @change="() => { companyIDisInvalid = false; }" :options="dates">
+                            <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{ date.text }}</b-form-select-option>
+                          </b-form-select>
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
+                      </div>
+                    </div>
+                  </b-card-header>
+                </b-card>
                 
+              </div>
+               <div class="d-flex justify-content-between align-items-center schedule-type" v-if="isScheduledTypeOffCaseWeekly">
+                  <b-card v-if="!checkSchedule" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                  <b-card-header class="justify-content-start">
+                    <div class="w-100 mt-md-0 mt-2">
+                      <div class="d-flex align-items-center mb-0">
+                        <span class="title mr-1">
+                          {{ $t("add_invoice.select_days") }}:
+                        </span>
+                        <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
+                          <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                            <b-form-radio-group v-model="offCaseScheduleDayOfWeek" class="d-flex" :aria-describedby="ariaDescribedby">
+                              <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index" @change="() => { companyIDisInvalid = false; 
+                                }">{{ day.text }}</b-form-radio>
+                            </b-form-radio-group>
+                          </b-form-group>
+                          <!-- <small class="text-danger" v-if='isWeekSelected'>Day of Week field is required</small> -->
+                        <!-- </validation-provider> -->
+                      </div>
+                    </div>
+                  </b-card-header>
+                </b-card>
+               
+                
+              </div>
+
+
+
+
+
+
+
+
+
 
                </div>
 
@@ -5156,7 +5228,6 @@ export default {
         { name: "Булбанк" },
       ],
       isBank: false,
-      isScheduled: false,
       noVatClause: [
         { clause: "чл.113, ал.9 от ЗДДС" },
         { clause: "чл.86, ал.3 във вр. с 21, ал.5 от ЗДДС" },
@@ -5277,6 +5348,19 @@ export default {
       };
     },
 
+    setOffScheduleType(value){
+      this.offCaseScheduleType = value;
+      if(value == "MONTHLY"){
+        this.isScheduledTypeOffCaseMonthly = true;
+        this.isScheduledTypeOffCaseWeekly = false;
+      }else{
+        this.isScheduledTypeOffCaseWeekly = true;
+        this.isScheduledTypeOffCaseMonthly = false;
+      }
+      console.log(this.invoiceData);
+      // this.scheduledTypeOffCase = value;
+      // alert(this.scheduledTypeOffCase);
+    },
     //
     applyCover(val) {
       if (val === 1) {
@@ -5392,13 +5476,32 @@ export default {
       this.daySelected = false;
     },
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
+
+      let schedule = {
+        scheduleType:"",
+        dayOfWeek:null,
+        dayOfMonth:null,
+      };
+      if (this.isScheduled ) {
+        // alert(this.offCaseScheduleDayOfMonth);
+        schedule.scheduleType = this.offCaseScheduleType;
+        if(this.offCaseScheduleType == "Monthly"){
+          schedule.dayOfMonth = this.offCaseScheduleDayOfMonth;
+        } else {
+          schedule.dayOfWeek = this.offCaseScheduleDayOfWeek;
+        }
+        invoiceData.cronScheduleApi = schedule;
+        console.log(this.invoiceData);
+      }
+      // return;
+
       if(invoiceData.cronScheduleApi !== null){
-      if (invoiceData.cronScheduleApi.dayOfWeek) {
-        this.isWeekSelected = false
-      }
-      else{
-        this.isWeekSelected = true
-      }
+        if (invoiceData.cronScheduleApi.dayOfWeek) {
+          this.isWeekSelected = false
+        }
+        else{
+          this.isWeekSelected = true
+        }
       }
       
 
@@ -5447,17 +5550,17 @@ export default {
         ).toFixed(2);
         return item;
       });
+
        if (this.isScheduled ) {
-          invoiceData.cronScheduleApi = null;
-        
-      }else {
           if(invoiceData.cronScheduleApi !== null){
-        if (invoiceData.cronScheduleApi.dayOfWeek) {
-          this.daySelected = false;
-        } else {
-          this.daySelected = true;
-        }
+              if (invoiceData.cronScheduleApi.dayOfWeek) {
+                this.daySelected = false;
+              } else {
+                this.daySelected = true;
+              }
           }
+      }else {
+          invoiceData.cronScheduleApi = null;
       }
       this.$refs.invoiceEditForm.validate().then((success) => {
         if (success && this.companyIDisInvalid === false  && this.isWeekSelected === false) {
@@ -5763,17 +5866,20 @@ export default {
           }
         }
         console.log(invoiceData.value.scheduled, invoiceData.value.cronScheduleApi)
-        // if(invoiceData.value.scheduled){
-        //   alert('scheduled');
-        // }else {
-        //   alert("notScheduled");
-        // }
+        if(invoiceData.value.scheduled){
+          // alert('scheduled');
+          checkSchedule.value = true;
+          isScheduled.value = true;
+        }else {
+          // alert("notScheduled");
+          checkSchedule.value = false;
+          isScheduled.value = false;
+        }
         if (invoiceData.value.cronScheduleApi.dayOfWeek) {
           //  alert(invoiceData.value.cronScheduleApi.dayOfWeek);
           invoiceData.cronScheduleApi.scheduleType = invoiceData.value.cronScheduleApi.scheduleType;
           invoiceData.cronScheduleApi.dayOfMonth = invoiceData.value.cronScheduleApi.dayOfMonth;
           invoiceData.cronScheduleApi.dayOfWeek = invoiceData.value.cronScheduleApi.dayOfWeek;
-
          
         }
       })
@@ -5932,7 +6038,16 @@ export default {
     var datalist = ref([]);
     var showSuggestions = ref(false);
 
-    var isWeekSelected = ref(false)
+    var isWeekSelected = ref(false);
+    var isScheduled = ref(false);
+    var isNotScheduled = ref(false);
+    var checkSchedule = ref(false);
+    var scheduledTypeOffCase = ref("");
+    var isScheduledTypeOffCaseMonthly = ref(false);
+    var isScheduledTypeOffCaseWeekly = ref(false);
+    var offCaseScheduleType = ref("");
+    var offCaseScheduleDayOfMonth = ref("");
+    var offCaseScheduleDayOfWeek = ref("");
 
     const SearchCompanyName = (companyName) => {
       if (companyName.length > 0) {
@@ -6387,7 +6502,16 @@ export default {
       isGreen,
       isOrange,
       isBlue,
-      isWeekSelected
+      isWeekSelected,
+      isScheduled,
+      isNotScheduled,
+      checkSchedule,
+      scheduledTypeOffCase,
+      isScheduledTypeOffCaseMonthly,
+      isScheduledTypeOffCaseWeekly,
+      offCaseScheduleType,
+      offCaseScheduleDayOfMonth,
+      offCaseScheduleDayOfWeek
     };
   },
 };
