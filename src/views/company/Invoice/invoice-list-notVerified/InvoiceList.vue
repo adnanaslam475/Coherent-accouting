@@ -6,17 +6,11 @@
       <b-row>
         <!-- Per Page -->
         <b-col cols="12" md="7" class="d-flex align-items-center justify-content-start mb-1 mb-md-0 pr-0">
-          <!-- <label>Entries</label>
-          <v-select
-            v-model="perPage"
-            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-            :options="perPageOptions"
-            :clearable="false"
-            class="per-page-selector d-inline-block ml-50 mr-1"
-          /> -->
+          <label>Entries</label>
+          <v-select v-model="perPage" @input="getMoreLoadInv" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :options="perPageOptions" :clearable="false" class="per-page-selector d-inline-block ml-50 mr-1" />
           <b-button variant="primary" class="mr-1 position-relative p-set">
-            <b-form-file ref="imageUploader" class="file-input" multiple @change="addMultiplefile" />
-            <b-spinner v-if="multiplefileLoading" small variant="light" />
+            <b-form-file ref="imageUploader" class="file-input" multiple />
+            <b-spinner v-if=" multiplefileLoading " small variant="light" />
             {{ $t("lbl.add_multiple_invoices") }}
             <!-- Add Multiple Invoices -->
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path1" />
@@ -443,17 +437,16 @@ export default {
 
   watch: {
     startDate: function () {
-      this.handleSearchSelect();
+      this.handleSearchSelect(10);
     },
     endDate: function () {
-      this.handleSearchSelect();
-    },
+      this.handleSearchSelect(10);
+    }
   },
 
   directives: {
     Ripple,
   },
-
   mounted() {
     setTimeout(() => {
       this.isCheck = true;
@@ -517,7 +510,11 @@ export default {
       tableAreaBusy.style.opacity = "1";
       this.loadMore = false;
     },
-
+    getMoreLoadInv(event){
+      console.log(" Coming here data ", event);
+      this.handleSearchSelect(event);
+      //this.observeScroll();
+    },
     observeScroll() {
       const options = {
         root: null,
@@ -553,14 +550,13 @@ export default {
     },
 
     // Hadling DateSelects and Search field
-    async handleSearchSelect() {
-      var tableAreaBusy = document.getElementById(
-        "company-invoices-not-verified"
-      );
+    async handleSearchSelect(pageNumData) {
+      var tableAreaBusy = document.getElementById("company-invoices-not-verified");
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
       this.pageNum = 1;
-      this.perPageRecords = 10;
+      //this.perPageRecords = 10
+      this.perPageRecords = pageNumData
 
       let data1 = {
         dateFrom: this.startDate,

@@ -2055,6 +2055,7 @@
 import { ref, onUnmounted } from "@vue/composition-api";
 import store from "@/store";
 import router from "@/router";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import {
   BImg,
   BRow,
@@ -2438,7 +2439,14 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       //} catch (error) {
 
       //}
-      
+      this.$toast({
+                  component: ToastificationContent,
+                  props: {
+                    title: `Email Send Successfully !!!`,
+                    icon: "EditIcon",
+                    variant: "success",
+                  },
+                });
     },       
     sendEmailData(e){
     e.preventDefault() // Prevent page from reloading.
