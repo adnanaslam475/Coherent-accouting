@@ -2002,12 +2002,11 @@
             </section>
           </vue-html2pdf>
 
-          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="false" :preview-modal="false"
+          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
             :paginate-elements-by-height="1100" filename="attachinvoice" :pdf-quality="2" :manual-pagination="false"
             pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
             @progress="onProgress($event)" @beforeDownload="beforeDownload($event)"
-            @hasDownloaded="hasDownloaded($event)" @startPagination="startPagination()"
-            @hasPaginated="hasPaginated()" ref="html2Pdfnew">
+            @hasDownloaded="hasDownloaded($event)" ref="html2Pdfnew">
             <section class="invoice-pdf" id="new-invoice" slot="pdf-content">
               <div v-if="invoiceData">
                 <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
@@ -2056,6 +2055,7 @@
 import { ref, onUnmounted } from "@vue/composition-api";
 import store from "@/store";
 import router from "@/router";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import {
   BImg,
   BRow,
@@ -2276,28 +2276,11 @@ export default {
     generatePDF() {
       this.$refs.html2Pdf.generatePdf();
     },
-    startPagination(){
-      console.log(" Start Pagination from... ");
-    },
-    hasPaginated(){
-      console.log(" Finished Pagination from... ");
-    },
-    //async beforeDownload ({ html2pdf, options, pdfContent }) {
-            //await html2pdf().set(options).from(pdfContent).toPdf().get('pdf').then((pdf) => {
-              //const blob = new Blob([pdfContent], { type: 'application/pdf' });
-              //console.log(" New Coming before here...... ", blob);
-            //}).save();
-        //},
-        async beforeDownload ({ html2pdf, options, pdfContent }) {
-          await html2pdf().set(options).from(pdfContent).toPdf().get('pdf').then((pdf) => {
-                const totalPages = pdf.internal.getNumberOfPages()
-                for (let i = 1; i <= totalPages; i++) {
-                    pdf.setPage(i)
-                    pdf.setFontSize(10)
-                    pdf.setTextColor(150)
-                    pdf.text('Page ' + i + ' of ' + totalPages, (pdf.internal.pageSize.getWidth() * 0.88), (pdf.internal.pageSize.getHeight() - 0.3))
-                } 
-            }).save()
+    async beforeDownload ({ html2pdf, options, pdfContent }) {
+            await html2pdf().set(options).from(pdfContent).toPdf().get('pdf').then((pdf) => {
+              const blob = new Blob([pdf], { type: 'application/pdf' });
+              console.log(" New Coming before here...... ", pdf, blob);
+            }).save();
         },
     async selectSendEmail() {
       this.sendEmail = false;
@@ -2456,7 +2439,14 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       //} catch (error) {
 
       //}
-      
+      this.$toast({
+                  component: ToastificationContent,
+                  props: {
+                    title: `Email Send Successfully !!!`,
+                    icon: "EditIcon",
+                    variant: "success",
+                  },
+                });
     },       
     sendEmailData(e){
     e.preventDefault() // Prevent page from reloading.
