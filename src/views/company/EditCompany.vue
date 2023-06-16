@@ -58,12 +58,12 @@
               <b-form-group id="input-group-4" :label="$t('register.lbl_country')" label-for="country">
                 <validation-provider #default="{ errors }" v-bind:name="$t('country')" rules="required">
                   <v-select v-model="getCompanyCountry" :options="getCountries" :filterBy="(option, search) => {
-                      return (
-                        (option.country || '')
-                          .toLocaleLowerCase()
-                          .indexOf(search.toLocaleLowerCase()) > -1
-                      );
-                    }
+                    return (
+                      (option.country || '')
+                        .toLocaleLowerCase()
+                        .indexOf(search.toLocaleLowerCase()) > -1
+                    );
+                  }
                     " id="company-country" name="country" v-bind:placeholder="$t('Please select your country')"
                     :value="$store.state.selected" v-on:input="updateCountryStatus()">
 
@@ -155,15 +155,14 @@
               <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
                   <v-select v-model="getCompanyStatus" :options="statusOptions" :filterBy="(option, search) => {
-                      return (
-                        (option.status || '')
-                          .toLocaleLowerCase()
-                          .indexOf(search.toLocaleLowerCase()) > -1
-                      );
-                    }
-                    " id="company-status" name="country-status"
-                    v-bind:placeholder="$t('Please select company status')" :value="$store.state.selected"
-                    v-on:input="updateCompanyStatus()">
+                    return (
+                      (option.status || '')
+                        .toLocaleLowerCase()
+                        .indexOf(search.toLocaleLowerCase()) > -1
+                    );
+                  }
+                    " id="company-status" name="country-status" v-bind:placeholder="$t('Please select company status')"
+                    :value="$store.state.selected" v-on:input="updateCompanyStatus()">
 
 
                     <template #selected-option="option" v-if="(isStatusSelected === true)">
@@ -338,25 +337,26 @@
 
       <!-- Third Tab: Export:Details -->
       <tab-content :title="$t('create_company.export_details')" :before-change="validationFormTab3">
-  <validation-observer ref="exportRules" tag="form">
-    <b-row>
-      <b-col>
-        <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
-  <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
-    <b-form-select id="platformPropertiesSelect" v-model="selectedPlatformProperty" :options="platformPropertiesOptions"></b-form-select>
-    <small class="text-danger">{{ errors[0] }}</small>
-  </validation-provider>
-  <div v-for="(value, label) in selectedPlatformProperties" :key="label">
-  <b-form-group :label="label">
-    <b-form-input v-model="selectedPlatformProperties[label]"></b-form-input>
-  </b-form-group>
-</div>
-</b-form-group>
+        <validation-observer ref="exportRules" tag="form">
+          <b-row>
+            <b-col>
+              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
+                <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
+                  <b-form-select id="platformPropertiesSelect" v-model="selectedPlatformProperty"
+                    :options="modifiedArray"></b-form-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+                <div v-for="(value, label) in selectedPlatformProperties" :key="label">
+                  <b-form-group :label="label">
+                    <b-form-input v-model="selectedPlatformProperties[label]"></b-form-input>
+                  </b-form-group>
+                </div>
+              </b-form-group>
 
-      </b-col>
-    </b-row> <!-- Closing tag for b-row added -->
-  </validation-observer>
-</tab-content>
+            </b-col>
+          </b-row> <!-- Closing tag for b-row added -->
+        </validation-observer>
+      </tab-content>
     </form-wizard>
   </div>
 </template>
@@ -617,21 +617,46 @@ export default {
         { value: "ZMK", name: "Zambian Kwacha", symbol: "ZK" },
       ],
       platformProperties: [],
-    platformPropertiesOptions: [],  // Add this line
-    selectedPlatformProperty: null,
-    selectedPlatformProperties: [],  // new data property
-    platformPropertiesData: {},
-    exportProperties: {},
+      platformPropertiesOptions: [],  // Add this line
+      selectedPlatformProperty: null,
+      selectedPlatformProperties: [],  // new data property
+      platformPropertiesData: {},
+      exportProperties: {},
     };
   },
- computed: {
-  //platformPropertiesOptions() {
-    //const keysToKeep = ['micro_invest', 'ajure'];
-    //const filteredProperties = this.platformProperties.filter(property => keysToKeep.includes(property));
-    //console.log("Selected Data ", filteredProperties);
-    //return filteredProperties.map(property => ({ value: property, text: property }));
-  //},
-},
+  computed: {
+    platformPropertiesOptions() {
+      const keysToKeep = ['micro_invest', 'ajure'];
+      const filteredProperties = this.platformProperties.filter(property => keysToKeep.includes(property));
+      return filteredProperties.map(property => ({ value: property, text: property }));
+    },
+    modifiedArray() {
+      const arr = [...this.platformPropertiesOptions]; // Create a copy of the input array
+
+      const microInvestIndex = arr.findIndex(
+        (item) => item.value === "MICRO_INVEST"
+      );
+      const ajureIndex = arr.findIndex((item) => item.value === "AJURE");
+
+      // Check if the element is found before performing modifications
+      if (microInvestIndex !== -1 && ajureIndex !== -1) {
+        const removedMicroInvest = arr.splice(microInvestIndex, 1)[0];
+        const removedAjure = arr.splice(
+          ajureIndex - (ajureIndex > microInvestIndex ? 1 : 0),
+          1
+        )[0];
+
+        arr.unshift({ ...removedAjure, disabled: false });
+        arr.unshift({ ...removedMicroInvest, disabled: false });
+      }
+      arr.forEach((item) => {
+        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE") {
+          item.disabled = true;
+        }
+      });
+      return arr;
+    },
+  },
 
   methods: {
     //
@@ -644,95 +669,95 @@ export default {
 
     //update companyInfo
     async updateCompanyInfo() {
-  let self = this;
+      let self = this;
 
-  if (this.isVatCheck === false) {
-    this.getVatNumber = "";
-  }
-  if (this.isCountrySelected === true) {
-    this.companyCountrySelected = this.getCompanyCountry.country;
-    this.companyCountryISOSelected = this.getCompanyCountry.isoAlpha2Country;
-    this.getCompanyCountry = this.companyCountrySelected;
-    this.getCompanyISO = this.companyCountryISOSelected;
-  }
-  if (this.isCurrencySelected === true) {
-    this.companyCurrencySelected = this.getCompanyCurrency.value;
-    this.getCompanyCurrency = this.companyCurrencySelected;
-  }
-  if (this.isStatusSelected === false) {
-    this.getCompanyStatus = this.getCompanyStatus.status;
-  }
+      if (this.isVatCheck === false) {
+        this.getVatNumber = "";
+      }
+      if (this.isCountrySelected === true) {
+        this.companyCountrySelected = this.getCompanyCountry.country;
+        this.companyCountryISOSelected = this.getCompanyCountry.isoAlpha2Country;
+        this.getCompanyCountry = this.companyCountrySelected;
+        this.getCompanyISO = this.companyCountryISOSelected;
+      }
+      if (this.isCurrencySelected === true) {
+        this.companyCurrencySelected = this.getCompanyCurrency.value;
+        this.getCompanyCurrency = this.companyCurrencySelected;
+      }
+      if (this.isStatusSelected === false) {
+        this.getCompanyStatus = this.getCompanyStatus.status;
+      }
 
-  var data = JSON.stringify({
-    companyAddress: this.getCompanyAddress,
-    companyCountry: this.getCompanyCountry,
-    companyIdentificationNumber: this.getCompanyID,
-    companyMail: this.getCompanyEmail,
-    companyName: this.getCompanyName,
-    companyBankAccount: this.getBankAccount,
-    companyCurrency: this.getCompanyCurrency,
-    companyFinancialStartOfYear: this.getCompFinYear,
-    companyIsoAlpha2Country: this.getCompanyISO,
-    companyOwnerApi: {
-      companName: this.companyRecord.companyOwnerApi.companName,
-      companyAddress: this.companyRecord.companyOwnerApi.companyAddress,
-      companyEic: this.companyRecord.companyOwnerApi.companyEic,
-      companyOwnerName: this.getCompOwnerName,
-      companyVatEic: this.companyRecord.companyOwnerApi.companyVatEic,
-      ownerEGN: this.getCompOwnerEgn,
-    },
-    companyPhone: this.getCompanyPhone,
-    companyVatAccepted: this.isVatCheck,
-    companyVatNumber: this.getVatNumber,
-    id: this.companyID,
-    status: this.getCompanyStatus,
-    exportProperties: {
-      id: this.exportProperties.id,
-      keyValues: this.selectedPlatformProperties,
-      platform: this.selectedPlatformProperty
-    }
-  });
-
-  var config = {
-    method: "put",
-    url: "/account/api/company/update/" + this.companyID,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("accessToken"),
-      "Access-Control-Allow-Credentials": true,
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "http://localhost:8080",
-    },
-    data: data,
-  };
-
-  await axios(config)
-    .then(function (response) {
-      self.$toast({
-        component: ToastificationContent,
-        props: {
-          title: `Company Updated Successfully`,
-          icon: "EditIcon",
-          variant: "success",
+      var data = JSON.stringify({
+        companyAddress: this.getCompanyAddress,
+        companyCountry: this.getCompanyCountry,
+        companyIdentificationNumber: this.getCompanyID,
+        companyMail: this.getCompanyEmail,
+        companyName: this.getCompanyName,
+        companyBankAccount: this.getBankAccount,
+        companyCurrency: this.getCompanyCurrency,
+        companyFinancialStartOfYear: this.getCompFinYear,
+        companyIsoAlpha2Country: this.getCompanyISO,
+        companyOwnerApi: {
+          companName: this.companyRecord.companyOwnerApi.companName,
+          companyAddress: this.companyRecord.companyOwnerApi.companyAddress,
+          companyEic: this.companyRecord.companyOwnerApi.companyEic,
+          companyOwnerName: this.getCompOwnerName,
+          companyVatEic: this.companyRecord.companyOwnerApi.companyVatEic,
+          ownerEGN: this.getCompOwnerEgn,
         },
+        companyPhone: this.getCompanyPhone,
+        companyVatAccepted: this.isVatCheck,
+        companyVatNumber: this.getVatNumber,
+        id: this.companyID,
+        status: this.getCompanyStatus,
+        exportProperties: {
+          id: this.exportProperties.id,
+          keyValues: this.selectedPlatformProperties,
+          platform: this.selectedPlatformProperty
+        }
       });
-      return self.$router.go(-1);
-    })
-    .catch(function (error) {
-      console.log(error);
-      self.$toast({
-        component: ToastificationContent,
-        props: {
-          title: `Error updating company info`,
-          icon: 'AlertTriangleIcon',
-          variant: 'danger',
-          timer: 1700,
+
+      var config = {
+        method: "put",
+        url: "/account/api/company/update/" + this.companyID,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
         },
-      });
-      setTimeout(() => {
-        self.$router.go();
-      }, 1740);
-    });
-},
+        data: data,
+      };
+
+      await axios(config)
+        .then(function (response) {
+          self.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Company Updated Successfully`,
+              icon: "EditIcon",
+              variant: "success",
+            },
+          });
+          return self.$router.go(-1);
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Error updating company info`,
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+              timer: 1700,
+            },
+          });
+          setTimeout(() => {
+            self.$router.go();
+          }, 1740);
+        });
+    },
 
 
     //getting company info
@@ -759,221 +784,215 @@ export default {
           this.getVatNumber = this.companyRecord.companyVatNumber;
           this.getBankAccount = this.companyRecord.companyBankAccount;
           this.getCompanyCurrency = this.companyRecord.companyCurrency;
-        this.getCompanyPhone = this.companyRecord.companyPhone;
-        this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
-        this.getCompanyEmail = this.companyRecord.companyMail;
-        this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;
-        this.getCompanyStatus = this.companyRecord.status;
-        // for getting exportproperties
-        this.exportProperties = this.companyRecord.exportProperties || {};
-        if (this.exportProperties.platform) {
-          this.selectedPlatformProperty = this.exportProperties.platform;
-          this.selectedPlatformProperties = this.exportProperties.keyValues;
+          this.getCompanyPhone = this.companyRecord.companyPhone;
+          this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
+          this.getCompanyEmail = this.companyRecord.companyMail;
+          this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;
+          this.getCompanyStatus = this.companyRecord.status;
+          // for getting exportproperties
+          this.exportProperties = this.companyRecord.exportProperties || {};
+          if (this.exportProperties.platform) {
+            this.selectedPlatformProperty = this.exportProperties.platform;
+            this.selectedPlatformProperties = this.exportProperties.keyValues;
+          }
+          if (this.getCompanyStatus === null) {
+            this.isStatusSelected = false;
+          }
+          else {
+            this.isStatusSelected = true;
+          }
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching company info",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          });
+        });
+
+      // if (data.data != "") {
+      //   this.companyRecord = data.data;
+      //   this.form = data.data;
+      //   this.getCompanyName = this.companyRecord.companyName;
+      //   this.getCompanyID = this.companyRecord.companyIdentificationNumber;
+      //   this.getCompanyAddress = this.companyRecord.companyAddress;
+      //   this.getCompanyCountry = this.companyRecord.companyCountry;
+      //   this.getCompOwnerName =
+      //     this.companyRecord.companyOwnerApi.companyOwnerName;
+      //     this.getCompOwnerEgn =
+      //     this.companyRecord.companyOwnerApi.ownerEGN;
+      //     this.isVatCheck = this.companyRecord.companyVatAccepted;
+      //     this.getVatNumber = this.companyRecord.companyVatNumber;
+      //     this.getBankAccount = this.companyRecord.companyBankAccount;
+      //     this.getCompanyCurrency = this.companyRecord.companyCurrency;
+      //     this.getCompanyPhone = this.companyRecord.companyPhone;
+      //     this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
+      //   this.getCompanyEmail = this.companyRecord.companyMail;
+      //   this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;  
+      //   this.getCompanyStatus = this.companyRecord.status;
+      //   if(this.getCompanyStatus === null){
+      //     this.isStatusSelected = false;
+      //   }
+      //   else{
+      //     this.isStatusSelected = true;
+      //   }
+      // }
+
+
+    },
+
+    //
+    updateCompanyStatus() {
+      this.isStatusSelected = false;
+    },
+
+
+
+    //
+    updateCountryStatus() {
+      this.isCountrySelected = true;
+    },
+
+
+
+    //
+    updateCurrencyStatus() {
+      this.isCurrencySelected = true;
+    },
+
+    //
+    async populateCountries() {
+      var config = {
+        method: "get",
+        url: "/account/api/countries",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+      };
+
+      const data = await axios(config);
+
+      if (data.data != "") {
+        this.getCountries = data.data;
+      }
+    },
+    async getPlatformProperties() {
+      var config = {
+        method: "get",
+        url: "/account/api/export/get-platforms-properties",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+      };
+
+      const response = await axios(config);
+
+      if (response.data != "") {
+        this.platformProperties = Object.keys(response.data);
+        this.platformPropertiesData = response.data;
+
+        this.platformPropertiesOptions = this.platformProperties.map(property => {
+          return { value: property, text: property }
+        });
+
+        // Get from localStorage if they exist, otherwise default to the first platform
+        this.selectedPlatformProperty = localStorage.getItem('selectedPlatformProperty') || this.platformProperties[0];
+        const selectedPlatformProperties = localStorage.getItem('selectedPlatformProperties');
+        if (selectedPlatformProperties) {
+          this.selectedPlatformProperties = JSON.parse(selectedPlatformProperties);
+        } else if (this.selectedPlatformProperty) {
+          this.selectedPlatformProperty = this.selectedPlatformProperty; // Trigger watcher
         }
-        if (this.getCompanyStatus === null) {
-          this.isStatusSelected = false;
-        }
-        else {
-          this.isStatusSelected = true;
-        }
-      })
-      .catch((error) => {
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: "Error fetching company info",
-            icon: 'AlertTriangleIcon',
-            variant: 'danger',
-          },
+      }
+    },
+
+
+
+    //validation check for account details
+    validationFormTab2() {
+      return new Promise((resolve, reject) => {
+        this.$refs.accountRules.validate().then((success) => {
+          if (success) {
+            this.getPlatformProperties();
+            resolve(true);
+            // this.updateCompanyInfo();
+          } else {
+            reject();
+          }
         });
       });
-
-    // if (data.data != "") {
-    //   this.companyRecord = data.data;
-    //   this.form = data.data;
-    //   this.getCompanyName = this.companyRecord.companyName;
-    //   this.getCompanyID = this.companyRecord.companyIdentificationNumber;
-    //   this.getCompanyAddress = this.companyRecord.companyAddress;
-    //   this.getCompanyCountry = this.companyRecord.companyCountry;
-    //   this.getCompOwnerName =
-    //     this.companyRecord.companyOwnerApi.companyOwnerName;
-    //     this.getCompOwnerEgn =
-    //     this.companyRecord.companyOwnerApi.ownerEGN;
-    //     this.isVatCheck = this.companyRecord.companyVatAccepted;
-    //     this.getVatNumber = this.companyRecord.companyVatNumber;
-    //     this.getBankAccount = this.companyRecord.companyBankAccount;
-    //     this.getCompanyCurrency = this.companyRecord.companyCurrency;
-    //     this.getCompanyPhone = this.companyRecord.companyPhone;
-    //     this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
-    //   this.getCompanyEmail = this.companyRecord.companyMail;
-    //   this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;  
-    //   this.getCompanyStatus = this.companyRecord.status;
-    //   if(this.getCompanyStatus === null){
-    //     this.isStatusSelected = false;
-    //   }
-    //   else{
-    //     this.isStatusSelected = true;
-    //   }
-    // }
-
-
-  },
-
-  //
-  updateCompanyStatus() {
-    this.isStatusSelected = false;
-  },
-
-
-
-  //
-  updateCountryStatus() {
-    this.isCountrySelected = true;
-  },
-
-
-
-  //
-  updateCurrencyStatus() {
-    this.isCurrencySelected = true;
-  },
-
-  //
-  async populateCountries() {
-    var config = {
-      method: "get",
-      url: "/account/api/countries",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("accessToken"),
-        "Access-Control-Allow-Credentials": true,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:8080",
-      },
-    };
-
-    const data = await axios(config);
-
-    if (data.data != "") {
-      this.getCountries = data.data;
-    }
-  },
-  async getPlatformProperties() {
-  var config = {
-    method: "get",
-    url: "/account/api/export/get-platforms-properties",
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("accessToken"),
-      "Access-Control-Allow-Credentials": true,
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "http://localhost:8080",
     },
-  };
+    //validation check for account details
+    validationFormTab3() {
+      return new Promise((resolve, reject) => {
+        this.$refs.exportRules.validate().then((success) => {
+          if (success) {
+            this.updateCompanyInfo();
+          } else {
+            reject();
+          }
+        });
+      });
+    },
+    //validation check for company details
+    validationForm() {
+      return new Promise((resolve, reject) => {
+        this.$refs.companyRules.validate().then((success) => {
+          if (success) {
+            resolve(true);
+          } else {
+            reject();
+          }
+        });
+      });
+    },
 
-  const response = await axios(config);
-
-  if (response.data != "") {
-    this.platformProperties = Object.keys(response.data);
-    this.platformPropertiesData = response.data;
-    console.log( "platformPropertiesOptions ",  this.platformProperties);
-    this.platformPropertiesOptions = this.platformProperties.map(property => {
-      console.log("Proprty data ", property);
-      if(property == "MICRO_INVEST" || property == "AJURE"){
-      return {value: property, text: property,}
-      }else{
-        //['micro_invest', 'ajure'];
-        return {value: false, text: property};
+    //
+    vatHandled() {
+      // this.isVatCheck = !this.isVatCheck; 
+      if (this.isVatCheck === true) {
+        this.isVatCheck = false;
       }
-    });
-
-    // Get from localStorage if they exist, otherwise default to the first platform
-    this.selectedPlatformProperty = localStorage.getItem('selectedPlatformProperty') || this.platformProperties[0];
-    const selectedPlatformProperties = localStorage.getItem('selectedPlatformProperties');
-    if (selectedPlatformProperties) {
-      this.selectedPlatformProperties = JSON.parse(selectedPlatformProperties);
-    } else if (this.selectedPlatformProperty) {
-      this.selectedPlatformProperty = this.selectedPlatformProperty; // Trigger watcher
-    }
-  }
-},
-
-
-
-  //validation check for account details
-  validationFormTab2() {
-    return new Promise((resolve, reject) => {
-      this.$refs.accountRules.validate().then((success) => {
-        if (success) {
-          this.getPlatformProperties();
-          resolve(true);
-          // this.updateCompanyInfo();
-        } else {
-          reject();
-        }
-      });
-    });
+      else {
+        this.isVatCheck = true;
+      }
+    },
   },
-  //validation check for account details
-  validationFormTab3() {
-    return new Promise((resolve, reject) => {
-      this.$refs.exportRules.validate().then((success) => {
-        if (success) {
-          this.updateCompanyInfo();
-        } else {
-          reject();
-        }
-      });
-    });
-  },
-  //validation check for company details
-  validationForm() {
-    return new Promise((resolve, reject) => {
-      this.$refs.companyRules.validate().then((success) => {
-        if (success) {
-          resolve(true);
-        } else {
-          reject();
-        }
-      });
-    });
+  watch: {
+    selectedPlatformProperty(newVal) {
+      if (this.platformPropertiesData && this.platformPropertiesData[newVal]) {
+        const properties = this.platformPropertiesData[newVal];
+        this.selectedPlatformProperties = properties.reduce((obj, property) => {
+          let [label, initialValue] = property.split('-');
+          obj[label] = initialValue || '';
+          return obj;
+        }, {});
+
+        // Save to localStorage
+        localStorage.setItem('selectedPlatformProperty', newVal);
+        localStorage.setItem('selectedPlatformProperties', JSON.stringify(this.selectedPlatformProperties));
+      } else {
+        this.selectedPlatformProperties = {};
+      }
+    },
   },
 
-  //
-  vatHandled() {
-    // this.isVatCheck = !this.isVatCheck; 
-    if (this.isVatCheck === true) {
-      this.isVatCheck = false;
-    }
-    else {
-      this.isVatCheck = true;
-    }
+
+
+  created: function () {
+    this.companyID = this.$route.params.id;
+    this.getCompanyInfo();
+    this.populateCountries();
   },
-},
-watch: {
-  selectedPlatformProperty(newVal) {
-    if (this.platformPropertiesData && this.platformPropertiesData[newVal]) {
-      const properties = this.platformPropertiesData[newVal];
-      this.selectedPlatformProperties = properties.reduce((obj, property) => {
-        let [label, initialValue] = property.split('-');
-        obj[label] = initialValue || '';
-        return obj;
-      }, {});
-
-      // Save to localStorage
-      localStorage.setItem('selectedPlatformProperty', newVal);
-      localStorage.setItem('selectedPlatformProperties', JSON.stringify(this.selectedPlatformProperties));
-    } else {
-      this.selectedPlatformProperties = {};
-    }
-  },
-},
-
-
-
-created: function () {
-  this.companyID = this.$route.params.id;
-  this.getCompanyInfo();
-  this.populateCountries();
-},
 };
 </script>
 
