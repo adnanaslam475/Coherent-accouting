@@ -32,8 +32,8 @@
                 <!-- @change="scheduleTypeOptionToggle(scheduleOptionToggleValue)"                 -->
                 <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn mr-2"
                   name="invoiceData.scheduled" switch>
-                  <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
-                  <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
+                  <span class="switch-icon-left" style="width: 76px">{{ $t("add_invoice.scheduled") }}</span>
+                  <span class="switch-icon-right" style="width: 76px">{{ $t("add_invoice.scheduled") }}</span>
                 </b-form-checkbox>
                 <b-card no-body class="invoice-preview date-issued mb-0 ml-0">
                   <b-card-header class="justify-content-end">
@@ -8891,4 +8891,5 @@ hr {
   .tm_pagebreak {
     page-break-before: always;
   }
-}</style>
+}
+</style>

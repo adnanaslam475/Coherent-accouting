@@ -184,7 +184,7 @@ h2.brand-text{
   padding-left: 8.5rem !important;
 }
 .custom-switch-btn.custom-switch .custom-control-label::before{
-  width: 8.5rem !important;
+  width: 9.6rem !important;
   height: 2.5rem !important;
   border-radius: 2.5rem !important;
 }
@@ -195,10 +195,12 @@ h2.brand-text{
   height: 1.5rem !important;
 }
 .custom-switch-btn.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
-  transform: translateX(6rem) !important;
+  transform: translateX(7.2rem) !important;
+ 
 }
 .custom-switch-btn.custom-switch .custom-control-label .switch-icon-left{
   left: 10px !important;
+  
 }
 .custom-switch-btn.custom-switch .custom-control-label .switch-icon-left, .custom-switch-btn.custom-switch .custom-control-label .switch-icon-right{
   top: 4px;
