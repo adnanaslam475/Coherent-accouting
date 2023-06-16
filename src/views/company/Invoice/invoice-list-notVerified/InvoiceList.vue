@@ -799,10 +799,13 @@ export default {
               self.progressStatus = progressVal.progressStatus;
               console.log(self.progressCount, self.progressStatus)
 
-              if (progressVal.progress == "100") {
+              if (progressVal.progress == "1000") {
                 clearInterval(myInterval);
+
               }
+
             }
+
           });
       }, 1000);
 
@@ -811,6 +814,7 @@ export default {
         .then((response) => {
           this.multiplefileLoading = false;
           self.refetchData();
+          this.refreshList()
           event.target.value = "";
           this.$toast({
             component: ToastificationContent,
