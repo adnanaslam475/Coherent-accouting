@@ -42,25 +42,34 @@
 
           <!-- Date Picker Modal -->
 
-          <b-modal id="modal-prevent-closing-invoice" ref="export_model" title="Select Month" :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" @show="resetModal" @hidden="resetModal" @ok="handleOk" :ok-disabled="modalDisabledMonth">
+          <b-modal id="modal-prevent-closing-invoice" ref="export_model" title="Select Month"
+            :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" @show="resetModal"
+            @hidden="resetModal" @ok="handleOk" :ok-disabled="modalDisabledMonth">
             <form ref="form" @submit.stop.prevent="handleMonthSelect">
               <validation-observer ref="selectMonthRules" tag="form">
                 <validation-provider #default="{ errors }" :name="$t('month_selected')" rules="required">
-                  <vue-monthly-picker id="month_selected" v-model="selectedMonthData.date" name="month_selected" date-format="Y-MM" :month-labels="monthLabels" :class="errors.length > 0 ? 'is-invalid' : null" place-holder="Please Select: " />
+                  <vue-monthly-picker id="month_selected" v-model="selectedMonthData.date" name="month_selected"
+                    date-format="Y-MM" :month-labels="monthLabels" :class="errors.length > 0 ? 'is-invalid' : null"
+                    place-holder="Please Select: " />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </validation-observer>
             </form>
           </b-modal>
 
-          <b-modal id="modal-invoices-export" ref="modal_exportValue" :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE' ? companyinfo.exportProperties.platform : ''" title-class="w-100 text-center" :ok-title="$t('company_invoices.Export_invoicess')" :cancel-title="$t('company_invoices.Cancel')" scrollable @ok="getExportFile()" :ok-disabled="modalDisabled" class="p-3">
+          <b-modal id="modal-invoices-export" ref="modal_exportValue"
+            :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE' ? companyinfo.exportProperties.platform : ''"
+            title-class="w-100 text-center" :ok-title="$t('company_invoices.Export_invoicess')"
+            :cancel-title="$t('company_invoices.Cancel')" scrollable @ok="getExportFile()" :ok-disabled="modalDisabled"
+            class="p-3">
             <form ref="form" @submit.stop.prevent="handleMonthSelect" class="border p-3 bg-light">
               <!-- display exportDto data -->
               <!-- display companyinfo.keyValues data -->
               <div v-if="companyinfo && companyinfo.exportProperties" class="mb-3">
                 <div v-for="(value, key) in companyinfo.exportProperties.keyValues" :key="key" class="mb-2">
                   <label :for="'input-' + key" class="form-label">{{ key }} :</label>
-                  <input :id="'input-' + key" class="form-control" v-model="companyinfo.exportProperties.keyValues[key]" readonly>
+                  <input :id="'input-' + key" class="form-control" v-model="companyinfo.exportProperties.keyValues[key]"
+                    readonly>
                 </div>
               </div>
               <div v-else>
@@ -79,7 +88,8 @@
         <b-col cols="12" md="6">
           <div class="d-flex align-items-center justify-content-end">
             <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="startDate" class="form-control invoice-edit-input invoice-input-top" :placeholder="$t('company_invoices.start_date')" />
+              <flat-pickr v-model="startDate" class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.start_date')" />
               <feather-icon v-if="startDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="startDate = ''" />
               <!-- <feather-icon
@@ -90,7 +100,8 @@
                 /> -->
             </div>
             <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top" :placeholder="$t('company_invoices.end_date')" />
+              <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.end_date')" />
               <feather-icon v-if="endDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="endDate = ''" />
               <!-- <feather-icon
@@ -101,7 +112,8 @@
                 /> -->
             </div>
             <div class="position-relative flex-1">
-              <b-form-input v-model="searchQuery" class="d-inline-block mr-1" :placeholder="$t('company_invoices.search')" @input="handleSearchSelect()" />
+              <b-form-input v-model="searchQuery" class="d-inline-block mr-1" :placeholder="$t('company_invoices.search')"
+                @input="handleSearchSelect()" />
               <feather-icon size="16" icon="XIcon" class="cursor-pointer clear-all" @click="searchQuery = ''" />
             </div>
           </div>
@@ -123,7 +135,9 @@
     <!--  Error Message Starts  -->
 
     <!--  Table Starts  -->
-    <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100" id="company-invoices">
+    <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns"
+      responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found"
+      :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100" id="company-invoices">
 
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
@@ -145,7 +159,8 @@
       </template>
 
       <template #cell(invoiceNumber)="data">
-        <b-link :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId }, }" class="font-weight-bold">
+        <b-link :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId }, }"
+          class="font-weight-bold">
           <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
@@ -167,9 +182,11 @@
       </template>
 
       <template #cell(transactionType)="data">
-        <b-link :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId }, }" class="font-weight-bold">
+        <b-link :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId }, }"
+          class="font-weight-bold">
           <span :id="`transactionType-row-${data.item.id}`" class="text-nowrap">
-            <b-badge pill :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'}`" class="text-capitalize">
+            <b-badge pill :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'}`"
+              class="text-capitalize">
               {{ $t("company_invoices." + data.value) }}
             </b-badge>
           </span>
@@ -296,13 +313,15 @@
       <template #cell(actions)="data">
 
         <div class="text-nowrap">
-          <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16" class="mr-1 cursor-pointer" @click="
-            $router.push({
-              name: 'company-invoice-preview',
-              params: { id: data.item.id, companyId: companyId },
-            })
-            " />
-          <b-tooltip title="Preview Invoice" class="cursor-pointer" :target="`invoice-row-${data.item.id}-preview-icon`" />
+          <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16"
+            class="mr-1 cursor-pointer" @click="
+              $router.push({
+                name: 'company-invoice-preview',
+                params: { id: data.item.id, companyId: companyId },
+              })
+              " />
+          <b-tooltip title="Preview Invoice" class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-preview-icon`" />
 
           <!-- Dropdown -->
           <b-dropdown variant="link" toggle-class="p-0" no-caret dropleft :right="$store.state.appConfig.isRTL">
@@ -327,9 +346,14 @@
           </b-dropdown>
 
           <!-- Duplicate -->
-          <feather-icon :id="`invoice-row-${data.item.id}-duplicate-icon`" icon="LayersIcon" size="16" class="mx-1 cursor-pointer" @click="duplicateInvoice(data.item)" />
-          <b-tooltip title="Duplicate Invoice" class="cursor-pointer" :target="`invoice-row-${data.item.id}-duplicate-icon`" />
-          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :ref="`invoicePdf${data.item.id}`" :preview-modal="false" :paginate-elements-by-height="1100" filename="invoice" :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px" @progress="onProgress($event)">
+          <feather-icon :id="`invoice-row-${data.item.id}-duplicate-icon`" icon="LayersIcon" size="16"
+            class="mx-1 cursor-pointer" @click="duplicateInvoice(data.item)" />
+          <b-tooltip title="Duplicate Invoice" class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-duplicate-icon`" />
+          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true"
+            :ref="`invoicePdf${data.item.id}`" :preview-modal="false" :paginate-elements-by-height="1100"
+            filename="invoice" :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10"
+            pdf-orientation="portrait" pdf-content-width="1125px" @progress="onProgress($event)">
             <section slot="pdf-content" class="invoice-pdf invoice-preview-list">
               <invoice-download :invoice-data="data.item" />
             </section>
@@ -830,6 +854,7 @@ export default {
     },
 
     async handleSearchSelect() {
+
       var tableAreaBusy = document.getElementById("company-invoices");
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
@@ -842,7 +867,7 @@ export default {
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: this.sortBy,
+          sortField: 'id',
           verified: "true",
           searchTerm: this.searchQuery,
         },
@@ -852,10 +877,15 @@ export default {
         `/account/api/invoice/search/${this.companyId}/1/${this.perPageRecords}`,
         data1,
         config
-      );
+      ).then((res) => {
+        console.log('response ========>', res)
+        this.invoices = res.data.elements;
+        tableAreaBusy.style.opacity = "1";
+        this.loadMore = false
+      })
 
-      this.invoices = data.data.elements;
-      tableAreaBusy.style.opacity = "1";
+      // this.invoices = data.data.elements;
+      // tableAreaBusy.style.opacity = "1";
     },
 
     async listInvoices() {
@@ -897,7 +927,7 @@ export default {
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: this.sortBy,
+          sortField: 'id',
           verified: "true",
           searchTerm: this.searchQuery,
         },

@@ -7,58 +7,59 @@ export default {
   mutations: {},
   actions: {
     fetchInvoices(ctx, queryParams) {
-        let pageNumber = queryParams.currentPage
-        let perPageValue = queryParams.perPage
-        let companyId = queryParams.companyId
 
-        if(queryParams.q || queryParams.dateFrom || queryParams.dateTo){
-          let data = {}
-          if(queryParams.dateFrom || queryParams.dateTo){
-            data = {
-              dateFrom: queryParams.dateFrom,
-              dateTo: queryParams.dateTo
-            }
-          } 
-          let config = {
-            params: {
-              direction: queryParams.direction ? 'desc' : 'asc',
-              sortField: queryParams.sortField,
-              verified: queryParams.verified,
-              searchTerm: queryParams.q
-            },
+      let pageNumber = queryParams.currentPage
+      let perPageValue = queryParams.perPage
+      let companyId = queryParams.companyId
+
+      if (queryParams.q || queryParams.dateFrom || queryParams.dateTo) {
+        let data = {}
+        if (queryParams.dateFrom || queryParams.dateTo) {
+          data = {
+            dateFrom: queryParams.dateFrom,
+            dateTo: queryParams.dateTo
           }
-          return new Promise((resolve, reject) => {
-            axios
-              .post(`/account/api/invoice/search/${companyId}/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`,data, config)
-              .then((response) =>{
-                resolve(response)
-              })
-              .catch((error) =>{
-                reject(error)
-              })
-          })
-
-        } else{
-
-          let config = {
-            params: {
-              direction: queryParams.direction ? 'desc' : 'asc',
-              sortField: queryParams.sortField,
-              verified: queryParams.verified
-            },
-          }
-          return new Promise((resolve, reject) => {
-            axios
-              .get(`/account/api/invoice/list/${companyId}/${pageNumber?pageNumber:1}/${perPageValue?perPageValue:10}`, config)
-              .then((response) =>{
-                resolve(response)
-              })
-              .catch((error) =>{
-                reject(error)
-              })
-          })
-
         }
+        let config = {
+          params: {
+            direction: queryParams.direction ? 'desc' : 'asc',
+            sortField: queryParams.sortField,
+            verified: queryParams.verified,
+            searchTerm: queryParams.q
+          },
+        }
+        return new Promise((resolve, reject) => {
+          axios
+            .post(`/account/api/invoice/search/${companyId}/${pageNumber ? pageNumber : 1}/${perPageValue ? perPageValue : 10}`, data, config)
+            .then((response) => {
+              resolve(response)
+            })
+            .catch((error) => {
+              reject(error)
+            })
+        })
+
+      } else {
+
+        let config = {
+          params: {
+            direction: queryParams.direction ? 'desc' : 'asc',
+            sortField: queryParams.sortField,
+            verified: queryParams.verified
+          },
+        }
+        return new Promise((resolve, reject) => {
+          axios
+            .get(`/account/api/invoice/list/${companyId}/${pageNumber ? pageNumber : 1}/${perPageValue ? perPageValue : 10}`, config)
+            .then((response) => {
+              resolve(response)
+            })
+            .catch((error) => {
+              reject(error)
+            })
+        })
+
+      }
     },
     fetchInvoice(ctx, { id }) {
       return new Promise((resolve, reject) => {
