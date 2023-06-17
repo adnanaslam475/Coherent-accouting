@@ -33,9 +33,9 @@
                 <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn mr-2"
                   name="invoiceData.scheduled" switch>
                   <span class="switch-icon-left" style="width: 76px">{{ $t("add_invoice.scheduled") }}</span>
-                  <span class="switch-icon-right" style="width: 76px">{{ $t("add_invoice.scheduled") }}</span>
+                  <span class="switch-icon-right" style="width: 76px">{{ $t("add_invoice.regular") }}</span>
                 </b-form-checkbox>
-                <b-card no-body class="invoice-preview date-issued mb-0 ml-0">
+                <b-card no-body class="invoice-preview date-issued mb-0 ml-0" v-if="disabled = invoiceData.scheduled">
                   <b-card-header class="justify-content-end">
                     <div class="mt-md-0 mt-2">
                       <div class="d-flex align-items-center mb-0">

@@ -36,6 +36,7 @@
         <b-col cols="12" md="5">
           <div class="d-flex align-items-center justify-content-end">
             <div class="position-relative mr-1 filter-date">
+
               <flat-pickr v-model="dateFrom" class="form-control invoice-edit-input invoice-input-top"
                 :placeholder="$t('company_invoices.start_date')" />
 
@@ -436,10 +437,13 @@ export default {
   },
 
   watch: {
-    startDate: function () {
+    dateTo: function () {
       this.handleSearchSelect(10);
     },
-    endDate: function () {
+    dateFrom: function () {
+      this.handleSearchSelect(10);
+    },
+    searchQuery: function () {
       this.handleSearchSelect(10);
     }
   },
@@ -551,6 +555,7 @@ export default {
 
     // Hadling DateSelects and Search field
     async handleSearchSelect(pageNumData) {
+
       var tableAreaBusy = document.getElementById("company-invoices-not-verified");
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
@@ -565,20 +570,23 @@ export default {
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: this.sortBy,
+          sortField: 'id',
           verified: "false",
           searchTerm: this.searchQuery,
         },
       };
 
-      const data = await axios.post(
+      await axios.post(
         `/account/api/invoice/search/${this.companyId}/1/${this.perPageRecords}`,
         data1,
         config
-      );
+      ).then((res) => {
+        this.invoices = res.data.elements;
+        tableAreaBusy.style.opacity = "1";
+        this.loadMore = false
+      })
 
-      this.invoices = data.data.elements;
-      tableAreaBusy.style.opacity = "1";
+
     },
 
     async listInvoices() {
@@ -612,6 +620,7 @@ export default {
     },
 
     async searchInvoices() {
+
       this.pageNum += 1;
       let data1 = {
         dateFrom: this.startDate,
@@ -620,7 +629,7 @@ export default {
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: this.sortBy,
+          sortField: 'id',
           verified: "false",
           searchTerm: this.searchQuery,
         },
