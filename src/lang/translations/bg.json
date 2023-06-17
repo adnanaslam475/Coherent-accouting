@@ -370,6 +370,7 @@
     "date": "Дата",
     "due_date": "Краен срок",
     "scheduled": "Периодична",
+    "regular": "Нормална",
     "schedule_type": "Вид",
     "WEEKLY": "СЕДМИЧНО",
     "MONTHLY": "МЕСЕЧНО",

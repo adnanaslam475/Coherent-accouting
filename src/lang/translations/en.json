@@ -390,6 +390,7 @@
     "date": "Date",
     "due_date": "Due Date",
     "scheduled": "Scheduled",
+    "regular": "Regular",
     "schedule_type": "Scheduled Type",
     "WEEKLY": "WEEKLY",
     "MONTHLY": "MONTHLY",
