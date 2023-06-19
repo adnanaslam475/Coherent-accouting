@@ -803,7 +803,7 @@ export default {
               self.progressCount = progressVal.progress;
               self.progressStatus = progressVal.progressStatus;
               console.log(self.progressCount, self.progressStatus)
-
+           
               if (progressVal.progress == "100") {
                 clearInterval(myInterval);
 

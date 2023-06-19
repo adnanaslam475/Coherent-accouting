@@ -5,13 +5,14 @@
         <b-card-title>{{ $t('companies.unverified_invoice') }}</b-card-title>
       </b-card-header>
 
-      <b-card-body>
+      <b-card-body style="overflow: auto">
         <div v-if="!activeProjectUnverified">
           <div class="alert-body">
             No record found
           </div>
         </div>
-        <div v-if="activeProjectUnverified" v-for="(transaction, index) in activeProjectUnverified" :key="index" class="transaction-item">
+        <div v-if="activeProjectUnverified" v-for="(transaction, index) in activeProjectUnverified" :key="index"
+          class="transaction-item">
           <b-media no-body>
             <b-media-aside>
               <b-avatar rounded size="42" :variant="transactionData[`${index > 4 ? index - 5 : index}`].avatarVariant">
@@ -27,7 +28,8 @@
               </b-link>
             </b-media-body>
           </b-media>
-          <div class="font-weight-bolder" :class="transactionData[`${index > 4 ? index - 5 : index}`].deduction ? 'text-success' : 'text-success'">
+          <div class="font-weight-bolder"
+            :class="transactionData[`${index > 4 ? index - 5 : index}`].deduction ? 'text-success' : 'text-success'">
             {{ transaction.unVerifiedInvoicesCount }}
           </div>
         </div>
@@ -60,7 +62,8 @@
               </b-link>
             </b-media-body>
           </b-media>
-          <div class="font-weight-bolder" :class="transactionData[`${index > 4 ? index - 5 : index}`].deduction ? 'text-success' : 'text-success'">
+          <div class="font-weight-bolder"
+            :class="transactionData[`${index > 4 ? index - 5 : index}`].deduction ? 'text-success' : 'text-success'">
             <!-- {{ transactionData[`${index > 4 ? index-5 : index }`].payment }} -->
 
             {{ formatDate(transaction.period) }}
