@@ -57,7 +57,7 @@
                   }
                     " switch :checked="isScheduled">
                   <span class="switch-icon-left">{{ $t("add_invoice.scheduled") }}</span>
-                  <span class="switch-icon-right">{{ $t("add_invoice.scheduled") }}</span>
+                  <span class="switch-icon-right">{{ $t("add_invoice.regular") }}</span>
                 </b-form-checkbox>
                 <div v-if="isScheduled" class='ml-4'>
                   <b-card no-body class="invoice-preview date-issued mb-0 ml-0" v-if="isScheduled">
@@ -84,6 +84,18 @@
                     </b-card-header>
                   </b-card>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 <b-card no-body class="invoice-preview date-issued mb-0 ml-auto">
@@ -209,7 +221,8 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-center schedule-type"
                   v-if="isScheduledTypeOffCaseWeekly">
-                  <b-card v-if="!checkSchedule" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                  <b-card v-if="!checkSchedule && isScheduled" no-body
+                    class="invoice-preview date-issued mb-0 ml-0 mr-auto">
                     <b-card-header class="justify-content-start">
                       <div class="w-100 mt-md-0 mt-2">
                         <div class="d-flex align-items-center mb-0">
@@ -236,7 +249,20 @@
                 </div>
 
 
+
+
+
+
+
+
+
+
               </div>
+
+
+
+
+
               <div
                 class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input invoice-input-middle mb-md-0">
                 <div class="mt-md-0 mt-2 flex-1">
@@ -5734,22 +5760,22 @@ export default {
     },
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
 
-      let schedule = {
-        scheduleType: "",
-        dayOfWeek: null,
-        dayOfMonth: null,
-      };
-      if (this.isScheduled) {
+      // let schedule = {
+      //   scheduleType: "",
+      //   dayOfWeek: null,
+      //   dayOfMonth: null,
+      // };
+      // if (this.isScheduled) {
 
-        schedule.scheduleType = this.offCaseScheduleType;
-        if (this.offCaseScheduleType == "Monthly") {
-          schedule.dayOfMonth = this.offCaseScheduleDayOfMonth;
-        } else {
-          schedule.dayOfWeek = this.offCaseScheduleDayOfWeek;
-        }
-        invoiceData.cronScheduleApi = schedule;
-        console.log(this.invoiceData);
-      }
+      //   schedule.scheduleType = this.offCaseScheduleType;
+      //   if (this.offCaseScheduleType == "MONTHLY") {
+      //     schedule.dayOfMonth = this.offCaseScheduleDayOfMonth;
+      //   } else {
+      //     schedule.dayOfWeek = this.offCaseScheduleDayOfWeek;
+      //   }
+      //   invoiceData.cronScheduleApi = schedule;
+      //   console.log(this.invoiceData);
+      // }
       // return;
 
       if (invoiceData.cronScheduleApi !== null) {
