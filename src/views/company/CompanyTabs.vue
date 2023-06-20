@@ -5,9 +5,10 @@
       <b-tab>
         <template #title>
           <feather-icon icon="BriefcaseIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('lbl.company_info') }}</span> 
+          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('lbl.company_info') }}</span>
         </template>
-        <CompanyInfo v-if="companyTab == 0 || infoActive" :company-tab="companyTab" @state="update($event)" :companyDetails="companyDetails"/>
+        <CompanyInfo v-if="companyTab == 0 || infoActive" :company-tab="companyTab" @state="update($event)"
+          :companyDetails="companyDetails" />
       </b-tab>
 
       <!-- invoices tab -->
@@ -23,7 +24,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="FileIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize" >{{ $t('company_tabs.multiple_upload') }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.multiple_upload') }}</span>
         </template>
         <NotVerifiedInvoice v-if="companyTab == 2 || multipleUploadActive" />
       </b-tab>
@@ -34,21 +35,28 @@
           <feather-icon icon="FlagIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.vat_reports') }} </span>
         </template>
-        <VatReports
-          v-if="companyTab == 3 || vatReportsActive"
-          :vat-reports-tab="vatReportsTab"
-          @state="updateVatReportsTab($event)"
-        />
+        <VatReports v-if="companyTab == 3 || vatReportsActive" :vat-reports-tab="vatReportsTab"
+          @state="updateVatReportsTab($event)" />
       </b-tab>
 
-      <!-- Yearly Reports Tab -->
+      <!-- credit notifications Tab -->
       <b-tab>
         <template #title>
           <feather-icon icon="FlagIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.yearly_reports') }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">Credit Notifications</span>
         </template>
-        <YearlyReport v-if="companyTab == 4 || yearlyReportsActive" />
+        <YearlyReport v-if="companyTab == 4 || creditNotifications" />
       </b-tab>
+
+      <!-- debit notifications Tab -->
+      <b-tab>
+        <template #title>
+          <feather-icon icon="FlagIcon" />
+          <span style="font-size: 0.8vw" class="text-capitalize">Debit Notifications</span>
+        </template>
+        <YearlyReport v-if="companyTab == 5 || debitNotifications" />
+      </b-tab>
+
 
       <!-- Documents tab -->
       <b-tab>
@@ -56,7 +64,7 @@
           <feather-icon icon="FolderIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.company_documents') }}</span>
         </template>
-        <Document v-if="companyTab == 5 || companyDocumentsActive" />
+        <Document v-if="companyTab == 6 || companyDocumentsActive" />
       </b-tab>
 
       <!--Private Person tab -->
@@ -65,11 +73,8 @@
           <feather-icon icon="UserIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.clients_or_recipients') }}</span>
         </template>
-        <PrivatePersons
-          v-if="companyTab == 6 || privatePersonActive"
-          :add-record="addRecord"
-          @state="updateAddRecord($event)"
-        />
+        <PrivatePersons v-if="companyTab == 7 || privatePersonActive" :add-record="addRecord"
+          @state="updateAddRecord($event)" />
       </b-tab>
 
       <!-- Name of company -->
@@ -78,8 +83,8 @@
           <span>
             <h4 style="color: #0a64bc; font-size: 1vw;">
               <b>{{ companyName }}</b>
-            </h4></span
-          >
+            </h4>
+          </span>
         </template>
       </b-tab>
     </b-tabs>
@@ -122,7 +127,7 @@ export default {
   },
   data() {
     return {
-      companyDetails:[],
+      companyDetails: [],
       companyNameLength: "",
       companyName: "",
       companyID: "",
@@ -137,20 +142,22 @@ export default {
       invoicesActive: this.$route.params.InvoiceId == 1 ? true : false,
       multipleUploadActive: this.$route.params.InvoiceId == 2 ? true : false,
       vatReportsActive: this.$route.params.InvoiceId == 3 ? true : false,
-      yearlyReportsActive: this.$route.params.InvoiceId == 4 ? true : false,
-      companyDocumentsActive: this.$route.params.InvoiceId == 5 ? true : false,
-      privatePersonActive: this.$route.params.InvoiceId == 6 ? true : false,
+      creditNotifications: this.$route.params.InvoiceId == 4 ? true : false,
+      debitNotifications: this.$route.params.InvoiceId == 5 ? true : false,
+
+      companyDocumentsActive: this.$route.params.InvoiceId == 6 ? true : false,
+      privatePersonActive: this.$route.params.InvoiceId == 7 ? true : false,
     };
   },
-  mounted(){
+  mounted() {
     this.companyID = this.$route.params.id;
     this.getCompanyInfo();
   },
   created() {
   },
   watch: {
-    companyTab: function(newValue, oldValue) {
-      switch(newValue) {
+    companyTab: function (newValue, oldValue) {
+      switch (newValue) {
         case 0:
           this.infoActive = true
           break;
@@ -164,12 +171,15 @@ export default {
           this.vatReportsActive = true
           break;
         case 4:
-          this.yearlyReportsActive = true
+          this.creditNotifications = true
           break;
         case 5:
-          this.companyDocumentsActive = true
+          this.debitNotifications = true
           break;
         case 6:
+          this.companyDocumentsActive = true
+          break;
+        case 7:
           this.privatePersonActive = true
           break;
         default:
@@ -186,13 +196,13 @@ export default {
           "Access-Control-Allow-Origin": "http://localhost:8080",
         },
       })
-      .then((response) => {
-        let companyRecord = response.data;
-        this.companyDetails= companyRecord;
-        this.companyName = companyRecord.companyName;
-        this.companyNameLength = this.companyName.length;
-      })
-      .catch((error) => {
+        .then((response) => {
+          let companyRecord = response.data;
+          this.companyDetails = companyRecord;
+          this.companyName = companyRecord.companyName;
+          this.companyNameLength = this.companyName.length;
+        })
+        .catch((error) => {
           // console.log(error);
           this.$toast({
             component: ToastificationContent,
@@ -239,6 +249,6 @@ export default {
 }
 
 .nav-tabs .nav-link svg {
-    margin-right: 0.3rem;
+  margin-right: 0.3rem;
 }
 </style>
