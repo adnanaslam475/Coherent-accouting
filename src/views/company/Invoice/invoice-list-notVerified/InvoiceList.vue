@@ -37,18 +37,18 @@
           <div class="d-flex align-items-center justify-content-end">
             <div class="position-relative mr-1 filter-date">
 
-              <flat-pickr v-model="dateFrom" class="form-control invoice-edit-input invoice-input-top"
+              <flat-pickr v-model="startDate" class="form-control invoice-edit-input invoice-input-top"
                 :placeholder="$t('company_invoices.start_date')" />
 
-              <feather-icon v-if="dateFrom === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
-              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="dateFrom = ''" />
+              <feather-icon v-if="startDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
+              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="startDate = ''" />
             </div>
             <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="dateTo" class="form-control invoice-edit-input invoice-input-top"
+              <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top"
                 :placeholder="$t('company_invoices.end_date')" />
 
-              <feather-icon v-if="dateTo === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
-              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="dateTo = ''" />
+              <feather-icon v-if="endDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
+              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="endDate = ''" />
             </div>
             <div class="position-relative flex-1">
               <b-form-input v-model="searchQuery" class="d-inline-block mr-1"
@@ -437,10 +437,10 @@ export default {
   },
 
   watch: {
-    dateTo: function () {
+    endDate: function () {
       this.handleSearchSelect(10);
     },
-    dateFrom: function () {
+    startDate: function () {
       this.handleSearchSelect(10);
     },
     searchQuery: function () {
@@ -473,8 +473,8 @@ export default {
         this.pageNum = 1;
       }
       let payLoadDates = {
-        dateFrom: this.startDate,
-        dateTo: this.endDate,
+        startDate: this.startDate,
+        endDate: this.endDate,
       };
       let config = {
         params: {
@@ -564,8 +564,8 @@ export default {
       this.perPageRecords = pageNumData
 
       let data1 = {
-        dateFrom: this.startDate,
-        dateTo: this.endDate,
+        startDate: this.startDate,
+        endDate: this.endDate,
       };
       let config = {
         params: {
@@ -623,8 +623,8 @@ export default {
 
       this.pageNum += 1;
       let data1 = {
-        dateFrom: this.startDate,
-        dateTo: this.endDate,
+        startDate: this.startDate,
+        endDate: this.endDate,
       };
       let config = {
         params: {
@@ -803,7 +803,7 @@ export default {
               self.progressCount = progressVal.progress;
               self.progressStatus = progressVal.progressStatus;
               console.log(self.progressCount, self.progressStatus)
-           
+
               if (progressVal.progress == "100") {
                 clearInterval(myInterval);
 
@@ -878,8 +878,8 @@ export default {
       dataMeta,
       perPageOptions,
       searchQuery,
-      dateFrom,
-      dateTo,
+      startDate,
+      endDate,
       sortBy,
       isSortDirDesc,
       refInvoiceListTable,
@@ -919,8 +919,8 @@ export default {
       dataMeta,
       perPageOptions,
       searchQuery,
-      dateFrom,
-      dateTo,
+      startDate,
+      endDate,
       companyId,
       sortBy,
       isSortDirDesc,
