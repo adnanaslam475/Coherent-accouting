@@ -33,28 +33,28 @@
           <!-- Header: Left Content -->
           <div class="mt-md-0 mt-2 flex-1">
             <b-card no-body class="invoice-preview invoice-card" :style="isBlue === true
-                ? 'border: 1px solid #007aff !important'
-                : isGreen === true
-                  ? 'border: 1px solid #8fce00 !important'
-                  : isPurple === true
-                    ? 'border: 1px solid #ad3978 !important'
-                    : isOrange === true
-                      ? 'border: 1px solid #FFA500 !important'
-                      : 'border:1px solid #f6d1ff !important'
+              ? 'border: 1px solid #007aff !important'
+              : isGreen === true
+                ? 'border: 1px solid #8fce00 !important'
+                : isPurple === true
+                  ? 'border: 1px solid #ad3978 !important'
+                  : isOrange === true
+                    ? 'border: 1px solid #FFA500 !important'
+                    : 'border:1px solid #f6d1ff !important'
               ">
               <b-card-header class="justify-content-center invoice-header" :class="isBlue === true
-                  ? 'tm_accent_bg'
-                  : isGreen === true
-                    ? 'green_bg'
-                    : isPurple === true
-                      ? 'purple_bg'
-                      : isOrange === true
-                        ? 'orange_bg'
-                        : 'gray_bg'
+                ? 'tm_accent_bg'
+                : isGreen === true
+                  ? 'green_bg'
+                  : isPurple === true
+                    ? 'purple_bg'
+                    : isOrange === true
+                      ? 'orange_bg'
+                      : 'gray_bg'
                 ">
                 <h5 class="m-0" :style="isGray === true
-                    ? 'color: black !important'
-                    : 'color: white !important'
+                  ? 'color: black !important'
+                  : 'color: white !important'
                   ">
                   {{ $t("add_invoice.supplier") }}
                 </h5>
@@ -106,28 +106,28 @@
 
           <div class="mt-md-0 mt-2 flex-1">
             <b-card no-body class="invoice-preview invoice-card" :style="isBlue === true
-                ? 'border: 1px solid #007aff !important'
-                : isGreen === true
-                  ? 'border: 1px solid #8fce00 !important'
-                  : isPurple === true
-                    ? 'border: 1px solid #ad3978 !important'
-                    : isOrange === true
-                      ? 'border: 1px solid #FFA500 !important'
-                      : 'border:1px solid #f6d1ff !important'
+              ? 'border: 1px solid #007aff !important'
+              : isGreen === true
+                ? 'border: 1px solid #8fce00 !important'
+                : isPurple === true
+                  ? 'border: 1px solid #ad3978 !important'
+                  : isOrange === true
+                    ? 'border: 1px solid #FFA500 !important'
+                    : 'border:1px solid #f6d1ff !important'
               ">
               <b-card-header class="justify-content-center invoice-header" :class="isBlue === true
-                  ? 'tm_accent_bg'
-                  : isGreen === true
-                    ? 'green_bg'
-                    : isPurple === true
-                      ? 'purple_bg'
-                      : isOrange === true
-                        ? 'orange_bg'
-                        : 'gray_bg'
+                ? 'tm_accent_bg'
+                : isGreen === true
+                  ? 'green_bg'
+                  : isPurple === true
+                    ? 'purple_bg'
+                    : isOrange === true
+                      ? 'orange_bg'
+                      : 'gray_bg'
                 ">
                 <h5 class="m-0" :style="isGray === true
-                    ? 'color: black !important'
-                    : 'color: white !important'
+                  ? 'color: black !important'
+                  : 'color: white !important'
                   ">
                   {{ $t("add_invoice.recipient") }}
                 </h5>
@@ -204,14 +204,14 @@
           </b-card>
         </div>
         <b-card no-body class="invoice-preview-card transaction-container" :style="isBlue === true
-            ? 'border: 1px solid #007aff'
-            : isGreen === true
-              ? 'border: 1px solid #8fce00'
-              : isPurple === true
-                ? 'border: 1px solid #ad3978'
-                : isOrange === true
-                  ? 'border: 1px solid #FFA500'
-                  : 'border:1px solid #f6d1ff'
+          ? 'border: 1px solid #007aff'
+          : isGreen === true
+            ? 'border: 1px solid #8fce00'
+            : isPurple === true
+              ? 'border: 1px solid #ad3978'
+              : isOrange === true
+                ? 'border: 1px solid #FFA500'
+                : 'border:1px solid #f6d1ff'
           ">
           <!-- Invoice Description: Table -->
           <!-- <b-table-lite
@@ -308,17 +308,17 @@
                 <table>
                   <thead>
                     <tr :class="isBlue === true
-                        ? 'tm_accent_bg'
-                        : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
                       " :style="isGray === true
-      ? 'color: black !important'
-      : 'color: white !important'
+    ? 'color: black !important'
+    : 'color: white !important'
     ">
                       <th class="tm_width_1 tm_semi_bold">
                         {{ $t("add_invoice.s_no") }}
@@ -373,14 +373,14 @@
         </b-card>
 
         <b-card no-body class="invoice-preview-card transaction-container" :style="isBlue === true
-            ? 'border: 1px solid #007aff'
-            : isGreen === true
-              ? 'border: 1px solid #8fce00'
-              : isPurple === true
-                ? 'border: 1px solid #ad3978'
-                : isOrange === true
-                  ? 'border: 1px solid #FFA500'
-                  : 'border:1px solid #f6d1ff'
+          ? 'border: 1px solid #007aff'
+          : isGreen === true
+            ? 'border: 1px solid #8fce00'
+            : isPurple === true
+              ? 'border: 1px solid #ad3978'
+              : isOrange === true
+                ? 'border: 1px solid #FFA500'
+                : 'border:1px solid #f6d1ff'
           ">
           <b-card-body class="invoice-padding">
             <b-row class="invoiceStat">
@@ -472,37 +472,22 @@
             </b-row>
           </b-card-body>
         </b-card>
-            <template>
-              <b-modal ref="my-modal" hide-footer title="Using Component Methods">
-                <div class="d-block text-center">
-                  <form @submit.prevent="onSubmit" class="add-form">
-                    <label>Title</label>
-                    <input 
-                      type="text" 
-                      v-model="name"
-                      name="name"
-                      value="Title"
-                      placeholder="Your Title"
-                    >
-                    <label>Email</label>
-                    <input 
-                      type="email" 
-                      v-model="email"
-                      name="email"
-                      placeholder="Your Email"
-                      >
-                    <label>Message</label>
-                    <textarea 
-                      name="message"
-                      v-model="message"
-                      cols="30" rows="5"
-                      placeholder="Message">
+        <template>
+          <b-modal ref="my-modal" hide-footer title="Using Component Methods">
+            <div class="d-block text-center">
+              <form @submit.prevent="onSubmit" class="add-form">
+                <label>Title</label>
+                <input type="text" v-model="name" name="name" value="Title" placeholder="Your Title">
+                <label>Email</label>
+                <input type="email" v-model="email" name="email" placeholder="Your Email">
+                <label>Message</label>
+                <textarea name="message" v-model="message" cols="30" rows="5" placeholder="Message">
                     </textarea>
-                    <input type="submit" value="Send">
-                  </form>
-                </div>
-              </b-modal>
-            </template>
+                <input type="submit" value="Send">
+              </form>
+            </div>
+          </b-modal>
+        </template>
         <div class="mt-md-0 mt-2 flex-1" v-if="hasBankDetails">
           <b-card no-body class="invoice-preview invoice-card">
             <b-card-header class="justify-content-center invoice-header">
@@ -818,31 +803,31 @@
                     </div>
                   </div>
                   <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-  <tr>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.supplierCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for supplier's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.recipientCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for recipient's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-  </tr>
-</table>
+                    <tr>
+                      <td style="text-align: center; padding: 30px;">
+                        <div style=" margin-bottom: 20px;">
+                          {{ invoiceData.supplierCompany.companyOwnerName }}
+                        </div>
+                        <div style="height: 50px; border-bottom: 1px dashed black;">
+                          <!-- Space for supplier's signature -->
+                        </div>
+                        <div style="margin-top: 10px;">
+                          {{ new Date().toLocaleDateString() }}
+                        </div>
+                      </td>
+                      <td style="text-align: center; padding: 30px;">
+                        <div style=" margin-bottom: 20px;">
+                          {{ invoiceData.recipientCompany.companyOwnerName }}
+                        </div>
+                        <div style="height: 50px; border-bottom: 1px dashed black;">
+                          <!-- Space for recipient's signature -->
+                        </div>
+                        <div style="margin-top: 10px;">
+                          {{ new Date().toLocaleDateString() }}
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </div>
@@ -864,28 +849,28 @@
                   </div>
                   <div class="tm_invoice_right tm_text_right tm_mobile_hide">
                     <div class="tm_f50 tm_text_uppercase" :style="isGray === true
-                        ? 'color: black !important'
-                        : 'color: white !important'
+                      ? 'color: black !important'
+                      : 'color: white !important'
                       ">
                       {{ $t("add_invoice.invoice") }}
                     </div>
                   </div>
                   <div class="tm_shape_bg tm_mobile_hide" :class="isBlue === true
-                      ? 'tm_accent_bg'
-                      : isGreen === true
-                        ? 'green_bg'
-                        : isPurple === true
-                          ? 'purple_bg'
-                          : isOrange === true
-                            ? 'orange_bg'
-                            : 'gray_bg'
+                    ? 'tm_accent_bg'
+                    : isGreen === true
+                      ? 'green_bg'
+                      : isPurple === true
+                        ? 'purple_bg'
+                        : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
                     "></div>
                 </div>
                 <div class="tm_invoice_info tm_mb25">
                   <div class="tm_card_note tm_mobile_hide"></div>
                   <div class="tm_invoice_info_list" style="margin-top: 5px; margin-bottom: 10px" :style="isGray === true
-                      ? 'color: black !important'
-                      : 'color: white !important'
+                    ? 'color: black !important'
+                    : 'color: white !important'
                     ">
                     <p class="tm_invoice_number tm_m0">
                       {{ $t("company_invoices.invoice_no") }}:
@@ -971,17 +956,17 @@
                       <table>
                         <thead>
                           <tr :class="isBlue === true
-                              ? 'tm_accent_bg'
-                              : isGreen === true
-                                ? 'green_bg'
-                                : isPurple === true
-                                  ? 'purple_bg'
-                                  : isOrange === true
-                                    ? 'orange_bg'
-                                    : 'gray_bg'
+                            ? 'tm_accent_bg'
+                            : isGreen === true
+                              ? 'green_bg'
+                              : isPurple === true
+                                ? 'purple_bg'
+                                : isOrange === true
+                                  ? 'orange_bg'
+                                  : 'gray_bg'
                             " :style="isGray === true
-      ? 'color: black !important'
-      : 'color: white !important'
+    ? 'color: black !important'
+    : 'color: white !important'
     ">
                             <th class="tm_width_1 tm_semi_bold">
                               {{ $t("add_invoice.s_no") }}
@@ -1126,17 +1111,17 @@
                           </tr>
 
                           <tr :class="isBlue === true
-                              ? 'tm_accent_bg'
-                              : isGreen === true
-                                ? 'green_bg'
-                                : isPurple === true
-                                  ? 'purple_bg'
-                                  : isOrange === true
-                                    ? 'orange_bg'
-                                    : 'gray_bg'
+                            ? 'tm_accent_bg'
+                            : isGreen === true
+                              ? 'green_bg'
+                              : isPurple === true
+                                ? 'purple_bg'
+                                : isOrange === true
+                                  ? 'orange_bg'
+                                  : 'gray_bg'
                             " :style="isGray === true
-      ? 'color: black !important'
-      : 'color: white !important'
+    ? 'color: black !important'
+    : 'color: white !important'
     ">
                             <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16">
                               {{ $t("add_invoice.total_price") }}:
@@ -1158,31 +1143,31 @@
                     </div>
                   </div>
                   <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-  <tr>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.supplierCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for supplier's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.recipientCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for recipient's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-  </tr>
-</table>
+                    <tr>
+                      <td style="text-align: center; padding: 30px;">
+                        <div style=" margin-bottom: 20px;">
+                          {{ invoiceData.supplierCompany.companyOwnerName }}
+                        </div>
+                        <div style="height: 50px; border-bottom: 1px dashed black;">
+                          <!-- Space for supplier's signature -->
+                        </div>
+                        <div style="margin-top: 10px;">
+                          {{ new Date().toLocaleDateString() }}
+                        </div>
+                      </td>
+                      <td style="text-align: center; padding: 30px;">
+                        <div style=" margin-bottom: 20px;">
+                          {{ invoiceData.recipientCompany.companyOwnerName }}
+                        </div>
+                        <div style="height: 50px; border-bottom: 1px dashed black;">
+                          <!-- Space for recipient's signature -->
+                        </div>
+                        <div style="margin-top: 10px;">
+                          {{ new Date().toLocaleDateString() }}
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </div>
@@ -1197,115 +1182,115 @@
             <div class="tm_invoice tm_style1 tm_type2" id="tm_download_section">
               <div class="tm_bars">
                 <span :class="isBlue === true
-                    ? 'tm_accent_bg'
-                    : isGreen === true
-                      ? 'green_bg'
-                      : isPurple === true
-                        ? 'purple_bg'
-                        : isOrange === true
-                          ? 'orange_bg'
-                          : 'gray_bg'
+                  ? 'tm_accent_bg'
+                  : isGreen === true
+                    ? 'green_bg'
+                    : isPurple === true
+                      ? 'purple_bg'
+                      : isOrange === true
+                        ? 'orange_bg'
+                        : 'gray_bg'
                   "></span>
                 <span :class="isBlue === true
-                    ? 'tm_accent_bg'
-                    : isGreen === true
-                      ? 'green_bg'
-                      : isPurple === true
-                        ? 'purple_bg'
-                        : isOrange === true
-                          ? 'orange_bg'
-                          : 'gray_bg'
+                  ? 'tm_accent_bg'
+                  : isGreen === true
+                    ? 'green_bg'
+                    : isPurple === true
+                      ? 'purple_bg'
+                      : isOrange === true
+                        ? 'orange_bg'
+                        : 'gray_bg'
                   "></span>
                 <span :class="isBlue === true
-                    ? 'tm_accent_bg'
-                    : isGreen === true
-                      ? 'green_bg'
-                      : isPurple === true
-                        ? 'purple_bg'
-                        : isOrange === true
-                          ? 'orange_bg'
-                          : 'gray_bg'
+                  ? 'tm_accent_bg'
+                  : isGreen === true
+                    ? 'green_bg'
+                    : isPurple === true
+                      ? 'purple_bg'
+                      : isOrange === true
+                        ? 'orange_bg'
+                        : 'gray_bg'
                   "></span>
               </div>
               <div class="tm_bars tm_type1">
                 <span :class="isBlue === true
-                    ? 'tm_accent_bg'
-                    : isGreen === true
-                      ? 'green_bg'
-                      : isPurple === true
-                        ? 'purple_bg'
-                        : isOrange === true
-                          ? 'orange_bg'
-                          : 'gray_bg'
+                  ? 'tm_accent_bg'
+                  : isGreen === true
+                    ? 'green_bg'
+                    : isPurple === true
+                      ? 'purple_bg'
+                      : isOrange === true
+                        ? 'orange_bg'
+                        : 'gray_bg'
                   "></span>
                 <span :class="isBlue === true
-                    ? 'tm_accent_bg'
-                    : isGreen === true
-                      ? 'green_bg'
-                      : isPurple === true
-                        ? 'purple_bg'
-                        : isOrange === true
-                          ? 'orange_bg'
-                          : 'gray_bg'
+                  ? 'tm_accent_bg'
+                  : isGreen === true
+                    ? 'green_bg'
+                    : isPurple === true
+                      ? 'purple_bg'
+                      : isOrange === true
+                        ? 'orange_bg'
+                        : 'gray_bg'
                   "></span>
                 <span :class="isBlue === true
-                    ? 'tm_accent_bg'
-                    : isGreen === true
-                      ? 'green_bg'
-                      : isPurple === true
-                        ? 'purple_bg'
-                        : isOrange === true
-                          ? 'orange_bg'
-                          : 'gray_bg'
+                  ? 'tm_accent_bg'
+                  : isGreen === true
+                    ? 'green_bg'
+                    : isPurple === true
+                      ? 'purple_bg'
+                      : isOrange === true
+                        ? 'orange_bg'
+                        : 'gray_bg'
                   "></span>
               </div>
               <div class="tm_shape">
                 <div class="tm_shape_in" :class="isBlue === true
-                    ? 'tm_accent_bg'
-                    : isGreen === true
-                      ? 'green_bg'
-                      : isPurple === true
-                        ? 'purple_bg'
-                        : isOrange === true
-                          ? 'orange_bg'
-                          : 'gray_bg'
+                  ? 'tm_accent_bg'
+                  : isGreen === true
+                    ? 'green_bg'
+                    : isPurple === true
+                      ? 'purple_bg'
+                      : isOrange === true
+                        ? 'orange_bg'
+                        : 'gray_bg'
                   "></div>
               </div>
               <div class="tm_shape_2 tm_primary_color">
                 <div class="tm_shape_2_in" :style="isBlue === true
-                    ? 'color: #007aff;'
-                    : isGreen === true
-                      ? 'color: #8fce00'
-                      : isPurple === true
-                        ? 'color: #ad3978'
-                        : isOrange === true
-                          ? 'color: #FFA500'
-                          : 'color: #f6d1ff'
+                  ? 'color: #007aff;'
+                  : isGreen === true
+                    ? 'color: #8fce00'
+                    : isPurple === true
+                      ? 'color: #ad3978'
+                      : isOrange === true
+                        ? 'color: #FFA500'
+                        : 'color: #f6d1ff'
                   "></div>
               </div>
               <div class="tm_shape_2 tm_type1 tm_primary_color">
                 <div class="tm_shape_2_in" :style="isBlue === true
-                    ? 'color: #007aff;'
-                    : isGreen === true
-                      ? 'color: #8fce00'
-                      : isPurple === true
-                        ? 'color: #ad3978'
-                        : isOrange === true
-                          ? 'color: #FFA500'
-                          : 'color: #f6d1ff'
+                  ? 'color: #007aff;'
+                  : isGreen === true
+                    ? 'color: #8fce00'
+                    : isPurple === true
+                      ? 'color: #ad3978'
+                      : isOrange === true
+                        ? 'color: #FFA500'
+                        : 'color: #f6d1ff'
                   "></div>
               </div>
               <!-- <div class="tm_shape_4 tm_primary_bg"></div> -->
               <div class="tm_shape tm_type1">
                 <div class="tm_shape_in" :class="isBlue === true
-                    ? 'tm_accent_bg'
-                    : isGreen === true
-                      ? 'green_bg'
-                      : isPurple === true
-                        ? 'purple_bg'
-                        : isOrange === true
-                          ? 'orange_bg'
-                          : 'gray_bg'
+                  ? 'tm_accent_bg'
+                  : isGreen === true
+                    ? 'green_bg'
+                    : isPurple === true
+                      ? 'purple_bg'
+                      : isOrange === true
+                        ? 'orange_bg'
+                        : 'gray_bg'
                   "></div>
               </div>
               <div class="tm_invoice_in">
@@ -1395,17 +1380,17 @@
                       <table>
                         <thead>
                           <tr :class="isBlue === true
-                              ? 'tm_accent_bg'
-                              : isGreen === true
-                                ? 'green_bg'
-                                : isPurple === true
-                                  ? 'purple_bg'
-                                  : isOrange === true
-                                    ? 'orange_bg'
-                                    : 'gray_bg'
+                            ? 'tm_accent_bg'
+                            : isGreen === true
+                              ? 'green_bg'
+                              : isPurple === true
+                                ? 'purple_bg'
+                                : isOrange === true
+                                  ? 'orange_bg'
+                                  : 'gray_bg'
                             " :style="isGray === true
-      ? 'color: black !important'
-      : 'color: white !important'
+    ? 'color: black !important'
+    : 'color: white !important'
     ">
                             <th class="tm_width_1 tm_semi_bold">
                               {{ $t("add_invoice.s_no") }}
@@ -1574,35 +1559,38 @@
                 </div>
 
                 <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-  <tr>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.supplierCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for supplier's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-    <td style="text-align: center; padding: 30px;">
-      <div style=" margin-bottom: 20px;">
-        {{ invoiceData.recipientCompany.companyOwnerName }}
-      </div>
-      <div style="height: 50px; border-bottom: 1px dashed black;">
-        <!-- Space for recipient's signature -->
-      </div>
-      <div style="margin-top: 10px;">
-        {{ new Date().toLocaleDateString() }}
-      </div>
-    </td>
-  </tr>
-</table>
+                  <tr>
+                    <td style="text-align: center; padding: 30px;">
+                      <div style=" margin-bottom: 20px;">
+                        {{ invoiceData.supplierCompany.companyOwnerName }}
+                      </div>
+                      <div style="height: 50px; border-bottom: 1px dashed black;">
+                        <!-- Space for supplier's signature -->
+                      </div>
+                      <div style="margin-top: 10px;">
+                        {{ new Date().toLocaleDateString() }}
+                      </div>
+                    </td>
+                    <td style="text-align: center; padding: 30px;">
+                      <div style=" margin-bottom: 20px;">
+                        {{ invoiceData.recipientCompany.companyOwnerName }}
+                      </div>
+                      <div style="height: 50px; border-bottom: 1px dashed black;">
+                        <!-- Space for recipient's signature -->
+                      </div>
+                      <div style="margin-top: 10px;">
+                        {{ new Date().toLocaleDateString() }}
+                      </div>
+                    </td>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
         </div>
+
+
+
       </b-col>
 
       <!-- template 04 -->
@@ -1615,14 +1603,14 @@
                   <path
                     d="M850 0.889398H0V150.889H184.505C216.239 150.889 246.673 141.531 269.113 124.872L359.112 58.0565C381.553 41.3977 411.987 32.0391 443.721 32.0391H850V0.889398Z"
                     :fill="isBlue === true
-                        ? '#007aff'
-                        : isGreen === true
-                          ? '#8fce00'
-                          : isPurple === true
-                            ? '#ad3978'
-                            : isOrange === true
-                              ? '#FFA500'
-                              : '#f6d1ff'
+                      ? '#007aff'
+                      : isGreen === true
+                        ? '#8fce00'
+                        : isPurple === true
+                          ? '#ad3978'
+                          : isOrange === true
+                            ? '#FFA500'
+                            : '#f6d1ff'
                       " fill-opacity="1" />
                 </svg>
               </div>
@@ -1631,14 +1619,14 @@
                   <path
                     d="M0 150.889H850V0.889408H665.496C633.762 0.889408 603.327 10.2481 580.887 26.9081L490.888 93.7224C468.447 110.381 438.014 119.74 406.279 119.74H0V150.889Z"
                     :fill="isBlue === true
-                        ? '#007aff'
-                        : isGreen === true
-                          ? '#8fce00'
-                          : isPurple === true
-                            ? '#ad3978'
-                            : isOrange === true
-                              ? '#FFA500'
-                              : '#f6d1ff'
+                      ? '#007aff'
+                      : isGreen === true
+                        ? '#8fce00'
+                        : isPurple === true
+                          ? '#ad3978'
+                          : isOrange === true
+                            ? '#FFA500'
+                            : '#f6d1ff'
                       " fill-opacity="1" />
                 </svg>
               </div>
@@ -1661,33 +1649,33 @@
                   </div>
                   <div class="tm_invoice_info_list">
                     <p class="tm_invoice_number tm_m0" style="z-index: 9" :style="isGray === true
-                        ? 'color: black !important'
-                        : 'color: white !important'
+                      ? 'color: black !important'
+                      : 'color: white !important'
                       ">
                       {{ $t("company_invoices.invoice_no") }}:
                       <b class="tm_primary_color" :style="isGray === true
-                          ? 'color: black !important'
-                          : 'color: white !important'
+                        ? 'color: black !important'
+                        : 'color: white !important'
                         ">#{{ invoiceData.invoiceNumber }}</b>
                     </p>
                     <p class="tm_invoice_date tm_m0" style="z-index: 9" :style="isGray === true
-                        ? 'color: black !important'
-                        : 'color: white !important'
+                      ? 'color: black !important'
+                      : 'color: white !important'
                       ">
                       {{ $t("add_invoice.date") }}:
                       <b class="tm_primary_color" :style="isGray === true
-                          ? 'color: black !important'
-                          : 'color: white !important'
+                        ? 'color: black !important'
+                        : 'color: white !important'
                         ">{{ invoiceData.dateIssued }}</b>
                     </p>
                     <p class="tm_invoice_date tm_m0" style="z-index: 9" :style="invoiceData.invoiceColor === 'GRAY'
-                        ? 'color: black !important'
-                        : 'color: white !important'
+                      ? 'color: black !important'
+                      : 'color: white !important'
                       ">
                       {{ $t("company_invoices.transaction_type") }}:
                       <b class="tm_primary_color" :style="invoiceData.invoiceColor === 'GRAY'
-                          ? 'color: black !important'
-                          : 'color: white !important'
+                        ? 'color: black !important'
+                        : 'color: white !important'
                         ">{{
     $t("company_invoices." + invoiceData.transactionType)
   }}</b>
@@ -1761,17 +1749,17 @@
                     <table>
                       <thead>
                         <tr :class="isBlue === true
-                            ? 'tm_accent_bg'
-                            : isGreen === true
-                              ? 'green_bg'
-                              : isPurple === true
-                                ? 'purple_bg'
-                                : isOrange === true
-                                  ? 'orange_bg'
-                                  : 'gray_bg'
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                            ? 'green_bg'
+                            : isPurple === true
+                              ? 'purple_bg'
+                              : isOrange === true
+                                ? 'orange_bg'
+                                : 'gray_bg'
                           " :style="isGray === true
-      ? 'color: black !important'
-      : 'color: white !important'
+    ? 'color: black !important'
+    : 'color: white !important'
     ">
                           <th class="tm_width_1 tm_semi_bold">
                             {{ $t("add_invoice.s_no") }}
@@ -1932,38 +1920,38 @@
                         </tbody>
                       </table>
 
-                     
+
                     </div>
-                    
+
                   </div>
                   <div style="width: 50%; float: left;">
-  <table style="width: 100%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
-    <tr>
-      <td style="text-align: center; padding: 30px;">
-        <div style=" margin-bottom: 20px;">
-          {{ invoiceData.supplierCompany.companyOwnerName }}
-        </div>
-        <div style="height: 50px; border-bottom: 1px dashed black;">
-          <!-- Space for supplier's signature -->
-        </div>
-        <div style="margin-top: 10px;">
-          {{ new Date().toLocaleDateString() }}
-        </div>
-      </td>
-      <td style="text-align: center; padding: 30px;">
-        <div style=" margin-bottom: 20px;">
-          {{ invoiceData.recipientCompany.companyOwnerName }}
-        </div>
-        <div style="height: 50px; border-bottom: 1px dashed black;">
-          <!-- Space for recipient's signature -->
-        </div>
-        <div style="margin-top: 10px;">
-          {{ new Date().toLocaleDateString() }}
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>
+                    <table style="width: 100%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+                      <tr>
+                        <td style="text-align: center; padding: 30px;">
+                          <div style=" margin-bottom: 20px;">
+                            {{ invoiceData.supplierCompany.companyOwnerName }}
+                          </div>
+                          <div style="height: 50px; border-bottom: 1px dashed black;">
+                            <!-- Space for supplier's signature -->
+                          </div>
+                          <div style="margin-top: 10px;">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                        <td style="text-align: center; padding: 30px;">
+                          <div style=" margin-bottom: 20px;">
+                            {{ invoiceData.recipientCompany.companyOwnerName }}
+                          </div>
+                          <div style="height: 50px; border-bottom: 1px dashed black;">
+                            <!-- Space for recipient's signature -->
+                          </div>
+                          <div style="margin-top: 10px;">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1983,8 +1971,8 @@
           <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
             :paginate-elements-by-height="1100" filename="invoice" :pdf-quality="2" :manual-pagination="false"
             pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
-            @progress="onProgress($event)" @beforeDownload="beforeDownload($event)"
-            @hasDownloaded="hasDownloaded($event)" ref="html2Pdf">
+            @progress="onProgress($event)" @beforeDownload="beforeDownload($event)" @hasDownloaded="hasDownloaded($event)"
+            ref="html2Pdf">
             <section class="invoice-pdf" slot="pdf-content">
               <div v-if="invoiceData">
                 <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
@@ -2005,8 +1993,8 @@
           <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
             :paginate-elements-by-height="1100" filename="attachinvoice" :pdf-quality="2" :manual-pagination="false"
             pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
-            @progress="onProgress($event)" @beforeDownload="beforeDownload($event)"
-            @hasDownloaded="hasDownloaded($event)" ref="html2Pdfnew">
+            @progress="onProgress($event)" @beforeDownload="beforeDownload($event)" @hasDownloaded="hasDownloaded($event)"
+            ref="html2Pdfnew">
             <section class="invoice-pdf" id="new-invoice" slot="pdf-content">
               <div v-if="invoiceData">
                 <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
@@ -2041,13 +2029,28 @@
             {{ $t("company_info.edit") }}
           </b-button>
 
-           <!-- Button: Edit -->
-          <b-button v-b-modal.modal-1 v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block @click="selectSendEmail()">
+          <!-- Button: Edit -->
+          <b-button v-b-modal.modal-1 v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75"
+            block @click="selectSendEmail()">
             {{ $t("add_invoice.send_email") }}
           </b-button>
         </b-card>
       </b-col>
     </b-row>
+    <b-modal ref="my-modal" hide-footer title="Using Component Methods">
+      <div class="d-block text-center">
+        <form @submit.prevent="onSubmit" class="add-form">
+          <label>Title</label>
+          <input type="text" v-model="name" name="name" value="Title" placeholder="Your Title">
+          <label>Email</label>
+          <input type="email" v-model="email" name="email" placeholder="Your Email">
+          <label>Message</label>
+          <textarea name="message" v-model="message" cols="30" rows="5" placeholder="Message">
+                    </textarea>
+          <input type="submit" value="Send">
+        </form>
+      </div>
+    </b-modal>
   </section>
 </template>
 
@@ -2251,37 +2254,37 @@ export default {
     onProgress(event) {
       console.log(`Processed: ${event} / 100`);
     },
-    async hasDownloaded(event){
+    async hasDownloaded(event) {
       console.log(" Lineeeee...... ", event);
       this.attachPDFToFile(event)
     },
     showModal() {
-        this.$refs['my-modal'].show()
-      },
-      hideModal() {
-        this.$refs['my-modal'].hide()
-      },
-      toggleModal() {
-        // We pass the ID of the button that we want to return focus to
-        // when the modal has hidden
-        this.$refs['my-modal'].toggle('#toggle-btn')
-      },
-      uploadFile() {
-        this.file = this.$refs.file.files[0];
-        console.log(" File Uploading data ", this.file);
-        this.fileToByteArray(this.file, function (byteArrayData) {
-          console.log(" File Byte ARray ", byteArrayData);
+      this.$refs['my-modal'].show()
+    },
+    hideModal() {
+      this.$refs['my-modal'].hide()
+    },
+    toggleModal() {
+      // We pass the ID of the button that we want to return focus to
+      // when the modal has hidden
+      this.$refs['my-modal'].toggle('#toggle-btn')
+    },
+    uploadFile() {
+      this.file = this.$refs.file.files[0];
+      console.log(" File Uploading data ", this.file);
+      this.fileToByteArray(this.file, function (byteArrayData) {
+        console.log(" File Byte ARray ", byteArrayData);
       });
-      },
+    },
     generatePDF() {
       this.$refs.html2Pdf.generatePdf();
     },
-    async beforeDownload ({ html2pdf, options, pdfContent }) {
-            await html2pdf().set(options).from(pdfContent).toPdf().get('pdf').then((pdf) => {
-              const blob = new Blob([pdf], { type: 'application/pdf' });
-              console.log(" New Coming before here...... ", pdf, blob);
-            }).save();
-        },
+    async beforeDownload({ html2pdf, options, pdfContent }) {
+      await html2pdf().set(options).from(pdfContent).toPdf().get('pdf').then((pdf) => {
+        const blob = new Blob([pdf], { type: 'application/pdf' });
+        console.log(" New Coming before here...... ", pdf, blob);
+      }).save();
+    },
     async selectSendEmail() {
       this.sendEmail = false;
       this.$refs['my-modal'].show();
@@ -2293,16 +2296,16 @@ export default {
 *Моля, не отговаряйте на това съобщение! То е автоматично генерирано. Ако имате въпроси, моля свържете се с фирмата доставчик изпратения документ.
 
 Copyright © 2023 Coherent Accounting, All rights reserved.`;
-      this.name = `Фактура с Номер: ${this.invoiceData.invoiceNumber} от : ${this.invoiceData.supplierCompany.companName}`;       
+      this.name = `Фактура с Номер: ${this.invoiceData.invoiceNumber} от : ${this.invoiceData.supplierCompany.companName}`;
       //const newpdfContent123 = this.$refs.html2Pdf.$el.innerHTML;
       //console.log(" New DONDNDNNDDN ", newpdfContent123, this.$el, this.$refs.html2Pdf);
-      this.$refs.html2Pdfnew.generatePdf()
+      // this.$refs.html2Pdfnew.generatePdf()
       //these are important data
       //let data = Object.assign({}, this.$refs.html2Pdfnew.$el.innerHTML);
       //console.log(" new pdf data is ", data);
       //const newblob123 = new Blob([data], { type: 'application/pdf' });
-        //this.fileToByteArray(newblob123, function (byteArrayData) {
-          //console.log(" New BYYYY TTT ARRAAAYYYY ", byteArrayData);
+      //this.fileToByteArray(newblob123, function (byteArrayData) {
+      //console.log(" New BYYYY TTT ARRAAAYYYY ", byteArrayData);
       //});
     },
     attachPDFToFile(pdfBlob) {
@@ -2319,66 +2322,66 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       consol.log(" blob data is here... ", blob);
       //saveAs(blob, 'invoice.pdf');
     },
-    handleFileUpload(e){
-    this.file = e.target.files[0];
-    console.log("Invoice Data ", this.file );
-  },
-      createBase64Image(fileObject) {
-        const reader = new FileReader();
+    handleFileUpload(e) {
+      this.file = e.target.files[0];
+      console.log("Invoice Data ", this.file);
+    },
+    createBase64Image(fileObject) {
+      const reader = new FileReader();
 
-        reader.onload = (e) => {
-          this.userObject.imgPersonal = e.target.result;
-        };
-        reader.readAsBinaryString(fileObject)
-        console.log("file object", fileObject);
-      },
-      async fileToByteArray(file, callback) {
-        var reader = new FileReader();
-        reader.onloadend = function (e) {
-          if (e.target.readyState === FileReader.DONE) {
-            var arrayBuffer = e.target.result;
-            var uint8Array = new Uint8Array(arrayBuffer);
-            var byteArray = Array.from(uint8Array);
-            callback(byteArray);
-          }
-        };
-        reader.readAsArrayBuffer(file);
-      },
-     onSubmit(e){
-                e.preventDefault()
-                console.log("fdfgdfgdfgfdg", this.name)
-                //const content = this.getHTMLContent(); // Replace with your HTML content
-                //this.$refs.html2Pdf.generatePdf().then((pdfBlob) => {
-                  // Perform actions with the generated PDF blob (e.g., send via email)
-                  //this.sendEmailWithAttachment(pdfBlob);
-                //});
-                this.email = e.target.email.value;
-                console.log("Target Values", e.target.email.value, this.invoiceData.invoiceNumber);
-                //this.$refs.html2Pdf.generatePdf('<h1>Your PDF Content</h1>', this.savePDF);
-                this.sendEmailFromAPI(e.target.email.value, e.target.message.value, e.target.name.value, this.invoiceData.invoiceNumber);
-                this.$refs['my-modal'].hide();
-            },
-             savePDF(pdfData) {
-              const file = new File([pdfData], 'invoice.pdf', { type: 'application/pdf' });
-              const url = URL.createObjectURL(file);
-              const link = document.createElement('a');
-              link.href = url;
-              link.download = file.name;
-              link.click();
-              console.log(" URL FILE ", url);
-              URL.revokeObjectURL(url);
-              console.log(" URL 222 FILE ", url);
-            },
-            sendEmailWithAttachment(pdfBlob) {
-              // Your logic to send email with the PDF attachment
-              // ...
-              console.log(pdfBlob);
-            },
-            getHTMLContent() {
-              // Replace with your code to get the HTML content for the PDF generation
-              // ...
-              // Example HTML content
-              const htmlContent = `
+      reader.onload = (e) => {
+        this.userObject.imgPersonal = e.target.result;
+      };
+      reader.readAsBinaryString(fileObject)
+      console.log("file object", fileObject);
+    },
+    async fileToByteArray(file, callback) {
+      var reader = new FileReader();
+      reader.onloadend = function (e) {
+        if (e.target.readyState === FileReader.DONE) {
+          var arrayBuffer = e.target.result;
+          var uint8Array = new Uint8Array(arrayBuffer);
+          var byteArray = Array.from(uint8Array);
+          callback(byteArray);
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    },
+    onSubmit(e) {
+      e.preventDefault()
+      console.log("fdfgdfgdfgfdg", this.name)
+      //const content = this.getHTMLContent(); // Replace with your HTML content
+      //this.$refs.html2Pdf.generatePdf().then((pdfBlob) => {
+      // Perform actions with the generated PDF blob (e.g., send via email)
+      //this.sendEmailWithAttachment(pdfBlob);
+      //});
+      this.email = e.target.email.value;
+      console.log("Target Values", e.target.email.value, this.invoiceData.invoiceNumber);
+      //this.$refs.html2Pdf.generatePdf('<h1>Your PDF Content</h1>', this.savePDF);
+      this.sendEmailFromAPI(e.target.email.value, e.target.message.value, e.target.name.value, this.invoiceData.invoiceNumber);
+      this.$refs['my-modal'].hide();
+    },
+    savePDF(pdfData) {
+      const file = new File([pdfData], 'invoice.pdf', { type: 'application/pdf' });
+      const url = URL.createObjectURL(file);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = file.name;
+      link.click();
+      console.log(" URL FILE ", url);
+      URL.revokeObjectURL(url);
+      console.log(" URL 222 FILE ", url);
+    },
+    sendEmailWithAttachment(pdfBlob) {
+      // Your logic to send email with the PDF attachment
+      // ...
+      console.log(pdfBlob);
+    },
+    getHTMLContent() {
+      // Replace with your code to get the HTML content for the PDF generation
+      // ...
+      // Example HTML content
+      const htmlContent = `
                 <html>
                   <head>
                     <title>PDF Content</title>
@@ -2389,69 +2392,69 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
                   </body>
                 </html>
               `;
-              return htmlContent;
-            },
-     async sendEmailFromAPI(emailData, messageData, nameData, invoiceNumber) {
+      return htmlContent;
+    },
+    async sendEmailFromAPI(emailData, messageData, nameData, invoiceNumber) {
       //sending Email info
       const byteArray = [];
       const formData = new FormData();
-       console.log(" New file generating data... ", this.file);
-       //const fileDataArray =  this.fileToByteArray(this.file, function (byteArrayData) {
-        const fileDataArray =  this.fileToByteArray(this.file, function (byteArrayData) {
-          console.log("byteArrayData  jdajdas ... ", byteArrayData);
-          // Use the byte array as needed
-            byteArray.push(byteArrayData);
-         //return byteArrayData;
-         console.log("under function data ", byteArray, emailData, messageData, nameData);
-          const response = axios.post("account/api/invoice/send-to-email", {
-            "file": byteArrayData,
-            "invoiceNumber": invoiceNumber,
-            "toEmail": emailData,
-            "message": messageData,
-            "title": nameData
-          }, {
-            headers: {
-              'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-              'Content-Type': 'application/json'
-            },
-            responseType: 'blob',
-          });
+      console.log(" New file generating data... ", this.file);
+      //const fileDataArray =  this.fileToByteArray(this.file, function (byteArrayData) {
+      const fileDataArray = this.fileToByteArray(this.file, function (byteArrayData) {
+        console.log("byteArrayData  jdajdas ... ", byteArrayData);
+        // Use the byte array as needed
+        byteArray.push(byteArrayData);
+        //return byteArrayData;
+        console.log("under function data ", byteArray, emailData, messageData, nameData);
+        const response = axios.post("account/api/invoice/send-to-email", {
+          "file": byteArrayData,
+          "invoiceNumber": invoiceNumber,
+          "toEmail": emailData,
+          "message": messageData,
+          "title": nameData
+        }, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+            'Content-Type': 'application/json'
+          },
+          responseType: 'blob',
         });
-     setInterval(
-      console.log(" Byte Code Generate ", byteArray)
-      ,3000);
+      });
+      setInterval(
+        console.log(" Byte Code Generate ", byteArray)
+        , 3000);
       //console.log(" Byte Code Generate ", fileDataArray, byteArray);
-              //console.log(" New Messages Data is here... ", this.message);
+      //console.log(" New Messages Data is here... ", this.message);
       const token = localStorage.getItem("accessToken");
       //try {
-        //const response = await axios.post("account/api/invoice/send-to-email", {
-          //"file": byteArray,
-          //"toEmail": "javeedraza25@gmail.com",
-          //"message": "zzzzzzzz",
-          //"title": "zazaza"
-        //}, {
-          //headers: {
-            //'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-            //'Content-Type': 'application/json'
-          //},
-          //responseType: 'blob',
-        //});
+      //const response = await axios.post("account/api/invoice/send-to-email", {
+      //"file": byteArray,
+      //"toEmail": "javeedraza25@gmail.com",
+      //"message": "zzzzzzzz",
+      //"title": "zazaza"
+      //}, {
+      //headers: {
+      //'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+      //'Content-Type': 'application/json'
+      //},
+      //responseType: 'blob',
+      //});
       //} catch (error) {
 
       //}
       this.$toast({
-                  component: ToastificationContent,
-                  props: {
-                    title: `Email Send Successfully !!!`,
-                    icon: "EditIcon",
-                    variant: "success",
-                  },
-                });
-    },       
-    sendEmailData(e){
-    e.preventDefault() // Prevent page from reloading.
-    // console.log(" New data here ");
-  },
+        component: ToastificationContent,
+        props: {
+          title: `Email Send Successfully !!!`,
+          icon: "EditIcon",
+          variant: "success",
+        },
+      });
+    },
+    sendEmailData(e) {
+      e.preventDefault() // Prevent page from reloading.
+      // console.log(" New data here ");
+    },
   },
 };
 </script>
@@ -2462,7 +2465,9 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
 
 <style lang="scss">
 @media print {
-  html, body {
+
+  html,
+  body {
     height: initial !important;
     overflow: initial !important;
     -webkit-print-color-adjust: exact;
@@ -5517,11 +5522,13 @@ hr {
 </style>
 
 <style scoped>
-* {box-sizing: border-box;}
+* {
+  box-sizing: border-box;
+}
 
 .container {
   display: block;
-  margin:auto;
+  margin: auto;
   text-align: center;
   border-radius: 5px;
   background-color: #f2f2f2;
@@ -5533,7 +5540,9 @@ label {
   float: left;
 }
 
-input[type=text], [type=email], textarea {
+input[type=text],
+[type=email],
+textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
