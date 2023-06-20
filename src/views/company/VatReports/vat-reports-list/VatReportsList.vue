@@ -35,14 +35,14 @@
     </div>
 
     <!-- Modal pop-up to select month -->
-    <b-modal id="modal-prevent-closing" ref="modal" title="Select Month" :ok-title="loadModal" cancel-title="Close"
+    <b-modal id="modal-prevent-closing" ref="modal" :title="$t('company_info.selectMonth')" :ok-title="loadModal" cancel-title="Close"
       @show="resetModal" @hidden="resetModal" @ok="handleOk" :ok-disabled="modalDisabledMonth">
       <form ref="form" @submit.stop.prevent="handleMonthSelected">
         <validation-observer ref="selectMonthRules" tag="form">
           <validation-provider #default="{ errors }" :name="$t('month_selected')" rules="required">
             <vue-monthly-picker id="month_selected" v-model="selectedMonthData.date" name="month_selected"
               date-format="Y-MM" :month-labels="monthLabels" :class="errors.length > 0 ? 'is-invalid' : null"
-              place-holder="Please Select: " />
+              :place-holder="$t('company_info.pleaseSelect')" />
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </validation-observer>
@@ -50,7 +50,7 @@
     </b-modal>
 
     <!-- Modal pop-up containing the list of invoices for vat report -->
-    <b-modal id="modal-invoices-for-report" ref="modal" title="Invoices for Vat Reports" ok-title="Download Zip"
+    <b-modal id="modal-invoices-for-report" ref="modal" :title="$t('company_info.invoiceForVat')" ok-title="Download Zip"
       cancel-title="Close" scrollable @ok="getZipFile(refetchData)" :ok-disabled="modalDisabled">
       <form ref="form" @submit.stop.prevent="handleMonthSelected">
         <!-- invoices-for-vat-reports Table -->
@@ -117,15 +117,15 @@
     </b-modal>
 
     <!-- Add Assets -->
-    <b-modal id="add-asset-modal" ref="modal" title="Add Asset" ok-title="Add" cancel-title="Close" @ok="createAsset()">
+    <b-modal id="add-asset-modal" ref="modal" :title="$t('company_documents.add_asset')" :ok-title="$t('clients_or_recipients.add')" :cancel-title="$t('update_tickets.close')" @ok="createAsset()">
       <b-row>
         <b-col class="pb-2" cols="12">
           <b-input-group class="input-group-merge">
-            <b-form-textarea v-model="notes" placeholder="Add notes about binary file" rows="5" />
+            <b-form-textarea v-model="notes" :placeholder="$t('vat_reports.binaryFile')" rows="5" />
           </b-input-group>
         </b-col>
         <b-col cols="12">
-          <file-pond ref="pond" required name="file" label-idle="Drop files here..." :allow-multiple="false"
+          <file-pond ref="pond" required name="file" :label-idle="$t('vat_reports.dropFiles')" :allow-multiple="false"
             :files="myFiles" :server="server" />
         </b-col>
       </b-row>
@@ -267,7 +267,7 @@
                 params: { id: data.item.id, companyId: companyID },
               })
               " />
-          <b-tooltip title="Preview Report" class="cursor-pointer" :target="`report-row-${data.item.id}-preview-icon`" />
+          <b-tooltip :title="$t('company_info.preview')" class="cursor-pointer" :target="`report-row-${data.item.id}-preview-icon`" />
 
           <!-- Dropdown -->
           <b-dropdown variant="link" toggle-class="p-0" no-caret :right="$store.state.appConfig.isRTL">
@@ -283,11 +283,11 @@
               params: { companyId: companyID, id: data.item.id },
             }">
               <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
+              <span class="align-middle ml-50">{{ $t("company_info.edit")}}</span>
             </b-dropdown-item>
             <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
               <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
+              <span class="align-middle ml-50">{{ $t("company_info.delete")}}</span>
             </b-dropdown-item>
           </b-dropdown>
 
@@ -306,9 +306,9 @@
               }) -->
           <feather-icon v-else :id="`report-row-${data.item.id}-asset-icon`" icon="DatabaseIcon" size="16" color="green"
             class="mx-1 cursor-pointer" />
-          <b-tooltip title="Add Asset" class="cursor-pointer" :target="`report-row-${data.item.id}-no-asset-icon`" />
+          <b-tooltip :title="$t('company_documents.add_asset')" class="cursor-pointer" :target="`report-row-${data.item.id}-no-asset-icon`" />
 
-          <b-tooltip title="Assets" class="cursor-pointer" :target="`report-row-${data.item.id}-asset-icon`" />
+          <b-tooltip :title="$t('company_info.assets')" class="cursor-pointer" :target="`report-row-${data.item.id}-asset-icon`" />
         </div>
       </template>
     </b-table>

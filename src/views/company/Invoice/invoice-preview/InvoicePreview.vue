@@ -472,16 +472,31 @@
             </b-row>
           </b-card-body>
         </b-card>
-        <template>
-          <b-modal ref="my-modal" hide-footer title="Using Component Methods">
-            <div class="d-block text-center">
-              <form @submit.prevent="onSubmit" class="add-form">
-                <label>Title</label>
-                <input type="text" v-model="name" name="name" value="Title" placeholder="Your Title">
-                <label>Email</label>
-                <input type="email" v-model="email" name="email" placeholder="Your Email">
-                <label>Message</label>
-                <textarea name="message" v-model="message" cols="30" rows="5" placeholder="Message">
+            <template>
+              <b-modal ref="my-modal" hide-footer :title="$t('company_info.componentMethod')">
+                <div class="d-block text-center">
+                  <form @submit.prevent="onSubmit" class="add-form">
+                    <label>{{$t('tickets_page.title')}}</label>
+                    <input 
+                      type="text" 
+                      v-model="name"
+                      name="name"
+                      value="Title"
+                      :placeholder="$t('company_info.yourTitle')"
+                    >
+                    <label>{{$t('login.lbl_email')}}</label>
+                    <input 
+                      type="email" 
+                      v-model="email"
+                      name="email"
+                      :placeholder="$t('company_info.yourEmail')"
+                      >
+                    <label>{{$t('company_info.Message')}}</label>
+                    <textarea 
+                      name="message"
+                      v-model="message"
+                      cols="30" rows="5"
+                      :placeholder="$t('company_info.Message')">
                     </textarea>
                 <input type="submit" value="Send">
               </form>

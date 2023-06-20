@@ -1180,7 +1180,7 @@
             block
             @click="generatePDF()"
           >
-            Download
+            {{ $t("download") }}
           </b-button>
 
           <vue-html2pdf
@@ -1214,7 +1214,7 @@
             block
             @click="printVatReport()"
           >
-            Print
+            {{ $t("print") }}
           </b-button>
 
           <!-- Button: Edit -->
@@ -1228,7 +1228,7 @@
               params: { companyId: companyID, id: vatReportData.id },
             }"
           >
-            Edit
+            {{ $t("company_info.edit")}}
           </b-button>
         </b-card>
       </b-col>

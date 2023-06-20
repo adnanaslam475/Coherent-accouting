@@ -1062,7 +1062,7 @@
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.name }}
+                              {{ $t(option.name) }}
                             </div>
                           </template>
                           <template #selected-option="option" v-else>
@@ -1083,7 +1083,7 @@
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.name }}
+                              {{ $t(option.name) }}
                             </span>
                           </template>
                         </v-select>
@@ -1840,7 +1840,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </div>
                                   </template>
                                   <template #selected-option="option" v-else>
@@ -1861,7 +1861,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </span>
                                   </template>
                                 </v-select>
@@ -2855,7 +2855,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </div>
                                   </template>
                                   <template #selected-option="option" v-else>
@@ -2876,7 +2876,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </span>
                                   </template>
                                 </v-select>
@@ -3949,7 +3949,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </div>
                                   </template>
                                   <template #selected-option="option" v-else>
@@ -3970,7 +3970,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </span>
                                   </template>
                                 </v-select>
@@ -4986,7 +4986,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </div>
                                   </template>
                                   <template #selected-option="option" v-else>
@@ -5007,7 +5007,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </span>
                                   </template>
                                 </v-select>
@@ -5503,13 +5503,13 @@ export default {
 
       clauseToSend: "",
       bankNameToSend: "",
-      bankList: [
-        { name: "Първа Инвестиционна Банка" },
-        { name: "ДСК" },
-        { name: "Уникредит Булбанк" },
-        { name: "Централна Кооперативна Банка" },
-        { name: "Булбанк" },
-      ],
+      // bankList: [
+      //   { name: "Първа Инвестиционна Банка" },
+      //   { name: "ДСК" },
+      //   { name: "Уникредит Булбанк" },
+      //   { name: "Централна Кооперативна Банка" },
+      //   { name: "Булбанк" },
+      // ],
       isBank: false,
       noVatClause: [
         { clause: "чл.113, ал.9 от ЗДДС" },
@@ -5544,6 +5544,15 @@ export default {
     window.removeEventListener("resize", this.initTrHeight);
   },
   computed: {
+    bankList() {
+        return [
+          { name: this.$t('add_invoice.bank-1') },
+          { name: this.$t('add_invoice.bank-2') },
+          { name: this.$t('add_invoice.bank-3') },
+          { name: this.$t('add_invoice.bank-4') },
+          { name: this.$t('add_invoice.bank-5') },
+        ];
+      },
     dropdownStyle() {
       return this.isGray === true ? { 'color': 'black' } : { 'color': 'white' }
     },

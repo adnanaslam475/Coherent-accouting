@@ -73,7 +73,7 @@
         <li class="dropdown-menu-header">
           <div class="dropdown-header d-flex">
             <h4 class="notification-title mb-0 mr-auto">
-              Notifications
+              {{ $t("notifications.notification")}}
             </h4>
             <b-badge
               pill
@@ -128,10 +128,10 @@
                 </b-link>
               </b-row>
               <small class="notification-text">
-                You can download file by clicking <a
+                {{ $t("notifications.click")}} <a
                   href="javascript:void(0)"
                   @click="downloadFile(notification)"
-                >here</a>
+                >{{ $t("notifications.here")}}</a>
                 <!--                <a-->
                 <!--                  v-if="fullIndex !== notification.id"-->
                 <!--                  href="javascript:void(0)"-->
@@ -152,7 +152,7 @@
             variant="primary"
             block
             @click="markNotificationReadAll()"
-          >Read all notifications
+          >{{ $t("notifications.readAll")}}
           </b-button>
         </li>
       </b-nav-item-dropdown>
