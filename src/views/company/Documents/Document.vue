@@ -47,7 +47,7 @@
           >
             <b-col cols="2">
               <b-button small type="submit" variant="primary" block>
-                Create
+                {{ $t("company_documents.create") }}
               </b-button>
             </b-col>
           </b-col>
@@ -170,7 +170,7 @@
                   @click="showImageDetail(data.item.binaryId,data.item.id, images1[data.item.id].type)" 
                 />
                 <b-tooltip
-                  title="Preview Document"
+                  :title="$t('company_documents.preview')"
                   :target="`preview-${data.item.id}-icon`"
                 />
              
@@ -215,7 +215,7 @@
                   style="cursor: pointer" 
                 />
                 <b-tooltip
-                  title="Edit Document"
+                  :title="$t('company_documents.edit')"
                   :target="`edit-${data.item.id}-icon`"
                 />
               
@@ -228,7 +228,7 @@
                   style="cursor: pointer" 
                 />
                 <b-tooltip
-                  title="Delete Document"
+                  :title="$t('company_documents.delete')"
                   :target="`delete-${data.item.id}-icon`"
                 />
                 <feather-icon
@@ -242,7 +242,7 @@
                 />
                 <b-tooltip
                   v-if="images1[data.item.id]"
-                  title="Download Document"
+                  :title="$t('company_documents.download')"
                   :target="`download-${data.item.id}-icon`"
                 />
               </div>

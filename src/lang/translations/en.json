@@ -191,6 +191,15 @@
     "confirm": "Confirm"
   },
   "company_info": {
+    "invoiceForVat": "Invoices for Vat Reports",
+    "pleaseSelect": "Please Select",
+    "selectMonth": "Select Month",
+    "yourTitle": "Your Title",
+    "yourEmail": "Your Email",
+    "Message": "Message",
+    "componentMethod": "Using Component Methods",
+    "preview": "Preview Report",
+    "previewInvoice": "Preview Invoice",
     "edit": "Edit",
     "delete": "Delete",
     "owner_name": "Owner Name",
@@ -201,6 +210,7 @@
     "contact": "Contact",
     "address": "Аddress",
     "total_assets": "Total Assets",
+    "assets": "Assets",
     "total_invoices": "Total Invoices",
     "total_not_verified_invoices": "Total NotVerified Invoices",
     "total_private_person": "Total Private Person",
@@ -252,6 +262,9 @@
     "close": "Exit"
   },
   "vat_reports": {
+    "dropFiles": "Drop files here...",
+    "binaryFile": "Add notes about binary file",
+    "add": "Add",
     "add_vat_report": "Add VAT Report",
     "generate_vat_report": "Generate VAT Report",
     "period": "Period",
@@ -305,7 +318,12 @@
     "add_asset": "Add Asset",
     "media": "Media",
     "notes": "Notes",
+    "create": "Create",
     "delete_doc": "Delete Document",
+    "preview": "Preview Document",
+    "edit": "Edit Document",
+    "delete": "Delete Document",
+    "download": "Download Document",
     "delete_confirmation": "Are you sure you want to delete this document?"
   },
   "my_profile_page": {
@@ -345,6 +363,12 @@
     "active_until": "Active Until ",
     "we_will_send_you_a_notification": "We will send you a notification upon Subscription expiration"
   },
+  "notifications":{
+    "notification": "Notifications",
+    "click": "You can download file by clicking",
+    "here": "here",
+    "readAll": "Read all notifications"
+  },
   "clients_or_recipients": {
     "add_user": "Add User",
     "user": "User",
@@ -370,6 +394,11 @@
     "RESOLVED": "RESOLVED"
   },
   "add_invoice": {
+    "bank-1": "bank-01",
+    "bank-2": "bank-02",
+    "bank-3": "bank-03",
+    "bank-4": "bank-04",
+    "bank-5": "bank-05",
     "invoice": "Invoice",
     "company_address": "Company Address",
     "company_id_no": "Company ID Number",
@@ -440,7 +469,7 @@
     "CREDIT_NOTIFICATION": "Credit Notification",
     "DEBIT_NOTIFICATION": "Debit Notification",
     "select_notification": "Select Notification",
-    "send_email": "send email"
+    "send_email": "Send Email"
   },
   "create_company": {
     "company_details": "Company Details",

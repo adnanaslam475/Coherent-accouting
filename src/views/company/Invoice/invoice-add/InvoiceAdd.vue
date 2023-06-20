@@ -884,7 +884,7 @@
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.name }}
+                              {{ $t(option.name) }}
                             </div>
                           </template>
 
@@ -895,7 +895,7 @@
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.name }}
+                              {{ $t(option.name) }}
                             </span>
                           </template>
                         </v-select>
@@ -1585,7 +1585,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </div>
                                   </template>
 
@@ -1596,7 +1596,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </span>
                                   </template>
                                 </v-select>
@@ -2458,7 +2458,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </div>
                                   </template>
 
@@ -2469,7 +2469,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </span>
                                   </template>
                                 </v-select>
@@ -3400,7 +3400,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </div>
                                   </template>
 
@@ -3411,7 +3411,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </span>
                                   </template>
                                 </v-select>
@@ -4279,7 +4279,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </div>
                                   </template>
 
@@ -4290,7 +4290,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ option.name }}
+                                      {{ $t(option.name) }}
                                     </span>
                                   </template>
                                 </v-select>
@@ -4712,13 +4712,13 @@ export default {
       daySelected: false,
       clauseToSend: "",
       bankNameToSend: "",
-      bankList: [
-        { name: "bank-01" },
-        { name: "bank-02" },
-        { name: "bank-03" },
-        { name: "bank-04" },
-        { name: "bank-05" },
-      ],
+      // bankList: [
+      //   { name: i18n.tc("add_invoice.bank-1") },
+      //   { name: i18n.tc("add_invoice.bank-2") },
+      //   { name: i18n.tc("add_invoice.bank-3") },
+      //   { name: i18n.tc("add_invoice.bank-4") },
+      //   { name: i18n.tc("add_invoice.bank-5") },
+      // ],
       isBank: false,
       noVatClause: [
         { clause: "clause-01" },
@@ -4752,6 +4752,17 @@ export default {
   destroyed() {
     // window.removeEventListener("resize", this.initTrHeight);
   },
+  computed: {
+      bankList() {
+        return [
+          { name: this.$t('add_invoice.bank-1') },
+          { name: this.$t('add_invoice.bank-2') },
+          { name: this.$t('add_invoice.bank-3') },
+          { name: this.$t('add_invoice.bank-4') },
+          { name: this.$t('add_invoice.bank-5') },
+        ];
+      },
+    },
   methods: {
     //
     async updateLogo(e) {
