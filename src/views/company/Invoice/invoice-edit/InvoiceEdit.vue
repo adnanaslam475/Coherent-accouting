@@ -33,7 +33,7 @@
                     </b-input-group>
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
-                  <div class="d-flex justify-content-between align-items-center px-3">
+                  <!-- <div class="d-flex justify-content-between align-items-center px-3">
                     <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
                       <template #first>
                         <b-form-select-option :value="null" disabled>
@@ -43,7 +43,7 @@
                     </b-form-select>
                     <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
                       + selectedNotification) }}</div>
-                  </div>
+                  </div> -->
                 </div>
               </b-card-header>
             </b-card>
@@ -5545,14 +5545,14 @@ export default {
   },
   computed: {
     bankList() {
-        return [
-          { name: this.$t('add_invoice.bank-1') },
-          { name: this.$t('add_invoice.bank-2') },
-          { name: this.$t('add_invoice.bank-3') },
-          { name: this.$t('add_invoice.bank-4') },
-          { name: this.$t('add_invoice.bank-5') },
-        ];
-      },
+      return [
+        { name: this.$t('add_invoice.bank-1') },
+        { name: this.$t('add_invoice.bank-2') },
+        { name: this.$t('add_invoice.bank-3') },
+        { name: this.$t('add_invoice.bank-4') },
+        { name: this.$t('add_invoice.bank-5') },
+      ];
+    },
     dropdownStyle() {
       return this.isGray === true ? { 'color': 'black' } : { 'color': 'white' }
     },
