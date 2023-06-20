@@ -564,8 +564,8 @@ export default {
       this.perPageRecords = pageNumData
 
       let data1 = {
-        startDate: this.startDate,
-        endDate: this.endDate,
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
       };
       let config = {
         params: {
