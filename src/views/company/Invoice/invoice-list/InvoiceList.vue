@@ -42,7 +42,7 @@
 
           <!-- Date Picker Modal -->
 
-          <b-modal id="modal-prevent-closing-invoice" ref="export_model" title="Select Month"
+          <b-modal id="modal-prevent-closing-invoice" ref="export_model" :title="$t('company_info.selectMonth')"
             :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" @show="resetModal"
             @hidden="resetModal" @ok="handleOk" :ok-disabled="modalDisabledMonth">
             <form ref="form" @submit.stop.prevent="handleMonthSelect">
@@ -50,7 +50,7 @@
                 <validation-provider #default="{ errors }" :name="$t('month_selected')" rules="required">
                   <vue-monthly-picker id="month_selected" v-model="selectedMonthData.date" name="month_selected"
                     date-format="Y-MM" :month-labels="monthLabels" :class="errors.length > 0 ? 'is-invalid' : null"
-                    place-holder="Please Select: " />
+                    :place-holder="$t('company_info.pleaseSelect')" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </validation-observer>
@@ -320,7 +320,7 @@
                 params: { id: data.item.id, companyId: companyId },
               })
               " />
-          <b-tooltip title="Preview Invoice" class="cursor-pointer"
+          <b-tooltip :title="$t('company_info.previewInvoice')" class="cursor-pointer"
             :target="`invoice-row-${data.item.id}-preview-icon`" />
 
           <!-- Dropdown -->
@@ -330,25 +330,25 @@
             </template>
             <b-dropdown-item @click="generatePDF(data.item.id)">
               <feather-icon icon="DownloadIcon" />
-              <span class="align-middle ml-50">Download</span>
+              <span class="align-middle ml-50">{{$t('download')}}</span>
             </b-dropdown-item>
             <b-dropdown-item :to="{
               name: 'company-invoice-edit',
               params: { id: data.item.id, companyId: companyId },
             }">
               <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
+              <span class="align-middle ml-50">{{$t('company_info.edit')}}</span>
             </b-dropdown-item>
             <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
               <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
+              <span class="align-middle ml-50">{{$t('company_info.delete')}}</span>
             </b-dropdown-item>
           </b-dropdown>
 
           <!-- Duplicate -->
           <feather-icon :id="`invoice-row-${data.item.id}-duplicate-icon`" icon="LayersIcon" size="16"
             class="mx-1 cursor-pointer" @click="duplicateInvoice(data.item)" />
-          <b-tooltip title="Duplicate Invoice" class="cursor-pointer"
+          <b-tooltip :title="$t('company_info.duplicate')" class="cursor-pointer"
             :target="`invoice-row-${data.item.id}-duplicate-icon`" />
           <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true"
             :ref="`invoicePdf${data.item.id}`" :preview-modal="false" :paginate-elements-by-height="1100"

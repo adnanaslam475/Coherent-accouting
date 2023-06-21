@@ -18,6 +18,14 @@
     "add_multiple_invoices": "Add Multiple Invoices",
     "list_invoices": "List Invoices"
   },
+  "features":{
+    "title":"Latest Features",
+    "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs."
+  },
+  "partners":{
+    "title":"Our Partners",
+    "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs."
+  },
   "login": {
     "title": "Welcome to Coherent Accounting! \uD83D\uDC4B",
     "subtitle": "Please sign-in to your account and start the adventure",
@@ -191,6 +199,14 @@
     "confirm": "Confirm"
   },
   "company_info": {
+    "MON": "MON",
+    "TUE": "TUE",
+    "WED": "WED",
+    "THU": "THU",
+    "FRI": "FRI",
+    "SAT": "SAT",
+    "SUN": "SUN",
+    "duplicate": "Duplicate Invoice",
     "invoiceForVat": "Invoices for Vat Reports",
     "pleaseSelect": "Please Select",
     "selectMonth": "Select Month",
@@ -554,6 +570,9 @@
     "yes": "Yes",
     "no": "No"
   },
+  "incomeSalesServices": "Income Sales Services",
+  "taxSales": "Tax Sales",
+  "clients": "Clients",
   "home": "Home",
   "dashboard": "Dashboard",
   "invoices": "Invoices",

@@ -190,6 +190,14 @@
     "confirm": "Потвърди"
   },
   "company_info": {
+    "MON": "ПОН",
+    "TUE": "вт",
+    "WED": "СРЯ",
+    "THU": "ЧЕТВ",
+    "FRI": "ПЕТ",
+    "SAT": "SAT",
+    "SUN": "СЛЪНЦЕ",
+    "duplicate": "Дублирана фактура",
     "invoiceForVat": "Фактури за отчети по ДДС",
     "pleaseSelect": "Моля изберете",
     "selectMonth": "Изберете месец",
@@ -533,6 +541,9 @@
     "yes": "ДА",
     "no": "НЕ"
   },
+  "incomeSalesServices": "Услуги за продажби на приходи",
+  "taxSales": "Данъчни продажби",
+  "clients": "клиенти",
   "home": "Начало",
   "dashboard": "Табло",
   "invoices": "Фактури",

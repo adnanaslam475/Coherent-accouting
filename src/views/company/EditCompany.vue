@@ -347,7 +347,7 @@
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
                 <div v-for="(value, label) in selectedPlatformProperties" :key="label">
-                  <b-form-group :label="label">
+                  <b-form-group :label="$t(label)">
                     <b-form-input v-model="selectedPlatformProperties[label]"></b-form-input>
                   </b-form-group>
                 </div>
