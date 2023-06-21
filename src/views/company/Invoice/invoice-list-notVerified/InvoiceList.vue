@@ -267,18 +267,18 @@
             </template>
             <b-dropdown-item @click="generatePDF(data.item.id)">
               <feather-icon icon="DownloadIcon" />
-              <span class="align-middle ml-50">{{ $t("download")}}</span>
+              <span class="align-middle ml-50">{{ $t("download") }}</span>
             </b-dropdown-item>
             <b-dropdown-item :to="{
               name: 'company-invoice-edit',
               params: { id: data.item.id, companyId: companyId },
             }">
               <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">{{ $t("company_info.edit")}}</span>
+              <span class="align-middle ml-50">{{ $t("company_info.edit") }}</span>
             </b-dropdown-item>
             <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
               <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">{{ $t("company_info.delete")}}</span>
+              <span class="align-middle ml-50">{{ $t("company_info.delete") }}</span>
             </b-dropdown-item>
           </b-dropdown>
           <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true"
@@ -564,8 +564,8 @@ export default {
       this.perPageRecords = pageNumData
 
       let data1 = {
-        startDate: this.startDate,
-        endDate: this.endDate,
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
       };
       let config = {
         params: {
@@ -623,8 +623,8 @@ export default {
 
       this.pageNum += 1;
       let data1 = {
-        startDate: this.startDate,
-        endDate: this.endDate,
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
       };
       let config = {
         params: {
@@ -793,26 +793,25 @@ export default {
       for (let i = 0; i < this.multiplefile.length; i++) {
         formData.append("files", this.multiplefile[i]);
       }
-      let myInterval = setInterval(function () {
 
+      let myInterval = setInterval(function () {
         axios
           .get("/account/api/progress/" + `${companyID}`)
           .then((response) => {
+
             const progressVal = response.data;
             if (progressVal?.length !== 0 && progressVal !== undefined) {
+
               self.progressCount = progressVal.progress;
               self.progressStatus = progressVal.progressStatus;
               console.log(self.progressCount, self.progressStatus)
 
-              if (progressVal.progress == "100") {
-                clearInterval(myInterval);
-
-              }
-
             }
-
+            if (progressVal.progress == "100") {
+              clearInterval(myInterval);
+            }
           });
-      }, 1000);
+      }, 5000);
 
       useJwt
         .addMultipleFileInvoice(token, companyID, formData)
