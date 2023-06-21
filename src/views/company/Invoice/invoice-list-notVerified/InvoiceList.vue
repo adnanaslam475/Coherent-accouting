@@ -267,18 +267,18 @@
             </template>
             <b-dropdown-item @click="generatePDF(data.item.id)">
               <feather-icon icon="DownloadIcon" />
-              <span class="align-middle ml-50">{{ $t("download")}}</span>
+              <span class="align-middle ml-50">{{ $t("download") }}</span>
             </b-dropdown-item>
             <b-dropdown-item :to="{
               name: 'company-invoice-edit',
               params: { id: data.item.id, companyId: companyId },
             }">
               <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">{{ $t("company_info.edit")}}</span>
+              <span class="align-middle ml-50">{{ $t("company_info.edit") }}</span>
             </b-dropdown-item>
             <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
               <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">{{ $t("company_info.delete")}}</span>
+              <span class="align-middle ml-50">{{ $t("company_info.delete") }}</span>
             </b-dropdown-item>
           </b-dropdown>
           <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true"
@@ -623,8 +623,8 @@ export default {
 
       this.pageNum += 1;
       let data1 = {
-        startDate: this.startDate,
-        endDate: this.endDate,
+        dateFrom: this.startDate,
+        dateTo: this.endDate,
       };
       let config = {
         params: {

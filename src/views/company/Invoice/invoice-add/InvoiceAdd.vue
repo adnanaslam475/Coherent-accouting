@@ -71,6 +71,10 @@
                         <!-- <validation-provider #default="{ errors }" name="dueDate" rules="required"> -->
                         <flat-pickr v-model="invoiceData.dueDate"
                           class="form-control invoice-edit-input invoice-input-top" />
+                        <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
+                          class="cursor-pointer clear-all" />
+                        <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                          @click="invoiceData.dueDate = ''" />
                         <!-- <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider> -->
                       </div>
@@ -498,6 +502,10 @@
                       <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                         <flat-pickr v-model="invoiceData.dateIssued"
                           class="form-control invoice-edit-input invoice-input-top" />
+                        <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                          class="cursor-pointer clear-all" />
+                        <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                          @click="invoiceData.dateIssued = ''" />
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
                     </div>
@@ -1058,6 +1066,10 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
+                                  <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                          class="cursor-pointer clear-all" />
+                        <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                          @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
@@ -1902,6 +1914,10 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
+                                  <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                            class="cursor-pointer clear-all" />
+                          <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                            @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
@@ -2848,6 +2864,10 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
+                                  <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                          class="cursor-pointer clear-all" />
+                        <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                          @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
@@ -3730,6 +3750,10 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
+                                  <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                            class="cursor-pointer clear-all" />
+                          <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                            @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
@@ -4753,16 +4777,16 @@ export default {
     // window.removeEventListener("resize", this.initTrHeight);
   },
   computed: {
-      bankList() {
-        return [
-          { name: this.$t('add_invoice.bank-1') },
-          { name: this.$t('add_invoice.bank-2') },
-          { name: this.$t('add_invoice.bank-3') },
-          { name: this.$t('add_invoice.bank-4') },
-          { name: this.$t('add_invoice.bank-5') },
-        ];
-      },
+    bankList() {
+      return [
+        { name: this.$t('add_invoice.bank-1') },
+        { name: this.$t('add_invoice.bank-2') },
+        { name: this.$t('add_invoice.bank-3') },
+        { name: this.$t('add_invoice.bank-4') },
+        { name: this.$t('add_invoice.bank-5') },
+      ];
     },
+  },
   methods: {
     //
     async updateLogo(e) {
@@ -4934,6 +4958,7 @@ export default {
       this.daySelected = false;
     },
     invoiceAdd(invoiceData, AccountTypeOption) {
+
       //assign the data of recipient and creator
       //creator supplier company
       invoiceData.bankApi.name = this.bankNameToSend;
@@ -5029,7 +5054,11 @@ export default {
               ).toFixed(2);
               return item;
             });
+            if (!invoiceData.scheduled) {
 
+              invoiceData.cronScheduleApi = null
+              console.log(invoiceData)
+            }
             this.loading = true;
             let token = useJwt.getToken();
             useJwt
