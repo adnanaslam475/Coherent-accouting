@@ -4973,7 +4973,6 @@ export default {
       //creator supplier company
       console.log(invoiceData, 'here is invoice data')
       if (this.isBank === false) {
-        alert('hereee')
         invoiceData.bankApi = {
           name: "",
           bic: "",
