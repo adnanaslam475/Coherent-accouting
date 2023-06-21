@@ -1066,10 +1066,10 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
-                                  <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                          class="cursor-pointer clear-all" />
-                        <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                          @click="invoiceData.dateIssued = ''" />
+                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                                class="cursor-pointer clear-all" />
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
@@ -1914,10 +1914,10 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
-                                  <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                            class="cursor-pointer clear-all" />
-                          <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                            @click="invoiceData.dateIssued = ''" />
+                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                                class="cursor-pointer clear-all" />
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
@@ -2864,10 +2864,10 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
-                                  <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                          class="cursor-pointer clear-all" />
-                        <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                          @click="invoiceData.dateIssued = ''" />
+                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                                class="cursor-pointer clear-all" />
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
@@ -3750,10 +3750,10 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
-                                  <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                            class="cursor-pointer clear-all" />
-                          <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                            @click="invoiceData.dateIssued = ''" />
+                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                                class="cursor-pointer clear-all" />
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
@@ -4971,15 +4971,18 @@ export default {
 
       //assign the data of recipient and creator
       //creator supplier company
-      invoiceData.bankApi.name = this.bankNameToSend;
-      invoiceData.vatCondition = this.clauseToSend;
+      console.log(invoiceData, 'here is invoice data')
       if (this.isBank === false) {
+        alert('hereee')
         invoiceData.bankApi = {
           name: "",
           bic: "",
           bank: "",
         };
       }
+      invoiceData.bankApi.name = this.bankNameToSend;
+      invoiceData.vatCondition = this.clauseToSend;
+
 
       if (invoiceData.vatPercent !== "0") {
         invoiceData.vatCondition = "";
@@ -5011,11 +5014,14 @@ export default {
         invoiceData.recipientCompany.companyVatEic = "";
       }
       // console.log(invoiceData.cronScheduleApi.dayOfWeek, invoiceData.scheduled);
-      if (invoiceData.cronScheduleApi.dayOfWeek) {
-        this.daySelected = false;
-      } else {
-        this.daySelected = true;
+      if (invoiceData.cronScheduleApi != null) {
+        if (invoiceData.cronScheduleApi.dayOfWeek) {
+          this.daySelected = false;
+        } else {
+          this.daySelected = true;
+        }
       }
+
       // if (invoiceData.scheduled === false) {
       //   invoiceData.cronScheduleApi = "NO";
       // }
