@@ -793,24 +793,20 @@ export default {
       for (let i = 0; i < this.multiplefile.length; i++) {
         formData.append("files", this.multiplefile[i]);
       }
-      let myInterval = setInterval(function () {
 
+      let myInterval = setInterval(function () {
         axios
           .get("/account/api/progress/" + `${companyID}`)
           .then((response) => {
+
             const progressVal = response.data;
             if (progressVal?.length !== 0 && progressVal !== undefined) {
+
               self.progressCount = progressVal.progress;
               self.progressStatus = progressVal.progressStatus;
               console.log(self.progressCount, self.progressStatus)
 
-              if (progressVal.progress == "100") {
-                clearInterval(myInterval);
-
-              }
-
             }
-
           });
       }, 1000);
 
@@ -820,6 +816,7 @@ export default {
           this.multiplefileLoading = false;
           self.refetchData();
           this.refreshList()
+          clearInterval(myInterval);
           event.target.value = "";
           this.$toast({
             component: ToastificationContent,
