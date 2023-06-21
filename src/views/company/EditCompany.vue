@@ -8,7 +8,7 @@
       <!-- First Tab: Company Details -->
       <tab-content :title="$t('create_company.company_details')" :before-change="validationForm">
         <validation-observer ref="companyRules" tag="form">
-          <b-row>
+          <!-- <b-row>
             <b-col cols="12" class="mb-2">
               <h5 class="mb-0">
                 {{ $t('create_company.company_details') }}
@@ -17,7 +17,7 @@
                 {{ $t('create_company.update_details') }}
               </small>
             </b-col>
-          </b-row>
+          </b-row> -->
           <b-form-row>
             <!-- Company Name -->
             <b-col>

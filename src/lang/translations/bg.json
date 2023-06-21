@@ -17,6 +17,14 @@
     "add_multiple_invoices": "Качване на много фактури",
     "list_invoices": "Списък Фактури"
   },
+  "features":{
+    "title":"Най-новите функции",
+    "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs."
+  },
+  "partners":{
+    "title":"Нашите партньори",
+    "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs."
+  },
   "login": {
     "title": "Добре дошли в Coherent Accounting! 👋",
     "subtitle": "Моля регистрирайте се и започнете приключението си",
