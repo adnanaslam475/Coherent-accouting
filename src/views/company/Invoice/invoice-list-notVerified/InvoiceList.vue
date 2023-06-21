@@ -807,8 +807,11 @@ export default {
               console.log(self.progressCount, self.progressStatus)
 
             }
+            if (progressVal.progress == "100") {
+              clearInterval(myInterval);
+            }
           });
-      }, 1000);
+      }, 5000);
 
       useJwt
         .addMultipleFileInvoice(token, companyID, formData)
@@ -816,7 +819,6 @@ export default {
           this.multiplefileLoading = false;
           self.refetchData();
           this.refreshList()
-          clearInterval(myInterval);
           event.target.value = "";
           this.$toast({
             component: ToastificationContent,
