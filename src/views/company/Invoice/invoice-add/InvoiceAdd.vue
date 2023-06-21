@@ -4798,9 +4798,7 @@ export default {
           ]
       },
     },
-  },
   methods: {
-    //
     async updateLogo(e) {
       this.isUploading = i18n.tc("add_invoice.uploading");
       let self = this;
