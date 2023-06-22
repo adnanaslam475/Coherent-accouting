@@ -1126,13 +1126,13 @@
                         <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
-                            placeholder="Supplier Company Owner Name..." />
+                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="supplierCompanyName" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companName"
-                            placeholder="Supplier Company Name..." @input="
+                            :placeholder="$t('add_invoice.SupplierCompanyName')" @input="
                               SearchCompanyName(
                                 invoiceData.supplierCompany.companName
                               )
@@ -1150,7 +1150,7 @@
 
                         <validation-provider #default="{ errors }" name="supplierCompanyAddress" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyAddress" autocomplete="off"
-                            placeholder="Supplier Company Address.." style="margin-bottom: 5px" />
+                            :placeholder="$t('add_invoice.SupplierCompanyAddress')" style="margin-bottom: 5px" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="supplierVat">
@@ -1192,7 +1192,7 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()" @focus="
     ShowSuggestionEicRecipient(datalistEicRecipient)
-    " style="margin-bottom: 5px" placeholder="Recipient Company ID Number...." />
+    " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientCompanyIDNumber')" />
                           <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEicRecipient" :key="data.eic"
@@ -1211,7 +1211,7 @@
                               ShowSuggestionPersonIdNumber(
                                 datalistPersonIdNumber
                               )
-                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
+                              " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientPersonIDNumber')" />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
@@ -1227,7 +1227,7 @@
                           ">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Owner Name...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
@@ -1241,7 +1241,7 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()"
                             @focus="ShowSuggestionRecipient(datalistRecipient)" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Name...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyName')" />
                           <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistRecipient" :key="data.eic"
                               @click="autoCompletefnRecipient(data)" @mousedown="autoCompletefnRecipient(data)">
@@ -1255,7 +1255,7 @@
     )
     " list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()"
                             @focus="ShowSuggestionPerson(datalistPerson)" style="margin-bottom: 5px"
-                            placeholder="Recipient Person Name...." />
+                            :placeholder="$t('add_invoice.RecipientPersonName')" />
                           <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPerson" :key="data.eic"
                               @click="autoCompletefnPerson(data)" @mousedown="autoCompletefnPerson(data)">
@@ -1271,14 +1271,14 @@
                           " rules="required">
                           <b-form-input v-model="invoiceData.recipientCompany.companyAddress
                             " autocomplete="off" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Address...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="AccountTypeOption == 'company' && recipientVat">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
-                                " autocomplete="off" placeholder="Recipient Company VAT Number...." />
+                                " autocomplete="off" :placeholder="$t('add_invoice.RecipientCompanyVATNumber')" />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
@@ -1987,13 +1987,13 @@
                         <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
-                            placeholder="Supplier Company Owner Name..." />
+                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="supplierCompanyName" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companName"
-                            placeholder="Supplier Company Name..." @input="
+                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" @input="
                               SearchCompanyName(
                                 invoiceData.supplierCompany.companName
                               )
@@ -2011,7 +2011,7 @@
 
                         <validation-provider #default="{ errors }" name="supplierCompanyAddress" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyAddress" autocomplete="off"
-                            placeholder="Supplier Company Address.." style="margin-bottom: 5px" />
+                            :placeholder="$t('add_invoice.SupplierCompanyAddress')" style="margin-bottom: 5px" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="supplierVat">
@@ -2052,7 +2052,7 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()" @focus="
     ShowSuggestionEicRecipient(datalistEicRecipient)
-    " style="margin-bottom: 5px" placeholder="Recipient Company ID Number...." />
+    " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientCompanyIDNumber')" />
                           <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name" class="input-suggesstions"
                             style="width: 100%">
                             <b-list-group-item v-for="data in datalistEicRecipient" :key="data.eic"
@@ -2071,7 +2071,7 @@
                               ShowSuggestionPersonIdNumber(
                                 datalistPersonIdNumber
                               )
-                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
+                              " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientPersonIDNumber')" />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                             class="input-suggesstions" style="width: 100%">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
@@ -2087,7 +2087,7 @@
                           ">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Owner Name...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
@@ -2101,7 +2101,7 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()"
                             @focus="ShowSuggestionRecipient(datalistRecipient)" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Name...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyName')" />
                           <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions"
                             style="width: 100%">
                             <b-list-group-item v-for="data in datalistRecipient" :key="data.eic"
@@ -2116,7 +2116,7 @@
     )
     " list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()"
                             @focus="ShowSuggestionPerson(datalistPerson)" style="margin-bottom: 5px"
-                            placeholder="Recipient Person Name...." />
+                            :placeholder="$t('add_invoice.RecipientPersonName')" />
                           <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions"
                             style="width: 47%">
                             <b-list-group-item v-for="data in datalistPerson" :key="data.eic"
@@ -2133,14 +2133,14 @@
                           " rules="required">
                           <b-form-input v-model="invoiceData.recipientCompany.companyAddress
                             " autocomplete="off" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Address...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="AccountTypeOption == 'company' && recipientVat">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
-                                " autocomplete="off" placeholder="Recipient Company VAT Number...." />
+                                " autocomplete="off" :placeholder="$t('add_invoice.RecipientCompanyVATNumber')" />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
@@ -2943,13 +2943,13 @@
                         <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
-                            placeholder="Supplier Company Owner Name..." />
+                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="supplierCompanyName" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companName"
-                            placeholder="Supplier Company Name..." @input="
+                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" @input="
                               SearchCompanyName(
                                 invoiceData.supplierCompany.companName
                               )
@@ -2966,7 +2966,7 @@
 
                         <validation-provider #default="{ errors }" name="supplierCompanyAddress" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyAddress" autocomplete="off"
-                            placeholder="Supplier Company Address.." style="margin-bottom: 5px" />
+                            :placeholder="$t('add_invoice.SupplierCompanyAddress')" style="margin-bottom: 5px" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="supplierVat">
@@ -3004,7 +3004,7 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()" @focus="
     ShowSuggestionEicRecipient(datalistEicRecipient)
-    " style="margin-bottom: 5px" placeholder="Recipient Company ID Number...." />
+    " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientCompanyIDNumber')" />
                           <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEicRecipient" :key="data.eic"
@@ -3023,7 +3023,7 @@
                               ShowSuggestionPersonIdNumber(
                                 datalistPersonIdNumber
                               )
-                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
+                              " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientPersonIDNumber')" />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
@@ -3039,7 +3039,7 @@
                           ">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Owner Name...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
@@ -3053,7 +3053,7 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()"
                             @focus="ShowSuggestionRecipient(datalistRecipient)" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Name...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyName')" />
                           <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistRecipient" :key="data.eic"
                               @click="autoCompletefnRecipient(data)" @mousedown="autoCompletefnRecipient(data)">
@@ -3067,7 +3067,7 @@
     )
     " list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()"
                             @focus="ShowSuggestionPerson(datalistPerson)" style="margin-bottom: 5px"
-                            placeholder="Recipient Person Name...." />
+                            :placeholder="$t('add_invoice.RecipientPersonName')" />
                           <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPerson" :key="data.eic"
                               @click="autoCompletefnPerson(data)" @mousedown="autoCompletefnPerson(data)">
@@ -3083,14 +3083,14 @@
                           " rules="required">
                           <b-form-input v-model="invoiceData.recipientCompany.companyAddress
                             " autocomplete="off" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Address...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="AccountTypeOption == 'company' && recipientVat">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
-                                " autocomplete="off" placeholder="Recipient Company VAT Number...." />
+                                " autocomplete="off" :placeholder="$t('add_invoice.RecipientCompanyVATNumber')" />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
@@ -3823,13 +3823,13 @@
                         <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
-                            placeholder="Supplier Company Owner Name..." />
+                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="supplierCompanyName" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companName"
-                            placeholder="Supplier Company Name..." @input="
+                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" @input="
                               SearchCompanyName(
                                 invoiceData.supplierCompany.companName
                               )
@@ -3846,7 +3846,7 @@
 
                         <validation-provider #default="{ errors }" name="supplierCompanyAddress" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyAddress" autocomplete="off"
-                            placeholder="Supplier Company Address.." style="margin-bottom: 5px" />
+                            :placeholder="$t('add_invoice.SupplierCompanyAddress')" style="margin-bottom: 5px" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
@@ -3887,7 +3887,7 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()" @focus="
     ShowSuggestionEicRecipient(datalistEicRecipient)
-    " style="margin-bottom: 5px" placeholder="Recipient Company ID Number...." />
+    " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientCompanyIDNumber')" />
                           <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEicRecipient" :key="data.eic"
@@ -3906,7 +3906,7 @@
                               ShowSuggestionPersonIdNumber(
                                 datalistPersonIdNumber
                               )
-                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number...." />
+                              " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientPersonIDNumber')" />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
@@ -3922,7 +3922,7 @@
                           ">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Owner Name...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
@@ -3936,7 +3936,7 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()"
                             @focus="ShowSuggestionRecipient(datalistRecipient)" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Name...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyName')" />
                           <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistRecipient" :key="data.eic"
                               @click="autoCompletefnRecipient(data)" @mousedown="autoCompletefnRecipient(data)">
@@ -3950,7 +3950,7 @@
     )
     " list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()"
                             @focus="ShowSuggestionPerson(datalistPerson)" style="margin-bottom: 5px"
-                            placeholder="Recipient Person Name...." />
+                            :placeholder="$t('add_invoice.RecipientPersonName')" />
                           <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPerson" :key="data.eic"
                               @click="autoCompletefnPerson(data)" @mousedown="autoCompletefnPerson(data)">
@@ -3966,14 +3966,14 @@
                           " rules="required">
                           <b-form-input v-model="invoiceData.recipientCompany.companyAddress
                             " autocomplete="off" style="margin-bottom: 5px"
-                            placeholder="Recipient Company Address...." />
+                            :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="AccountTypeOption == 'company' && recipientVat">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
-                                " autocomplete="off" placeholder="Recipient Company VAT Number...." />
+                                " autocomplete="off" :placeholder="$t('add_invoice.RecipientCompanyVATNumber')" />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
@@ -4777,27 +4777,27 @@ export default {
     // window.removeEventListener("resize", this.initTrHeight);
   },
   computed: {
-      bankList() {
-        return [
-          { name: this.$t('add_invoice.bank-1') },
-          { name: this.$t('add_invoice.bank-2') },
-          { name: this.$t('add_invoice.bank-3') },
-          { name: this.$t('add_invoice.bank-4') },
-          { name: this.$t('add_invoice.bank-5') },
-        ];
-      },
-      days(){
-        return [
-          { text: i18n.tc("company_info.MON"), value: "MON" }, 
-          { text: i18n.tc("company_info.TUE"), value: "TUE" }, 
-          { text: i18n.tc("company_info.WED"), value: "WED" }, 
-          { text: i18n.tc("company_info.THU"), value: "THU" }, 
-          { text: i18n.tc("company_info.FRI"), value: "FRI" }, 
-          { text: i18n.tc("company_info.SAT"), value: "SAT" }, 
-          { text: i18n.tc("company_info.SUN"), value: "SUN" }
-          ]
-      },
+    bankList() {
+      return [
+        { name: this.$t('add_invoice.bank-1') },
+        { name: this.$t('add_invoice.bank-2') },
+        { name: this.$t('add_invoice.bank-3') },
+        { name: this.$t('add_invoice.bank-4') },
+        { name: this.$t('add_invoice.bank-5') },
+      ];
     },
+    days() {
+      return [
+        { text: i18n.tc("company_info.MON"), value: "MON" },
+        { text: i18n.tc("company_info.TUE"), value: "TUE" },
+        { text: i18n.tc("company_info.WED"), value: "WED" },
+        { text: i18n.tc("company_info.THU"), value: "THU" },
+        { text: i18n.tc("company_info.FRI"), value: "FRI" },
+        { text: i18n.tc("company_info.SAT"), value: "SAT" },
+        { text: i18n.tc("company_info.SUN"), value: "SUN" }
+      ]
+    },
+  },
   methods: {
     async updateLogo(e) {
       this.isUploading = i18n.tc("add_invoice.uploading");
