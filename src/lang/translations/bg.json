@@ -28,7 +28,7 @@
   "login": {
     "title": "Добре дошли в Coherent Accounting! 👋",
     "subtitle": "Моля регистрирайте се и започнете приключението си",
-    "lbl_email": "Получател",
+    "lbl_email": "Email",
     "email_placeholder": "john@example.com",
     "lbl_password": "Парола",
     "lnk_forget_password": "Забравена парола?",
