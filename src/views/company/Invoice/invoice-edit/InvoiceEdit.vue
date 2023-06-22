@@ -108,6 +108,10 @@
                         <!-- <validation-provider #default="{ errors }" name="dueDate" rules="required"> -->
                         <flat-pickr v-model="invoiceData.dueDate"
                           class="form-control invoice-edit-input invoice-input-top" />
+                        <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
+                          class="cursor-pointer clear-all" />
+                        <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                          @click="invoiceData.dueDate = ''" />
                         <!-- <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider> -->
                       </div>
@@ -1268,7 +1272,12 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
+                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                                class="cursor-pointer clear-all" />
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
+
                             </validation-provider>
                           </span>
                         </p>
@@ -2255,7 +2264,12 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
+                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                                class="cursor-pointer clear-all" />
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
+
                             </validation-provider>
                           </span>
                         </p>
@@ -3345,6 +3359,10 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
+                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                                class="cursor-pointer clear-all" />
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
@@ -4387,6 +4405,10 @@
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
+                                 <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                                  class="cursor-pointer clear-all" />
+                                <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                  @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
@@ -5527,7 +5549,7 @@ export default {
       scheduleOptionToggleValue: false,
       scheduleTypes: ["WEEKLY", "MONTHLY"],
       dates: [{ value: null, text: 'Please select an option' }, { value: 1, text: "1" }, { value: 2, text: "2" }, { value: 3, text: "3" }, { value: 4, text: "4" }, { value: 5, text: "5" }, { value: 6, text: "6" }, { value: 7, text: "7" }, { value: 8, text: "8" }, { value: 9, text: "9" }, { value: 10, text: "10" }, { value: 11, text: "11" }, { value: 12, text: "12" }, { value: 13, text: "13" }, { value: 14, text: "14" }, { value: 15, text: "15" }, { value: 16, text: "16" }, { value: 17, text: "17" }, { value: 18, text: "18" }, { value: 19, text: "19" }, { value: 20, text: "20" }, { value: 21, text: "21" }, { value: 22, text: "22" }, { value: 23, text: "23" }, { value: 24, text: "24" }, { value: 25, text: "25" }, { value: 26, text: "26" }, { value: 27, text: "27" }, { value: 28, text: "28" }, { value: 29, text: "29" }, { value: 30, text: "30" }, { value: 31, text: "31" }],
-      days: [{ text: "MON", value: "MON" }, { text: "TUE", value: "TUE" }, { text: "WED", value: "WED" }, { text: "THU", value: "THU" }, { text: "FRI", value: "FRI" }, { text: "SAT", value: "SAT" }, { text: "SUN", value: "SUN" }],
+
       daySelected: false,
     };
   },
@@ -5552,6 +5574,17 @@ export default {
         { name: this.$t('add_invoice.bank-4') },
         { name: this.$t('add_invoice.bank-5') },
       ];
+    },
+    days() {
+      return [
+        { text: i18n.tc("company_info.MON"), value: "MON" },
+        { text: i18n.tc("company_info.TUE"), value: "TUE" },
+        { text: i18n.tc("company_info.WED"), value: "WED" },
+        { text: i18n.tc("company_info.THU"), value: "THU" },
+        { text: i18n.tc("company_info.FRI"), value: "FRI" },
+        { text: i18n.tc("company_info.SAT"), value: "SAT" },
+        { text: i18n.tc("company_info.SUN"), value: "SUN" }
+      ]
     },
     dropdownStyle() {
       return this.isGray === true ? { 'color': 'black' } : { 'color': 'white' }
