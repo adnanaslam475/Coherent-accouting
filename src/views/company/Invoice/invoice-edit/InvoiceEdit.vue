@@ -1224,7 +1224,7 @@
                       </div>
 
 
-                      <div class="d-flex justify-content-between align-items-center px-3">
+                      <!-- <div class="d-flex justify-content-between align-items-center px-3">
                         <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
                           <template #first>
                             <b-form-select-option :value="null" disabled>
@@ -1234,7 +1234,7 @@
                         </b-form-select>
                         <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
                           + selectedNotification) }}</div>
-                      </div>
+                      </div> -->
 
 
 
@@ -2192,7 +2192,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="tm_invoice_right tm_text_right tm_mobile_hide">
+                      <!-- <div class="tm_invoice_right tm_text_right tm_mobile_hide">
                         <div class="tm_f50 tm_text_uppercase" :style="isGray === true
                           ? 'color: black !important'
                           : 'color: white !important'">
@@ -2209,7 +2209,7 @@
                               v-if="selectedNotification">{{ $t("add_invoice." + selectedNotification) }}</span>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
 
 
 
@@ -3320,7 +3320,7 @@
                         </div>
                       </div>
 
-                      <div class="tm_invoice_right tm_text_right"></div>
+                      <!-- <div class="tm_invoice_right tm_text_right"></div>
                       <div class="d-flex justify-content-start align-items-center px-3" style="margin-right:2rem ;">
                         <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
                           <template #first>
@@ -3331,7 +3331,7 @@
                         </b-form-select>
                         <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
                           + selectedNotification) }}</div>
-                      </div>
+                      </div> -->
 
 
 
@@ -4340,7 +4340,7 @@
                         </div>
 
                       </div>
-                      <div class="d-flex justify-content-between align-items-center px-3">
+                      <!-- <div class="d-flex justify-content-between align-items-center px-3">
                         <b-form-select v-model="selectedNotification"
                           :options="['CREDIT_NOTIFICATION', 'DEBIT_NOTIFICATION']" class="my-3">
                           <template #first>
@@ -4351,7 +4351,7 @@
                         </b-form-select>
                         <span class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{
                           $t("add_invoice." + selectedNotification) }}</span>
-                      </div>
+                      </div> -->
                     </div>
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_seperator">
