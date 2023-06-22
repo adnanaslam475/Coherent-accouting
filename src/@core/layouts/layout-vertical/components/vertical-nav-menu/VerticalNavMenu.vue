@@ -1,34 +1,19 @@
 <template>
-  <div
-    class="main-menu menu-fixed menu-accordion menu-shadow"
-    :class="[
-      { 'expanded': !isVerticalMenuCollapsed || (isVerticalMenuCollapsed && isMouseHovered) },
-      skin === 'semi-dark' ? 'menu-dark' : 'menu-light'
-    ]"
-    @mouseenter="updateMouseHovered(true)"
-    @mouseleave="updateMouseHovered(false)"
-  >
+  <div class="main-menu menu-fixed menu-accordion menu-shadow" :class="[
+    { 'expanded': !isVerticalMenuCollapsed || (isVerticalMenuCollapsed && isMouseHovered) },
+    skin === 'semi-dark' ? 'menu-dark' : 'menu-light'
+  ]" @mouseenter="updateMouseHovered(true)" @mouseleave="updateMouseHovered(false)">
     <!-- main menu header-->
     <div class="navbar-header expanded">
-      <slot
-        name="header"
-        :toggleVerticalMenuActive="toggleVerticalMenuActive"
-        :toggleCollapsed="toggleCollapsed"
-        :collapseTogglerIcon="collapseTogglerIcon"
-      >
+      <slot name="header" :toggleVerticalMenuActive="toggleVerticalMenuActive" :toggleCollapsed="toggleCollapsed"
+        :collapseTogglerIcon="collapseTogglerIcon">
         <ul class="nav navbar-nav flex-row">
 
           <!-- Logo & Text -->
           <li class="nav-item mr-auto">
-            <b-link
-              class="navbar-brand"
-              to="/"
-            >
+            <b-link class="navbar-brand" to="/">
               <span class="brand-logo">
-                <b-img
-                  :src="appLogoImage"
-                  alt="logo"
-                />
+                <b-img :src="appLogoImage" alt="logo" />
               </span>
               <h2 class="brand-text">
                 {{ appName }}
@@ -39,18 +24,9 @@
           <!-- Toggler Button -->
           <li class="nav-item nav-toggle">
             <b-link class="nav-link modern-nav-toggle">
-              <feather-icon
-                icon="XIcon"
-                size="20"
-                class="d-block d-xl-none"
-                @click="toggleVerticalMenuActive"
-              />
-              <feather-icon
-                :icon="collapseTogglerIconFeather"
-                size="20"
-                class="d-none d-xl-block collapse-toggle-icon"
-                @click="toggleCollapsed"
-              />
+              <feather-icon icon="XIcon" size="20" class="d-block d-xl-none" @click="toggleVerticalMenuActive" />
+              <feather-icon :icon="collapseTogglerIconFeather" size="20" class="d-none d-xl-block collapse-toggle-icon"
+                @click="toggleCollapsed" />
             </b-link>
           </li>
         </ul>
@@ -59,22 +35,12 @@
     <!-- / main menu header-->
 
     <!-- Shadow -->
-    <div
-      :class="{'d-block': shallShadowBottom}"
-      class="shadow-bottom"
-    />
+    <div :class="{ 'd-block': shallShadowBottom }" class="shadow-bottom" />
 
     <!-- main menu content-->
-    <vue-perfect-scrollbar
-      :settings="perfectScrollbarSettings"
-      class="main-menu-content scroll-area"
-      tagname="ul"
-      @ps-scroll-y="evt => { shallShadowBottom = evt.srcElement.scrollTop > 0 }"
-    >
-      <vertical-nav-menu-items
-        :items="navMenuItems"
-        class="navigation navigation-main"
-      />
+    <vue-perfect-scrollbar :settings="perfectScrollbarSettings" class="main-menu-content scroll-area" tagname="ul"
+      @ps-scroll-y="evt => { shallShadowBottom = evt.srcElement.scrollTop > 0 }">
+      <vertical-nav-menu-items :items="navMenuItems" class="navigation navigation-main" />
       <!-- {{ $t('navMenuItems.title') }} -->
     </vue-perfect-scrollbar>
     <!-- /main menu content-->
@@ -90,7 +56,7 @@ import useAppConfig from '@core/app-config/useAppConfig'
 import { $themeConfig } from '@themeConfig'
 import VerticalNavMenuItems from './components/vertical-nav-menu-items/VerticalNavMenuItems.vue'
 import useVerticalNavMenu from './useVerticalNavMenu'
-import  {i18n} from '@/main.js'
+import { i18n } from '@/main.js'
 
 export default {
 
@@ -100,48 +66,48 @@ export default {
     BLink,
     BImg,
   },
-  data(){
+  data() {
     return {
-    navMenuItems : [{
-    title: 'dashboard',
-    route: 'home',
-    icon: 'HomeIcon',
-  },
-  {
-    title: 'companiess',
-    route: 'companies',
-    icon: 'BriefcaseIcon',
-  },
-  /**{
-    title: 'my_invoices',
-    route: 'invoices',
-    icon: 'FileTextIcon',
-  },*/
-  {
-    title: 'videos',
-    route: 'videos',
-    icon: 'VideoIcon',
-  },
-  {
-    title: 'my_tickets',
-    route: 'tickets',
-    icon: 'TagIcon',
-  },
-  {
-    title: 'my-plans',
-    route: 'my-plans',
-    icon: 'PackageIcon',
-  },
-  {
-    title: 'my_profile',
-    route: 'settings',
-    icon: 'UserIcon',
-  },
-  {
-    title: 'contacts',
-    route: 'contacts',
-    icon: 'BookIcon',
-  }]
+      navMenuItems: [{
+        title: 'dashboard',
+        route: 'home',
+        icon: 'HomeIcon',
+      },
+      {
+        title: 'companiess',
+        route: 'companies',
+        icon: 'BriefcaseIcon',
+      },
+      /**{
+        title: 'my_invoices',
+        route: 'invoices',
+        icon: 'FileTextIcon',
+      },*/
+      {
+        title: 'videos',
+        route: 'videos',
+        icon: 'VideoIcon',
+      },
+      {
+        title: 'my_tickets',
+        route: 'tickets',
+        icon: 'TagIcon',
+      },
+      // {
+      //   title: 'my-plans',
+      //   route: 'my-plans',
+      //   icon: 'PackageIcon',
+      // },
+      {
+        title: 'my_profile',
+        route: 'settings',
+        icon: 'UserIcon',
+      },
+      {
+        title: 'contacts',
+        route: 'contacts',
+        icon: 'BookIcon',
+      }]
     }
   },
   props: {
@@ -180,7 +146,7 @@ export default {
     // App Name
     const { appName, appLogoImage } = $themeConfig.app
 
-    
+
 
     return {
       navMenuItems,
