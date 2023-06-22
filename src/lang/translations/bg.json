@@ -389,6 +389,21 @@
     "RESOLVED": "ОТГОВОРЕН"
   },
   "add_invoice": {
+     "SupplierCompanyOwnerName" : "Име на собственика на компанията доставчик...",
+     "SupplierCompanyName": "Име на фирмата доставчик...",
+     "SupplierCompanyAddress": "Адрес на компанията доставчик..",
+    "RecipientCompanyIDNumber": "Идентификационен номер на компанията получател....",
+    "RecipientPersonIDNumber": "Идентификационен номер на получателя...",
+    "RecipientCompanyOwnerName": "Име на собственика на компанията получател....",
+    "RecipientCompanyName": "Име на компанията получател...",
+    "RecipientPersonName": "Име на лицето на получателя...",
+    "RecipientCompanyAddress": "Адрес на компанията получател....",
+    "RecipientCompanyVATNumber": "ДДС номер на компанията получател....",
+
+
+
+
+
     "bank-1": "Уникредит Булбанк",
     "bank-2": "Първа Инвестиционна Банка",
     "bank-3": "Централна Кооперативна Банка",
