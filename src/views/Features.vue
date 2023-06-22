@@ -25,9 +25,9 @@
         <h1>
           {{  $t('features.title') }}
         </h1>
-        <p class="mb-1 pb-75">
+        <!-- <p class="mb-1 pb-75">
           {{  $t('features.description') }} 
-        </p>
+        </p> -->
       </div>
        <b-table class="my-settings" striped hover :items="items"></b-table>
 
@@ -38,7 +38,7 @@
           {{  $t('partners.title') }}
         </h1>
         <p class="mb-1 pb-75">
-          {{  $t('partners.description') }} 
+         
         </p>
       </div>
         <b-row class="pricing-card">
@@ -54,7 +54,7 @@
               <b-row class="mx-auto d-flex align-items-center justify-content-center">
 
                 <!-- Basic Plan -->
-                <b-col md="4">
+                <b-col md="4" class="text-center">
                    <b-card img-src="../assets/images/partners/one.jpg" img-alt="Image" img-top>
                    <a target="_blank" href="https://sites.google.com/" class="card-link">ЛОГО Д И З</a>
                     <!-- <b-card-text>
@@ -66,7 +66,7 @@
                     </template> -->
                   </b-card>
                 </b-col>
-                <b-col md="4">
+                <b-col md="4" class="text-center">
                   <b-card img-src="../assets/images/partners/two.jpg" img-alt="Image" img-top>
                   <a target="_blank" href="https://sites.google.com/" class="card-link">ЛОГО ЗОДИ</a>
                     <!-- <b-card-text>
@@ -108,6 +108,7 @@ import navbarAds from "./navbarAds.vue"
 import {
   BRow, BCol, BCard, BCardBody, BForm, BInputGroup, BFormInput, BCardText, BInputGroupPrepend, BImg,
 } from 'bootstrap-vue'
+import  {i18n} from '@/main.js'
 
 export default {
   components: {
@@ -136,20 +137,20 @@ export default {
   data() {
     return {
       items: [
-        { feature: "Безплатни красиви фактури с опция за лого", status: "✅" },
-        { feature: "Конвертиране на фактури от системата на Микроинвест към други счетоводни програми.", status: "✅" },
-        { feature: "Безплатен OCR на фактури", status: "✅" },
-        { feature: "Екпорт на фактури към други Счетоводни програми", status: "✅" },
-        { feature: "Екпорт на създадените в системата фактури към други Счетоводни програми", status: "✅" },
-        { feature: "Напомняния и известия", status: "✅" },
-        { feature: "Стена с напомняния за ненаправени ДДС отчети.", status: "✅" },
-        { feature: "Темплейти за създаване на оферти към други фирми", status: "✅" },
-        { feature: "Качване на документи и файлове свързани с наеми и пълномощни и документи на фирма", status: "✅" },
-        { feature: "Фунционалности и туулове за цялостно менажиране на фирма на едно място което може да достъпвате от всякъде", status: "✅" },
-        { feature: "Авотоматични попълване на полета за фактури без да се въвеждат всички данни", status: "✅" },
-        { feature: "Отчети по чл. 117, ал. 1 от ЗДДС", status: "✅" },
-        { feature: "Красив и модерен дизайн лесен за научаване", status: "✅" },
-        { feature: "Фирмени досиета", status: "✅" }
+        { [i18n.tc("lbl.features")]: "Безплатни красиви фактури с опция за лого", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Конвертиране на фактури от системата на Микроинвест към други счетоводни програми.", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Безплатен OCR на фактури", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Екпорт на фактури към други Счетоводни програми", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Екпорт на създадените в системата фактури към други Счетоводни програми", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Напомняния и известия", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Стена с напомняния за ненаправени ДДС отчети.", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Темплейти за създаване на оферти към други фирми", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Качване на документи и файлове свързани с наеми и пълномощни и документи на фирма", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Фунционалности и туулове за цялостно менажиране на фирма на едно място което може да достъпвате от всякъде", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Авотоматични попълване на полета за фактури без да се въвеждат всички данни", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Отчети по чл. 117, ал. 1 от ЗДДС", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Красив и модерен дизайн лесен за научаване", [i18n.tc("companies.status")]: "✅" },
+        { [i18n.tc("lbl.features")]: "Фирмени досиета", [i18n.tc("companies.status")]: "✅" }
       ]
     };
   }
