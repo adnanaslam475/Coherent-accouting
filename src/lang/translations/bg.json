@@ -464,7 +464,7 @@
     "CREDIT_NOTIFICATION": "Кредитно известие",
     "DEBIT_NOTIFICATION": "Известие за дебит",
     "select_notification": "Изберете Известие",
-    "send_email": "Изпратете имейл"
+    "send_email": "Изпратете по имейл"
   },
   "create_company": {
     "company_details": "Фирма детайли",
