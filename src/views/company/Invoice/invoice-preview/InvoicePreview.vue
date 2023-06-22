@@ -472,31 +472,16 @@
             </b-row>
           </b-card-body>
         </b-card>
-            <template>
-              <b-modal ref="my-modal" hide-footer :title="$t('company_info.componentMethod')">
-                <div class="d-block text-center">
-                  <form @submit.prevent="onSubmit" class="add-form">
-                    <label>{{$t('tickets_page.title')}}</label>
-                    <input 
-                      type="text" 
-                      v-model="name"
-                      name="name"
-                      value="Title"
-                      :placeholder="$t('company_info.yourTitle')"
-                    >
-                    <label>{{$t('login.lbl_email')}}</label>
-                    <input 
-                      type="email" 
-                      v-model="email"
-                      name="email"
-                      :placeholder="$t('company_info.yourEmail')"
-                      >
-                    <label>{{$t('company_info.Message')}}</label>
-                    <textarea 
-                      name="message"
-                      v-model="message"
-                      cols="30" rows="5"
-                      :placeholder="$t('company_info.Message')">
+        <template>
+          <b-modal ref="my-modal" hide-footer :title="$t('company_info.componentMethod')">
+            <div class="d-block text-center">
+              <form @submit.prevent="onSubmit" class="add-form">
+                <label>{{ $t('tickets_page.title') }}</label>
+                <input type="text" v-model="name" name="name" value="Title" :placeholder="$t('company_info.yourTitle')">
+                <label>{{ $t('login.lbl_email') }}</label>
+                <input type="email" v-model="email" name="email" required :placeholder="$t('company_info.yourEmail')">
+                <label>{{ $t('company_info.Message') }}</label>
+                <textarea name="message" v-model="message" cols="30" rows="5" :placeholder="$t('company_info.Message')">
                     </textarea>
                 <input type="submit" value="Send">
               </form>
@@ -1986,8 +1971,7 @@
           <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
             :paginate-elements-by-height="1100" filename="invoice" :pdf-quality="2" :manual-pagination="false"
             pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
-            @progress="onProgress($event)" @beforeDownload="beforeDownload($event)" @hasDownloaded="hasDownloaded($event)"
-            ref="html2Pdf">
+            @progress="onProgress($event)" @hasDownloaded="hasDownloaded($event)" ref="html2Pdf">
             <section class="invoice-pdf" slot="pdf-content">
               <div v-if="invoiceData">
                 <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
@@ -2008,8 +1992,7 @@
           <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
             :paginate-elements-by-height="1100" filename="attachinvoice" :pdf-quality="2" :manual-pagination="false"
             pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
-            @progress="onProgress($event)" @beforeDownload="beforeDownload($event)" @hasDownloaded="hasDownloaded($event)"
-            ref="html2Pdfnew">
+            @progress="onProgress($event)" @hasDownloaded="hasDownloaded($event)" ref="html2Pdfnew">
             <section class="invoice-pdf" id="new-invoice" slot="pdf-content">
               <div v-if="invoiceData">
                 <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
@@ -2058,7 +2041,7 @@
           <label>Title</label>
           <input type="text" v-model="name" name="name" value="Title" placeholder="Your Title">
           <label>Email</label>
-          <input type="email" v-model="email" name="email" placeholder="Your Email">
+          <input type="email" v-model="email" required name="email" placeholder="Your Email">
           <label>Message</label>
           <textarea name="message" v-model="message" cols="30" rows="5" placeholder="Message">
                     </textarea>
@@ -2292,14 +2275,15 @@ export default {
       });
     },
     generatePDF() {
+
       this.$refs.html2Pdf.generatePdf();
     },
-    async beforeDownload({ html2pdf, options, pdfContent }) {
-      await html2pdf().set(options).from(pdfContent).toPdf().get('pdf').then((pdf) => {
-        const blob = new Blob([pdf], { type: 'application/pdf' });
-        console.log(" New Coming before here...... ", pdf, blob);
-      }).save();
-    },
+    // async beforeDownload({ html2pdf, options, pdfContent }) {
+    //   await html2pdf().set(options).from(pdfContent).toPdf().get('pdf').then((pdf) => {
+    //     const blob = new Blob([pdf], { type: 'application/pdf' });
+    //     console.log(" New Coming before here...... ", pdf, blob);
+    //   }).save();
+    // },
     async selectSendEmail() {
       this.sendEmail = false;
       this.$refs['my-modal'].show();
@@ -2332,11 +2316,7 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
         console.log(" hrhthththththhtthth ", byteArrayData);
       })
     },
-    downloadPDF(pdfData) {
-      const blob = new Blob([pdfData], { type: 'application/pdf' });
-      consol.log(" blob data is here... ", blob);
-      //saveAs(blob, 'invoice.pdf');
-    },
+
     handleFileUpload(e) {
       this.file = e.target.files[0];
       console.log("Invoice Data ", this.file);
