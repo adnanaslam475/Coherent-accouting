@@ -242,6 +242,9 @@
     "create_yearly_report": "Създай годишен отчет"
   },
   "company_tabs": {
+    "CreditNotifications": "Кредитни известия",
+    "DebitNotifications": "Известия за дебит",
+
     "multiple_upload": "Масов OCR",
     "vat_reports": "ДДС Отчети",
     "yearly_reports": "Годишни отчети",

@@ -42,8 +42,9 @@
       <!-- credit notifications Tab -->
       <b-tab>
         <template #title>
-          <feather-icon icon="FlagIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">Credit Notifications</span>
+          <feather-icon icon="CreditCardIcon" />
+          <span style="font-size: 0.8vw" class="text-capitalize">{{
+            $t('company_tabs.CreditNotifications') }}</span>
         </template>
         <YearlyReport v-if="companyTab == 4 || creditNotifications" />
       </b-tab>
@@ -51,8 +52,9 @@
       <!-- debit notifications Tab -->
       <b-tab>
         <template #title>
-          <feather-icon icon="FlagIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">Debit Notifications</span>
+          <feather-icon icon="CreditCardIcon" />
+          <span style="font-size: 0.8vw" class="text-capitalize">{{
+            $t('company_tabs.DebitNotifications') }}</span>
         </template>
         <YearlyReport v-if="companyTab == 5 || debitNotifications" />
       </b-tab>

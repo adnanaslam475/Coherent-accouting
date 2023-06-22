@@ -243,6 +243,8 @@
     "create_yearly_report": "Create Yearly Report"
   },
   "company_tabs": {
+    "CreditNotifications": "Credit Notifications",
+    "DebitNotifications": "Debit Notifications",
     "multiple_upload": "Multiple Uploads",
     "vat_reports": "Vat Reports",
     "yearly_reports": "Yearly Reports",
