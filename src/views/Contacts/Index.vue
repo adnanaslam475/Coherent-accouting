@@ -4,7 +4,7 @@
       <b-col cols="12">
         <b-card v-if="socialAccounts" class="card-transaction" no-body>
           <b-card-header>
-            <h3>{{ $t('social_accounts') }}</h3>
+            <h3>{{ $t("social_accounts") }}</h3>
           </b-card-header>
 
           <b-card-body>
@@ -12,16 +12,17 @@
               v-for="item in socialAccounts"
               :key="item.name"
               class="transaction-item mb-0"
-              style="padding-bottom: 4px; padding-block-end: 20px;"
+              style="padding-bottom: 4px; padding-block-end: 20px"
             >
-              <b-media                     
+              <b-media
                 tag="a"
-                :href="item.links.link" 
-                class="align-items-center flex-1"  
+                :href="item.links.link"
+                class="align-items-center flex-1"
                 no-body
+                target="_blank"
               >
-                <b-media-aside style="align-self: unset !important;">
-                    <b-img :src="item.logo" width="35" />
+                <b-media-aside style="align-self: unset !important">
+                  <b-img :src="item.logo" width="35" />
                 </b-media-aside>
                 <b-media-body>
                   <h4 class="transaction-title">
@@ -29,7 +30,7 @@
                   </h4>
                   <small
                     v-if="item.links && item.links.link"
-                    style="opacity: 1; color: #0A64BC; font-size: 1rem;"
+                    style="opacity: 1; color: #0a64bc; font-size: 1rem"
                   >
                     {{ item.links.username }}
                   </small>
@@ -38,11 +39,7 @@
                 </b-media-body>
               </b-media>
               <div>
-                <b-media 
-                  tag="a"
-                  :href="item.links.link" 
-                  no-body
-                >
+                <b-media tag="a" :href="item.links.link" no-body>
                   <b-media-aside class="m-0">
                     <b-avatar
                       class="rounded-0"
@@ -133,7 +130,7 @@ export default {
     return {
       codeVerticalIcon,
       socialAccounts: [
-         {
+        {
           logo: facebook,
           name: "Facebook",
           links: {
@@ -164,7 +161,8 @@ export default {
           logo: chat,
           name: "Chat",
           links: {
-            username: "В долния десен ъгъл има син чат прозорец за бърза връзка с нас",
+            username:
+              "В долния десен ъгъл има син чат прозорец за бърза връзка с нас",
             link: "#",
           },
           connected: true,

@@ -6,18 +6,23 @@
       :subtitle="null"
       shape="square"
       :finish-button-text="$t('create_company.create')"
-      :next-button-text = "$t('create_company.next')"
+      :next-button-text="$t('create_company.next')"
       :back-button-text="$t('create_company.previous')"
       class="mb-3"
       @on-complete="saveCompany()"
     >
       <!-- First Tab: Company Details -->
-      <tab-content :title="$t('create_company.company_details')" :before-change="validationForm">
+      <tab-content
+        :title="$t('create_company.company_details')"
+        :before-change="validationForm"
+      >
         <validation-observer ref="companyRules" tag="form">
           <b-row>
             <b-col cols="12" class="mb-2">
-              <h5 class="mb-0"> {{$t('create_company.company_details')}}</h5>
-              <small class="text-muted">  {{$t('create_company.create_details')}} </small>
+              <h5 class="mb-0">{{ $t("create_company.company_details") }}</h5>
+              <small class="text-muted">
+                {{ $t("create_company.create_details") }}
+              </small>
             </b-col>
           </b-row>
           <b-form-row>
@@ -25,7 +30,7 @@
             <b-col>
               <b-form-group
                 id="input-group-1"
-                :label= "$t('companies.company_name')"
+                :label="$t('companies.company_name')"
                 label-for="company_name"
               >
                 <validation-provider
@@ -61,7 +66,7 @@
             <b-col>
               <b-form-group
                 id="input-group-2"
-                :label= "$t('create_company.company_id')"
+                :label="$t('create_company.company_id')"
                 label-for="company_identification_number"
               >
                 <validation-provider
@@ -99,7 +104,7 @@
             <b-col>
               <b-form-group
                 id="input-group-3"
-                :label= "$t('add_invoice.company_address')"
+                :label="$t('add_invoice.company_address')"
                 label-for="company_address"
               >
                 <validation-provider
@@ -121,7 +126,7 @@
             <b-col>
               <b-form-group
                 id="input-group-4"
-                :label= "$t('register.lbl_country')"
+                :label="$t('register.lbl_country')"
                 label-for="country"
               >
                 <validation-provider
@@ -153,9 +158,17 @@
                           display: flex;
                           align-items: center;
                           justify-content: left;
-                          grid-gap: 8px;"
+                          grid-gap: 8px;
+                        "
                       >
-                        <img :src='"@/assets/flags/" + getCompanyISO.toLowerCase() + ".png"' style="width: 30px; height: 20px"/>
+                        <img
+                          :src="
+                            '@/assets/flags/' +
+                            getCompanyISO.toLowerCase() +
+                            '.png'
+                          "
+                          style="width: 30px; height: 20px"
+                        />
                         {{ getCompanyCountry }}
                       </div>
                     </template>
@@ -169,7 +182,14 @@
                           grid-gap: 8px;
                         "
                       >
-                        <img :src='"@/assets/flags/" + option.isoAlpha2Country.toLowerCase() + ".png"' style="width: 30px; height: 20px"/>
+                        <img
+                          :src="
+                            '@/assets/flags/' +
+                            option.isoAlpha2Country.toLowerCase() +
+                            '.png'
+                          "
+                          style="width: 30px; height: 20px"
+                        />
 
                         {{ option.country }}
                       </span>
@@ -186,7 +206,7 @@
             <b-col>
               <b-form-group
                 id="input-group-5"
-                :label= "$t('company_info.owner_name')"
+                :label="$t('company_info.owner_name')"
                 label-for="owner_name"
               >
                 <validation-provider
@@ -208,13 +228,13 @@
             <b-col>
               <b-form-group
                 id="input-group-6"
-                :label= "$t('company_info.owner_egn')"
+                :label="$t('company_info.owner_egn')"
                 label-for="owner_egn"
               >
                 <validation-provider
                   #default="{ errors }"
                   v-bind:name="$t('owner_egn')"
-                  rules="required|digits:10"
+                  rules="digits:10"
                 >
                   <b-form-input
                     id="owner_egn"
@@ -244,12 +264,20 @@
                   <b-form-input
                     id="vat_number"
                     v-model="form.vat_no"
-                    :state="((errors.length > 0) || (vatIsValid === 0))  ? false : null"
+                    :state="
+                      errors.length > 0 || vatIsValid === 0 ? false : null
+                    "
                     placeholder="Company Vat Number"
-                    @mousedown="()=>{ vatIsValid = 3}"                  />
+                    @mousedown="
+                      () => {
+                        vatIsValid = 3;
+                      }
+                    "
+                  />
                   <small class="text-danger">{{ errors[0] }}</small>
-                  <small class="text-danger" v-if="vatIsValid === 0">Company VAT Number is invalid</small>
-
+                  <small class="text-danger" v-if="vatIsValid === 0"
+                    >Company VAT Number is invalid</small
+                  >
                 </validation-provider>
               </b-form-group></b-col
             >
@@ -263,19 +291,24 @@
                 value="accepted"
                 @change="vatHandled()"
               >
-              {{ $t('create_company.vat') }}
+                {{ $t("create_company.vat") }}
               </b-form-checkbox>
             </b-col>
           </b-form-row>
         </validation-observer>
       </tab-content>
       <!-- Second Tab: Account Details -->
-      <tab-content :title="$t('create_company.account_details')" :before-change="validationFormTab2">
+      <tab-content
+        :title="$t('create_company.account_details')"
+        :before-change="validationFormTab2"
+      >
         <validation-observer ref="accountRules" tag="form">
           <b-row>
             <b-col cols="12" class="mb-2">
-              <h5 class="mb-0"> {{ $t('create_company.account_details') }}</h5>
-              <small class="text-muted"> {{ $t('create_company.create_acc_details') }} </small>
+              <h5 class="mb-0">{{ $t("create_company.account_details") }}</h5>
+              <small class="text-muted">
+                {{ $t("create_company.create_acc_details") }}
+              </small>
             </b-col>
           </b-row>
           <b-form-row>
@@ -315,18 +348,21 @@
                     v-bind:placeholder="$t('Please select currency')"
                     v-on:input="updateCurrencyStatus()"
                   >
-                  <template #selected-option="option" v-if="defaultCurrency === true">
-                        <div
-                          style="
-                            display: flex;
-                            align-items: center;
-                            justify-content: left;
-                            grid-gap: 8px;
-                          "
-                        >
-                          {{ form.company_currency }} 
-                        </div>
-                      </template>
+                    <template
+                      #selected-option="option"
+                      v-if="defaultCurrency === true"
+                    >
+                      <div
+                        style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: left;
+                          grid-gap: 8px;
+                        "
+                      >
+                        {{ form.company_currency }}
+                      </div>
+                    </template>
                     <template #selected-option="option" v-else>
                       <div
                         style="
@@ -424,34 +460,75 @@
                   /> -->
                   <div class="position-relative mr-1">
                     <flat-pickr
-                    id="company_fin_year"
-                    class="form-control"
-                    v-model="form.fin_year"
-                    :state="errors.length > 0 ? false : null"
-                    placeholder="Select date"
-                    style="background-color: white !important;"
-                  /> 
-                          <feather-icon
-                            v-if="form.fin_year === ''"
-                            size="16"
-                            icon="CalendarIcon"
-                            class="cursor-pointer clear-all"
-                          />
-                          <feather-icon
-                            v-else
-                            size="16"
-                            icon="XIcon"
-                            class="cursor-pointer clear-all"
-                            @click="form.fin_year = ''"
-                          />
-                        </div>
-                  
+                      id="company_fin_year"
+                      class="form-control"
+                      v-model="form.fin_year"
+                      :state="errors.length > 0 ? false : null"
+                      placeholder="Select date"
+                      style="background-color: white !important"
+                    />
+                    <feather-icon
+                      v-if="form.fin_year === ''"
+                      size="16"
+                      icon="CalendarIcon"
+                      class="cursor-pointer clear-all"
+                    />
+                    <feather-icon
+                      v-else
+                      size="16"
+                      icon="XIcon"
+                      class="cursor-pointer clear-all"
+                      @click="form.fin_year = ''"
+                    />
+                  </div>
+
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group></b-col
             >
             <b-col></b-col>
           </b-form-row>
+        </validation-observer>
+      </tab-content>
+      <!-- Third Tab: Export:Details -->
+      <tab-content
+        :title="$t('create_company.export_details')"
+        :before-change="validationFormTab3"
+      >
+        <validation-observer ref="exportRules" tag="form">
+          <b-row>
+            <b-col>
+              <b-form-group
+                id="input-group-4"
+                :label="$t('create_company.company_status')"
+                label-for="status"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  v-bind:name="$t('status')"
+                  rules="required"
+                >
+                  <b-form-select
+                    id="platformPropertiesSelect"
+                    v-model="selectedPlatformProperty"
+                    :options="modifiedArray"
+                  ></b-form-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+                <div
+                  v-for="(value, label) in selectedPlatformProperties"
+                  :key="label"
+                >
+                  <b-form-group :label="$t(label)">
+                    <b-form-input
+                      v-model="selectedPlatformProperties[label]"
+                    ></b-form-input>
+                  </b-form-group>
+                </div>
+              </b-form-group>
+            </b-col>
+          </b-row>
+          <!-- Closing tag for b-row added -->
         </validation-observer>
       </tab-content>
     </form-wizard>
@@ -542,7 +619,7 @@ export default {
         company_iso_country: null,
         owner_egn: null,
         company_bank_account: null,
-        company_currency: 'BGN',
+        company_currency: "BGN",
         phone_no: null,
         vat_no: null,
         fin_year: null,
@@ -721,17 +798,18 @@ export default {
         { value: "YER", name: "Yemeni Rial", symbol: "﷼" },
         { value: "ZMK", name: "Zambian Kwacha", symbol: "ZK" },
       ],
+      selectedPlatformProperty: null,
     };
   },
   methods: {
     //
-    formatOwnerEGN(e){
-     return String(e).substring(0,10);
-  },
-   //
-   updateCurrencyStatus(){
+    formatOwnerEGN(e) {
+      return String(e).substring(0, 10);
+    },
+    //
+    updateCurrencyStatus() {
       this.defaultCurrency = false;
-     },
+    },
 
     //getting country name and ISO from v-select
     updateCountryStatus() {
@@ -845,32 +923,34 @@ export default {
     validationForm() {
       return new Promise((resolve, reject) => {
         //  if vat
-         if(this.isVatCheck === true){
+        if (this.isVatCheck === true) {
           this.$refs.companyRules.validate().then((success) => {
             const token = useJwt.getToken();
-           useJwt.validateVatNo(token, this.form.vat_no).then((response) => {
-            if (response.data.valid === true) this.vatIsValid = 1;
-            else this.vatIsValid = 0;
-            if (success && this.vatIsValid === 1) {
+            useJwt
+              .validateVatNo(token, this.form.vat_no)
+              .then((response) => {
+                if (response.data.valid === true) this.vatIsValid = 1;
+                else this.vatIsValid = 0;
+                if (success && this.vatIsValid === 1) {
+                  resolve(true);
+                } else {
+                  reject();
+                }
+              })
+              .catch((error) => {});
+          });
+        }
+        //  no vat
+        else {
+          this.$refs.companyRules.validate().then((success) => {
+            if (success) {
               resolve(true);
             } else {
               reject();
             }
-          })
-          .catch((error) => {});
           });
-         }
-        //  no vat
-         else{
-          this.$refs.companyRules.validate().then((success) => {
-          if (success) {
-            resolve(true);
-          } else {
-            reject();
-          }
-        });
-      }
-    });
+        }
+      });
     },
     //
     vatHandled() {
@@ -912,6 +992,11 @@ export default {
         digitalSignature: "",
         companyFinancialStartOfYear: this.form.fin_year,
         vat: this.isVatCheck,
+        exportProperties: {
+          id: this.exportProperties.id,
+          keyValues: this.selectedPlatformProperties,
+          platform: this.selectedPlatformProperty,
+        },
       });
 
       var config = {
@@ -938,7 +1023,7 @@ export default {
             },
           });
           return self.$router.push({
-                  name: "companies",
+            name: "companies",
           });
         })
 
