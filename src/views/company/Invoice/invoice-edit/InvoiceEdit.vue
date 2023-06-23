@@ -298,12 +298,7 @@
                                 :value="day.value"
                                 v-for="(day, index) in days"
                                 :key="index"
-                                @change="
-                                  () => {
-                                    companyIDisInvalid = false;
-                                    isWeekSelected = false;
-                                  }
-                                "
+                                @change="toggleDaySelected()"
                                 >{{ day.text }}</b-form-radio
                               >
                             </b-form-radio-group>
@@ -10438,7 +10433,13 @@ export default {
       if (invoiceData.vatPercent !== 0) {
         invoiceData.vatCondition = "";
       }
-
+      if (invoiceData.cronScheduleApi != null) {
+        if (invoiceData.cronScheduleApi.dayOfWeek) {
+          this.daySelected = false;
+        } else {
+          this.daySelected = true;
+        }
+      }
       if (AccountTypeOption == "person") {
         invoiceData.recipientCompany.companName =
           invoiceData.recipientCompany.companyOwnerName;
@@ -10452,17 +10453,6 @@ export default {
         return item;
       });
 
-      if (this.isScheduled) {
-        if (invoiceData.cronScheduleApi !== null) {
-          if (invoiceData.cronScheduleApi.dayOfWeek) {
-            this.daySelected = false;
-          } else {
-            this.daySelected = true;
-          }
-        }
-      } else {
-        invoiceData.cronScheduleApi = null;
-      }
       this.$refs.invoiceEditForm.validate().then((success) => {
         if (
           success &&
