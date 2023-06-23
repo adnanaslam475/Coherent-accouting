@@ -5,7 +5,9 @@
 
       <!-- Left Text-->
       <b-col lg="8" class="d-none d-lg-flex align-items-center p-5">
-        <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
+        <div
+          class="w-100 d-lg-flex align-items-center justify-content-center px-5"
+        >
           <b-img fluid :src="imgUrl" alt="Register V2" />
         </div>
       </b-col>
@@ -15,107 +17,229 @@
       <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
           <b-card-title class="mb-1">
-            {{ $t('register.title') }}
+            {{ $t("register.title") }}
           </b-card-title>
           <b-card-text class="mb-2">
-            {{ $t('register.subtitle') }}
+            {{ $t("register.subtitle") }}
           </b-card-text>
 
           <!-- form -->
           <validation-observer ref="registerForm" #default="{ invalid }">
             <b-form class="auth-register-form mt-2" @submit.prevent="register">
               <!-- username -->
-              <b-form-group v-bind:label="$t('register.lbl_f_name')" label-for="register-firstname">
-                <validation-provider #default="{ errors }" v-bind:name="$t('register.lbl_f_name')" vid="firstname"
-                  rules="required">
-                  <b-form-input id="register-firstname" v-model="firstname" name="register-firstname"
-                    :state="errors.length > 0 ? false : null" v-bind:placeholder="$t('register.lbl_f_name')" />
+              <b-form-group
+                v-bind:label="$t('register.lbl_f_name')"
+                label-for="register-firstname"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  v-bind:name="$t('register.lbl_f_name')"
+                  vid="firstname"
+                  rules="required"
+                >
+                  <b-form-input
+                    id="register-firstname"
+                    v-model="firstname"
+                    name="register-firstname"
+                    :state="errors.length > 0 ? false : null"
+                    v-bind:placeholder="$t('register.lbl_f_name')"
+                  />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
-              <b-form-group v-bind:label="$t('register.lbl_l_name')" label-for="register-lastname">
-                <validation-provider #default="{ errors }" v-bind:name="$t('register.lbl_f_name')" vid="lastname"
-                  rules="required">
-                  <b-form-input id="register-lastname" v-model="lastname" name="register-lastname"
-                    :state="errors.length > 0 ? false : null" v-bind:placeholder="$t('register.lbl_f_name')" />
+              <b-form-group
+                v-bind:label="$t('register.lbl_l_name')"
+                label-for="register-lastname"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  v-bind:name="$t('register.lbl_f_name')"
+                  vid="lastname"
+                  rules="required"
+                >
+                  <b-form-input
+                    id="register-lastname"
+                    v-model="lastname"
+                    name="register-lastname"
+                    :state="errors.length > 0 ? false : null"
+                    v-bind:placeholder="$t('register.lbl_f_name')"
+                  />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
               <!-- Company -->
-              <b-form-group :label="$t('register.lbl_c_accountType')" label-for="register-accountType">
-                <validation-provider #default="{ errors }" name="accountType" vid="accountType" rules="required">
-                  <b-form-select v-model="account" id="register-accountType" name="register-accountType"
-                    :state="errors.length > 0 ? false : null">
-                    <b-form-select-option value="" disabled selected>{{ $t('register.select_account')
+              <b-form-group
+                :label="$t('register.lbl_c_accountType')"
+                label-for="register-accountType"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="accountType"
+                  vid="accountType"
+                  rules="required"
+                >
+                  <b-form-select
+                    v-model="account"
+                    id="register-accountType"
+                    name="register-accountType"
+                    :state="errors.length > 0 ? false : null"
+                  >
+                    <b-form-select-option value="" disabled selected>{{
+                      $t("register.select_account")
                     }}</b-form-select-option>
-                    <b-form-select-option value="COMPANY">{{ $t('register.company') }}</b-form-select-option>
-                    <b-form-select-option value="PERSONAL">{{ $t('register.personal') }}</b-form-select-option>
+                    <b-form-select-option value="COMPANY">{{
+                      $t("register.company")
+                    }}</b-form-select-option>
+                    <b-form-select-option value="PERSONAL">{{
+                      $t("register.personal")
+                    }}</b-form-select-option>
                   </b-form-select>
 
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
               <div v-if="account === 'COMPANY'">
-                <b-form-group v-bind:label="$t('register.lbl_c_name')" label-for="register-companyName">
-                  <validation-provider #default="{ errors }" v-bind:name="$t('register.lbl_f_name')" vid="companyName"
-                    rules="required">
-                    <b-form-input id="register-companyName" v-model="companyName" name="register-companyName"
-                      :state="errors.length > 0 ? false : null" v-bind:placeholder="$t('register.lbl_c_name')" />
+                <b-form-group
+                  v-bind:label="$t('register.lbl_c_name')"
+                  label-for="register-companyName"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    v-bind:name="$t('register.lbl_f_name')"
+                    vid="companyName"
+                    rules="required"
+                  >
+                    <b-form-input
+                      id="register-companyName"
+                      v-model="companyName"
+                      name="register-companyName"
+                      :state="errors.length > 0 ? false : null"
+                      v-bind:placeholder="$t('register.lbl_c_name')"
+                    />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
 
-                <b-form-group v-bind:label="$t('register.lbl_c_address')" label-for="register-companyAddress">
-                  <validation-provider #default="{ errors }" v-bind:name="$t('register.lbl_c_address')"
-                    vid="companyAddress" rules="required">
-                    <b-form-input id="register-companyAddress" v-model="companyAddress" name="register-companyAddress"
-                      :state="errors.length > 0 ? false : null" v-bind:placeholder="$t('register.lbl_c_address')" />
+                <b-form-group
+                  v-bind:label="$t('register.lbl_c_address')"
+                  label-for="register-companyAddress"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    v-bind:name="$t('register.lbl_c_address')"
+                    vid="companyAddress"
+                    rules="required"
+                  >
+                    <b-form-input
+                      id="register-companyAddress"
+                      v-model="companyAddress"
+                      name="register-companyAddress"
+                      :state="errors.length > 0 ? false : null"
+                      v-bind:placeholder="$t('register.lbl_c_address')"
+                    />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
 
-                <b-form-group v-bind:label="$t('register.lbl_c_registrationNumber')"
-                  label-for="register-registrationNumber">
-                  <validation-provider #default="{ errors }" name="registrationNumber" vid="registrationNumber"
-                    rules="required">
-                    <b-form-input id="register-registrationNumber" v-model="registrationNumber"
-                      name="register-registrationNumber" :state="errors.length > 0 ? false : null"
-                      v-bind:placeholder="$t('register.lbl_c_registrationNumber')" />
+                <b-form-group
+                  v-bind:label="$t('register.lbl_c_registrationNumber')"
+                  label-for="register-registrationNumber"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="registrationNumber"
+                    vid="registrationNumber"
+                    rules="required"
+                  >
+                    <b-form-input
+                      id="register-registrationNumber"
+                      v-model="registrationNumber"
+                      name="register-registrationNumber"
+                      :state="errors.length > 0 ? false : null"
+                      v-bind:placeholder="
+                        $t('register.lbl_c_registrationNumber')
+                      "
+                    />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
 
-                <b-form-group v-bind:label="$t('register.lbl_c_vatNumber')" label-for="register-vatNumber">
-                  <validation-provider #default="{ errors }" name="vatNumber" vid="vatNumber" rules="required">
-                    <b-form-input id="register-vatNumber" v-model="vatNumber" name="register-vatNumber"
-                      :state="errors.length > 0 ? false : null" v-bind:placeholder="$t('register.lbl_c_vatNumber')" />
+                <b-form-group
+                  v-bind:label="$t('register.lbl_c_vatNumber')"
+                  label-for="register-vatNumber"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="vatNumber"
+                    vid="vatNumber"
+                    rules="required"
+                  >
+                    <b-form-input
+                      id="register-vatNumber"
+                      v-model="vatNumber"
+                      name="register-vatNumber"
+                      :state="errors.length > 0 ? false : null"
+                      v-bind:placeholder="$t('register.lbl_c_vatNumber')"
+                    />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
               </div>
 
               <!-- email -->
-              <b-form-group v-bind:label="$t('register.lbl_email')" label-for="register-email">
-                <validation-provider #default="{ errors }" v-bind:name="$t('register.lbl_email')" vid="email"
-                  rules="required|email">
-                  <b-form-input id="register-email" v-model="userEmail" name="register-email"
-                    :state="errors.length > 0 ? false : null" v-bind:placeholder="$t('register.email_placeholder')" />
+              <b-form-group
+                v-bind:label="$t('register.lbl_email')"
+                label-for="register-email"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  v-bind:name="$t('register.lbl_email')"
+                  vid="email"
+                  rules="required|email"
+                >
+                  <b-form-input
+                    id="register-email"
+                    v-model="userEmail"
+                    name="register-email"
+                    :state="errors.length > 0 ? false : null"
+                    v-bind:placeholder="$t('register.email_placeholder')"
+                  />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
               <!-- password -->
-              <b-form-group label-for="register-password" v-bind:label="$t('register.lbl_password')">
-                <validation-provider #default="{ errors }" v-bind:name="$t('register.lbl_password')" vid="password"
-                  rules="required">
-                  <b-input-group class="input-group-merge" :class="errors.length > 0 ? 'is-invalid' : null">
-                    <b-form-input id="register-password" v-model="password" class="form-control-merge"
-                      :type="passwordFieldType" :state="errors.length > 0 ? false : null" name="register-password"
-                      placeholder="············" />
+              <b-form-group
+                label-for="register-password"
+                v-bind:label="$t('register.lbl_password')"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  v-bind:name="$t('register.lbl_password')"
+                  vid="password"
+                  rules="required"
+                >
+                  <b-input-group
+                    class="input-group-merge"
+                    :class="errors.length > 0 ? 'is-invalid' : null"
+                  >
+                    <b-form-input
+                      id="register-password"
+                      v-model="password"
+                      class="form-control-merge"
+                      :type="passwordFieldType"
+                      :state="errors.length > 0 ? false : null"
+                      name="register-password"
+                      placeholder="············"
+                    />
                     <b-input-group-append is-text>
-                      <feather-icon :icon="passwordToggleIcon" class="cursor-pointer" @click="togglePasswordVisibility" />
+                      <feather-icon
+                        :icon="passwordToggleIcon"
+                        class="cursor-pointer"
+                        @click="togglePasswordVisibility"
+                      />
                     </b-input-group-append>
                   </b-input-group>
                   <small class="text-danger">{{ errors[0] }}</small>
@@ -123,7 +247,12 @@
               </b-form-group>
 
               <b-form-group label="Country" label-for="register-country">
-                <validation-provider #default="{ errors }" name="country" vid="country" rules="required">
+                <validation-provider
+                  #default="{ errors }"
+                  name="country"
+                  vid="country"
+                  rules="required"
+                >
                   <!-- <b-form-select
                     v-model="country"
                     :options="items"
@@ -132,20 +261,48 @@
                     :state="errors.length > 0 ? false:null"
                   >
                   </b-form-select> -->
-                  <v-select v-model="country" :options="options" :filterBy="(option, label, search) => {
-                    return (option.text || '').toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1
-                  }" v-bind:label="$t('register.lbl_country')" id="register-country" name="country"
-                    v-bind:placeholder="$t('register.country_placeholder')" :value="$store.state.selected"
-                    :state="errors.length > 0 ? false : null">
+                  <v-select
+                    v-model="country"
+                    :options="options"
+                    :filterBy="
+                      (option, label, search) => {
+                        return (
+                          (option.text || '')
+                            .toLocaleLowerCase()
+                            .indexOf(search.toLocaleLowerCase()) > -1
+                        );
+                      }
+                    "
+                    v-bind:label="$t('register.lbl_country')"
+                    id="register-country"
+                    name="country"
+                    v-bind:placeholder="$t('register.country_placeholder')"
+                    :value="$store.state.selected"
+                    :state="errors.length > 0 ? false : null"
+                  >
                     <template #selected-option="option">
-                      <div style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
-                        <img :src="getImg(option.src)">
+                      <div
+                        style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: left;
+                          grid-gap: 8px;
+                        "
+                      >
+                        <img :src="getImg(option.src)" />
                         {{ option.text }}
                       </div>
                     </template>
                     <template v-slot:option="option">
-                      <span style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
-                        <img :src="getImg(option.src)"> {{ option.text }}
+                      <span
+                        style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: left;
+                          grid-gap: 8px;
+                        "
+                      >
+                        <img :src="getImg(option.src)" /> {{ option.text }}
                       </span>
                     </template>
                   </v-select>
@@ -154,27 +311,33 @@
               </b-form-group>
 
               <b-form-group>
-                <b-form-checkbox id="register-privacy-policy" v-model="gdpr"
-                  name="checkbox-1">{{ $t('register.i_agree_to') }}
+                <b-form-checkbox
+                  id="register-privacy-policy"
+                  v-model="gdpr"
+                  name="checkbox-1"
+                  >{{ $t("register.i_agree_to") }}
                   <b-link v-b-modal.modal-scrollable>
-                    {{ $t('register.lbl_privacy_term_link') }}
+                    {{ $t("register.lbl_privacy_term_link") }}
                   </b-link>
                 </b-form-checkbox>
               </b-form-group>
 
-              <b-button variant="primary" block type="submit" :disabled="invalid || loading || !gdpr">
+              <b-button
+                variant="primary"
+                block
+                type="submit"
+                :disabled="invalid || loading || !gdpr"
+              >
                 <b-spinner v-if="loading" small variant="light" />
-                {{ $t('register.lbl_submit') }} vghvghvghv
+                {{ $t("register.lbl_submit") }}
               </b-button>
-
-
             </b-form>
           </validation-observer>
 
           <p class="text-center mt-2">
-            <span>{{ $t('register.have_account') }}</span>
+            <span>{{ $t("register.have_account") }}</span>
             <b-link :to="{ name: 'login' }">
-              <span>&nbsp;{{ $t('register.lbl_login_link') }}</span>
+              <span>&nbsp;{{ $t("register.lbl_login_link") }}</span>
             </b-link>
           </p>
 
@@ -183,17 +346,25 @@
       </b-col>
       <!-- /Register-->
     </b-row>
-    <b-modal id="modal-scrollable" scrollable :title="$t('register.lbl_privacy')" cancel-title="Close" ok-title="Accept"
-      cancel-variant="outline-secondary" centered size="lg" @ok="gdpr = true">
+    <b-modal
+      id="modal-scrollable"
+      scrollable
+      :title="$t('register.lbl_privacy')"
+      cancel-title="Close"
+      ok-title="Accept"
+      cancel-variant="outline-secondary"
+      centered
+      size="lg"
+      @ok="gdpr = true"
+    >
       <b-card-text>
-        <span style="white-space: break-spaces;">
-          {{ $t('register.lbl_privacy_content') }}
+        <span style="white-space: break-spaces">
+          {{ $t("register.lbl_privacy_content") }}
         </span>
       </b-card-text>
     </b-modal>
   </div>
 </template>
-
 
 <script>
 /* eslint-disable global-require */
@@ -229,14 +400,14 @@ import {
   BNavItem,
   BSpinner,
   BModal,
-  BFormSelectOption
+  BFormSelectOption,
 } from "bootstrap-vue";
 import { required, email, password } from "@validations";
 import { togglePasswordVisibility } from "@core/mixins/ui/forms";
 import store from "@/store/index";
 import useJwt from "@/auth/jwt/useJwt";
 import vSelect from "vue-select";
-import navbarAds from "./navbarAds.vue"
+import navbarAds from "./navbarAds.vue";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 export default {
   components: {
@@ -274,7 +445,7 @@ export default {
     navbarAds,
     BSpinner,
     BModal,
-    BFormSelectOption
+    BFormSelectOption,
   },
   mixins: [togglePasswordVisibility],
   data() {
@@ -301,11 +472,11 @@ export default {
       account: null,
       options: [],
       accountType: [
-        { value: null, text: 'Please select account type', disabled: true },
-        { value: 'COMPANY', text: 'COMPANY' },
-        { value: 'PERSONAL', text: 'PERSONAL' },
+        { value: null, text: "Please select account type", disabled: true },
+        { value: "COMPANY", text: "COMPANY" },
+        { value: "PERSONAL", text: "PERSONAL" },
       ],
-      loading: false
+      loading: false,
     };
   },
   computed: {
@@ -325,7 +496,7 @@ export default {
     register() {
       this.$refs.registerForm.validate().then((success) => {
         if (success) {
-          this.loading = true
+          this.loading = true;
           useJwt
             .clientToken()
             .then((res) => {
@@ -333,7 +504,7 @@ export default {
               useJwt
                 .getIpAddress()
                 .then((res) => {
-                  let IpAddress = res?.data?.ip
+                  let IpAddress = res?.data?.ip;
                   useJwt
                     .register(token, {
                       firstName: this.firstname,
@@ -341,10 +512,16 @@ export default {
                       email: this.userEmail,
                       password: this.password,
                       accountType: this.account,
-                      companyAddress: this.account == "COMPANY" ? this.companyAddress : "",
-                      companyName: this.account == "COMPANY" ? this.companyName : "",
-                      companyRegistrationNumber: this.account == "COMPANY" ? this.registrationNumber : "",
-                      vatNumber: this.account == "COMPANY" ? this.vatNumber : "",
+                      companyAddress:
+                        this.account == "COMPANY" ? this.companyAddress : "",
+                      companyName:
+                        this.account == "COMPANY" ? this.companyName : "",
+                      companyRegistrationNumber:
+                        this.account == "COMPANY"
+                          ? this.registrationNumber
+                          : "",
+                      vatNumber:
+                        this.account == "COMPANY" ? this.vatNumber : "",
                       country: this.country?.text,
                       gdpr: this.gdpr,
                       identifier: "",
@@ -352,11 +529,11 @@ export default {
                       isoAlpha2Country: this.country?.value,
                     })
                     .then((response) => {
-                      this.loading = false
-                      return this.$router.push({ name: "verify-email" })
+                      this.loading = false;
+                      return this.$router.push({ name: "verify-email" });
                     })
                     .catch((error) => {
-                      this.loading = false
+                      this.loading = false;
                       this.$toast({
                         component: ToastificationContent,
                         props: {
@@ -368,11 +545,11 @@ export default {
                     });
                 })
                 .catch((error) => {
-                  this.loading = false
+                  this.loading = false;
                 });
             })
             .catch((error) => {
-              this.loading = false
+              this.loading = false;
               this.$toast({
                 component: ToastificationContent,
                 props: {
@@ -440,7 +617,7 @@ export default {
     this.populateCountries();
   },
 };
-  /* eslint-disable global-require */
+/* eslint-disable global-require */
 </script>
 
 <style lang="scss">
