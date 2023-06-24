@@ -2,7 +2,7 @@
   <div>
     <form-wizard color="#0A64BC" :title="null" :subtitle="null" shape="square"
       :finish-button-text="$t('create_company.create')" :next-button-text="$t('create_company.next')"
-      :back-button-text="$t('create_company.previous')" class="mb-3" @on-complete="saveCompany()">
+      :back-button-text="$t('create_company.previous')" class="mb-3">
       <!-- First Tab: Company Details -->
       <tab-content :title="$t('create_company.company_details')" :before-change="validationForm">
         <validation-observer ref="companyRules" tag="form">
@@ -578,7 +578,7 @@ export default {
         { value: "ZMK", name: "Zambian Kwacha", symbol: "ZK" },
       ],
       platformProperties: [],
-
+      platformPropertiesOptions: [],  // Add this line
       selectedPlatformProperty: null,
       selectedPlatformProperties: [],  // new data property
       platformPropertiesData: {},
@@ -845,7 +845,7 @@ export default {
         data: data,
       };
 
-      const data1 = await axios(config)
+      await axios(config)
         .then(function (response) {
           // console.log(JSON.stringify(response.data));
           self.$toast({
@@ -862,7 +862,7 @@ export default {
         })
 
         .catch(function (error) {
-          // console.log(error);
+
           self.$toast({
             component: ToastificationContent,
             props: {
@@ -872,7 +872,7 @@ export default {
             },
           });
 
-          return self.$router.go();
+          // return self.$router.go();
         });
     },
     //populating the list of countries
