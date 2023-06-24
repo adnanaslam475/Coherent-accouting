@@ -1,12 +1,21 @@
 <template>
   <section class="invoice-add-wrapper">
     <TabList />
-    <!--  -->
+    <!-- Alert: No item found -->
+    <b-alert variant="danger" :show="invoiceData === undefined">
+      <h4 class="alert-heading">Error fetching invoice data</h4>
+      <div class="alert-body">
+        No invoice found with this invoice id. Check
+        <b-link class="alert-link" :to="{ name: 'apps-invoice-list' }">
+          Invoice List
+        </b-link>
+        for other invoices.
+      </div>
+    </b-alert>
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
       <b-form @submit.prevent="invoiceEdit(invoiceData, 'save', AccountTypeOption)">
-        <b-row class="invoice-add">
+        <b-row v-if="invoiceData" class="invoice-add">
           <!-- Col: Left (Invoice Container) -->
-          <!-- template 05 -->
           <b-col cols="12" xl="10" md="10" v-if="isTemplateFive">
             <b-card no-body class="invoice-add">
               <b-card-header class="justify-content-center">
@@ -19,13 +28,26 @@
                       <b-input-group-prepend is-text>
                         <feather-icon icon="HashIcon" />
                       </b-input-group-prepend>
+
                       <b-form-input id="invoice-data-id" v-model="invoiceData.invoiceNumber" />
                     </b-input-group>
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
+                  <!-- <div class="d-flex justify-content-between align-items-center px-3">
+                    <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
+                      <template #first>
+                        <b-form-select-option :value="null" disabled>
+                          {{ $t("add_invoice.select_notification") }}
+                        </b-form-select-option>
+                      </template>
+                    </b-form-select>
+                    <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
+                      + selectedNotification) }}</div>
+                  </div> -->
                 </div>
               </b-card-header>
             </b-card>
+
             <div>
               <!-- Account Type -->
               <div class="d-flex justify-content-between align-items-center mb-2 accountType">
@@ -143,6 +165,9 @@
                   </b-card-header>
                 </b-card>
               </div>
+
+
+
               <div
                 class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input invoice-input-middle mb-md-0">
                 <div class="mt-md-0 mt-2 flex-1">
@@ -190,8 +215,7 @@
                               @focus="ShowSuggestion(datalist)" />
                             <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions"
                               style="width: 100%">
-                              <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
-                                @mousedown="autoCompletefn(data)">
+                              <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)">
                                 {{ data.company_name }}
                               </b-list-group-item>
                             </b-list-group>
@@ -218,20 +242,24 @@
                         </span>
                         <b-input-group class="input-group invoice-edit-input-group">
                           <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required">
-                            <b-form-input v-model="invoiceData.supplierCompany.companyEic"
-                              @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)" list="my-company_name"
-                              autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)"
-                              @mousedown="() => { companyIDisInvalid = false; }" />
+                            <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="
+                              SearchCompanyEic(
+                                invoiceData.supplierCompany.companyEic
+                              )
+                              " list="my-company_name" autocomplete="off" @blur="hideSuggestionEic()"
+                              @focus="ShowSuggestionEic(datalistEic)" @mousedown="() => {
+                                companyIDisInvalid = false;
+                              }
+                                " />
                             <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions"
                               style="width: 100%">
                               <b-list-group-item v-for="data in datalistEic" :key="data.eic"
-                                @click="autoCompletefnEic(data)" @mousedown="autoCompletefnEic(data)">
+                                @click="autoCompletefnEic(data)">
                                 {{ data.eic }}
                               </b-list-group-item>
                             </b-list-group>
                             <small class="text-danger">{{ errors[0] }}</small>
-                            <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
-                            </small>
+                            <small class="text-danger" v-if="companyIDisInvalid">Company ID is not correct</small>
                           </validation-provider>
                         </b-input-group>
                       </div>
@@ -260,8 +288,16 @@
                       </div>
                       <div class="d-flex align-items-center mb-1">
                         <span class="mr-1"> {{ $t("add_invoice.vat") }}: </span>
-                        <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-1"
-                          name="check-button" switch>
+                        <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-1" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="check-button" switch>
                           <span class="switch-icon-left">
                             {{ $t("add_invoice.yes") }}
                           </span>
@@ -321,24 +357,27 @@
                                 SearchCompanyNameRecipient(
                                   invoiceData.recipientCompany.companName
                                 )
-                                " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()"
-                              @focus="ShowSuggestionRecipient(datalistRecipient)" />
+                                " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()" @focus="
+    ShowSuggestionRecipient(datalistRecipient)
+    " />
                             <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions"
                               style="width: 100%">
-                              <b-list-group-item button v-for="data in datalistRecipient" :key="data.eic"
-                                @click="autoCompletefnRecipient(data)" @mousedown="autoCompletefnRecipient(data)">
+                              <b-list-group-item v-for="data in datalistRecipient" :key="data.eic"
+                                @click="autoCompletefnRecipient(data)">
                                 {{ data.company_name }}
                               </b-list-group-item>
                             </b-list-group>
-                            <b-form-input v-if="AccountTypeOption == 'person'"
-                              v-model="invoiceData.recipientCompany.companyOwnerName"
-                              @input="SearchCompanyPerson(invoiceData.recipientCompany.companyOwnerName)"
-                              list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()"
-                              @focus="ShowSuggestionPerson(datalistPerson)" />
+                            <b-form-input v-if="AccountTypeOption == 'person'" v-model="invoiceData.recipientCompany.companyOwnerName
+                              " @input="
+    SearchCompanyPerson(
+      invoiceData.recipientCompany.companyOwnerName
+    )
+    " list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()"
+                              @focus="ShowSuggestionPerson(datalistPerson)" placeholder="Recipient Person Name..." />
                             <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions"
                               style="width: 100%">
                               <b-list-group-item v-for="data in datalistPerson" :key="data.eic"
-                                @click="autoCompletefnPerson(data)" @mousedown="autoCompletefnPerson(data)">
+                                @click="autoCompletefnPerson(data)">
                                 {{ data.firstMiddleAndLastName }}
                               </b-list-group-item>
                             </b-list-group>
@@ -373,28 +412,37 @@
                               : 'personIdNumber'
                             " rules="required">
                             <b-form-input v-if="AccountTypeOption == 'company'"
-                              v-model="invoiceData.recipientCompany.companyEic"
-                              @input="SearchCompanyEicRecipient(invoiceData.recipientCompany.companyEic)"
-                              list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()"
-                              @focus="ShowSuggestionEicRecipient(datalistEicRecipient)" />
+                              v-model="invoiceData.recipientCompany.companyEic" @input="
+                                SearchCompanyEicRecipient(
+                                  invoiceData.recipientCompany.companyEic
+                                )
+                                " list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()"
+                              @focus="
+                                ShowSuggestionEicRecipient(datalistEicRecipient)
+                                " />
                             <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name"
                               class="input-suggesstions" style="width: 100%">
                               <b-list-group-item v-for="data in datalistEicRecipient" :key="data.eic"
-                                @click="autoCompletefnEicRecipient(data)" @mousedown="autoCompletefnEicRecipient(data)">
+                                @click="autoCompletefnEicRecipient(data)">
                                 {{ data.eic }}
                               </b-list-group-item>
                             </b-list-group>
 
                             <b-form-input v-if="AccountTypeOption == 'person'"
-                              v-model="invoiceData.recipientCompany.companyEic"
-                              @input="SearchCompanyPersonIdNumber(invoiceData.recipientCompany.companyEic)"
-                              list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()"
-                              @focus="ShowSuggestionPersonIdNumber(datalistPersonIdNumber)" />
+                              v-model="invoiceData.recipientCompany.companyEic" @input="
+                                SearchCompanyPersonIdNumber(
+                                  invoiceData.recipientCompany.companyEic
+                                )
+                                " list="my-company_name" autocomplete="off" @blur="hideSuggestionPersonIdNumber()"
+                              @focus="
+                                ShowSuggestionPersonIdNumber(
+                                  datalistPersonIdNumber
+                                )
+                                " />
                             <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                               class="input-suggesstions" style="width: 100%">
                               <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
-                                @click="autoCompletefnPersonIdNumber(data)"
-                                @mousedown="autoCompletefnPersonIdNumber(data)">
+                                @click="autoCompletefnPersonIdNumber(data)">
                                 {{ data.identificationNumber }}
                               </b-list-group-item>
                             </b-list-group>
@@ -429,8 +477,16 @@
                       </div>
                       <div v-if="AccountTypeOption == 'company'" class="d-flex align-items-center mb-1">
                         <span class="mr-1"> {{ $t("add_invoice.vat") }}: </span>
-                        <b-form-checkbox v-model="recipientVat" class="custom-control-primary custom-switch-btn-1"
-                          name="check-button" switch>
+                        <b-form-checkbox v-model="recipientVat" class="custom-control-primary custom-switch-btn-1" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="check-button" switch>
                           <span class="switch-icon-left">
                             {{ $t("add_invoice.yes") }}
                           </span>
@@ -472,23 +528,39 @@
               </b-card>
               <b-form-checkbox v-model="InvoiceTypeOptionToggleValue"
                 @change="InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)"
-                class="custom-control-primary custom-switch-btn-2 flex-1 text-center" name="AccountTypeOptionToggle"
-                switch>
-                <span class="switch-icon-left text-uppercase">
+                class="custom-control-primary custom-switch-btn-2 flex-1 text-center" :class="isBlue === true
+                  ? 'tm_accent_bg_checkbox'
+                  : isGreen === true
+                    ? 'green_bg_checkbox'
+                    : isPurple === true
+                      ? 'purple_bg_checkbox'
+                      : isOrange === true
+                        ? 'orange_bg_checkbox'
+                        : 'gray_bg_checkbox'
+                  " name="AccountTypeOptionToggle" switch>
+                <span class="switch-icon-left">
                   {{ $t("add_invoice.PROFORMA") }}
                 </span>
-                <span class="switch-icon-right text-uppercase">
+                <span class="switch-icon-right">
                   {{ $t("add_invoice.ORIGINAL") }}
                 </span>
               </b-form-checkbox>
               <b-form-checkbox v-model="saleTypeOptionToggleValue"
                 @change="saleTypeOptionToggle(saleTypeOptionToggleValue)"
-                class="custom-control-primary custom-switch-btn-2 flex-1 text-center" name="AccountTypeOptionToggle"
-                switch>
-                <span class="switch-icon-left text-uppercase">
+                class="custom-control-primary custom-switch-btn-2 flex-1 text-center" :class="isBlue === true
+                  ? 'tm_accent_bg_checkbox'
+                  : isGreen === true
+                    ? 'green_bg_checkbox'
+                    : isPurple === true
+                      ? 'purple_bg_checkbox'
+                      : isOrange === true
+                        ? 'orange_bg_checkbox'
+                        : 'gray_bg_checkbox'
+                  " name="AccountTypeOptionToggle" switch>
+                <span class="switch-icon-left">
                   {{ $t("add_invoice.goods") }}
                 </span>
-                <span class="switch-icon-right text-uppercase">
+                <span class="switch-icon-right">
                   {{ $t("add_invoice.service") }}
                 </span>
               </b-form-checkbox>
@@ -499,15 +571,26 @@
                       <span class="title mr-1">
                         {{ $t("add_invoice.date") }}:
                       </span>
-                      <validation-provider #default="{ errors }" name="dateIssued" rules="required">
-                        <flat-pickr v-model="invoiceData.dateIssued"
-                          class="form-control invoice-edit-input invoice-input-top" />
-                        <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                          class="cursor-pointer clear-all" />
-                        <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                          @click="invoiceData.dateIssued = ''" />
-                        <small class="text-danger">{{ errors[0] }}</small>
-                      </validation-provider>
+                      <!-- <validation-provider
+                        #default="{ errors }"
+                        name="dateIssued"
+                        rules="required"
+                      > -->
+                      <!-- <flat-pickr
+                          v-model="invoiceData.dateIssued"
+                          class="form-control invoice-edit-input invoice-input-top"
+                        /> -->
+
+                      <flat-pickr v-model="invoiceData.dateIssued"
+                        class="form-control invoice-edit-input invoice-input-top" placeholder="Select date: " />
+
+                      <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                        class="cursor-pointer clear-all mr-2" />
+                      <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all mr-2"
+                        @click="invoiceData.dateIssued = ''" />
+
+                      <!-- <small class="text-danger">{{ errors[0] }}</small>
+                      </validation-provider> -->
                     </div>
                   </div>
                 </b-card-header>
@@ -541,7 +624,10 @@
                             : isOrange === true
                               ? 'orange_bg'
                               : 'gray_bg'
-                        " :style="isGray === true ? 'color: black !important' : 'color: white !important'">
+                        " :style="isGray === true
+    ? 'color: black !important'
+    : 'color: white !important'
+    ">
                         <b-row class="flex-grow-1 px-1 invoice-add-transections">
                           <!-- Single Item Form Headers -->
                           <b-col cols="12" lg="1">
@@ -592,8 +678,7 @@
                           <b-col cols="12" lg="1">
                             <label class="d-inline d-lg-none">Qty</label>
                             <validation-provider #default="{ errors }" name="transectionQuantity" rules="required">
-                              <b-form-input v-model="item.quantity" type="number" class="mb-0" placeholder="0"
-                                step="0.0000000001" @input="populateValues()" />
+                              <b-form-input v-model="item.quantity" type="number" class="mb-0" step="0.0000000001" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </b-col>
@@ -614,7 +699,7 @@
                                 </b-input-group-prepend>
 
                                 <b-form-input v-model="item.singleAmountTransaction" type="number" class="mb-0" step="any"
-                                  placeholder="0.00" @input="populateValues()" />
+                                  placeholder="0.00" />
                               </b-input-group>
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -635,14 +720,9 @@
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
 
-                                <!-- <b-form-input
-                                  :value="(item.singleAmountTransaction * item.quantity).toFixed(2)"
-                                  disabled
-                                  class="mb-0"
-                                /> -->
                                 <b-form-input :value="(
-                                  parseFloat(item.singleAmountTransaction) *
-                                  parseFloat(item.quantity)
+                                  item.singleAmountTransaction *
+                                  item.quantity
                                 ).toFixed(2)
                                   " disabled class="mb-0" />
                               </b-input-group>
@@ -662,8 +742,8 @@
                 </div>
               </b-card-body>
             </b-card>
-            <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="addNewItemInItemForm" class="mb-2"
-              :style="isBlue === true
+            <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" variant="primary" @click="addNewItemInItemForm"
+              class="mb-2" :style="isBlue === true
                 ? 'background-color: #007aff !important; color: white !important'
                 : isGreen === true
                   ? 'background-color: #8fce00 !important; color: white !important'
@@ -678,20 +758,11 @@
 
             <b-card no-body class="invoice-add-card mb-1">
               <b-card-body class="invoice-padding form-item-section p-0">
-                <b-row class="pb-0 m-0 transaction-container" :style="isBlue === true
-                  ? 'border: 1px solid #007aff'
-                  : isGreen === true
-                    ? 'border: 1px solid #8fce00'
-                    : isPurple === true
-                      ? 'border: 1px solid #ad3978'
-                      : isOrange === true
-                        ? 'border: 1px solid #FFA500'
-                        : 'border:1px solid #f6d1ff'
-                  ">
+                <b-row class="pb-0 m-0 border transaction-container border-1 border-primary">
                   <!-- Col: Sales Persion -->
                   <b-col cols="12" class="border border-0 row m-0 py-2">
                     <b-col cols="12" md="7" class="mt-md-6 d-flex" order="2" order-md="1">
-                      <h1 class="invoiceTypeHeading text-uppercase">
+                      <h1 class="invoiceTypeHeading">
                         {{ $t("add_invoice." + invoiceData.invoiceType) }}
                       </h1>
                     </b-col>
@@ -710,7 +781,10 @@
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
 
-                                <b-form-input v-model="invoiceData.amountNonVat" disabled />
+                                <b-form-input :value="amountNonVat(invoiceData.transactions)
+                                  ? amountNonVat(invoiceData.transactions)
+                                  : 0
+                                  " disabled />
                               </b-input-group>
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -721,13 +795,15 @@
                             {{ $t("add_invoice.vat") }}:
                           </p>
                           <p class="invoice-total-amount">
-                            <validation-provider #default="{ errors }" name="vat" ref="vatPercent" :rules="`${vatPercentValidate
-                              ? 'required|vatPercentValid'
-                              : 'required'
-                              }`">
+                            <validation-provider #default="{ errors }" name="vat" rules="required">
                               <b-input-group class="input-group-merge invoice-edit-input-group">
-                                <b-form-input v-model="invoiceData.vatPercent" step="any" type="number" class="text-right"
-                                  @input="populateValues()" />
+                                <!-- value="
+                                    invoiceData.vatPercent
+                                      ? invoiceData.vatPercent
+                                      : 20
+                                  " -->
+                                <b-form-input v-model="invoiceData.vatPercent" step="any" type="number"
+                                  class="text-right" />
 
                                 <b-input-group-append is-text>
                                   <span>%</span>
@@ -747,8 +823,11 @@
                                 <b-input-group-prepend is-text>
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
-
-                                <b-form-input v-model="invoiceData.vatAmount" type="number" disabled />
+                                <b-form-input :value="vatAmount(
+                                  invoiceData.transactions,
+                                  invoiceData.vatPercent
+                                )
+                                  " type="number" disabled />
                               </b-input-group>
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -761,8 +840,10 @@
                           <p class="invoice-total-amount">
                             <validation-provider #default="{ errors }" name="tradeDiscountPercent" rules="required">
                               <b-input-group class="input-group-merge invoice-edit-input-group">
-                                <b-form-input v-model="invoiceData.tradeDiscountPercent" step="any" type="number"
-                                  class="text-right" @input="populateValues()" />
+                                <b-form-input v-model="invoiceData.tradeDiscountPercent" :value="invoiceData.tradeDiscountPercent
+                                  ? invoiceData.tradeDiscountPercent
+                                  : 0
+                                  " step="any" type="number" class="text-right" />
 
                                 <b-input-group-append is-text>
                                   <span>%</span>
@@ -783,23 +864,18 @@
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
 
-                                <!-- <b-form-input
-                                  :value="
-                                    tradeDiscountAmount(
-                                      invoiceData.transactions,
-                                      invoiceData.vatPercent,
-                                      invoiceData.tradeDiscountPercent
-                                    )
-                                      ? tradeDiscountAmount(
-                                          invoiceData.transactions,
-                                          invoiceData.vatPercent,
-                                          invoiceData.tradeDiscountPercent
-                                        )
-                                      : 0
-                                  "
-                                  disabled
-                                /> -->
-                                <b-form-input v-model="invoiceData.tradeDiscountAmount" disabled />
+                                <b-form-input :value="tradeDiscountAmount(
+                                  invoiceData.transactions,
+                                  invoiceData.vatPercent,
+                                  invoiceData.tradeDiscountPercent
+                                )
+                                  ? tradeDiscountAmount(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent,
+                                    invoiceData.tradeDiscountPercent
+                                  )
+                                  : 0
+                                  " disabled />
                               </b-input-group>
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -816,25 +892,18 @@
                                   <span>{{ invoiceData.currency }}</span>
                                 </b-input-group-prepend>
 
-                                <!-- <b-form-input
-                                  :value="
-                                    totalPrice(
-                                      invoiceData.transactions,
-                                      invoiceData.vatPercent,
-                                      invoiceData.tradeDiscountPercent
-                                    )
-                                      ? totalPrice(
-                                          invoiceData.transactions,
-                                          invoiceData.vatPercent,
-                                          invoiceData.tradeDiscountPercent
-                                        )
-                                      : 0
-                                  "
-                                  disabled
-                                  class="opacity-1 font-weight-bolder custom-font"
-                                /> -->
-                                <b-form-input v-model="invoiceData.totalAmount" disabled
-                                  class="opacity-1 font-weight-bolder custom-font" />
+                                <b-form-input :value="totalPrice(
+                                  invoiceData.transactions,
+                                  invoiceData.vatPercent,
+                                  invoiceData.tradeDiscountPercent
+                                )
+                                  ? totalPrice(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent,
+                                    invoiceData.tradeDiscountPercent
+                                  )
+                                  : 0
+                                  " disabled class="opacity-1 font-weight-bolder custom-font" />
                               </b-input-group>
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -847,15 +916,25 @@
               </b-card-body>
             </b-card>
 
-            <!-- Bank Details Switch -->
+            <!-- bank Details Switch -->
             <b-row>
               <b-col>
-                <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1" name="AccountTypeOptionToggle"
-                  @change="() => {
-                    isBank = !isBank;
-                  }
-                    " switch :checked="isBank">
-                  <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
+                <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1" :class="isBlue === true
+                  ? 'tm_accent_bg_checkbox'
+                  : isGreen === true
+                    ? 'green_bg_checkbox'
+                    : isPurple === true
+                      ? 'purple_bg_checkbox'
+                      : isOrange === true
+                        ? 'orange_bg_checkbox'
+                        : 'gray_bg_checkbox'
+                  " name="AccountTypeOptionToggle" @change="() => {
+    hasBankDetails = !hasBankDetails;
+  }
+    " switch :checked="hasBankDetails">
+                  <span class="switch-icon-left text-uppercase">
+                    {{ $t("add_invoice.bank") }}
+                  </span>
                   <span class="switch-icon-right text-uppercase">
                     {{ $t("add_invoice.no_bank") }}
                   </span>
@@ -864,7 +943,7 @@
             </b-row>
 
             <!-- Bank Details -->
-            <b-card no-body class="invoice-add-card mb-1 mt-1" v-if="isBank">
+            <b-card no-body class="invoice-add-card mb-1 mt-1" v-if="hasBankDetails">
               <b-card-body class="invoice-padding form-item-section p-2 border border-1 border-primary rounded">
                 <div>
                   <b-form-row>
@@ -875,7 +954,7 @@
                         <v-select v-model="invoiceData.bankApi.name" :options="bankList" id="invoice-bank"
                           name="invoice-bank" v-bind:placeholder="$t('Please select bank...')"
                           :value="$store.state.selected" @input="selectBankName()">
-                          <template #selected-option="option" v-if="bankNameToSend !== ''">
+                          <template #selected-option="option" v-if="editMode && bankNameToSend !== ''">
                             <div style="
                                 display: flex;
                                 align-items: center;
@@ -885,7 +964,7 @@
                               {{ bankNameToSend }}
                             </div>
                           </template>
-                          <template #selected-option="option" v-else>
+                          <template #selected-option="option" v-else-if="editMode && bankNameToSend === ''">
                             <div style="
                                 display: flex;
                                 align-items: center;
@@ -893,6 +972,16 @@
                                 grid-gap: 8px;
                               ">
                               {{ $t(option.name) }}
+                            </div>
+                          </template>
+                          <template #selected-option="option" v-else>
+                            <div style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: left;
+                                grid-gap: 8px;
+                              ">
+                              {{ invoiceData.bankApi.name }}
                             </div>
                           </template>
 
@@ -937,7 +1026,8 @@
               </b-card-body>
             </b-card>
 
-            <b-row v-if="invoiceData.vatPercent === '0'" class="mt-2">
+            <b-row v-if="invoiceData.vatPercent === '0' || invoiceData.vatPercent === 0
+              " class="mt-2">
               <b-col>
                 <b-card no-body class="">
                   <b-card-body class="invoice-padding form-item-section p-2 rounded">
@@ -945,8 +1035,8 @@
                       <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
                         <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
                           name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
-                            " :value="$store.state.selected" @input="selectVatClause()">
-                          <template #selected-option="option" v-if="clauseToSend !== ''">
+                            " @input="selectVatClause()">
+                          <template #selected-option="option" v-if="editClauseMode && clauseToSend !== ''">
                             <div style="
                                 display: flex;
                                 align-items: center;
@@ -956,7 +1046,7 @@
                               {{ clauseToSend }}
                             </div>
                           </template>
-                          <template #selected-option="option" v-else>
+                          <template #selected-option="option" v-else-if="editClauseMode && clauseToSend === ''">
                             <div style="
                                 display: flex;
                                 align-items: center;
@@ -964,6 +1054,16 @@
                                 grid-gap: 8px;
                               ">
                               {{ option.clause }}
+                            </div>
+                          </template>
+                          <template #selected-option="option" v-else>
+                            <div style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: left;
+                                grid-gap: 8px;
+                              ">
+                              {{ invoiceData.vatCondition }}
                             </div>
                           </template>
 
@@ -988,7 +1088,6 @@
               <b-col> </b-col>
             </b-row>
           </b-col>
-
           <!-- template 01 -->
           <b-col cols="12" xl="10" md="10" v-if="isTemplateOne">
             <div class="tm_container">
@@ -1034,18 +1133,26 @@
                           </div>
                         </div>
                       </div>
-                      <div class="tm_invoice_right tm_text_right">
-                        <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          {{ $t("add_invoice.invoice") }}
-                        </div>
-                      </div>
+
+                      <!-- <div class="d-flex justify-content-between align-items-center px-3">
+                        <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
+                          <template #first>
+                            <b-form-select-option :value="null" disabled>
+                              {{ $t("add_invoice.select_notification") }}
+                            </b-form-select-option>
+                          </template>
+                        </b-form-select>
+                        <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
+                          + selectedNotification) }}</div>
+                      </div> -->
                     </div>
+
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_seperator tm_gray_bg"></div>
                       <div class="tm_invoice_info_list">
                         <p class="tm_invoice_number tm_m0">
-                          <!-- Invoice No: -->
                           {{ $t("add_invoice.invoice") }}:
+
                           <span><validation-provider #default="{ errors }" name="invoiceNumber" vid="Invoice"
                               rules="required">
                               <b-input-group class="input-group-merge invoice-edit-input-group invoice-input-top">
@@ -1059,57 +1166,111 @@
                             </validation-provider>
                           </span>
                         </p>
-                        <p class="tm_invoice_date tm_m0">
-                          <!-- Date: -->
-                          {{ $t("add_invoice.date") }}:
-                          <span>
-                            <validation-provider #default="{ errors }" name="dateIssued" rules="required">
-                              <flat-pickr v-model="invoiceData.dateIssued"
-                                class="form-control invoice-edit-input invoice-input-top" />
-                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                                @click="invoiceData.dateIssued = ''" />
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
-                          </span>
-                        </p>
+                        <b-card no-body class="invoice-preview date-issued mb-0">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.date") }}:
+                                </span>
+                                <!-- <validation-provider
+                        #default="{ errors }"
+                        name="dateIssued"
+                        rules="required"
+                      > -->
+                                <!-- <flat-pickr
+                          v-model="invoiceData.dateIssued"
+                          class="form-control invoice-edit-input invoice-input-top"
+                        /> -->
+
+                                <flat-pickr v-model="invoiceData.dateIssued"
+                                  class="form-control invoice-edit-input invoice-input-top" placeholder="Select date: " />
+
+                                <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                                  class="cursor-pointer clear-all mr-2" />
+                                <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all mr-2"
+                                  @click="invoiceData.dateIssued = ''" />
+
+                                <!-- <small class="text-danger">{{ errors[0] }}</small>
+                      </validation-provider> -->
+                              </div>
+                            </div>
+                          </b-card-header>
+                        </b-card>
                       </div>
                     </div>
 
-                    <!-- Person/Company Switch -->
-
                     <!-- Account Type -->
                     <div class="d-flex justify-content-between align-items-center mb-2 accountType">
-                      <!-- @change="scheduleTypeOptionToggle(scheduleOptionToggleValue)"                 -->
                       <b-form-checkbox v-model="invoiceData.scheduled"
-                        class="custom-control-primary custom-switch-btn mr-2" name="invoiceData.scheduled" switch>
-                        <span class="switch-icon-left" style="width: 76px">{{ $t("add_invoice.scheduled") }}</span>
-                        <span class="switch-icon-right" style="width: 76px">{{ $t("add_invoice.regular") }}</span>
+                        class="custom-control-primary custom-switch-btn fmr-2" name="invoiceData.scheduled" @change="() => {
+                          isScheduled = !isScheduled;
+                        }
+                          " switch :checked="isScheduled">
+                        <span class="switch-icon-left">{{
+                          $t("add_invoice.scheduled")
+                        }}</span>
+                        <span class="switch-icon-right">{{
+                          $t("add_invoice.regular")
+                        }}</span>
                       </b-form-checkbox>
-                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0"
-                        v-if="disabled = invoiceData.scheduled" style="width: 27%;">
-                        <b-card-header class="justify-content-end">
-                          <div class="mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.schedule_type") }}:
-                              </span>
-                              <validation-provider #default="{ errors }" name="scheduleType" rules="required">
-                                <b-form-select :disabled="!invoiceData.scheduled"
-                                  v-model="invoiceData.cronScheduleApi.scheduleType"
-                                  @change="() => { companyIDisInvalid = false; }">
-                                  <b-form-select-option value="WEEKLY">{{ $t("add_invoice.WEEKLY")
-                                  }}</b-form-select-option>
-                                  <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY")
-                                  }}</b-form-select-option>
-                                </b-form-select>
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
+                      <div v-if="isScheduled" class="ml-4">
+                        <b-card no-body class="invoice-preview date-issued mb-0 ml-0" v-if="isScheduled">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.schedule_type") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" rules="required">
+                                  <b-form-select v-if="checkSchedule" v-model="invoiceData.cronScheduleApi.scheduleType
+                                    " @change="() => {
+    companyIDisInvalid = false;
+  }
+    ">
+                                    <b-form-select-option value="WEEKLY">{{
+                                      $t("add_invoice.WEEKLY")
+                                    }}</b-form-select-option>
+                                    <b-form-select-option value="MONTHLY">{{
+                                      $t("add_invoice.MONTHLY")
+                                    }}</b-form-select-option>
+                                  </b-form-select>
+                                  <b-form-select v-if="!checkSchedule" @change="setOffScheduleType">
+                                    <b-form-select-option value="WEEKLY">{{
+                                      $t("add_invoice.WEEKLY")
+                                    }}</b-form-select-option>
+                                    <b-form-select-option value="MONTHLY">{{
+                                      $t("add_invoice.MONTHLY")
+                                    }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+                      <b-form-checkbox v-model="AccountTypeOptionToggleValue" @change="
+                        AccountTypeOptionToggle(AccountTypeOptionToggleValue)
+                        " class="custom-control-primary custom-switch-btn" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
+                          {{ $t("add_invoice.person") }}
+                        </span>
+                        <span class="switch-icon-right">
+                          {{ $t("add_invoice.company") }}
+                        </span>
+                      </b-form-checkbox>
                       <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="company"
                         class="d-none">
                         <h5>{{ $t("add_invoice.company") }}</h5>
@@ -1118,86 +1279,142 @@
                         class="d-none">
                         <h5>{{ $t("add_invoice.person") }}</h5>
                       </b-form-radio>
-
-                      <b-form-checkbox v-model="AccountTypeOptionToggleValue"
-                        @change="AccountTypeOptionToggle(AccountTypeOptionToggleValue)"
-                        class="custom-control-primary custom-switch-btn" name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left">
-                          {{ $t("add_invoice.person") }}
-                        </span>
-                        <span class="switch-icon-right">
-                          {{ $t("add_invoice.company") }}
-                        </span>
-                      </b-form-checkbox>
                     </div>
-
-                    <!-- Schedule Type -->
-                    <div class="d-flex justify-content-between align-items-center mb-2 schedule-type"
-                      v-if='invoiceData.scheduled'>
-                      <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'MONTHLY'" no-body
-                        class="invoice-preview date-issued mb-0 ml-0 mr-auto">
-                        <b-card-header class="justify-content-end">
-                          <div class="mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.select_date") }}:
-                              </span>
-                              <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
-                                <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth"
-                                  @change="() => { companyIDisInvalid = false; }" :options="dates">
-                                  <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{
-                                    date.text }}</b-form-select-option>
-                                </b-form-select>
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
+                    <div class="d-flex justify-content-between align-items-center mb-2 accountType">
+                      <!-- Schedule Type -->
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="invoiceData.cronScheduleApi">
+                        <b-card v-if="invoiceData.cronScheduleApi.scheduleType ==
+                          'MONTHLY' && invoiceData.scheduled
+                          " no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_date") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
+                                  <b-form-select v-if="checkSchedule" v-model="invoiceData.cronScheduleApi.dayOfMonth
+                                    " @change="() => {
+    companyIDisInvalid = false;
+  }
+    " :options="dates">
+                                    <b-form-select-option :value="date.value" v-for="(date, index) in dates"
+                                      :key="index">{{ date.text }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
-                      <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'WEEKLY'" no-body
-                        class="invoice-preview date-issued mb-0 ml-0 mr-auto">
-                        <b-card-header class="justify-content-start">
-                          <div class="w-100 mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.select_days") }}:
-                              </span>
-                              <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
-                              <div class="d-block">
-                                <b-form-group class="d-flex w-100 mb-0" v-slot="{ ariaDescribedby }">
-                                  <b-form-radio-group v-model="invoiceData.cronScheduleApi.dayOfWeek"
-                                    @change="toggleDaySelected()" :options="days" class="d-flex"
-                                    :aria-describedby="ariaDescribedby">
-                                    <!-- <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index">{{ day.text }}</b-form-radio> -->
+                          </b-card-header>
+                        </b-card>
+
+                        <b-card v-if="invoiceData.cronScheduleApi.scheduleType ==
+                            'WEEKLY' && invoiceData.scheduled
+                            " no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-start">
+                            <div class="w-100 mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_days") }}:
+                                </span>
+                                <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
+                                <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                                  <b-form-radio-group class="d-flex" v-model="invoiceData.cronScheduleApi.dayOfWeek
+                                    " :aria-describedby="ariaDescribedby">
+                                    <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index" @change="() => {
+                                      companyIDisInvalid = false;
+                                      isWeekSelected = false;
+                                    }
+                                      ">{{ day.text }}</b-form-radio>
                                   </b-form-radio-group>
                                 </b-form-group>
-                                <small class="text-danger d-flex w-100 pl-1" v-if="daySelected">The dayOfWeek field is
-                                  required</small>
+                                <small class="text-danger" v-if="isWeekSelected">Day of Week field is required</small>
+                                <!-- </validation-provider> -->
                               </div>
-                              <!-- <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider> -->
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="isScheduledTypeOffCaseMonthly">
+                        <b-card v-if="!checkSchedule" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_date") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
+                                  <b-form-select v-model="offCaseScheduleDayOfMonth" @change="() => {
+                                    companyIDisInvalid = false;
+                                  }
+                                    " :options="dates">
+                                    <b-form-select-option :value="date.value" v-for="(date, index) in dates"
+                                      :key="index">{{ date.text }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
+                            </div>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="isScheduledTypeOffCaseWeekly">
+                        <b-card v-if="!checkSchedule && isScheduled" no-body
+                          class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-start">
+                            <div class="w-100 mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_days") }}:
+                                </span>
+                                <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
+                                <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                                  <b-form-radio-group v-model="offCaseScheduleDayOfWeek" class="d-flex"
+                                    :aria-describedby="ariaDescribedby">
+                                    <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index" @change="() => {
+                                      companyIDisInvalid = false;
+                                    }
+                                      ">{{ day.text }}</b-form-radio>
+                                  </b-form-radio-group>
+                                </b-form-group>
+                                <!-- <small class="text-danger" v-if='isWeekSelected'>Day of Week field is required</small> -->
+                                <!-- </validation-provider> -->
+                              </div>
+                            </div>
+                          </b-card-header>
+                        </b-card>
+                      </div>
                     </div>
 
-                    <div class="tm_invoice_head tm_mb10">
+                    <div class="tm_invoice_head tm_mb10" style="height: auto">
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <h6 class="tm_mb2">
                           <b class="tm_primary_color">
-                            {{ $t("add_invoice.supplier") }}:</b>
+                            {{ $t("add_invoice.supplier") }}</b>
                         </h6>
 
                         <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required">
-                          <b-form-input v-model="invoiceData.supplierCompany.companyEic"
-                            @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)" list="my-company_name"
-                            autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)"
-                            @mousedown="() => { companyIDisInvalid = false; }" style="margin-bottom: 5px" />
+                          <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="
+                            SearchCompanyEic(
+                              invoiceData.supplierCompany.companyEic
+                            )
+                            " list="my-company_name" autocomplete="off" @blur="hideSuggestionEic()"
+                            @focus="ShowSuggestionEic(datalistEic)" @mousedown="() => {
+                              companyIDisInvalid = false;
+                            }
+                              " style="margin-bottom: 5px" placeholder="Supplier Company ID Number..." />
                           <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEic" :key="data.eic"
-                              @click="autoCompletefnEic(data)" @mousedown="autoCompletefnEic(data)">
+                              @click="autoCompletefnEic(data)">
                               {{ data.eic }}
                             </b-list-group-item>
                           </b-list-group>
@@ -1209,22 +1426,20 @@
                         <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
+                            placeholder="Supplier Company Owner Name..." />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="supplierCompanyName" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companName"
-                            :placeholder="$t('add_invoice.SupplierCompanyName')" @input="
+                            placeholder="Supplier Company Name..." @input="
                               SearchCompanyName(
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
                             @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
-                          <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions"
-                            style="width: 47%">
-                            <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
-                              @mousedown="autoCompletefn(data)">
+                          <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
+                            <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)">
                               {{ data.company_name }}
                             </b-list-group-item>
                           </b-list-group>
@@ -1233,21 +1448,29 @@
 
                         <validation-provider #default="{ errors }" name="supplierCompanyAddress" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyAddress" autocomplete="off"
-                            :placeholder="$t('add_invoice.SupplierCompanyAddress')" style="margin-bottom: 5px" />
+                            placeholder="Supplier Company Address.." style="margin-bottom: 5px" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="supplierVat">
                           <validation-provider #default="{ errors }" name="supplierVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.supplierCompany.companyVatEic
-                                " autocomplete="off" style="margin-bottom: 5px" />
+                                " autocomplete="off" placeholder="Supplier Company Vat Number..."
+                                style="margin-bottom: 5px" />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </div>
-
-                        <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2"
-                          name="check-button" switch>
+                        <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="check-button" switch>
                           <span class="switch-icon-left text-uppercase">
                             {{ $t("add_invoice.vat") }}</span>
                           <span class="switch-icon-right text-uppercase">
@@ -1259,7 +1482,7 @@
                       <!-- Recipient -->
                       <div class="tm_invoice_right tm_text_right" style="width: 47%">
                         <h6 class="tm_mb2">
-                          <b class="tm_primary_color" style="margin-left: 3px">
+                          <b class="tm_primary_color">
                             {{ $t("add_invoice.recipient") }}:</b>
                         </h6>
 
@@ -1275,11 +1498,11 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()" @focus="
     ShowSuggestionEicRecipient(datalistEicRecipient)
-    " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientCompanyIDNumber')" />
-                          <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name"
-                            class="input-suggesstions">
+    " style="margin-bottom: 5px" placeholder="Recipient Company ID Number..." />
+                          <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name" class="input-suggesstions"
+                            style="width: 47%">
                             <b-list-group-item v-for="data in datalistEicRecipient" :key="data.eic"
-                              @click="autoCompletefnEicRecipient(data)" @mousedown="autoCompletefnEicRecipient(data)">
+                              @click="autoCompletefnEicRecipient(data)">
                               {{ data.eic }}
                             </b-list-group-item>
                           </b-list-group>
@@ -1294,11 +1517,11 @@
                               ShowSuggestionPersonIdNumber(
                                 datalistPersonIdNumber
                               )
-                              " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientPersonIDNumber')" />
+                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number..." />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
-                              @click="autoCompletefnPersonIdNumber(data)" @mousedown="autoCompletefnPersonIdNumber(data)">
+                              @click="autoCompletefnPersonIdNumber(data)">
                               {{ data.identificationNumber }}
                             </b-list-group-item>
                           </b-list-group>
@@ -1306,11 +1529,10 @@
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
-                        <validation-provider #default="{ errors }" name="recipientCompanyOwner" :rules="AccountTypeOption == 'company' ? 'required' : ''
-                          ">
+                        <validation-provider #default="{ errors }" name="recipientCompanyOwner" rules="required">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
+                            placeholder="Recipient Company Owner Name...." />
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
@@ -1324,10 +1546,10 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()"
                             @focus="ShowSuggestionRecipient(datalistRecipient)" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyName')" />
+                            placeholder="Recipient Company Name..." />
                           <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistRecipient" :key="data.eic"
-                              @click="autoCompletefnRecipient(data)" @mousedown="autoCompletefnRecipient(data)">
+                              @click="autoCompletefnRecipient(data)">
                               {{ data.company_name }}
                             </b-list-group-item>
                           </b-list-group>
@@ -1338,10 +1560,10 @@
     )
     " list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()"
                             @focus="ShowSuggestionPerson(datalistPerson)" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientPersonName')" />
+                            placeholder="Recipient Person Name..." />
                           <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPerson" :key="data.eic"
-                              @click="autoCompletefnPerson(data)" @mousedown="autoCompletefnPerson(data)">
+                              @click="autoCompletefnPerson(data)">
                               {{ data.firstMiddleAndLastName }}
                             </b-list-group-item>
                           </b-list-group>
@@ -1354,21 +1576,31 @@
                           " rules="required">
                           <b-form-input v-model="invoiceData.recipientCompany.companyAddress
                             " autocomplete="off" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
+                            placeholder="Recipient Company Address..." />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
+
                         <div v-if="AccountTypeOption == 'company' && recipientVat">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
-                            <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
+                            <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
-                                " autocomplete="off" :placeholder="$t('add_invoice.RecipientCompanyVATNumber')" />
+                                " autocomplete="off" style="margin-bottom: 5px"
+                                placeholder="Recipient Company VAT Number.." />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </div>
 
-                        <b-form-checkbox v-if="AccountTypeOption == 'company'" v-model="recipientVat"
-                          class="custom-control-primary custom-switch-btn-2" name="check-button" switch>
+                        <b-form-checkbox v-model="recipientVat" class="custom-control-primary custom-switch-btn-2" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="check-button" switch v-if="AccountTypeOption == 'company'">
                           <span class="switch-icon-left text-uppercase">
                             {{ $t("add_invoice.vat") }}</span>
                           <span class="switch-icon-right text-uppercase">
@@ -1379,7 +1611,7 @@
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0 border">
+                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0">
                         <b-card-header class="justify-content-end">
                           <div class="mt-md-0 mt-2">
                             <div class="d-flex align-items-center mb-0">
@@ -1408,23 +1640,39 @@
                       </b-card>
                       <b-form-checkbox v-model="InvoiceTypeOptionToggleValue" @change="
                         InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)
-                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right"
-                        name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left text-uppercase">
+                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
                           {{ $t("add_invoice.PROFORMA") }}
                         </span>
-                        <span class="switch-icon-right text-uppercase">
+                        <span class="switch-icon-right">
                           {{ $t("add_invoice.ORIGINAL") }}
                         </span>
                       </b-form-checkbox>
                       <b-form-checkbox v-model="saleTypeOptionToggleValue" @change="
                         saleTypeOptionToggle(saleTypeOptionToggleValue)
-                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right"
-                        name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left text-uppercase">
+                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
                           {{ $t("add_invoice.goods") }}
                         </span>
-                        <span class="switch-icon-right text-uppercase">
+                        <span class="switch-icon-right">
                           {{ $t("add_invoice.service") }}
                         </span>
                       </b-form-checkbox>
@@ -1596,11 +1844,19 @@
                     <!-- Bank Details Switch -->
                     <b-row class="mb-1">
                       <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
+                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="AccountTypeOptionToggle" @change="() => {
+    hasBankDetails = !hasBankDetails;
+  }
+    " switch :checked="hasBankDetails">
                           <span class="switch-icon-left text-uppercase">
                             {{ $t("add_invoice.bank") }}
                           </span>
@@ -1613,10 +1869,7 @@
 
                     <div class="tm_invoice_footer" style="margin-bottom: 70px">
                       <div class="tm_left_footer">
-                        <div v-if="isBank">
-                          <!-- <p class="tm_mb2">
-                            <b class="tm_primary_color">Payment info:</b>
-                          </p> -->
+                        <div v-if="hasBankDetails">
                           <p class="tm_m0 d-inline-flex">
                             <span style="padding: 10px 10px 0px 0px; width: 60px"><b>BIC: </b>
                             </span>
@@ -1663,7 +1916,7 @@
                                 <v-select v-model="invoiceData.bankApi.name" :options="bankList" id="invoice-bank"
                                   name="invoice-bank" v-bind:placeholder="$t('Please select bank...')
                                     " :value="$store.state.selected" @input="selectBankName()">
-                                  <template #selected-option="option" v-if="bankNameToSend !== ''">
+                                  <template #selected-option="option" v-if="editMode && bankNameToSend !== ''">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -1673,7 +1926,9 @@
                                       {{ bankNameToSend }}
                                     </div>
                                   </template>
-                                  <template #selected-option="option" v-else>
+                                  <template #selected-option="option" v-else-if="
+                                      editMode && bankNameToSend === ''
+                                    ">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -1681,6 +1936,16 @@
                                         grid-gap: 8px;
                                       ">
                                       {{ $t(option.name) }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: left;
+                                        grid-gap: 8px;
+                                      ">
+                                      {{ invoiceData.bankApi.name }}
                                     </div>
                                   </template>
 
@@ -1704,16 +1969,17 @@
 
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent === '0'">
+                        <div v-if="invoiceData.vatPercent === '0' ||
+                            invoiceData.vatPercent === 0
+                            ">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
-                            <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
-                              </b></span>
+                            <span style="width: 60px"><b>Non Vat Clause: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
                                 <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
                                   name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
-                                    " :value="$store.state.selected" @input="selectVatClause()">
-                                  <template #selected-option="option" v-if="clauseToSend !== ''">
+                                    " @input="selectVatClause()">
+                                  <template #selected-option="option" v-if="editClauseMode && clauseToSend !== ''">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -1723,7 +1989,9 @@
                                       {{ clauseToSend }}
                                     </div>
                                   </template>
-                                  <template #selected-option="option" v-else>
+                                  <template #selected-option="option" v-else-if="
+                                      editClauseMode && clauseToSend === ''
+                                    ">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -1731,6 +1999,16 @@
                                         grid-gap: 8px;
                                       ">
                                       {{ option.clause }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: left;
+                                        grid-gap: 8px;
+                                      ">
+                                      {{ invoiceData.vatCondition }}
                                     </div>
                                   </template>
 
@@ -1751,8 +2029,9 @@
                               </validation-provider></span>
                           </p>
                         </div>
+
                         <b-row class="mt-2">
-                          <b-col cols="12" md="7" class="mt-md-6 d-flex ml-5 pl-4 pt-3" order="2" order-md="1">
+                          <b-col cols="12" md="7" class="mt-md-6 d-flex ml-5 pl-4 pt-2" order="2" order-md="1">
                             <h1 class="invoiceTypeHeading">
                               {{ $t("add_invoice." + invoiceData.invoiceType) }}
                             </h1>
@@ -1772,8 +2051,10 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.amountNonVat" disabled
-                                    style="background-color: #f5f6fa" />
+                                  <b-form-input :value="amountNonVat(invoiceData.transactions)
+                                    ? amountNonVat(invoiceData.transactions)
+                                    : 0
+                                    " disabled style="background-color: #f5f6fa" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -1786,13 +2067,10 @@
                               {{ $t("add_invoice.vat") }}:
                             </p>
                             <p class="invoice-total-amount">
-                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent" :rules="`${vatPercentValidate
-                                ? 'required|vatPercentValid'
-                                : 'required'
-                                }`">
+                              <validation-provider #default="{ errors }" name="vat" rules="required">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
                                   <b-form-input v-model="invoiceData.vatPercent" step="any" type="number"
-                                    class="text-right" @input="populateValues()" />
+                                    class="text-right" />
 
                                   <b-input-group-append is-text>
                                     <span>%</span>
@@ -1814,9 +2092,11 @@
                                   <b-input-group-prepend is-text>
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
-
-                                  <b-form-input v-model="invoiceData.vatAmount" type="number" disabled
-                                    style="background-color: #f5f6fa" />
+                                  <b-form-input :value="vatAmount(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent
+                                  )
+                                    " type="number" disabled style="background-color: #f5f6fa" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -1831,8 +2111,10 @@
                             <p class="invoice-total-amount">
                               <validation-provider #default="{ errors }" name="tradeDiscountPercent" rules="required">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
-                                  <b-form-input v-model="invoiceData.tradeDiscountPercent" step="any" type="number"
-                                    class="text-right" @input="populateValues()" />
+                                  <b-form-input v-model="invoiceData.tradeDiscountPercent" :value="invoiceData.tradeDiscountPercent
+                                    ? invoiceData.tradeDiscountPercent
+                                    : 0
+                                    " step="any" type="number" class="text-right" />
 
                                   <b-input-group-append is-text>
                                     <span>%</span>
@@ -1855,8 +2137,18 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.tradeDiscountAmount" disabled
-                                    style="background-color: #f5f6fa" />
+                                  <b-form-input :value="tradeDiscountAmount(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent,
+                                    invoiceData.tradeDiscountPercent
+                                  )
+                                    ? tradeDiscountAmount(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                    : 0
+                                    " disabled style="background-color: #f5f6fa" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -1875,8 +2167,19 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.totalAmount" disabled
-                                    class="opacity-1 font-weight-bolder custom-font" style="background-color: #f5f6fa" />
+                                  <b-form-input :value="totalPrice(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent,
+                                    invoiceData.tradeDiscountPercent
+                                  )
+                                    ? totalPrice(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                    : 0
+                                    " disabled class="opacity-1 font-weight-bolder custom-font"
+                                    style="background-color: #f5f6fa" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -1887,6 +2190,53 @@
                         </div>
                       </div>
                     </div>
+                    <table style="
+                        width: 80%;
+                        margin: auto;
+                        padding-top: 5rem;
+                        border-collapse: collapse;
+                      ">
+                      <tr>
+                        <td style="text-align: center; padding: 30px">
+                          <div style="margin-bottom: 20px">
+                            <span v-show="!editingSupplier" @click="editingSupplier = true" class="editable-text">
+                              {{ invoiceData.supplierCompany.companyOwnerName }}
+                            </span>
+                            <input v-show="editingSupplier" type="text" v-model="invoiceData.supplierCompany.companyOwnerName
+                              " @blur="editingSupplier = false" class="editable-input" />
+                          </div>
+                          <div style="
+                              height: 50px;
+                              border-bottom: 1px dashed black;
+                            ">
+                            <!-- Space for supplier's signature -->
+                          </div>
+                          <div style="margin-top: 10px">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                        <td style="text-align: center; padding: 30px">
+                          <div style="margin-bottom: 20px">
+                            <span v-show="!editingRecipient" @click="editingRecipient = true" class="editable-text">
+                              {{
+                                invoiceData.recipientCompany.companyOwnerName
+                              }}
+                            </span>
+                            <input v-show="editingRecipient" type="text" v-model="invoiceData.recipientCompany.companyOwnerName
+                                " @blur="editingRecipient = false" class="editable-input" />
+                          </div>
+                          <div style="
+                              height: 50px;
+                              border-bottom: 1px dashed black;
+                            ">
+                            <!-- Space for recipient's signature -->
+                          </div>
+                          <div style="margin-top: 10px">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -1913,7 +2263,9 @@
                               style="position: absolute; left: 70px; top: 13px" @click="() => {
                                 showLogo = false;
                                 logoToUpload = '';
-                                isUploading = i18n.tc('add_invoice.upload_logo');
+                                isUploading = i18n.tc(
+                                  'add_invoice.upload_logo'
+                                );
                                 invoiceData.logoId = '';
                               }
                                 " />
@@ -1947,14 +2299,25 @@
                           </div>
                         </div>
                       </div>
-                      <div class="tm_invoice_right tm_text_right tm_mobile_hide">
+                      <!-- <div class="tm_invoice_right tm_text_right tm_mobile_hide">
                         <div class="tm_f50 tm_text_uppercase" :style="isGray === true
                           ? 'color: black !important'
-                          : 'color: white !important'
-                          ">
-                          {{ $t("add_invoice.invoice") }}
+                          : 'color: white !important'">
+                          <div class="d-flex justify-content-between customClassName">
+                            <b-form-select v-model="selectedNotification" :options="notificationOptions"
+                              class="customClassName maxWidthDropdown">
+                              <template #first>
+                                <b-form-select-option :value="null" disabled>
+                                  {{ $t("add_invoice.select_notification") }}
+                                </b-form-select-option>
+                              </template>
+                            </b-form-select>
+                            <span class="ml-3 text-uppercase font-weight-bold customClassName"
+                              v-if="selectedNotification">{{ $t("add_invoice." + selectedNotification) }}</span>
+                          </div>
                         </div>
-                      </div>
+                      </div> -->
+
                       <div class="tm_shape_bg tm_mobile_hide" :class="isBlue === true
                         ? 'tm_accent_bg'
                         : isGreen === true
@@ -1973,7 +2336,6 @@
                         : 'color: white !important'
                         ">
                         <p class="tm_invoice_number tm_m0">
-                          <!-- Invoice No: -->
                           {{ $t("add_invoice.invoice") }}:
 
                           <span><validation-provider #default="{ errors }" name="invoiceNumber" vid="Invoice"
@@ -1989,23 +2351,39 @@
                             </validation-provider>
                           </span>
                         </p>
-                        <p class="tm_invoice_date tm_m0">
-                          <!-- Date: -->
-                          {{ $t("add_invoice.date") }}:
+                        <b-card no-body class="invoice-preview date-issued mb-0">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.date") }}:
+                                </span>
+                                <!-- <validation-provider
+                        #default="{ errors }"
+                        name="dateIssued"
+                        rules="required"
+                      > -->
+                                <!-- <flat-pickr
+                          v-model="invoiceData.dateIssued"
+                          class="form-control invoice-edit-input invoice-input-top"
+                        /> -->
 
-                          <span>
-                            <validation-provider #default="{ errors }" name="dateIssued" rules="required">
-                              <flat-pickr v-model="invoiceData.dateIssued"
-                                class="form-control invoice-edit-input invoice-input-top" />
-                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                                @click="invoiceData.dateIssued = ''" />
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
-                          </span>
-                        </p>
+                                <flat-pickr v-model="invoiceData.dateIssued"
+                                  class="form-control invoice-edit-input invoice-input-top" placeholder="Select date: " />
+
+                                <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                                  class="cursor-pointer clear-all mr-2" style="color: black" />
+                                <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all mr-2"
+                                  @click="invoiceData.dateIssued = ''" style="color: black" />
+
+                                <!-- <small class="text-danger">{{ errors[0] }}</small>
+                      </validation-provider> -->
+                              </div>
+                            </div>
+                          </b-card-header>
+                        </b-card>
                       </div>
+
                       <div class="tm_invoice_seperator tm_accent_bg" :class="isBlue === true
                         ? 'tm_accent_bg'
                         : isGreen === true
@@ -2017,36 +2395,77 @@
                               : 'gray_bg'
                         "></div>
                     </div>
+
                     <div class="d-flex justify-content-between align-items-center mb-2 accountType">
-                      <!-- @change="scheduleTypeOptionToggle(scheduleOptionToggleValue)"                 -->
                       <b-form-checkbox v-model="invoiceData.scheduled"
-                        class="custom-control-primary custom-switch-btn mr-2" name="invoiceData.scheduled" switch>
-                        <span class="switch-icon-left" style="width: 76px">{{ $t("add_invoice.scheduled") }}</span>
-                        <span class="switch-icon-right" style="width: 76px">{{ $t("add_invoice.regular") }}</span>
+                        class="custom-control-primary custom-switch-btn fmr-2" name="invoiceData.scheduled" @change="() => {
+                          isScheduled = !isScheduled;
+                        }
+                          " switch :checked="isScheduled">
+                        <span class="switch-icon-left">{{
+                          $t("add_invoice.scheduled")
+                        }}</span>
+                        <span class="switch-icon-right">{{
+                          $t("add_invoice.regular")
+                        }}</span>
                       </b-form-checkbox>
-                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0 "
-                        v-if="disabled = invoiceData.scheduled" style="width: 27%;">
-                        <b-card-header class="justify-content-end">
-                          <div class="mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.schedule_type") }}:
-                              </span>
-                              <validation-provider #default="{ errors }" name="scheduleType" rules="required">
-                                <b-form-select :disabled="!invoiceData.scheduled"
-                                  v-model="invoiceData.cronScheduleApi.scheduleType"
-                                  @change="() => { companyIDisInvalid = false; }">
-                                  <b-form-select-option value="WEEKLY">{{ $t("add_invoice.WEEKLY")
-                                  }}</b-form-select-option>
-                                  <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY")
-                                  }}</b-form-select-option>
-                                </b-form-select>
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
+                      <div v-if="isScheduled" class="ml-4">
+                        <b-card no-body class="invoice-preview date-issued mb-0 ml-0" v-if="isScheduled">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.schedule_type") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" rules="required">
+                                  <b-form-select v-if="checkSchedule" v-model="invoiceData.cronScheduleApi.scheduleType
+                                    " @change="() => {
+    companyIDisInvalid = false;
+  }
+    ">
+                                    <b-form-select-option value="WEEKLY">{{
+                                      $t("add_invoice.WEEKLY")
+                                    }}</b-form-select-option>
+                                    <b-form-select-option value="MONTHLY">{{
+                                      $t("add_invoice.MONTHLY")
+                                    }}</b-form-select-option>
+                                  </b-form-select>
+                                  <b-form-select v-if="!checkSchedule" @change="setOffScheduleType">
+                                    <b-form-select-option value="WEEKLY">{{
+                                      $t("add_invoice.WEEKLY")
+                                    }}</b-form-select-option>
+                                    <b-form-select-option value="MONTHLY">{{
+                                      $t("add_invoice.MONTHLY")
+                                    }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+                      <b-form-checkbox v-model="AccountTypeOptionToggleValue" @change="
+                        AccountTypeOptionToggle(AccountTypeOptionToggleValue)
+                        " class="custom-control-primary custom-switch-btn" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
+                          {{ $t("add_invoice.person") }}
+                        </span>
+                        <span class="switch-icon-right">
+                          {{ $t("add_invoice.company") }}
+                        </span>
+                      </b-form-checkbox>
                       <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="company"
                         class="d-none">
                         <h5>{{ $t("add_invoice.company") }}</h5>
@@ -2055,77 +2474,127 @@
                         class="d-none">
                         <h5>{{ $t("add_invoice.person") }}</h5>
                       </b-form-radio>
-
-                      <b-form-checkbox v-model="AccountTypeOptionToggleValue"
-                        @change="AccountTypeOptionToggle(AccountTypeOptionToggleValue)"
-                        class="custom-control-primary custom-switch-btn" name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left">
-                          {{ $t("add_invoice.person") }}
-                        </span>
-                        <span class="switch-icon-right">
-                          {{ $t("add_invoice.company") }}
-                        </span>
-                      </b-form-checkbox>
                     </div>
-
-                    <!-- Schedule Type -->
-                    <div class="d-flex justify-content-between align-items-center mb-2 schedule-type"
-                      v-if='invoiceData.scheduled'>
-                      <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'MONTHLY'" no-body
-                        class="invoice-preview date-issued mb-0 ml-0 mr-auto">
-                        <b-card-header class="justify-content-end">
-                          <div class="mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.select_date") }}:
-                              </span>
-                              <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
-                                <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth"
-                                  @change="() => { companyIDisInvalid = false; }" :options="dates">
-                                  <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{
-                                    date.text }}</b-form-select-option>
-                                </b-form-select>
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
+                    <div class="d-flex justify-content-between align-items-center mb-2 accountType">
+                      <!-- Schedule Type -->
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="invoiceData.cronScheduleApi">
+                        <b-card v-if="invoiceData.cronScheduleApi.scheduleType ==
+                          'MONTHLY' && invoiceData.scheduled
+                          " no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_date") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
+                                  <b-form-select v-if="checkSchedule" v-model="invoiceData.cronScheduleApi.dayOfMonth
+                                    " @change="() => {
+    companyIDisInvalid = false;
+  }
+    " :options="dates">
+                                    <b-form-select-option :value="date.value" v-for="(date, index) in dates"
+                                      :key="index">{{ date.text }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
-                      <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'WEEKLY'" no-body
-                        class="invoice-preview date-issued mb-0 ml-0 mr-auto">
-                        <b-card-header class="justify-content-start">
-                          <div class="w-100 mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.select_days") }}:
-                              </span>
-                              <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
-                              <div class="d-block">
-                                <b-form-group class="d-flex w-100 mb-0" v-slot="{ ariaDescribedby }">
-                                  <b-form-radio-group v-model="invoiceData.cronScheduleApi.dayOfWeek"
-                                    @change="toggleDaySelected()" :options="days" class="d-flex"
-                                    :aria-describedby="ariaDescribedby">
-                                    <!-- <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index">{{ day.text }}</b-form-radio> -->
+                          </b-card-header>
+                        </b-card>
+
+                        <b-card v-if="invoiceData.cronScheduleApi.scheduleType ==
+                            'WEEKLY' && invoiceData.scheduled
+                            " no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-start">
+                            <div class="w-100 mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_days") }}:
+                                </span>
+                                <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
+                                <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                                  <b-form-radio-group class="d-flex" v-model="invoiceData.cronScheduleApi.dayOfWeek
+                                    " :aria-describedby="ariaDescribedby">
+                                    <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index" @change="() => {
+                                      companyIDisInvalid = false;
+                                      isWeekSelected = false;
+                                    }
+                                      ">{{ day.text }}</b-form-radio>
                                   </b-form-radio-group>
                                 </b-form-group>
-                                <small class="text-danger d-flex w-100 pl-1" v-if="daySelected">The dayOfWeek field is
-                                  required</small>
+                                <small class="text-danger" v-if="isWeekSelected">Day of Week field is required</small>
+                                <!-- </validation-provider> -->
                               </div>
-                              <!-- <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider> -->
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="isScheduledTypeOffCaseMonthly">
+                        <b-card v-if="!checkSchedule" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_date") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
+                                  <b-form-select v-model="offCaseScheduleDayOfMonth" @change="() => {
+                                    companyIDisInvalid = false;
+                                  }
+                                    " :options="dates">
+                                    <b-form-select-option :value="date.value" v-for="(date, index) in dates"
+                                      :key="index">{{ date.text }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
+                            </div>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="isScheduledTypeOffCaseWeekly">
+                        <b-card v-if="!checkSchedule && isScheduled" no-body
+                          class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-start">
+                            <div class="w-100 mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_days") }}:
+                                </span>
+                                <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
+                                <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                                  <b-form-radio-group v-model="offCaseScheduleDayOfWeek" class="d-flex"
+                                    :aria-describedby="ariaDescribedby">
+                                    <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index" @change="() => {
+                                      companyIDisInvalid = false;
+                                    }
+                                      ">{{ day.text }}</b-form-radio>
+                                  </b-form-radio-group>
+                                </b-form-group>
+                                <!-- <small class="text-danger" v-if='isWeekSelected'>Day of Week field is required</small> -->
+                                <!-- </validation-provider> -->
+                              </div>
+                            </div>
+                          </b-card-header>
+                        </b-card>
+                      </div>
                     </div>
-
-                    <!-- Supplier -->
-
-                    <div class="tm_invoice_head tm_mb10">
+                    <div class="tm_invoice_head tm_mb10" style="height: auto">
+                      <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
-                        <p class="tm_mb2">
-                          <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}:</b>
-                        </p>
+                        <h6 class="tm_mb2">
+                          <b class="tm_primary_color">
+                            {{ $t("add_invoice.supplier") }}:</b>
+                        </h6>
                         <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="
                             SearchCompanyEic(
@@ -2137,9 +2606,9 @@
                             }
                               " style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions"
-                            style="width: 47%">
+                            style="width: 100%">
                             <b-list-group-item v-for="data in datalistEic" :key="data.eic"
-                              @click="autoCompletefnEic(data)" @mousedown="autoCompletefnEic(data)">
+                              @click="autoCompletefnEic(data)">
                               {{ data.eic }}
                             </b-list-group-item>
                           </b-list-group>
@@ -2147,25 +2616,25 @@
                           <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
                           </small>
                         </validation-provider>
+
                         <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
+                            placeholder="Supplier Company Owner Name..." />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="supplierCompanyName" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companName"
-                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" @input="
+                            placeholder="Supplier Company Name..." @input="
                               SearchCompanyName(
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
                             @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions"
-                            style="width: 47%">
-                            <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
-                              @mousedown="autoCompletefn(data)">
+                            style="width: 100%">
+                            <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)">
                               {{ data.company_name }}
                             </b-list-group-item>
                           </b-list-group>
@@ -2174,21 +2643,29 @@
 
                         <validation-provider #default="{ errors }" name="supplierCompanyAddress" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyAddress" autocomplete="off"
-                            :placeholder="$t('add_invoice.SupplierCompanyAddress')" style="margin-bottom: 5px" />
+                            placeholder="Supplier Company Address.." style="margin-bottom: 5px" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="supplierVat">
                           <validation-provider #default="{ errors }" name="supplierVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.supplierCompany.companyVatEic
-                                " autocomplete="off" style="margin-bottom: 5px" />
+                                " autocomplete="off" placeholder="Supplier Company Vat Number..."
+                                style="margin-bottom: 5px" />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </div>
-
-                        <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2"
-                          name="check-button" switch>
+                        <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="check-button" switch>
                           <span class="switch-icon-left text-uppercase">
                             {{ $t("add_invoice.vat") }}</span>
                           <span class="switch-icon-right text-uppercase">
@@ -2197,10 +2674,10 @@
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
-                      <!-- Recipient -->
+                      <!-- Recipient-->
                       <div class="tm_invoice_right tm_text_right" style="width: 47%">
                         <h6 class="tm_mb2">
-                          <b class="tm_primary_color" style="padding-left: 3px">
+                          <b class="tm_primary_color">
                             {{ $t("add_invoice.recipient") }}:</b>
                         </h6>
                         <!-- Company/Person Identification-->
@@ -2215,11 +2692,11 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()" @focus="
     ShowSuggestionEicRecipient(datalistEicRecipient)
-    " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientCompanyIDNumber')" />
+    " style="margin-bottom: 5px" placeholder="Recipient Company ID Number..." />
                           <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name" class="input-suggesstions"
-                            style="width: 100%">
+                            style="width: 47%">
                             <b-list-group-item v-for="data in datalistEicRecipient" :key="data.eic"
-                              @click="autoCompletefnEicRecipient(data)" @mousedown="autoCompletefnEicRecipient(data)">
+                              @click="autoCompletefnEicRecipient(data)">
                               {{ data.eic }}
                             </b-list-group-item>
                           </b-list-group>
@@ -2234,11 +2711,11 @@
                               ShowSuggestionPersonIdNumber(
                                 datalistPersonIdNumber
                               )
-                              " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientPersonIDNumber')" />
+                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number..." />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
-                            class="input-suggesstions" style="width: 100%">
+                            class="input-suggesstions" style="width: 47%">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
-                              @click="autoCompletefnPersonIdNumber(data)" @mousedown="autoCompletefnPersonIdNumber(data)">
+                              @click="autoCompletefnPersonIdNumber(data)">
                               {{ data.identificationNumber }}
                             </b-list-group-item>
                           </b-list-group>
@@ -2246,11 +2723,10 @@
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
-                        <validation-provider #default="{ errors }" name="recipientCompanyOwner" :rules="AccountTypeOption == 'company' ? 'required' : ''
-                          ">
+                        <validation-provider #default="{ errors }" name="recipientCompanyOwner" rules="required">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
+                            placeholder="Recipient Company Owner Name..." />
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
@@ -2264,11 +2740,11 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()"
                             @focus="ShowSuggestionRecipient(datalistRecipient)" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyName')" />
+                            placeholder="Recipient Company Name..." />
                           <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions"
-                            style="width: 100%">
+                            style="width: 47%">
                             <b-list-group-item v-for="data in datalistRecipient" :key="data.eic"
-                              @click="autoCompletefnRecipient(data)" @mousedown="autoCompletefnRecipient(data)">
+                              @click="autoCompletefnRecipient(data)">
                               {{ data.company_name }}
                             </b-list-group-item>
                           </b-list-group>
@@ -2279,11 +2755,11 @@
     )
     " list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()"
                             @focus="ShowSuggestionPerson(datalistPerson)" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientPersonName')" />
+                            placeholder="RecipientPerson Name..." />
                           <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions"
                             style="width: 47%">
                             <b-list-group-item v-for="data in datalistPerson" :key="data.eic"
-                              @click="autoCompletefnPerson(data)" @mousedown="autoCompletefnPerson(data)">
+                              @click="autoCompletefnPerson(data)">
                               {{ data.firstMiddleAndLastName }}
                             </b-list-group-item>
                           </b-list-group>
@@ -2296,21 +2772,30 @@
                           " rules="required">
                           <b-form-input v-model="invoiceData.recipientCompany.companyAddress
                             " autocomplete="off" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
+                            placeholder="Recipient Company Address..." />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="AccountTypeOption == 'company' && recipientVat">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
-                            <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
+                            <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
-                                " autocomplete="off" :placeholder="$t('add_invoice.RecipientCompanyVATNumber')" />
+                                " autocomplete="off" style="margin-bottom: 5px"
+                                placeholder="Recipient Company VAT Number.." />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </div>
 
-                        <b-form-checkbox v-if="AccountTypeOption == 'company'" v-model="recipientVat"
-                          class="custom-control-primary custom-switch-btn-2" name="check-button" switch>
+                        <b-form-checkbox v-model="recipientVat" class="custom-control-primary custom-switch-btn-2" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="check-button" switch v-if="AccountTypeOption == 'company'">
                           <span class="switch-icon-left text-uppercase">
                             {{ $t("add_invoice.vat") }}</span>
                           <span class="switch-icon-right text-uppercase">
@@ -2321,7 +2806,7 @@
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0 border">
+                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0">
                         <b-card-header class="justify-content-end">
                           <div class="mt-md-0 mt-2">
                             <div class="d-flex align-items-center mb-0">
@@ -2350,23 +2835,39 @@
                       </b-card>
                       <b-form-checkbox v-model="InvoiceTypeOptionToggleValue" @change="
                         InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)
-                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right"
-                        name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left text-uppercase">
+                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
                           {{ $t("add_invoice.PROFORMA") }}
                         </span>
-                        <span class="switch-icon-right text-uppercase">
+                        <span class="switch-icon-right">
                           {{ $t("add_invoice.ORIGINAL") }}
                         </span>
                       </b-form-checkbox>
                       <b-form-checkbox v-model="saleTypeOptionToggleValue" @change="
                         saleTypeOptionToggle(saleTypeOptionToggleValue)
-                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right"
-                        name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left text-uppercase">
+                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
                           {{ $t("add_invoice.goods") }}
                         </span>
-                        <span class="switch-icon-right text-uppercase">
+                        <span class="switch-icon-right">
                           {{ $t("add_invoice.service") }}
                         </span>
                       </b-form-checkbox>
@@ -2539,7 +3040,6 @@
                         border: 1px solid white;
                         padding: 10px;
                         border-radius: 30px;
-                       
                       " :style="isBlue === true
                         ? 'background-color: #007aff !important; color: white !important'
                         : isGreen === true
@@ -2553,13 +3053,22 @@
                       {{ $t("add_invoice.add_item") }}
                     </b-button>
 
+                    <!-- Bank Details Switch -->
                     <b-row class="mb-1">
                       <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
+                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="AccountTypeOptionToggle" @change="() => {
+    hasBankDetails = !hasBankDetails;
+  }
+    " switch :checked="hasBankDetails">
                           <span class="switch-icon-left text-uppercase">
                             {{ $t("add_invoice.bank") }}
                           </span>
@@ -2572,10 +3081,7 @@
 
                     <div class="tm_invoice_footer tm_border_top tm_mb90 tm_m0_md pb-5">
                       <div class="tm_left_footer">
-                        <div v-if="isBank">
-                          <!-- <p class="tm_mb2">
-                            <b class="tm_primary_color">Payment info:</b>
-                          </p> -->
+                        <div v-if="hasBankDetails">
                           <p class="tm_m0 d-inline-flex">
                             <span style="padding: 10px 10px 0px 0px; width: 60px"><b>BIC: </b>
                             </span>
@@ -2612,15 +3118,15 @@
                           </p>
                           <br />
                           <p class="tm_m0 d-inline-flex" style="margin-top: 2px">
-                            <span style="padding: 10px 10px 0px 0px; width: 60px"><b>{{ $t("add_invoice.bank") }}:
-                              </b></span>
+                            <span style="padding: 10px 10px 0px 0px; width: 60px"><b>{{ $t("add_invoice.bank")
+                            }}:</b></span>
 
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="bank" rules="required">
                                 <v-select v-model="invoiceData.bankApi.name" :options="bankList" id="invoice-bank"
                                   name="invoice-bank" v-bind:placeholder="$t('Please select bank...')
                                     " :value="$store.state.selected" @input="selectBankName()">
-                                  <template #selected-option="option" v-if="bankNameToSend !== ''">
+                                  <template #selected-option="option" v-if="editMode && bankNameToSend !== ''">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -2630,7 +3136,9 @@
                                       {{ bankNameToSend }}
                                     </div>
                                   </template>
-                                  <template #selected-option="option" v-else>
+                                  <template #selected-option="option" v-else-if="
+                                      editMode && bankNameToSend === ''
+                                    ">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -2638,6 +3146,16 @@
                                         grid-gap: 8px;
                                       ">
                                       {{ $t(option.name) }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: left;
+                                        grid-gap: 8px;
+                                      ">
+                                      {{ invoiceData.bankApi.name }}
                                     </div>
                                   </template>
 
@@ -2660,16 +3178,17 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent === '0'">
+                        <div v-if="invoiceData.vatPercent === '0' ||
+                            invoiceData.vatPercent === 0
+                            ">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
-                            <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
-                              </b></span>
+                            <span style="width: 60px"><b>Non Vat Clause: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
                                 <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
                                   name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
-                                    " :value="$store.state.selected" @input="selectVatClause()">
-                                  <template #selected-option="option" v-if="clauseToSend !== ''">
+                                    " @input="selectVatClause()">
+                                  <template #selected-option="option" v-if="editClauseMode && clauseToSend !== ''">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -2679,7 +3198,9 @@
                                       {{ clauseToSend }}
                                     </div>
                                   </template>
-                                  <template #selected-option="option" v-else>
+                                  <template #selected-option="option" v-else-if="
+                                      editClauseMode && clauseToSend === ''
+                                    ">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -2687,6 +3208,16 @@
                                         grid-gap: 8px;
                                       ">
                                       {{ option.clause }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: left;
+                                        grid-gap: 8px;
+                                      ">
+                                      {{ invoiceData.vatCondition }}
                                     </div>
                                   </template>
 
@@ -2708,7 +3239,7 @@
                           </p>
                         </div>
                         <b-row class="mt-2">
-                          <b-col cols="12" md="7" class="mt-md-6 d-flex ml-5 pl-4 pt-3" order="2" order-md="1">
+                          <b-col cols="12" md="7" class="mt-md-6 d-flex ml-5 pl-3 pt-2" order="2" order-md="1">
                             <h1 class="invoiceTypeHeading">
                               {{ $t("add_invoice." + invoiceData.invoiceType) }}
                             </h1>
@@ -2728,7 +3259,10 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.amountNonVat" disabled />
+                                  <b-form-input :value="amountNonVat(invoiceData.transactions)
+                                    ? amountNonVat(invoiceData.transactions)
+                                    : 0
+                                    " disabled />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -2741,13 +3275,10 @@
                               {{ $t("add_invoice.vat") }}:
                             </p>
                             <p class="invoice-total-amount">
-                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent" :rules="`${vatPercentValidate
-                                ? 'required|vatPercentValid'
-                                : 'required'
-                                }`">
+                              <validation-provider #default="{ errors }" name="vat" rules="required">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
                                   <b-form-input v-model="invoiceData.vatPercent" step="any" type="number"
-                                    class="text-right" @input="populateValues()" />
+                                    class="text-right" />
 
                                   <b-input-group-append is-text>
                                     <span>%</span>
@@ -2769,8 +3300,11 @@
                                   <b-input-group-prepend is-text>
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
-
-                                  <b-form-input v-model="invoiceData.vatAmount" type="number" disabled />
+                                  <b-form-input :value="vatAmount(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent
+                                  )
+                                    " type="number" disabled />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -2785,8 +3319,10 @@
                             <p class="invoice-total-amount">
                               <validation-provider #default="{ errors }" name="tradeDiscountPercent" rules="required">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
-                                  <b-form-input v-model="invoiceData.tradeDiscountPercent" step="any" type="number"
-                                    class="text-right" @input="populateValues()" />
+                                  <b-form-input v-model="invoiceData.tradeDiscountPercent" :value="invoiceData.tradeDiscountPercent
+                                    ? invoiceData.tradeDiscountPercent
+                                    : 0
+                                    " step="any" type="number" class="text-right" />
 
                                   <b-input-group-append is-text>
                                     <span>%</span>
@@ -2809,7 +3345,18 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.tradeDiscountAmount" disabled />
+                                  <b-form-input :value="tradeDiscountAmount(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent,
+                                    invoiceData.tradeDiscountPercent
+                                  )
+                                    ? tradeDiscountAmount(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                    : 0
+                                    " disabled />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -2828,8 +3375,18 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.totalAmount" disabled
-                                    class="opacity-1 font-weight-bolder custom-font" />
+                                  <b-form-input :value="totalPrice(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent,
+                                    invoiceData.tradeDiscountPercent
+                                  )
+                                    ? totalPrice(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                    : 0
+                                    " disabled class="opacity-1 font-weight-bolder custom-font" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -2840,6 +3397,54 @@
                         </div>
                       </div>
                     </div>
+
+                    <table style="
+                        width: 80%;
+                        margin: auto;
+                        padding-top: 5rem;
+                        border-collapse: collapse;
+                      ">
+                      <tr>
+                        <td style="text-align: center; padding: 30px">
+                          <div style="margin-bottom: 20px">
+                            <span v-show="!editingSupplier" @click="editingSupplier = true" class="editable-text">
+                              {{ invoiceData.supplierCompany.companyOwnerName }}
+                            </span>
+                            <input v-show="editingSupplier" type="text" v-model="invoiceData.supplierCompany.companyOwnerName
+                              " @blur="editingSupplier = false" class="editable-input" />
+                          </div>
+                          <div style="
+                              height: 50px;
+                              border-bottom: 1px dashed black;
+                            ">
+                            <!-- Space for supplier's signature -->
+                          </div>
+                          <div style="margin-top: 10px">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                        <td style="text-align: center; padding: 30px">
+                          <div style="margin-bottom: 20px">
+                            <span v-show="!editingRecipient" @click="editingRecipient = true" class="editable-text">
+                              {{
+                                invoiceData.recipientCompany.companyOwnerName
+                              }}
+                            </span>
+                            <input v-show="editingRecipient" type="text" v-model="invoiceData.recipientCompany.companyOwnerName
+                                " @blur="editingRecipient = false" class="editable-input" />
+                          </div>
+                          <div style="
+                              height: 50px;
+                              border-bottom: 1px dashed black;
+                            ">
+                            <!-- Space for recipient's signature -->
+                          </div>
+                          <div style="margin-top: 10px">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -3015,28 +3620,54 @@
                           </div>
                         </div>
                       </div>
-                      <div class="tm_invoice_right tm_text_right"></div>
+
+                      <!-- <div class="tm_invoice_right tm_text_right"></div>
+                      <div class="d-flex justify-content-start align-items-center px-3" style="margin-right:2rem ;">
+                        <b-form-select v-model="selectedNotification" :options="notificationOptions" class="my-3">
+                          <template #first>
+                            <b-form-select-option :value="null" disabled>
+                              {{ $t("add_invoice.select_notification") }}
+                            </b-form-select-option>
+                          </template>
+                        </b-form-select>
+                        <div class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{ $t("add_invoice."
+                          + selectedNotification) }}</div>
+                      </div> -->
                     </div>
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_info_list">
-                        <p class="tm_invoice_date tm_m0">
-                          <!-- Date: -->
-                          {{ $t("add_invoice.date") }}:
+                        <b-card no-body class="invoice-preview date-issued mb-0">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.date") }}:
+                                </span>
+                                <!-- <validation-provider
+                        #default="{ errors }"
+                        name="dateIssued"
+                        rules="required"
+                      > -->
+                                <!-- <flat-pickr
+                          v-model="invoiceData.dateIssued"
+                          class="form-control invoice-edit-input invoice-input-top"
+                        /> -->
 
-                          <span>
-                            <validation-provider #default="{ errors }" name="dateIssued" rules="required">
-                              <flat-pickr v-model="invoiceData.dateIssued"
-                                class="form-control invoice-edit-input invoice-input-top" />
-                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                                @click="invoiceData.dateIssued = ''" />
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
-                          </span>
-                        </p>
+                                <flat-pickr v-model="invoiceData.dateIssued"
+                                  class="form-control invoice-edit-input invoice-input-top" placeholder="Select date: " />
+
+                                <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                                  class="cursor-pointer clear-all mr-2" />
+                                <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all mr-2"
+                                  @click="invoiceData.dateIssued = ''" />
+
+                                <!-- <small class="text-danger">{{ errors[0] }}</small>
+                      </validation-provider> -->
+                              </div>
+                            </div>
+                          </b-card-header>
+                        </b-card>
                         <p class="tm_invoice_number tm_m0">
-                          <!-- Invoice No: -->
                           {{ $t("add_invoice.invoice") }}:
 
                           <span><validation-provider #default="{ errors }" name="invoiceNumber" vid="Invoice"
@@ -3055,37 +3686,76 @@
                       </div>
                     </div>
 
-                    <!-- Person/Company Switch -->
                     <div class="d-flex justify-content-between align-items-center mb-2 accountType">
-                      <!-- @change="scheduleTypeOptionToggle(scheduleOptionToggleValue)"                 -->
                       <b-form-checkbox v-model="invoiceData.scheduled"
-                        class="custom-control-primary custom-switch-btn mr-2" name="invoiceData.scheduled" switch>
-                        <span class="switch-icon-left" style="width: 76px">{{ $t("add_invoice.scheduled") }}</span>
-                        <span class="switch-icon-right" style="width: 76px">{{ $t("add_invoice.regular") }}</span>
+                        class="custom-control-primary custom-switch-btn fmr-2" name="invoiceData.scheduled" @change="() => {
+                          isScheduled = !isScheduled;
+                        }
+                          " switch :checked="isScheduled">
+                        <span class="switch-icon-left">{{
+                          $t("add_invoice.scheduled")
+                        }}</span>
+                        <span class="switch-icon-right">{{
+                          $t("add_invoice.regular")
+                        }}</span>
                       </b-form-checkbox>
-                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0"
-                        v-if="disabled = invoiceData.scheduled" style="width: 27%;">
-                        <b-card-header class="justify-content-end">
-                          <div class="mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.schedule_type") }}:
-                              </span>
-                              <validation-provider #default="{ errors }" name="scheduleType" rules="required">
-                                <b-form-select :disabled="!invoiceData.scheduled"
-                                  v-model="invoiceData.cronScheduleApi.scheduleType"
-                                  @change="() => { companyIDisInvalid = false; }">
-                                  <b-form-select-option value="WEEKLY">{{ $t("add_invoice.WEEKLY")
-                                  }}</b-form-select-option>
-                                  <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY")
-                                  }}</b-form-select-option>
-                                </b-form-select>
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
+                      <div v-if="isScheduled" class="ml-4">
+                        <b-card no-body class="invoice-preview date-issued mb-0 ml-0" v-if="isScheduled">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.schedule_type") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" rules="required">
+                                  <b-form-select v-if="checkSchedule" v-model="invoiceData.cronScheduleApi.scheduleType
+                                    " @change="() => {
+    companyIDisInvalid = false;
+  }
+    ">
+                                    <b-form-select-option value="WEEKLY">{{
+                                      $t("add_invoice.WEEKLY")
+                                    }}</b-form-select-option>
+                                    <b-form-select-option value="MONTHLY">{{
+                                      $t("add_invoice.MONTHLY")
+                                    }}</b-form-select-option>
+                                  </b-form-select>
+                                  <b-form-select v-if="!checkSchedule" @change="setOffScheduleType">
+                                    <b-form-select-option value="WEEKLY">{{
+                                      $t("add_invoice.WEEKLY")
+                                    }}</b-form-select-option>
+                                    <b-form-select-option value="MONTHLY">{{
+                                      $t("add_invoice.MONTHLY")
+                                    }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+                      <b-form-checkbox v-model="AccountTypeOptionToggleValue" @change="
+                        AccountTypeOptionToggle(AccountTypeOptionToggleValue)
+                        " class="custom-control-primary custom-switch-btn" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
+                          {{ $t("add_invoice.person") }}
+                        </span>
+                        <span class="switch-icon-right">
+                          {{ $t("add_invoice.company") }}
+                        </span>
+                      </b-form-checkbox>
                       <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="company"
                         class="d-none">
                         <h5>{{ $t("add_invoice.company") }}</h5>
@@ -3094,75 +3764,127 @@
                         class="d-none">
                         <h5>{{ $t("add_invoice.person") }}</h5>
                       </b-form-radio>
-
-                      <b-form-checkbox v-model="AccountTypeOptionToggleValue"
-                        @change="AccountTypeOptionToggle(AccountTypeOptionToggleValue)"
-                        class="custom-control-primary custom-switch-btn" name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left">
-                          {{ $t("add_invoice.person") }}
-                        </span>
-                        <span class="switch-icon-right">
-                          {{ $t("add_invoice.company") }}
-                        </span>
-                      </b-form-checkbox>
                     </div>
-
-                    <!-- Schedule Type -->
-                    <div class="d-flex justify-content-between align-items-center mb-2 schedule-type"
-                      v-if='invoiceData.scheduled'>
-                      <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'MONTHLY'" no-body
-                        class="invoice-preview date-issued mb-0 ml-0 mr-auto">
-                        <b-card-header class="justify-content-end">
-                          <div class="mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.select_date") }}:
-                              </span>
-                              <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
-                                <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth"
-                                  @change="() => { companyIDisInvalid = false; }" :options="dates">
-                                  <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{
-                                    date.text }}</b-form-select-option>
-                                </b-form-select>
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
+                    <div class="d-flex justify-content-between align-items-center mb-2 accountType">
+                      <!-- Schedule Type -->
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="invoiceData.cronScheduleApi">
+                        <b-card v-if="invoiceData.cronScheduleApi.scheduleType ==
+                          'MONTHLY' && invoiceData.scheduled
+                          " no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_date") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
+                                  <b-form-select v-if="checkSchedule" v-model="invoiceData.cronScheduleApi.dayOfMonth
+                                    " @change="() => {
+    companyIDisInvalid = false;
+  }
+    " :options="dates">
+                                    <b-form-select-option :value="date.value" v-for="(date, index) in dates"
+                                      :key="index">{{ date.text }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
-                      <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'WEEKLY'" no-body
-                        class="invoice-preview date-issued mb-0 ml-0 mr-auto">
-                        <b-card-header class="justify-content-start">
-                          <div class="w-100 mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.select_days") }}:
-                              </span>
-                              <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
-                              <div class="d-block">
-                                <b-form-group class="d-flex w-100 mb-0" v-slot="{ ariaDescribedby }">
-                                  <b-form-radio-group v-model="invoiceData.cronScheduleApi.dayOfWeek"
-                                    @change="toggleDaySelected()" :options="days" class="d-flex"
-                                    :aria-describedby="ariaDescribedby">
-                                    <!-- <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index">{{ day.text }}</b-form-radio> -->
+                          </b-card-header>
+                        </b-card>
+
+                        <b-card v-if="invoiceData.cronScheduleApi.scheduleType ==
+                            'WEEKLY' && invoiceData.scheduled
+                            " no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-start">
+                            <div class="w-100 mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_days") }}:
+                                </span>
+                                <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
+                                <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                                  <b-form-radio-group class="d-flex" v-model="invoiceData.cronScheduleApi.dayOfWeek
+                                    " :aria-describedby="ariaDescribedby">
+                                    <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index" @change="() => {
+                                      companyIDisInvalid = false;
+                                      isWeekSelected = false;
+                                    }
+                                      ">{{ day.text }}</b-form-radio>
                                   </b-form-radio-group>
                                 </b-form-group>
-                                <small class="text-danger d-flex w-100 pl-1" v-if="daySelected">The dayOfWeek field is
-                                  required</small>
+                                <small class="text-danger" v-if="isWeekSelected">Day of Week field is required</small>
+                                <!-- </validation-provider> -->
                               </div>
-                              <!-- <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider> -->
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="isScheduledTypeOffCaseMonthly">
+                        <b-card v-if="!checkSchedule" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_date") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
+                                  <b-form-select v-model="offCaseScheduleDayOfMonth" @change="() => {
+                                    companyIDisInvalid = false;
+                                  }
+                                    " :options="dates">
+                                    <b-form-select-option :value="date.value" v-for="(date, index) in dates"
+                                      :key="index">{{ date.text }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
+                            </div>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="isScheduledTypeOffCaseWeekly">
+                        <b-card v-if="!checkSchedule && isScheduled" no-body
+                          class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-start">
+                            <div class="w-100 mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_days") }}:
+                                </span>
+                                <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
+                                <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                                  <b-form-radio-group v-model="offCaseScheduleDayOfWeek" class="d-flex"
+                                    :aria-describedby="ariaDescribedby">
+                                    <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index" @change="() => {
+                                      companyIDisInvalid = false;
+                                    }
+                                      ">{{ day.text }}</b-form-radio>
+                                  </b-form-radio-group>
+                                </b-form-group>
+                                <!-- <small class="text-danger" v-if='isWeekSelected'>Day of Week field is required</small> -->
+                                <!-- </validation-provider> -->
+                              </div>
+                            </div>
+                          </b-card-header>
+                        </b-card>
+                      </div>
                     </div>
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
-                        <p class="tm_mb2">
-                          <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}:</b>
-                        </p>
+                        <h6 class="tm_mb2">
+                          <b class="tm_primary_color">
+                            {{ $t("add_invoice.supplier") }}:</b>
+                        </h6>
                         <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="
                             SearchCompanyEic(
@@ -3172,10 +3894,10 @@
                             @focus="ShowSuggestionEic(datalistEic)" @mousedown="() => {
                               companyIDisInvalid = false;
                             }
-                              " style="margin-bottom: 5px" placeholder="Supplier Company ID Number...." />
+                              " style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEic" :key="data.eic"
-                              @click="autoCompletefnEic(data)" @mousedown="autoCompletefnEic(data)">
+                              @click="autoCompletefnEic(data)">
                               {{ data.eic }}
                             </b-list-group-item>
                           </b-list-group>
@@ -3187,21 +3909,20 @@
                         <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
+                            placeholder="Supplier Company Owner Name..." />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="supplierCompanyName" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companName"
-                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" @input="
+                            placeholder="Supplier Company Name..." @input="
                               SearchCompanyName(
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
                             @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
-                            <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
-                              @mousedown="autoCompletefn(data)">
+                            <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)">
                               {{ data.company_name }}
                             </b-list-group-item>
                           </b-list-group>
@@ -3210,31 +3931,43 @@
 
                         <validation-provider #default="{ errors }" name="supplierCompanyAddress" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyAddress" autocomplete="off"
-                            :placeholder="$t('add_invoice.SupplierCompanyAddress')" style="margin-bottom: 5px" />
+                            placeholder="Supplier Company Address.." style="margin-bottom: 5px" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="supplierVat">
                           <validation-provider #default="{ errors }" name="supplierVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.supplierCompany.companyVatEic
-                                " autocomplete="off" style="margin-bottom: 5px" />
+                                " autocomplete="off" placeholder="Supplier Company Vat Number..."
+                                style="margin-bottom: 5px" />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </div>
-
-                        <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2"
-                          name="check-button" switch>
-                          <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.vat") }}</span>
-                          <span class="switch-icon-right text-uppercase"> {{ $t("add_invoice.no_vat") }} </span>
+                        <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="check-button" switch>
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
-                      <!-- Recipient -->
+                      <!-- Recipient-->
                       <div class="tm_invoice_right tm_text_right" style="width: 47%">
-                        <p class="tm_mb2">
-                          <b class="tm_primary_color" style="padding-left: 3px"> {{ $t("add_invoice.recipient") }}:</b>
-                        </p>
+                        <h6 class="tm_mb2">
+                          <b class="tm_primary_color">
+                            {{ $t("add_invoice.recipient") }}:</b>
+                        </h6>
 
                         <!-- Company/Person Identification-->
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
@@ -3248,11 +3981,11 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()" @focus="
     ShowSuggestionEicRecipient(datalistEicRecipient)
-    " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientCompanyIDNumber')" />
+    " style="margin-bottom: 5px" placeholder="Recipient Company ID Number..." />
                           <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEicRecipient" :key="data.eic"
-                              @click="autoCompletefnEicRecipient(data)" @mousedown="autoCompletefnEicRecipient(data)">
+                              @click="autoCompletefnEicRecipient(data)">
                               {{ data.eic }}
                             </b-list-group-item>
                           </b-list-group>
@@ -3267,11 +4000,11 @@
                               ShowSuggestionPersonIdNumber(
                                 datalistPersonIdNumber
                               )
-                              " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientPersonIDNumber')" />
+                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number..." />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
-                              @click="autoCompletefnPersonIdNumber(data)" @mousedown="autoCompletefnPersonIdNumber(data)">
+                              @click="autoCompletefnPersonIdNumber(data)">
                               {{ data.identificationNumber }}
                             </b-list-group-item>
                           </b-list-group>
@@ -3283,7 +4016,7 @@
                           ">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
+                            placeholder="Recipient Company Owner Name..." />
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
@@ -3297,10 +4030,10 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()"
                             @focus="ShowSuggestionRecipient(datalistRecipient)" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyName')" />
+                            placeholder="Recipient Company Name..." />
                           <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistRecipient" :key="data.eic"
-                              @click="autoCompletefnRecipient(data)" @mousedown="autoCompletefnRecipient(data)">
+                              @click="autoCompletefnRecipient(data)">
                               {{ data.company_name }}
                             </b-list-group-item>
                           </b-list-group>
@@ -3311,10 +4044,10 @@
     )
     " list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()"
                             @focus="ShowSuggestionPerson(datalistPerson)" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientPersonName')" />
+                            placeholder="Recipient Person Name..." />
                           <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPerson" :key="data.eic"
-                              @click="autoCompletefnPerson(data)" @mousedown="autoCompletefnPerson(data)">
+                              @click="autoCompletefnPerson(data)">
                               {{ data.firstMiddleAndLastName }}
                             </b-list-group-item>
                           </b-list-group>
@@ -3327,29 +4060,41 @@
                           " rules="required">
                           <b-form-input v-model="invoiceData.recipientCompany.companyAddress
                             " autocomplete="off" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
+                            placeholder="Recipient Company Address..." />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="AccountTypeOption == 'company' && recipientVat">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
-                            <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
+                            <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
-                                " autocomplete="off" :placeholder="$t('add_invoice.RecipientCompanyVATNumber')" />
+                                " autocomplete="off" style="margin-bottom: 5px"
+                                placeholder="Recipient Company VAT Number.." />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </div>
 
-                        <b-form-checkbox v-if="AccountTypeOption == 'company'" v-model="recipientVat"
-                          class="custom-control-primary custom-switch-btn-2" name="check-button" switch>
-                          <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.vat") }}</span>
-                          <span class="switch-icon-right text-uppercase"> {{ $t("add_invoice.no_vat") }} </span>
+                        <b-form-checkbox v-model="recipientVat" class="custom-control-primary custom-switch-btn-2" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="check-button" switch v-if="AccountTypeOption == 'company'">
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
                       </div>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0 border">
+                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0">
                         <b-card-header class="justify-content-end">
                           <div class="mt-md-0 mt-2">
                             <div class="d-flex align-items-center mb-0">
@@ -3378,23 +4123,39 @@
                       </b-card>
                       <b-form-checkbox v-model="InvoiceTypeOptionToggleValue" @change="
                         InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)
-                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right"
-                        name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left text-uppercase">
+                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
                           {{ $t("add_invoice.PROFORMA") }}
                         </span>
-                        <span class="switch-icon-right text-uppercase">
+                        <span class="switch-icon-right">
                           {{ $t("add_invoice.ORIGINAL") }}
                         </span>
                       </b-form-checkbox>
                       <b-form-checkbox v-model="saleTypeOptionToggleValue" @change="
                         saleTypeOptionToggle(saleTypeOptionToggleValue)
-                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right"
-                        name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left text-uppercase">
+                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
                           {{ $t("add_invoice.goods") }}
                         </span>
-                        <span class="switch-icon-right text-uppercase">
+                        <span class="switch-icon-right">
                           {{ $t("add_invoice.service") }}
                         </span>
                       </b-form-checkbox>
@@ -3580,14 +4341,26 @@
                         ">
                       {{ $t("add_invoice.add_item") }}
                     </b-button>
+
+                    <!-- Bank Details Switch -->
                     <b-row class="mb-1">
                       <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
-                          <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
+                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="AccountTypeOptionToggle" @change="() => {
+    hasBankDetails = !hasBankDetails;
+  }
+    " switch :checked="hasBankDetails">
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.bank") }}
+                          </span>
                           <span class="switch-icon-right text-uppercase">
                             {{ $t("add_invoice.no_bank") }}
                           </span>
@@ -3597,10 +4370,7 @@
 
                     <div class="tm_invoice_footer">
                       <div class="tm_left_footer">
-                        <div v-if="isBank">
-                          <!-- <p class="tm_mb2">
-                            <b class="tm_primary_color">Payment info:</b>
-                          </p> -->
+                        <div v-if="hasBankDetails">
                           <p class="tm_m0 d-inline-flex">
                             <span style="padding: 10px 10px 0px 0px; width: 60px"><b>BIC: </b>
                             </span>
@@ -3639,15 +4409,15 @@
                           </p>
                           <br />
                           <p class="tm_m0 d-inline-flex" style="margin-top: 2px">
-                            <span style="padding: 10px 10px 0px 0px; width: 60px"><b>{{ $t("add_invoice.bank")
-                            }}:</b></span>
+                            <span style="padding: 10px 10px 0px 0px; width: 60px"><b>{{ $t("add_invoice.bank") }}:
+                              </b></span>
 
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="bank" rules="required">
                                 <v-select v-model="invoiceData.bankApi.name" :options="bankList" id="invoice-bank"
                                   name="invoice-bank" v-bind:placeholder="$t('Please select bank...')
                                     " :value="$store.state.selected" @input="selectBankName()">
-                                  <template #selected-option="option" v-if="bankNameToSend !== ''">
+                                  <template #selected-option="option" v-if="editMode && bankNameToSend !== ''">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -3657,7 +4427,9 @@
                                       {{ bankNameToSend }}
                                     </div>
                                   </template>
-                                  <template #selected-option="option" v-else>
+                                  <template #selected-option="option" v-else-if="
+                                      editMode && bankNameToSend === ''
+                                    ">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -3665,6 +4437,16 @@
                                         grid-gap: 8px;
                                       ">
                                       {{ $t(option.name) }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: left;
+                                        grid-gap: 8px;
+                                      ">
+                                      {{ invoiceData.bankApi.name }}
                                     </div>
                                   </template>
 
@@ -3679,6 +4461,7 @@
                                     </span>
                                   </template>
                                 </v-select>
+
                                 <small class="text-danger">{{
                                   errors[0]
                                 }}</small>
@@ -3687,15 +4470,18 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent === '0'">
+
+                        <div v-if="invoiceData.vatPercent === '0' ||
+                            invoiceData.vatPercent === 0
+                            ">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
-                            <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
+                            <span style="width: 60px"><b>Non Vat Clause: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
                                 <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
                                   name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
-                                    " :value="$store.state.selected" @input="selectVatClause()">
-                                  <template #selected-option="option" v-if="clauseToSend !== ''">
+                                    " @input="selectVatClause()">
+                                  <template #selected-option="option" v-if="editClauseMode && clauseToSend !== ''">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -3705,7 +4491,9 @@
                                       {{ clauseToSend }}
                                     </div>
                                   </template>
-                                  <template #selected-option="option" v-else>
+                                  <template #selected-option="option" v-else-if="
+                                      editClauseMode && clauseToSend === ''
+                                    ">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -3713,6 +4501,16 @@
                                         grid-gap: 8px;
                                       ">
                                       {{ option.clause }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: left;
+                                        grid-gap: 8px;
+                                      ">
+                                      {{ invoiceData.vatCondition }}
                                     </div>
                                   </template>
 
@@ -3734,16 +4532,17 @@
                           </p>
                         </div>
                         <b-row class="mt-2">
-                          <b-col cols="12" md="7" class="mt-md-6 d-flex ml-5 pl-4 pt-3" order="2" order-md="1">
+                          <b-col cols="12" md="7" class="mt-md-6 d-flex ml-5 pl-3 pt-2" order="2" order-md="1">
                             <h1 class="invoiceTypeHeading">
                               {{ $t("add_invoice." + invoiceData.invoiceType) }}
                             </h1>
                           </b-col>
                         </b-row>
                       </div>
+
                       <div class="tm_right_footer">
                         <div class="invoice-total-wrapper">
-                          <div class="invoice-total-item" style="justify-content: right">
+                          <div class="invoice-total-item mt-1" style="justify-content: right">
                             <p class="invoice-total-title">
                               {{ $t("add_invoice.total_price_non_vat") }}:
                             </p>
@@ -3754,8 +4553,10 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.amountNonVat" disabled
-                                    style="background-color: #f5f6fa" />
+                                  <b-form-input :value="amountNonVat(invoiceData.transactions)
+                                    ? amountNonVat(invoiceData.transactions)
+                                    : 0
+                                    " disabled style="background-color: #f5f6fa" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -3768,13 +4569,10 @@
                               {{ $t("add_invoice.vat") }}:
                             </p>
                             <p class="invoice-total-amount">
-                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent" :rules="`${vatPercentValidate
-                                ? 'required|vatPercentValid'
-                                : 'required'
-                                }`">
+                              <validation-provider #default="{ errors }" name="vat" rules="required">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
                                   <b-form-input v-model="invoiceData.vatPercent" step="any" type="number"
-                                    class="text-right" @input="populateValues()" />
+                                    class="text-right" />
 
                                   <b-input-group-append is-text>
                                     <span>%</span>
@@ -3796,9 +4594,11 @@
                                   <b-input-group-prepend is-text>
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
-
-                                  <b-form-input v-model="invoiceData.vatAmount" type="number" disabled
-                                    style="background-color: #f5f6fa" />
+                                  <b-form-input :value="vatAmount(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent
+                                  )
+                                    " type="number" disabled style="background-color: #f5f6fa" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -3813,8 +4613,10 @@
                             <p class="invoice-total-amount">
                               <validation-provider #default="{ errors }" name="tradeDiscountPercent" rules="required">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
-                                  <b-form-input v-model="invoiceData.tradeDiscountPercent" step="any" type="number"
-                                    class="text-right" @input="populateValues()" />
+                                  <b-form-input v-model="invoiceData.tradeDiscountPercent" :value="invoiceData.tradeDiscountPercent
+                                    ? invoiceData.tradeDiscountPercent
+                                    : 0
+                                    " step="any" type="number" class="text-right" />
 
                                   <b-input-group-append is-text>
                                     <span>%</span>
@@ -3837,8 +4639,18 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.tradeDiscountAmount" disabled
-                                    style="background-color: #f5f6fa" />
+                                  <b-form-input :value="tradeDiscountAmount(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent,
+                                    invoiceData.tradeDiscountPercent
+                                  )
+                                    ? tradeDiscountAmount(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                    : 0
+                                    " disabled style="background-color: #f5f6fa" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -3846,6 +4658,7 @@
                               </validation-provider>
                             </p>
                           </div>
+
                           <div class="invoice-total-item" style="justify-content: right">
                             <p class="invoice-total-title font-weight-bolder custom-font">
                               {{ $t("add_invoice.total_price") }}:
@@ -3857,9 +4670,21 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.totalAmount" disabled
-                                    class="opacity-1 font-weight-bolder custom-font" style="background-color: #f5f6fa" />
+                                  <b-form-input :value="totalPrice(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent,
+                                    invoiceData.tradeDiscountPercent
+                                  )
+                                    ? totalPrice(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                    : 0
+                                    " disabled class="opacity-1 font-weight-bolder custom-font"
+                                    style="background-color: #f5f6fa" />
                                 </b-input-group>
+
                                 <small class="text-danger">{{
                                   errors[0]
                                 }}</small>
@@ -3871,6 +4696,53 @@
                         <div class="tm_shape_3 tm_accent_bg_10" style="z-index: -1"></div>
                       </div>
                     </div>
+                    <table style="
+                        width: 80%;
+                        margin: auto;
+                        padding-top: 5rem;
+                        border-collapse: collapse;
+                      ">
+                      <tr>
+                        <td style="text-align: center; padding: 30px">
+                          <div style="margin-bottom: 20px">
+                            <span v-show="!editingSupplier" @click="editingSupplier = true" class="editable-text">
+                              {{ invoiceData.supplierCompany.companyOwnerName }}
+                            </span>
+                            <input v-show="editingSupplier" type="text" v-model="invoiceData.supplierCompany.companyOwnerName
+                              " @blur="editingSupplier = false" class="editable-input" />
+                          </div>
+                          <div style="
+                              height: 50px;
+                              border-bottom: 1px dashed black;
+                            ">
+                            <!-- Space for supplier's signature -->
+                          </div>
+                          <div style="margin-top: 10px">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                        <td style="text-align: center; padding: 30px">
+                          <div style="margin-bottom: 20px">
+                            <span v-show="!editingRecipient" @click="editingRecipient = true" class="editable-text">
+                              {{
+                                invoiceData.recipientCompany.companyOwnerName
+                              }}
+                            </span>
+                            <input v-show="editingRecipient" type="text" v-model="invoiceData.recipientCompany.companyOwnerName
+                                " @blur="editingRecipient = false" class="editable-input" />
+                          </div>
+                          <div style="
+                              height: 50px;
+                              border-bottom: 1px dashed black;
+                            ">
+                            <!-- Space for recipient's signature -->
+                          </div>
+                          <div style="margin-top: 10px">
+                            {{ new Date().toLocaleDateString() }}
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -3929,7 +4801,9 @@
                               style="position: absolute; left: 70px; top: -7px" @click="() => {
                                 showLogo = false;
                                 logoToUpload = '';
-                                isUploading = i18n.tc('add_invoice.upload_logo');
+                                isUploading = i18n.tc(
+                                  'add_invoice.upload_logo'
+                                );
                                 invoiceData.logoId = '';
                               }
                                 " />
@@ -3952,11 +4826,18 @@
                           </div>
                         </div>
                       </div>
-                      <div class="tm_invoice_right tm_text_right">
-                        <div class="tm_primary_color tm_f50 tm_text_uppercase">
-                          {{ $t("add_invoice.invoice") }}
-                        </div>
-                      </div>
+                      <!-- <div class="d-flex justify-content-between align-items-center px-3">
+                        <b-form-select v-model="selectedNotification"
+                          :options="['CREDIT_NOTIFICATION', 'DEBIT_NOTIFICATION']" class="my-3">
+                          <template #first>
+                            <b-form-select-option :value="null" disabled>
+                              {{ $t("add_invoice.select_notification") }}
+                            </b-form-select-option>
+                          </template>
+                        </b-form-select>
+                        <span class="ml-3 text-uppercase font-weight-bold" v-if="selectedNotification">{{
+                          $t("add_invoice." + selectedNotification) }}</span>
+                      </div> -->
                     </div>
                     <div class="tm_invoice_info tm_mb20">
                       <div class="tm_invoice_seperator">
@@ -3967,7 +4848,6 @@
                           ? 'color: black !important'
                           : 'color: white !important'
                           ">
-                          <!-- Invoice No: -->
                           {{ $t("add_invoice.invoice") }}:
 
                           <span><validation-provider #default="{ errors }" name="invoiceNumber" vid="Invoice"
@@ -3991,15 +4871,19 @@
                           {{ $t("add_invoice.date") }}:
 
                           <span>
-                            <validation-provider #default="{ errors }" name="dateIssued" rules="required">
-                              <flat-pickr v-model="invoiceData.dateIssued"
-                                class="form-control invoice-edit-input invoice-input-top" />
-                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                                @click="invoiceData.dateIssued = ''" />
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
+                            <!-- <validation-provider
+                              #default="{ errors }"
+                              name="dateIssued"
+                              rules="required"
+                            > -->
+                            <flat-pickr v-model="invoiceData.dateIssued"
+                              class="form-control invoice-edit-input invoice-input-top" />
+                            <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                              class="cursor-pointer clear-all mr-2 mt-1" style="color: black" />
+                            <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all mr-2 mt-1"
+                              style="color: black" @click="invoiceData.dateIssued = ''" />
+                            <!-- <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider> -->
                           </span>
                         </p>
                         <div class="tm_invoice_info_list_bg" :class="isBlue === true
@@ -4015,37 +4899,76 @@
                       </div>
                     </div>
 
-                    <!-- Person/Company Switch -->
                     <div class="d-flex justify-content-between align-items-center mb-2 accountType">
-                      <!-- @change="scheduleTypeOptionToggle(scheduleOptionToggleValue)"                 -->
                       <b-form-checkbox v-model="invoiceData.scheduled"
-                        class="custom-control-primary custom-switch-btn mr-2" name="invoiceData.scheduled" switch>
-                        <span class="switch-icon-left" style="width: 76px">{{ $t("add_invoice.scheduled") }}</span>
-                        <span class="switch-icon-right" style="width: 76px">{{ $t("add_invoice.regular") }}</span>
+                        class="custom-control-primary custom-switch-btn fmr-2" name="invoiceData.scheduled" @change="() => {
+                          isScheduled = !isScheduled;
+                        }
+                          " switch :checked="isScheduled">
+                        <span class="switch-icon-left">{{
+                          $t("add_invoice.scheduled")
+                        }}</span>
+                        <span class="switch-icon-right">{{
+                          $t("add_invoice.regular")
+                        }}</span>
                       </b-form-checkbox>
-                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0"
-                        v-if="disabled = invoiceData.scheduled" style="width: 27%;">
-                        <b-card-header class="justify-content-end">
-                          <div class="mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.schedule_type") }}:
-                              </span>
-                              <validation-provider #default="{ errors }" name="scheduleType" rules="required">
-                                <b-form-select :disabled="!invoiceData.scheduled"
-                                  v-model="invoiceData.cronScheduleApi.scheduleType"
-                                  @change="() => { companyIDisInvalid = false; }">
-                                  <b-form-select-option value="WEEKLY">{{ $t("add_invoice.WEEKLY")
-                                  }}</b-form-select-option>
-                                  <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY")
-                                  }}</b-form-select-option>
-                                </b-form-select>
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
+                      <div v-if="isScheduled" class="ml-4">
+                        <b-card no-body class="invoice-preview date-issued mb-0 ml-0" v-if="isScheduled">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.schedule_type") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" rules="required">
+                                  <b-form-select v-if="checkSchedule" v-model="invoiceData.cronScheduleApi.scheduleType
+                                    " @change="() => {
+    companyIDisInvalid = false;
+  }
+    ">
+                                    <b-form-select-option value="WEEKLY">{{
+                                      $t("add_invoice.WEEKLY")
+                                    }}</b-form-select-option>
+                                    <b-form-select-option value="MONTHLY">{{
+                                      $t("add_invoice.MONTHLY")
+                                    }}</b-form-select-option>
+                                  </b-form-select>
+                                  <b-form-select v-if="!checkSchedule" @change="setOffScheduleType">
+                                    <b-form-select-option value="WEEKLY">{{
+                                      $t("add_invoice.WEEKLY")
+                                    }}</b-form-select-option>
+                                    <b-form-select-option value="MONTHLY">{{
+                                      $t("add_invoice.MONTHLY")
+                                    }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+                      <b-form-checkbox v-model="AccountTypeOptionToggleValue" @change="
+                        AccountTypeOptionToggle(AccountTypeOptionToggleValue)
+                        " class="custom-control-primary custom-switch-btn" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
+                          {{ $t("add_invoice.person") }}
+                        </span>
+                        <span class="switch-icon-right">
+                          {{ $t("add_invoice.company") }}
+                        </span>
+                      </b-form-checkbox>
                       <b-form-radio v-model="AccountTypeOption" plain name="accountTypeoptions" value="company"
                         class="d-none">
                         <h5>{{ $t("add_invoice.company") }}</h5>
@@ -4054,76 +4977,127 @@
                         class="d-none">
                         <h5>{{ $t("add_invoice.person") }}</h5>
                       </b-form-radio>
-
-                      <b-form-checkbox v-model="AccountTypeOptionToggleValue"
-                        @change="AccountTypeOptionToggle(AccountTypeOptionToggleValue)"
-                        class="custom-control-primary custom-switch-btn" name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left">
-                          {{ $t("add_invoice.person") }}
-                        </span>
-                        <span class="switch-icon-right">
-                          {{ $t("add_invoice.company") }}
-                        </span>
-                      </b-form-checkbox>
                     </div>
-
-                    <!-- Schedule Type -->
-                    <div class="d-flex justify-content-between align-items-center mb-2 schedule-type"
-                      v-if='invoiceData.scheduled'>
-                      <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'MONTHLY'" no-body
-                        class="invoice-preview date-issued mb-0 ml-0 mr-auto">
-                        <b-card-header class="justify-content-end">
-                          <div class="mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.select_date") }}:
-                              </span>
-                              <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
-                                <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth"
-                                  @change="() => { companyIDisInvalid = false; }" :options="dates">
-                                  <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{
-                                    date.text }}</b-form-select-option>
-                                </b-form-select>
-                                <small class="text-danger">{{ errors[0] }}</small>
-                              </validation-provider>
+                    <div class="d-flex justify-content-between align-items-center mb-2 accountType">
+                      <!-- Schedule Type -->
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="invoiceData.cronScheduleApi">
+                        <b-card v-if="invoiceData.cronScheduleApi.scheduleType ==
+                          'MONTHLY' && invoiceData.scheduled
+                          " no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_date") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
+                                  <b-form-select v-if="checkSchedule" v-model="invoiceData.cronScheduleApi.dayOfMonth
+                                    " @change="() => {
+    companyIDisInvalid = false;
+  }
+    " :options="dates">
+                                    <b-form-select-option :value="date.value" v-for="(date, index) in dates"
+                                      :key="index">{{ date.text }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
-                      <b-card v-if="invoiceData.cronScheduleApi.scheduleType == 'WEEKLY'" no-body
-                        class="invoice-preview date-issued mb-0 ml-0 mr-auto" style="width: 27%;">
-                        <b-card-header class="justify-content-start">
-                          <div class="w-100 mt-md-0 mt-2">
-                            <div class="d-flex align-items-center mb-0">
-                              <span class="title mr-1">
-                                {{ $t("add_invoice.select_days") }}:
-                              </span>
-                              <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
-                              <div class="d-block">
-                                <b-form-group class="d-flex w-100 mb-0" v-slot="{ ariaDescribedby }">
-                                  <b-form-radio-group v-model="invoiceData.cronScheduleApi.dayOfWeek"
-                                    @change="toggleDaySelected()" :options="days" class="d-flex"
-                                    :aria-describedby="ariaDescribedby">
-                                    <!-- <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index">{{ day.text }}</b-form-radio> -->
+                          </b-card-header>
+                        </b-card>
+
+                        <b-card v-if="invoiceData.cronScheduleApi.scheduleType ==
+                            'WEEKLY' && invoiceData.scheduled
+                            " no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-start">
+                            <div class="w-100 mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_days") }}:
+                                </span>
+                                <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
+                                <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                                  <b-form-radio-group class="d-flex" v-model="invoiceData.cronScheduleApi.dayOfWeek
+                                    " :aria-describedby="ariaDescribedby">
+                                    <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index" @change="() => {
+                                      companyIDisInvalid = false;
+                                      isWeekSelected = false;
+                                    }
+                                      ">{{ day.text }}</b-form-radio>
                                   </b-form-radio-group>
                                 </b-form-group>
-                                <small class="text-danger d-flex w-100 pl-1" v-if="daySelected">The dayOfWeek field is
-                                  required</small>
+                                <small class="text-danger" v-if="isWeekSelected">Day of Week field is required</small>
+                                <!-- </validation-provider> -->
                               </div>
-                              <!-- <small class="text-danger">{{ errors[0] }}</small>
-                        </validation-provider> -->
                             </div>
-                          </div>
-                        </b-card-header>
-                      </b-card>
-                    </div>
+                          </b-card-header>
+                        </b-card>
+                      </div>
 
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="isScheduledTypeOffCaseMonthly">
+                        <b-card v-if="!checkSchedule" no-body class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-end">
+                            <div class="mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_date") }}:
+                                </span>
+                                <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
+                                  <b-form-select v-model="offCaseScheduleDayOfMonth" @change="() => {
+                                    companyIDisInvalid = false;
+                                  }
+                                    " :options="dates">
+                                    <b-form-select-option :value="date.value" v-for="(date, index) in dates"
+                                      :key="index">{{ date.text }}</b-form-select-option>
+                                  </b-form-select>
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </div>
+                            </div>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center schedule-type"
+                        v-if="isScheduledTypeOffCaseWeekly">
+                        <b-card v-if="!checkSchedule && isScheduled" no-body
+                          class="invoice-preview date-issued mb-0 ml-0 mr-auto">
+                          <b-card-header class="justify-content-start">
+                            <div class="w-100 mt-md-0 mt-2">
+                              <div class="d-flex align-items-center mb-0">
+                                <span class="title mr-1">
+                                  {{ $t("add_invoice.select_days") }}:
+                                </span>
+                                <!-- <validation-provider #default="{ errors }" name="dayOfWeek" rules="required"> -->
+                                <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+                                  <b-form-radio-group v-model="offCaseScheduleDayOfWeek" class="d-flex"
+                                    :aria-describedby="ariaDescribedby">
+                                    <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index" @change="() => {
+                                      companyIDisInvalid = false;
+                                    }
+                                      ">{{ day.text }}</b-form-radio>
+                                  </b-form-radio-group>
+                                </b-form-group>
+                                <!-- <small class="text-danger" v-if='isWeekSelected'>Day of Week field is required</small> -->
+                                <!-- </validation-provider> -->
+                              </div>
+                            </div>
+                          </b-card-header>
+                        </b-card>
+                      </div>
+                    </div>
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
-                        <p class="tm_mb2">
-                          <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}</b>
-                        </p>
+                        <h6 class="tm_mb2">
+                          <b class="tm_primary_color">
+                            {{ $t("add_invoice.supplier") }}</b>
+                        </h6>
                         <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="
                             SearchCompanyEic(
@@ -4136,7 +5110,7 @@
                               " style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEic" :key="data.eic"
-                              @click="autoCompletefnEic(data)" @mousedown="autoCompletefnEic(data)">
+                              @click="autoCompletefnEic(data)">
                               {{ data.eic }}
                             </b-list-group-item>
                           </b-list-group>
@@ -4148,21 +5122,20 @@
                         <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
+                            placeholder="Supplier Company Owner Name..." />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="supplierCompanyName" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companName"
-                            :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" @input="
+                            placeholder="Supplier Company Name..." @input="
                               SearchCompanyName(
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
                             @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
-                            <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
-                              @mousedown="autoCompletefn(data)">
+                            <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)">
                               {{ data.company_name }}
                             </b-list-group-item>
                           </b-list-group>
@@ -4171,34 +5144,43 @@
 
                         <validation-provider #default="{ errors }" name="supplierCompanyAddress" rules="required">
                           <b-form-input v-model="invoiceData.supplierCompany.companyAddress" autocomplete="off"
-                            :placeholder="$t('add_invoice.SupplierCompanyAddress')" style="margin-bottom: 5px" />
+                            placeholder="Supplier Company Address.." style="margin-bottom: 5px" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
-
                         <div v-if="supplierVat">
                           <validation-provider #default="{ errors }" name="supplierVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.supplierCompany.companyVatEic
-                                " autocomplete="off" style="margin-bottom: 5px" />
+                                " autocomplete="off" placeholder="Supplier Company Vat Number..."
+                                style="margin-bottom: 5px" />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </div>
-
-                        <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2"
-                          name="check-button" switch>
-                          <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.vat") }}</span>
-                          <span class="switch-icon-right text-uppercase"> {{ $t("add_invoice.no_vat") }} </span>
+                        <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="check-button" switch>
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
-
-                        <!-- Recipient -->
                       </div>
                       <div style="width: 6%"></div>
-
+                      <!-- Recipient-->
                       <div class="tm_invoice_right tm_text_right" style="width: 47%">
-                        <p class="tm_mb2">
-                          <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
-                        </p>
+                        <h6 class="tm_mb2">
+                          <b class="tm_primary_color">
+                            {{ $t("add_invoice.recipient") }}:</b>
+                        </h6>
 
                         <!-- Company/Person Identification-->
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
@@ -4212,11 +5194,11 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionEicRecipient()" @focus="
     ShowSuggestionEicRecipient(datalistEicRecipient)
-    " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientCompanyIDNumber')" />
+    " style="margin-bottom: 5px" placeholder="Recipient Company ID Number..." />
                           <b-list-group v-if="showSuggestionsEicRecipient" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEicRecipient" :key="data.eic"
-                              @click="autoCompletefnEicRecipient(data)" @mousedown="autoCompletefnEicRecipient(data)">
+                              @click="autoCompletefnEicRecipient(data)">
                               {{ data.eic }}
                             </b-list-group-item>
                           </b-list-group>
@@ -4231,11 +5213,11 @@
                               ShowSuggestionPersonIdNumber(
                                 datalistPersonIdNumber
                               )
-                              " style="margin-bottom: 5px" :placeholder="$t('add_invoice.RecipientPersonIDNumber')" />
+                              " style="margin-bottom: 5px" placeholder="Recipient Person ID Number..." />
                           <b-list-group v-if="showSuggestionsPersonIdNumber" id="my-company_name"
                             class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPersonIdNumber" :key="data.eic"
-                              @click="autoCompletefnPersonIdNumber(data)" @mousedown="autoCompletefnPersonIdNumber(data)">
+                              @click="autoCompletefnPersonIdNumber(data)">
                               {{ data.identificationNumber }}
                             </b-list-group-item>
                           </b-list-group>
@@ -4247,7 +5229,7 @@
                           ">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
+                            placeholder="Recipient Company Owner Name..." />
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
@@ -4261,10 +5243,10 @@
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestionRecipient()"
                             @focus="ShowSuggestionRecipient(datalistRecipient)" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyName')" />
+                            placeholder="Recipient Company Name..." />
                           <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistRecipient" :key="data.eic"
-                              @click="autoCompletefnRecipient(data)" @mousedown="autoCompletefnRecipient(data)">
+                              @click="autoCompletefnRecipient(data)">
                               {{ data.company_name }}
                             </b-list-group-item>
                           </b-list-group>
@@ -4275,10 +5257,10 @@
     )
     " list="my-company_name" autocomplete="off" @blur="hideSuggestionPerson()"
                             @focus="ShowSuggestionPerson(datalistPerson)" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientPersonName')" />
+                            placeholder="Recipient Person Name..." />
                           <b-list-group v-if="showSuggestionsPerson" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistPerson" :key="data.eic"
-                              @click="autoCompletefnPerson(data)" @mousedown="autoCompletefnPerson(data)">
+                              @click="autoCompletefnPerson(data)">
                               {{ data.firstMiddleAndLastName }}
                             </b-list-group-item>
                           </b-list-group>
@@ -4291,29 +5273,40 @@
                           " rules="required">
                           <b-form-input v-model="invoiceData.recipientCompany.companyAddress
                             " autocomplete="off" style="margin-bottom: 5px"
-                            :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
+                            placeholder="Recipient Company Address..." />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                         <div v-if="AccountTypeOption == 'company' && recipientVat">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
-                            <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
+                            <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
-                                " autocomplete="off" :placeholder="$t('add_invoice.RecipientCompanyVATNumber')" />
+                                " autocomplete="off" style="margin-bottom: 5px"
+                                placeholder="Recipient Company VAT Number.." />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </div>
 
-                        <b-form-checkbox v-if="AccountTypeOption == 'company'" v-model="recipientVat"
-                          class="custom-control-primary custom-switch-btn-2" name="check-button" switch>
-                          <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.vat") }}</span>
-                          <span class="switch-icon-right text-uppercase"> {{ $t("add_invoice.no_vat") }} </span>
+                        <b-form-checkbox v-model="recipientVat" class="custom-control-primary custom-switch-btn-2" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="check-button" switch v-if="AccountTypeOption == 'company'">
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}</span>
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
                       </div>
                     </div>
-
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0 border">
+                      <b-card no-body class="invoice-preview date-issued mb-0 ml-0">
                         <b-card-header class="justify-content-end">
                           <div class="mt-md-0 mt-2">
                             <div class="d-flex align-items-center mb-0">
@@ -4342,23 +5335,39 @@
                       </b-card>
                       <b-form-checkbox v-model="InvoiceTypeOptionToggleValue" @change="
                         InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)
-                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right"
-                        name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left text-uppercase">
+                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
                           {{ $t("add_invoice.PROFORMA") }}
                         </span>
-                        <span class="switch-icon-right text-uppercase">
+                        <span class="switch-icon-right">
                           {{ $t("add_invoice.ORIGINAL") }}
                         </span>
                       </b-form-checkbox>
                       <b-form-checkbox v-model="saleTypeOptionToggleValue" @change="
                         saleTypeOptionToggle(saleTypeOptionToggleValue)
-                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right"
-                        name="AccountTypeOptionToggle" switch>
-                        <span class="switch-icon-left text-uppercase">
+                        " class="custom-control-primary custom-switch-btn-2 flex-1 text-right" :class="isBlue === true
+    ? 'tm_accent_bg_checkbox'
+    : isGreen === true
+      ? 'green_bg_checkbox'
+      : isPurple === true
+        ? 'purple_bg_checkbox'
+        : isOrange === true
+          ? 'orange_bg_checkbox'
+          : 'gray_bg_checkbox'
+    " name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left">
                           {{ $t("add_invoice.goods") }}
                         </span>
-                        <span class="switch-icon-right text-uppercase">
+                        <span class="switch-icon-right">
                           {{ $t("add_invoice.service") }}
                         </span>
                       </b-form-checkbox>
@@ -4546,14 +5555,25 @@
                       {{ $t("add_invoice.add_item") }}
                     </b-button>
 
+                    <!-- Bank Details Switch -->
                     <b-row class="mb-1">
                       <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
-                          <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
+                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1" :class="isBlue === true
+                          ? 'tm_accent_bg_checkbox'
+                          : isGreen === true
+                            ? 'green_bg_checkbox'
+                            : isPurple === true
+                              ? 'purple_bg_checkbox'
+                              : isOrange === true
+                                ? 'orange_bg_checkbox'
+                                : 'gray_bg_checkbox'
+                          " name="AccountTypeOptionToggle" @change="() => {
+    hasBankDetails = !hasBankDetails;
+  }
+    " switch :checked="hasBankDetails">
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.bank") }}
+                          </span>
                           <span class="switch-icon-right text-uppercase">
                             {{ $t("add_invoice.no_bank") }}
                           </span>
@@ -4561,12 +5581,9 @@
                       </b-col>
                     </b-row>
 
-                    <div class="tm_invoice_footer mb-4 pb-4">
+                    <div class="tm_invoice_footer mb-4 pb-5">
                       <div class="tm_left_footer">
-                        <div v-if="isBank">
-                          <!-- <p class="tm_mb2">
-                            <b class="tm_primary_color">Payment info:</b>
-                          </p> -->
+                        <div v-if="hasBankDetails">
                           <p class="tm_m0 d-inline-flex">
                             <span style="padding: 10px 10px 0px 0px; width: 60px"><b>BIC: </b>
                             </span>
@@ -4603,15 +5620,15 @@
                           </p>
                           <br />
                           <p class="tm_m0 d-inline-flex" style="margin-top: 2px">
-                            <span style="padding: 10px 10px 0px 0px; width: 60px"><b>{{ $t("add_invoice.bank")
-                            }}:</b></span>
+                            <span style="padding: 10px 10px 0px 0px; width: 60px"><b>{{ $t("add_invoice.bank") }}:
+                              </b></span>
 
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="bank" rules="required">
                                 <v-select v-model="invoiceData.bankApi.name" :options="bankList" id="invoice-bank"
                                   name="invoice-bank" v-bind:placeholder="$t('Please select bank...')
                                     " :value="$store.state.selected" @input="selectBankName()">
-                                  <template #selected-option="option" v-if="bankNameToSend !== ''">
+                                  <template #selected-option="option" v-if="editMode && bankNameToSend !== ''">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -4621,7 +5638,9 @@
                                       {{ bankNameToSend }}
                                     </div>
                                   </template>
-                                  <template #selected-option="option" v-else>
+                                  <template #selected-option="option" v-else-if="
+                                      editMode && bankNameToSend === ''
+                                    ">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -4629,6 +5648,16 @@
                                         grid-gap: 8px;
                                       ">
                                       {{ $t(option.name) }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: left;
+                                        grid-gap: 8px;
+                                      ">
+                                      {{ invoiceData.bankApi.name }}
                                     </div>
                                   </template>
 
@@ -4651,15 +5680,17 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent === '0'">
+                        <div v-if="invoiceData.vatPercent === '0' ||
+                            invoiceData.vatPercent === 0
+                            ">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
-                            <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
+                            <span style="width: 60px"><b>Non Vat Clause: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
                                 <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
                                   name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
-                                    " :value="$store.state.selected" @input="selectVatClause()">
-                                  <template #selected-option="option" v-if="clauseToSend !== ''">
+                                    " @input="selectVatClause()">
+                                  <template #selected-option="option" v-if="editClauseMode && clauseToSend !== ''">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -4669,7 +5700,9 @@
                                       {{ clauseToSend }}
                                     </div>
                                   </template>
-                                  <template #selected-option="option" v-else>
+                                  <template #selected-option="option" v-else-if="
+                                      editClauseMode && clauseToSend === ''
+                                    ">
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -4677,6 +5710,16 @@
                                         grid-gap: 8px;
                                       ">
                                       {{ option.clause }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: left;
+                                        grid-gap: 8px;
+                                      ">
+                                      {{ invoiceData.vatCondition }}
                                     </div>
                                   </template>
 
@@ -4698,7 +5741,7 @@
                           </p>
                         </div>
                         <b-row class="mt-2">
-                          <b-col cols="12" md="7" class="mt-md-6 d-flex ml-5 pl-4 pt-3" order="2" order-md="1">
+                          <b-col cols="12" md="7" class="mt-md-6 d-flex ml-5 pl-3 pt-2" order="2" order-md="1">
                             <h1 class="invoiceTypeHeading">
                               {{ $t("add_invoice." + invoiceData.invoiceType) }}
                             </h1>
@@ -4711,6 +5754,7 @@
                             <p class="invoice-total-title">
                               {{ $t("add_invoice.total_price_non_vat") }}:
                             </p>
+
                             <p class="invoice-total-amount">
                               <validation-provider #default="{ errors }" name="amountNonVat" rules="required">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
@@ -4718,8 +5762,10 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.amountNonVat" disabled
-                                    style="background-color: #f5f6fa" />
+                                  <b-form-input :value="amountNonVat(invoiceData.transactions)
+                                    ? amountNonVat(invoiceData.transactions)
+                                    : 0
+                                    " disabled style="background-color: #f5f6fa" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -4732,13 +5778,10 @@
                               {{ $t("add_invoice.vat") }}:
                             </p>
                             <p class="invoice-total-amount">
-                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent" :rules="`${vatPercentValidate
-                                ? 'required|vatPercentValid'
-                                : 'required'
-                                }`">
+                              <validation-provider #default="{ errors }" name="vat" rules="required">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
                                   <b-form-input v-model="invoiceData.vatPercent" step="any" type="number"
-                                    class="text-right" @input="populateValues()" />
+                                    class="text-right" />
 
                                   <b-input-group-append is-text>
                                     <span>%</span>
@@ -4760,9 +5803,11 @@
                                   <b-input-group-prepend is-text>
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
-
-                                  <b-form-input v-model="invoiceData.vatAmount" type="number" disabled
-                                    style="background-color: #f5f6fa" />
+                                  <b-form-input :value="vatAmount(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent
+                                  )
+                                    " type="number" disabled style="background-color: #f5f6fa" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -4777,8 +5822,10 @@
                             <p class="invoice-total-amount">
                               <validation-provider #default="{ errors }" name="tradeDiscountPercent" rules="required">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
-                                  <b-form-input v-model="invoiceData.tradeDiscountPercent" step="any" type="number"
-                                    class="text-right" @input="populateValues()" />
+                                  <b-form-input v-model="invoiceData.tradeDiscountPercent" :value="invoiceData.tradeDiscountPercent
+                                    ? invoiceData.tradeDiscountPercent
+                                    : 0
+                                    " step="any" type="number" class="text-right" />
 
                                   <b-input-group-append is-text>
                                     <span>%</span>
@@ -4801,8 +5848,18 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.tradeDiscountAmount" disabled
-                                    style="background-color: #f5f6fa" />
+                                  <b-form-input :value="tradeDiscountAmount(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent,
+                                    invoiceData.tradeDiscountPercent
+                                  )
+                                    ? tradeDiscountAmount(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                    : 0
+                                    " disabled style="background-color: #f5f6fa" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -4821,8 +5878,19 @@
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
 
-                                  <b-form-input v-model="invoiceData.totalAmount" disabled
-                                    class="opacity-1 font-weight-bolder custom-font" style="background-color: #f5f6fa" />
+                                  <b-form-input :value="totalPrice(
+                                    invoiceData.transactions,
+                                    invoiceData.vatPercent,
+                                    invoiceData.tradeDiscountPercent
+                                  )
+                                    ? totalPrice(
+                                      invoiceData.transactions,
+                                      invoiceData.vatPercent,
+                                      invoiceData.tradeDiscountPercent
+                                    )
+                                    : 0
+                                    " disabled class="opacity-1 font-weight-bolder custom-font"
+                                    style="background-color: #f5f6fa" />
                                 </b-input-group>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -4835,31 +5903,93 @@
                     </div>
 
                     <div class="tm_padd_15_20 pt-5">
-                      <p class="tm_mb2"></p>
-                      <ul class="tm_m0 tm_note_list"></ul>
+                      <p class="tm_mb2">
+                        <!-- <b class="tm_primary_color">Terms & Conditions:</b> -->
+                      </p>
+                      <ul class="tm_m0 tm_note_list">
+                        <!-- <li>
+                          All claims relating to quantity or shipping errors.
+                        </li>
+                        <li>Delivery dates are not guaranteed and Seller.</li> -->
+                      </ul>
                     </div>
+                    <!-- .tm_note -->
                   </div>
+
+                  <table style="
+                      width: 50%;
+                      float: left;
+                      margin: auto;
+                      padding-top: 5rem;
+                      border-collapse: collapse;
+                    ">
+                    <tr>
+                      <td style="text-align: center; padding: 30px">
+                        <div style="
+                            border-bottom: 1px solid black;
+                            margin-bottom: 20px;
+                          ">
+                          <span v-show="!editingSupplier" @click="editingSupplier = true" class="editable-text"
+                            @dblclick="editingSupplier = false">
+                            {{ invoiceData.supplierCompany.companyOwnerName }}
+                          </span>
+                          <input v-show="editingSupplier" type="text" v-model="invoiceData.supplierCompany.companyOwnerName
+                            " @blur="editingSupplier = false" class="editable-input" />
+                        </div>
+                        <div style="height: 50px; border-bottom: 1px dashed black">
+                          <!-- Space for supplier's signature -->
+                        </div>
+                        <div style="margin-top: 10px">
+                          {{ new Date().toLocaleDateString() }}
+                        </div>
+                      </td>
+                      <td style="text-align: center; padding: 30px">
+                        <div style="
+                            border-bottom: 1px solid black;
+                            margin-bottom: 20px;
+                          ">
+                          <span v-show="!editingRecipient" @click="editingRecipient = true" class="editable-text"
+                            @dblclick="editingRecipient = false">
+                            {{ invoiceData.recipientCompany.companyOwnerName }}
+                          </span>
+                          <input v-show="editingRecipient" type="text" v-model="invoiceData.recipientCompany.companyOwnerName
+                            " @blur="editingRecipient = false" class="editable-input" />
+                        </div>
+                        <div style="height: 50px; border-bottom: 1px dashed black">
+                          <!-- Space for recipient's signature -->
+                        </div>
+                        <div style="margin-top: 10px">
+                          {{ new Date().toLocaleDateString() }}
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </div>
           </b-col>
 
           <!-- Right Col: Card -->
-          <b-col cols="12" md="2" xl="2" class="invoice-actions mt-md-0 mt-2">
+          <b-col cols="12" md="2" xl="2" class="invoice-actions">
             <!-- Action Buttons -->
             <b-card>
               <!-- Button: DOwnload -->
               <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" class="mb-75" block
-                type="submit" :disabled="loading">
+                :disabled="loading" @click="invoiceEdit(invoiceData, 'preview', AccountTypeOption)">
                 <b-spinner v-if="loading" small variant="light" />
                 {{ $t("add_invoice.preview") }}
               </b-button>
 
               <!-- Button: Print -->
-              <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" block type="submit"
-                :disabled="loading">
+              <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" block :disabled="loading"
+                type="submit">
                 <b-spinner v-if="loading" small variant="light" />
                 {{ $t("add_invoice.save") }}
+              </b-button>
+              <b-button v-if="!invoiceData.verified" v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary"
+                block :disabled="loading" type="button" @click="invoiceVerify(invoiceData, AccountTypeOption)">
+                <b-spinner v-if="loading" small variant="light" />
+                {{ $t("add_invoice.verify") }}
               </b-button>
               <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" block type="button"
                 @click="clearForm">
@@ -4867,38 +5997,14 @@
               </b-button>
             </b-card>
 
-            <!-- cover -->
+            <!-- covers -->
             <div class="row mb-2">
-              <div class="ml-1 cursor-pointer" style="
-                  height: 23px;
-                  width: 23px;
-                  background-color: #ad3978;
-                  margin-right: 16px;
-                " @click="applyCover(1)"></div>
-              <div class="cursor-pointer" style="
-                  height: 23px;
-                  width: 23px;
-                  background-color: #007aff;
-                  margin-right: 16px;
-                " @click="applyCover(2)"></div>
-              <div class="cursor-pointer" style="
-                  height: 23px;
-                  width: 23px;
-                  background-color: #8fce00;
-                  margin-right: 16px;
-                " @click="applyCover(3)"></div>
-              <div class="cursor-pointer" style="
-                  height: 23px;
-                  width: 23px;
-                  background-color: #ffa500;
-                  margin-right: 16px;
-                " @click="applyCover(4)"></div>
-              <div class="cursor-pointer" style="
-                  height: 23px;
-                  width: 23px;
-                  background-color: #f6d1ff;
-                  margin-right: 16px;
-                " @click="applyCover(5)"></div>
+              <div class="ml-1 cursor-pointer color-button" style="background-color: #ad3978" @click="applyCover(1)">
+              </div>
+              <div class="cursor-pointer color-button" style="background-color: #007aff" @click="applyCover(2)"></div>
+              <div class="cursor-pointer color-button" style="background-color: #8fce00" @click="applyCover(3)"></div>
+              <div class="cursor-pointer color-button" style="background-color: #ffa500" @click="applyCover(4)"></div>
+              <div class="cursor-pointer color-button" style="background-color: #f6d1ff" @click="applyCover(5)"></div>
             </div>
 
             <!-- template 1 -->
@@ -4941,14 +6047,9 @@
         </b-row>
       </b-form>
     </validation-observer>
-    <invoice-sidebar-add-new-customer />
   </section>
 </template>
 
-<!-- <script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jspdf.min.js"></script>
-<script src="assets/js/html2canvas.min.js"></script>
-<script src="assets/js/main.js"></script> -->
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import {
@@ -4956,8 +6057,6 @@ import {
   email,
   confirmed,
   password,
-  regex,
-  vatPercentValid,
   singlePriceValid,
   qtyValid,
 } from "@validations";
@@ -4966,8 +6065,10 @@ import { ref, onUnmounted } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
 import Ripple from "vue-ripple-directive";
 import store from "@/store";
-import TabList from "../../TabList.vue";
+import router from "@/router";
 import {
+  BImg,
+  BFormRow,
   BRow,
   BCol,
   BCard,
@@ -4985,30 +6086,28 @@ import {
   BFormTextarea,
   BFormCheckbox,
   BPopover,
+  BAlert,
+  BLink,
   VBToggle,
   BSpinner,
   BFormRadio,
   BListGroup,
   BListGroupItem,
   BFormSelectOption,
-  BFormRow,
-  BImg,
-  BFormFile,
   BFormRadioGroup,
 } from "bootstrap-vue";
 import vSelect from "vue-select";
 import flatPickr from "vue-flatpickr-component";
 import invoiceStoreModule from "../invoiceStoreModule";
-import InvoiceSidebarAddNewCustomer from "../InvoiceSidebarAddNewCustomer.vue";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
-import router from "@/router";
-import { setTimeout } from "timers";
+import TabList from "../../TabList.vue";
 import axios from "@/libs/axios";
 import { i18n } from "@/main.js";
 
 export default {
   components: {
+    BImg,
     BRow,
     BCol,
     BCard,
@@ -5026,89 +6125,131 @@ export default {
     BFormTextarea,
     BFormCheckbox,
     BPopover,
+    BAlert,
+    BLink,
     flatPickr,
     vSelect,
     Logo,
-    InvoiceSidebarAddNewCustomer,
-    BSpinner,
     ValidationProvider,
     ValidationObserver,
+    BSpinner,
     BFormRadio,
     BListGroup,
     BListGroupItem,
     TabList,
-    BFormSelectOption,
     BFormRow,
-    BImg,
-    BFormFile,
+    BFormSelectOption,
     BFormRadioGroup,
-  },
-  data() {
-    return {
-      showLogo: false,
-      isUploading: i18n.tc("add_invoice.upload_logo"),
-      logoToUpload: "",
-      isTemplateFive: true,
-      isTemplateOne: false,
-      isTemplateTwo: false,
-      isTemplateThree: false,
-      isTemplateFour: false,
-      companyIDisInvalid: false,
-      scheduleOptionToggleValue: false,
-      scheduleTypes: ["WEEKLY", "MONTHLY"],
-      dates: [{ value: null, text: 'Please select an option' }, { value: 1, text: "1" }, { value: 2, text: "2" }, { value: 3, text: "3" }, { value: 4, text: "4" }, { value: 5, text: "5" }, { value: 6, text: "6" }, { value: 7, text: "7" }, { value: 8, text: "8" }, { value: 9, text: "9" }, { value: 10, text: "10" }, { value: 11, text: "11" }, { value: 12, text: "12" }, { value: 13, text: "13" }, { value: 14, text: "14" }, { value: 15, text: "15" }, { value: 16, text: "16" }, { value: 17, text: "17" }, { value: 18, text: "18" }, { value: 19, text: "19" }, { value: 20, text: "20" }, { value: 21, text: "21" }, { value: 22, text: "22" }, { value: 23, text: "23" }, { value: 24, text: "24" }, { value: 25, text: "25" }, { value: 26, text: "26" }, { value: 27, text: "27" }, { value: 28, text: "28" }, { value: 29, text: "29" }, { value: 30, text: "30" }, { value: 31, text: "31" }],
-      // days: [{ text: i18n.tc("company_info.MON"), value: "MON" }, { text: "TUE", value: "TUE" }, { text: "WED", value: "WED" }, { text: "THU", value: "THU" }, { text: "FRI", value: "FRI" }, { text: "SAT", value: "SAT" }, { text: "SUN", value: "SUN" }],
-      daySelected: false,
-      clauseToSend: "",
-      bankNameToSend: "",
-      // bankList: [
-      //   { name: i18n.tc("add_invoice.bank-1") },
-      //   { name: i18n.tc("add_invoice.bank-2") },
-      //   { name: i18n.tc("add_invoice.bank-3") },
-      //   { name: i18n.tc("add_invoice.bank-4") },
-      //   { name: i18n.tc("add_invoice.bank-5") },
-      // ],
-      isBank: false,
-      noVatClause: [
-        { clause: "clause-01" },
-        { clause: "clause-02" },
-        { clause: "clause-03" },
-        { clause: "clause-04" },
-        { clause: "clause-05" },
-      ],
-      loading: false,
-      required,
-      email,
-      confirmed,
-      password,
-      regex,
-      vatPercentValid,
-      singlePriceValid,
-      qtyValid,
-    };
   },
   directives: {
     Ripple,
     "b-toggle": VBToggle,
   },
   mixins: [heightTransition],
+
+  // Reset Tr Height if data changes
+  watch: {
+    // eslint-disable-next-line func-names
+    "invoiceData.transactions": function () {
+      this.initTrHeight();
+    },
+  },
+  data() {
+    return {
+      companyIDisInvalid: false,
+      editClauseMode: false,
+      editMode: false,
+      editingSupplier: false,
+      editingRecipient: false,
+      notifications: [
+        { value: "CREDIT_NOTIFICATION", text: "Credit Notification" },
+        { value: "DEBIT_NOTIFICATION", text: "Debit Notification" },
+      ],
+      selectedNotification: null,
+
+      clauseToSend: "",
+      bankNameToSend: "",
+      // bankList: [
+      //   { name: "Първа Инвестиционна Банка" },
+      //   { name: "ДСК" },
+      //   { name: "Уникредит Булбанк" },
+      //   { name: "Централна Кооперативна Банка" },
+      //   { name: "Булбанк" },
+      // ],
+      isBank: false,
+      noVatClause: [
+        { clause: "чл.113, ал.9 от ЗДДС" },
+        { clause: "чл.86, ал.3 във вр. с 21, ал.5 от ЗДДС" },
+        { clause: "чл.86, ал.3 във вр. с 21, ал.2 от ЗДДС" },
+      ],
+      invoiceID: null,
+      loading: false,
+      required,
+      email,
+      confirmed,
+      password,
+      singlePriceValid,
+      qtyValid,
+      scheduleOptionToggleValue: false,
+      scheduleTypes: ["WEEKLY", "MONTHLY"],
+      dates: [
+        { value: null, text: "Please select an option" },
+        { value: 1, text: "1" },
+        { value: 2, text: "2" },
+        { value: 3, text: "3" },
+        { value: 4, text: "4" },
+        { value: 5, text: "5" },
+        { value: 6, text: "6" },
+        { value: 7, text: "7" },
+        { value: 8, text: "8" },
+        { value: 9, text: "9" },
+        { value: 10, text: "10" },
+        { value: 11, text: "11" },
+        { value: 12, text: "12" },
+        { value: 13, text: "13" },
+        { value: 14, text: "14" },
+        { value: 15, text: "15" },
+        { value: 16, text: "16" },
+        { value: 17, text: "17" },
+        { value: 18, text: "18" },
+        { value: 19, text: "19" },
+        { value: 20, text: "20" },
+        { value: 21, text: "21" },
+        { value: 22, text: "22" },
+        { value: 23, text: "23" },
+        { value: 24, text: "24" },
+        { value: 25, text: "25" },
+        { value: 26, text: "26" },
+        { value: 27, text: "27" },
+        { value: 28, text: "28" },
+        { value: 29, text: "29" },
+        { value: 30, text: "30" },
+        { value: 31, text: "31" },
+      ],
+
+      daySelected: false,
+    };
+  },
+
   mounted() {
-    // this.initTrHeight();
+    this.initTrHeight();
   },
   created() {
-    // window.addEventListener("resize", this.initTrHeight);
+    window.addEventListener("resize", this.initTrHeight);
+    this.invoiceID = this.$route.params.id;
+    this.getCompanyInfo();
   },
   destroyed() {
-    // window.removeEventListener("resize", this.initTrHeight);
+    window.removeEventListener("resize", this.initTrHeight);
   },
   computed: {
     bankList() {
       return [
-        { name: this.$t('add_invoice.bank-1') },
-        { name: this.$t('add_invoice.bank-2') },
-        { name: this.$t('add_invoice.bank-3') },
-        { name: this.$t('add_invoice.bank-4') },
-        { name: this.$t('add_invoice.bank-5') },
+        { name: this.$t("add_invoice.bank-1") },
+        { name: this.$t("add_invoice.bank-2") },
+        { name: this.$t("add_invoice.bank-3") },
+        { name: this.$t("add_invoice.bank-4") },
+        { name: this.$t("add_invoice.bank-5") },
       ];
     },
     days() {
@@ -5119,11 +6260,38 @@ export default {
         { text: i18n.tc("company_info.THU"), value: "THU" },
         { text: i18n.tc("company_info.FRI"), value: "FRI" },
         { text: i18n.tc("company_info.SAT"), value: "SAT" },
-        { text: i18n.tc("company_info.SUN"), value: "SUN" }
-      ]
+        { text: i18n.tc("company_info.SUN"), value: "SUN" },
+      ];
+    },
+    dropdownStyle() {
+      return this.isGray === true ? { color: "black" } : { color: "white" };
+    },
+    notificationOptions() {
+      return ["CREDIT_NOTIFICATION", "DEBIT_NOTIFICATION"].map(
+        (notification) => ({
+          text: this.$t("add_invoice." + notification),
+          value: notification,
+        })
+      );
     },
   },
   methods: {
+    async getCompanyInfo() {
+      //getting company info
+      const data = await axios
+        .get(`/account/api/company/` + this.$route.params.companyId, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            "Access-Control-Allow-Credentials": true,
+          },
+        })
+        .then((response) => {
+          this.supplierID = response.data.companyIdentificationNumber;
+          // console.log(this.supplierID);
+        })
+        .catch((error) => { });
+    },
+
     async updateLogo(e) {
       this.isUploading = i18n.tc("add_invoice.uploading");
       let self = this;
@@ -5142,7 +6310,7 @@ export default {
       request.onload = function () {
         if (request.status >= 200 && request.status < 300) {
           var val = JSON.parse(request.response);
-          // self.logoToUpload = val.binaryId;
+          // self.logoToupload = val.binaryId;
           self.invoiceData.logoId = val.binaryId;
 
           //  display the logo
@@ -5160,7 +6328,6 @@ export default {
                   const filePath = reader.result;
                   self.logoToUpload = filePath;
                   self.showLogo = true;
-                  console.log(self.showLogo);
                   self.isUploading = i18n.tc("add_invoice.change_logo");
                   // console.log(filePath);
                 };
@@ -5181,6 +6348,19 @@ export default {
       };
     },
 
+    setOffScheduleType(value) {
+      this.offCaseScheduleType = value;
+      if (value == "MONTHLY") {
+        this.isScheduledTypeOffCaseMonthly = true;
+        this.isScheduledTypeOffCaseWeekly = false;
+      } else {
+        this.isScheduledTypeOffCaseWeekly = true;
+        this.isScheduledTypeOffCaseMonthly = false;
+      }
+      console.log(this.invoiceData);
+      // this.scheduledTypeOffCase = value;
+      // alert(this.scheduledTypeOffCase);
+    },
     //
     applyCover(val) {
       if (val === 1) {
@@ -5221,7 +6401,6 @@ export default {
       }
     },
 
-    //
     switchTemplates(val) {
       if (val === 1) {
         this.isTemplateOne = true;
@@ -5260,12 +6439,14 @@ export default {
         this.invoiceData.templateId = 5;
       }
     },
+
     selectVatClause() {
       if (this.invoiceData.vatCondition === null) {
         this.clauseToSend = "";
       } else {
         this.clauseToSend = this.invoiceData.vatCondition.clause;
       }
+      this.editClauseMode = true;
     },
     selectBankName() {
       if (this.invoiceData.bankApi.name === null) {
@@ -5273,6 +6454,7 @@ export default {
       } else {
         this.bankNameToSend = this.invoiceData.bankApi.name.name;
       }
+      this.editMode = true;
     },
     addNewItemInItemForm() {
       this.$refs.form.style.overflow = "hidden";
@@ -5286,181 +6468,12 @@ export default {
     initTrHeight() {
       this.trSetHeight(null);
       this.$nextTick(() => {
-        this.trSetHeight(this.$refs.form.scrollHeight);
+        this.trSetHeight(this.$refs.form ? this.$refs.form.scrollHeight : 0);
       });
     },
     toggleDaySelected() {
       this.daySelected = false;
     },
-    // invoiceAdd(invoiceData, AccountTypeOption) {
-
-    //   //assign the data of recipient and creator
-    //   //creator supplier company
-    //   console.log(invoiceData, 'here is invoice data')
-    //   if (this.isBank === false) {
-    //     invoiceData.bankApi = {
-    //       name: "",
-    //       bic: "",
-    //       bank: "",
-    //     };
-    //   }
-    //   invoiceData.bankApi.name = this.bankNameToSend;
-    //   invoiceData.vatCondition = this.clauseToSend;
-
-
-    //   if (invoiceData.vatPercent !== "0") {
-    //     invoiceData.vatCondition = "";
-    //   }
-
-    //   // Company ID validation on the basis of transactionType
-    //   if (invoiceData.transactionType === "INCOME") {
-    //     if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
-    //       this.companyIDisInvalid = true;
-    //     }
-
-    //     if (invoiceData.supplierCompany.companyEic === "") {
-    //       this.companyIDisInvalid = false;
-    //     }
-    //   } else {
-    //     this.companyIDisInvalid = false;
-    //   }
-
-    //   let regExp =
-    //     /^((AT)(U\d{8})|(BE)(0\d{9})|(CY)(\d{8}[LX])|(CZ)(\d{8,10})|(DE)(\d{9})|(DK)(\d{8})|(EE)(\d{9})|(EL|GR)(\d{9})|(ES)([\dA-Z]\d{7}[\dA-Z])|(FI)(\d{8})|(FR)([\dA-Z]{2}\d{9})|(HU)(\d{8})|(IE)(\d{7}[A-Z]{2})|(IT)(\d{11})|(LT)(\d{9}|\d{12})|(LU)(\d{8})|(LV)(\d{11})|(MT)(\d{8})|(NL)(\d{9}(B\d{2}|BO2))|(PL)(\d{10})|(PT)(\d{9})|(RO)(\d{2,10})|(SE)(\d{12})|(SI)(\d{8})|(SK)(\d{10}))$/gim;
-    //   let ValidateVatNumber =
-    //     this.supplierVat && invoiceData.transactionType == "EXPENSE";
-    //   let validateVat =
-    //     this.recipientVat && parseFloat(invoiceData.vatPercent) > 0;
-
-    //   if (AccountTypeOption == "person") {
-    //     invoiceData.recipientCompany.companName =
-    //       invoiceData.recipientCompany.companyOwnerName;
-    //     invoiceData.recipientCompany.companyVatEic = "";
-    //   }
-    //   // console.log(invoiceData.cronScheduleApi.dayOfWeek, invoiceData.scheduled);
-    //   if (invoiceData.cronScheduleApi != null) {
-    //     if (invoiceData.cronScheduleApi.dayOfWeek) {
-    //       this.daySelected = false;
-    //     } else {
-    //       this.daySelected = true;
-    //     }
-    //   }
-
-    //   // if (invoiceData.scheduled === false) {
-    //   //   invoiceData.cronScheduleApi = "NO";
-    //   // }
-    //   if (validateVat) {
-    //     let validateRegExp = invoiceData.recipientCompany.companyVatEic;
-    //     validateRegExp = validateRegExp.replace(/\W|_/g, "");
-    //     let result = regExp.test(validateRegExp);
-    //     if (result) {
-    //       if (!this.vatPercentValidate) {
-    //         this.vatPercentValidate = true;
-    //         setTimeout(() => {
-    //           this.$refs.invoiceEditForm.validate();
-    //         }, 100);
-    //         return;
-    //       }
-    //     } else {
-    //       this.vatPercentValidate = false;
-    //     }
-    //   } else {
-    //     this.vatPercentValidate = false;
-    //   }
-
-    //   this.$refs.invoiceEditForm.validate().then((success) => {
-    //     if (success && this.companyIDisInvalid === false) {
-    //       if (
-    //         success &&
-    //         this.isTemplateOne === false &&
-    //         this.isTemplateTwo === false &&
-    //         this.isTemplateThree === false &&
-    //         this.isTemplateFour === false &&
-    //         this.isTemplateFive === false
-    //       ) {
-    //         this.$toast({
-    //           component: ToastificationContent,
-    //           props: {
-    //             title: `Please choose some template...`,
-    //             icon: "EditIcon",
-    //             variant: "danger",
-    //           },
-    //         });
-    //       } else {
-    //         invoiceData.transactions.map((item) => {
-    //           item.transactionTotalAmountNonVat = (
-    //             parseFloat(item.singleAmountTransaction) *
-    //             parseFloat(item.quantity)
-    //           ).toFixed(2);
-    //           return item;
-    //         });
-    //         if (!invoiceData.scheduled) {
-
-    //           invoiceData.cronScheduleApi = null
-    //           console.log(invoiceData)
-    //         }
-    //         this.loading = true;
-    //         let token = useJwt.getToken();
-    //         useJwt
-    //           .EditCompanyInvoice(
-    //             token,
-    //             router.currentRoute.params.companyId,
-    //             invoiceData
-    //           )
-    //           .then(async (response) => {
-    //             this.loading = false;
-    //             this.$toast({
-    //               component: ToastificationContent,
-    //               props: {
-    //                 title: `Invoice Created Successfully`,
-    //                 icon: "EditIcon",
-    //                 variant: "success",
-    //               },
-    //             });
-    //             if (ValidateVatNumber) {
-    //               let validateRegExp =
-    //                 response.data.supplierCompany.companyVatEic;
-    //               validateRegExp = validateRegExp.replace(/\W|_/g, "");
-    //               let result = regExp.test(validateRegExp);
-    //               if (result) {
-    //                 this.showMsgBoxTwo(response.data.id, invoiceData);
-    //               } else {
-    //                 this.$router.push({
-    //                   name: "company-invoice-edit",
-    //                   params: {
-    //                     id: response.data.id,
-    //                     companyId: router.currentRoute.params.companyId,
-    //                   },
-    //                 });
-    //               }
-    //             } else {
-    //               this.$router.push({
-    //                 name: "company-invoice-edit",
-    //                 params: {
-    //                   id: response.data.id,
-    //                   companyId: router.currentRoute.params.companyId,
-    //                 },
-    //               });
-    //             }
-    //           })
-    //           .catch((error) => {
-    //             this.loading = false;
-    //             this.$toast({
-    //               component: ToastificationContent,
-    //               props: {
-    //                 title: `${error?.response?.data?.errorMessage
-    //                   ? error.response.data.errorMessage
-    //                   : error
-    //                   }`,
-    //                 icon: "AlertTriangleIcon",
-    //                 variant: "danger",
-    //               },
-    //             });
-    //           });
-    //       }
-    //     }
-    //   });
-    // },
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
       // let schedule = {
       //   scheduleType: "",
@@ -5622,76 +6635,13 @@ export default {
         }
       });
     },
-    showMsgBoxTwo(id, invoiceData) {
-      const h = this.$createElement;
-      // Using HTML string
-      // More complex structure
-      const messageVNode = h("div", { class: ["bvModalFont"] }, [
-        h("p", { class: ["text-center card-text"] }, [
-          `${this.$t("protocol.description")}`,
-        ]),
-      ]);
-      this.$bvModal
-        .msgBoxConfirm([messageVNode], {
-          title: `${this.$t("protocol.title")}`,
-          okVariant: "primary",
-          okTitle: `${this.$t("protocol.yes")}`,
-          cancelTitle: `${this.$t("protocol.no")}`,
-          hideHeaderClose: false,
-          centered: true,
-        })
-        .then((value) => {
-          if (value) {
-            this.loading = true;
-            invoiceData.invoiceNumber = "1" + invoiceData.invoiceNumber;
-            invoiceData.documentType = "PROTOCOL";
-            let token = useJwt.getToken();
-            useJwt
-              .addCompanyInvoice(
-                token,
-                router.currentRoute.params.companyId,
-                invoiceData
-              )
-              .then((response) => {
-                this.loading = false;
-
-                this.$toast({
-                  component: ToastificationContent,
-                  props: {
-                    title: `Protocol Added Successfully`,
-                    icon: "EditIcon",
-                    variant: "success",
-                  },
-                });
-                this.$router.push({
-                  name: "company-invoice-edit",
-                  params: {
-                    id: id,
-                    companyId: router.currentRoute.params.companyId,
-                  },
-                });
-              })
-              .catch((error) => {
-                this.loading = false;
-                this.$toast({
-                  component: ToastificationContent,
-                  props: {
-                    title: `${error.response.data.errorMessage}`,
-                    icon: "EditIcon",
-                    variant: "error",
-                  },
-                });
-              });
-          } else {
-            this.$router.push({
-              name: "company-invoice-edit",
-              params: {
-                id: id,
-                companyId: router.currentRoute.params.companyId,
-              },
-            });
-          }
-        });
+    invoiceVerify(invoiceData, AccountTypeOption) {
+      this.$refs.invoiceEditForm.validate().then((success) => {
+        if (success) {
+          invoiceData.verified = true;
+          this.invoiceEdit(invoiceData, "invoices", AccountTypeOption);
+        }
+      });
     },
   },
   setup() {
@@ -6574,26 +7524,43 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-// @import "assets/css/style.css";
+<style lang="scss">
 @import "@core/scss/vue/libs/vue-select.scss";
 @import "@core/scss/vue/libs/vue-flatpicker.scss";
-
-.invoice-add-wrapper {
-  .add-new-client-header {
-    padding: $options-padding-y $options-padding-x;
-    color: $success;
-
-    &:hover {
-      background-color: rgba($success, 0.12);
-    }
-  }
-}
 </style>
 
 <style lang="scss" scoped>
 @import "~@core/scss/base/pages/app-invoice.scss";
-@import "~@core/scss/base/components/variables-dark";
+
+.customClassName {
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.maxWidthDropdown {
+  max-width: 250px;
+  /* Replace with your desired width */
+}
+
+.editable-text {
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.editable-text:hover {
+  background-color: #f0f0f0;
+}
+
+.editable-input {
+  border: 1px solid #888;
+  transition: border 0.3s;
+}
+
+.editable-input:focus {
+  border-color: #007bff;
+}
 
 .flatpickr-input {
   background-color: white !important;
@@ -6643,23 +7610,6 @@ export default {
   gap: 10px;
   justify-content: end;
   margin-bottom: 2rem;
-}
-
-.cursor-pointer {
-  height: 25px;
-  width: 25px;
-  margin-right: 16px;
-}
-
-
-@media (min-width: 1200px) {
-
-  /* modify this based on when the issue occurs */
-  .cursor-pointer {
-    /* Example: increase the size of the buttons at larger viewport sizes */
-    height: 23px;
-    width: 23px;
-  }
 }
 
 .invoice-add-input span.title.mr-1 {
@@ -6716,6 +7666,22 @@ export default {
 
 .v-select {
   margin-top: 3px !important;
+}
+
+.color-button {
+  height: 25px;
+  width: 25px;
+  margin-right: 16px;
+}
+
+@media (min-width: 1200px) {
+
+  /* modify this based on when the issue occurs */
+  .color-button {
+    /* Example: increase the size of the buttons at larger viewport sizes */
+    height: 23px;
+    width: 23px;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -8176,7 +9142,7 @@ hr {
   transform: skewX(35deg);
   position: absolute;
   height: 100%;
-  width: 60.5%;
+  width: 60%;
   right: -75px;
   overflow: hidden;
   border: none;
