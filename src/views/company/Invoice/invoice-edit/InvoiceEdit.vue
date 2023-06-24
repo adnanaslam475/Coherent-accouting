@@ -4850,9 +4850,9 @@
             <b-card>
               <!-- Button: DOwnload -->
               <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" class="mb-75" block
-                type="submit" :disabled="loading">
-                <b-spinner v-if="loading" small variant="light" />
-                {{ $t("add_invoice.preview") }}
+                type="button" :disabled="loading" @click="invoiceEdit(invoiceData, 'preview', AccountTypeOption)">
+  {{ $t("add_invoice.preview") }}
+
               </b-button>
 
               <!-- Button: Print -->
@@ -5485,6 +5485,7 @@ export default {
           this.isWeekSelected = false;
         } else {
           this.isWeekSelected = true;
+
         }
       }
 

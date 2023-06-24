@@ -4850,8 +4850,8 @@
             <b-card>
               <!-- Button: DOwnload -->
               <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" class="mb-75" block
-                type="submit" :disabled="loading">
-                <b-spinner v-if="loading" small variant="light" />
+                :disabled="loading" @click="invoiceEdit(invoiceData, 'preview', AccountTypeOption)">
+                
                 {{ $t("add_invoice.preview") }}
               </b-button>
 
@@ -5061,6 +5061,7 @@ export default {
       daySelected: false,
       clauseToSend: "",
       bankNameToSend: "",
+      isWeekSelected: false,
       // bankList: [
       //   { name: i18n.tc("add_invoice.bank-1") },
       //   { name: i18n.tc("add_invoice.bank-2") },
@@ -5304,6 +5305,15 @@ export default {
           bank: "",
         };
       }
+
+      if (invoiceData.cronScheduleApi !== null) {
+        if (invoiceData.cronScheduleApi.dayOfWeek) {
+          this.isWeekSelected = false;
+        } else {
+          this.isWeekSelected = true;
+
+        }
+      }
       invoiceData.bankApi.name = this.bankNameToSend;
       invoiceData.vatCondition = this.clauseToSend;
 
@@ -5369,7 +5379,8 @@ export default {
       }
 
       this.$refs.invoiceForm.validate().then((success) => {
-        if (success && this.companyIDisInvalid === false) {
+        if (success && this.companyIDisInvalid === false && this.isWeekSelected === false) {
+
           if (
             success &&
             this.isTemplateOne === false &&
@@ -5441,6 +5452,26 @@ export default {
                       companyId: router.currentRoute.params.companyId,
                     },
                   });
+                }
+
+                if (redirectPage == "save") {
+                  return this.$router.push({
+                    name: "CompanyView",
+                    params: {
+                      id: router.currentRoute.params.companyId,
+                      InvoiceId: 1,
+                    },
+                  });
+                } else if (redirectPage == "preview") {
+                  return this.$router.push({
+                    name: "company-invoice-preview",
+                    params: {
+                      id: invoiceData.id,
+                      companyId: router.currentRoute.params.companyId,
+                    },
+                  });
+                } else {
+                  return true;
                 }
               })
               .catch((error) => {
@@ -5551,6 +5582,7 @@ export default {
     var vatPercentValidate = ref(false);
     var AccountTypeOption = ref("company");
     var AccountTypeOptionToggleValue = false;
+
 
     let AccountTypeOptionToggle = (value) => {
       if (value) {
