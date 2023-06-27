@@ -3,7 +3,7 @@
     <TabList />
     <!--  -->
     <validation-observer ref="invoiceForm" #default="{ invalid }">
-      <b-form @submit.prevent="invoiceAdd(invoiceData, AccountTypeOption)">
+      <b-form @submit.prevent="invoiceAdd(invoiceData, 'save', AccountTypeOption)">
         <b-row class="invoice-add">
           <!-- Col: Left (Invoice Container) -->
           <!-- template 05 -->
@@ -133,7 +133,7 @@
                               <!-- <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index">{{ day.text }}</b-form-radio> -->
                             </b-form-radio-group>
                           </b-form-group>
-                          <small class="text-danger d-flex w-100 pl-1" v-if="daySelected">The dayOfWeek field is
+                          <small class="text-danger d-flex w-100 pl-1" v-if="isWeekSelected">The dayOfWeek field is
                             required</small>
                         </div>
                         <!-- <small class="text-danger">{{ errors[0] }}</small>
@@ -4850,8 +4850,8 @@
             <b-card>
               <!-- Button: DOwnload -->
               <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" class="mb-75" block
-                :disabled="loading" @click="invoiceEdit(invoiceData, 'preview', AccountTypeOption)">
-                
+                :disabled="loading" @click="invoiceAdd(invoiceData, 'preview', AccountTypeOption)">
+
                 {{ $t("add_invoice.preview") }}
               </b-button>
 
@@ -5293,11 +5293,11 @@ export default {
     toggleDaySelected() {
       this.daySelected = false;
     },
-    invoiceAdd(invoiceData, AccountTypeOption) {
+    invoiceAdd(invoiceData, redirectPage, AccountTypeOption) {
 
       //assign the data of recipient and creator
       //creator supplier company
-      console.log(invoiceData, 'here is invoice data')
+
       if (this.isBank === false) {
         invoiceData.bankApi = {
           name: "",
@@ -5306,12 +5306,17 @@ export default {
         };
       }
 
-      if (invoiceData.cronScheduleApi !== null) {
-        if (invoiceData.cronScheduleApi.dayOfWeek) {
-          this.isWeekSelected = false;
-        } else {
-          this.isWeekSelected = true;
+      if (invoiceData.scheduled == true) {
 
+        if (invoiceData.cronScheduleApi !== null) {
+          if (!invoiceData.cronScheduleApi.dayOfWeek) {
+
+
+            this.isWeekSelected = true;
+          } else {
+            this.isWeekSelected = false;
+
+          }
         }
       }
       invoiceData.bankApi.name = this.bankNameToSend;
@@ -5405,13 +5410,12 @@ export default {
               ).toFixed(2);
               return item;
             });
-            if (!invoiceData.scheduled) {
 
-              invoiceData.cronScheduleApi = null
-              console.log(invoiceData)
-            }
             this.loading = true;
             let token = useJwt.getToken();
+            if(invoiceData.scheduled == false){
+              invoiceData.cronScheduleApi = null
+            }
             useJwt
               .addCompanyInvoice(
                 token,
@@ -5456,7 +5460,7 @@ export default {
 
                 if (redirectPage == "save") {
                   return this.$router.push({
-                    name: "CompanyView",
+                    name: "company-invoice-edit",
                     params: {
                       id: router.currentRoute.params.companyId,
                       InvoiceId: 1,

@@ -1,8 +1,7 @@
 <template>
   <div>
     <form-wizard color="#0A64BC" :title="null" :subtitle="null" shape="square"
-      :finish-button-text="$t('create_company.create')" :next-button-text="$t('create_company.next')"
-      :back-button-text="$t('create_company.previous')" class="mb-3">
+      :finish-button-text="$t('create_company.create')" :next-button-text="$t('create_company.next')" class="mb-3">
       <!-- First Tab: Company Details -->
       <tab-content :title="$t('create_company.company_details')" :before-change="validationForm">
         <validation-observer ref="companyRules" tag="form">
@@ -778,7 +777,9 @@ export default {
       return new Promise((resolve, reject) => {
         this.$refs.exportRules.validate().then((success) => {
           if (success) {
+            resolve(true)
             this.saveCompany();
+
           } else {
             reject();
           }
@@ -926,6 +927,24 @@ export default {
         }
       });
       return arr;
+    },
+  },
+  watch: {
+    selectedPlatformProperty(newVal) {
+      if (this.platformPropertiesData && this.platformPropertiesData[newVal]) {
+        const properties = this.platformPropertiesData[newVal];
+        this.selectedPlatformProperties = properties.reduce((obj, property) => {
+          let [label, initialValue] = property.split('-');
+          obj[label] = initialValue || '';
+          return obj;
+        }, {});
+
+        // Save to localStorage
+        localStorage.setItem('selectedPlatformProperty', newVal);
+        localStorage.setItem('selectedPlatformProperties', JSON.stringify(this.selectedPlatformProperties));
+      } else {
+        this.selectedPlatformProperties = {};
+      }
     },
   },
   created() {
