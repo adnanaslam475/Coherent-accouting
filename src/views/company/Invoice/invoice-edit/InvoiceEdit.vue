@@ -8,7 +8,7 @@
           <!-- Col: Left (Invoice Container) -->
           <!-- template 05 -->
 
-          <b-col cols="12" xl="10" md="10" v-if="isTemplateFive">
+          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '5' || invoiceData.templateId == ''">
             <b-card no-body class="invoice-add">
               <b-card-header class="justify-content-center">
                 <div class="d-flex align-items-center mb-0">
@@ -989,7 +989,7 @@
           </b-col>
 
           <!-- template 01 -->
-          <b-col cols="12" xl="10" md="10" v-if="isTemplateOne">
+          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '1'">
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div class="tm_invoice tm_style1" id="tm_download_section">
@@ -1890,7 +1890,7 @@
           </b-col>
 
           <!-- template 02 -->
-          <b-col cols="12" xl="10" md="10" v-if="isTemplateTwo">
+          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '2'">
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div class="tm_invoice tm_style1 tm_type1" id="tm_download_section">
@@ -2840,7 +2840,7 @@
           </b-col>
 
           <!-- template 03 -->
-          <b-col cols="12" xl="10" md="10" v-if="isTemplateThree">
+          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '3'">
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div class="tm_invoice tm_style1 tm_type2" id="tm_download_section">
@@ -3868,7 +3868,7 @@
           </b-col>
 
           <!-- template 04 -->
-          <b-col cols="12" xl="10" md="10" v-if="isTemplateFour">
+          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '4'">
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div class="tm_invoice tm_style1 tm_type3" id="tm_download_section">
@@ -5450,6 +5450,8 @@ export default {
     //   });
     // },
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
+      console.log(invoiceData.templateId)
+
       // console.log('scheduleddd =====>', invoiceData.scheduled)
 
       // let schedule = {
@@ -5809,6 +5811,7 @@ export default {
           isTemplateOne.value = true;
         } else if (invoiceData.value.templateId === "2") {
           isTemplateTwo.value = true;
+
         } else if (invoiceData.value.templateId === "3") {
           isTemplateThree.value = true;
         } else if (invoiceData.value.templateId === "4") {

@@ -892,7 +892,7 @@ export default {
 
     companyId.value = router.currentRoute.params.id;
     const skill = ref(20);
-    const progressCount = ref(null);
+    const progressCount = ref(0);
     const progressStatus = ref(null);
     let myInterval = window.setInterval(function () {
       axios
@@ -902,9 +902,10 @@ export default {
           if (progressVal?.length !== 0 && progressVal !== undefined) {
             progressCount.value = progressVal.progress;
             progressStatus.value = progressVal.progressStatus;
-            if (progressVal.progress == "100") {
-              clearInterval(myInterval);
-            }
+
+          }
+          if (progressVal.progress == "100" || progressCount.value == 0) {
+            clearInterval(myInterval);
           }
         });
     }, 1000);
