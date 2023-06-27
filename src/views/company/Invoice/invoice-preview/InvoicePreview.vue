@@ -2015,7 +2015,11 @@
             @click="printInvoice">
             {{ $t("print") }}
           </b-button>
-
+          <!-- Button verify  -->
+          <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block
+            @click="invoiceEdit(invoiceData)" v-if="!invoiceData.verified">
+            {{ $t("add_invoice.verify") }}
+          </b-button>
           <!-- Button: Edit -->
           <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block :to="{
             name: 'company-invoice-edit',
@@ -2072,6 +2076,7 @@ import {
   BCardHeader,
 } from "bootstrap-vue";
 import Logo from "@core/layouts/components/Logo.vue";
+import useJwt from "@/auth/jwt/useJwt";
 import Ripple from "vue-ripple-directive";
 import invoiceStoreModule from "../invoiceStoreModule";
 import InvoiceDownload from "../invoice-download/InvoiceDownload.vue";
@@ -2316,7 +2321,51 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
         console.log(" hrhthththththhtthth ", byteArrayData);
       })
     },
+    invoiceEdit(invoiceData) {
 
+
+      invoiceData.verified = true
+      console.log(invoiceData)
+      let token = useJwt.getToken();
+      useJwt
+        .EditCompanyInvoice(
+          token,
+          router.currentRoute.params.id,
+          router.currentRoute.params.companyId,
+          invoiceData
+        )
+        .then((response) => {
+          this.loading = false;
+          // invoice.cronScheduleApi = {
+
+          //   scheduleType: "",
+          //   dayOfWeek: null,
+          //   dayOfMonth: null,
+
+          // };
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Invoice Updated Successfully`,
+              icon: "EditIcon",
+              variant: "success",
+            },
+          });
+
+
+        })
+        .catch((error) => {
+          this.loading = false;
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          });
+        });
+    },
     handleFileUpload(e) {
       this.file = e.target.files[0];
       console.log("Invoice Data ", this.file);

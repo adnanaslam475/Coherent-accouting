@@ -7,6 +7,7 @@
         <b-row class="invoice-add">
           <!-- Col: Left (Invoice Container) -->
           <!-- template 05 -->
+
           <b-col cols="12" xl="10" md="10" v-if="isTemplateFive">
             <b-card no-body class="invoice-add">
               <b-card-header class="justify-content-center">
@@ -29,13 +30,15 @@
             <div>
               <!-- Account Type -->
               <div class="d-flex justify-content-between align-items-center mb-2 accountType">
-                <!-- @change="scheduleTypeOptionToggle(scheduleOptionToggleValue)"                 -->
+                <!-- @change="scheduleTypeOptionToggle(scheduleOptionToggleValue)" 
+                                -->
+
                 <b-form-checkbox v-model="invoiceData.scheduled" class="custom-control-primary custom-switch-btn mr-2"
                   name="invoiceData.scheduled" switch>
                   <span class="switch-icon-left" style="width: 76px">{{ $t("add_invoice.scheduled") }}</span>
                   <span class="switch-icon-right" style="width: 76px">{{ $t("add_invoice.regular") }}</span>
                 </b-form-checkbox>
-                <b-card no-body class="invoice-preview date-issued mb-0 ml-0" v-if="disabled = invoiceData.scheduled">
+                <b-card no-body class="invoice-preview date-issued mb-0 ml-0" v-if="invoiceData.scheduled">
                   <b-card-header class="justify-content-end">
                     <div class="mt-md-0 mt-2">
                       <div class="d-flex align-items-center mb-0">
@@ -43,8 +46,7 @@
                           {{ $t("add_invoice.schedule_type") }}:
                         </span>
                         <validation-provider #default="{ errors }" name="scheduleType" rules="required">
-                          <b-form-select :disabled="!invoiceData.scheduled"
-                            v-model="invoiceData.cronScheduleApi.scheduleType"
+                          <b-form-select v-model="invoiceData.cronScheduleApi.scheduleType"
                             @change="() => { companyIDisInvalid = false; }">
                             <b-form-select-option value="WEEKLY">{{ $t("add_invoice.WEEKLY") }}</b-form-select-option>
                             <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY") }}</b-form-select-option>
@@ -133,7 +135,7 @@
                               <!-- <b-form-radio :value="day.value" v-for="(day, index) in days" :key="index">{{ day.text }}</b-form-radio> -->
                             </b-form-radio-group>
                           </b-form-group>
-                          <small class="text-danger d-flex w-100 pl-1" v-if="daySelected">The dayOfWeek field is
+                          <small class="text-danger d-flex w-100 pl-1" v-if="isWeekSelected">The dayOfWeek field is
                             required</small>
                         </div>
                         <!-- <small class="text-danger">{{ errors[0] }}</small>
@@ -721,10 +723,7 @@
                             {{ $t("add_invoice.vat") }}:
                           </p>
                           <p class="invoice-total-amount">
-                            <validation-provider #default="{ errors }" name="vat" ref="vatPercent" :rules="`${vatPercentValidate
-                              ? 'required|vatPercentValid'
-                              : 'required'
-                              }`">
+                            <validation-provider #default="{ errors }" name="vat" ref="vatPercent">
                               <b-input-group class="input-group-merge invoice-edit-input-group">
                                 <b-form-input v-model="invoiceData.vatPercent" step="any" type="number" class="text-right"
                                   @input="populateValues()" />
@@ -777,7 +776,7 @@
                             {{ $t("add_invoice.discount_sum") }}:
                           </p>
                           <p class="invoice-total-amount">
-                            <validation-provider #default="{ errors }" name="tradeDiscountAmount" rules="required">
+                            <validation-provider #default="{ errors }" name="tradeDiscountAmount">
                               <b-input-group class="input-group-merge invoice-edit-input-group">
                                 <b-input-group-prepend is-text>
                                   <span>{{ invoiceData.currency }}</span>
@@ -1786,10 +1785,7 @@
                               {{ $t("add_invoice.vat") }}:
                             </p>
                             <p class="invoice-total-amount">
-                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent" :rules="`${vatPercentValidate
-                                ? 'required|vatPercentValid'
-                                : 'required'
-                                }`">
+                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
                                   <b-form-input v-model="invoiceData.vatPercent" step="any" type="number"
                                     class="text-right" @input="populateValues()" />
@@ -2741,10 +2737,7 @@
                               {{ $t("add_invoice.vat") }}:
                             </p>
                             <p class="invoice-total-amount">
-                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent" :rules="`${vatPercentValidate
-                                ? 'required|vatPercentValid'
-                                : 'required'
-                                }`">
+                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
                                   <b-form-input v-model="invoiceData.vatPercent" step="any" type="number"
                                     class="text-right" @input="populateValues()" />
@@ -3768,10 +3761,7 @@
                               {{ $t("add_invoice.vat") }}:
                             </p>
                             <p class="invoice-total-amount">
-                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent" :rules="`${vatPercentValidate
-                                ? 'required|vatPercentValid'
-                                : 'required'
-                                }`">
+                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
                                   <b-form-input v-model="invoiceData.vatPercent" step="any" type="number"
                                     class="text-right" @input="populateValues()" />
@@ -4732,10 +4722,7 @@
                               {{ $t("add_invoice.vat") }}:
                             </p>
                             <p class="invoice-total-amount">
-                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent" :rules="`${vatPercentValidate
-                                ? 'required|vatPercentValid'
-                                : 'required'
-                                }`">
+                              <validation-provider #default="{ errors }" name="vat" ref="vatPercent">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
                                   <b-form-input v-model="invoiceData.vatPercent" step="any" type="number"
                                     class="text-right" @input="populateValues()" />
@@ -4851,7 +4838,7 @@
               <!-- Button: DOwnload -->
               <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" class="mb-75" block
                 type="button" :disabled="loading" @click="invoiceEdit(invoiceData, 'preview', AccountTypeOption)">
-  {{ $t("add_invoice.preview") }}
+                {{ $t("add_invoice.preview") }}
 
               </b-button>
 
@@ -5085,6 +5072,7 @@ export default {
       vatPercentValid,
       singlePriceValid,
       qtyValid,
+      isWeekSelected: false
     };
   },
   directives: {
@@ -5462,6 +5450,8 @@ export default {
     //   });
     // },
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
+      // console.log('scheduleddd =====>', invoiceData.scheduled)
+
       // let schedule = {
       //   scheduleType: "",
       //   dayOfWeek: null,
@@ -5479,13 +5469,17 @@ export default {
       //   console.log(this.invoiceData);
       // }
       // return;
+      if (invoiceData.scheduled == true) {
 
-      if (invoiceData.cronScheduleApi !== null) {
-        if (invoiceData.cronScheduleApi.dayOfWeek) {
-          this.isWeekSelected = false;
-        } else {
-          this.isWeekSelected = true;
+        if (invoiceData.cronScheduleApi !== null) {
+          if (!invoiceData.cronScheduleApi.dayOfWeek) {
 
+
+            this.isWeekSelected = true;
+          } else {
+            this.isWeekSelected = false;
+
+          }
         }
       }
 
@@ -5533,17 +5527,17 @@ export default {
         return item;
       });
 
-      if (this.isScheduled) {
-        if (invoiceData.cronScheduleApi !== null) {
-          if (invoiceData.cronScheduleApi.dayOfWeek) {
-            this.daySelected = false;
-          } else {
-            this.daySelected = true;
-          }
-        }
-      } else {
-        invoiceData.cronScheduleApi = null;
-      }
+      // if (this.isScheduled) {
+      //   if (invoiceData.cronScheduleApi !== null) {
+      //     if (invoiceData.cronScheduleApi.dayOfWeek) {
+      //       this.daySelected = false;
+      //     } else {
+      //       this.daySelected = true;
+      //     }
+      //   }
+      // } else {
+      //   invoiceData.cronScheduleApi = null;
+      // }
       this.$refs.invoiceEditForm.validate().then((success) => {
         if (
           success &&
@@ -5568,6 +5562,10 @@ export default {
             });
           } else {
             this.loading = true;
+            // if (!invoiceData.sechduled) {
+            //   invoiceData.cronScheduleApi = null
+
+            // }
             let token = useJwt.getToken();
             useJwt
               .EditCompanyInvoice(
@@ -5578,7 +5576,13 @@ export default {
               )
               .then((response) => {
                 this.loading = false;
+                // invoice.cronScheduleApi = {
 
+                //   scheduleType: "",
+                //   dayOfWeek: null,
+                //   dayOfMonth: null,
+
+                // };
                 this.$toast({
                   component: ToastificationContent,
                   props: {
@@ -5788,14 +5792,18 @@ export default {
               : response.data.currency;
 
 
-        let schedule = {
-          scheduleType: "",
-          dayOfWeek: null,
-          dayOfMonth: null,
-        };
-        response.data.cronScheduleApi = schedule
 
         invoiceData.value = response.data;
+
+        // if (invoiceData.value.scheduled == false) {
+        //   let schedule = {
+        //     scheduleType: "",
+        //     dayOfWeek: null,
+        //     dayOfMonth: null,
+        //   };
+        //   invoiceData.value.cronScheduleApi = schedule
+
+        // }
         console.log(invoiceData.value);
         if (invoiceData.value.templateId === "1") {
           isTemplateOne.value = true;
@@ -5927,6 +5935,7 @@ export default {
         if (invoiceData.value.scheduled) {
           checkSchedule.value = true;
           isScheduled.value = true;
+
         } else {
           checkSchedule.value = false;
           isScheduled.value = false;
@@ -6096,7 +6105,7 @@ export default {
     var datalist = ref([]);
     var showSuggestions = ref(false);
 
-    var isWeekSelected = ref(false);
+
     var isScheduled = ref(false);
     var isNotScheduled = ref(false);
     var checkSchedule = ref(false);
@@ -6560,7 +6569,7 @@ export default {
       isGreen,
       isOrange,
       isBlue,
-      isWeekSelected,
+
       isScheduled,
       isNotScheduled,
       checkSchedule,
