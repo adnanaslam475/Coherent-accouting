@@ -5309,14 +5309,17 @@ export default {
       if (invoiceData.scheduled == true) {
 
         if (invoiceData.cronScheduleApi !== null) {
-          if (!invoiceData.cronScheduleApi.dayOfWeek) {
+          if (invoiceData.cronScheduleApi.scheduleType == "WEEKLY") {
+            if (!invoiceData.cronScheduleApi.dayOfWeek) {
 
 
-            this.isWeekSelected = true;
-          } else {
-            this.isWeekSelected = false;
+              this.isWeekSelected = true;
+            } else {
+              this.isWeekSelected = false;
 
+            }
           }
+
         }
       }
       invoiceData.bankApi.name = this.bankNameToSend;
@@ -5413,7 +5416,7 @@ export default {
 
             this.loading = true;
             let token = useJwt.getToken();
-            if(invoiceData.scheduled == false){
+            if (invoiceData.scheduled == false) {
               invoiceData.cronScheduleApi = null
             }
             useJwt
@@ -5441,7 +5444,7 @@ export default {
                     this.showMsgBoxTwo(response.data.id, invoiceData);
                   } else {
                     this.$router.push({
-                      name: "company-invoice-edit",
+                      name: "CompanyView",
                       params: {
                         id: response.data.id,
                         companyId: router.currentRoute.params.companyId,
@@ -5450,7 +5453,7 @@ export default {
                   }
                 } else {
                   this.$router.push({
-                    name: "company-invoice-edit",
+                    name: "company-invoice-add",
                     params: {
                       id: response.data.id,
                       companyId: router.currentRoute.params.companyId,
@@ -5460,7 +5463,7 @@ export default {
 
                 if (redirectPage == "save") {
                   return this.$router.push({
-                    name: "company-invoice-edit",
+                    name: "CompanyView",
                     params: {
                       id: router.currentRoute.params.companyId,
                       InvoiceId: 1,
@@ -5538,7 +5541,7 @@ export default {
                   },
                 });
                 this.$router.push({
-                  name: "company-invoice-edit",
+                  name: "CompanyView",
                   params: {
                     id: id,
                     companyId: router.currentRoute.params.companyId,
@@ -5556,14 +5559,6 @@ export default {
                   },
                 });
               });
-          } else {
-            this.$router.push({
-              name: "company-invoice-edit",
-              params: {
-                id: id,
-                companyId: router.currentRoute.params.companyId,
-              },
-            });
           }
         });
     },

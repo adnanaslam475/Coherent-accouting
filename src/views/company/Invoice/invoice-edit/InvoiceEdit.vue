@@ -8,7 +8,7 @@
           <!-- Col: Left (Invoice Container) -->
           <!-- template 05 -->
 
-          <b-col cols="12" xl="10" md="10" v-if="isTemplateFive">
+          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '5' || invoiceData.templateId == ''">
             <b-card no-body class="invoice-add">
               <b-card-header class="justify-content-center">
                 <div class="d-flex align-items-center mb-0">
@@ -989,7 +989,7 @@
           </b-col>
 
           <!-- template 01 -->
-          <b-col cols="12" xl="10" md="10" v-if="isTemplateOne">
+          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '1'">
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div class="tm_invoice tm_style1" id="tm_download_section">
@@ -998,6 +998,7 @@
                       <div class="tm_invoice_left">
                         <div class="tm_logo">
                           <div>
+
                             <b-img :src="logoToUpload" fluid class="mr-1" style="
                                 width: 80px;
                                 height: 80px;
@@ -1890,7 +1891,7 @@
           </b-col>
 
           <!-- template 02 -->
-          <b-col cols="12" xl="10" md="10" v-if="isTemplateTwo">
+          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '2'">
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div class="tm_invoice tm_style1 tm_type1" id="tm_download_section">
@@ -2840,7 +2841,7 @@
           </b-col>
 
           <!-- template 03 -->
-          <b-col cols="12" xl="10" md="10" v-if="isTemplateThree">
+          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '3'">
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div class="tm_invoice tm_style1 tm_type2" id="tm_download_section">
@@ -3868,7 +3869,7 @@
           </b-col>
 
           <!-- template 04 -->
-          <b-col cols="12" xl="10" md="10" v-if="isTemplateFour">
+          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '4'">
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div class="tm_invoice tm_style1 tm_type3" id="tm_download_section">
@@ -4852,6 +4853,12 @@
                 @click="clearForm">
                 {{ $t("add_invoice.clear") }}
               </b-button>
+
+              <b-button v-if="!invoiceData.verified" v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary"
+                type="button" block :disabled="loading" @click="invoiceEdit(invoiceData, 'verify', AccountTypeOption)">
+                <b-spinner v-if="loading" small variant="light" />
+                {{ $t("add_invoice.verify") }}
+              </b-button>
             </b-card>
 
             <!-- cover -->
@@ -5034,7 +5041,7 @@ export default {
     return {
       showLogo: false,
       isUploading: i18n.tc("add_invoice.upload_logo"),
-      logoToUpload: "",
+
       isTemplateFive: true,
       isTemplateOne: false,
       isTemplateTwo: false,
@@ -5280,176 +5287,10 @@ export default {
     toggleDaySelected() {
       this.daySelected = false;
     },
-    // invoiceAdd(invoiceData, AccountTypeOption) {
 
-    //   //assign the data of recipient and creator
-    //   //creator supplier company
-    //   console.log(invoiceData, 'here is invoice data')
-    //   if (this.isBank === false) {
-    //     invoiceData.bankApi = {
-    //       name: "",
-    //       bic: "",
-    //       bank: "",
-    //     };
-    //   }
-    //   invoiceData.bankApi.name = this.bankNameToSend;
-    //   invoiceData.vatCondition = this.clauseToSend;
-
-
-    //   if (invoiceData.vatPercent !== "0") {
-    //     invoiceData.vatCondition = "";
-    //   }
-
-    //   // Company ID validation on the basis of transactionType
-    //   if (invoiceData.transactionType === "INCOME") {
-    //     if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
-    //       this.companyIDisInvalid = true;
-    //     }
-
-    //     if (invoiceData.supplierCompany.companyEic === "") {
-    //       this.companyIDisInvalid = false;
-    //     }
-    //   } else {
-    //     this.companyIDisInvalid = false;
-    //   }
-
-    //   let regExp =
-    //     /^((AT)(U\d{8})|(BE)(0\d{9})|(CY)(\d{8}[LX])|(CZ)(\d{8,10})|(DE)(\d{9})|(DK)(\d{8})|(EE)(\d{9})|(EL|GR)(\d{9})|(ES)([\dA-Z]\d{7}[\dA-Z])|(FI)(\d{8})|(FR)([\dA-Z]{2}\d{9})|(HU)(\d{8})|(IE)(\d{7}[A-Z]{2})|(IT)(\d{11})|(LT)(\d{9}|\d{12})|(LU)(\d{8})|(LV)(\d{11})|(MT)(\d{8})|(NL)(\d{9}(B\d{2}|BO2))|(PL)(\d{10})|(PT)(\d{9})|(RO)(\d{2,10})|(SE)(\d{12})|(SI)(\d{8})|(SK)(\d{10}))$/gim;
-    //   let ValidateVatNumber =
-    //     this.supplierVat && invoiceData.transactionType == "EXPENSE";
-    //   let validateVat =
-    //     this.recipientVat && parseFloat(invoiceData.vatPercent) > 0;
-
-    //   if (AccountTypeOption == "person") {
-    //     invoiceData.recipientCompany.companName =
-    //       invoiceData.recipientCompany.companyOwnerName;
-    //     invoiceData.recipientCompany.companyVatEic = "";
-    //   }
-    //   // console.log(invoiceData.cronScheduleApi.dayOfWeek, invoiceData.scheduled);
-    //   if (invoiceData.cronScheduleApi != null) {
-    //     if (invoiceData.cronScheduleApi.dayOfWeek) {
-    //       this.daySelected = false;
-    //     } else {
-    //       this.daySelected = true;
-    //     }
-    //   }
-
-    //   // if (invoiceData.scheduled === false) {
-    //   //   invoiceData.cronScheduleApi = "NO";
-    //   // }
-    //   if (validateVat) {
-    //     let validateRegExp = invoiceData.recipientCompany.companyVatEic;
-    //     validateRegExp = validateRegExp.replace(/\W|_/g, "");
-    //     let result = regExp.test(validateRegExp);
-    //     if (result) {
-    //       if (!this.vatPercentValidate) {
-    //         this.vatPercentValidate = true;
-    //         setTimeout(() => {
-    //           this.$refs.invoiceEditForm.validate();
-    //         }, 100);
-    //         return;
-    //       }
-    //     } else {
-    //       this.vatPercentValidate = false;
-    //     }
-    //   } else {
-    //     this.vatPercentValidate = false;
-    //   }
-
-    //   this.$refs.invoiceEditForm.validate().then((success) => {
-    //     if (success && this.companyIDisInvalid === false) {
-    //       if (
-    //         success &&
-    //         this.isTemplateOne === false &&
-    //         this.isTemplateTwo === false &&
-    //         this.isTemplateThree === false &&
-    //         this.isTemplateFour === false &&
-    //         this.isTemplateFive === false
-    //       ) {
-    //         this.$toast({
-    //           component: ToastificationContent,
-    //           props: {
-    //             title: `Please choose some template...`,
-    //             icon: "EditIcon",
-    //             variant: "danger",
-    //           },
-    //         });
-    //       } else {
-    //         invoiceData.transactions.map((item) => {
-    //           item.transactionTotalAmountNonVat = (
-    //             parseFloat(item.singleAmountTransaction) *
-    //             parseFloat(item.quantity)
-    //           ).toFixed(2);
-    //           return item;
-    //         });
-    //         if (!invoiceData.scheduled) {
-
-    //           invoiceData.cronScheduleApi = null
-    //           console.log(invoiceData)
-    //         }
-    //         this.loading = true;
-    //         let token = useJwt.getToken();
-    //         useJwt
-    //           .EditCompanyInvoice(
-    //             token,
-    //             router.currentRoute.params.companyId,
-    //             invoiceData
-    //           )
-    //           .then(async (response) => {
-    //             this.loading = false;
-    //             this.$toast({
-    //               component: ToastificationContent,
-    //               props: {
-    //                 title: `Invoice Created Successfully`,
-    //                 icon: "EditIcon",
-    //                 variant: "success",
-    //               },
-    //             });
-    //             if (ValidateVatNumber) {
-    //               let validateRegExp =
-    //                 response.data.supplierCompany.companyVatEic;
-    //               validateRegExp = validateRegExp.replace(/\W|_/g, "");
-    //               let result = regExp.test(validateRegExp);
-    //               if (result) {
-    //                 this.showMsgBoxTwo(response.data.id, invoiceData);
-    //               } else {
-    //                 this.$router.push({
-    //                   name: "company-invoice-edit",
-    //                   params: {
-    //                     id: response.data.id,
-    //                     companyId: router.currentRoute.params.companyId,
-    //                   },
-    //                 });
-    //               }
-    //             } else {
-    //               this.$router.push({
-    //                 name: "company-invoice-edit",
-    //                 params: {
-    //                   id: response.data.id,
-    //                   companyId: router.currentRoute.params.companyId,
-    //                 },
-    //               });
-    //             }
-    //           })
-    //           .catch((error) => {
-    //             this.loading = false;
-    //             this.$toast({
-    //               component: ToastificationContent,
-    //               props: {
-    //                 title: `${error?.response?.data?.errorMessage
-    //                   ? error.response.data.errorMessage
-    //                   : error
-    //                   }`,
-    //                 icon: "AlertTriangleIcon",
-    //                 variant: "danger",
-    //               },
-    //             });
-    //           });
-    //       }
-    //     }
-    //   });
-    // },
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
+
+
       // console.log('scheduleddd =====>', invoiceData.scheduled)
 
       // let schedule = {
@@ -5566,6 +5407,10 @@ export default {
             //   invoiceData.cronScheduleApi = null
 
             // }
+            if (redirectPage == 'verify') {
+              invoiceData.verified = true
+
+            }
             let token = useJwt.getToken();
             useJwt
               .EditCompanyInvoice(
@@ -5608,7 +5453,17 @@ export default {
                       companyId: router.currentRoute.params.companyId,
                     },
                   });
-                } else {
+                } else if (redirectPage == "verify") {
+                  return this.$router.push({
+                    name: "CompanyView",
+                    params: {
+                      id: invoiceData.id,
+                      companyId: router.currentRoute.params.companyId,
+                    },
+                  });
+                }
+
+                else {
                   return true;
                 }
               })
@@ -5767,6 +5622,7 @@ export default {
     var InvoiceTypeOptionToggleValue = ref(null);
     var saleTypeOptionToggleValue = ref(null);
 
+
     let uploadValue = {
       companyOwnerName: "",
       companName: "",
@@ -5809,6 +5665,7 @@ export default {
           isTemplateOne.value = true;
         } else if (invoiceData.value.templateId === "2") {
           isTemplateTwo.value = true;
+
         } else if (invoiceData.value.templateId === "3") {
           isTemplateThree.value = true;
         } else if (invoiceData.value.templateId === "4") {
@@ -5846,12 +5703,13 @@ export default {
                 // console.log(response.data);
                 const reader = new FileReader();
                 reader.readAsDataURL(response.data);
+
                 reader.onload = function () {
                   const filePath = reader.result;
                   logoToUpload.value = filePath;
                   showLogo.value = true;
                   isUploading.value = i18n.tc("add_invoice.change_logo");
-                  // console.log(filePath);
+                  console.log(filePath);
                   invoiceData.value.creatorName = response.data.creatorName; // Add this
                   invoiceData.value.recipientName = response.data.recipientName; // Add this
                   invoiceData.value.creatorSignature =
