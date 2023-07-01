@@ -189,7 +189,7 @@
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
-                              @focus="ShowSuggestion(datalist)" />
+                              @focus="ShowSuggestion(datalist)" @change='handleChange(invoiceData.supplierCompany)' />
                             <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions"
                               style="width: 100%">
                               <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
@@ -5142,6 +5142,7 @@ export default {
     },
   },
   methods: {
+
     removeLogo() {
       this.showLogo = false;
       this.logoToUpload = '';
@@ -5355,7 +5356,9 @@ export default {
 
       // Company ID validation on the basis of transactionType
       if (invoiceData.transactionType === "INCOME") {
-        if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
+        let self = this
+        this.companyIDisInvalid = false;
+        if (invoiceData.supplierCompany.companyEic !== self.supplierID) {
           this.companyIDisInvalid = true;
         }
         if (invoiceData.supplierCompany.companyEic === "") {
@@ -5620,13 +5623,13 @@ export default {
 
     const hasBankDetails = ref(false);
 
-    const supplierID = ref(null);
+
     const isTemplateFive = ref(false);
     const isTemplateOne = ref(false);
     const isTemplateTwo = ref(false);
     const isTemplateThree = ref(false);
     const isTemplateFour = ref(false);
-
+    var supplierID = ref(null)
     const isUploading = ref("");
 
     const showLogo = ref(null);
@@ -5715,7 +5718,7 @@ export default {
           isOrange.value = true;
         else isGray.value = true;
 
-        // supplierID.value = response.data.supplierCompany.companyEic;
+        supplierID.value = response.data.supplierCompany.companyEic;
 
         if (
           invoiceData.value.logoId === "" ||
@@ -5864,7 +5867,13 @@ export default {
         invoiceData.value.saleType = "SERVICE";
       }
     };
+    const handleChange = (item) => {
+      console.log(item, 'here is handle change');
 
+      supplierID.value = item.companyEic
+      console.log(supplierID.value)
+
+    };
     const amountNonVat = (item) => {
       let totalAmountNonVat = item.reduce((acc, ele) => {
         return (
@@ -6076,6 +6085,8 @@ export default {
         useJwt
           .SearchCompanyEic(token, companyEic)
           .then((response) => {
+
+
             if (response?.data != undefined || response?.data.length != 0) {
               showSuggestionsEic.value = true;
             } else {
@@ -6198,6 +6209,7 @@ export default {
         useJwt
           .SearchCompanyEic(token, companyEic)
           .then((response) => {
+
             if (response?.data != undefined || response?.data.length != 0) {
               showSuggestionsEicRecipient.value = true;
             } else {
@@ -6400,6 +6412,7 @@ export default {
       isTemplateTwo,
       isTemplateThree,
       isTemplateFour,
+      handleChange,
       supplierID,
       hasBankDetails,
       AccountTypeOption,
