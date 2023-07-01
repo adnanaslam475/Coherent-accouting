@@ -664,6 +664,7 @@ export default {
     },
     // Searching a company by companyName
     async SearchCompanyName(val) {
+
       let self = this;
       var data = JSON.stringify({
         companyName: val,
