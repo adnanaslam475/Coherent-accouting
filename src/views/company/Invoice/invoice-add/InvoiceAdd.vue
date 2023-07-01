@@ -5461,7 +5461,7 @@ export default {
                   });
                 }
 
-                if (redirectPage == "save") {
+                if (redirectPage == "invoices") {
                   return this.$router.push({
                     name: "CompanyView",
                     params: {
