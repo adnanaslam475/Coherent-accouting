@@ -5332,6 +5332,8 @@ export default {
 
       // Company ID validation on the basis of transactionType
       if (invoiceData.transactionType === "INCOME") {
+        alert('here i m')
+        console.log('company eic======>', invoiceData.supplierCompany.companyEic, 'supplier ID=====>', this.supplierID)
         if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
           this.companyIDisInvalid = true;
         }
@@ -5442,6 +5444,13 @@ export default {
                   let result = regExp.test(validateRegExp);
                   if (result) {
                     this.showMsgBoxTwo(response.data.id, invoiceData);
+                    this.$router.push({
+                      name: "company-invoice-edit",
+                      params: {
+                        id: response.data.id,
+                        companyId: router.currentRoute.params.companyId,
+                      },
+                    });
                   } else {
                     this.$router.push({
                       name: "CompanyView",
@@ -5453,7 +5462,7 @@ export default {
                   }
                 } else {
                   this.$router.push({
-                    name: "company-invoice-add",
+                    name: "company-invoice-edit",
                     params: {
                       id: response.data.id,
                       companyId: router.currentRoute.params.companyId,
