@@ -1901,20 +1901,15 @@
                       <div class="tm_invoice_left">
                         <div class="tm_logo">
                           <div>
-                            <b-img :src="logoToUpload" fluid class="mr-1" style="
+
+                            <img :src="logoToUpload" fluid class="mr-1" style="
                                 width: 80px;
                                 height: 80px;
                                 border: 1px solid black;
                               " v-if="showLogo" />
                             <feather-icon v-if="showLogo" size="16" icon="XSquareIcon" color="red" class="cursor-pointer"
-                              style="position: absolute; left: 70px; top: 13px" @click="() => {
-                                showLogo = false;
-                                logoToUpload = '';
-                                isUploading = i18n.tc('add_invoice.upload_logo');
-                                invoiceData.logoId = '';
-                              }
-                                " />
-                            <span>
+                              style="position: absolute; left: 70px; top: 13px" @click="removeLogo()" />
+                            <span v-if="!showLogo">
                               <label for="invoiceLogo2">
                                 <div style="
                                     border: 1px solid white;
@@ -1935,7 +1930,34 @@
     ? 'color: black !important'
     : 'color: white !important'
     ">
-                                  {{ isUploading }}
+                                  {{ $t('add_invoice.upload_logo') }}
+                                </div>
+                              </label>
+                              <input type="file" name="invoiceLogo2" id="invoiceLogo2"
+                                style="display: none; visibility: none" @change="updateLogo" accept="image/*" />
+                            </span>
+                            <span v-if="showLogo">
+                              <label for="invoiceLogo2">
+                                <div style="
+                                    border: 1px solid white;
+                                    padding: 10px;
+                                    border-radius: 30px;
+
+                                    cursor: pointer;
+                                  " :class="isBlue === true
+                                    ? 'tm_accent_bg'
+                                    : isGreen === true
+                                      ? 'green_bg'
+                                      : isPurple === true
+                                        ? 'purple_bg'
+                                        : isOrange === true
+                                          ? 'orange_bg'
+                                          : 'gray_bg'
+                                    " :style="isGray === true
+    ? 'color: black !important'
+    : 'color: white !important'
+    ">
+                                  {{ $t('add_invoice.change_logo') }}
                                 </div>
                               </label>
                               <input type="file" name="invoiceLogo2" id="invoiceLogo2"
@@ -3920,6 +3942,7 @@
                               style="position: absolute; left: 70px; top: -7px" @click="() => {
                                 showLogo = false;
                                 logoToUpload = '';
+
                                 isUploading = i18n.tc('add_invoice.upload_logo');
                                 invoiceData.logoId = '';
                               }
@@ -5039,7 +5062,7 @@ export default {
   },
   data() {
     return {
-      showLogo: false,
+
       isUploading: i18n.tc("add_invoice.upload_logo"),
 
       isTemplateFive: true,
@@ -5119,6 +5142,12 @@ export default {
     },
   },
   methods: {
+    removeLogo() {
+      this.showLogo = false;
+      this.logoToUpload = '';
+      this.isUploading = i18n.tc('add_invoice.upload_logo');
+      this.invoiceData.logoId = '';
+    },
     async updateLogo(e) {
       this.isUploading = i18n.tc("add_invoice.uploading");
       let self = this;
@@ -5403,6 +5432,7 @@ export default {
             });
           } else {
             this.loading = true;
+
             // if (!invoiceData.sechduled) {
             //   invoiceData.cronScheduleApi = null
 
@@ -5693,6 +5723,7 @@ export default {
           showLogo.value = false;
         } else {
           // logoToUpload.value = invoiceData.value.logoId;
+          showLogo.value = true;
           axios
             .get(
               `${axios.defaults.baseURL}/binaries/api/get-binary/${invoiceData.value.logoId}/${router.currentRoute.params.companyId}`,
@@ -5700,7 +5731,9 @@ export default {
             )
             .then((response) => {
               if (response.status === 200) {
+                isUploading.value = i18n.tc("add_invoice.change_logo");
                 // console.log(response.data);
+                showLogo.value = true;
                 const reader = new FileReader();
                 reader.readAsDataURL(response.data);
 
@@ -5708,7 +5741,7 @@ export default {
                   const filePath = reader.result;
                   logoToUpload.value = filePath;
                   showLogo.value = true;
-                  isUploading.value = i18n.tc("add_invoice.change_logo");
+
                   console.log(filePath);
                   invoiceData.value.creatorName = response.data.creatorName; // Add this
                   invoiceData.value.recipientName = response.data.recipientName; // Add this
