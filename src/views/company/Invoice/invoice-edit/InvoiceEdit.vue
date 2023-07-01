@@ -5487,10 +5487,12 @@ export default {
                   return this.$router.push({
                     name: "CompanyView",
                     params: {
-                      id: invoiceData.id,
-                      companyId: router.currentRoute.params.companyId,
+                      id: router.currentRoute.params.companyId,
+                      InvoiceId: 2,
+
                     },
                   });
+
                 }
 
                 else {
