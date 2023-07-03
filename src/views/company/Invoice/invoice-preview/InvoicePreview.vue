@@ -2301,16 +2301,16 @@ export default {
 
 Copyright © 2023 Coherent Accounting, All rights reserved.`;
       this.name = `Фактура с Номер: ${this.invoiceData.invoiceNumber} от : ${this.invoiceData.supplierCompany.companName}`;
-      //const newpdfContent123 = this.$refs.html2Pdf.$el.innerHTML;
-      //console.log(" New DONDNDNNDDN ", newpdfContent123, this.$el, this.$refs.html2Pdf);
-      // this.$refs.html2Pdfnew.generatePdf()
-      //these are important data
-      //let data = Object.assign({}, this.$refs.html2Pdfnew.$el.innerHTML);
-      //console.log(" new pdf data is ", data);
-      //const newblob123 = new Blob([data], { type: 'application/pdf' });
-      //this.fileToByteArray(newblob123, function (byteArrayData) {
-      //console.log(" New BYYYY TTT ARRAAAYYYY ", byteArrayData);
-      //});
+      const newpdfContent123 = this.$refs.html2Pdf.$el.innerHTML;
+      console.log(" New DONDNDNNDDN ", newpdfContent123, this.$el, this.$refs.html2Pdf);
+      this.$refs.html2Pdfnew.generatePdf()
+      // these are important data
+      let data = Object.assign({}, this.$refs.html2Pdfnew.$el.innerHTML);
+      console.log(" new pdf data is ", data);
+      const newblob123 = new Blob([data], { type: 'application/pdf' });
+      this.fileToByteArray(newblob123, function (byteArrayData) {
+        console.log(" New BYYYY TTT ARRAAAYYYY ", byteArrayData);
+      });
     },
     attachPDFToFile(pdfBlob) {
       this.file = new File([pdfBlob], 'document.pdf');

@@ -500,6 +500,7 @@
     "send_email": "Send Email"
   },
   "create_company": {
+    "software": "Software",
     "company_details": "Company Details",
     "account_details": "Account Details",
     "create_details": "Enter Your Company Details",

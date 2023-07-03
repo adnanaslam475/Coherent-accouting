@@ -152,7 +152,7 @@
               </b-form-group></b-col>
             <!-- Company Status -->
             <b-col>
-              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
+              <b-form-group id="input-group-4" :label="$t('create_company.software')" label-for="status">
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
                   <v-select v-model="getCompanyStatus" :options="statusOptions" :filterBy="(option, search) => {
                     return (

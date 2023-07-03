@@ -287,7 +287,7 @@
         <validation-observer ref="exportRules" tag="form">
           <b-row>
             <b-col>
-              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
+              <b-form-group id="input-group-4" :label="$t('create_company.software')" label-for="status">
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
                   <b-form-select id="platformPropertiesSelect" v-model="selectedPlatformProperty"
                     :options="modifiedArray"></b-form-select>
