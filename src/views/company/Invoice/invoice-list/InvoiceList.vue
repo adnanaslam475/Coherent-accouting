@@ -43,9 +43,10 @@
           <!-- Date Picker Modal -->
 
           <b-modal id="modal-prevent-closing-invoice" ref="export_model" :title="$t('company_info.selectMonth')"
-            :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" @show="resetModal"
-            @hidden="resetModal" @ok="handleOk" :ok-disabled="modalDisabledMonth">
+            :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" @show="resetModal" @ok="handleOk"
+            :ok-disabled="modalDisabledMonth">
             <form ref="form" @submit.stop.prevent="handleMonthSelect">
+
               <validation-observer ref="selectMonthRules" tag="form">
                 <validation-provider #default="{ errors }" :name="$t('month_selected')" rules="required">
                   <vue-monthly-picker id="month_selected" v-model="selectedMonthData.date" name="month_selected"
@@ -65,6 +66,7 @@
             <form ref="form" @submit.stop.prevent="handleMonthSelect" class="border p-3 bg-light">
               <!-- display exportDto data -->
               <!-- display companyinfo.keyValues data -->
+
               <div v-if="companyinfo && companyinfo.exportProperties" class="mb-3">
                 <div v-for="(value, key) in companyinfo.exportProperties.keyValues" :key="key" class="mb-2">
                   <label :for="'input-' + key" class="form-label">{{ key }} :</label>
@@ -330,18 +332,18 @@
             </template>
             <b-dropdown-item @click="generatePDF(data.item.id)">
               <feather-icon icon="DownloadIcon" />
-              <span class="align-middle ml-50">{{$t('download')}}</span>
+              <span class="align-middle ml-50">{{ $t('download') }}</span>
             </b-dropdown-item>
             <b-dropdown-item :to="{
               name: 'company-invoice-edit',
               params: { id: data.item.id, companyId: companyId },
             }">
               <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">{{$t('company_info.edit')}}</span>
+              <span class="align-middle ml-50">{{ $t('company_info.edit') }}</span>
             </b-dropdown-item>
             <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
               <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">{{$t('company_info.delete')}}</span>
+              <span class="align-middle ml-50">{{ $t('company_info.delete') }}</span>
             </b-dropdown-item>
           </b-dropdown>
 
@@ -688,8 +690,9 @@ export default {
       this.$nextTick(() => {
         this.$bvModal.show("modal-spinner");
       });
+
       this.exportDto.companyId = router.currentRoute.params.id; // Set companyId to 85
-      this.exportDto.date = new Date().toISOString().split('T')[0]; // Set date to current date
+      this.exportDto.date = this.selectedMonthData.date; // Set date to current date
       this.exportDto.platformName = this.exportDto.platformName; // Set platformName to "AJURE"
       try {
         const response = await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
@@ -728,18 +731,24 @@ export default {
         this.$refs.modal_exportValue.hide();
       } catch (error) {
         console.error("Error:", error);
-        if (error.response) {
-          console.log('Error status:', error.response.status);
-          console.log('Error data:', error.response.data);
-        }
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: `Something went wrong`,
-            icon: "AlertTriangleIcon",
-            variant: "danger",
-          },
-        });
+        if (error.response.status === 409) {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Няма фактури за този период!`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          });
+        } else
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Something went wrong`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          });
         this.$nextTick(() => {
           this.$bvModal.hide("modal-spinner");
         });
@@ -763,6 +772,7 @@ export default {
         const month = tPeriod.substring(5, tPeriod.length);
         this.selectedMonthData.date = month.length === 1 ? `${year}-0${month}-01` : `${year}-${month}-01`;
         let companyID = this.$route.params.id;
+
         try {
           const response = await axios.get(`/account/api/company/${companyID}`, {
             headers: {
@@ -773,6 +783,7 @@ export default {
           this.companyinfo = response.data;
           this.$refs.export_model.hide();
           this.$refs.modal_exportValue.show();
+          console.log('this.selectedMonthData.date', this.selectedMonthData.date)
         } catch (error) {
           console.log(error);
         }

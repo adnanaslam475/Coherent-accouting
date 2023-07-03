@@ -485,6 +485,7 @@
     "send_email": "Изпратете по имейл"
   },
   "create_company": {
+     "software": "Софтуер",
     "company_details": "Фирма детайли",
     "account_details": "Акаунт детайли",
     "create_details": "Въведете детайли за фирма",

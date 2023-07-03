@@ -1220,7 +1220,8 @@
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
-                            @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
+                            @focus="ShowSuggestion(datalist)" @change='handleChange(invoiceData.supplierCompany)'
+                            style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions"
                             style="width: 47%">
                             <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
@@ -2180,7 +2181,8 @@
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
-                            @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
+                            @focus="ShowSuggestion(datalist)" @change='handleChange(invoiceData.supplierCompany)'
+                            style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions"
                             style="width: 47%">
                             <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
@@ -3214,7 +3216,8 @@
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
-                            @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
+                            @focus="ShowSuggestion(datalist)" @change='handleChange(invoiceData.supplierCompany)'
+                            style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
                               @mousedown="autoCompletefn(data)">
@@ -4173,7 +4176,8 @@
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
-                            @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
+                            @focus="ShowSuggestion(datalist)" @change='handleChange(invoiceData.supplierCompany)'
+                            style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
                               @mousedown="autoCompletefn(data)">
