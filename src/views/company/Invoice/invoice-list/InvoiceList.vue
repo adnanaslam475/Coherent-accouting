@@ -39,7 +39,7 @@
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>
-
+          {{ companyDetails.companyName }}
           <!-- Date Picker Modal -->
 
           <b-modal id="modal-prevent-closing-invoice" ref="export_model" :title="$t('company_info.selectMonth')"
@@ -511,7 +511,7 @@ export default {
     VueMonthlyPicker,
   },
 
-  props: ["invoiceTab"],
+  props: ["invoiceTab", "companyDetails"],
 
   data() {
     return {
@@ -687,6 +687,8 @@ export default {
     },
 
     async getExportFile() {
+      console.log(this.companyDetails, 'companyDetails')
+
       this.$nextTick(() => {
         this.$bvModal.show("modal-spinner");
       });
@@ -694,8 +696,9 @@ export default {
       this.exportDto.companyId = router.currentRoute.params.id; // Set companyId to 85
       this.exportDto.date = this.selectedMonthData.date; // Set date to current date
       this.exportDto.platformName = this.exportDto.platformName; // Set platformName to "AJURE"
+      let companyName = this.companyDetails.companyName
       try {
-        const response = await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
+        await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
             'Content-Type': 'application/json',
@@ -703,15 +706,19 @@ export default {
           },
           responseType: 'blob',
         }).then(function (response) {
+          const headers = response.headers;
+          const contentDisposition = headers['Content-Disposition'];
+          console.log(contentDisposition, 'alsdkj')
           const blobData = response.data;
           const exportDataBlob = new Blob([blobData], { type: blobData.type });
           const url = window.URL.createObjectURL(exportDataBlob);
           const link = document.createElement('a');
           link.href = url;
           if (blobData.type == 'application/zip') {
-            link.setAttribute('download', `${router.currentRoute.params.id}.zip`); // download as .zip
+            console.log('this.companyDetails.companyName', companyName)
+            link.setAttribute('download', companyName + '.zip'); // download as .zip
           } else {
-            link.setAttribute('download', `${router.currentRoute.params.id}.txt`); // download as .txt
+            link.setAttribute('download', companyName + '.txt'); // download as .txt
           }
           document.body.appendChild(link);
           link.click();
