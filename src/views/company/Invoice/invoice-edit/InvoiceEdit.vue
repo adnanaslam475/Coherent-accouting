@@ -2,6 +2,7 @@
   <section class="invoice-add-wrapper">
     <TabList />
     <!--  -->
+
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
       <b-form @submit.prevent="invoiceEdit(invoiceData, 'save', AccountTypeOption)">
         <b-row class="invoice-add">
@@ -27,6 +28,7 @@
                 </div>
               </b-card-header>
             </b-card>
+
             <div>
               <!-- Account Type -->
               <div class="d-flex justify-content-between align-items-center mb-2 accountType">
@@ -189,7 +191,7 @@
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
-                              @focus="ShowSuggestion(datalist)" @change='handleChange(invoiceData.supplierCompany)' />
+                              @focus="ShowSuggestion(datalist)" />
                             <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions"
                               style="width: 100%">
                               <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
@@ -232,7 +234,9 @@
                               </b-list-group-item>
                             </b-list-group>
                             <small class="text-danger">{{ errors[0] }}</small>
-                            <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
+                            <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                              $t("add_invoice.PleaseEnterTheCompanyID") }}
+                              {{ companyName }}
                             </small>
                           </validation-provider>
                         </b-input-group>
@@ -1202,7 +1206,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }} {{
+    companyName }}
                           </small>
                         </validation-provider>
 
@@ -1220,8 +1226,7 @@
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
-                            @focus="ShowSuggestion(datalist)" @change='handleChange(invoiceData.supplierCompany)'
-                            style="margin-bottom: 5px" />
+                            @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions"
                             style="width: 47%">
                             <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
@@ -2164,7 +2169,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }} {{
+    companyName }}
                           </small>
                         </validation-provider>
                         <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
@@ -2181,8 +2188,7 @@
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
-                            @focus="ShowSuggestion(datalist)" @change='handleChange(invoiceData.supplierCompany)'
-                            style="margin-bottom: 5px" />
+                            @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions"
                             style="width: 47%">
                             <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
@@ -3198,7 +3204,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }} {{
+    companyName }}
                           </small>
                         </validation-provider>
 
@@ -3216,8 +3224,7 @@
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
-                            @focus="ShowSuggestion(datalist)" @change='handleChange(invoiceData.supplierCompany)'
-                            style="margin-bottom: 5px" />
+                            @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
                               @mousedown="autoCompletefn(data)">
@@ -4158,7 +4165,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }} {{
+    companyName }}
                           </small>
                         </validation-provider>
 
@@ -4176,8 +4185,7 @@
                                 invoiceData.supplierCompany.companName
                               )
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
-                            @focus="ShowSuggestion(datalist)" @change='handleChange(invoiceData.supplierCompany)'
-                            style="margin-bottom: 5px" />
+                            @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
                               @mousedown="autoCompletefn(data)">
@@ -4983,7 +4991,7 @@ import {
   qtyValid,
 } from "@validations";
 import Logo from "@core/layouts/components/Logo.vue";
-import { ref, onUnmounted } from "@vue/composition-api";
+import { ref, onUnmounted, onMounted } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
 import Ripple from "vue-ripple-directive";
 import store from "@/store";
@@ -5116,6 +5124,7 @@ export default {
   mixins: [heightTransition],
   mounted() {
     // this.initTrHeight();
+
   },
   created() {
     // window.addEventListener("resize", this.initTrHeight);
@@ -5605,6 +5614,9 @@ export default {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
+    // onMounted(() => {
+    //   getCompanyInfo()
+    // })
     var AccountTypeOption = ref("company");
     var AccountTypeOptionToggleValue = false;
 
@@ -5634,6 +5646,7 @@ export default {
     const isTemplateThree = ref(false);
     const isTemplateFour = ref(false);
     var supplierID = ref(null)
+    var companyName = ref("");
     const isUploading = ref("");
 
     const showLogo = ref(null);
@@ -5645,7 +5658,7 @@ export default {
     const isGreen = ref(false);
     const isOrange = ref(false);
     const isGray = ref(false);
-
+    const companyInfo = ref(null);
     const currencyOptions = [
       { value: "лв.", text: "лв." },
       { value: "$", text: "$" },
@@ -5871,13 +5884,35 @@ export default {
         invoiceData.value.saleType = "SERVICE";
       }
     };
-    const handleChange = (item) => {
-      console.log(item, 'here is handle change');
+    // const handleChange = (item) => {
+    //   console.log(item, 'here is handle change');
 
-      supplierID.value = item.companyEic
-      console.log(supplierID.value)
+    //   supplierID.value = item.companyEic
+    //   console.log(supplierID.value)
 
-    };
+    // };
+
+    axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+      },
+    })
+      .then((response) => {
+        console.log(response, 'asdfasdf')
+
+
+        companyName.value = response.data.companyName
+        console.log(companyName.value, 'this is company name ')
+        supplierID.value = response.data.companyIdentificationNumber
+
+      })
+      .catch((error) => {
+        // console.log(error);
+
+      });
+
     const amountNonVat = (item) => {
       let totalAmountNonVat = item.reduce((acc, ele) => {
         return (
@@ -6407,6 +6442,8 @@ export default {
     };
 
     return {
+      companyName,
+      companyInfo,
       populateValues,
       logoToUpload,
       showLogo,
@@ -6416,7 +6453,7 @@ export default {
       isTemplateTwo,
       isTemplateThree,
       isTemplateFour,
-      handleChange,
+
       supplierID,
       hasBankDetails,
       AccountTypeOption,

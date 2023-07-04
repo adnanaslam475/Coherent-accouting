@@ -1,5 +1,6 @@
 {
   "app_logo_title": "Coherent Accounting",
+  
   "lbl": {
     "login": "Login",
     "register": "Register",
@@ -412,6 +413,7 @@
     "RESOLVED": "RESOLVED"
   },
   "add_invoice": {
+    "PleaseEnterTheCompanyID": "Please enter the company id of ",
     "SupplierCompanyOwnerName" : "Supplier Company Owner Name...",
     "SupplierCompanyName": "Supplier Company Name...",
     "SupplierCompanyAddress": "Supplier Company Address..",

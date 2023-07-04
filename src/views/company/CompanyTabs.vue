@@ -17,7 +17,8 @@
           <feather-icon icon="FileTextIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('invoices') }}</span>
         </template>
-        <Invoice v-if="companyTab == 1 || invoicesActive" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)" />
+        <Invoice v-if="companyTab == 1 || invoicesActive" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)"
+          :companyDetails="companyDetails" />
       </b-tab>
 
       <!-- Multiple Uploads tab -->

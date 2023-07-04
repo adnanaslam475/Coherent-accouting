@@ -190,6 +190,7 @@
               </div>
             </b-card-header>
           </b-card>
+
           <b-card no-body class="invoice-preview date-issued">
             <b-card-header class="justify-content-end">
               <div class="invoice-date-wrapper invoice-middle-content">
@@ -198,6 +199,19 @@
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.dateIssued }}
+                </p>
+              </div>
+            </b-card-header>
+          </b-card>
+          <!-- due date -->
+          <b-card no-body class="invoice-preview date-issued" v-if="invoiceData.dueDate != null">
+            <b-card-header class="justify-content-end">
+              <div class="invoice-date-wrapper invoice-middle-content">
+                <p class="invoice-date-title">
+                  {{ $t("add_invoice.due_date") }}:
+                </p>
+                <p class="invoice-date">
+                  {{ invoiceData.dueDate }}
                 </p>
               </div>
             </b-card-header>
