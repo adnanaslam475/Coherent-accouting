@@ -39,7 +39,7 @@
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>
-          {{ companyDetails.companyName }}
+
           <!-- Date Picker Modal -->
 
           <b-modal id="modal-prevent-closing-invoice" ref="export_model" :title="$t('company_info.selectMonth')"
@@ -696,7 +696,10 @@ export default {
       this.exportDto.companyId = router.currentRoute.params.id; // Set companyId to 85
       this.exportDto.date = this.selectedMonthData.date; // Set date to current date
       this.exportDto.platformName = this.exportDto.platformName; // Set platformName to "AJURE"
-      let companyName = this.companyDetails.companyName
+      let companyName = this.companyDetails
+      console.log(companyName, 'https://priceoye.pk/wireless-earbuds/xiaomi/redmi-buds-3-lite')
+      let fileNme = `EIC_${companyName.companyIdentificationNumber}_date_${new Date()}`
+
       try {
         await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
           headers: {
@@ -716,7 +719,7 @@ export default {
           link.href = url;
           if (blobData.type == 'application/zip') {
             console.log('this.companyDetails.companyName', companyName)
-            link.setAttribute('download', companyName + '.zip'); // download as .zip
+            link.setAttribute('download', fileNme + '.zip'); // download as .zip
           } else {
             link.setAttribute('download', companyName + '.txt'); // download as .txt
           }

@@ -392,6 +392,7 @@
     "RESOLVED": "ОТГОВОРЕН"
   },
   "add_invoice": {
+     "PleaseEnterTheCompanyID": "Моля, въведете идентификационния номер на фирмата ",
      "SupplierCompanyOwnerName" : "Име на собственика на компанията доставчик...",
      "SupplierCompanyName": "Име на фирмата доставчик...",
      "SupplierCompanyAddress": "Адрес на компанията доставчик..",

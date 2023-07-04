@@ -234,7 +234,8 @@
                               </b-list-group-item>
                             </b-list-group>
                             <small class="text-danger">{{ errors[0] }}</small>
-                            <small class="text-danger" v-if="companyIDisInvalid === true">Please enter the company id of
+                            <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                              $t("add_invoice.PleaseEnterTheCompanyID") }}
                               {{ companyName }}
                             </small>
                           </validation-provider>
@@ -1205,8 +1206,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Please enter the company id of {{
-                            companyName }}
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }} {{
+    companyName }}
                           </small>
                         </validation-provider>
 
@@ -2167,8 +2169,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Please enter the company id of {{
-                            companyName }}
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }} {{
+    companyName }}
                           </small>
                         </validation-provider>
                         <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
@@ -3201,8 +3204,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Please enter the company id of {{
-                            companyName }}
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }} {{
+    companyName }}
                           </small>
                         </validation-provider>
 
@@ -4161,8 +4165,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Please enter the company id of {{
-                            companyName }}
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }} {{
+    companyName }}
                           </small>
                         </validation-provider>
 
