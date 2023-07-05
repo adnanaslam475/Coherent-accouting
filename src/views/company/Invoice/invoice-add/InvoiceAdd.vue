@@ -5342,7 +5342,6 @@ export default {
 
       // Company ID validation on the basis of transactionType
       if (invoiceData.transactionType === "INCOME") {
-
         console.log('company eic======>', invoiceData.supplierCompany.companyEic, 'supplier ID=====>', this.supplierID)
         if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
           this.companyIDisInvalid = true;
