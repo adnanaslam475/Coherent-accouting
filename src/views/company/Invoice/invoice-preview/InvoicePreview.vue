@@ -2315,16 +2315,16 @@ export default {
 
 Copyright © 2023 Coherent Accounting, All rights reserved.`;
       this.name = `Фактура с Номер: ${this.invoiceData.invoiceNumber} от : ${this.invoiceData.supplierCompany.companName}`;
-      //const newpdfContent123 = this.$refs.html2Pdf.$el.innerHTML;
-      //console.log(" New DONDNDNNDDN ", newpdfContent123, this.$el, this.$refs.html2Pdf);
-      // this.$refs.html2Pdfnew.generatePdf()
-      //these are important data
-      //let data = Object.assign({}, this.$refs.html2Pdfnew.$el.innerHTML);
-      //console.log(" new pdf data is ", data);
-      //const newblob123 = new Blob([data], { type: 'application/pdf' });
-      //this.fileToByteArray(newblob123, function (byteArrayData) {
-      //console.log(" New BYYYY TTT ARRAAAYYYY ", byteArrayData);
-      //});
+      const newpdfContent123 = this.$refs.html2Pdf.$el.innerHTML;
+      console.log(" New DONDNDNNDDN ", newpdfContent123, this.$el, this.$refs.html2Pdf);
+      this.$refs.html2Pdfnew.generatePdf()
+      // these are important data
+      let data = Object.assign({}, this.$refs.html2Pdfnew.$el.innerHTML);
+      console.log(" new pdf data is ", data);
+      const newblob123 = new Blob([data], { type: 'application/pdf' });
+      this.fileToByteArray(newblob123, function (byteArrayData) {
+        console.log(" New BYYYY TTT ARRAAAYYYY ", byteArrayData);
+      });
     },
     attachPDFToFile(pdfBlob) {
       this.file = new File([pdfBlob], 'document.pdf');
@@ -2415,7 +2415,7 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       //});
       this.email = e.target.email.value;
       console.log("Target Values", e.target.email.value, this.invoiceData.invoiceNumber);
-      //this.$refs.html2Pdf.generatePdf('<h1>Your PDF Content</h1>', this.savePDF);
+      this.$refs.html2Pdf.generatePdf('<h1>Your PDF Content</h1>', this.savePDF);
       this.sendEmailFromAPI(e.target.email.value, e.target.message.value, e.target.name.value, this.invoiceData.invoiceNumber);
       this.$refs['my-modal'].hide();
     },
@@ -2453,34 +2453,6 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       return htmlContent;
     },
     async sendEmailFromAPI(emailData, messageData, nameData, invoiceNumber) {
-
-
-      console.log('emailData', emailData, 'messageData', messageData, 'nameData', nameData, 'invoiceNumber', invoiceNumber)
-      axios.post("account/api/invoice/send-to-email", {
-        "file": this.file,
-        "invoiceNumber": invoiceNumber,
-        "toEmail": emailData,
-        "message": messageData,
-        "title": nameData
-      }, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-          'Content-Type': 'application/json'
-        },
-        responseType: 'blob',
-      }).then((res) => {
-        console.log(res, '====================')
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: `Email Send Successfully !!!`,
-            icon: "EditIcon",
-            variant: "success",
-          },
-        });
-      })
-      return
-
       //sending Email info
       const byteArray = [];
       const formData = new FormData();
