@@ -301,28 +301,28 @@
                 </div>
                 <div class="tm_invoice_right tm_text_right tm_mobile_hide">
                   <div class="tm_f50 tm_text_uppercase" :style="invoiceData.invoiceColor === 'GRAY'
-                      ? 'color: black !important'
-                      : 'color: white !important'
+                    ? 'color: black !important'
+                    : 'color: white !important'
                     ">
                     {{ $t("add_invoice.invoice") }}
                   </div>
                 </div>
                 <div class="tm_shape_bg tm_mobile_hide" :class="invoiceData.invoiceColor === 'BLUE'
-                    ? 'tm_accent_bg'
-                    : invoiceData.invoiceColor === 'GREEN'
-                      ? 'green_bg'
-                      : invoiceData.invoiceColor === 'PURPLE'
-                        ? 'purple_bg'
-                        : invoiceData.invoiceColor === 'ORANGE'
-                          ? 'orange_bg'
-                          : 'gray_bg'
+                  ? 'tm_accent_bg'
+                  : invoiceData.invoiceColor === 'GREEN'
+                    ? 'green_bg'
+                    : invoiceData.invoiceColor === 'PURPLE'
+                      ? 'purple_bg'
+                      : invoiceData.invoiceColor === 'ORANGE'
+                        ? 'orange_bg'
+                        : 'gray_bg'
                   "></div>
               </div>
               <div class="tm_invoice_info tm_mb25">
                 <div class="tm_card_note tm_mobile_hide"></div>
                 <div class="tm_invoice_info_list" style="margin-top: 5px; margin-bottom: 10px" :style="invoiceData.invoiceColor === 'GRAY'
-                    ? 'color: black !important'
-                    : 'color: white !important'
+                  ? 'color: black !important'
+                  : 'color: white !important'
                   ">
                   <p class="tm_invoice_number tm_m0">
                     {{ $t("company_invoices.invoice_no") }}:
@@ -408,17 +408,17 @@
                     <table>
                       <thead>
                         <tr :class="invoiceData.invoiceColor === 'BLUE'
-                            ? 'tm_accent_bg'
-                            : invoiceData.invoiceColor === 'GREEN'
-                              ? 'green_bg'
-                              : invoiceData.invoiceColor === 'PURPLE'
-                                ? 'purple_bg'
-                                : invoiceData.invoiceColor === 'ORANGE'
-                                  ? 'orange_bg'
-                                  : 'gray_bg'
+                          ? 'tm_accent_bg'
+                          : invoiceData.invoiceColor === 'GREEN'
+                            ? 'green_bg'
+                            : invoiceData.invoiceColor === 'PURPLE'
+                              ? 'purple_bg'
+                              : invoiceData.invoiceColor === 'ORANGE'
+                                ? 'orange_bg'
+                                : 'gray_bg'
                           " :style="invoiceData.invoiceColor === 'GRAY'
-      ? 'color: black !important'
-      : 'color: white !important'
+    ? 'color: black !important'
+    : 'color: white !important'
     ">
                           <th class="tm_width_1 tm_semi_bold">
                             {{ $t("add_invoice.s_no") }}
@@ -563,17 +563,17 @@
                         </tr>
 
                         <tr :class="invoiceData.invoiceColor === 'BLUE'
-                            ? 'tm_accent_bg'
-                            : invoiceData.invoiceColor === 'GREEN'
-                              ? 'green_bg'
-                              : invoiceData.invoiceColor === 'PURPLE'
-                                ? 'purple_bg'
-                                : invoiceData.invoiceColor === 'ORANGE'
-                                  ? 'orange_bg'
-                                  : 'gray_bg'
+                          ? 'tm_accent_bg'
+                          : invoiceData.invoiceColor === 'GREEN'
+                            ? 'green_bg'
+                            : invoiceData.invoiceColor === 'PURPLE'
+                              ? 'purple_bg'
+                              : invoiceData.invoiceColor === 'ORANGE'
+                                ? 'orange_bg'
+                                : 'gray_bg'
                           " :style="invoiceData.invoiceColor === 'GRAY'
-      ? 'color: black !important'
-      : 'color: white !important'
+    ? 'color: black !important'
+    : 'color: white !important'
     ">
                           <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16">
                             {{ $t("add_invoice.total_price") }}:
@@ -636,115 +636,115 @@
           <div class="tm_invoice tm_style1 tm_type2" id="tm_download_section">
             <div class="tm_bars">
               <span :class="invoiceData.invoiceColor === 'BLUE'
-                  ? 'tm_accent_bg'
-                  : invoiceData.invoiceColor === 'GREEN'
-                    ? 'green_bg'
-                    : invoiceData.invoiceColor === 'PURPLE'
-                      ? 'purple_bg'
-                      : invoiceData.invoiceColor === 'ORANGE'
-                        ? 'orange_bg'
-                        : 'gray_bg'
+                ? 'tm_accent_bg'
+                : invoiceData.invoiceColor === 'GREEN'
+                  ? 'green_bg'
+                  : invoiceData.invoiceColor === 'PURPLE'
+                    ? 'purple_bg'
+                    : invoiceData.invoiceColor === 'ORANGE'
+                      ? 'orange_bg'
+                      : 'gray_bg'
                 "></span>
               <span :class="invoiceData.invoiceColor === 'BLUE'
-                  ? 'tm_accent_bg'
-                  : invoiceData.invoiceColor === 'GREEN'
-                    ? 'green_bg'
-                    : invoiceData.invoiceColor === 'PURPLE'
-                      ? 'purple_bg'
-                      : invoiceData.invoiceColor === 'ORANGE'
-                        ? 'orange_bg'
-                        : 'gray_bg'
+                ? 'tm_accent_bg'
+                : invoiceData.invoiceColor === 'GREEN'
+                  ? 'green_bg'
+                  : invoiceData.invoiceColor === 'PURPLE'
+                    ? 'purple_bg'
+                    : invoiceData.invoiceColor === 'ORANGE'
+                      ? 'orange_bg'
+                      : 'gray_bg'
                 "></span>
               <span :class="invoiceData.invoiceColor === 'BLUE'
-                  ? 'tm_accent_bg'
-                  : invoiceData.invoiceColor === 'GREEN'
-                    ? 'green_bg'
-                    : invoiceData.invoiceColor === 'PURPLE'
-                      ? 'purple_bg'
-                      : invoiceData.invoiceColor === 'ORANGE'
-                        ? 'orange_bg'
-                        : 'gray_bg'
+                ? 'tm_accent_bg'
+                : invoiceData.invoiceColor === 'GREEN'
+                  ? 'green_bg'
+                  : invoiceData.invoiceColor === 'PURPLE'
+                    ? 'purple_bg'
+                    : invoiceData.invoiceColor === 'ORANGE'
+                      ? 'orange_bg'
+                      : 'gray_bg'
                 "></span>
             </div>
             <div class="tm_bars tm_type1 d-none">
               <span :class="invoiceData.invoiceColor === 'BLUE'
-                  ? 'tm_accent_bg'
-                  : invoiceData.invoiceColor === 'GREEN'
-                    ? 'green_bg'
-                    : invoiceData.invoiceColor === 'PURPLE'
-                      ? 'purple_bg'
-                      : invoiceData.invoiceColor === 'ORANGE'
-                        ? 'orange_bg'
-                        : 'gray_bg'
+                ? 'tm_accent_bg'
+                : invoiceData.invoiceColor === 'GREEN'
+                  ? 'green_bg'
+                  : invoiceData.invoiceColor === 'PURPLE'
+                    ? 'purple_bg'
+                    : invoiceData.invoiceColor === 'ORANGE'
+                      ? 'orange_bg'
+                      : 'gray_bg'
                 "></span>
               <span :class="invoiceData.invoiceColor === 'BLUE'
-                  ? 'tm_accent_bg'
-                  : invoiceData.invoiceColor === 'GREEN'
-                    ? 'green_bg'
-                    : invoiceData.invoiceColor === 'PURPLE'
-                      ? 'purple_bg'
-                      : invoiceData.invoiceColor === 'ORANGE'
-                        ? 'orange_bg'
-                        : 'gray_bg'
+                ? 'tm_accent_bg'
+                : invoiceData.invoiceColor === 'GREEN'
+                  ? 'green_bg'
+                  : invoiceData.invoiceColor === 'PURPLE'
+                    ? 'purple_bg'
+                    : invoiceData.invoiceColor === 'ORANGE'
+                      ? 'orange_bg'
+                      : 'gray_bg'
                 "></span>
               <span :class="invoiceData.invoiceColor === 'BLUE'
-                  ? 'tm_accent_bg'
-                  : invoiceData.invoiceColor === 'GREEN'
-                    ? 'green_bg'
-                    : invoiceData.invoiceColor === 'PURPLE'
-                      ? 'purple_bg'
-                      : invoiceData.invoiceColor === 'ORANGE'
-                        ? 'orange_bg'
-                        : 'gray_bg'
+                ? 'tm_accent_bg'
+                : invoiceData.invoiceColor === 'GREEN'
+                  ? 'green_bg'
+                  : invoiceData.invoiceColor === 'PURPLE'
+                    ? 'purple_bg'
+                    : invoiceData.invoiceColor === 'ORANGE'
+                      ? 'orange_bg'
+                      : 'gray_bg'
                 "></span>
             </div>
             <div class="tm_shape">
               <div class="tm_shape_in" :class="invoiceData.invoiceColor === 'BLUE'
-                  ? 'tm_accent_bg'
-                  : invoiceData.invoiceColor === 'GREEN'
-                    ? 'green_bg'
-                    : invoiceData.invoiceColor === 'PURPLE'
-                      ? 'purple_bg'
-                      : invoiceData.invoiceColor === 'ORANGE'
-                        ? 'orange_bg'
-                        : 'gray_bg'
+                ? 'tm_accent_bg'
+                : invoiceData.invoiceColor === 'GREEN'
+                  ? 'green_bg'
+                  : invoiceData.invoiceColor === 'PURPLE'
+                    ? 'purple_bg'
+                    : invoiceData.invoiceColor === 'ORANGE'
+                      ? 'orange_bg'
+                      : 'gray_bg'
                 "></div>
             </div>
             <div class="tm_shape_2 tm_primary_color d-none">
               <div class="tm_shape_2_in" :style="invoiceData.invoiceColor === 'BLUE'
-                  ? 'color: #007aff;'
-                  : invoiceData.invoiceColor === 'GREEN'
-                    ? 'color: #8fce00'
-                    : invoiceData.invoiceColor === 'PURPLE'
-                      ? 'color: #ad3978'
-                      : invoiceData.invoiceColor === 'ORANGE'
-                        ? 'color: #FFA500'
-                        : 'color: #f6d1ff'
+                ? 'color: #007aff;'
+                : invoiceData.invoiceColor === 'GREEN'
+                  ? 'color: #8fce00'
+                  : invoiceData.invoiceColor === 'PURPLE'
+                    ? 'color: #ad3978'
+                    : invoiceData.invoiceColor === 'ORANGE'
+                      ? 'color: #FFA500'
+                      : 'color: #f6d1ff'
                 "></div>
             </div>
             <div class="tm_shape_2 tm_type1 tm_primary_color">
               <div class="tm_shape_2_in" :style="invoiceData.invoiceColor === 'BLUE'
-                  ? 'color: #007aff;'
-                  : invoiceData.invoiceColor === 'GREEN'
-                    ? 'color: #8fce00'
-                    : invoiceData.invoiceColor === 'PURPLE'
-                      ? 'color: #ad3978'
-                      : invoiceData.invoiceColor === 'ORANGE'
-                        ? 'color: #FFA500'
-                        : 'color: #f6d1ff'
+                ? 'color: #007aff;'
+                : invoiceData.invoiceColor === 'GREEN'
+                  ? 'color: #8fce00'
+                  : invoiceData.invoiceColor === 'PURPLE'
+                    ? 'color: #ad3978'
+                    : invoiceData.invoiceColor === 'ORANGE'
+                      ? 'color: #FFA500'
+                      : 'color: #f6d1ff'
                 "></div>
             </div>
             <!-- <div class="tm_shape_4 tm_primary_bg"></div> -->
             <div class="tm_shape tm_type1 d-none">
               <div class="tm_shape_in" :class="invoiceData.invoiceColor === 'BLUE'
-                  ? 'tm_accent_bg'
-                  : invoiceData.invoiceColor === 'GREEN'
-                    ? 'green_bg'
-                    : invoiceData.invoiceColor === 'PURPLE'
-                      ? 'purple_bg'
-                      : invoiceData.invoiceColor === 'ORANGE'
-                        ? 'orange_bg'
-                        : 'gray_bg'
+                ? 'tm_accent_bg'
+                : invoiceData.invoiceColor === 'GREEN'
+                  ? 'green_bg'
+                  : invoiceData.invoiceColor === 'PURPLE'
+                    ? 'purple_bg'
+                    : invoiceData.invoiceColor === 'ORANGE'
+                      ? 'orange_bg'
+                      : 'gray_bg'
                 "></div>
             </div>
             <div class="tm_invoice_in">
@@ -833,17 +833,17 @@
                     <table>
                       <thead>
                         <tr :class="invoiceData.invoiceColor === 'BLUE'
-                            ? 'tm_accent_bg'
-                            : invoiceData.invoiceColor === 'GREEN'
-                              ? 'green_bg'
-                              : invoiceData.invoiceColor === 'PURPLE'
-                                ? 'purple_bg'
-                                : invoiceData.invoiceColor === 'ORANGE'
-                                  ? 'orange_bg'
-                                  : 'gray_bg'
+                          ? 'tm_accent_bg'
+                          : invoiceData.invoiceColor === 'GREEN'
+                            ? 'green_bg'
+                            : invoiceData.invoiceColor === 'PURPLE'
+                              ? 'purple_bg'
+                              : invoiceData.invoiceColor === 'ORANGE'
+                                ? 'orange_bg'
+                                : 'gray_bg'
                           " :style="invoiceData.invoiceColor === 'GRAY'
-      ? 'color: black !important'
-      : 'color: white !important'
+    ? 'color: black !important'
+    : 'color: white !important'
     ">
                           <th class="tm_width_1 tm_semi_bold">
                             {{ $t("add_invoice.s_no") }}
@@ -1060,14 +1060,14 @@
                 <path
                   d="M850 0.889398H0V150.889H184.505C216.239 150.889 246.673 141.531 269.113 124.872L359.112 58.0565C381.553 41.3977 411.987 32.0391 443.721 32.0391H850V0.889398Z"
                   :fill="invoiceData.invoiceColor === 'BLUE'
-                      ? '#007aff'
-                      : invoiceData.invoiceColor === 'GREEN'
-                        ? '#8fce00'
-                        : invoiceData.invoiceColor === 'PURPLE'
-                          ? '#ad3978'
-                          : invoiceData.invoiceColor === 'ORANGE'
-                            ? '#FFA500'
-                            : '#f6d1ff'
+                    ? '#007aff'
+                    : invoiceData.invoiceColor === 'GREEN'
+                      ? '#8fce00'
+                      : invoiceData.invoiceColor === 'PURPLE'
+                        ? '#ad3978'
+                        : invoiceData.invoiceColor === 'ORANGE'
+                          ? '#FFA500'
+                          : '#f6d1ff'
                     " fill-opacity="1" />
               </svg>
             </div>
@@ -1076,14 +1076,14 @@
                 <path
                   d="M0 150.889H850V0.889408H665.496C633.762 0.889408 603.327 10.2481 580.887 26.9081L490.888 93.7224C468.447 110.381 438.014 119.74 406.279 119.74H0V150.889Z"
                   :fill="invoiceData.invoiceColor === 'BLUE'
-                      ? '#007aff'
-                      : invoiceData.invoiceColor === 'GREEN'
-                        ? '#8fce00'
-                        : invoiceData.invoiceColor === 'PURPLE'
-                          ? '#ad3978'
-                          : invoiceData.invoiceColor === 'ORANGE'
-                            ? '#FFA500'
-                            : '#f6d1ff'
+                    ? '#007aff'
+                    : invoiceData.invoiceColor === 'GREEN'
+                      ? '#8fce00'
+                      : invoiceData.invoiceColor === 'PURPLE'
+                        ? '#ad3978'
+                        : invoiceData.invoiceColor === 'ORANGE'
+                          ? '#FFA500'
+                          : '#f6d1ff'
                     " fill-opacity="1" />
               </svg>
             </div>
@@ -1107,33 +1107,33 @@
                 </div>
                 <div class="tm_invoice_info_list">
                   <p class="tm_invoice_number tm_m0" :style="invoiceData.invoiceColor === 'GRAY'
-                      ? 'color: black !important'
-                      : 'color: white !important'
+                    ? 'color: black !important'
+                    : 'color: white !important'
                     ">
                     {{ $t("company_invoices.invoice_no") }}:
                     <b class="tm_primary_color" :style="invoiceData.invoiceColor === 'GRAY'
-                        ? 'color: black !important'
-                        : 'color: white !important'
+                      ? 'color: black !important'
+                      : 'color: white !important'
                       ">#{{ invoiceData.invoiceNumber }}</b>
                   </p>
                   <p class="tm_invoice_date tm_m0" :style="invoiceData.invoiceColor === 'GRAY'
-                      ? 'color: black !important'
-                      : 'color: white !important'
+                    ? 'color: black !important'
+                    : 'color: white !important'
                     ">
                     {{ $t("add_invoice.date") }}:
                     <b class="tm_primary_color" :style="invoiceData.invoiceColor === 'GRAY'
-                        ? 'color: black !important'
-                        : 'color: white !important'
+                      ? 'color: black !important'
+                      : 'color: white !important'
                       ">{{ invoiceData.dateIssued }}</b>
                   </p>
                   <p class="tm_invoice_date tm_m0" :style="invoiceData.invoiceColor === 'GRAY'
-                      ? 'color: black !important'
-                      : 'color: white !important'
+                    ? 'color: black !important'
+                    : 'color: white !important'
                     ">
                     {{ $t("company_invoices.transaction_type") }}:
                     <b class="tm_primary_color" :style="invoiceData.invoiceColor === 'GRAY'
-                        ? 'color: black !important'
-                        : 'color: white !important'
+                      ? 'color: black !important'
+                      : 'color: white !important'
                       ">{{
     $t("company_invoices." + invoiceData.transactionType)
   }}</b>
@@ -1207,17 +1207,17 @@
                   <table>
                     <thead>
                       <tr :class="invoiceData.invoiceColor === 'BLUE'
-                          ? 'tm_accent_bg'
-                          : invoiceData.invoiceColor === 'GREEN'
-                            ? 'green_bg'
-                            : invoiceData.invoiceColor === 'PURPLE'
-                              ? 'purple_bg'
-                              : invoiceData.invoiceColor === 'ORANGE'
-                                ? 'orange_bg'
-                                : 'gray_bg'
+                        ? 'tm_accent_bg'
+                        : invoiceData.invoiceColor === 'GREEN'
+                          ? 'green_bg'
+                          : invoiceData.invoiceColor === 'PURPLE'
+                            ? 'purple_bg'
+                            : invoiceData.invoiceColor === 'ORANGE'
+                              ? 'orange_bg'
+                              : 'gray_bg'
                         " :style="invoiceData.invoiceColor === 'GRAY'
-      ? 'color: black !important'
-      : 'color: white !important'
+    ? 'color: black !important'
+    : 'color: white !important'
     ">
                         <th class="tm_width_1 tm_semi_bold">
                           {{ $t("add_invoice.s_no") }}
@@ -1430,28 +1430,28 @@
         <!-- Header: Left Content -->
         <div class="mt-md-0 mt-2 flex-1">
           <b-card no-body class="invoice-preview invoice-card" :style="invoiceData.invoiceColor === 'BLUE'
-              ? 'border: 1px solid #007aff !important'
-              : invoiceData.invoiceColor === 'GREEN'
-                ? 'border: 1px solid #8fce00 !important'
-                : invoiceData.invoiceColor === 'PURPLE'
-                  ? 'border: 1px solid #ad3978 !important'
-                  : invoiceData.invoiceColor === 'ORANGE'
-                    ? 'border: 1px solid #FFA500 !important'
-                    : 'border:1px solid #f6d1ff !important'
+            ? 'border: 1px solid #007aff !important'
+            : invoiceData.invoiceColor === 'GREEN'
+              ? 'border: 1px solid #8fce00 !important'
+              : invoiceData.invoiceColor === 'PURPLE'
+                ? 'border: 1px solid #ad3978 !important'
+                : invoiceData.invoiceColor === 'ORANGE'
+                  ? 'border: 1px solid #FFA500 !important'
+                  : 'border:1px solid #f6d1ff !important'
             ">
             <b-card-header class="justify-content-center invoice-header" :class="invoiceData.invoiceColor === 'BLUE'
-                ? 'tm_accent_bg'
-                : invoiceData.invoiceColor === 'GREEN'
-                  ? 'green_bg'
-                  : invoiceData.invoiceColor === 'PURPLE'
-                    ? 'purple_bg'
-                    : invoiceData.invoiceColor === 'ORANGE'
-                      ? 'orange_bg'
-                      : 'gray_bg'
+              ? 'tm_accent_bg'
+              : invoiceData.invoiceColor === 'GREEN'
+                ? 'green_bg'
+                : invoiceData.invoiceColor === 'PURPLE'
+                  ? 'purple_bg'
+                  : invoiceData.invoiceColor === 'ORANGE'
+                    ? 'orange_bg'
+                    : 'gray_bg'
               ">
               <h5 class="m-0" :style="invoiceData.invoiceColor === 'GRAY'
-                  ? 'color: black !important'
-                  : 'color: white !important'
+                ? 'color: black !important'
+                : 'color: white !important'
                 ">
                 {{ $t("add_invoice.supplier") }}
               </h5>
@@ -1497,28 +1497,28 @@
 
         <div class="mt-md-0 mt-2 invoice-data-wrapper-right flex-1">
           <b-card no-body class="invoice-preview invoice-card" :style="invoiceData.invoiceColor === 'BLUE'
-              ? 'border: 1px solid #007aff !important'
-              : invoiceData.invoiceColor === 'GREEN'
-                ? 'border: 1px solid #8fce00 !important'
-                : invoiceData.invoiceColor === 'PURPLE'
-                  ? 'border: 1px solid #ad3978 !important'
-                  : invoiceData.invoiceColor === 'ORANGE'
-                    ? 'border: 1px solid #FFA500 !important'
-                    : 'border:1px solid #f6d1ff !important'
+            ? 'border: 1px solid #007aff !important'
+            : invoiceData.invoiceColor === 'GREEN'
+              ? 'border: 1px solid #8fce00 !important'
+              : invoiceData.invoiceColor === 'PURPLE'
+                ? 'border: 1px solid #ad3978 !important'
+                : invoiceData.invoiceColor === 'ORANGE'
+                  ? 'border: 1px solid #FFA500 !important'
+                  : 'border:1px solid #f6d1ff !important'
             ">
             <b-card-header class="justify-content-center invoice-header" :class="invoiceData.invoiceColor === 'BLUE'
-                ? 'tm_accent_bg'
-                : invoiceData.invoiceColor === 'GREEN'
-                  ? 'green_bg'
-                  : invoiceData.invoiceColor === 'PURPLE'
-                    ? 'purple_bg'
-                    : invoiceData.invoiceColor === 'ORANGE'
-                      ? 'orange_bg'
-                      : 'gray_bg'
+              ? 'tm_accent_bg'
+              : invoiceData.invoiceColor === 'GREEN'
+                ? 'green_bg'
+                : invoiceData.invoiceColor === 'PURPLE'
+                  ? 'purple_bg'
+                  : invoiceData.invoiceColor === 'ORANGE'
+                    ? 'orange_bg'
+                    : 'gray_bg'
               ">
               <h5 class="m-0" :style="invoiceData.invoiceColor === 'GRAY'
-                  ? 'color: black !important'
-                  : 'color: white !important'
+                ? 'color: black !important'
+                : 'color: white !important'
                 ">
                 {{ $t("add_invoice.recipient") }}:
               </h5>
@@ -1575,6 +1575,7 @@
             </div>
           </b-card-header>
         </b-card>
+
         <b-card no-body class="invoice-preview date-issued">
           <b-card-header class="justify-content-end">
             <div class="invoice-date-wrapper invoice-middle-content">
@@ -1585,17 +1586,28 @@
             </div>
           </b-card-header>
         </b-card>
+
+        <b-card no-body class="invoice-preview date-issued" v-if="invoiceData.dueDate">
+          <b-card-header class="justify-content-end">
+            <div class="invoice-date-wrapper invoice-middle-content">
+              <p class="invoice-date-title">{{ $t("add_invoice.due_date") }}:</p>
+              <p class="invoice-date">
+                {{ invoiceData.dueDate }}
+              </p>
+            </div>
+          </b-card-header>
+        </b-card>
       </div>
 
       <b-card no-body class="invoice-preview-card transaction-container" :style="invoiceData.invoiceColor === 'BLUE'
-          ? 'border: 1px solid #007aff'
-          : invoiceData.invoiceColor === 'GREEN'
-            ? 'border: 1px solid #8fce00'
-            : invoiceData.invoiceColor === 'PURPLE'
-              ? 'border: 1px solid #ad3978'
-              : invoiceData.invoiceColor === 'ORANGE'
-                ? 'border: 1px solid #FFA500'
-                : 'border:1px solid #f6d1ff'
+        ? 'border: 1px solid #007aff'
+        : invoiceData.invoiceColor === 'GREEN'
+          ? 'border: 1px solid #8fce00'
+          : invoiceData.invoiceColor === 'PURPLE'
+            ? 'border: 1px solid #ad3978'
+            : invoiceData.invoiceColor === 'ORANGE'
+              ? 'border: 1px solid #FFA500'
+              : 'border:1px solid #f6d1ff'
         ">
         <!-- Invoice Description: Table -->
         <!-- <b-table-lite
@@ -1675,17 +1687,17 @@
               <table>
                 <thead>
                   <tr :class="invoiceData.invoiceColor === 'BLUE'
-                      ? 'tm_accent_bg'
-                      : invoiceData.invoiceColor === 'GREEN'
-                        ? 'green_bg'
-                        : invoiceData.invoiceColor === 'PURPLE'
-                          ? 'purple_bg'
-                          : invoiceData.invoiceColor === 'ORANGE'
-                            ? 'orange_bg'
-                            : 'gray_bg'
+                    ? 'tm_accent_bg'
+                    : invoiceData.invoiceColor === 'GREEN'
+                      ? 'green_bg'
+                      : invoiceData.invoiceColor === 'PURPLE'
+                        ? 'purple_bg'
+                        : invoiceData.invoiceColor === 'ORANGE'
+                          ? 'orange_bg'
+                          : 'gray_bg'
                     " :style="invoiceData.invoiceColor === 'GRAY'
-      ? 'color: black !important'
-      : 'color: white !important'
+    ? 'color: black !important'
+    : 'color: white !important'
     ">
                     <th class="tm_width_1 tm_semi_bold">
                       {{ $t("add_invoice.s_no") }}
@@ -1739,14 +1751,14 @@
         <!-- Invoice Description: Total -->
       </b-card>
       <b-card no-body class="invoice-preview-card transaction-container" :style="invoiceData.invoiceColor === 'BLUE'
-          ? 'border: 1px solid #007aff'
-          : invoiceData.invoiceColor === 'GREEN'
-            ? 'border: 1px solid #8fce00'
-            : invoiceData.invoiceColor === 'PURPLE'
-              ? 'border: 1px solid #ad3978'
-              : invoiceData.invoiceColor === 'ORANGE'
-                ? 'border: 1px solid #FFA500'
-                : 'border:1px solid #f6d1ff'
+        ? 'border: 1px solid #007aff'
+        : invoiceData.invoiceColor === 'GREEN'
+          ? 'border: 1px solid #8fce00'
+          : invoiceData.invoiceColor === 'PURPLE'
+            ? 'border: 1px solid #ad3978'
+            : invoiceData.invoiceColor === 'ORANGE'
+              ? 'border: 1px solid #FFA500'
+              : 'border:1px solid #f6d1ff'
         ">
         <b-card-body class="invoice-padding">
           <b-row class="invoiceStat">

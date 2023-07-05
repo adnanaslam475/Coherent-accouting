@@ -230,7 +230,9 @@
                               </b-list-group-item>
                             </b-list-group>
                             <small class="text-danger">{{ errors[0] }}</small>
-                            <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
+                            <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                              $t("add_invoice.PleaseEnterTheCompanyID") }}
+                              {{ companyName }}
                             </small>
                           </validation-provider>
                         </b-input-group>
@@ -1202,7 +1204,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }}
+                            {{ companyName }}
                           </small>
                         </validation-provider>
 
@@ -2144,7 +2148,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }}
+                            {{ companyName }}
                           </small>
                         </validation-provider>
                         <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
@@ -3180,7 +3186,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }}
+                            {{ companyName }}
                           </small>
                         </validation-provider>
 
@@ -4141,7 +4149,9 @@
                             </b-list-group-item>
                           </b-list-group>
                           <small class="text-danger">{{ errors[0] }}</small>
-                          <small class="text-danger" v-if="companyIDisInvalid === true">Company ID is not correct
+                          <small class="text-danger" v-if="companyIDisInvalid === true">{{
+                            $t("add_invoice.PleaseEnterTheCompanyID") }}
+                            {{ companyName }}
                           </small>
                         </validation-provider>
 
@@ -5332,7 +5342,7 @@ export default {
 
       // Company ID validation on the basis of transactionType
       if (invoiceData.transactionType === "INCOME") {
-        alert('here i m')
+
         console.log('company eic======>', invoiceData.supplierCompany.companyEic, 'supplier ID=====>', this.supplierID)
         if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
           this.companyIDisInvalid = true;
@@ -5590,8 +5600,27 @@ export default {
     var vatPercentValidate = ref(false);
     var AccountTypeOption = ref("company");
     var AccountTypeOptionToggleValue = false;
+    var companyName = ref("");
+    axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+      },
+    })
+      .then((response) => {
+        console.log(response, 'asdfasdf')
 
 
+        companyName.value = response.data.companyName
+        console.log(companyName.value, 'this is company name ')
+        supplierID.value = response.data.companyIdentificationNumber
+
+      })
+      .catch((error) => {
+        // console.log(error);
+
+      });
     let AccountTypeOptionToggle = (value) => {
       if (value) {
         AccountTypeOption.value = "person";
@@ -6261,6 +6290,7 @@ export default {
         }
       });
     return {
+      companyName,
       supplierID,
       populateValues,
       supplierVat,
