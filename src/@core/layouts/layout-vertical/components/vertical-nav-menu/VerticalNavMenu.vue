@@ -93,11 +93,11 @@ export default {
         route: 'tickets',
         icon: 'TagIcon',
       },
-      // {
-      //   title: 'my-plans',
-      //   route: 'my-plans',
-      //   icon: 'PackageIcon',
-      // },
+      {
+        title: 'my-plans',
+        route: 'my-plans',
+        icon: 'PackageIcon',
+      },
       {
         title: 'my_profile',
         route: 'settings',

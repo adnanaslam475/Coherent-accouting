@@ -375,12 +375,6 @@ export default class JwtService {
 
   //Getting Plans
   getPlansPrices() {
-    return this.axiosIns2.post(this.jwtConfig.GetPlansEndPoint, {
-    });
-
-  }
-
-  upgradePlan() {
     return this.axiosIns2.get(this.jwtConfig.GetPlansEndPoint, {
     });
 

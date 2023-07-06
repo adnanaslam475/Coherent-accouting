@@ -76,7 +76,8 @@
                 <!--/ plan benefit -->
 
                 <!-- buttons -->
-                <b-button v-ripple.400="'rgba(40, 199, 111, 0.15)'" block class="mt-2" variant="outline-success">
+                <b-button v-ripple.400="'rgba(40, 199, 111, 0.15)'" block class="mt-2" variant="outline-success"
+                  @click="upgradeBasicPlan">
                   {{ $t("pricing.plan") }}
                 </b-button>
               </b-card>
@@ -134,7 +135,8 @@
                 <!--/ plan benefit -->
 
                 <!-- buttons -->
-                <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" block class="mt-2" variant="primary">
+                <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" block class="mt-2" variant="primary"
+                  @click="upgradeBiginerrPlan">
                   {{ $t("pricing.upgrade") }}
                 </b-button>
               </b-card>
@@ -185,7 +187,8 @@
                 <!--/ plan benefit -->
 
                 <!-- buttons -->
-                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" block class="mt-2" variant="outline-primary">
+                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" block class="mt-2" variant="outline-primary"
+                  @click="upgradeStarterPlan">
                   {{ $t("pricing.upgrade") }}
                 </b-button>
               </b-card>
@@ -240,7 +243,8 @@
                 <!--/ plan benefit -->
 
                 <!-- buttons -->
-                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" block class="mt-2" variant="outline-primary">
+                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" block class="mt-2" variant="outline-primary"
+                  @click="upgradeEnterprisePlan">
                   {{ $t("pricing.upgrade") }}
                 </b-button>
               </b-card>
@@ -294,7 +298,8 @@
                 <!--/ plan benefit -->
 
                 <!-- buttons -->
-                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" block class="mt-2" variant="outline-primary">
+                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" block class="mt-2" variant="outline-primary"
+                  @click="upgradePlatiniumPlan">
                   {{ $t("pricing.upgrade") }}
                 </b-button>
               </b-card>
@@ -328,6 +333,7 @@ import ToastificationContent from "@core/components/toastification/Toastificatio
 
 import Ripple from "vue-ripple-directive";
 import useJwt from "@/auth/jwt/useJwt";
+import axios from "@/libs/axios";
 /* eslint-disable global-require */
 export default {
   components: {
@@ -592,6 +598,127 @@ export default {
           });
         });
     },
+    upgradeBasicPlan() {
+      console.log(this.monthlyPlanShow)
+      let currentPlan = {}
+      if (this.monthlyPlanShow) {
+        currentPlan = this.plansPrice.find(obj => obj.id === 101);
+
+      } else {
+        currentPlan = this.plansPrice.find(obj => obj.id === 102);
+      }
+
+      console.log(currentPlan)
+      currentPlan.subscription = true
+      axios.post("account/api/payment/create-payment", currentPlan, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+          'Content-Type': 'application/json'
+        },
+
+      }).then((res) => {
+        console.log(res.data)
+        const successURL = res.data.successUrl
+        window.open(successURL, '_blank')
+      })
+    },
+    upgradeBiginerrPlan() {
+      console.log(this.monthlyPlanShow)
+      let currentPlan = {}
+      if (this.monthlyPlanShow) {
+        currentPlan = this.plansPrice.find(obj => obj.id === 103);
+
+      } else {
+        currentPlan = this.plansPrice.find(obj => obj.id === 106);
+      }
+
+      console.log(currentPlan)
+      currentPlan.subscription = true
+      axios.post("account/api/payment/create-payment", currentPlan, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+          'Content-Type': 'application/json'
+        },
+
+      }).then((res) => {
+        console.log(res.data)
+        const successURL = res.data.successUrl
+        window.open(successURL, '_blank')
+      })
+    },
+    upgradeStarterPlan() {
+      console.log(this.monthlyPlanShow)
+      let currentPlan = {}
+      if (this.monthlyPlanShow) {
+        currentPlan = this.plansPrice.find(obj => obj.id === 107);
+
+      } else {
+        currentPlan = this.plansPrice.find(obj => obj.id === 108);
+      }
+
+      console.log(currentPlan)
+      currentPlan.subscription = true
+      axios.post("account/api/payment/create-payment", currentPlan, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+          'Content-Type': 'application/json'
+        },
+
+      }).then((res) => {
+        console.log(res.data)
+        const successURL = res.data.successUrl
+        window.open(successURL, '_blank')
+      })
+    },
+
+    upgradeEnterprisePlan() {
+      console.log(this.monthlyPlanShow)
+      let currentPlan = {}
+      if (this.monthlyPlanShow) {
+        currentPlan = this.plansPrice.find(obj => obj.id === 109);
+
+      } else {
+        currentPlan = this.plansPrice.find(obj => obj.id === 110);
+      }
+
+      console.log(currentPlan)
+      currentPlan.subscription = true
+      axios.post("account/api/payment/create-payment", currentPlan, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+          'Content-Type': 'application/json'
+        },
+
+      }).then((res) => {
+        console.log(res.data)
+        const successURL = res.data.successUrl
+        window.open(successURL, '_blank')
+      })
+    },
+    upgradePlatiniumPlan() {
+      console.log(this.monthlyPlanShow)
+      let currentPlan = {}
+      if (this.monthlyPlanShow) {
+        currentPlan = this.plansPrice.find(obj => obj.id === 111);
+
+      } else {
+        currentPlan = this.plansPrice.find(obj => obj.id === 112);
+      }
+
+      console.log(currentPlan)
+      currentPlan.subscription = true
+      axios.post("account/api/payment/create-payment", currentPlan, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+          'Content-Type': 'application/json'
+        },
+
+      }).then((res) => {
+        console.log(res.data)
+        const successURL = res.data.successUrl
+        window.open(successURL, '_blank')
+      })
+    }
   },
 };
 /* eslint-disable global-require */
