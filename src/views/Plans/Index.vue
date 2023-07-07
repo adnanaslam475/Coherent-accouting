@@ -503,6 +503,28 @@ export default {
     this.helicolptorImage = require("@/assets/images/illustration/helicoptor.svg");
     this.monthlyPlanShow = this.status === "monthly";
     this.getPlansValues();
+
+  },
+  mounted() {
+    if (this.$route.query.planId && this.$route.query.session_id) {
+      let paymentData = {
+        "planId": this.$route.query.planId,
+        "sessionId": this.$route.query.session_id
+      }
+      axios.post("account/api/payment/complete-payment", paymentData, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
+          'Content-Type': 'application/json'
+        },
+
+      }).then((res) => {
+        console.log(res.data)
+
+
+
+
+      })
+    }
   },
   methods: {
     tooglePlan() {
@@ -599,6 +621,7 @@ export default {
         });
     },
     upgradeBasicPlan() {
+
       console.log(this.monthlyPlanShow)
       let currentPlan = {}
       if (this.monthlyPlanShow) {
@@ -618,8 +641,11 @@ export default {
 
       }).then((res) => {
         console.log(res.data)
-        const successURL = res.data.successUrl
+        const successURL = res.data.redirectUrl
         window.open(successURL, '_blank')
+        console.log(this.$route.query != {}, 'quesry params')
+
+
       })
     },
     upgradeBiginerrPlan() {
