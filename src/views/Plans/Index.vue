@@ -519,7 +519,7 @@ export default {
 
       }).then((res) => {
         console.log(res.data)
-        if (res.data.sucess == 'OK') {
+        if (res.data.SUCCESS == 'OK') {
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -528,6 +528,7 @@ export default {
               variant: 'success',
             },
           })
+          this.$router.push({ name: 'my-plans' })
         }
       })
     }
@@ -674,7 +675,7 @@ export default {
 
       }).then((res) => {
         console.log(res.data)
-        const successURL = res.data.successUrl
+        const successURL = res.data.redirectUrl
         window.open(successURL, '_blank')
       })
     },
@@ -698,7 +699,7 @@ export default {
 
       }).then((res) => {
         console.log(res.data)
-        const successURL = res.data.successUrl
+        const successURL = res.data.redirectUrl
         window.open(successURL, '_blank')
       })
     },
@@ -723,7 +724,7 @@ export default {
 
       }).then((res) => {
         console.log(res.data)
-        const successURL = res.data.successUrl
+        const successURL = res.data.redirectUrl
         window.open(successURL, '_blank')
       })
     },
@@ -747,7 +748,7 @@ export default {
 
       }).then((res) => {
         console.log(res.data)
-        const successURL = res.data.successUrl
+        const successURL = res.data.redirectUrl
         if (successURL == null) {
           this.$toast({
             component: ToastificationContent,
