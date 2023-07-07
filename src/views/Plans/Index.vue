@@ -519,7 +519,7 @@ export default {
 
       }).then((res) => {
         console.log(res.data)
-        if (res.data.sucess == 'OK') {
+        if (res.data.SUCCESS == 'OK') {
           this.$toast({
             component: ToastificationContent,
             props: {
