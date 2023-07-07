@@ -528,6 +528,7 @@ export default {
               variant: 'success',
             },
           })
+          this.$router.push({ name: 'my-plans' })
         }
       })
     }
