@@ -519,10 +519,16 @@ export default {
 
       }).then((res) => {
         console.log(res.data)
-
-
-
-
+        if (res.data.sucess == 'OK') {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Payment has been paid successfully`,
+              icon: 'EditIcon',
+              variant: 'success',
+            },
+          })
+        }
       })
     }
   },
