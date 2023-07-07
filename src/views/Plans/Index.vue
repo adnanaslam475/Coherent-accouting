@@ -638,7 +638,7 @@ export default {
       }
 
       console.log(currentPlan)
-      currentPlan.subscription = true
+      currentPlan.isSubscription = true
       axios.post("account/api/payment/create-payment", currentPlan, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
@@ -665,7 +665,7 @@ export default {
       }
 
       console.log(currentPlan)
-      currentPlan.subscription = true
+      currentPlan.isSubscription = true
       axios.post("account/api/payment/create-payment", currentPlan, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
@@ -689,7 +689,7 @@ export default {
       }
 
       console.log(currentPlan)
-      currentPlan.subscription = true
+      currentPlan.isSubscription = true
       axios.post("account/api/payment/create-payment", currentPlan, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
@@ -714,7 +714,7 @@ export default {
       }
 
       console.log(currentPlan)
-      currentPlan.subscription = true
+      currentPlan.isSubscription = true
       axios.post("account/api/payment/create-payment", currentPlan, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
@@ -738,7 +738,7 @@ export default {
       }
 
       console.log(currentPlan)
-      currentPlan.subscription = true
+      currentPlan.isSubscription = true
       axios.post("account/api/payment/create-payment", currentPlan, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
@@ -748,7 +748,20 @@ export default {
       }).then((res) => {
         console.log(res.data)
         const successURL = res.data.successUrl
-        window.open(successURL, '_blank')
+        if (successURL == null) {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: res.data.sessionId,
+              icon: 'EditIcon',
+              variant: 'error',
+            },
+          })
+
+        } else {
+          window.open(successURL, '_blank')
+        }
+
       })
     }
   },
