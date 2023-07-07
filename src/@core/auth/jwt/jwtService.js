@@ -64,50 +64,50 @@ export default class JwtService {
     // Add response interceptor
     this.axiosIns.interceptors.response.use((response) => {
       return response;
-    },(error) => {
-        // const { config, response: { status } } = error
-        // const { config, response } = error.config;
-        const originalRequest = error.config;
+    }, (error) => {
+      // const { config, response: { status } } = error
+      // const { config, response } = error.config;
+      const originalRequest = error.config;
 
-        if (error.response && error.response.status === 401) {
-          if (error.response.data && error.response.data.error_description 
-            && error.response.data.error_description.includes('Access token expired:')) {
-            this.refreshToken().then((r) => {
-              // Update accessToken in localStorage
-              this.setToken(r.data.access_token);
-              this.setRefreshToken(r.data.refresh_token);
-              this.onAccessTokenFetched(r.data.access_token);
-            }).catch(error => {
-              if (error.response && error.response.status === 401) {
-                // && error.response.data && error.response.data.error_description 
-                // && error.response.data.error_description.includes('Invalid refresh token (expired):')) {
-                localStorage.removeItem(this.jwtConfig.storageTokenKeyName)
-                localStorage.removeItem(this.jwtConfig.storageRefreshTokenKeyName)
-                localStorage.removeItem('userData')
-                router.push({ name: 'login' })
-              }
-            });
-
-          }
-
-          // incorrect old password
-          if(error.response.data.errorMessage === "The old password is not correct!"){
-            return;
-          }
-
-          const retryOriginalRequest = new Promise((resolve) => {
-            this.addSubscriber((accessToken) => {
-              // Make sure to assign accessToken according to your response.
-              // Check: https://pixinvent.ticksy.com/ticket/2413870
-              // Change Authorization header
-              originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`;
-              resolve(this.axiosIns(originalRequest));
-            });
+      if (error.response && error.response.status === 401) {
+        if (error.response.data && error.response.data.error_description
+          && error.response.data.error_description.includes('Access token expired:')) {
+          this.refreshToken().then((r) => {
+            // Update accessToken in localStorage
+            this.setToken(r.data.access_token);
+            this.setRefreshToken(r.data.refresh_token);
+            this.onAccessTokenFetched(r.data.access_token);
+          }).catch(error => {
+            if (error.response && error.response.status === 401) {
+              // && error.response.data && error.response.data.error_description 
+              // && error.response.data.error_description.includes('Invalid refresh token (expired):')) {
+              localStorage.removeItem(this.jwtConfig.storageTokenKeyName)
+              localStorage.removeItem(this.jwtConfig.storageRefreshTokenKeyName)
+              localStorage.removeItem('userData')
+              router.push({ name: 'login' })
+            }
           });
-          return retryOriginalRequest;
+
         }
-        return Promise.reject(error);
+
+        // incorrect old password
+        if (error.response.data.errorMessage === "The old password is not correct!") {
+          return;
+        }
+
+        const retryOriginalRequest = new Promise((resolve) => {
+          this.addSubscriber((accessToken) => {
+            // Make sure to assign accessToken according to your response.
+            // Check: https://pixinvent.ticksy.com/ticket/2413870
+            // Change Authorization header
+            originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`;
+            resolve(this.axiosIns(originalRequest));
+          });
+        });
+        return retryOriginalRequest;
       }
+      return Promise.reject(error);
+    }
     );
   }
 
@@ -220,7 +220,7 @@ export default class JwtService {
   }
 
   EditInvoice(token, id, ...args) {
-    return this.axiosIns.put(`${this.jwtConfig.invoiceEditEndpoint}/${id}`,...args)
+    return this.axiosIns.put(`${this.jwtConfig.invoiceEditEndpoint}/${id}`, ...args)
   }
 
   DeleteInvoice(token, id) {
@@ -284,12 +284,12 @@ export default class JwtService {
   }
 
   //Get Create-Vat-Report-Zip
-  GetVatReportsZip(token,...args){
-    return this.axiosIns.post(`${this.jwtConfig.CreateVatReportZipFileEndPoint}`, ...args) 
+  GetVatReportsZip(token, ...args) {
+    return this.axiosIns.post(`${this.jwtConfig.CreateVatReportZipFileEndPoint}`, ...args)
   }
 
-  EditUser(token,id,...args) {
-    return this.axiosIns.put(`${this.jwtConfig.UserEditEndpoint}/${id}`, ...args) 
+  EditUser(token, id, ...args) {
+    return this.axiosIns.put(`${this.jwtConfig.UserEditEndpoint}/${id}`, ...args)
   }
 
   DeleteUser(token, id) {
@@ -374,8 +374,8 @@ export default class JwtService {
   }
 
   //Getting Plans
-  getPlansPrices(){
-    return this.axiosIns2.get(this.jwtConfig.GetPlansEndPoint, {
+  getPlansPrices() {
+    return this.axiosIns.get(this.jwtConfig.GetPlansEndPoint, {
     });
 
   }
@@ -385,31 +385,31 @@ export default class JwtService {
     let headers = {
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
     };
-    return this.axiosIns.get(this.jwtConfig. GetUserCurrentPlan, {
+    return this.axiosIns.get(this.jwtConfig.GetUserCurrentPlan, {
       headers: headers,
     });
   }
 
   //validate company-vat-number
-  validateVatNo(token, data){
+  validateVatNo(token, data) {
     let headers = {
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
     };
     return this.axiosIns.get(
-      `${this.jwtConfig.validateVat+'?vatNumber='+data}`,{
-       headers: headers
-      }
+      `${this.jwtConfig.validateVat + '?vatNumber=' + data}`, {
+      headers: headers
+    }
     );
   }
 
   export(token, data) {
     let headers = {
       'Authorization': `Bearer ${token}`,
-      
+
     };
     return this.axiosIns.post(
       `/api/export`, data, { headers: headers }
     );
   }
-  
+
 }

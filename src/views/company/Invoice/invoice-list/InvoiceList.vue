@@ -698,7 +698,12 @@ export default {
       this.exportDto.platformName = this.exportDto.platformName; // Set platformName to "AJURE"
       let companyName = this.companyDetails
       console.log(companyName, 'https://priceoye.pk/wireless-earbuds/xiaomi/redmi-buds-3-lite')
-      let fileNme = `EIC_${companyName.companyIdentificationNumber}_date_${new Date()}`
+      const dateString = new Date();
+      const date = new Date(dateString);
+
+      const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+      const formattedDate = date.toLocaleDateString('en-US', options);
+      let fileNme = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`
 
       try {
         await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {

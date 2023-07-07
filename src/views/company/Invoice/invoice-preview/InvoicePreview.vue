@@ -2003,7 +2003,7 @@
             </section>
           </vue-html2pdf>
 
-          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
+          <!-- <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
             :paginate-elements-by-height="1100" filename="attachinvoice" :pdf-quality="2" :manual-pagination="false"
             pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
             @progress="onProgress($event)" @hasDownloaded="hasDownloaded($event)" ref="html2Pdfnew">
@@ -2022,7 +2022,7 @@
                 </div>
               </b-alert>
             </section>
-          </vue-html2pdf>
+          </vue-html2pdf> -->
 
           <!-- Button: Print -->
           <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block
