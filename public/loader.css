@@ -1,0 +1,324 @@
+body {
+  margin: 0;
+}
+
+#loading-bg {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: block;
+  position: absolute;
+}
+.loading-logo {
+  position: absolute;
+  left: calc(50% - 45px);
+  top: 40%;
+}
+.loading {
+  position: absolute;
+  left: calc(50% - 35px);
+  top: 50%;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 3px solid transparent;
+}
+.loading .effect-1,
+.loading .effect-2 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-left: 3px solid rgba(121, 97, 249, 1);
+  border-radius: 50%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.loading .effect-1 {
+  animation: rotate 1s ease infinite;
+}
+.loading .effect-2 {
+  animation: rotateOpacity 1s ease infinite 0.1s;
+}
+.loading .effect-3 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-left: 3px solid rgba(121, 97, 249, 1);
+  -webkit-animation: rotateOpacity 1s ease infinite 0.2s;
+  animation: rotateOpacity 1s ease infinite 0.2s;
+  border-radius: 50%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.loading .effects {
+  transition: all 0.3s ease;
+}
+
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+@keyframes rotateOpacity {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    opacity: 0.1;
+  }
+  100% {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+    opacity: 1;
+  }
+}
+.button-position-right {
+  right: 0px;
+  top: 0;
+  position: absolute;
+}
+.company-info-btn {
+  margin: 2px 2px;
+}
+.company-info-btn button#dropdown-4__BV_toggle_ {
+  width: 20px;
+  height: 25px;
+}
+.company-info-btn button#dropdown-4__BV_toggle_::after {
+  background-image: none;
+  content: "+";
+  height:25px;
+  width:20px;
+  font-size:20px;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-family:courier;
+  position: absolute;
+  left: 5px;
+}
+.body-0.card-body {
+  margin-left: 0;
+}
+.company-info-table th {
+  width: 150px;
+}
+.hover-img {
+  transition: transform .4s; /* Animation */
+}
+.hover-img:hover {
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+.download-icon {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+.filter-date {
+  min-width: 10rem;
+  max-width: 10rem;
+}
+.flex-1{
+  flex: 1;
+}
+.card-header.invoice-header{
+  padding: 0.72rem !important;
+  border: 0;
+  border-radius: 0;
+}
+.invoice-preview.date-issued {
+  width: max-content;
+  margin-right: 0;
+  margin-left: auto;
+}
+.invoice-preview.date-issued .card-header{
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+.clear-all-add{
+  top: -0.7rem;
+  position: relative;
+  right: -1rem;
+}
+.clear-all {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 8px;
+  width: 14px;
+  height: 14px;
+}
+.table thead th, .table tfoot th {
+  font-size: 0.8vw !important;
+}
+.table tbody td {
+  font-size: 0.8vw !important;
+}
+h2.brand-text{
+  white-space: break-spaces;
+}
+.table tr td span[id^="recipientCompany-row-"] span.badge,.table tr td span[id^="supplierCompany-row-"] span.badge{
+  overflow: hidden;
+  max-width: 20ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* custom-switch-btn */
+.custom-switch-btn{
+  height: 2.5rem !important;
+}
+.custom-switch-btn.custom-switch .custom-control-label {
+  padding-left: 8.5rem !important;
+}
+.custom-switch-btn.custom-switch .custom-control-label::before{
+  width: 9.6rem !important;
+  height: 2.5rem !important;
+  border-radius: 2.5rem !important;
+}
+.custom-switch-btn.custom-switch .custom-control-label:after {
+  top: 6px !important;
+  left: 6px !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+.custom-switch-btn.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+  transform: translateX(7.2rem) !important;
+ 
+}
+.custom-switch-btn.custom-switch .custom-control-label .switch-icon-left{
+  left: 10px !important;
+  
+}
+.custom-switch-btn.custom-switch .custom-control-label .switch-icon-left, .custom-switch-btn.custom-switch .custom-control-label .switch-icon-right{
+  top: 4px;
+  font-size: 1rem;
+}
+/* custom-switch-1 */
+.custom-switch-btn-1{
+  height: 2.5rem !important;
+}
+.custom-switch-btn-1.custom-switch .custom-control-label {
+  padding-left: 5.5rem !important;
+}
+.custom-switch-btn-1.custom-switch .custom-control-label::before{
+  width: 5.5rem !important;
+  height: 2.5rem !important;
+  border-radius: 2.5rem !important;
+}
+.custom-switch-btn-1.custom-switch .custom-control-label:after {
+  top: 6px !important;
+  left: 6px !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+.custom-switch-btn-1.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+  transform: translateX(3rem) !important;
+}
+.custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-left{
+  left: 10px !important;
+}
+.custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-left, .custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-right{
+  top: 4px;
+  font-size: 1rem;
+}
+/* custom-switch-2 */
+.custom-switch-btn-2{
+  height: 2.5rem !important;
+}
+.custom-switch-btn-2.custom-switch .custom-control-label {
+  padding-left: 9.5rem !important;
+}
+.custom-switch-btn-2.custom-switch .custom-control-label::before{
+  width: 9.5rem !important;
+  height: 2.5rem !important;
+  border-radius: 2.5rem !important;
+}
+.custom-switch-btn-2.custom-switch .custom-control-label:after {
+  top: 6px !important;
+  left: 6px !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+.custom-switch-btn-2.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+  transform: translateX(7rem) !important;
+}
+.custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-left{
+  left: 10px !important;
+}
+.custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-left, .custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-right{
+  top: 4px;
+  font-size: 1rem;
+}
+input.form-control:disabled{
+  text-align: right;
+}
+@media print {
+  .tabs-hide-print,.print-none{
+    display: none;
+  }
+}
+/* Add/edit transaction UI */
+.transaction-container{
+  border-radius: 15px !important;
+  overflow: hidden;
+}
+.p-custom{
+  padding: 0.5rem 1rem;
+}
+.px-custom{
+  padding: 0 1rem;
+}
+.py-custom{
+  padding: 0.8rem;
+}
+.custom-font{
+  font-size: 1.3rem !important;
+}
+.opacity-1{
+  opacity: 1 !important;
+}
+.invoice-add .invoice-total-wrapper {
+  max-width: 100% !important;
+}
+.invoiceTypeHeading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: xxx-large;
+  font-size: -webkit-xxx-large;
+  transform: rotate(330deg) scale(1.2);
+  font-weight: 400;
+}
+.invoice-add-transections{
+font-size: 0.8vw;
+}
+.invoice-add-transections .col-12{
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+/* Preview transaction UI */
+.invoiceStat .invoice-total-item .invoice-total-title.font-weight-bolder{
+  font-weight: 600 !important;
+}
+ 
+/* custom-preview-table */
+.top-custom{
+  top: 18px;
+}
+.bvModalFont p{
+  font-size: 15px;
+}
