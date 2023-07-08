@@ -1266,7 +1266,7 @@
                   >
                     <b-form-group
                       id="input-group-4"
-                      label="Clause for Non Vat:"
+                      label="Tax Exclusive:"
                       label-for="non-vat-clause"
                     >
                       <validation-provider

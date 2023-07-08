@@ -943,7 +943,7 @@
               <b-col>
                 <b-card no-body class="">
                   <b-card-body class="invoice-padding form-item-section p-2 rounded">
-                    <b-form-group id="input-group-4" label="Clause for Non Vat:" label-for="non-vat-clause">
+                    <b-form-group id="input-group-4" label="Tax Exclusive:" label-for="non-vat-clause">
                       <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
                         <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
                           name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
