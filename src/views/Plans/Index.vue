@@ -311,7 +311,7 @@
     <!--/ pricing plan cards -->
 
     <b-row>
-      <b-col><b>Note: </b>All prices are without VAT</b-col>
+      <b-col><b>Забележка: </b>Всички цени са без ДДС</b-col>
     </b-row>
   </section>
 </template>
