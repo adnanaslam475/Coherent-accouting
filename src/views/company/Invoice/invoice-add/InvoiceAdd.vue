@@ -5081,9 +5081,9 @@ export default {
       // ],
       isBank: false,
       noVatClause: [
-      { clause: "чл.113, ал.9 от ЗДДС" },
-      { clause: "чл.86, ал.3 във вр. с 21, ал.5 от ЗДДС" },
-      { clause: "чл.86, ал.3 във вр. с 21, ал.2 от ЗДДС" },
+        { clause: "чл.113, ал.9 от ЗДДС" },
+        { clause: "чл.86, ал.3 във вр. с 21, ал.5 от ЗДДС" },
+        { clause: "чл.86, ал.3 във вр. с 21, ал.2 от ЗДДС" },
       ],
       loading: false,
       required,
@@ -5489,7 +5489,7 @@ export default {
                   return this.$router.push({
                     name: "company-invoice-preview",
                     params: {
-                      id: invoiceData.id,
+                      id: response.data.id,
                       companyId: router.currentRoute.params.companyId,
                     },
                   });

@@ -697,14 +697,14 @@ export default {
       this.exportDto.date = this.selectedMonthData.date; // Set date to current date
       this.exportDto.platformName = this.exportDto.platformName; // Set platformName to "AJURE"
       let companyName = this.companyDetails
-      console.log(companyName, 'https://priceoye.pk/wireless-earbuds/xiaomi/redmi-buds-3-lite')
+      console.log(companyName)
       const dateString = new Date();
       const date = new Date(dateString);
 
       const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
       const formattedDate = date.toLocaleDateString('en-US', options);
-      let fileNme = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`
-
+      let fileName = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`
+      console.log(fileName, 'here is file Name')
       try {
         await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
           headers: {
@@ -724,7 +724,7 @@ export default {
           link.href = url;
           if (blobData.type == 'application/zip') {
             console.log('this.companyDetails.companyName', companyName)
-            link.setAttribute('download', fileNme + '.zip'); // download as .zip
+            link.setAttribute('download', fileName + '.zip'); // download as .zip
           } else {
             link.setAttribute('download', companyName + '.txt'); // download as .txt
           }

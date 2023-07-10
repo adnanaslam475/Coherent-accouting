@@ -910,6 +910,8 @@ export default {
         (item) => item.value === "MICRO_INVEST"
       );
       const ajureIndex = arr.findIndex((item) => item.value === "AJURE");
+      const xeroIndex = arr.findIndex((item) => item.value === "XERO");
+
 
       // Check if the element is found before performing modifications
       if (microInvestIndex !== -1 && ajureIndex !== -1) {
@@ -919,11 +921,14 @@ export default {
           1
         )[0];
 
+
         arr.unshift({ ...removedAjure, disabled: false });
         arr.unshift({ ...removedMicroInvest, disabled: false });
+
+
       }
       arr.forEach((item) => {
-        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE") {
+        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE" && item.value !== "XERO") {
           item.disabled = true;
         }
       });
