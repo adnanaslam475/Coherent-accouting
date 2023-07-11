@@ -872,6 +872,7 @@
                 <div>
                   <b-form-row>
                     <!-- Bank name -->
+
                     <b-col>
                       <span>{{ $t("add_invoice.bank") }}: </span>
                       <validation-provider #default="{ errors }" name="bank" rules="required">
@@ -5099,9 +5100,9 @@ export default {
       // ],
       isBank: false,
       noVatClause: [
-      { clause: "чл.113, ал.9 от ЗДДС" },
-      { clause: "чл.86, ал.3 във вр. с 21, ал.5 от ЗДДС" },
-      { clause: "чл.86, ал.3 във вр. с 21, ал.2 от ЗДДС" },
+        { clause: "чл.113, ал.9 от ЗДДС" },
+        { clause: "чл.86, ал.3 във вр. с 21, ал.5 от ЗДДС" },
+        { clause: "чл.86, ал.3 във вр. с 21, ал.2 от ЗДДС" },
       ],
       loading: false,
       required,
@@ -5332,6 +5333,8 @@ export default {
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
 
 
+
+
       // console.log('scheduleddd =====>', invoiceData.scheduled)
 
       // let schedule = {
@@ -5386,13 +5389,13 @@ export default {
       if (this.clauseToSend !== "") {
         invoiceData.vatCondition = this.clauseToSend;
       }
-      if (this.hasBankDetails === false) {
-        invoiceData.bankApi = {
-          name: "",
-          bic: "",
-          iban: "",
-        };
-      }
+      // if (this.hasBankDetails === false) {
+      //   invoiceData.bankApi = {
+      //     name: "",
+      //     bic: "",
+      //     iban: "",
+      //   };
+      // }
 
       if (invoiceData.vatPercent !== 0) {
         invoiceData.vatCondition = "";
@@ -5422,6 +5425,10 @@ export default {
       // } else {
       //   invoiceData.cronScheduleApi = null;
       // }
+      if (this.isBank == false) {
+        invoiceData.bankApi = null
+      }
+
       this.$refs.invoiceEditForm.validate().then((success) => {
         if (
           success &&
@@ -5454,6 +5461,9 @@ export default {
             if (redirectPage == 'verify') {
               invoiceData.verified = true
 
+            }
+            if (this.isBank) {
+              console.log(this.isBank, 'add bank')
             }
             let token = useJwt.getToken();
             useJwt
