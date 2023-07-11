@@ -7,7 +7,7 @@
         <b-row class="invoice-add">
           <!-- Col: Left (Invoice Container) -->
           <!-- template 05 -->
-          {{ invoiceData }}
+
           <b-col cols="12" xl="10" md="10" v-if="isTemplateFive">
             <b-card no-body class="invoice-add">
               <b-card-header class="justify-content-center">
