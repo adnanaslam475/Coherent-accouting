@@ -1856,10 +1856,10 @@
           <h5 class="m-0">{{ $t("add_invoice.bank_details") }}</h5>
         </b-card-header>
         <b-card-body class="invoice-body">
-          <b-row class="mt-1">
+          <div class="mt-1" style="display: flex; justify-content: space-around">
             <div>
               <div class="invoice-date-wrapper" style="border-bottom: none">
-                <p class="invoice-date-title" style="width: 2rem !important">
+                <p class="invoice-date-title">
                   {{ $t("add_invoice.name") }}
                 </p>
                 <p class="invoice-date">
@@ -1869,7 +1869,7 @@
             </div>
             <div>
               <div class="invoice-date-wrapper" style="border-bottom: none">
-                <p class="invoice-date-title" style="width: 2rem !important">
+                <p class="invoice-date-title">
                   BIC:
                 </p>
                 <p class="invoice-date">
@@ -1879,7 +1879,7 @@
             </div>
             <div>
               <div class="invoice-date-wrapper" style="border-bottom: none">
-                <p class="invoice-date-title" style="width: 2rem !important">
+                <p class="invoice-date-title">
                   IBAN:
                 </p>
                 <p class="invoice-date">
@@ -1887,7 +1887,7 @@
                 </p>
               </div>
             </div>
-          </b-row>
+          </div>
         </b-card-body>
       </b-card>
     </div>
