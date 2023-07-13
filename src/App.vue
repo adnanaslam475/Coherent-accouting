@@ -37,6 +37,11 @@ export default {
     LayoutFull,
 
   },
+  data() {
+    return {
+      currentPlan: null
+    }
+  },
   // ! We can move this computed: layout & contentLayoutType once we get to use Vue 3
   // Currently, router.currentRoute is not reactive and doesn't trigger any change
   computed: {
@@ -46,6 +51,34 @@ export default {
     },
     contentLayoutType() {
       return this.$store.state.appConfig.layout.type
+    },
+  },
+  mounted() {
+    this.getMyCurrentPlan()
+  },
+  methods: {
+    getMyCurrentPlan() {
+      let token = useJwt.getToken();
+      useJwt
+        .getUserCurrentPlan(token)
+        .then((response) => {
+          this.currentPlan = response.data;
+          let active = false
+          active = this.currentPlan.active
+          localStorage.setItem('active', active)
+
+
+        })
+        .catch(() => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Error fetching current plan`,
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          })
+        });
     },
   },
   beforeCreate() {

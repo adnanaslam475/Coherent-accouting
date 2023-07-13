@@ -356,6 +356,12 @@ export default class JwtService {
       files
     );
   }
+  addMultipleExportFiles(token, CompanyId, files) {
+    return this.axiosIns.post(
+      `${this.jwtConfig.multipleExportFileEndpoint}/${CompanyId}`,
+      files
+    );
+  }
 
   getCompany(id) {
     return this.axiosIns.get(`/account/api/company/${id}`);

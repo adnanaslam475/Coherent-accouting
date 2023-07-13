@@ -25,7 +25,7 @@
             {{ $t("company_invoices.add_invoice") }}
             <!-- Add Invoice -->
           </b-button>
-          <b-button variant="primary" class="mr-1 position-relative p-set">
+          <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
             <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" />
 
             <b-spinner v-if="fileLoading" small variant="light" />
@@ -33,9 +33,23 @@
             <!-- Add From File -->
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
           </b-button>
+          <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="isActive" v-else>
+
+            {{ $t("company_invoices.add_from_file") }}
+            <!-- Add From File -->
+            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
+          </b-button>
           <!--Add the third button name export-->
           <!-- Export Invoice Button -->
-          <b-button variant="primary" class="mr-1" @click="showDatePickerModal">
+          <b-button variant="primary" class="mr-1" :disabled="!isActive" v-if="platform == 'FRESH_BOOKS'">
+
+            <b-form-file ref="imageUploader" class="file-input" multiple @change="addExportFile" />
+            <b-spinner v-if="fileLoadingExport" small variant="light" />
+            {{ $t("company_invoices.Export_invoice") }}
+            <!-- Add From File -->
+
+          </b-button>
+          <b-button variant="primary" class="mr-1" @click="showDatePickerModal" :disabled="!isActive" v-else>
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>
@@ -427,6 +441,7 @@
 </template>
 
 <script>
+
 import {
   BCard,
   BRow,
@@ -471,7 +486,7 @@ import { watch, ref } from "vue";
 import axios from "@/libs/axios";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import VueMonthlyPicker from "vue-monthly-picker";
-
+import { saveAs } from 'file-saver';
 
 export default {
   directives: {
@@ -515,6 +530,10 @@ export default {
 
   data() {
     return {
+      exportFiles: null,
+      fileLoadingExport: false,
+      platform: null,
+      isActive: false,
       loadMore: false,
       isExportModalVisible: false,
       startDate: "",
@@ -608,6 +627,9 @@ export default {
     }, 1500);
     // this.fetchInvoices();
     this.observeScroll();
+    this.isActive = localStorage.getItem('active')
+    this.getCompany()
+
   },
 
   computed: {
@@ -676,7 +698,24 @@ export default {
     },
 
     showDatePickerModal() {
+
       this.$refs.export_model.show();
+    },
+    async getCompany() {
+      let companyID = this.$route.params.id;
+      try {
+        const response = await axios.get(`/account/api/company/${companyID}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            "Access-Control-Allow-Credentials": true,
+          },
+        });
+        console.log(response.data.platform, 'here is the company info')
+        this.platform = response.data.exportProperties.platform
+
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     handleOk(bvModalEvent) {
@@ -1104,22 +1143,60 @@ export default {
     },
 
     addfile(companyId) {
-      this.fileLoading = true;
+      if (!this.isActive) {
+
+
+        this.fileLoading = true;
+        const token = useJwt.getToken();
+        const formData = new FormData();
+        formData.append("file", this.file);
+        this.file = null;
+        useJwt
+          .addFileInvoice(token, companyId, formData)
+          .then((response) => {
+            this.fileLoading = false;
+            return this.$router.push({
+              name: "company-invoice-add",
+              params: {
+                companyId,
+                invoiceData: response.data,
+              },
+            });
+          })
+          .catch((error) => {
+            this.fileLoading = false;
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `${error.response.data.errorMessage}`,
+                icon: "AlertTriangleIcon",
+                variant: "danger",
+              },
+            });
+          });
+      }
+    },
+    addExportFile(event) {
+      console.log(event, 'sdasdf')
+      this.exportFiles = event.target.files;
+
+      this.fileLoadingExport = true;
       const token = useJwt.getToken();
       const formData = new FormData();
-      formData.append("file", this.file);
-      this.file = null;
+      for (let i = 0; i < this.exportFiles.length; i++) {
+        formData.append("files", this.exportFiles[i]);
+      }
+      let companyID = this.$route.params.id;
+
       useJwt
-        .addFileInvoice(token, companyId, formData)
+        .addMultipleExportFiles(token, companyID, formData)
         .then((response) => {
-          this.fileLoading = false;
-          return this.$router.push({
-            name: "company-invoice-add",
-            params: {
-              companyId,
-              invoiceData: response.data,
-            },
-          });
+          this.fileLoadingExport = false;
+          console.log(response.data)
+          const blob = new Blob([response.data], { type: 'text/csv' });
+
+          // Save the Blob as a file using FileSaver.js
+          saveAs(blob, 'data.csv');
         })
         .catch((error) => {
           this.fileLoading = false;
@@ -1132,12 +1209,14 @@ export default {
             },
           });
         });
-    },
+
+    }
   },
 
   created() {
     // window.addEventListener("scroll", this.handleScroll);
     this.handleOk = this.handleOk.bind(this);
+
   },
 
   setup() {

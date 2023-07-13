@@ -15,13 +15,13 @@
       </template>
       <account-setting-password />
     </b-tab>
-    <!-- <b-tab>
+    <b-tab>
       <template #title>
         <feather-icon icon="PackageIcon" size="18" class="mr-50" />
         <span class="font-weight-bold">{{ $t('my_profile_page.current_plan') }}</span>
       </template>
       <AccountCurrentPlan />
-    </b-tab> -->
+    </b-tab>
     <!--/ change password tab -->
 
     <!-- info -->
