@@ -464,10 +464,32 @@ export default {
       this.isCheck = true;
     }, 1500);
     this.observeScroll();
-    this.isActive = localStorage.getItem('active')
+    this.getMyCurrentPlan()
   },
 
   methods: {
+    getMyCurrentPlan() {
+      let token = useJwt.getToken();
+      useJwt
+        .getUserCurrentPlan(token)
+        .then((response) => {
+          this.currentPlan = response.data;
+
+          this.isActive = this.currentPlan.active
+
+
+        })
+        .catch(() => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Error fetching current plan`,
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          })
+        });
+    },
     async refreshList() {
       var tableAreaBusy = document.getElementById(
         "company-invoices-not-verified"

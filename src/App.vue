@@ -54,32 +54,10 @@ export default {
     },
   },
   mounted() {
-    this.getMyCurrentPlan()
+
   },
   methods: {
-    getMyCurrentPlan() {
-      let token = useJwt.getToken();
-      useJwt
-        .getUserCurrentPlan(token)
-        .then((response) => {
-          this.currentPlan = response.data;
-          let active = false
-          active = this.currentPlan.active
-          localStorage.setItem('active', active)
 
-
-        })
-        .catch(() => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Error fetching current plan`,
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
-            },
-          })
-        });
-    },
   },
   beforeCreate() {
     // Set colors in theme

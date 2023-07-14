@@ -943,7 +943,8 @@
               </b-card-body>
             </b-card>
 
-            <b-row v-if="invoiceData.vatPercent === '0'" class="mt-2">
+            <b-row v-if="invoiceData.vatPercent == '0'" class="mt-2">
+
               <b-col>
                 <b-card no-body class="">
                   <b-card-body class="invoice-padding form-item-section p-2 rounded">
@@ -952,7 +953,8 @@
                         <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
                           name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
                             " :value="$store.state.selected" @input="selectVatClause()">
-                          <template #selected-option="option" v-if="clauseToSend !== ''">
+                          <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
+
                             <div style="
                                 display: flex;
                                 align-items: center;
@@ -963,13 +965,14 @@
                             </div>
                           </template>
                           <template #selected-option="option" v-else>
+
                             <div style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.clause }}
+                              {{ option }}
                             </div>
                           </template>
 
@@ -980,9 +983,9 @@
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.clause }}
+                              {{ option }}
                             </span>
-                          </template>
+                          </template> -->
                         </v-select>
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
@@ -5102,9 +5105,9 @@ export default {
       // ],
 
       noVatClause: [
-        { clause: "чл.113, ал.9 от ЗДДС" },
-        { clause: "чл.86, ал.3 във вр. с 21, ал.5 от ЗДДС" },
-        { clause: "чл.86, ал.3 във вр. с 21, ал.2 от ЗДДС" },
+        "чл.113, ал.9 от ЗДДС",
+        "чл.86, ал.3 във вр. с 21, ал.5 от ЗДДС",
+        "чл.86, ал.3 във вр. с 21, ал.2 от ЗДДС",
       ],
       loading: false,
       required,
@@ -5303,7 +5306,7 @@ export default {
       if (this.invoiceData.vatCondition === null) {
         this.clauseToSend = "";
       } else {
-        this.clauseToSend = this.invoiceData.vatCondition.clause;
+        this.clauseToSend = this.invoiceData.vatCondition;
       }
     },
     selectBankName() {
@@ -5388,9 +5391,9 @@ export default {
         invoiceData.bankApi.name = this.bankNameToSend;
       }
 
-      if (this.clauseToSend !== "") {
-        invoiceData.vatCondition = this.clauseToSend;
-      }
+      // if (this.clauseToSend !== "") {
+      //   invoiceData.vatCondition = this.clauseToSend;
+      // }
       // if (this.hasBankDetails === false) {
       //   invoiceData.bankApi = {
       //     name: "",
@@ -5399,7 +5402,7 @@ export default {
       //   };
       // }
 
-      if (invoiceData.vatPercent !== 0) {
+      if (invoiceData.vatPercent != 0) {
         invoiceData.vatCondition = "";
       }
 

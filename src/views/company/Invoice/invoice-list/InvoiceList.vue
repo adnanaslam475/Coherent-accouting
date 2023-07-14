@@ -43,7 +43,7 @@
           <!-- Export Invoice Button -->
           <b-button variant="primary" class="mr-1" :disabled="!isActive" v-if="platform == 'FRESH_BOOKS'">
 
-            <b-form-file ref="imageUploader" class="file-input" multiple @change="addExportFile" />
+            <b-form-file ref="imageUploader" class="file-input2" multiple @change="addExportFile" />
             <b-spinner v-if="fileLoadingExport" small variant="light" />
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Add From File -->
@@ -530,6 +530,7 @@ export default {
 
   data() {
     return {
+      EIC: '',
       exportFiles: null,
       fileLoadingExport: false,
       platform: null,
@@ -627,9 +628,9 @@ export default {
     }, 1500);
     // this.fetchInvoices();
     this.observeScroll();
-    this.isActive = localStorage.getItem('active')
-    this.getCompany()
 
+    this.getCompany()
+    this.getMyCurrentPlan()
   },
 
   computed: {
@@ -643,6 +644,28 @@ export default {
 
 
   methods: {
+    getMyCurrentPlan() {
+      let token = useJwt.getToken();
+      useJwt
+        .getUserCurrentPlan(token)
+        .then((response) => {
+          this.currentPlan = response.data;
+
+          this.isActive = this.currentPlan.active
+
+
+        })
+        .catch(() => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Error fetching current plan`,
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          })
+        });
+    },
 
     /*
     async fetchInvoices() {
@@ -712,6 +735,7 @@ export default {
         });
         console.log(response.data.platform, 'here is the company info')
         this.platform = response.data.exportProperties.platform
+        this.EIC = response.data.companyIdentificationNumber
 
       } catch (error) {
         console.log(error);
@@ -1143,38 +1167,38 @@ export default {
     },
 
     addfile(companyId) {
-      if (!this.isActive) {
 
 
-        this.fileLoading = true;
-        const token = useJwt.getToken();
-        const formData = new FormData();
-        formData.append("file", this.file);
-        this.file = null;
-        useJwt
-          .addFileInvoice(token, companyId, formData)
-          .then((response) => {
-            this.fileLoading = false;
-            return this.$router.push({
-              name: "company-invoice-add",
-              params: {
-                companyId,
-                invoiceData: response.data,
-              },
-            });
-          })
-          .catch((error) => {
-            this.fileLoading = false;
-            this.$toast({
-              component: ToastificationContent,
-              props: {
-                title: `${error.response.data.errorMessage}`,
-                icon: "AlertTriangleIcon",
-                variant: "danger",
-              },
-            });
+
+      this.fileLoading = true;
+      const token = useJwt.getToken();
+      const formData = new FormData();
+      formData.append("file", this.file);
+      this.file = null;
+      useJwt
+        .addFileInvoice(token, companyId, formData)
+        .then((response) => {
+          this.fileLoading = false;
+          return this.$router.push({
+            name: "company-invoice-add",
+            params: {
+              companyId,
+              invoiceData: response.data,
+            },
           });
-      }
+        })
+        .catch((error) => {
+          this.fileLoading = false;
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          });
+        });
+
     },
     addExportFile(event) {
       console.log(event, 'sdasdf')
@@ -1187,7 +1211,11 @@ export default {
         formData.append("files", this.exportFiles[i]);
       }
       let companyID = this.$route.params.id;
+      const dateString = new Date();
+      const date = new Date(dateString);
 
+      const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+      const formattedDate = date.toLocaleDateString('en-US', options);
       useJwt
         .addMultipleExportFiles(token, companyID, formData)
         .then((response) => {
@@ -1196,7 +1224,7 @@ export default {
           const blob = new Blob([response.data], { type: 'text/csv' });
 
           // Save the Blob as a file using FileSaver.js
-          saveAs(blob, 'data.csv');
+          saveAs(blob, `EIC_${this.EIC}_DATE_${formattedDate}`);
         })
         .catch((error) => {
           this.fileLoading = false;
@@ -1416,6 +1444,16 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+}
+
+.file-input2 {
+  position: absolute;
+  left: 336px !important;
+  top: 0;
+  width: 15%;
   height: 100%;
   margin: 0;
   opacity: 0;
