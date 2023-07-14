@@ -1,5 +1,20 @@
 {
   "app_logo_title": "Coherent Accounting",
+  "months": {
+"Jan": "Jan",
+ "Feb": "Feb",
+        "Mar": "Mar",
+        "Apr":"Apr",
+        "May":"May",
+        "Jun": "Jun",
+        "Jul": "Jul",
+        "Aug": "Aug",
+        "Sep": "Sep",
+        "Oct": "Oct",
+        "Nov": "Nov",
+        "Dec": "Dec"
+
+  },
   
   "lbl": {
     "login": "Login",
@@ -313,7 +328,9 @@
     "recipientCompanyName": "Recipient Company Name: {name}",
     "supplierCompanyName": "Supplier Company Name: {name}",
     "transactionType": "Transaction Type: {value}",
-    "dateIssued": "Date Issued: {value}"
+    "dateIssued": "Date Issued: {value}",
+    "delete_invoice": "Delete Invoice"
+
   },
   "modal": {
     "title": "Invoices for Vat Report",

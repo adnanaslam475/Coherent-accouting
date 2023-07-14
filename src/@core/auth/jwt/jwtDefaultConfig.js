@@ -5,7 +5,7 @@ export default {
   countryToken: "/account/api/countries",
   // registerEndpoint: '/jwt/register',
   registerEndpoint: '/account/api/user/create',
-  verifyToken:"/account/api/forgot-password",
+  verifyToken: "/account/api/forgot-password",
   resetPasswordRequestEndpoint: '/account/api/forgot-password',
   resetPasswordEndpoint: '/account/api/save-forgot-password',
   refreshEndpoint: '/userauth/oauth/token',
@@ -18,7 +18,7 @@ export default {
   SearchCompanyEndpoint: '/index/api/search-companies/search-by-name',
   SearchEicEndpoint: '/index/api/search-companies',
   SearchEicPerson: '/account/api/user-person/search/1/100',
-  
+
   CompanyInvoiceAddEndpoint: '/account/api/invoice/create',
   companyInvoiceEditEndpoint: '/account/api/invoice',
   companyInvoiceDeleteEndpoint: '/account/api/invoice',
@@ -28,9 +28,11 @@ export default {
   searchEicPersonCompanies: '/account/api/person/search',
   fileInvoiceEndpoint: '/index/api/invoice/ocr',
   multipleFileInvoiceEndpoint: '/index/api/multiple/invoice/ocr',
+  multipleExportFileEndpoint: '/account/api/export',
+
 
   //Delete Company 
-  deleteCompanyEndPoint:'/account/api/company',
+  deleteCompanyEndPoint: '/account/api/company',
 
   // Vat-Reports
   VatReportAddEndPoint: '/account/api/report/create',
@@ -44,11 +46,11 @@ export default {
   getCompanies: '/api/company/list/1/10',
 
   //Getting Plans
-  GetPlansEndPoint:'/account/api/payment/plans',
-  GetUserCurrentPlan:'/account/api/user/plan/current-plan',
+  GetPlansEndPoint: '/account/api/payment/plans',
+  GetUserCurrentPlan: '/account/api/user/plan/current-plan',
 
   wrongOldPasswordEndPoint: '/account/api/user/change-password',
-  validateVat:'/account/api/company-validate',
+  validateVat: '/account/api/company-validate',
 
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>

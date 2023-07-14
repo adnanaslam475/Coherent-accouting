@@ -1749,7 +1749,7 @@
 
       <!-- Invoice Description: Total -->
     </b-card>
-    <b-card no-body class="invoice-preview-card transaction-container" :style="invoiceData.invoiceColor === 'BLUE'
+    <b-card no-body class="invoice-preview-card transaction-container " :style="invoiceData.invoiceColor === 'BLUE'
       ? 'border: 1px solid #007aff'
       : invoiceData.invoiceColor === 'GREEN'
         ? 'border: 1px solid #8fce00'
@@ -1759,8 +1759,8 @@
             ? 'border: 1px solid #FFA500'
             : 'border:1px solid #f6d1ff'
       ">
-      <b-card-body class="invoice-padding">
-        <b-row class="invoiceStat">
+      <b-card-body class="invoice-padding ">
+        <b-row class="invoiceStat d-flex justify-content-end mr-2">
           <!-- Col: Sales Persion -->
           <div cols="12" md="7" class="mt-md-6 d-flex" order="2" order-md="1">
             <h1 class="invoiceTypeHeading">
@@ -1856,10 +1856,10 @@
           <h5 class="m-0">{{ $t("add_invoice.bank_details") }}</h5>
         </b-card-header>
         <b-card-body class="invoice-body">
-          <b-row class="mt-1">
+          <div class="mt-1" style="display: flex; justify-content: space-around">
             <div>
               <div class="invoice-date-wrapper" style="border-bottom: none">
-                <p class="invoice-date-title" style="width: 2rem !important">
+                <p class="invoice-date-title">
                   {{ $t("add_invoice.name") }}
                 </p>
                 <p class="invoice-date">
@@ -1869,7 +1869,7 @@
             </div>
             <div>
               <div class="invoice-date-wrapper" style="border-bottom: none">
-                <p class="invoice-date-title" style="width: 2rem !important">
+                <p class="invoice-date-title">
                   BIC:
                 </p>
                 <p class="invoice-date">
@@ -1879,7 +1879,7 @@
             </div>
             <div>
               <div class="invoice-date-wrapper" style="border-bottom: none">
-                <p class="invoice-date-title" style="width: 2rem !important">
+                <p class="invoice-date-title">
                   IBAN:
                 </p>
                 <p class="invoice-date">
@@ -1887,7 +1887,7 @@
                 </p>
               </div>
             </div>
-          </b-row>
+          </div>
         </b-card-body>
       </b-card>
     </div>
@@ -1951,6 +1951,13 @@ export default {
 };
 </script>
 <style scoped>
+.invTotal {
+  display: flex;
+  justify-content: end !important;
+  float: end;
+
+}
+
 .no-page-break {
   page-break-inside: avoid;
 }
