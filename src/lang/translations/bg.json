@@ -1,18 +1,18 @@
 {
   "app_logo_title": "Coherent Accounting",
   "months": {
-"Jan": "Jan",
- "Feb": "Feb",
-        "Mar": "Mar",
-        "Apr":"Apr",
-        "May":"May",
-        "Jun": "Jun",
-        "Jul": "Jul",
-        "Aug": "Aug",
-        "Sep": "Sep",
-        "Oct": "Oct",
-        "Nov": "Nov",
-        "Dec": "Dec"
+"Jan": "Ян",
+ "Feb": "Фев",
+ "Mar": "Март",
+ "Apr":"Апр",
+ "May":"Май",
+ "Jun": "Юни",
+ "Jul": "Юли",
+ "Aug": "Авф",
+ "Sep": "Сеп",
+ "Oct": "Окт",
+ "Nov": "Ное",
+ "Dec": "Дек"
 
   },
   "lbl": {
