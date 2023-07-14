@@ -49,7 +49,7 @@
             <!-- Add From File -->
 
           </b-button>
-          <b-button variant="primary" class="mr-1" @click="showDatePickerModal" :disabled="isActive" v-else>
+          <b-button variant="primary" class="mr-1" @click="showDatePickerModal" :disabled="!isActive" v-else>
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>

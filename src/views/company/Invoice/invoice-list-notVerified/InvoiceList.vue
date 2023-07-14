@@ -6,9 +6,10 @@
       <b-row>
         <!-- Per Page -->
         <b-col cols="12" md="7" class="d-flex align-items-center justify-content-start mb-1 mb-md-0 pr-0">
+
           <!-- <label>Entries</label>
           <v-select v-model="perPage" @input="getMoreLoadInv" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :options="perPageOptions" :clearable="false" class="per-page-selector d-inline-block ml-50 mr-1" /> -->
-          <b-button variant="primary" class="mr-1 position-relative p-set" v-if="!isActive">
+          <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
             <b-form-file ref="imageUploader" class="file-input" multiple @change="addMultiplefile" />
             <b-spinner v-if="multiplefileLoading" small variant="light" />
             {{ $t("lbl.add_multiple_invoices") }}
