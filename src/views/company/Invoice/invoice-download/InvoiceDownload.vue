@@ -1749,7 +1749,7 @@
 
       <!-- Invoice Description: Total -->
     </b-card>
-    <b-card no-body class="invoice-preview-card transaction-container" :style="invoiceData.invoiceColor === 'BLUE'
+    <b-card no-body class="invoice-preview-card transaction-container " :style="invoiceData.invoiceColor === 'BLUE'
       ? 'border: 1px solid #007aff'
       : invoiceData.invoiceColor === 'GREEN'
         ? 'border: 1px solid #8fce00'
@@ -1759,8 +1759,8 @@
             ? 'border: 1px solid #FFA500'
             : 'border:1px solid #f6d1ff'
       ">
-      <b-card-body class="invoice-padding">
-        <b-row class="invoiceStat">
+      <b-card-body class="invoice-padding ">
+        <b-row class="invoiceStat d-flex justify-content-end mr-2">
           <!-- Col: Sales Persion -->
           <div cols="12" md="7" class="mt-md-6 d-flex" order="2" order-md="1">
             <h1 class="invoiceTypeHeading">
@@ -1951,6 +1951,13 @@ export default {
 };
 </script>
 <style scoped>
+.invTotal {
+  display: flex;
+  justify-content: end !important;
+  float: end;
+
+}
+
 .no-page-break {
   page-break-inside: avoid;
 }

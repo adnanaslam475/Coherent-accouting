@@ -1,5 +1,20 @@
 {
   "app_logo_title": "Coherent Accounting",
+  "months": {
+"Jan": "Jan",
+ "Feb": "Feb",
+        "Mar": "Mar",
+        "Apr":"Apr",
+        "May":"May",
+        "Jun": "Jun",
+        "Jul": "Jul",
+        "Aug": "Aug",
+        "Sep": "Sep",
+        "Oct": "Oct",
+        "Nov": "Nov",
+        "Dec": "Dec"
+
+  },
   "lbl": {
     "login": "Вход",
     "register": "Регистрирай се",
@@ -303,7 +318,10 @@
     "recipientCompanyName": "Име на компанията получател",
     "supplierCompanyName": "Име на фирмата доставчик",
     "transactionType": "Тип транзакция",
-    "dateIssued": "Дата на издаване"
+    "dateIssued": "Дата на издаване",
+    "delete_invoice": "Изтриване на фактура"
+    
+
   },
   "dashboard_lbl": {
     "statistics": "Сатистики",

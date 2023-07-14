@@ -33,7 +33,7 @@
             <!-- Add From File -->
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
           </b-button>
-          <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="isActive" v-else>
+          <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive" v-else>
 
             {{ $t("company_invoices.add_from_file") }}
             <!-- Add From File -->
@@ -43,13 +43,13 @@
           <!-- Export Invoice Button -->
           <b-button variant="primary" class="mr-1" :disabled="!isActive" v-if="platform == 'FRESH_BOOKS'">
 
-            <b-form-file ref="imageUploader" class="file-input2" multiple @change="addExportFile" />
+            <b-form-file ref="imageUploader" class="file-input2" multiple @change="addExportFile" :disabled="!isActive" />
             <b-spinner v-if="fileLoadingExport" small variant="light" />
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Add From File -->
 
           </b-button>
-          <b-button variant="primary" class="mr-1" @click="showDatePickerModal" :disabled="!isActive" v-else>
+          <b-button variant="primary" class="mr-1" @click="showDatePickerModal" :disabled="isActive" v-else>
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>
@@ -569,20 +569,7 @@ export default {
         invoicesForReport: null,
       },
       companyID: "",
-      monthLabels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+
       InvoicesTableColumns: [
         { key: "isChecked", label: "" },
         { key: "invoiceNumber" },
@@ -634,7 +621,27 @@ export default {
   },
 
   computed: {
+    monthLabels() {
+      let arr = [
+        this.$t('months.Jan'),
+        this.$t('months.Feb'),
+        this.$t('months.Mar'),
+        this.$t('months.Apr'),
 
+
+
+        this.$t('months.May'),
+        this.$t('months.Jun'),
+        this.$t('months.Jul'),
+        this.$t('months.Aug'),
+        this.$t('months.Sep'),
+        this.$t('months.Oct'),
+        this.$t('months.Nov'),
+        this.$t('months.Dec'),
+
+      ]
+      return arr
+    },
     modalDisabled() {
       // your condition here...
       return !this.exportDto || !this.companyinfo;
