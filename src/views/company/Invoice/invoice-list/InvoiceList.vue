@@ -25,7 +25,7 @@
             {{ $t("company_invoices.add_invoice") }}
             <!-- Add Invoice -->
           </b-button>
-          <b-button variant="primary" class="mr-1 position-relative p-set">
+          <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
             <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" />
 
             <b-spinner v-if="fileLoading" small variant="light" />
@@ -33,9 +33,23 @@
             <!-- Add From File -->
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
           </b-button>
+          <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive" v-else>
+
+            {{ $t("company_invoices.add_from_file") }}
+            <!-- Add From File -->
+            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
+          </b-button>
           <!--Add the third button name export-->
           <!-- Export Invoice Button -->
-          <b-button variant="primary" class="mr-1" @click="showDatePickerModal">
+          <b-button variant="primary" class="mr-1" :disabled="!isActive" v-if="platform == 'FRESH_BOOKS'">
+
+            <b-form-file ref="imageUploader" class="file-input2" multiple @change="addExportFile" :disabled="!isActive" />
+            <b-spinner v-if="fileLoadingExport" small variant="light" />
+            {{ $t("company_invoices.Export_invoice") }}
+            <!-- Add From File -->
+
+          </b-button>
+          <b-button variant="primary" class="mr-1" @click="showDatePickerModal" :disabled="!isActive" v-else>
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>
@@ -427,6 +441,7 @@
 </template>
 
 <script>
+
 import {
   BCard,
   BRow,
@@ -471,7 +486,7 @@ import { watch, ref } from "vue";
 import axios from "@/libs/axios";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import VueMonthlyPicker from "vue-monthly-picker";
-
+import { saveAs } from 'file-saver';
 
 export default {
   directives: {
@@ -515,6 +530,11 @@ export default {
 
   data() {
     return {
+      EIC: '',
+      exportFiles: null,
+      fileLoadingExport: false,
+      platform: null,
+      isActive: false,
       loadMore: false,
       isExportModalVisible: false,
       startDate: "",
@@ -549,20 +569,7 @@ export default {
         invoicesForReport: null,
       },
       companyID: "",
-      monthLabels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+
       InvoicesTableColumns: [
         { key: "isChecked", label: "" },
         { key: "invoiceNumber" },
@@ -608,10 +615,33 @@ export default {
     }, 1500);
     // this.fetchInvoices();
     this.observeScroll();
+
+    this.getCompany()
+    this.getMyCurrentPlan()
   },
 
   computed: {
+    monthLabels() {
+      let arr = [
+        this.$t('months.Jan'),
+        this.$t('months.Feb'),
+        this.$t('months.Mar'),
+        this.$t('months.Apr'),
 
+
+
+        this.$t('months.May'),
+        this.$t('months.Jun'),
+        this.$t('months.Jul'),
+        this.$t('months.Aug'),
+        this.$t('months.Sep'),
+        this.$t('months.Oct'),
+        this.$t('months.Nov'),
+        this.$t('months.Dec'),
+
+      ]
+      return arr
+    },
     modalDisabled() {
       // your condition here...
       return !this.exportDto || !this.companyinfo;
@@ -621,6 +651,28 @@ export default {
 
 
   methods: {
+    getMyCurrentPlan() {
+      let token = useJwt.getToken();
+      useJwt
+        .getUserCurrentPlan(token)
+        .then((response) => {
+          this.currentPlan = response.data;
+
+          this.isActive = this.currentPlan.active
+
+
+        })
+        .catch(() => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Error fetching current plan`,
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          })
+        });
+    },
 
     /*
     async fetchInvoices() {
@@ -676,7 +728,25 @@ export default {
     },
 
     showDatePickerModal() {
+
       this.$refs.export_model.show();
+    },
+    async getCompany() {
+      let companyID = this.$route.params.id;
+      try {
+        const response = await axios.get(`/account/api/company/${companyID}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            "Access-Control-Allow-Credentials": true,
+          },
+        });
+        console.log(response.data.platform, 'here is the company info')
+        this.platform = response.data.exportProperties.platform
+        this.EIC = response.data.companyIdentificationNumber
+
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     handleOk(bvModalEvent) {
@@ -697,14 +767,14 @@ export default {
       this.exportDto.date = this.selectedMonthData.date; // Set date to current date
       this.exportDto.platformName = this.exportDto.platformName; // Set platformName to "AJURE"
       let companyName = this.companyDetails
-      console.log(companyName, 'https://priceoye.pk/wireless-earbuds/xiaomi/redmi-buds-3-lite')
+      console.log(companyName)
       const dateString = new Date();
       const date = new Date(dateString);
 
       const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
       const formattedDate = date.toLocaleDateString('en-US', options);
-      let fileNme = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`
-
+      let fileName = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`
+      console.log(fileName, 'here is file Name')
       try {
         await axios.post("https://coherent-accounting.com/account/api/export", this.exportDto, {
           headers: {
@@ -724,9 +794,9 @@ export default {
           link.href = url;
           if (blobData.type == 'application/zip') {
             console.log('this.companyDetails.companyName', companyName)
-            link.setAttribute('download', fileNme + '.zip'); // download as .zip
+            link.setAttribute('download', fileName + '.zip'); // download as .zip
           } else {
-            link.setAttribute('download', companyName + '.txt'); // download as .txt
+            link.setAttribute('download', fileName + '.txt'); // download as .txt
           }
           document.body.appendChild(link);
           link.click();
@@ -1104,6 +1174,9 @@ export default {
     },
 
     addfile(companyId) {
+
+
+
       this.fileLoading = true;
       const token = useJwt.getToken();
       const formData = new FormData();
@@ -1132,12 +1205,53 @@ export default {
             },
           });
         });
+
     },
+    addExportFile(event) {
+      console.log(event, 'sdasdf')
+      this.exportFiles = event.target.files;
+
+      this.fileLoadingExport = true;
+      const token = useJwt.getToken();
+      const formData = new FormData();
+      for (let i = 0; i < this.exportFiles.length; i++) {
+        formData.append("files", this.exportFiles[i]);
+      }
+      let companyID = this.$route.params.id;
+      const dateString = new Date();
+      const date = new Date(dateString);
+
+      const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+      const formattedDate = date.toLocaleDateString('en-US', options);
+      useJwt
+        .addMultipleExportFiles(token, companyID, formData)
+        .then((response) => {
+          this.fileLoadingExport = false;
+          console.log(response.data)
+          const blob = new Blob([response.data], { type: 'text/csv' });
+
+          // Save the Blob as a file using FileSaver.js
+          saveAs(blob, `EIC_${this.EIC}_DATE_${formattedDate}`);
+        })
+        .catch((error) => {
+          this.fileLoading = false;
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          });
+        });
+
+    }
   },
 
   created() {
     // window.addEventListener("scroll", this.handleScroll);
     this.handleOk = this.handleOk.bind(this);
+
   },
 
   setup() {
@@ -1337,6 +1451,16 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+}
+
+.file-input2 {
+  position: absolute;
+  left: 336px !important;
+  top: 0;
+  width: 15%;
   height: 100%;
   margin: 0;
   opacity: 0;

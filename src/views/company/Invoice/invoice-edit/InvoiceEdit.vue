@@ -872,6 +872,7 @@
                 <div>
                   <b-form-row>
                     <!-- Bank name -->
+
                     <b-col>
                       <span>{{ $t("add_invoice.bank") }}: </span>
                       <validation-provider #default="{ errors }" name="bank" rules="required">
@@ -889,17 +890,19 @@
                             </div>
                           </template>
                           <template #selected-option="option" v-else>
+
                             <div style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ $t(option.name) }}
+                              {{ $t(option.label) }}
                             </div>
                           </template>
 
                           <template v-slot:option="option">
+
                             <span style="
                                 display: flex;
                                 align-items: center;
@@ -940,7 +943,8 @@
               </b-card-body>
             </b-card>
 
-            <b-row v-if="invoiceData.vatPercent === '0'" class="mt-2">
+            <b-row v-if="invoiceData.vatPercent == '0'" class="mt-2">
+
               <b-col>
                 <b-card no-body class="">
                   <b-card-body class="invoice-padding form-item-section p-2 rounded">
@@ -949,7 +953,8 @@
                         <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
                           name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
                             " :value="$store.state.selected" @input="selectVatClause()">
-                          <template #selected-option="option" v-if="clauseToSend !== ''">
+                          <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
+
                             <div style="
                                 display: flex;
                                 align-items: center;
@@ -960,13 +965,14 @@
                             </div>
                           </template>
                           <template #selected-option="option" v-else>
+
                             <div style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.clause }}
+                              {{ option }}
                             </div>
                           </template>
 
@@ -977,9 +983,9 @@
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.clause }}
+                              {{ option }}
                             </span>
-                          </template>
+                          </template> -->
                         </v-select>
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
@@ -1686,7 +1692,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ $t(option.name) }}
+                                      {{ $t(option.label) }}
                                     </div>
                                   </template>
 
@@ -2664,7 +2670,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ $t(option.name) }}
+                                      {{ $t(option.label) }}
                                     </div>
                                   </template>
 
@@ -3690,7 +3696,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ $t(option.name) }}
+                                      {{ $t(option.label) }}
                                     </div>
                                   </template>
 
@@ -4654,7 +4660,7 @@
                                         justify-content: left;
                                         grid-gap: 8px;
                                       ">
-                                      {{ $t(option.name) }}
+                                      {{ $t(option.label) }}
                                     </div>
                                   </template>
 
@@ -5097,11 +5103,11 @@ export default {
       //   { name: i18n.tc("add_invoice.bank-4") },
       //   { name: i18n.tc("add_invoice.bank-5") },
       // ],
-      isBank: false,
+
       noVatClause: [
-      { clause: "чл.113, ал.9 от ЗДДС" },
-      { clause: "чл.86, ал.3 във вр. с 21, ал.5 от ЗДДС" },
-      { clause: "чл.86, ал.3 във вр. с 21, ал.2 от ЗДДС" },
+        "чл.113, ал.9 от ЗДДС",
+        "чл.86, ал.3 във вр. с 21, ал.5 от ЗДДС",
+        "чл.86, ал.3 във вр. с 21, ал.2 от ЗДДС",
       ],
       loading: false,
       required,
@@ -5300,7 +5306,7 @@ export default {
       if (this.invoiceData.vatCondition === null) {
         this.clauseToSend = "";
       } else {
-        this.clauseToSend = this.invoiceData.vatCondition.clause;
+        this.clauseToSend = this.invoiceData.vatCondition;
       }
     },
     selectBankName() {
@@ -5330,6 +5336,8 @@ export default {
     },
 
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
+
+
 
 
       // console.log('scheduleddd =====>', invoiceData.scheduled)
@@ -5383,18 +5391,18 @@ export default {
         invoiceData.bankApi.name = this.bankNameToSend;
       }
 
-      if (this.clauseToSend !== "") {
-        invoiceData.vatCondition = this.clauseToSend;
-      }
-      if (this.hasBankDetails === false) {
-        invoiceData.bankApi = {
-          name: "",
-          bic: "",
-          iban: "",
-        };
-      }
+      // if (this.clauseToSend !== "") {
+      //   invoiceData.vatCondition = this.clauseToSend;
+      // }
+      // if (this.hasBankDetails === false) {
+      //   invoiceData.bankApi = {
+      //     name: "",
+      //     bic: "",
+      //     iban: "",
+      //   };
+      // }
 
-      if (invoiceData.vatPercent !== 0) {
+      if (invoiceData.vatPercent != 0) {
         invoiceData.vatCondition = "";
       }
 
@@ -5422,6 +5430,12 @@ export default {
       // } else {
       //   invoiceData.cronScheduleApi = null;
       // }
+      let self = this
+      console.log(self.isBank, 'banksssss')
+      if (self.isBank == false) {
+        invoiceData.bankApi = null
+      }
+
       this.$refs.invoiceEditForm.validate().then((success) => {
         if (
           success &&
@@ -5455,6 +5469,7 @@ export default {
               invoiceData.verified = true
 
             }
+
             let token = useJwt.getToken();
             useJwt
               .EditCompanyInvoice(
@@ -5671,7 +5686,7 @@ export default {
 
     var InvoiceTypeOptionToggleValue = ref(null);
     var saleTypeOptionToggleValue = ref(null);
-
+    var isBank = ref(false)
 
     let uploadValue = {
       companyOwnerName: "",
@@ -5700,7 +5715,10 @@ export default {
 
 
         invoiceData.value = response.data;
+        if (invoiceData.value.bankApi != null) {
 
+          isBank.value = true
+        }
         // if (invoiceData.value.scheduled == false) {
         //   let schedule = {
         //     scheduleType: "",
@@ -5710,7 +5728,8 @@ export default {
         //   invoiceData.value.cronScheduleApi = schedule
 
         // }
-        console.log(invoiceData.value);
+
+
         if (invoiceData.value.templateId === "1") {
           isTemplateOne.value = true;
         } else if (invoiceData.value.templateId === "2") {
@@ -5904,6 +5923,7 @@ export default {
         companyName.value = response.data.companyName
         console.log(companyName.value, 'this is company name ')
         supplierID.value = response.data.companyIdentificationNumber
+
 
       })
       .catch((error) => {
@@ -6440,6 +6460,7 @@ export default {
     };
 
     return {
+      isBank,
       companyName,
       companyInfo,
       populateValues,

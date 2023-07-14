@@ -1984,10 +1984,11 @@
 
           <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
             :paginate-elements-by-height="1100" filename="invoice" :pdf-quality="2" :manual-pagination="false"
-            pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px"
-            @progress="onProgress($event)" @hasDownloaded="hasDownloaded($event)" ref="html2Pdf">
+            pdf-format="a3" :pdf-margin="10" pdf-content-width="1125px" @progress="onProgress($event)"
+            @hasDownloaded="hasDownloaded($event)" ref="html2Pdf" id="invoice-pdf">
             <section class="invoice-pdf" slot="pdf-content">
               <div v-if="invoiceData">
+
                 <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
               </div>
               <b-alert variant="danger" :show="invoiceData === undefined">

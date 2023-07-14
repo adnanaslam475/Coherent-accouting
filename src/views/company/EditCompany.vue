@@ -650,7 +650,7 @@ export default {
         arr.unshift({ ...removedMicroInvest, disabled: false });
       }
       arr.forEach((item) => {
-        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE") {
+        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE" && item.value !== "XERO" && item.value !== "FRESH_BOOKS") {
           item.disabled = true;
         }
       });
