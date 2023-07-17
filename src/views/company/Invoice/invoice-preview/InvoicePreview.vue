@@ -2318,9 +2318,9 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       this.name = `Фактура с Номер: ${this.invoiceData.invoiceNumber} от : ${this.invoiceData.supplierCompany.companName}`;
       const newpdfContent123 = this.$refs.html2Pdf.$el.innerHTML;
       console.log(" New DONDNDNNDDN ", newpdfContent123, this.$el, this.$refs.html2Pdf);
-      this.$refs.html2Pdfnew.generatePdf()
+      this.$refs.html2Pdf.generatePdf()
       // these are important data
-      let data = Object.assign({}, this.$refs.html2Pdfnew.$el.innerHTML);
+      let data = Object.assign({}, this.$refs.html2Pdf.$el.innerHTML);
       console.log(" new pdf data is ", data);
       const newblob123 = new Blob([data], { type: 'application/pdf' });
       this.fileToByteArray(newblob123, function (byteArrayData) {
@@ -2416,7 +2416,7 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       //});
       this.email = e.target.email.value;
       console.log("Target Values", e.target.email.value, this.invoiceData.invoiceNumber);
-      this.$refs.html2Pdf.generatePdf('<h1>Your PDF Content</h1>', this.savePDF);
+      // this.$refs.html2Pdf.generatePdf('<h1>Your PDF Content</h1>', this.savePDF);
       this.sendEmailFromAPI(e.target.email.value, e.target.message.value, e.target.name.value, this.invoiceData.invoiceNumber);
       this.$refs['my-modal'].hide();
     },
