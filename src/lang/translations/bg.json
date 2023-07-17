@@ -623,9 +623,9 @@
     "yes": "ДА",
     "no": "НЕ"
   },
-  "incomeSalesServices": "Услуги за продажби на приходи",
-  "taxSales": "Данъчни продажби",
-  "clients": "клиенти",
+  "incomeSalesServices": "Сметка покупки/разходи",
+  "taxSales": "Сметка продажби",
+  "clients": "Сметка клиенти",
   "home": "Начало",
   "dashboard": "Табло",
   "invoices": "Фактури",
