@@ -331,7 +331,9 @@
     "dateIssued": "Дата на издаване: {value}",
     "delete_invoice": "Изтриване на фактура",
     "invoice_created_successfully": "Фактурата е създадена успешно",
-    "invoice_updated_successfully": "Фактурата е актуализирана успешно"
+    "invoice_updated_successfully": "Фактурата е актуализирана успешно",
+    "invoice_exported_successfully": "Фактурата е експортирана успешно"
+
 
 
   },

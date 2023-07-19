@@ -1232,6 +1232,14 @@ export default {
 
           // Save the Blob as a file using FileSaver.js
           saveAs(blob, `EIC_${this.EIC}_DATE_${formattedDate}`);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: this.$t('invoice_details.invoice_exported_successfully'),
+              icon: "AlertTriangleIcon",
+              variant: "success",
+            },
+          });
         })
         .catch((error) => {
           this.fileLoading = false;

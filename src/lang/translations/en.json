@@ -331,7 +331,8 @@
     "dateIssued": "Date Issued: {value}",
     "delete_invoice": "Delete Invoice",
     "invoice_created_successfully": "Invoice Created Successfully",
-    "invoice_updated_successfully": "Invoice Updated Successfully"
+    "invoice_updated_successfully": "Invoice Updated Successfully",
+    "invoice_exported_successfully": "Invoice exported Successfully"
 
   },
   "modal": {
