@@ -159,6 +159,11 @@
                       {{ invoiceData.vatCondition }}
                     </p>
                   </div>
+                  <div class="mt-4 d-flex" order="2" order-md="1">
+                    <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                      {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                    </h2>
+                  </div>
                 </div>
                 <div class="tm_right_footer">
                   <table>
@@ -487,6 +492,11 @@
                       <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                       {{ invoiceData.vatCondition }}
                     </p>
+                  </div>
+                  <div class="mt-4 d-flex" order="2" order-md="1">
+                    <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                      {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                    </h2>
                   </div>
                 </div>
                 <div class="tm_right_footer">
@@ -913,7 +923,11 @@
                       {{ invoiceData.vatCondition }}
                     </p>
                   </div>
-
+                  <div class="mt-4 d-flex" order="2" order-md="1">
+                    <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                      {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                    </h2>
+                  </div>
                 </div>
                 <div class="tm_right_footer">
                   <table>
@@ -1284,6 +1298,11 @@
                       ">
                       <b>{{ $t("add_invoice.non_vat_clause") }}: </b>{{ invoiceData.vatCondition }}
                     </p>
+                  </div>
+                  <div class="mt-4 d-flex" order="2" order-md="1">
+                    <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                      {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                    </h2>
                   </div>
                 </div>
                 <div class="tm_right_footer">
