@@ -274,7 +274,7 @@
     "update_invoice": "Update",
     "Export_invoice": "Export",
     "Export_invoicess": "Export",
-    "Cancel": " Cancel ",
+    "cancel": " Cancel ",
     "start_date": "Start Date",
     "end_date": "End Date",
     "search": "Search..",

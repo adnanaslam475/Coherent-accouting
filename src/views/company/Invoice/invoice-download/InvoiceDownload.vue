@@ -115,7 +115,7 @@
                     </thead>
                     <tbody>
                       <tr v-for="(item, index) in invoiceData.transactions" :key="index">
-                        <td>{{ index + 1 }}</td>
+                        <td class="tm_width_1">{{ index + 1 }}</td>
                         <td class="elipsis-text">
                           {{ item.serviceOrItemDescription }}
                         </td>
@@ -448,7 +448,7 @@
                     <tbody>
                       <tr v-for="(item, index) in invoiceData.transactions" :key="index">
                         <td class="tm_width_1">{{ index + 1 }}</td>
-                        <td class="tm_width_3">
+                        <td class="elipsis-text">
                           {{ item.serviceOrItemDescription }}
                         </td>
                         <td class="tm_width_1">{{ item.quantity }}</td>
@@ -878,7 +878,7 @@
                     <tbody>
                       <tr v-for="(item, index) in invoiceData.transactions" :key="index">
                         <td class="tm_width_1">{{ index + 1 }}</td>
-                        <td class="tm_width_3">
+                        <td class="elipsis-text">
                           {{ item.serviceOrItemDescription }}
                         </td>
                         <td class="tm_width_1">{{ item.quantity }}</td>
@@ -1256,17 +1256,17 @@
                   <tbody>
                     <tr v-for="(item, index) in invoiceData.transactions" :key="index">
                       <td class="tm_width_1">{{ index + 1 }}</td>
-                      <td class="tm_width_3">
+                      <td class="elipsis-text">
                         {{ item.serviceOrItemDescription }}
                       </td>
                       <td class="tm_width_1">{{ item.quantity }}</td>
                       <td class="tm_width_1">{{ item.measurement }}</td>
 
-                      <td class="tm_width_3">
+                      <td class="tm_width_2">
                         {{ item.singleAmountTransaction }}
                       </td>
 
-                      <td class="tm_width_3">
+                      <td class="tm_width_2">
                         {{
                           (
                             parseFloat(item.singleAmountTransaction) *
@@ -1741,7 +1741,7 @@
               <tbody>
                 <tr v-for="(item, index) in invoiceData.transactions" :key="index">
                   <td class="tm_width_1">{{ index + 1 }}</td>
-                  <td class="tm_width_3">
+                  <td class="elipsis-text">
                     {{ item.serviceOrItemDescription }}
                   </td>
                   <td class="tm_width_1">{{ item.quantity }}</td>

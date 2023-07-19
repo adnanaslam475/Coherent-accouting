@@ -2006,9 +2006,10 @@
           </b-button>
 
           <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
-            :paginate-elements-by-height="1100" filename="invoice" :pdf-quality="2" :manual-pagination="false"
-            pdf-format="a3" :pdf-margin="10" pdf-content-width="1125px" @progress="onProgress($event)"
-            @hasDownloaded="hasDownloaded($event)" ref="html2Pdf" id="invoice-pdf">
+            :paginate-elements-by-height="1100"
+            :filename='"invoice_" + invoiceData.invoiceNumber + "_" + invoiceData.supplierCompany.companyEic'
+            :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10" pdf-content-width="1125px"
+            @progress="onProgress($event)" @hasDownloaded="hasDownloaded($event)" ref="html2Pdf" id="invoice-pdf">
             <section class="invoice-pdf" slot="pdf-content">
               <div v-if="invoiceData">
 
@@ -2446,11 +2447,11 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
     },
     savePDF(pdfData) {
 
-      const file = new File([pdfData], 'invoice.pdf', { type: 'application/pdf' });
+      const file = new File([pdfData], { type: 'application/pdf' });
       const url = URL.createObjectURL(file);
       const link = document.createElement('a');
       link.href = url;
-      link.download = file.name;
+      link.download = '122.pdf';
       link.click();
       console.log(" URL FILE ", url);
       URL.revokeObjectURL(url);
