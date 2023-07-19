@@ -723,8 +723,15 @@
                           {{ invoiceData.vatCondition }}
                         </p>
                       </div>
+                      <div class="mt-4 d-flex" order="2" order-md="1">
+                        <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                          {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                        </h2>
+                      </div>
                     </div>
+
                     <div class="tm_right_footer">
+
                       <table>
                         <tbody>
                           <tr>
@@ -815,6 +822,7 @@
                         </tbody>
                       </table>
                     </div>
+
                   </div>
                   <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
                     <tr>
@@ -1050,6 +1058,11 @@
                           <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                           {{ invoiceData.vatCondition }}
                         </p>
+                      </div>
+                      <div class="mt-4 d-flex" order="2" order-md="1">
+                        <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                          {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                        </h2>
                       </div>
                     </div>
                     <div class="tm_right_footer">
@@ -1475,6 +1488,11 @@
                           {{ invoiceData.vatCondition }}
                         </p>
                       </div>
+                      <div class="mt-4 d-flex" order="2" order-md="1">
+                        <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                          {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                        </h2>
+                      </div>
                     </div>
                     <div class="tm_right_footer">
                       <table>
@@ -1841,6 +1859,11 @@
                           ">
                           <b>{{ $t("add_invoice.non_vat_clause") }}: </b>{{ invoiceData.vatCondition }}
                         </p>
+                      </div>
+                      <div class="mt-4 d-flex" order="2" order-md="1">
+                        <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                          {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                        </h2>
                       </div>
                     </div>
                     <div class="tm_right_footer">
@@ -2328,6 +2351,7 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       });
     },
     attachPDFToFile(pdfBlob) {
+
       this.file = new File([pdfBlob], 'document.pdf');
       // Perform operations with the file as needed
       // For demonstration purposes, we'll just log a message
@@ -2421,6 +2445,7 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       this.$refs['my-modal'].hide();
     },
     savePDF(pdfData) {
+
       const file = new File([pdfData], 'invoice.pdf', { type: 'application/pdf' });
       const url = URL.createObjectURL(file);
       const link = document.createElement('a');

@@ -329,7 +329,9 @@
     "supplierCompanyName": "Supplier Company Name: {name}",
     "transactionType": "Transaction Type: {value}",
     "dateIssued": "Date Issued: {value}",
-    "delete_invoice": "Delete Invoice"
+    "delete_invoice": "Delete Invoice",
+    "invoice_created_successfully": "Invoice Created Successfully",
+    "invoice_updated_successfully": "Invoice Updated Successfully"
 
   },
   "modal": {
