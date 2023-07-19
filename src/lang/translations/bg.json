@@ -323,6 +323,18 @@
     
 
   },
+    "invoice_details": {
+    "invoiceNumber": "Номер на фактура",
+    "recipientCompanyName": "Име на компанията получател: {name}",
+    "supplierCompanyName": "Име на фирмата доставчик: {name}",
+    "transactionType": "Тип транзакция: {value}",
+    "dateIssued": "Дата на издаване: {value}",
+    "delete_invoice": "Изтриване на фактура",
+    "invoice_created_successfully": "Фактурата е създадена успешно",
+    "invoice_updated_successfully": "Фактурата е актуализирана успешно"
+
+
+  },
   "dashboard_lbl": {
     "statistics": "Сатистики",
     "total_companies": "Общо Фирми",

@@ -723,8 +723,15 @@
                           {{ invoiceData.vatCondition }}
                         </p>
                       </div>
+                      <div class="mt-4 d-flex" order="2" order-md="1">
+                        <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                          {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                        </h2>
+                      </div>
                     </div>
+
                     <div class="tm_right_footer">
+
                       <table>
                         <tbody>
                           <tr>
@@ -815,6 +822,7 @@
                         </tbody>
                       </table>
                     </div>
+
                   </div>
                   <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
                     <tr>
@@ -1050,6 +1058,11 @@
                           <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                           {{ invoiceData.vatCondition }}
                         </p>
+                      </div>
+                      <div class="mt-4 d-flex" order="2" order-md="1">
+                        <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                          {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                        </h2>
                       </div>
                     </div>
                     <div class="tm_right_footer">
@@ -1475,6 +1488,11 @@
                           {{ invoiceData.vatCondition }}
                         </p>
                       </div>
+                      <div class="mt-4 d-flex" order="2" order-md="1">
+                        <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                          {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                        </h2>
+                      </div>
                     </div>
                     <div class="tm_right_footer">
                       <table>
@@ -1841,6 +1859,11 @@
                           ">
                           <b>{{ $t("add_invoice.non_vat_clause") }}: </b>{{ invoiceData.vatCondition }}
                         </p>
+                      </div>
+                      <div class="mt-4 d-flex" order="2" order-md="1">
+                        <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                          {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                        </h2>
                       </div>
                     </div>
                     <div class="tm_right_footer">
@@ -2318,9 +2341,9 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       this.name = `Фактура с Номер: ${this.invoiceData.invoiceNumber} от : ${this.invoiceData.supplierCompany.companName}`;
       const newpdfContent123 = this.$refs.html2Pdf.$el.innerHTML;
       console.log(" New DONDNDNNDDN ", newpdfContent123, this.$el, this.$refs.html2Pdf);
-      this.$refs.html2Pdfnew.generatePdf()
+      this.$refs.html2Pdf.generatePdf()
       // these are important data
-      let data = Object.assign({}, this.$refs.html2Pdfnew.$el.innerHTML);
+      let data = Object.assign({}, this.$refs.html2Pdf.$el.innerHTML);
       console.log(" new pdf data is ", data);
       const newblob123 = new Blob([data], { type: 'application/pdf' });
       this.fileToByteArray(newblob123, function (byteArrayData) {
@@ -2328,6 +2351,7 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       });
     },
     attachPDFToFile(pdfBlob) {
+
       this.file = new File([pdfBlob], 'document.pdf');
       // Perform operations with the file as needed
       // For demonstration purposes, we'll just log a message
@@ -2416,11 +2440,12 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       //});
       this.email = e.target.email.value;
       console.log("Target Values", e.target.email.value, this.invoiceData.invoiceNumber);
-      this.$refs.html2Pdf.generatePdf('<h1>Your PDF Content</h1>', this.savePDF);
+      // this.$refs.html2Pdf.generatePdf('<h1>Your PDF Content</h1>', this.savePDF);
       this.sendEmailFromAPI(e.target.email.value, e.target.message.value, e.target.name.value, this.invoiceData.invoiceNumber);
       this.$refs['my-modal'].hide();
     },
     savePDF(pdfData) {
+
       const file = new File([pdfData], 'invoice.pdf', { type: 'application/pdf' });
       const url = URL.createObjectURL(file);
       const link = document.createElement('a');

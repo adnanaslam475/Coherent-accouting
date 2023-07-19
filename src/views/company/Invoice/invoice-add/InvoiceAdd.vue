@@ -5440,7 +5440,7 @@ export default {
                 this.$toast({
                   component: ToastificationContent,
                   props: {
-                    title: `Invoice Created Successfully`,
+                    title: this.$t('invoice_details.invoice_created_successfully'),
                     icon: "EditIcon",
                     variant: "success",
                   },
