@@ -174,12 +174,12 @@
       <tab-content :title="$t('create_company.account_details')" :before-change="validationFormTab2">
         <validation-observer ref="accountRules" tag="form">
           <b-row>
-            <b-col cols="12" class="mb-2">
+            <!-- <b-col cols="12" class="mb-2">
               <h5 class="mb-0">{{ $t("create_company.account_details") }}</h5>
               <small class="text-muted">
                 {{ $t("create_company.create_acc_details") }}
               </small>
-            </b-col>
+            </b-col> -->
           </b-row>
           <b-form-row>
             <b-col>
