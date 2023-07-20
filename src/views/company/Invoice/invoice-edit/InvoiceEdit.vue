@@ -279,7 +279,12 @@
                     </b-card-body>
                   </b-card>
                 </div>
-
+                <div>
+                  <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
+                    class="mb-2 reverse-button">
+                    {{ $t("reverse") }}
+                  </b-button>
+                </div>
                 <div class="mt-md-0 mt-2 flex-1">
                   <b-card no-body class="invoice-add invoice-card" :style="isBlue === true
                     ? 'border: 1px solid #007aff !important'
@@ -1194,7 +1199,7 @@
 
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
-                      <div class="tm_invoice_left" style="width: 47%">
+                      <div class="tm_invoice_left" style="width: 44%">
                         <h6 class="tm_mb2">
                           <b class="tm_primary_color">
                             {{ $t("add_invoice.supplier") }}:</b>
@@ -1267,9 +1272,16 @@
                           </span>
                         </b-form-checkbox>
                       </div>
-                      <div style="width: 6%"></div>
+                      <div style="width: 12%">
+
+                        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
+                          class="reverse-button" style="margin-left: 10px">
+                          {{ $t("reverse") }}
+                        </b-button>
+
+                      </div>
                       <!-- Recipient -->
-                      <div class="tm_invoice_right tm_text_right" style="width: 47%">
+                      <div class="tm_invoice_right tm_text_right" style="width: 44%">
                         <h6 class="tm_mb2">
                           <b class="tm_primary_color" style="margin-left: 3px">
                             {{ $t("add_invoice.recipient") }}:</b>
@@ -2196,7 +2208,7 @@
                               " list="my-company_name" autocomplete="off" @blur="hideSuggestion()"
                             @focus="ShowSuggestion(datalist)" style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions"
-                            style="width: 47%">
+                            style="width: 44%">
                             <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
                               @mousedown="autoCompletefn(data)">
                               {{ data.company_name }}
@@ -2229,9 +2241,14 @@
                           </span>
                         </b-form-checkbox>
                       </div>
-                      <div style="width: 6%"></div>
+                      <div style="width: 12%">
+                        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
+                          class="reverse-button" style="margin-left: 10px">
+                          {{ $t("reverse") }}
+                        </b-button>
+                      </div>
                       <!-- Recipient -->
-                      <div class="tm_invoice_right tm_text_right" style="width: 47%">
+                      <div class="tm_invoice_right tm_text_right" style="width: 44%">
                         <h6 class="tm_mb2">
                           <b class="tm_primary_color" style="padding-left: 3px">
                             {{ $t("add_invoice.recipient") }}:</b>
@@ -3189,7 +3206,7 @@
                     </div>
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
-                      <div class="tm_invoice_left" style="width: 47%">
+                      <div class="tm_invoice_left" style="width: 44%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}:</b>
                         </p>
@@ -3261,9 +3278,14 @@
                           <span class="switch-icon-right text-uppercase"> {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
-                      <div style="width: 6%"></div>
+                      <div style="width: 12%">
+                        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
+                          class="reverse-button" style="margin-left: 10px">
+                          {{ $t("reverse") }}
+                        </b-button>
+                      </div>
                       <!-- Recipient -->
-                      <div class="tm_invoice_right tm_text_right" style="width: 47%">
+                      <div class="tm_invoice_right tm_text_right" style="width: 44%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color" style="padding-left: 3px"> {{ $t("add_invoice.recipient") }}:</b>
                         </p>
@@ -4150,7 +4172,7 @@
 
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
-                      <div class="tm_invoice_left" style="width: 47%">
+                      <div class="tm_invoice_left" style="width: 44%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}</b>
                         </p>
@@ -4225,9 +4247,14 @@
 
                         <!-- Recipient -->
                       </div>
-                      <div style="width: 6%"></div>
+                      <div style="width: 12%">
+                        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
+                          class="reverse-button" style="margin-left: 10px">
+                          {{ $t("reverse") }}
+                        </b-button>
+                      </div>
 
-                      <div class="tm_invoice_right tm_text_right" style="width: 47%">
+                      <div class="tm_invoice_right tm_text_right" style="width: 44%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
                         </p>
@@ -5159,7 +5186,13 @@ export default {
     },
   },
   methods: {
+    reverse() {
 
+      let temp = this.invoiceData.supplierCompany
+      this.invoiceData.supplierCompany = this.invoiceData.recipientCompany
+      this.invoiceData.recipientCompany = temp
+
+    },
     removeLogo() {
       this.showLogo = false;
       this.logoToUpload = '';
@@ -6551,6 +6584,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.reverse-button {
+  position: relative;
+  top: 50%;
+}
+
 // @import "assets/css/style.css";
 @import "@core/scss/vue/libs/vue-select.scss";
 @import "@core/scss/vue/libs/vue-flatpicker.scss";

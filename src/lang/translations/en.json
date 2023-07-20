@@ -1,4 +1,5 @@
 {
+  "reverse": "Reverse",
   "app_logo_title": "Coherent Accounting",
   "months": {
 "Jan": "Jan",
@@ -642,7 +643,17 @@
     "no": "No"
   },
   "incomeSalesServices": "Income Sales Services",
+   "incomeSalesGoods": "Income Sales Goods",
+   "GeneralExpenses": "General Expenses",
+   "Sales": "Sales",
+   "products": "Products",
+    "goods": "Goods",
+    "suppliers": "Suppliers",
+    "Tax": "Tax",
+    "expensesExternalServices": "Expenses External Services",
+    "taxPurchase": "Tax Purchase",
   "taxSales": "Tax Sales",
+   "userName": "User Name",
   "clients": "Clients",
   "home": "Home",
   "dashboard": "Dashboard",

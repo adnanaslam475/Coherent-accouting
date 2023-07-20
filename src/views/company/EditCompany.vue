@@ -747,10 +747,9 @@ export default {
           self.$toast({
             component: ToastificationContent,
             props: {
-              title: `Error updating company info`,
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
-              timer: 1700,
+              title: error.response.data.errorMessage,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
           });
           setTimeout(() => {

@@ -1,4 +1,6 @@
 {
+  "reverse": "Обратен",
+
   "app_logo_title": "Coherent Accounting",
   "months": {
 "Jan": "Ян",
@@ -638,6 +640,19 @@
     "no": "НЕ"
   },
   "incomeSalesServices": "Услуги за продажби на приходи",
+  "incomeSalesGoods": "Доход от продажба на стоки",
+    "userName": "Потребителско име",
+ "products": "Продукти",
+    "goods": "Стоки",
+    "suppliers": "Доставчици",
+   "Sales": "Продажби",
+   "GeneralExpenses": "Общи разходи",
+    "Tax": "Данък",
+
+
+
+    "expensesExternalServices": "Разходи Външни услуги",
+    "taxPurchase": "Данъчна покупка",
   "taxSales": "Данъчни продажби",
   "clients": "клиенти",
   "home": "Начало",

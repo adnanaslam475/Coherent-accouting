@@ -14,6 +14,8 @@ export default function useInvoicesList() {
   // Table Handlers
   const tableColumns = [
     { key: 'invoiceNumber', sortable: true },
+    { key: 'scheduled', sortable: true },
+
     { key: 'invoiceDate', label: "date Issued", sortable: true },
     { key: 'transactionType', sortable: true },
     { key: 'recipientCompanyName', label: "recipient Company", sortable: true },
