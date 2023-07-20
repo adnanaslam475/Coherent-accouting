@@ -1,6 +1,6 @@
 <template>
   <!-- template 01 -->
-  <div cols="12" xl="12" md="12" v-if="invoiceData.templateId === '1'">
+  <div v-if="invoiceData.templateId === '1'">
     <div class="tm_container" style="padding: 0px">
       <div class="tm_invoice_wrap">
         <div class="tm_invoice tm_style1" id="tm_download_section">
@@ -102,6 +102,9 @@
                         <th class="tm_width_4 tm_semi_bold tm_primary_color tm_gray_bg">
                           {{ $t("add_invoice.service_item_description") }}
                         </th>
+                        <th class="tm_width_1 tm_semi_bold tm_primary_color tm_gray_bg">
+                          {{ $t("add_invoice.measurement") }}
+                        </th>
                         <th class="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg">
                           {{ $t("add_invoice.single_amount_transaction") }}
                         </th>
@@ -116,15 +119,15 @@
                     <tbody>
                       <tr v-for="(item, index) in invoiceData.transactions" :key="index">
                         <td class="tm_width_1">{{ index + 1 }}</td>
-                        <td class="tm_width_3">
+                        <td class="elipsis-text">
                           {{ item.serviceOrItemDescription }}
                         </td>
-
-                        <td class="tm_width_2">
+                        <td class="tm_width_1">{{ item.measurement }}</td>
+                        <td>
                           {{ item.singleAmountTransaction }}
                         </td>
-                        <td class="tm_width_1">{{ item.quantity }}</td>
-                        <td class="tm_width_2 tm_text_right">
+                        <td>{{ item.quantity }}</td>
+                        <td>
                           {{
                             (
                               parseFloat(item.singleAmountTransaction) *
@@ -158,6 +161,11 @@
                       <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                       {{ invoiceData.vatCondition }}
                     </p>
+                  </div>
+                  <div class="mt-4 d-flex" order="2" order-md="1">
+                    <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                      {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                    </h2>
                   </div>
                 </div>
                 <div class="tm_right_footer">
@@ -286,7 +294,7 @@
   </div>
 
   <!-- template 02 -->
-  <div cols="12" xl="12" md="12" v-else-if="invoiceData.templateId === '2'">
+  <div v-else-if="invoiceData.templateId === '2'">
     <div class="tm_container" style="padding: 0px">
       <div class="tm_invoice_wrap">
         <div class="tm_invoice tm_style1 tm_type1" id="tm_download_section">
@@ -443,7 +451,7 @@
                     <tbody>
                       <tr v-for="(item, index) in invoiceData.transactions" :key="index">
                         <td class="tm_width_1">{{ index + 1 }}</td>
-                        <td class="tm_width_3">
+                        <td class="elipsis-text">
                           {{ item.serviceOrItemDescription }}
                         </td>
                         <td class="tm_width_1">{{ item.quantity }}</td>
@@ -487,6 +495,11 @@
                       <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                       {{ invoiceData.vatCondition }}
                     </p>
+                  </div>
+                  <div class="mt-4 d-flex" order="2" order-md="1">
+                    <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                      {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                    </h2>
                   </div>
                 </div>
                 <div class="tm_right_footer">
@@ -629,7 +642,7 @@
   </div>
 
   <!-- template 03 -->
-  <div cols="12" xl="12" md="12" v-else-if="invoiceData.templateId === '3'">
+  <div v-else-if="invoiceData.templateId === '3'">
     <div class="tm_container" style="padding: 0px">
       <div class="tm_invoice_wrap">
         <div class="tm_invoice tm_style1 tm_type2" id="tm_download_section">
@@ -868,7 +881,7 @@
                     <tbody>
                       <tr v-for="(item, index) in invoiceData.transactions" :key="index">
                         <td class="tm_width_1">{{ index + 1 }}</td>
-                        <td class="tm_width_3">
+                        <td class="elipsis-text">
                           {{ item.serviceOrItemDescription }}
                         </td>
                         <td class="tm_width_1">{{ item.quantity }}</td>
@@ -913,7 +926,11 @@
                       {{ invoiceData.vatCondition }}
                     </p>
                   </div>
-
+                  <div class="mt-4 d-flex" order="2" order-md="1">
+                    <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                      {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                    </h2>
+                  </div>
                 </div>
                 <div class="tm_right_footer">
                   <table>
@@ -1050,7 +1067,7 @@
   </div>
 
   <!-- template 04 -->
-  <div cols="12" xl="12" md="12" v-else-if="invoiceData.templateId === '4'">
+  <div v-else-if="invoiceData.templateId === '4'">
     <div class="tm_container" style="padding: 0px">
       <div class="tm_invoice_wrap">
         <div class="tm_invoice tm_style1 tm_type3" id="tm_download_section">
@@ -1242,17 +1259,17 @@
                   <tbody>
                     <tr v-for="(item, index) in invoiceData.transactions" :key="index">
                       <td class="tm_width_1">{{ index + 1 }}</td>
-                      <td class="tm_width_3">
+                      <td class="elipsis-text">
                         {{ item.serviceOrItemDescription }}
                       </td>
                       <td class="tm_width_1">{{ item.quantity }}</td>
                       <td class="tm_width_1">{{ item.measurement }}</td>
 
-                      <td class="tm_width_3">
+                      <td class="tm_width_2">
                         {{ item.singleAmountTransaction }}
                       </td>
 
-                      <td class="tm_width_3">
+                      <td class="tm_width_2">
                         {{
                           (
                             parseFloat(item.singleAmountTransaction) *
@@ -1284,6 +1301,11 @@
                       ">
                       <b>{{ $t("add_invoice.non_vat_clause") }}: </b>{{ invoiceData.vatCondition }}
                     </p>
+                  </div>
+                  <div class="mt-4 d-flex" order="2" order-md="1">
+                    <h2 class="invoiceTypeHeading mt-6 text-uppercase">
+                      {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                    </h2>
                   </div>
                 </div>
                 <div class="tm_right_footer">
@@ -1413,7 +1435,7 @@
     </div>
   </div>
   <!-- template 05 -->
-  <div cols="12" xl="12" md="12" v-else>
+  <div v-else>
     <b-card no-body class="invoice-preview">
       <b-card-header class="justify-content-center">
         <div class="d-flex align-items-center" style="gap: 15px">
@@ -1722,7 +1744,7 @@
               <tbody>
                 <tr v-for="(item, index) in invoiceData.transactions" :key="index">
                   <td class="tm_width_1">{{ index + 1 }}</td>
-                  <td class="tm_width_3">
+                  <td class="elipsis-text">
                     {{ item.serviceOrItemDescription }}
                   </td>
                   <td class="tm_width_1">{{ item.quantity }}</td>
@@ -1762,14 +1784,14 @@
       <b-card-body class="invoice-padding ">
         <b-row class="invoiceStat d-flex justify-content-end mr-2">
           <!-- Col: Sales Persion -->
-          <div cols="12" md="7" class="mt-md-6 d-flex" order="2" order-md="1">
+          <div class="mt-md-6 d-flex" order="2" order-md="1">
             <h1 class="invoiceTypeHeading">
               {{ $t("add_invoice." + invoiceData.invoiceType) }}
             </h1>
           </div>
 
           <!-- Col: Total -->
-          <div cols="12" md="5" class="mt-md-6 d-flex justify-content-end" order="1" order-md="2">
+          <div class="mt-md-6 d-flex justify-content-end" order="1" order-md="2">
             <div class="invoice-total-wrapper">
               <div class="invoice-total-item">
                 <p class="invoice-total-title">
@@ -1951,6 +1973,13 @@ export default {
 };
 </script>
 <style scoped>
+.elipsis-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 50px
+}
+
 .invTotal {
   display: flex;
   justify-content: end !important;

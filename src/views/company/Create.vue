@@ -294,6 +294,7 @@
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
                 <div v-for="(value, label) in selectedPlatformProperties" :key="label">
+
                   <b-form-group :label="$t(label)">
                     <b-form-input v-model="selectedPlatformProperties[label]"></b-form-input>
                   </b-form-group>
@@ -863,12 +864,13 @@ export default {
           });
         })
 
-        .catch(function (error) {
+        .catch((error) => {
+
 
           self.$toast({
             component: ToastificationContent,
             props: {
-              title: `Something Went Wrong`,
+              title: error.response.data.errorMessage,
               icon: "AlertTriangleIcon",
               variant: "danger",
             },

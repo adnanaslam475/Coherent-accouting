@@ -1,4 +1,5 @@
 {
+  "reverse": "Reverse",
   "app_logo_title": "Coherent Accounting",
   "months": {
 "Jan": "Jan",
@@ -274,7 +275,7 @@
     "update_invoice": "Update",
     "Export_invoice": "Export",
     "Export_invoicess": "Export",
-    "Cancel": " Cancel ",
+    "cancel": " Cancel ",
     "start_date": "Start Date",
     "end_date": "End Date",
     "search": "Search..",
@@ -329,7 +330,10 @@
     "supplierCompanyName": "Supplier Company Name: {name}",
     "transactionType": "Transaction Type: {value}",
     "dateIssued": "Date Issued: {value}",
-    "delete_invoice": "Delete Invoice"
+    "delete_invoice": "Delete Invoice",
+    "invoice_created_successfully": "Invoice Created Successfully",
+    "invoice_updated_successfully": "Invoice Updated Successfully",
+    "invoice_exported_successfully": "Invoice exported Successfully"
 
   },
   "modal": {
@@ -639,7 +643,17 @@
     "no": "No"
   },
   "incomeSalesServices": "Income Sales Services",
+   "incomeSalesGoods": "Income Sales Goods",
+   "GeneralExpenses": "General Expenses",
+   "Sales": "Sales",
+   "products": "Products",
+    "goods": "Goods",
+    "suppliers": "Suppliers",
+    "Tax": "Tax",
+    "expensesExternalServices": "Expenses External Services",
+    "taxPurchase": "Tax Purchase",
   "taxSales": "Tax Sales",
+   "userName": "User Name",
   "clients": "Clients",
   "home": "Home",
   "dashboard": "Dashboard",

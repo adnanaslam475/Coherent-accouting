@@ -8,7 +8,8 @@
           <div class="card-body" style="padding: 0px">
             <!----><!---->
             <div class="row" style="padding: 15px 0px 10px 15px">
-              <div class="d-flex justify-content-between flex-column col-5" style="padding-left: 0.5rem; padding-right: 0.5rem">
+              <div class="d-flex justify-content-between flex-column col-5"
+                style="padding-left: 0.5rem; padding-right: 0.5rem">
                 <div class="card" style="margin-right: 10px">
                   <div class="card-body" style="padding: 0px">
                     <div class="d-flex justify-content-start">
@@ -39,10 +40,12 @@
                           }}</span>
                         </div>
                         <div class="d-flex flex-wrap">
-                          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" variant="primary" class="text-capitalize" @click="editCompany()"> {{ $t('company_info.edit') }}
+                          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" variant="primary"
+                            class="text-capitalize" @click="editCompany()"> {{ $t('company_info.edit') }}
                           </b-button>
 
-                          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="danger" size="sm" class="ml-1 text-capitalize" @click="deleteModalShow = !deleteModalShow">
+                          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="danger" size="sm"
+                            class="ml-1 text-capitalize" @click="deleteModalShow = !deleteModalShow">
                             {{ $t('company_info.delete') }}
                           </b-button>
                         </div>
@@ -50,11 +53,15 @@
                     </div>
                     <div class="d-flex align-items-center mt-2">
                       <div class="d-flex align-items-center" style="margin-right: 5px">
-                        <feather-icon icon="UserIcon" width="18px" height="18px" style="margin-left: 8px; margin-right: -5px" />
+                        <feather-icon icon="UserIcon" width="18px" height="18px"
+                          style="margin-left: 8px; margin-right: -5px" />
                         <div class="ml-1">
+
                           <p class="mb-0 font-weight-bold">{{ $t('company_info.owner_name') }} </p>
                           <CopyToClipboard :text="companyOwnerName" @copy="copyTextNoInput(1)">
-                            <small id="comp-owner-copy" style="cursor: pointer">{{ companyOwnerName }}</small>
+
+                            <small id="comp-owner-copy" style="cursor: pointer">{{
+                              companyDetails.companyOwnerApi.companyOwnerName }}</small>
                           </CopyToClipboard>
                           <b-tooltip target="comp-owner-copy">{{
                             copyToClipboard
@@ -62,11 +69,13 @@
                         </div>
                       </div>
                       <div class="d-flex align-items-center">
-                        <feather-icon icon="InfoIcon" width="18px" height="18px" style="margin-left: 8px; margin-right: -5px" />
+                        <feather-icon icon="InfoIcon" width="18px" height="18px"
+                          style="margin-left: 8px; margin-right: -5px" />
                         <div class="ml-1">
                           <p class="mb-0 text-capitalize font-weight-bold"> {{ $t('company_info.owner_egn') }} </p>
                           <CopyToClipboard :text="companyOwnerEGN" @copy="copyTextNoInput(2)">
-                            <small v-if="companyOwnerEGN != null" id="comp-egn-copy" style="cursor: pointer">{{ companyOwnerEGN }}</small>
+                            <small v-if="companyOwnerEGN != null" id="comp-egn-copy" style="cursor: pointer">{{
+                              companyDetails.companyOwnerApi.ownerEGN }}</small>
                             <small v-else></small>
                           </CopyToClipboard>
                           <b-tooltip target="comp-egn-copy">{{
@@ -225,10 +234,13 @@
                       </tr>
                       <tr>
                         <th class="pb-50">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-75 feather feather-globe">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="mr-75 feather feather-globe">
                             <circle cx="12" cy="12" r="10" />
                             <line x1="2" y1="12" x2="22" y2="12" />
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                            <path
+                              d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                           </svg>
 
                           <span class="font-weight-bold text-capitalize">{{ $t('companies.country') }}</span>
@@ -253,7 +265,8 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="AlignJustifyIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{ $t('company_info.total_assets') }}</span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{
+                  $t('company_info.total_assets') }}</span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalAssets }}
@@ -262,7 +275,8 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="FileTextIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{ $t('company_info.total_invoices') }} </span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{
+                  $t('company_info.total_invoices') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalInvoices }}
@@ -271,7 +285,8 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="AlertCircleIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{ $t('company_info.total_not_verified_invoices') }}</span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{
+                  $t('company_info.total_not_verified_invoices') }}</span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalNotVerifiedInvoices }}
@@ -280,7 +295,8 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="AlertTriangleIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{ $t('company_info.total_private_person') }} </span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{
+                  $t('company_info.total_private_person') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalPrivatePerson }}
@@ -289,7 +305,8 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="ListIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{ $t('company_info.total_vat_reports') }} </span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{
+                  $t('company_info.total_vat_reports') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalVatReports }}
@@ -298,7 +315,8 @@
             <tr>
               <th class="pb-50">
                 <feather-icon icon="FileIcon" class="mr-50" />
-                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{ $t('company_info.total_yearly_reports') }} </span>
+                <span class="font-weight-bold text-capitalize" style="font-size: 0.85rem">{{
+                  $t('company_info.total_yearly_reports') }} </span>
               </th>
               <td class="pb-50">
                 {{ statisticItems.totalYearlyReports }}
@@ -306,7 +324,8 @@
             </tr>
           </table>
           <div class="button-position-right">
-            <b-dropdown id="dropdown-4" v-ripple.400="'rgba(113, 102, 240, 0.15)'" size="sm" right class="company-info-btn" variant="outline-primary">
+            <b-dropdown id="dropdown-4" v-ripple.400="'rgba(113, 102, 240, 0.15)'" size="sm" right
+              class="company-info-btn" variant="outline-primary">
               <b-dropdown-item :to="{
                 name: 'company-invoice-add',
                 params: {
@@ -339,7 +358,8 @@
     </div>
 
     <!-- modal -->
-    <b-modal v-model="deleteModalShow" :title="$t('companies.delete_company')" :ok-title="$t('companies.confirm')" :cancel-title="$t('clients_or_recipients.cancel')" @ok="deleteCompany()">
+    <b-modal v-model="deleteModalShow" :title="$t('companies.delete_company')" :ok-title="$t('companies.confirm')"
+      :cancel-title="$t('clients_or_recipients.cancel')" @ok="deleteCompany()">
       <b-card-text class="text-center" style="font-size: 15px">
         {{ $t('companies.delete_confirmation') }}
       </b-card-text>
@@ -353,19 +373,22 @@
             <b-card-title> {{ $t('company_info.report_timeline') }} </b-card-title>
             <div v-if="monthlyReportGraphDisplay.length > 0" class="d-flex align-items-center">
               <feather-icon icon="RefreshCcwIcon" size="17" style="cursor: pointer" @click="refreshMonthReportGraph()" />
-              <feather-icon v-ripple.400="'rgba(113, 102, 240, 0.15)'" v-b-toggle.collapse-1 icon="ChevronDownIcon" size="24" class="ml-2" variant="outline-primary" style="margin-right: -10px" />
+              <feather-icon v-ripple.400="'rgba(113, 102, 240, 0.15)'" v-b-toggle.collapse-1 icon="ChevronDownIcon"
+                size="24" class="ml-2" variant="outline-primary" style="margin-right: -10px" />
             </div>
           </b-card-header>
           <b-collapse v-if="monthlyReportGraphDisplay.length > 0" id="collapse-1" class="my-1" visible>
             <b-card-body style="padding: 0px 15px">
               <app-timeline>
-                <app-timeline-item v-for="(graph, index) in monthlyReportGraph" :key="index" :variant="variants[index % variants.length]">
+                <app-timeline-item v-for="(graph, index) in monthlyReportGraph" :key="index"
+                  :variant="variants[index % variants.length]">
                   <div class="
                       d-flex
                       flex-sm-row flex-column
                       mb-sm-0 mb-1
                     ">
-                    <small class="timeline-item-time text-nowrap mr-1 font-weight-bolder text-success">{{ graph.date.substr(0, 7) }}</small>
+                    <small class="timeline-item-time text-nowrap mr-1 font-weight-bolder text-success">{{
+                      graph.date.substr(0, 7) }}</small>
                     <h6>{{ graph.count }} {{ $t('company_info.reports_have_been_created') }}</h6>
                   </div>
                 </app-timeline-item>

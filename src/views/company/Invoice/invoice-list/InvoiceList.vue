@@ -151,6 +151,7 @@
     <!--  Error Message Starts  -->
 
     <!--  Table Starts  -->
+
     <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns"
       responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found"
       :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100" id="company-invoices">
@@ -180,7 +181,18 @@
           <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
+      <!-- Column: scheduled -->
+      <template #head(scheduled)>
+        {{ $t("add_invoice.scheduled") }}
+      </template>
 
+      <template #cell(scheduled)="data">
+        <span class="text-nowrap" v-if="data.item.scheduled" style="position: relative;
+    left: 27%;">
+
+          <img src="@/assets/images/svg/clock.svg" alt="">
+        </span>
+      </template>
       <!-- Column: Issued Date -->
       <template #head(invoiceDate)>
         {{ $t("company_invoices.date_issued") }}
@@ -1232,6 +1244,14 @@ export default {
 
           // Save the Blob as a file using FileSaver.js
           saveAs(blob, `EIC_${this.EIC}_DATE_${formattedDate}`);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: this.$t('invoice_details.invoice_exported_successfully'),
+              icon: "AlertTriangleIcon",
+              variant: "success",
+            },
+          });
         })
         .catch((error) => {
           this.fileLoading = false;

@@ -1,4 +1,6 @@
 {
+  "reverse": "Обратен",
+
   "app_logo_title": "Coherent Accounting",
   "months": {
 "Jan": "Ян",
@@ -8,7 +10,7 @@
  "May":"Май",
  "Jun": "Юни",
  "Jul": "Юли",
- "Aug": "Авф",
+ "Aug": "Авг",
  "Sep": "Сеп",
  "Oct": "Окт",
  "Nov": "Ное",
@@ -271,7 +273,7 @@
     "add_from_file": "OCR от Файл",
     "Export_invoice": "Експорт",
     "Export_invoicess": "Експортиране",
-    "Cancel": " Отказ",
+    "cancel": " Отказ",
     "cancel-title": "следващия",
     "start_date": "От дата",
     "end_date": "До дата",
@@ -321,6 +323,20 @@
     "dateIssued": "Дата на издаване",
     "delete_invoice": "Изтриване на фактура"
     
+
+  },
+    "invoice_details": {
+    "invoiceNumber": "Номер на фактура",
+    "recipientCompanyName": "Име на компанията получател: {name}",
+    "supplierCompanyName": "Име на фирмата доставчик: {name}",
+    "transactionType": "Тип транзакция: {value}",
+    "dateIssued": "Дата на издаване: {value}",
+    "delete_invoice": "Изтриване на фактура",
+    "invoice_created_successfully": "Фактурата е създадена успешно",
+    "invoice_updated_successfully": "Фактурата е актуализирана успешно",
+    "invoice_exported_successfully": "Фактурата е експортирана успешно"
+
+
 
   },
   "dashboard_lbl": {
@@ -546,13 +562,13 @@
   "videos_content": [
     {
       "video": {
-        "link": "https://www.youtube.com/embed/U2omQ7aMCQs",
+        "link": "https://www.youtube.com/embed/d0oA7d1cT9U",
         "title": "Как да се регистрирам за БЕЗПЛАТНАТА платформа"
       }
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/j2-bzPTFTPU",
+        "link": "https://www.youtube.com/embed/RVSctEKpzjs",
         "title": "Създаване на фирмено досие за секунди"
       }
     },
@@ -600,7 +616,7 @@
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/0mmlSpC-zVw",
+        "link": "https://www.youtube.com/embed/kubuaS_COso",
         "title": "Периодични безплатни фактури (месечно или седмично) в нашата система"
       }
     },
@@ -612,7 +628,7 @@
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/U2omQ7aMCQs",
+        "link": "https://www.youtube.com/embed/vPdgfgyG6DM",
         "title": "Как се съхраняват фирмени документи за водене на фирма"
       }
     }
@@ -624,6 +640,16 @@
     "no": "НЕ"
   },
   "incomeSalesServices": "Услуги за продажби на приходи",
+  "incomeSalesGoods": "Доход от продажба на стоки",
+    "userName": "Потребителско име",
+ "products": "Продукти",
+    "goods": "Стоки",
+    "suppliers": "Доставчици",
+   "Sales": "Продажби",
+   "GeneralExpenses": "Общи разходи",
+    "Tax": "Данък",
+  "expensesExternalServices": "Разходи Външни услуги",
+  "taxPurchase": "Данъчна покупка",
   "taxSales": "Данъчни продажби",
   "clients": "клиенти",
   "home": "Начало",
