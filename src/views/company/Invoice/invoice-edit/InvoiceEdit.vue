@@ -280,7 +280,7 @@
                   </b-card>
                 </div>
                 <div>
-                  <div @click="reverse" class="mb-2 reverse-button">
+                  <div @click="reverse" class="mb-2 reverse-button" style='cursor: pointer'>
                     <img src="@/assets/images/svg/repeat.svg" />
                   </div>
                 </div>
@@ -1274,7 +1274,7 @@
                       <div style="width: 12%">
 
                         <div @click="reverse" class="reverse-button"
-                          style="margin-left: 25px; position: relative; top: 27%">
+                          style="margin-left: 25px; position: relative; top: 27%; cursor: pointer">
                           <img src="@/assets/images/svg/repeat.svg" />
                         </div>
 
@@ -2242,7 +2242,7 @@
                       </div>
                       <div style="width: 12%">
                         <div @click="reverse" class="reverse-button"
-                          style="margin-left: 25px; position: relative; top: 27%">
+                          style="margin-left: 25px; position: relative; top: 27%; cursor: pointer">
                           <img src="@/assets/images/svg/repeat.svg" />
                         </div>
                       </div>
@@ -3278,7 +3278,7 @@
                         </b-form-checkbox>
                       </div>
                       <div style="width: 12%">
-                        <div @click="reverse" style="margin-left: 25px; position: relative; top: 27%">
+                        <div @click="reverse" style="margin-left: 25px; position: relative; top: 27%; cursor: pointer">
                           <img src="@/assets/images/svg/repeat.svg" />
                         </div>
                       </div>
@@ -4247,7 +4247,7 @@
                       </div>
                       <div style="width: 12%">
                         <div @click="reverse" class="reverse-button"
-                          style="margin-left: 25px; position: relative; top: 27%">
+                          style="margin-left: 25px; position: relative; top: 27%; cursor: pointer; cursor: pointer">
                           <img src="@/assets/images/svg/repeat.svg" />
                         </div>
                       </div>
