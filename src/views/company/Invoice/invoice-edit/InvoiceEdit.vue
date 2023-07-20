@@ -280,10 +280,9 @@
                   </b-card>
                 </div>
                 <div>
-                  <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
-                    class="mb-2 reverse-button">
+                  <div @click="reverse" class="mb-2 reverse-button">
                     <img src="@/assets/images/svg/repeat.svg" />
-                  </b-button>
+                  </div>
                 </div>
                 <div class="mt-md-0 mt-2 flex-1">
                   <b-card no-body class="invoice-add invoice-card" :style="isBlue === true
@@ -1274,10 +1273,10 @@
                       </div>
                       <div style="width: 12%">
 
-                        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
-                          class="reverse-button" style="margin-left: 10px">
+                        <div @click="reverse" class="reverse-button"
+                          style="margin-left: 25px; position: relative; top: 27%">
                           <img src="@/assets/images/svg/repeat.svg" />
-                        </b-button>
+                        </div>
 
                       </div>
                       <!-- Recipient -->
@@ -2242,10 +2241,10 @@
                         </b-form-checkbox>
                       </div>
                       <div style="width: 12%">
-                        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
-                          class="reverse-button" style="margin-left: 10px">
+                        <div @click="reverse" class="reverse-button"
+                          style="margin-left: 25px; position: relative; top: 27%">
                           <img src="@/assets/images/svg/repeat.svg" />
-                        </b-button>
+                        </div>
                       </div>
                       <!-- Recipient -->
                       <div class="tm_invoice_right tm_text_right" style="width: 44%">
@@ -3279,10 +3278,9 @@
                         </b-form-checkbox>
                       </div>
                       <div style="width: 12%">
-                        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
-                          class="reverse-button" style="margin-left: 10px">
+                        <div @click="reverse" style="margin-left: 25px; position: relative; top: 27%">
                           <img src="@/assets/images/svg/repeat.svg" />
-                        </b-button>
+                        </div>
                       </div>
                       <!-- Recipient -->
                       <div class="tm_invoice_right tm_text_right" style="width: 44%">
@@ -4248,10 +4246,10 @@
                         <!-- Recipient -->
                       </div>
                       <div style="width: 12%">
-                        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
-                          class="reverse-button" style="margin-left: 10px">
+                        <div @click="reverse" class="reverse-button"
+                          style="margin-left: 25px; position: relative; top: 27%">
                           <img src="@/assets/images/svg/repeat.svg" />
-                        </b-button>
+                        </div>
                       </div>
 
                       <div class="tm_invoice_right tm_text_right" style="width: 44%">

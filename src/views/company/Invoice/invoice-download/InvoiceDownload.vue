@@ -102,6 +102,9 @@
                         <th class="tm_width_4 tm_semi_bold tm_primary_color tm_gray_bg">
                           {{ $t("add_invoice.service_item_description") }}
                         </th>
+                        <th class="tm_width_1 tm_semi_bold tm_primary_color tm_gray_bg">
+                          {{ $t("add_invoice.measurement") }}
+                        </th>
                         <th class="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg">
                           {{ $t("add_invoice.single_amount_transaction") }}
                         </th>
@@ -119,7 +122,7 @@
                         <td class="elipsis-text">
                           {{ item.serviceOrItemDescription }}
                         </td>
-
+                        <td class="tm_width_1">{{ item.measurement }}</td>
                         <td>
                           {{ item.singleAmountTransaction }}
                         </td>
