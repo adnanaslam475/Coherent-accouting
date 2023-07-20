@@ -10,7 +10,7 @@
  "May":"Май",
  "Jun": "Юни",
  "Jul": "Юли",
- "Aug": "Авф",
+ "Aug": "Авг",
  "Sep": "Сеп",
  "Oct": "Окт",
  "Nov": "Ное",
@@ -520,7 +520,7 @@
     "send_email": "Изпратете по имейл"
   },
   "create_company": {
-     "software": "Софтуер",
+     "software": "Статус",
     "company_details": "Фирма детайли",
     "account_details": "Акаунт детайли",
     "create_details": "Въведете детайли за фирма",
@@ -529,7 +529,7 @@
     "update_acc_details": "Промени детайли за Вашия акаунт",
     "export_details": "Подробности за експортиране",
     "company_id": "ЕИК",
-    "company_status": "Статус на фирма",
+    "company_status": "Софтуер",
     "company_bank_account": "Фирмена банкова сметка",
     "company_currency": "Валута на фирма",
     "company_phone_no": "Фирмен телефонен номер",
@@ -562,13 +562,13 @@
   "videos_content": [
     {
       "video": {
-        "link": "https://www.youtube.com/embed/U2omQ7aMCQs",
+        "link": "https://www.youtube.com/embed/d0oA7d1cT9U",
         "title": "Как да се регистрирам за БЕЗПЛАТНАТА платформа"
       }
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/j2-bzPTFTPU",
+        "link": "https://www.youtube.com/embed/RVSctEKpzjs",
         "title": "Създаване на фирмено досие за секунди"
       }
     },
@@ -616,7 +616,7 @@
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/0mmlSpC-zVw",
+        "link": "https://www.youtube.com/embed/kubuaS_COso",
         "title": "Периодични безплатни фактури (месечно или седмично) в нашата система"
       }
     },
@@ -628,7 +628,7 @@
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/U2omQ7aMCQs",
+        "link": "https://www.youtube.com/embed/vPdgfgyG6DM",
         "title": "Как се съхраняват фирмени документи за водене на фирма"
       }
     }
@@ -648,11 +648,8 @@
    "Sales": "Продажби",
    "GeneralExpenses": "Общи разходи",
     "Tax": "Данък",
-
-
-
-    "expensesExternalServices": "Разходи Външни услуги",
-    "taxPurchase": "Данъчна покупка",
+  "expensesExternalServices": "Разходи Външни услуги",
+  "taxPurchase": "Данъчна покупка",
   "taxSales": "Данъчни продажби",
   "clients": "клиенти",
   "home": "Начало",
