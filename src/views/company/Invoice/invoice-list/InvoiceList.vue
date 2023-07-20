@@ -187,9 +187,9 @@
       </template>
 
       <template #cell(scheduled)="data">
-        <span class="text-nowrap">
+        <span class="text-nowrap" v-if="data.item.scheduled" style="margin-left: 4px">
 
-          {{ data.item.scheduled }}
+          <img src="@/assets/images/svg/clock.svg" alt="">
         </span>
       </template>
       <!-- Column: Issued Date -->
