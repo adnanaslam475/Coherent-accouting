@@ -223,7 +223,7 @@
       <!-- Second Tab: Account Details -->
       <tab-content :title="$t('create_company.account_details')" :before-change="validationFormTab2">
         <validation-observer ref="accountRules" tag="form">
-          <!-- <b-row>
+          <!-- <b-row>sd
             <b-col cols="12" class="mb-2">
               <h5 class="mb-0">
                 {{ $t('create_company.account_details') }}
@@ -231,6 +231,7 @@
               <small class="text-muted">
                 {{ $t('create_company.update_acc_details') }}
               </small>
+
             </b-col>
           </b-row> -->
           <b-form-row>
