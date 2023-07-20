@@ -282,7 +282,7 @@
                 <div>
                   <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
                     class="mb-2 reverse-button">
-                    {{ $t("reverse") }}
+                    <img src="@/assets/images/svg/repeat.svg" />
                   </b-button>
                 </div>
                 <div class="mt-md-0 mt-2 flex-1">
@@ -1276,7 +1276,7 @@
 
                         <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
                           class="reverse-button" style="margin-left: 10px">
-                          {{ $t("reverse") }}
+                          <img src="@/assets/images/svg/repeat.svg" />
                         </b-button>
 
                       </div>
@@ -2244,7 +2244,7 @@
                       <div style="width: 12%">
                         <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
                           class="reverse-button" style="margin-left: 10px">
-                          {{ $t("reverse") }}
+                          <img src="@/assets/images/svg/repeat.svg" />
                         </b-button>
                       </div>
                       <!-- Recipient -->
@@ -3281,7 +3281,7 @@
                       <div style="width: 12%">
                         <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
                           class="reverse-button" style="margin-left: 10px">
-                          {{ $t("reverse") }}
+                          <img src="@/assets/images/svg/repeat.svg" />
                         </b-button>
                       </div>
                       <!-- Recipient -->
@@ -4250,7 +4250,7 @@
                       <div style="width: 12%">
                         <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="reverse"
                           class="reverse-button" style="margin-left: 10px">
-                          {{ $t("reverse") }}
+                          <img src="@/assets/images/svg/repeat.svg" />
                         </b-button>
                       </div>
 

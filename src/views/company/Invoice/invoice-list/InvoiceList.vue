@@ -183,11 +183,12 @@
       </template>
       <!-- Column: scheduled -->
       <template #head(scheduled)>
-        {{ $t("scheduled") }}
+        {{ $t("add_invoice.scheduled") }}
       </template>
 
       <template #cell(scheduled)="data">
-        <span class="text-nowrap" v-if="data.item.scheduled" style="margin-left: 4px">
+        <span class="text-nowrap" v-if="data.item.scheduled" style="position: relative;
+    left: 27%;">
 
           <img src="@/assets/images/svg/clock.svg" alt="">
         </span>
