@@ -96,7 +96,7 @@
                   <table>
                     <thead>
                       <tr>
-                        <th class="tm_width_3 tm_semi_bold tm_primary_color tm_gray_bg">
+                        <th class="tm_width_1 tm_semi_bold tm_primary_color tm_gray_bg">
                           {{ $t("add_invoice.s_no") }}
                         </th>
                         <th class="tm_width_4 tm_semi_bold tm_primary_color tm_gray_bg">
@@ -111,7 +111,7 @@
                         <th class="tm_width_1 tm_semi_bold tm_primary_color tm_gray_bg">
                           {{ $t("add_invoice.qty") }}
                         </th>
-                        <th class="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg tm_text_right">
+                        <th class="tm_width_4 tm_semi_bold tm_primary_color tm_gray_bg tm_text_right">
                           {{ $t("add_invoice.transaction_total_nonVat") }}
                         </th>
                       </tr>
@@ -260,25 +260,25 @@
                   </table>
                 </div>
               </div>
-              <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+              <table>
                 <tr>
-                  <td style="text-align: center; padding: 30px;">
+                  <td style="text-align: center; ">
                     <div style=" margin-bottom: 20px;">
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </div>
-                    <div style="height: 50px; border-bottom: 1px dashed black;">
-                      <!-- Space for supplier's signature -->
+                    <div style=" border-bottom: 1px dashed black;">
+                      <!-- //Space for supplier's signature  -->
                     </div>
                     <div style="margin-top: 10px;">
                       {{ new Date().toLocaleDateString() }}
                     </div>
                   </td>
-                  <td style="text-align: center; padding: 30px;">
+                  <td style="text-align: center; ">
                     <div style=" margin-bottom: 20px;">
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </div>
-                    <div style="height: 50px; border-bottom: 1px dashed black;">
-                      <!-- Space for recipient's signature -->
+                    <div style=" border-bottom: 1px dashed black;">
+                      <!-- //Space for recipient's signature  -->
                     </div>
                     <div style="margin-top: 10px;">
                       {{ new Date().toLocaleDateString() }}
@@ -287,10 +287,13 @@
                 </tr>
               </table>
             </div>
+
           </div>
         </div>
+
       </div>
     </div>
+
   </div>
 
   <!-- template 02 -->
@@ -612,7 +615,7 @@
                     <div style=" margin-bottom: 20px;">
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </div>
-                    <div style="height: 50px; border-bottom: 1px dashed black;">
+                    <div style=" border-bottom: 1px dashed black;">
                       <!-- Space for supplier's signature -->
                     </div>
                     <div style="margin-top: 10px;">
@@ -623,7 +626,7 @@
                     <div style=" margin-bottom: 20px;">
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </div>
-                    <div style="height: 50px; border-bottom: 1px dashed black;">
+                    <div style=" border-bottom: 1px dashed black;">
                       <!-- Space for recipient's signature -->
                     </div>
                     <div style="margin-top: 10px;">
@@ -1771,6 +1774,7 @@
 
       <!-- Invoice Description: Total -->
     </b-card>
+
     <b-card no-body class="invoice-preview-card transaction-container " :style="invoiceData.invoiceColor === 'BLUE'
       ? 'border: 1px solid #007aff'
       : invoiceData.invoiceColor === 'GREEN'
@@ -1782,8 +1786,23 @@
             : 'border:1px solid #f6d1ff'
       ">
       <b-card-body class="invoice-padding ">
+
         <b-row class="invoiceStat d-flex justify-content-end mr-2">
           <!-- Col: Sales Persion -->
+          <div class="" v-if="invoiceData.vatPercent == '0'">
+            <b-card no-body class="invoice-preview date-issued ml-0 ">
+              <b-card-header class="justify-content-end">
+                <div class="invoice-date-wrapper invoice-middle-content">
+                  <p class="invoice-date-title">
+                    {{ $t("add_invoice.non_vat_clause") }}:
+                  </p>
+                  <p class="invoice-date">
+                    {{ invoiceData.vatCondition }}
+                  </p>
+                </div>
+              </b-card-header>
+            </b-card>
+          </div>
           <div class="mt-md-6 d-flex" order="2" order-md="1">
             <h1 class="invoiceTypeHeading">
               {{ $t("add_invoice." + invoiceData.invoiceType) }}
@@ -1912,23 +1931,10 @@
           </div>
         </b-card-body>
       </b-card>
+
     </div>
 
-    <div class="d-flex justify-content-between align-items-center"
-      v-if="invoiceData.vatPercent === '0' || invoiceData.vatPercent === 0">
-      <b-card no-body class="invoice-preview date-issued ml-0 mx-1">
-        <b-card-header class="justify-content-end">
-          <div class="invoice-date-wrapper invoice-middle-content">
-            <p class="invoice-date-title">
-              {{ $t("add_invoice.non_vat_clause") }}:
-            </p>
-            <p class="invoice-date">
-              {{ invoiceData.vatCondition }}
-            </p>
-          </div>
-        </b-card-header>
-      </b-card>
-    </div>
+
   </div>
 </template>
 
@@ -3158,9 +3164,9 @@ hr {
   display: flex;
 }
 
-.tm_invoice_footer table {
+/* .tm_invoice_footer table {
   margin-top: -1px;
-}
+} */
 
 .tm_invoice_footer .tm_left_footer {
   width: 58%;

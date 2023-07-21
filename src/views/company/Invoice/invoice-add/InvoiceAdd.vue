@@ -2,6 +2,7 @@
   <section class="invoice-add-wrapper">
     <TabList />
     <!--  -->
+
     <validation-observer ref="invoiceForm" #default="{ invalid }">
       <b-form @submit.prevent="invoiceAdd(invoiceData, 'save', AccountTypeOption)">
         <b-row class="invoice-add">
@@ -276,7 +277,11 @@
                     </b-card-body>
                   </b-card>
                 </div>
-
+                <div v-if="invoiceData.verified == false">
+                  <div @click="reverse" class="mb-2 reverse-button" style='cursor: pointer'>
+                    <img src="@/assets/images/svg/repeat.svg" />
+                  </div>
+                </div>
                 <div class="mt-md-0 mt-2 flex-1">
                   <b-card no-body class="invoice-add invoice-card" :style="isBlue === true
                     ? 'border: 1px solid #007aff !important'
@@ -940,11 +945,12 @@
               </b-card-body>
             </b-card>
 
-            <b-row v-if="invoiceData.vatPercent === '0'" class="mt-2">
+            <b-row v-if="invoiceData.vatPercent == '0'" class="mt-2">
               <b-col>
                 <b-card no-body class="">
                   <b-card-body class="invoice-padding form-item-section p-2 rounded">
                     <b-form-group id="input-group-4" label="Tax Exclusive:" label-for="non-vat-clause">
+                     
                       <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
                         <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
                           name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
@@ -1709,7 +1715,7 @@
 
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent === '0'">
+                        <div v-if="invoiceData.vatPercent == '0'">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
@@ -2667,7 +2673,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent === '0'">
+                        <div v-if="invoiceData.vatPercent == '0'">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
@@ -3696,7 +3702,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent === '0'">
+                        <div v-if="invoiceData.vatPercent == '0'">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
@@ -4662,7 +4668,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent === '0'">
+                        <div v-if="invoiceData.vatPercent == '0'">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">

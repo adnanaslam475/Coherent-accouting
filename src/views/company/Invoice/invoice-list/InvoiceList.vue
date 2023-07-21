@@ -41,7 +41,7 @@
           </b-button>
           <!--Add the third button name export-->
           <!-- Export Invoice Button -->
-          <b-button variant="primary" class="mr-1" :disabled="!isActive" v-if="platform == 'FRESH_BOOKS'">
+          <b-button variant="primary" class="mr-1 cursor-button" :disabled="!isActive" v-if="platform == 'FRESH_BOOKS'">
 
             <b-form-file ref="imageUploader" class="file-input2" multiple @change="addExportFile" :disabled="!isActive" />
             <b-spinner v-if="fileLoadingExport" small variant="light" />
@@ -49,7 +49,8 @@
             <!-- Add From File -->
 
           </b-button>
-          <b-button variant="primary" class="mr-1" @click="showDatePickerModal" :disabled="!isActive" v-else>
+          <b-button variant="primary" style="cursor: pointer;" class="mr-1" @click="showDatePickerModal"
+            :disabled="!isActive" v-else>
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>
@@ -1362,6 +1363,11 @@ export default {
 <style lang="scss">
 @import "@core/scss/vue/libs/vue-select.scss";
 @import "@core/scss/vue/libs/vue-flatpicker.scss";
+
+.cursor-button .custom-file label {
+
+  cursor: pointer
+}
 
 .invoiceList th {
   position: relative;
