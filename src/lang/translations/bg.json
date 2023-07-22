@@ -541,7 +541,7 @@
     "create": "Създай",
     "update": "Промени",
     "userName": "Потребителско име",
-    "incomeSalesServices": "Услуги за продажби на приходи",
+    "incomeSalesServices": "Сметка покупки/разходи", 
     "products": "Продукти",
     "goods": "Стоки",
     "expensesExternalServices": "Разходи Външни услуги",
@@ -639,7 +639,7 @@
     "yes": "ДА",
     "no": "НЕ"
   },
-  "incomeSalesServices": "Услуги за продажби на приходи",
+  "incomeSalesServices": "Сметка покупки/разходи",
   "incomeSalesGoods": "Доход от продажба на стоки",
     "userName": "Потребителско име",
  "products": "Продукти",
