@@ -637,17 +637,30 @@ export default {
     //function to auto-fill some input fields
     autoCompletefn(item, val) {
       if (val === 1) {
+        this.autofillCountry = true;
+        if (this.autofillCountry === true) {
+
+          this.getCompanyISO = item.country;
+          for (let i = 0; i < this.getCountries.length; i++) {
+            if (this.getCountries[i].isoAlpha2Country === item.country) {
+              this.getCompanyCountry = this.getCountries[i].country;
+            }
+          }
+        }
         this.showSuggestions = false;
         this.datalist.value = [];
+
       }
       if (val === 2) {
         this.showIDSuggestions = false;
         this.datalistID.value = [];
+
       }
       this.form.company_name = item.company_name;
       this.form.company_address = item.address;
       this.form.company_identification_number = item.eic;
       if (item.managers.length > 0) {
+
         this.form.owner_name = item.managers[0];
       } else {
         this.form.owner_name = "";
@@ -655,6 +668,7 @@ export default {
 
       this.autofillCountry = true;
       if (this.autofillCountry === true) {
+        alert('ok')
         this.getCompanyISO = item.country;
         for (let i = 0; i < this.getCountries.length; i++) {
           if (this.getCountries[i].isoAlpha2Country === item.country) {
