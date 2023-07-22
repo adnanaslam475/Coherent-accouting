@@ -668,7 +668,7 @@ export default {
 
       this.autofillCountry = true;
       if (this.autofillCountry === true) {
-        alert('ok')
+
         this.getCompanyISO = item.country;
         for (let i = 0; i < this.getCountries.length; i++) {
           if (this.getCountries[i].isoAlpha2Country === item.country) {
