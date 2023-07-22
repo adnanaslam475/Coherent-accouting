@@ -726,11 +726,19 @@
                           {{ invoiceData.vatCondition }}
                         </p>
                       </div>
+                      <p class="tm_m0" v-if="invoiceData.vatPercent == 0 ||
+                        invoiceData.vatPercent === '0'
+                        ">
+                        <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
+                        {{ invoiceData.vatCondition }}
+                      </p>
                       <div class="mt-4 d-flex" order="2" order-md="1">
                         <h2 class="invoiceTypeHeading mt-6 text-uppercase">
                           {{ $t("add_invoice." + invoiceData.invoiceType) }}
                         </h2>
                       </div>
+
+
                     </div>
 
                     <div class="tm_right_footer">
@@ -1042,6 +1050,7 @@
                   </div>
                   <div class="tm_invoice_footer tm_border_top tm_mb15 tm_m0_md">
                     <div class="tm_left_footer">
+
                       <div v-if="invoiceData.bankApi !== null">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
@@ -1055,13 +1064,14 @@
                         <p class="tm_m0">
                           <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
-                        <p class="tm_m0" v-if="invoiceData.vatPercent === 0 ||
-                          invoiceData.vatPercent === '0'
-                          ">
-                          <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
-                          {{ invoiceData.vatCondition }}
-                        </p>
+
                       </div>
+                      <p class="tm_m0" v-if="invoiceData.vatPercent == 0 ||
+                        invoiceData.vatPercent === '0'
+                        ">
+                        <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
+                        {{ invoiceData.vatCondition }}
+                      </p>
                       <div class="mt-4 d-flex" order="2" order-md="1">
                         <h2 class="invoiceTypeHeading mt-6 text-uppercase">
                           {{ $t("add_invoice." + invoiceData.invoiceType) }}
@@ -1484,13 +1494,14 @@
                         <p class="tm_m0">
                           <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
-                        <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
-                          invoiceData.vatPercent === 0
-                          ">
-                          <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
-                          {{ invoiceData.vatCondition }}
-                        </p>
+                       
                       </div>
+                       <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
+                         invoiceData.vatPercent === 0
+                         ">
+                            <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
+                            {{ invoiceData.vatCondition }}
+                          </p>
                       <div class="mt-4 d-flex" order="2" order-md="1">
                         <h2 class="invoiceTypeHeading mt-6 text-uppercase">
                           {{ $t("add_invoice." + invoiceData.invoiceType) }}
@@ -1857,12 +1868,15 @@
                         <p class="tm_m0">
                           <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
-                        <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
-                          invoiceData.vatPercent === 0
-                          ">
-                          <b>{{ $t("add_invoice.non_vat_clause") }}: </b>{{ invoiceData.vatCondition }}
-                        </p>
+
                       </div>
+                      <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
+                        invoiceData.vatPercent === 0
+                        ">
+                        <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
+                        {{ invoiceData.vatCondition }}
+                      </p>
+
                       <div class="mt-4 d-flex" order="2" order-md="1">
                         <h2 class="invoiceTypeHeading mt-6 text-uppercase">
                           {{ $t("add_invoice." + invoiceData.invoiceType) }}

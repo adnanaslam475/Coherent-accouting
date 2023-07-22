@@ -341,7 +341,20 @@
         <validation-observer ref="exportRules" tag="form">
           <b-row>
             <b-col>
-              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
+              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status"
+                v-if="isEdit">
+                <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
+                  <b-form-select id="platformPropertiesSelect" v-model="exportProperties.platform"
+                    :options="modifiedArray" @change="checkChange"></b-form-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+                <div v-for="(value, label) in exportProperties.keyValues" :key="label">
+                  <b-form-group :label="$t(label)">
+                    <b-form-input v-model="exportProperties.keyValues[label]"></b-form-input>
+                  </b-form-group>
+                </div>
+              </b-form-group>
+              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status" v-else>
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
                   <b-form-select id="platformPropertiesSelect" v-model="selectedPlatformProperty"
                     :options="modifiedArray"></b-form-select>
@@ -426,6 +439,7 @@ export default {
   },
   data() {
     return {
+      isEdit: true,
       isStatusSelected: '',
       statusOptions: [
         { status: "ACTIVE" },
@@ -661,6 +675,9 @@ export default {
 
   methods: {
     //
+    checkChange() {
+      this.isEdit = false
+    },
     formatOwnerEGN(e) {
       return String(e).substring(0, 10);
     },

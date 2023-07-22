@@ -155,13 +155,14 @@
                     <p class="tm_m0">
                       <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                     </p>
-                    <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
-                      invoiceData.vatPercent === 0
-                      ">
-                      <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
-                      {{ invoiceData.vatCondition }}
-                    </p>
+
                   </div>
+                  <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
+                    invoiceData.vatPercent === 0
+                    ">
+                    <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
+                    {{ invoiceData.vatCondition }}
+                  </p>
                   <div class="mt-4 d-flex" order="2" order-md="1">
                     <h2 class="invoiceTypeHeading mt-6 text-uppercase">
                       {{ $t("add_invoice." + invoiceData.invoiceType) }}
@@ -492,13 +493,14 @@
                     <p class="tm_m0">
                       <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                     </p>
-                    <p class="tm_m0" v-if="invoiceData.vatPercent === 0 ||
-                      invoiceData.vatPercent === '0'
-                      ">
-                      <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
-                      {{ invoiceData.vatCondition }}
-                    </p>
+
                   </div>
+                  <p class="tm_m0" v-if="invoiceData.vatPercent === 0 ||
+                    invoiceData.vatPercent === '0'
+                    ">
+                    <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
+                    {{ invoiceData.vatCondition }}
+                  </p>
                   <div class="mt-4 d-flex" order="2" order-md="1">
                     <h2 class="invoiceTypeHeading mt-6 text-uppercase">
                       {{ $t("add_invoice." + invoiceData.invoiceType) }}
@@ -922,13 +924,14 @@
                     <p class="tm_m0">
                       <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                     </p>
+                  
+                  </div>
                     <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
                       invoiceData.vatPercent === 0
                       ">
-                      <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
-                      {{ invoiceData.vatCondition }}
-                    </p>
-                  </div>
+                        <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
+                        {{ invoiceData.vatCondition }}
+                      </p>
                   <div class="mt-4 d-flex" order="2" order-md="1">
                     <h2 class="invoiceTypeHeading mt-6 text-uppercase">
                       {{ $t("add_invoice." + invoiceData.invoiceType) }}
@@ -1028,21 +1031,22 @@
 
 
 
-                  <div class="tm_shape_3 tm_accent_bg_10">
+                  <!-- <div class="tm_shape_3 tm_accent_bg_10">
 
-                  </div>
+                  </div> -->
 
                 </div>
               </div>
-              <table class="no-page-break"
+
+              <!-- <table class="no-page-break"
                 style="width: 80%; margin: auto; padding-top: 1rem; border-collapse: collapse;">
                 <tr>
-                  <td style="text-align: center; padding: 15px;">
+                  <td style="text-align: center; ">
                     <div style="margin-bottom: 10px;">
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </div>
-                    <div style="height: 30px; border-bottom: 1px dashed black;">
-                      <!-- Space for supplier's signature -->
+                    <div style=" border-bottom: 1px dashed black;">
+                     
                     </div>
                     <div style="margin-top: 5px;">
                       {{ new Date().toLocaleDateString() }}
@@ -1052,15 +1056,15 @@
                     <div style="margin-bottom: 10px;">
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </div>
-                    <div style="height: 30px; border-bottom: 1px dashed black;">
-                      <!-- Space for recipient's signature -->
-                    </div>
-                    <div style="margin-top: 5px;">
-                      {{ new Date().toLocaleDateString() }}
-                    </div>
-                  </td>
-                </tr>
-              </table>
+                    <div style=" border-bottom: 1px dashed black;">
+                    
+            </div>
+            <div style="margin-top: 5px;">
+              {{ new Date().toLocaleDateString() }}
+            </div>
+            </td>
+            </tr>
+            </table> -->
 
             </div>
           </div>
@@ -1299,12 +1303,13 @@
                     <p class="tm_m0">
                       <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                     </p>
-                    <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
-                      invoiceData.vatPercent === 0
-                      ">
-                      <b>{{ $t("add_invoice.non_vat_clause") }}: </b>{{ invoiceData.vatCondition }}
-                    </p>
+                    
                   </div>
+                  <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
+                    invoiceData.vatPercent === 0
+                    ">
+                        <b>{{ $t("add_invoice.non_vat_clause") }}: </b>{{ invoiceData.vatCondition }}
+                      </p>
                   <div class="mt-4 d-flex" order="2" order-md="1">
                     <h2 class="invoiceTypeHeading mt-6 text-uppercase">
                       {{ $t("add_invoice." + invoiceData.invoiceType) }}
