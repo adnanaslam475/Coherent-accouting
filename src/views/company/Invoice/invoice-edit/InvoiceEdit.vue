@@ -2,7 +2,7 @@
   <section class="invoice-add-wrapper">
     <TabList />
     <!--  -->
-
+   
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
       <b-form @submit.prevent="invoiceEdit(invoiceData, 'save', AccountTypeOption)">
         <b-row class="invoice-add">
@@ -1766,42 +1766,42 @@
                               </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
-                                 <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
-                          name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
-                            " :value="$store.state.selected" @input="selectVatClause()">
-                          <template #selected-option="option" v-if="clauseToSend != ''">
+                                <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
+                                  name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
+                                    " :value="$store.state.selected" @input="selectVatClause()">
+                                  <template #selected-option="option" v-if="clauseToSend != ''">
 
-                            <div style="
+                                    <div style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ clauseToSend }}
-                            </div>
-                          </template>
-                          <template #selected-option="option" v-else>
-                            <div style="
+                                      {{ clauseToSend }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.label }}
-                            </div>
-                          </template>
+                                      {{ option.label }}
+                                    </div>
+                                  </template>
 
-                          <template v-slot:option="option">
-                            <span style="
+                                  <template v-slot:option="option">
+                                    <span style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.label }}
-                            </span>
-                          </template>
-                          <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
+                                      {{ option.label }}
+                                    </span>
+                                  </template>
+                                  <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
 
                             <div style="
                                 display: flex;
@@ -1834,7 +1834,7 @@
                               {{ option }}
                             </span>
                           </template> -->
-                        </v-select>
+                                </v-select>
                                 <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider></span>
                           </p>
@@ -2780,42 +2780,42 @@
                               </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
-                                 <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
-                          name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
-                            " :value="$store.state.selected" @input="selectVatClause()">
-                          <template #selected-option="option" v-if="clauseToSend != ''">
+                                <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
+                                  name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
+                                    " :value="$store.state.selected" @input="selectVatClause()">
+                                  <template #selected-option="option" v-if="clauseToSend != ''">
 
-                            <div style="
+                                    <div style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ clauseToSend }}
-                            </div>
-                          </template>
-                          <template #selected-option="option" v-else>
-                            <div style="
+                                      {{ clauseToSend }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.label }}
-                            </div>
-                          </template>
+                                      {{ option.label }}
+                                    </div>
+                                  </template>
 
-                          <template v-slot:option="option">
-                            <span style="
+                                  <template v-slot:option="option">
+                                    <span style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.label }}
-                            </span>
-                          </template>
-                          <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
+                                      {{ option.label }}
+                                    </span>
+                                  </template>
+                                  <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
 
                             <div style="
                                 display: flex;
@@ -2848,7 +2848,7 @@
                               {{ option }}
                             </span>
                           </template> -->
-                        </v-select>
+                                </v-select>
                                 <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider></span>
                           </p>
@@ -3842,41 +3842,41 @@
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
                                 <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
-                          name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
-                            " :value="$store.state.selected" @input="selectVatClause()">
-                          <template #selected-option="option" v-if="clauseToSend != ''">
+                                  name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
+                                    " :value="$store.state.selected" @input="selectVatClause()">
+                                  <template #selected-option="option" v-if="clauseToSend != ''">
 
-                            <div style="
+                                    <div style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ clauseToSend }}
-                            </div>
-                          </template>
-                          <template #selected-option="option" v-else>
-                            <div style="
+                                      {{ clauseToSend }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.label }}
-                            </div>
-                          </template>
+                                      {{ option.label }}
+                                    </div>
+                                  </template>
 
-                          <template v-slot:option="option">
-                            <span style="
+                                  <template v-slot:option="option">
+                                    <span style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                              {{ option.label }}
-                            </span>
-                          </template>
-                          <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
+                                      {{ option.label }}
+                                    </span>
+                                  </template>
+                                  <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
 
                             <div style="
                                 display: flex;
@@ -3909,7 +3909,7 @@
                               {{ option }}
                             </span>
                           </template> -->
-                        </v-select>
+                                </v-select>
                                 <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider></span>
                           </p>
@@ -4843,41 +4843,41 @@
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
                                 <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
-                            name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
-                              " :value="$store.state.selected" @input="selectVatClause()">
-                            <template #selected-option="option" v-if="clauseToSend != ''">
+                                  name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
+                                    " :value="$store.state.selected" @input="selectVatClause()">
+                                  <template #selected-option="option" v-if="clauseToSend != ''">
 
-                              <div style="
+                                    <div style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                                {{ clauseToSend }}
-                              </div>
-                            </template>
-                            <template #selected-option="option" v-else>
-                              <div style="
+                                      {{ clauseToSend }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                                {{ option.label }}
-                              </div>
-                            </template>
+                                      {{ option.label }}
+                                    </div>
+                                  </template>
 
-                            <template v-slot:option="option">
-                              <span style="
+                                  <template v-slot:option="option">
+                                    <span style="
                                 display: flex;
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
                               ">
-                                {{ option.label }}
-                              </span>
-                            </template>
-                            <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
+                                      {{ option.label }}
+                                    </span>
+                                  </template>
+                                  <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
 
                             <div style="
                                 display: flex;
@@ -4910,7 +4910,7 @@
                               {{ option }}
                             </span>
                           </template> -->
-                          </v-select>
+                                </v-select>
                                 <small class="text-danger">{{ errors[0] }}</small>
                               </validation-provider></span>
                           </p>

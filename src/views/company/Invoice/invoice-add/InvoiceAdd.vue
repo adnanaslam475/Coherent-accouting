@@ -9,6 +9,7 @@
           <!-- Col: Left (Invoice Container) -->
           <!-- template 05 -->
 
+
           <b-col cols="12" xl="10" md="10" v-if="isTemplateFive">
             <b-card no-body class="invoice-add">
               <b-card-header class="justify-content-center">
@@ -277,7 +278,7 @@
                     </b-card-body>
                   </b-card>
                 </div>
-                <div v-if="invoiceData.verified == false">
+                <div v-if="invoiceData.logoId != ''">
                   <div @click="reverse" class="mb-2 reverse-button" style='cursor: pointer'>
                     <img src="@/assets/images/svg/repeat.svg" />
                   </div>
@@ -950,7 +951,7 @@
                 <b-card no-body class="">
                   <b-card-body class="invoice-padding form-item-section p-2 rounded">
                     <b-form-group id="input-group-4" label="Tax Exclusive:" label-for="non-vat-clause">
-                     
+
                       <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
                         <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
                           name="non-vat-clause" v-bind:placeholder="$t('Please select non-vat clause..')
@@ -1193,7 +1194,7 @@
 
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
-                      <div class="tm_invoice_left" style="width: 47%">
+                      <div class="tm_invoice_left" style="width: 44%">
                         <h6 class="tm_mb2">
                           <b class="tm_primary_color">
                             {{ $t("add_invoice.supplier") }}:</b>
@@ -1266,9 +1267,16 @@
                           </span>
                         </b-form-checkbox>
                       </div>
-                      <div style="width: 6%"></div>
+                      <div style="width: 12%">
+
+                        <div @click="reverse" class="reverse-button"
+                          style="margin-left: 25px; position: relative; top: 27%; cursor: pointer">
+                          <img src="@/assets/images/svg/repeat.svg" />
+                        </div>
+
+                      </div>
                       <!-- Recipient -->
-                      <div class="tm_invoice_right tm_text_right" style="width: 47%">
+                      <div class="tm_invoice_right tm_text_right" style="width: 44%">
                         <h6 class="tm_mb2">
                           <b class="tm_primary_color" style="margin-left: 3px">
                             {{ $t("add_invoice.recipient") }}:</b>
@@ -2148,7 +2156,7 @@
                             }
                               " style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions"
-                            style="width: 47%">
+                            style="width: 44%">
                             <b-list-group-item v-for="data in datalistEic" :key="data.eic"
                               @click="autoCompletefnEic(data)" @mousedown="autoCompletefnEic(data)">
                               {{ data.eic }}
@@ -2209,9 +2217,16 @@
                           </span>
                         </b-form-checkbox>
                       </div>
-                      <div style="width: 6%"></div>
+                      <div style="width: 12%">
+
+                        <div @click="reverse" class="reverse-button"
+                          style="margin-left: 25px; position: relative; top: 27%; cursor: pointer">
+                          <img src="@/assets/images/svg/repeat.svg" />
+                        </div>
+
+                      </div>
                       <!-- Recipient -->
-                      <div class="tm_invoice_right tm_text_right" style="width: 47%">
+                      <div class="tm_invoice_right tm_text_right" style="width: 44%">
                         <h6 class="tm_mb2">
                           <b class="tm_primary_color" style="padding-left: 3px">
                             {{ $t("add_invoice.recipient") }}:</b>
@@ -3172,7 +3187,7 @@
                     </div>
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
-                      <div class="tm_invoice_left" style="width: 47%">
+                      <div class="tm_invoice_left" style="width: 44%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}:</b>
                         </p>
@@ -3244,9 +3259,16 @@
                           <span class="switch-icon-right text-uppercase"> {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
-                      <div style="width: 6%"></div>
+                      <div style="width: 12%">
+
+                        <div @click="reverse" class="reverse-button"
+                          style="margin-left: 25px; position: relative; top: 27%; cursor: pointer">
+                          <img src="@/assets/images/svg/repeat.svg" />
+                        </div>
+
+                      </div>
                       <!-- Recipient -->
-                      <div class="tm_invoice_right tm_text_right" style="width: 47%">
+                      <div class="tm_invoice_right tm_text_right" style="width: 44%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color" style="padding-left: 3px"> {{ $t("add_invoice.recipient") }}:</b>
                         </p>
@@ -4135,7 +4157,7 @@
 
                     <div class="tm_invoice_head tm_mb10">
                       <!-- Supplier -->
-                      <div class="tm_invoice_left" style="width: 47%">
+                      <div class="tm_invoice_left" style="width: 44%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}</b>
                         </p>
@@ -4210,9 +4232,16 @@
 
                         <!-- Recipient -->
                       </div>
-                      <div style="width: 6%"></div>
+                      <div style="width: 12%">
 
-                      <div class="tm_invoice_right tm_text_right" style="width: 47%">
+                        <div @click="reverse" class="reverse-button"
+                          style="margin-left: 25px; position: relative; top: 27%; cursor: pointer">
+                          <img src="@/assets/images/svg/repeat.svg" />
+                        </div>
+
+                      </div>
+
+                      <div class="tm_invoice_right tm_text_right" style="width: 44%">
                         <p class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.recipient") }}:</b>
                         </p>
@@ -5138,8 +5167,16 @@ export default {
         { text: i18n.tc("company_info.SUN"), value: "SUN" }
       ]
     },
+
   },
   methods: {
+    reverse() {
+
+      let temp = this.invoiceData.supplierCompany
+      this.invoiceData.supplierCompany = this.invoiceData.recipientCompany
+      this.invoiceData.recipientCompany = temp
+
+    },
     async updateLogo(e) {
       this.isUploading = i18n.tc("add_invoice.uploading");
       let self = this;
@@ -5728,6 +5765,7 @@ export default {
       invoiceData.value.recipientCompany = invoiceData?.value?.recipientCompany
         ? invoiceData.value.recipientCompany
         : uploadValue;
+
       invoiceData.value.vatPercent = invoiceData?.value?.vatPercent
         ? invoiceData.value.vatPercent
         : 20;
@@ -5765,6 +5803,7 @@ export default {
       useJwt
         .getCompany(router.currentRoute.params.companyId)
         .then((response) => {
+
           let Response = response.data;
           invoiceData.value.supplierCompany.companyOwnerName =
             Response?.companyOwnerApi?.companyOwnerName;
@@ -6370,6 +6409,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.reverse-button {
+  position: relative;
+  top: 50%;
+}
+
 // @import "assets/css/style.css";
 @import "@core/scss/vue/libs/vue-select.scss";
 @import "@core/scss/vue/libs/vue-flatpicker.scss";

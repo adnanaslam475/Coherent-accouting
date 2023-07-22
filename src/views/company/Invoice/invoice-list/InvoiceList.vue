@@ -1198,7 +1198,9 @@ export default {
       useJwt
         .addFileInvoice(token, companyId, formData)
         .then((response) => {
+          console.log(response)
           this.fileLoading = false;
+
           return this.$router.push({
             name: "company-invoice-add",
             params: {

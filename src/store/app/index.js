@@ -5,6 +5,7 @@ export default {
   state: {
     windowWidth: 0,
     shallShowOverlay: false,
+    ocrInvoiceData: {}
   },
   getters: {
     currentBreakPoint: state => {
@@ -15,6 +16,9 @@ export default {
       if (windowWidth >= $themeBreakpoints.sm) return 'sm'
       return 'xs'
     },
+    getOCR(state) {
+      return state.ocrInvoiceData
+    }
   },
   mutations: {
     UPDATE_WINDOW_WIDTH(state, val) {
@@ -23,6 +27,10 @@ export default {
     TOGGLE_OVERLAY(state, val) {
       state.shallShowOverlay = val !== undefined ? val : !state.shallShowOverlay
     },
+    setOCR(state, payload) {
+      state.ocrInvoiceData = payload
+      console.log(state.ocrInvoiceData, '=p=p=p=p=p=p=p=p')
+    }
   },
   actions: {},
 }
