@@ -731,7 +731,9 @@ export default {
         status: this.getCompanyStatus,
         exportProperties: {
           id: this.exportProperties.id,
-          keyValues: this.selectedPlatformProperties,
+          keyValues: this.isEdit ? this.exportProperties.keyValues : this.selectedPlatformProperties,
+
+
           platform: this.selectedPlatformProperty
         }
       });

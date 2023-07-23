@@ -578,7 +578,7 @@ export default {
         { value: "ZMK", name: "Zambian Kwacha", symbol: "ZK" },
       ],
       platformProperties: [],
-      platformPropertiesOptions: [],  // Add this line
+
       selectedPlatformProperty: null,
       selectedPlatformProperties: [],  // new data property
       platformPropertiesData: {},
@@ -648,7 +648,7 @@ export default {
           }
         }
         this.showSuggestions = false;
-        this.datalist.value = [];
+        // this.datalist.value = [];
 
       }
       if (val === 2) {

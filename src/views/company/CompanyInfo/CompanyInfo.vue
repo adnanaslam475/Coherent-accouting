@@ -61,7 +61,7 @@
                           <CopyToClipboard :text="companyOwnerName" @copy="copyTextNoInput(1)">
 
                             <small id="comp-owner-copy" style="cursor: pointer">{{
-                              companyDetails.companyOwnerApi.companyOwnerName }}</small>
+                              companyOwnerName }}</small>
                           </CopyToClipboard>
                           <b-tooltip target="comp-owner-copy">{{
                             copyToClipboard
@@ -75,8 +75,8 @@
                           <p class="mb-0 text-capitalize font-weight-bold"> {{ $t('company_info.owner_egn') }} </p>
                           <CopyToClipboard :text="companyOwnerEGN" @copy="copyTextNoInput(2)">
                             <small v-if="companyOwnerEGN != null" id="comp-egn-copy" style="cursor: pointer">{{
-                              companyDetails.companyOwnerApi.ownerEGN }}</small>
-                            <small v-else></small>
+                              companyOwnerEGN }}</small>
+
                           </CopyToClipboard>
                           <b-tooltip target="comp-egn-copy">{{
                             copyToClipboard
@@ -683,8 +683,7 @@ export default {
     //
     getCompanyInfo() {
       this.companyNameLength = this.companyDetails.companyName.length;
-      // this.companyOwnerName =
-      this.companyDetails.companyOwnerApi.companyOwnerName;
+      this.companyOwnerName = this.companyDetails.companyOwnerApi.companyOwnerName;
       this.companyOwnerEGN = this.companyDetails.companyOwnerApi.ownerEGN;
       this.companyName = this.companyDetails.companyName;
       this.companyAddress = this.companyDetails.companyAddress;
