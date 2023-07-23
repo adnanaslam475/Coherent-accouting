@@ -1226,69 +1226,71 @@
               </div>
             </div>
             <div class="tm_table tm_style1 tm_mb30">
-              <div class="tm_table_responsive">
-                <table>
-                  <thead>
-                    <tr :class="invoiceData.invoiceColor === 'BLUE'
-                      ? 'tm_accent_bg'
-                      : invoiceData.invoiceColor === 'GREEN'
-                        ? 'green_bg'
-                        : invoiceData.invoiceColor === 'PURPLE'
-                          ? 'purple_bg'
-                          : invoiceData.invoiceColor === 'ORANGE'
-                            ? 'orange_bg'
-                            : 'gray_bg'
-                      " :style="invoiceData.invoiceColor === 'GRAY'
+              <div class="">
+                <div class="tm_table_responsive">
+                  <table>
+                    <thead>
+                      <tr :class="invoiceData.invoiceColor === 'BLUE'
+                        ? 'tm_accent_bg'
+                        : invoiceData.invoiceColor === 'GREEN'
+                          ? 'green_bg'
+                          : invoiceData.invoiceColor === 'PURPLE'
+                            ? 'purple_bg'
+                            : invoiceData.invoiceColor === 'ORANGE'
+                              ? 'orange_bg'
+                              : 'gray_bg'
+                        " :style="invoiceData.invoiceColor === 'GRAY'
     ? 'color: black !important'
     : 'color: white !important'
     ">
-                      <th class="tm_width_1 tm_semi_bold">
-                        {{ $t("add_invoice.s_no") }}
-                      </th>
-                      <th class="tm_width_3 tm_semi_bold">
-                        {{ $t("add_invoice.service_item_description") }}
-                      </th>
-                      <th class="tm_width_1 tm_semi_bold">
-                        {{ $t("add_invoice.qty") }}
-                      </th>
-                      <th class="tm_width_1 tm_semi_bold">
-                        {{ $t("add_invoice.measurement") }}
-                      </th>
-                      <th class="tm_width_3 tm_semi_bold">
-                        {{ $t("add_invoice.single_amount_transaction") }}
-                      </th>
+                        <th class="tm_width_1 tm_semi_bold">
+                          {{ $t("add_invoice.s_no") }}
+                        </th>
+                        <th class="tm_width_3 tm_semi_bold">
+                          {{ $t("add_invoice.service_item_description") }}
+                        </th>
+                        <th class="tm_width_1 tm_semi_bold">
+                          {{ $t("add_invoice.qty") }}
+                        </th>
+                        <th class="tm_width_1 tm_semi_bold">
+                          {{ $t("add_invoice.measurement") }}
+                        </th>
+                        <th class="tm_width_3 tm_semi_bold">
+                          {{ $t("add_invoice.single_amount_transaction") }}
+                        </th>
 
-                      <th class="tm_width_3 tm_semi_bold">
-                        {{ $t("add_invoice.transaction_total_nonVat") }}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(item, index) in invoiceData.transactions" :key="index">
-                      <td class="tm_width_1">{{ index + 1 }}</td>
-                      <td class="elipsis-text">
-                        {{ item.serviceOrItemDescription }}
-                      </td>
-                      <td class="tm_width_1">{{ item.quantity }}</td>
-                      <td class="tm_width_1">{{ item.measurement }}</td>
+                        <th class="tm_width_3 tm_semi_bold">
+                          {{ $t("add_invoice.transaction_total_nonVat") }}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item, index) in invoiceData.transactions" :key="index">
+                        <td class="tm_width_1">{{ index + 1 }}</td>
+                        <td class="elipsis-text">
+                          {{ item.serviceOrItemDescription }}
+                        </td>
+                        <td class="tm_width_1">{{ item.quantity }}</td>
+                        <td class="tm_width_1">{{ item.measurement }}</td>
 
-                      <td class="tm_width_2">
-                        {{ item.singleAmountTransaction }}
-                      </td>
+                        <td class="tm_width_3">
+                          {{ item.singleAmountTransaction }}
+                        </td>
 
-                      <td class="tm_width_2">
-                        {{
-                          (
-                            parseFloat(item.singleAmountTransaction) *
-                            parseFloat(item.quantity)
-                          ).toFixed(2)
-                        }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                        <td class="tm_width_3">
+                          {{
+                            (
+                              parseFloat(item.singleAmountTransaction) *
+                              parseFloat(item.quantity)
+                            ).toFixed(2)
+                          }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              <div class="tm_invoice_footer mb-5 pb-5">
+              <div class="tm_invoice_footer">
                 <div class="tm_left_footer">
                   <div v-if="invoiceData.bankApi !== null">
                     <p class="tm_mb2">
@@ -1308,7 +1310,8 @@
                   <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
                     invoiceData.vatPercent === 0
                     ">
-                    <b>{{ $t("add_invoice.non_vat_clause") }}: </b>{{ invoiceData.vatCondition }}
+                    <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
+                    {{ invoiceData.vatCondition }}
                   </p>
                   <div class="mt-4 d-flex" order="2" order-md="1">
                     <h2 class="invoiceTypeHeading mt-6 text-uppercase">
@@ -1320,7 +1323,7 @@
                   <table>
                     <tbody>
                       <tr>
-                        <td class="tm_width_3 tm_primary_color tm_border_none">
+                        <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2">
                           {{ $t("add_invoice.total_price_non_vat") }}:
                         </td>
                         <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
@@ -1337,7 +1340,7 @@
                       </tr>
 
                       <tr>
-                        <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                        <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2">
                           {{ $t("add_invoice.vat") }} % :
                         </td>
                         <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
@@ -1346,7 +1349,7 @@
                       </tr>
 
                       <tr>
-                        <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                        <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2">
                           {{ $t("company_invoices.vat_amount") }}:
                         </td>
                         <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
@@ -1363,7 +1366,7 @@
                       </tr>
 
                       <tr>
-                        <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                        <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2">
                           {{ $t("add_invoice.discount_percent") }}:
                         </td>
                         <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
@@ -1372,7 +1375,7 @@
                       </tr>
 
                       <tr>
-                        <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                        <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2">
                           {{ $t("add_invoice.discount_sum") }}:
                         </td>
                         <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
@@ -1388,8 +1391,8 @@
                         </td>
                       </tr>
 
-                      <tr class="tm_border_top tm_border_bottom">
-                        <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color">
+                      <tr class="tm_border_top">
+                        <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color pl-2">
                           {{ $t("add_invoice.total_price") }}:
                         </td>
                         <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right">
@@ -1406,36 +1409,44 @@
                       </tr>
                     </tbody>
                   </table>
+
+
+
+                  <!-- <div class="tm_shape_3 tm_accent_bg_10">
+
+                  </div> -->
+
                 </div>
               </div>
-              <div class="no-page-break" style="width: 50%; float: left;">
-                <table style="width: 100%; margin: auto; padding-top: 1rem; border-collapse: collapse;">
-                  <tr>
-                    <td style="text-align: center; padding: 15px;">
-                      <div style="border-bottom: 1px solid black; margin-bottom: 10px;">
-                        {{ invoiceData.supplierCompany.companyOwnerName }}
-                      </div>
-                      <div style="height: 30px; border-bottom: 1px dashed black;">
-                        <!-- Space for supplier's signature -->
-                      </div>
-                      <div style="margin-top: 5px;">
-                        {{ new Date().toLocaleDateString() }}
-                      </div>
-                    </td>
-                    <td style="text-align: center; padding: 15px;">
-                      <div style="border-bottom: 1px solid black; margin-bottom: 10px;">
-                        {{ invoiceData.recipientCompany.companyOwnerName }}
-                      </div>
-                      <div style="height: 30px; border-bottom: 1px dashed black;">
-                        <!-- Space for recipient's signature -->
-                      </div>
-                      <div style="margin-top: 5px;">
-                        {{ new Date().toLocaleDateString() }}
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-              </div>
+
+              <table class="no-page-break"
+                style="width: 80%; margin: auto; padding-top: 1rem; border-collapse: collapse;">
+                <tr>
+                  <td style="text-align: center; ">
+                    <div style="margin-bottom: 10px;">
+                      {{ invoiceData.supplierCompany.companyOwnerName }}
+                    </div>
+                    <div style=" border-bottom: 1px dashed black;">
+
+                    </div>
+                    <div style="margin-top: 5px;">
+                      {{ new Date().toLocaleDateString() }}
+                    </div>
+                  </td>
+                  <td style="text-align: center; padding: 15px;">
+                    <div style="margin-bottom: 10px;">
+                      {{ invoiceData.recipientCompany.companyOwnerName }}
+                    </div>
+                    <div style=" border-bottom: 1px dashed black;">
+
+                    </div>
+                    <div style="margin-top: 5px;">
+                      {{ new Date().toLocaleDateString() }}
+                    </div>
+                  </td>
+                </tr>
+              </table>
+
             </div>
           </div>
         </div>
