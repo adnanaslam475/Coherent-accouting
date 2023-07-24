@@ -859,16 +859,11 @@
             <!-- Bank Details Switch -->
             <b-row>
               <b-col>
-                <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1" name="AccountTypeOptionToggle"
-                  @change="() => {
-                    isBank = !isBank;
-                  }
-                    " switch :checked="isBank">
-                  <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
-                  <span class="switch-icon-right text-uppercase">
-                    {{ $t("add_invoice.no_bank") }}
-                  </span>
-                </b-form-checkbox>
+                <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
+                  v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
+                  @change="checkProcessType(bankProcess)">
+
+                </b-form-select>
               </b-col>
             </b-row>
 
@@ -900,8 +895,10 @@
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
-                              ">
+                                
+                              " @click="fillBankApi">
                               {{ $t(option.name) }}
+
                             </div>
                           </template>
 
@@ -911,7 +908,7 @@
                                 align-items: center;
                                 justify-content: left;
                                 grid-gap: 8px;
-                              ">
+                              " @click="fillBankApi">
                               {{ $t(option.name) }}
                             </span>
                           </template>
@@ -1071,17 +1068,19 @@
                         </p>
                         <p class="tm_invoice_date tm_m0">
                           <!-- Date: -->
-                          {{ $t("add_invoice.date") }}:
+                          {{ $t("add_invoice.due_date") }}:
                           <span>
-                            <validation-provider #default="{ errors }" name="dateIssued" rules="required">
-                              <flat-pickr v-model="invoiceData.dateIssued"
-                                class="form-control invoice-edit-input invoice-input-top" />
-                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                                @click="invoiceData.dateIssued = ''" />
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
+                            <flat-pickr v-model="invoiceData.dueDate"
+                              class="form-control invoice-edit-input invoice-input-top" />
+                            <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
+                              class="cursor-pointer " style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;" />
+                            <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer " style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;" @click="invoiceData.dueDate = ''" />
                           </span>
                         </p>
                       </div>
@@ -1267,7 +1266,7 @@
                           </span>
                         </b-form-checkbox>
                       </div>
-                      <div style="width: 12%">
+                      <div style="width: 12%" v-if="invoiceData.logoId != ''">
 
                         <div @click="reverse" class="reverse-button"
                           style="margin-left: 25px; position: relative; top: 27%; cursor: pointer">
@@ -1447,6 +1446,24 @@
                           {{ $t("add_invoice.service") }}
                         </span>
                       </b-form-checkbox>
+                      <div class="d-flex align-items-end mb-0">
+                        <span class="title mr-1">
+                          {{ $t("add_invoice.date") }}:
+                        </span>
+                        <validation-provider #default="{ errors }" name="dateIssued" rules="required">
+                          <flat-pickr v-model="invoiceData.dateIssued"
+                            class="form-control invoice-edit-input invoice-input-top" />
+                          <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon" style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;" class="cursor-pointer " />
+                          <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer" style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;" @click="invoiceData.dateIssued = ''" />
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
+                      </div>
                     </div>
 
                     <b-card no-body class="invoice-add-card mb-1 mt-2">
@@ -1614,20 +1631,15 @@
 
                     <!-- Bank Details Switch -->
                     <b-row class="mb-1">
-                      <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
-                          <span class="switch-icon-left text-uppercase">
-                            {{ $t("add_invoice.bank") }}
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            {{ $t("add_invoice.no_bank") }}
-                          </span>
-                        </b-form-checkbox>
-                      </b-col>
+                      <b-row>
+                        <b-col>
+                          <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
+                            v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
+                            @change="checkProcessType(bankProcess)">
+
+                          </b-form-select>
+                        </b-col>
+                      </b-row>
                     </b-row>
 
                     <div class="tm_invoice_footer" style="margin-bottom: 70px">
@@ -2010,18 +2022,20 @@
                         </p>
                         <p class="tm_invoice_date tm_m0">
                           <!-- Date: -->
-                          {{ $t("add_invoice.date") }}:
-
+                          {{ $t("add_invoice.due_date") }}:
                           <span>
-                            <validation-provider #default="{ errors }" name="dateIssued" rules="required">
-                              <flat-pickr v-model="invoiceData.dateIssued"
-                                class="form-control invoice-edit-input invoice-input-top" />
-                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                                @click="invoiceData.dateIssued = ''" />
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
+                            <flat-pickr v-model="invoiceData.dueDate"
+                              class="form-control invoice-edit-input invoice-input-top" />
+                            <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
+                              class="cursor-pointer " style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;" />
+                            <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer"
+                              @click="invoiceData.dueDate = ''" style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;" />
                           </span>
                         </p>
                       </div>
@@ -2086,7 +2100,26 @@
                         </span>
                       </b-form-checkbox>
                     </div>
+                    <p class="tm_invoice_date tm_m0">
+                      <!-- Date: -->
+                      {{ $t("add_invoice.date") }}:
 
+                      <validation-provider #default="{ errors }" name="dateIssued" rules="required">
+                        <flat-pickr v-model="invoiceData.dateIssued"
+                          class="form-control invoice-edit-input invoice-input-top" />
+                        <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                          class="cursor-pointer clear-all" style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;" />
+                        <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                          @click="invoiceData.dateIssued = ''" style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;" />
+                        <small class="text-danger">{{ errors[0] }}</small>
+                      </validation-provider>
+                    </p>
                     <!-- Schedule Type -->
                     <div class="d-flex justify-content-between align-items-center mb-2 schedule-type"
                       v-if='invoiceData.scheduled'>
@@ -2217,7 +2250,7 @@
                           </span>
                         </b-form-checkbox>
                       </div>
-                      <div style="width: 12%">
+                      <div style="width: 12%" v-if="invoiceData.logoId != ''">
 
                         <div @click="reverse" class="reverse-button"
                           style="margin-left: 25px; position: relative; top: 27%; cursor: pointer">
@@ -2583,18 +2616,11 @@
 
                     <b-row class="mb-1">
                       <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
-                          <span class="switch-icon-left text-uppercase">
-                            {{ $t("add_invoice.bank") }}
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            {{ $t("add_invoice.no_bank") }}
-                          </span>
-                        </b-form-checkbox>
+                        <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
+                          v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
+                          @change="checkProcessType(bankProcess)">
+
+                        </b-form-select>
                       </b-col>
                     </b-row>
 
@@ -3056,11 +3082,34 @@
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
                               <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                                @click="invoiceData.dateIssued = ''" />
+                                class="cursor-pointer" style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;" />
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer" style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;" @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
+                          </span>
+                        </p>
+                        <p class="tm_invoice_date tm_m0">
+                          <!-- Date: -->
+                          {{ $t("add_invoice.due_date") }}:
+                          <span>
+                            <flat-pickr v-model="invoiceData.dueDate"
+                              class="form-control invoice-edit-input invoice-input-top" />
+                            <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
+                              class="cursor-pointer" style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;"/>
+                            <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer"style="position: relative;
+    
+      bottom: 31px;
+      left: 188px;"
+                              @click="invoiceData.dueDate = ''" />
                           </span>
                         </p>
                         <p class="tm_invoice_number tm_m0">
@@ -3259,7 +3308,7 @@
                           <span class="switch-icon-right text-uppercase"> {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
                       </div>
-                      <div style="width: 12%">
+                      <div style="width: 12%" v-if="invoiceData.logoId != ''">
 
                         <div @click="reverse" class="reverse-button"
                           style="margin-left: 25px; position: relative; top: 27%; cursor: pointer">
@@ -3619,16 +3668,11 @@
                     </b-button>
                     <b-row class="mb-1">
                       <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
-                          <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
-                          <span class="switch-icon-right text-uppercase">
-                            {{ $t("add_invoice.no_bank") }}
-                          </span>
-                        </b-form-checkbox>
+                        <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
+                          v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
+                          @change="checkProcessType(bankProcess)">
+
+                        </b-form-select>
                       </b-col>
                     </b-row>
 
@@ -4032,11 +4076,29 @@
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
                               <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                class="cursor-pointer" style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;"/>
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer" style="position: relative;
+    
+    bottom: 31px;
+    left: 188px;"
                                 @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
+                          </span>
+                        </p>
+                        <p class="tm_invoice_date tm_m0">
+                          <!-- Date: -->
+                          {{ $t("add_invoice.due_date") }}:
+                          <span>
+                            <flat-pickr v-model="invoiceData.dueDate"
+                              class="form-control invoice-edit-input invoice-input-top" />
+                            <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
+                              class="cursor-pointer clear-all" />
+                            <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                              @click="invoiceData.dueDate = ''" />
                           </span>
                         </p>
                         <div class="tm_invoice_info_list_bg" :class="isBlue === true
@@ -4232,7 +4294,7 @@
 
                         <!-- Recipient -->
                       </div>
-                      <div style="width: 12%">
+                      <div style="width: 12%" v-if="invoiceData.logoId != ''">
 
                         <div @click="reverse" class="reverse-button"
                           style="margin-left: 25px; position: relative; top: 27%; cursor: pointer">
@@ -4594,16 +4656,11 @@
 
                     <b-row class="mb-1">
                       <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
-                          <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
-                          <span class="switch-icon-right text-uppercase">
-                            {{ $t("add_invoice.no_bank") }}
-                          </span>
-                        </b-form-checkbox>
+                        <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
+                          v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
+                          @change="checkProcessType(bankProcess)">
+
+                        </b-form-select>
                       </b-col>
                     </b-row>
 
@@ -5091,6 +5148,8 @@ export default {
   },
   data() {
     return {
+      bankProcess: '',
+      banks: [],
       showLogo: false,
       isUploading: i18n.tc("add_invoice.upload_logo"),
       logoToUpload: "",
@@ -5181,6 +5240,7 @@ export default {
   mixins: [heightTransition],
   mounted() {
     // this.initTrHeight();
+    this.getPaymentProcess()
   },
   created() {
     // window.addEventListener("resize", this.initTrHeight);
@@ -5212,6 +5272,41 @@ export default {
 
   },
   methods: {
+    fillBankApi() {
+      let self = this
+
+      console.log(this.invoiceData, self.companyBankBic, 'this is invoice Data')
+    },
+    checkProcessType(type) {
+      console.log(type, 'this sssss===>')
+      if (type == 'BANK_TRANSFER') {
+        this.isBank = true
+      } else {
+        this.isBank = false
+      }
+    },
+
+    getPaymentProcess() {
+      var config = {
+        method: "get",
+        url: "/account/api/invoice/get-payment-processes",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+
+      };
+      axios(config)
+        .then((response) => {
+          console.log(response.data);
+          this.banks = response.data
+          console.log(this.banks, 'there are banks')
+
+        })
+        .catch(function (error) { });
+    },
     reverse() {
 
       let temp = this.invoiceData.supplierCompany
@@ -5363,6 +5458,9 @@ export default {
       }
     },
     selectBankName() {
+      let self = this
+      console.log('======>', this.invoiceData, self.companyBankBic,)
+      this.invoiceData.bankApi.bic = self.companyBankBic
       if (this.invoiceData.bankApi.name === null) {
         this.bankNameToSend = "";
       } else {
@@ -5736,7 +5834,7 @@ export default {
     const isGreen = ref(false);
     const isOrange = ref(false);
     const isGray = ref(false);
-
+    var companyBankBic = ref(null)
     var invoiceData = ref({
       logoId: "",
       templateId: "",
@@ -5845,8 +5943,9 @@ export default {
       useJwt
         .getCompany(router.currentRoute.params.companyId)
         .then((response) => {
-
+          console.log(response, '=======')
           let Response = response.data;
+
           invoiceData.value.supplierCompany.companyOwnerName =
             Response?.companyOwnerApi?.companyOwnerName;
           invoiceData.value.supplierCompany.companName = Response?.companyName;
@@ -5858,6 +5957,10 @@ export default {
             Response?.companyAddress;
           supplierVat.value = Response?.companyVatNumber ? true : false;
           supplierID.value = Response?.companyIdentificationNumber;
+
+          companyBankBic.value = Response?.companyBankBic;
+
+
         })
         .catch((error) => {
           // console.log(error);
@@ -6445,6 +6548,7 @@ export default {
       isGreen,
       isOrange,
       isBlue,
+      companyBankBic
     };
   },
 };

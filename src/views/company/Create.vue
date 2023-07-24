@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ form }}
     <form-wizard color="#0A64BC" :title="null" :subtitle="null" shape="square"
       :finish-button-text="$t('create_company.create')" :next-button-text="$t('create_company.next')" class="mb-3">
       <!-- First Tab: Company Details -->
@@ -147,7 +148,8 @@
               </b-form-group>
             </b-col>
           </b-form-row>
-          <b-form-row v-if="isVatCheck === true">
+
+          <b-form-row v-if="isVatCheck == true">
             <b-col><b-form-group id="input-group-7" :label="$t('add_invoice.company_vat')" label-for="company_vat_no">
                 <validation-provider #default="{ errors }" v-bind:name="$t('company_vat_number')" rules="required">
                   <b-form-input id="vat_number" v-model="form.vat_no" :state="errors.length > 0 || vatIsValid === 0 ? false : null
@@ -162,8 +164,10 @@
             <b-col></b-col>
           </b-form-row>
           <b-form-row>
+
             <b-col>
-              <b-form-checkbox id="vat-checkbox" name="vat-checkbox" value="accepted" @change="vatHandled()">
+              <b-form-checkbox id="vat-checkbox" v-model="form.companyVatAccepted" name="vat-checkbox" value="accepted"
+                @change="vatHandled()">
                 {{ $t("create_company.vat") }}
               </b-form-checkbox>
             </b-col>
@@ -278,6 +282,28 @@
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group></b-col>
+            <b-col>
+
+              <b-form-group id="input-group-1" :label="$t('Company Bank Name')" label-for="companyBankName">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
+                  <v-select v-model="form.companyBankName" :options="banks" :value="$store.state.selected"
+                    id="companyBankName" :state="errors.length > 0 ? false : null"
+                    v-bind:placeholder="$t('Please select bank')" v-on:input="updateCurrencyStatus()">
+
+                  </v-select>
+
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+
+          <b-form-row>
+            <b-col><b-form-group id="input-group-1" label="Company Bank Bic" label-for="company_fin_year">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankBic')" rules="required">
+                  <b-form-input id="companyBankBic" v-model="form.companyBankBic" placeholder="Company Bank Bic" />
+
+                </validation-provider>
+              </b-form-group></b-col>
             <b-col></b-col>
           </b-form-row>
         </validation-observer>
@@ -373,6 +399,7 @@ export default {
   },
   data() {
     return {
+      banks: [],
       statusOptions: [
         { status: "ACTIVE" },
         { status: "INAVTIVE" },
@@ -401,6 +428,8 @@ export default {
         phone_no: null,
         vat_no: null,
         fin_year: null,
+        companyBankBic: null,
+        companyBankName: null
       },
       options: [],
       isCountrySelected: false,
@@ -676,7 +705,37 @@ export default {
           }
         }
       }
+      axios.get(`/account/api/company-validate?vatNumber=BG` + this.form.company_identification_number, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+      })
+        .then((response) => {
+
+          console.log(response.data.valid)
+          if (response.data.valid) {
+            this.isVatCheck = true
+            this.form.companyVatAccepted = 'accepted'
+            this.form.vat_no = 'BG' + this.form.company_identification_number
+
+
+          }
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching company info",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          });
+        });
+
     },
+
     // Searching a company by companyName
     async SearchCompanyName(val) {
 
@@ -705,6 +764,27 @@ export default {
             self.showSuggestions = false;
           }
           self.datalist = response.data;
+        })
+        .catch(function (error) { });
+    },
+    SearchBankName() {
+      var config = {
+        method: "get",
+        url: "/account/api/company/list-bank-names",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+
+      };
+      axios(config)
+        .then((response) => {
+          console.log(response.data);
+          this.banks = response.data
+          console.log(this.banks, 'there are banks')
+
         })
         .catch(function (error) { });
     },
@@ -805,7 +885,7 @@ export default {
     //
     vatHandled() {
       // this.isVatCheck = !this.isVatCheck;
-      if (this.isVatCheck === true) {
+      if (this.isVatCheck == true) {
         this.isVatCheck = false;
       } else {
         this.isVatCheck = true;
@@ -826,6 +906,8 @@ export default {
         currency = this.form.company_currency.value;
       }
       var data = JSON.stringify({
+        companyBankName: this.form.companyBankName,
+        companyBankBic: this.form.companyBankBic,
         companyName: this.form.company_name,
         companyCountry: this.getCompanyCountry,
         companyIsoAlpha2Country: this.getCompanyISO,
@@ -971,6 +1053,10 @@ export default {
   },
   created() {
     this.populateCountries();
+
+  },
+  mounted() {
+    this.SearchBankName()
   },
 };
 </script>

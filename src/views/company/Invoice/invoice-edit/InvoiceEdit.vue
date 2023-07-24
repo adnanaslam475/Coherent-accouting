@@ -2,7 +2,7 @@
   <section class="invoice-add-wrapper">
     <TabList />
     <!--  -->
-   
+
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
       <b-form @submit.prevent="invoiceEdit(invoiceData, 'save', AccountTypeOption)">
         <b-row class="invoice-add">
@@ -857,16 +857,13 @@
             <!-- Bank Details Switch -->
             <b-row>
               <b-col>
-                <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1" name="AccountTypeOptionToggle"
-                  @change="() => {
-                    isBank = !isBank;
-                  }
-                    " switch :checked="isBank">
-                  <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
-                  <span class="switch-icon-right text-uppercase">
-                    {{ $t("add_invoice.no_bank") }}
-                  </span>
-                </b-form-checkbox>
+                <b-col>
+                  <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
+                    v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
+                    @change="checkProcessType(bankProcess)">
+
+                  </b-form-select>
+                </b-col>
               </b-col>
             </b-row>
 
@@ -1652,18 +1649,11 @@
                     <!-- Bank Details Switch -->
                     <b-row class="mb-1">
                       <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
-                          <span class="switch-icon-left text-uppercase">
-                            {{ $t("add_invoice.bank") }}
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            {{ $t("add_invoice.no_bank") }}
-                          </span>
-                        </b-form-checkbox>
+                        <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
+                          v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
+                          @change="checkProcessType(bankProcess)">
+
+                        </b-form-select>
                       </b-col>
                     </b-row>
 
@@ -2669,18 +2659,11 @@
 
                     <b-row class="mb-1">
                       <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
-                          <span class="switch-icon-left text-uppercase">
-                            {{ $t("add_invoice.bank") }}
-                          </span>
-                          <span class="switch-icon-right text-uppercase">
-                            {{ $t("add_invoice.no_bank") }}
-                          </span>
-                        </b-form-checkbox>
+                        <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
+                          v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
+                          @change="checkProcessType(bankProcess)">
+
+                        </b-form-select>
                       </b-col>
                     </b-row>
 
@@ -3731,16 +3714,11 @@
                     </b-button>
                     <b-row class="mb-1">
                       <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
-                          <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
-                          <span class="switch-icon-right text-uppercase">
-                            {{ $t("add_invoice.no_bank") }}
-                          </span>
-                        </b-form-checkbox>
+                        <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
+                          v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
+                          @change="checkProcessType(bankProcess)">
+
+                        </b-form-select>
                       </b-col>
                     </b-row>
 
@@ -4734,16 +4712,11 @@
 
                     <b-row class="mb-1">
                       <b-col>
-                        <b-form-checkbox class="custom-control-primary custom-switch-btn-2 flex-1"
-                          name="AccountTypeOptionToggle" @change="() => {
-                            isBank = !isBank;
-                          }
-                            " switch :checked="isBank">
-                          <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }} </span>
-                          <span class="switch-icon-right text-uppercase">
-                            {{ $t("add_invoice.no_bank") }}
-                          </span>
-                        </b-form-checkbox>
+                        <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
+                          v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
+                          @change="checkProcessType(bankProcess)">
+
+                        </b-form-select>
                       </b-col>
                     </b-row>
 
@@ -5266,7 +5239,8 @@ export default {
   },
   data() {
     return {
-
+      bankProcess: '',
+      banks: [],
       isUploading: i18n.tc("add_invoice.upload_logo"),
 
       isTemplateFive: true,
@@ -5291,49 +5265,49 @@ export default {
       // ],
 
       noVatClause: [
-      "чл.113 ал.9 от ЗДДС" ,
-"чл.140 ал.1 от ЗДДС" ,
-"чл.86 ал.1 от ППЗДДС" ,
-"чл.21 ал.2 от ЗДДС" ,
-"чл.22 ал.3 от ЗДДС" ,
-"чл.22 ал.4 от ЗДДС" ,
-"чл.30 ал.1 т.1 от ЗДДС" ,
-"чл.39 от ЗДДС" ,
-"чл.28 т.1 от ЗДДС" ,
-"чл.28 т.2 от ЗДДС" ,
-"чл.86 ал.3 от ЗДДС" ,
-"чл.41 т.1a от ЗДДС" ,
-"чл.46 от ЗДДС" ,
-"чл.163 А ал.2 от ЗДДС" ,
-"чл.45 ал.1 от ЗДДС" ,
-"чл.143 от ЗДДС" ,
-"чл. 47 ал. 2 от ЗДДС" ,
-"чл.53 ал.1 от ЗДДС" ,
-"фирмата не е регистрирана по ЗДДС" ,
-"чл.29 ал.1 и ал.2 от ЗДДС" ,
-"Облагане на марж - туристически услуги" ,
-"Облагане на марж - туристически у-ги и чл.29  ал.1 и 2 от ЗДДС" ,
-"чл.47, т.2 от ЗДДС" ,
-"чл.113, ал.3 от ЗДДС" ,
-"чл.113, ал.3 от ЗДДС във връзка с чл. 10, ал.5 от ЗКПО" ,
-"чл.21, ал.4 от ЗДДС" ,
-"чл.50, ал.1 т.2 от ЗДДС" ,
-"чл.30 ал.2 от ЗДДС" ,
-"чл.31 т.6 от ЗДДС" ,
-"чл.36 ал.1 от ЗДДС" ,
-"чл.41 т.4 от ЗДДС" ,
-"чл.26, ал.2 от ЗДДС" ,
-"чл. 44, ал.1, т.1 от ЗДДС" ,
-"чл.45 ал.3 от ЗДДС" ,
-"чл.69 ал.2 от ЗДДС" ,
-"чл.3, ал.5 от ЗДДС" ,
-"чл.40, т.3 от ЗДДС" ,
-"чл.47 от ЗДДС" ,
-"чл.21, ал.5 от ЗДДС" ,
-"чл.173 от ЗДДС" ,
-"чл.66Б от ЗДДС" ,
-"чл.42 от ЗДДС" ,
-"чл.46, ал.1, т.1 от ЗДДС" ,
+        "чл.113 ал.9 от ЗДДС",
+        "чл.140 ал.1 от ЗДДС",
+        "чл.86 ал.1 от ППЗДДС",
+        "чл.21 ал.2 от ЗДДС",
+        "чл.22 ал.3 от ЗДДС",
+        "чл.22 ал.4 от ЗДДС",
+        "чл.30 ал.1 т.1 от ЗДДС",
+        "чл.39 от ЗДДС",
+        "чл.28 т.1 от ЗДДС",
+        "чл.28 т.2 от ЗДДС",
+        "чл.86 ал.3 от ЗДДС",
+        "чл.41 т.1a от ЗДДС",
+        "чл.46 от ЗДДС",
+        "чл.163 А ал.2 от ЗДДС",
+        "чл.45 ал.1 от ЗДДС",
+        "чл.143 от ЗДДС",
+        "чл. 47 ал. 2 от ЗДДС",
+        "чл.53 ал.1 от ЗДДС",
+        "фирмата не е регистрирана по ЗДДС",
+        "чл.29 ал.1 и ал.2 от ЗДДС",
+        "Облагане на марж - туристически услуги",
+        "Облагане на марж - туристически у-ги и чл.29  ал.1 и 2 от ЗДДС",
+        "чл.47, т.2 от ЗДДС",
+        "чл.113, ал.3 от ЗДДС",
+        "чл.113, ал.3 от ЗДДС във връзка с чл. 10, ал.5 от ЗКПО",
+        "чл.21, ал.4 от ЗДДС",
+        "чл.50, ал.1 т.2 от ЗДДС",
+        "чл.30 ал.2 от ЗДДС",
+        "чл.31 т.6 от ЗДДС",
+        "чл.36 ал.1 от ЗДДС",
+        "чл.41 т.4 от ЗДДС",
+        "чл.26, ал.2 от ЗДДС",
+        "чл. 44, ал.1, т.1 от ЗДДС",
+        "чл.45 ал.3 от ЗДДС",
+        "чл.69 ал.2 от ЗДДС",
+        "чл.3, ал.5 от ЗДДС",
+        "чл.40, т.3 от ЗДДС",
+        "чл.47 от ЗДДС",
+        "чл.21, ал.5 от ЗДДС",
+        "чл.173 от ЗДДС",
+        "чл.66Б от ЗДДС",
+        "чл.42 от ЗДДС",
+        "чл.46, ал.1, т.1 от ЗДДС",
       ],
       loading: false,
       required,
@@ -5354,7 +5328,7 @@ export default {
   mixins: [heightTransition],
   mounted() {
     // this.initTrHeight();
-
+    this.getPaymentProcess
   },
   created() {
     // window.addEventListener("resize", this.initTrHeight);
@@ -5385,6 +5359,27 @@ export default {
     },
   },
   methods: {
+    getPaymentProcess() {
+      var config = {
+        method: "get",
+        url: "/account/api/invoice/get-payment-processes",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+
+      };
+      axios(config)
+        .then((response) => {
+          console.log(response.data);
+          this.banks = response.data
+          console.log(this.banks, 'there are banks')
+
+        })
+        .catch(function (error) { });
+    },
     reverse() {
 
       let temp = this.invoiceData.supplierCompany
@@ -5931,6 +5926,7 @@ export default {
       creatorSignature: "", // Add this if you have a signature
       recipientSignature: "", // Add this if you have a signature
     };
+    var companyBankBic = ref(null)
 
     store
       .dispatch("app-invoice/fetchInvoice", {
@@ -5951,6 +5947,7 @@ export default {
 
           isBank.value = true
         }
+        companyBankBic.value = response.data?.companyBankBic;
         // if (invoiceData.value.scheduled == false) {
         //   let schedule = {
         //     scheduleType: "",

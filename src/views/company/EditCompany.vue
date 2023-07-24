@@ -330,6 +330,28 @@
                   </div>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
+              </b-form-group>
+
+            </b-col>
+            <b-col>
+
+              <b-form-group id="input-group-1" :label="$t('Company Bank Name')" label-for="companyBankName">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
+                  <v-select v-model="companyBankName" :options="banks" :value="$store.state.selected" id="companyBankName"
+                    v-bind:placeholder="$t('Please select bank')">
+
+                  </v-select>
+
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+          <b-form-row>
+            <b-col><b-form-group id="input-group-1" label="Company Bank Bic" label-for="company_fin_year">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankBic')">
+                  <b-form-input id="companyBankBic" v-model="companyBankBic" placeholder="Company Bank Bic" />
+
+                </validation-provider>
               </b-form-group></b-col>
             <b-col></b-col>
           </b-form-row>
@@ -439,6 +461,7 @@ export default {
   },
   data() {
     return {
+      banks: [],
       isEdit: true,
       isStatusSelected: '',
       statusOptions: [
@@ -449,6 +472,8 @@ export default {
       companyRecord: [],
       getCompanyName: "",
       getCompanyEmail: "",
+      companyBankBic: '',
+      companyBankName: '',
       getCompanyAddress: "",
       getCompanyCountry: "",
       getCompOwnerName: "",
@@ -632,7 +657,7 @@ export default {
         { value: "ZMK", name: "Zambian Kwacha", symbol: "ZK" },
       ],
       platformProperties: [],
-      platformPropertiesOptions: [],  // Add this line
+
       selectedPlatformProperty: null,
       selectedPlatformProperties: [],  // new data property
       platformPropertiesData: {},
@@ -675,6 +700,27 @@ export default {
 
   methods: {
     //
+    SearchBankName() {
+      var config = {
+        method: "get",
+        url: "/account/api/company/list-bank-names",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+
+      };
+      axios(config)
+        .then((response) => {
+          console.log(response.data);
+          this.banks = response.data
+          console.log(this.banks, 'there are banks')
+
+        })
+        .catch(function (error) { });
+    },
     checkChange() {
       this.isEdit = false
     },
@@ -707,6 +753,8 @@ export default {
       }
 
       var data = JSON.stringify({
+        companyBankName: this.companyBankName,
+        companyBankBic: this.companyBankBic,
         companyAddress: this.getCompanyAddress,
         companyCountry: this.getCompanyCountry,
         companyIdentificationNumber: this.getCompanyID,
@@ -791,10 +839,13 @@ export default {
         .then((response) => {
           this.companyRecord = response.data;
           this.form = response.data;
-          this.getCompanyName = this.companyRecord.companyName;
+          this.companyBankName = this.companyRecord.companyBankName,
+            this.companyBankBic = this.companyRecord.companyBankBic,
+            this.getCompanyName = this.companyRecord.companyName;
           this.getCompanyID = this.companyRecord.companyIdentificationNumber;
           this.getCompanyAddress = this.companyRecord.companyAddress;
           this.getCompanyCountry = this.companyRecord.companyCountry;
+
           this.getCompOwnerName =
             this.companyRecord.companyOwnerApi.companyOwnerName;
           this.getCompOwnerEgn =
@@ -1005,7 +1056,9 @@ export default {
     },
   },
 
-
+  mounted() {
+    this.SearchBankName()
+  },
 
   created: function () {
     this.companyID = this.$route.params.id;
