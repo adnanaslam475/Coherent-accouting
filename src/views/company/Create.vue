@@ -433,6 +433,7 @@ export default {
       },
       options: [],
       isCountrySelected: false,
+      platformPropertiesOptions: [],
       getCountries: [],
       // getCountries: [{ country: "" }, { isoAlpha2Country: "" }],
       selectedItem: "",

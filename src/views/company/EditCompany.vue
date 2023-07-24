@@ -662,6 +662,7 @@ export default {
       selectedPlatformProperties: [],  // new data property
       platformPropertiesData: {},
       exportProperties: {},
+      platformPropertiesOptions: [],
     };
   },
   computed: {
