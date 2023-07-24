@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ form }}
+
     <form-wizard color="#0A64BC" :title="null" :subtitle="null" shape="square"
       :finish-button-text="$t('create_company.create')" :next-button-text="$t('create_company.next')" class="mb-3">
       <!-- First Tab: Company Details -->
