@@ -518,7 +518,7 @@
     "DEBIT_NOTIFICATION": "Известие за дебит",
     "select_notification": "Изберете Известие",
     "send_email": "Изпратете по имейл",
-      "taxExclusive": "Без данък:"
+      "taxExclusive": "Основание за неначисляване на ДДС:"
   },
   "create_company": {
      "software": "Статус",
