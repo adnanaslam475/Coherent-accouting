@@ -236,10 +236,33 @@
           </b-row> -->
           <b-form-row>
             <b-col>
+
+              <b-form-group id="input-group-1" :label="$t('Company Bank Name')" label-for="companyBankName">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
+                  <v-select v-model="companyBankName" :options="banks" :value="$store.state.selected" id="companyBankName"
+                    v-bind:placeholder="$t('Please select bank')">
+
+                  </v-select>
+
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+            <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_bank_account')"
                 label-for="company_bank_account">
                 <b-form-input id="company_bank_account" v-model="getBankAccount" type="text"
                   placeholder="Company Bank Account" autocomplete="off" required></b-form-input> </b-form-group></b-col>
+
+          </b-form-row>
+          <b-form-row>
+            <b-col><b-form-group id="input-group-1" label="Company Bank Bic" label-for="company_fin_year">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankBic')">
+                  <b-form-input id="companyBankBic" v-model="companyBankBic" placeholder="Company Bank Bic" />
+
+                </validation-provider>
+              </b-form-group></b-col>
+
+
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_currency')"
                 label-for="company_currency">
@@ -296,6 +319,7 @@
               </b-form-group>
             </b-col>
 
+
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_email')" label-for="company_email">
                 <validation-provider #default="{ errors }" v-bind:name="$t('company email')" rules="required|email">
@@ -306,7 +330,8 @@
             </b-col>
           </b-form-row>
           <b-form-row>
-            <b-col><b-form-group id="input-group-1" :label="$t('create_company.company_fin_year')"
+            <b-col>
+              <b-form-group id="input-group-1" :label="$t('create_company.company_fin_year')"
                 label-for="company_fin_year">
 
                 <validation-provider #default="{ errors }" v-bind:name="$t('company_fin_year')" rules="required">
@@ -331,29 +356,7 @@
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
-
             </b-col>
-            <b-col>
-
-              <b-form-group id="input-group-1" :label="$t('Company Bank Name')" label-for="companyBankName">
-                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
-                  <v-select v-model="companyBankName" :options="banks" :value="$store.state.selected" id="companyBankName"
-                    v-bind:placeholder="$t('Please select bank')">
-
-                  </v-select>
-
-                </validation-provider>
-              </b-form-group>
-            </b-col>
-          </b-form-row>
-          <b-form-row>
-            <b-col><b-form-group id="input-group-1" label="Company Bank Bic" label-for="company_fin_year">
-                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankBic')">
-                  <b-form-input id="companyBankBic" v-model="companyBankBic" placeholder="Company Bank Bic" />
-
-                </validation-provider>
-              </b-form-group></b-col>
-            <b-col></b-col>
           </b-form-row>
         </validation-observer>
       </tab-content>

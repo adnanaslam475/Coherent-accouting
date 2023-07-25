@@ -181,7 +181,7 @@
             <b-col>
 
               <b-form-group id="input-group-5" :label="$t('Company Bank Name')" label-for="companyBankName">
-                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')" rules="required">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
                   <v-select v-model="form.companyBankName" :options="banks" :value="$store.state.selected"
                     id="companyBankName" :state="errors.length > 0 ? false : null"
                     v-bind:placeholder="$t('Please select bank')">
@@ -195,16 +195,21 @@
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_bank_account')"
                 label-for="company_bank_account">
-                <b-form-input id="company_bank_account" v-model="form.company_bank_account" type="text"
-                  placeholder="Company Bank Account" autocomplete="off" required></b-form-input>
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')"
+                  :rules="form.companyBankName == null ? '' : 'required'">
+                  <b-form-input id="company_bank_account" v-model="form.company_bank_account" type="text"
+                    placeholder="Company Bank Account" autocomplete="off"></b-form-input>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
               </b-form-group></b-col>
 
           </b-form-row>
           <b-form-row>
             <b-col><b-form-group id="input-group-1" label="Company Bank Bic" label-for="company_fin_year">
-                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankBic')" rules="required">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankBic')"
+                  :rules="form.companyBankName == null ? '' : 'required'">
                   <b-form-input id="companyBankBic" v-model="form.companyBankBic" placeholder="Company Bank Bic" />
-
+                  <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group></b-col>
             <b-col>

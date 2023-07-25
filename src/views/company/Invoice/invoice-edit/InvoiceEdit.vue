@@ -1104,17 +1104,17 @@
                             </validation-provider>
                           </span>
                         </p>
-                        <div class="d-flex align-items-center mb-0">
-                          <span class="title mr-1">
+                        <div class=" mb-0">
+                          <span>
                             {{ $t("add_invoice.due_date") }}:
                           </span>
                           <!-- <validation-provider #default="{ errors }" name="dueDate" rules="required"> -->
                           <flat-pickr v-model="invoiceData.dueDate"
                             class="form-control invoice-edit-input invoice-input-top" />
                           <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
-                            class="cursor-pointer" />
+                            class="cursor-pointer" style="position: relative; bottom: 31px; left: 188px;" />
                           <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer "
-                            style="position: relative; bottom: 31px; left: 108px;" @click="invoiceData.dueDate = ''" />
+                            style="position: relative; bottom: 31px; left: 188px;" @click="invoiceData.dueDate = ''" />
                           <!-- <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider> -->
                         </div>
@@ -2104,22 +2104,7 @@
                             </validation-provider>
                           </span>
                         </p>
-                        <p class="tm_invoice_date tm_m0">
-                          <!-- Date: -->
-                          {{ $t("add_invoice.date") }}:
 
-                          <span>
-                            <validation-provider #default="{ errors }" name="dateIssued" rules="required">
-                              <flat-pickr v-model="invoiceData.dateIssued"
-                                class="form-control invoice-edit-input invoice-input-top" />
-                              <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                                @click="invoiceData.dateIssued = ''" />
-                              <small class="text-danger">{{ errors[0] }}</small>
-                            </validation-provider>
-                          </span>
-                        </p>
                         <div class="d-flex align-items-center mb-0">
                           <span class="title mr-1">
                             {{ $t("add_invoice.due_date") }}:
@@ -2128,9 +2113,11 @@
                           <flat-pickr v-model="invoiceData.dueDate"
                             class="form-control invoice-edit-input invoice-input-top" />
                           <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
-                            class="cursor-pointer" />
+                            class="cursor-pointer"
+                            style="position: relative; bottom: 31px; left: 188px; color: #6e6b7b;" />
                           <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer "
-                            style="position: relative; bottom: 31px; left: 158px;" @click="invoiceData.dueDate = ''" />
+                            style="position: relative; bottom: 31px; left: 128px; color: #6e6b7b;"
+                            @click="invoiceData.dueDate = ''" />
                           <!-- <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider> -->
                         </div>
@@ -2196,7 +2183,22 @@
                         </span>
                       </b-form-checkbox>
                     </div>
+                    <p class="tm_invoice_date tm_m0">
+                      <!-- Date: -->
+                      {{ $t("add_invoice.date") }}:
 
+                      <span>
+                        <validation-provider #default="{ errors }" name="dateIssued" rules="required">
+                          <flat-pickr v-model="invoiceData.dateIssued"
+                            class="form-control invoice-edit-input invoice-input-top" />
+                          <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
+                            class="cursor-pointer" style="position: relative; bottom: 31px; left: 188px;" />
+                          <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer"
+                            @click="invoiceData.dateIssued = ''" style="position: relative; bottom: 31px; left: 188px;" />
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
+                      </span>
+                    </p>
                     <!-- Schedule Type -->
                     <div class="d-flex justify-content-between align-items-center mb-2 schedule-type"
                       v-if='invoiceData.scheduled'>
@@ -4201,9 +4203,10 @@
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
                               <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer" style="position: relative; bottom: 31px;left: 188px;" />
+                                class="cursor-pointer"
+                                style="position: relative; bottom: 31px;left: 188px; color: #6e6b7b;" />
                               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer"
-                                style="position: relative; bottom: 31px;left: 188px;"
+                                style="position: relative; bottom: 31px;left: 188px; color: #6e6b7b;"
                                 @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -4219,9 +4222,11 @@
                             <flat-pickr v-model="invoiceData.dueDate"
                               class="form-control invoice-edit-input invoice-input-top" />
                             <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
-                              class="cursor-pointer" style="position: relative; bottom: 31px;left: 188px;" />
+                              class="cursor-pointer"
+                              style="position: relative; bottom: 31px;left: 188px; color: #6e6b7b;" />
                             <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer"
-                              style="position: relative; bottom: 31px;left: 188px;" @click="invoiceData.dueDate = ''" />
+                              style="position: relative; bottom: 31px;left: 188px; color: #6e6b7b;"
+                              @click="invoiceData.dueDate = ''" />
                           </span>
                         </p>
                         <div class="tm_invoice_info_list_bg" :class="isBlue === true
