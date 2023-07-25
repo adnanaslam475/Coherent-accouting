@@ -5307,9 +5307,12 @@ export default {
     return {
       measureOptions: [
         'кг.',
+        'гр.',
+        'тон',
+        'литър',
+        'мл.',
+        'стек',
         'бр.',
-        'литра',
-        'чифт'
       ],
       bankProcess: '',
       banks: [],
