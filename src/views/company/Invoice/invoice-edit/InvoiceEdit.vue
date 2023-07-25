@@ -944,12 +944,12 @@
               </b-card-body>
             </b-card>
 
-            <b-row v-if="invoiceData.vatPercent == '0'" class="mt-2">
+            <b-row v-if="companyName.companyVatNumber != null || companyName.companyVatNumber != ''" class="mt-2">
 
               <b-col>
                 <b-card no-body class="">
                   <b-card-body class="invoice-padding form-item-section p-2 rounded">
-                    <b-form-group id="input-group-4" label="Tax Exclusive:" label-for="non-vat-clause">
+                    <b-form-group id="input-group-4" :label="$t('add_invoice.taxExclusive')" label-for="non-vat-clause">
 
                       <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
                         <v-select v-model="invoiceData.vatCondition" :options="noVatClause" id="non-vat-clause"
@@ -1103,21 +1103,37 @@
                             </validation-provider>
                           </span>
                         </p>
-                        <p class="tm_invoice_date tm_m0">
+                        <div class="d-flex align-items-center mb-0">
+                          <span class="title mr-1">
+                            {{ $t("add_invoice.due_date") }}:
+                          </span>
+                          <!-- <validation-provider #default="{ errors }" name="dueDate" rules="required"> -->
+                          <flat-pickr v-model="invoiceData.dueDate"
+                            class="form-control invoice-edit-input invoice-input-top" />
+                          <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
+                            class="cursor-pointer" />
+                          <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer "
+                            style="position: relative; bottom: 31px; left: 108px;" @click="invoiceData.dueDate = ''" />
+                          <!-- <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider> -->
+                        </div>
+                        <div class="mb-0">
                           <!-- Date: -->
-                          {{ $t("add_invoice.date") }}:
+                          <span>{{ $t("add_invoice.date") }}:</span>
+
                           <span>
                             <validation-provider #default="{ errors }" name="dateIssued" rules="required">
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
                               <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                                @click="invoiceData.dateIssued = ''" />
+                                class="cursor-pointer" style="position: relative; bottom: 31px; left: 188px;" />
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer"
+                                @click="invoiceData.dateIssued = ''"
+                                style="position: relative; bottom: 31px; left: 188px;" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
-                        </p>
+                        </div>
                       </div>
                     </div>
 
@@ -1750,7 +1766,7 @@
 
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent == '0'">
+                        <div v-if="companyName.companyVatNumber != null || companyName.companyVatNumber != ''">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
@@ -2102,6 +2118,20 @@
                             </validation-provider>
                           </span>
                         </p>
+                        <div class="d-flex align-items-center mb-0">
+                          <span class="title mr-1">
+                            {{ $t("add_invoice.due_date") }}:
+                          </span>
+                          <!-- <validation-provider #default="{ errors }" name="dueDate" rules="required"> -->
+                          <flat-pickr v-model="invoiceData.dueDate"
+                            class="form-control invoice-edit-input invoice-input-top" />
+                          <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
+                            class="cursor-pointer" />
+                          <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer "
+                            style="position: relative; bottom: 31px; left: 158px;" @click="invoiceData.dueDate = ''" />
+                          <!-- <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider> -->
+                        </div>
                       </div>
                       <div class="tm_invoice_seperator tm_accent_bg" :class="isBlue === true
                         ? 'tm_accent_bg'
@@ -2757,7 +2787,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent == '0'">
+                        <div v-if="companyName.companyVatNumber != null || companyName.companyVatNumber != ''">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
@@ -3154,13 +3184,28 @@
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
                               <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                class="cursor-pointer" style="position: relative; bottom: 31px; left: 188px;" />
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer"
+                                style="position: relative; bottom: 31px; left: 188px;"
                                 @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </span>
                         </p>
+                        <div class="d-flex align-items-center mb-0">
+                          <span class="title mr-1">
+                            {{ $t("add_invoice.due_date") }}:
+                          </span>
+                          <!-- <validation-provider #default="{ errors }" name="dueDate" rules="required"> -->
+                          <flat-pickr v-model="invoiceData.dueDate"
+                            class="form-control invoice-edit-input invoice-input-top" />
+                          <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
+                            class="cursor-pointer" style="position: relative; bottom: 31px; left: 148px;" />
+                          <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer "
+                            style="position: relative; left: -23px;" @click="invoiceData.dueDate = ''" />
+                          <!-- <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider> -->
+                        </div>
                         <p class="tm_invoice_number tm_m0">
                           <!-- Invoice No: -->
                           {{ $t("add_invoice.invoice") }}:
@@ -3814,7 +3859,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent == '0'">
+                        <div v-if="companyName.companyVatNumber != null || companyName.companyVatNumber != ''">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
@@ -4152,11 +4197,27 @@
                               <flat-pickr v-model="invoiceData.dateIssued"
                                 class="form-control invoice-edit-input invoice-input-top" />
                               <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                                class="cursor-pointer clear-all" />
-                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                class="cursor-pointer" style="position: relative; bottom: 31px;left: 188px;" />
+                              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer"
+                                style="position: relative; bottom: 31px;left: 188px;"
                                 @click="invoiceData.dateIssued = ''" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
+                          </span>
+                        </p>
+                        <p class="tm_invoice_date tm_m0" style="z-index: 9" :style="isGray === true
+                          ? 'color: black !important'
+                          : 'color: white !important'
+                          ">
+                          <!-- Date: -->
+                          {{ $t("add_invoice.due_date") }}:
+                          <span>
+                            <flat-pickr v-model="invoiceData.dueDate"
+                              class="form-control invoice-edit-input invoice-input-top" />
+                            <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
+                              class="cursor-pointer" style="position: relative; bottom: 31px;left: 188px;" />
+                            <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer"
+                              style="position: relative; bottom: 31px;left: 188px;" @click="invoiceData.dueDate = ''" />
                           </span>
                         </p>
                         <div class="tm_invoice_info_list_bg" :class="isBlue === true
@@ -4810,7 +4871,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="invoiceData.vatPercent == '0'">
+                        <div v-if="companyName.companyVatNumber != null || companyName.companyVatNumber != ''">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
@@ -6137,7 +6198,7 @@ export default {
     //   console.log(supplierID.value)
 
     // };
-
+    var companyName = ref("");
     axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -6148,7 +6209,7 @@ export default {
       .then((response) => {
         console.log(response, 'asdfasdf')
 
-
+        companyName.value = response.data.companyName
         companyName.value = response.data.companyName
         console.log(companyName.value, 'this is company name ')
         supplierID.value = response.data.companyIdentificationNumber

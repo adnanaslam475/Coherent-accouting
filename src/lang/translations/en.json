@@ -520,7 +520,8 @@
     "CREDIT_NOTIFICATION": "Credit Notification",
     "DEBIT_NOTIFICATION": "Debit Notification",
     "select_notification": "Select Notification",
-    "send_email": "Send Email"
+    "send_email": "Send Email",
+    "taxExclusive": "Tax Exclusive:"
   },
   "create_company": {
     "software": "Software",

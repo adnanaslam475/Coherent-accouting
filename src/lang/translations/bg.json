@@ -517,7 +517,8 @@
     "CREDIT_NOTIFICATION": "Кредитно известие",
     "DEBIT_NOTIFICATION": "Известие за дебит",
     "select_notification": "Изберете Известие",
-    "send_email": "Изпратете по имейл"
+    "send_email": "Изпратете по имейл",
+      "taxExclusive": "Без данък:"
   },
   "create_company": {
      "software": "Статус",

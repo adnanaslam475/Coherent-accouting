@@ -174,6 +174,51 @@
                         </td>
                         <td v-else class="pb-50"></td>
                       </tr>
+                      <!-- Bank name  -->
+                      <tr>
+                        <th class="pb-50">
+                          <feather-icon icon="HomeIcon" class="mr-75" />
+                          <span class="font-weight-bold text-capitalize">{{ $t('Bank Name') }}</span>
+                        </th>
+                        <td v-if="companyDetails.companyBankName != null" class="pb-50">
+                          <CopyToClipboard :text="companyDetails.companyBankName" @copy="copyTextNoInput(5)"
+                            class="abbbc">
+                            <p id="comp-account-copy" style="
+                              width: fit-content;
+                              margin: 0px;
+                              cursor: pointer;
+                            ">
+                              {{ companyDetails.companyBankName }}
+                            </p>
+                          </CopyToClipboard>
+                          <b-tooltip target="comp-account-copy">{{
+                            copyToClipboard
+                          }}</b-tooltip>
+                        </td>
+                        <td v-else class="pb-50"></td>
+                      </tr>
+                      <!-- BIC  -->
+                      <tr>
+                        <th class="pb-50">
+                          <feather-icon icon="CreditCardIcon" class="mr-75" />
+                          <span class="font-weight-bold text-capitalize">{{ $t('BIC') }}</span>
+                        </th>
+                        <td v-if="companyDetails.companyBankBic != null" class="pb-50">
+                          <CopyToClipboard :text="companyDetails.companyBankBic" @copy="copyTextNoInput(5)" class="abbbc">
+                            <p id="comp-account-copy" style="
+                              width: fit-content;
+                              margin: 0px;
+                              cursor: pointer;
+                            ">
+                              {{ companyDetails.companyBankBic }}
+                            </p>
+                          </CopyToClipboard>
+                          <b-tooltip target="comp-account-copy">{{
+                            copyToClipboard
+                          }}</b-tooltip>
+                        </td>
+                        <td v-else class="pb-50"></td>
+                      </tr>
                       <!-- Company Phone -->
                       <tr>
                         <th class="pb-50">

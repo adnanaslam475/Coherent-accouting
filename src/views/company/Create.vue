@@ -177,20 +177,35 @@
       <!-- Second Tab: Account Details -->
       <tab-content :title="$t('create_company.account_details')" :before-change="validationFormTab2">
         <validation-observer ref="accountRules" tag="form">
-          <b-row>
-            <!-- <b-col cols="12" class="mb-2">
-              <h5 class="mb-0">{{ $t("create_company.account_details") }}</h5>
-              <small class="text-muted">
-                {{ $t("create_company.create_acc_details") }}
-              </small>
-            </b-col> -->
-          </b-row>
           <b-form-row>
+            <b-col>
+
+              <b-form-group id="input-group-5" :label="$t('Company Bank Name')" label-for="companyBankName">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')" rules="required">
+                  <v-select v-model="form.companyBankName" :options="banks" :value="$store.state.selected"
+                    id="companyBankName" :state="errors.length > 0 ? false : null"
+                    v-bind:placeholder="$t('Please select bank')">
+
+                  </v-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_bank_account')"
                 label-for="company_bank_account">
                 <b-form-input id="company_bank_account" v-model="form.company_bank_account" type="text"
                   placeholder="Company Bank Account" autocomplete="off" required></b-form-input>
+              </b-form-group></b-col>
+
+          </b-form-row>
+          <b-form-row>
+            <b-col><b-form-group id="input-group-1" label="Company Bank Bic" label-for="company_fin_year">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankBic')" rules="required">
+                  <b-form-input id="companyBankBic" v-model="form.companyBankBic" placeholder="Company Bank Bic" />
+
+                </validation-provider>
               </b-form-group></b-col>
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_currency')"
@@ -236,6 +251,7 @@
               </b-form-group>
             </b-col>
           </b-form-row>
+
           <b-form-row>
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_phone_no')" label-for="company_phone">
@@ -282,30 +298,10 @@
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group></b-col>
-            <b-col>
-
-              <b-form-group id="input-group-1" :label="$t('Company Bank Name')" label-for="companyBankName">
-                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
-                  <v-select v-model="form.companyBankName" :options="banks" :value="$store.state.selected"
-                    id="companyBankName" :state="errors.length > 0 ? false : null"
-                    v-bind:placeholder="$t('Please select bank')" v-on:input="updateCurrencyStatus()">
-
-                  </v-select>
-
-                </validation-provider>
-              </b-form-group>
-            </b-col>
+            <b-col> </b-col>
           </b-form-row>
 
-          <b-form-row>
-            <b-col><b-form-group id="input-group-1" label="Company Bank Bic" label-for="company_fin_year">
-                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankBic')" rules="required">
-                  <b-form-input id="companyBankBic" v-model="form.companyBankBic" placeholder="Company Bank Bic" />
 
-                </validation-provider>
-              </b-form-group></b-col>
-            <b-col></b-col>
-          </b-form-row>
         </validation-observer>
       </tab-content>
       <!-- Third Tab: Export:Details -->
@@ -1027,7 +1023,7 @@ export default {
 
       }
       arr.forEach((item) => {
-        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE" && item.value !== "XERO") {
+        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE" && item.value !== "XERO" && item.value !== "FRESH_BOOKS") {
           item.disabled = true;
         }
       });
