@@ -609,7 +609,8 @@
                           <b-col cols="12" lg="1">
                             <label class="d-inline d-lg-none">Measure</label>
                             <validation-provider #default="{ errors }" name="transectionMeasurement" rules="required">
-                              <b-form-input v-model="item.measurement" type="text" class="mb-0" />
+                              <b-form-select v-model="item.measurement"  class="mb-0"
+                                        :options="measureOptions" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </b-col>
@@ -1544,7 +1545,8 @@
                                     <label class="d-inline d-lg-none">Measure</label>
                                     <validation-provider #default="{ errors }" name="transectionMeasurement"
                                       rules="required">
-                                      <b-form-input v-model="item.measurement" type="text" class="mb-0" />
+                                      <b-form-select v-model="item.measurement"  class="mb-0"
+                                        :options="measureOptions" />
                                       <small class="text-danger">{{
                                         errors[0]
                                       }}</small>
@@ -2522,7 +2524,8 @@
                                     <label class="d-inline d-lg-none">Measure</label>
                                     <validation-provider #default="{ errors }" name="transectionMeasurement"
                                       rules="required">
-                                      <b-form-input v-model="item.measurement" type="text" class="mb-0" />
+                                      <b-form-select v-model="item.measurement"  class="mb-0"
+                                        :options="measureOptions" />
                                       <small class="text-danger">{{
                                         errors[0]
                                       }}</small>
@@ -3575,7 +3578,8 @@
                                     <label class="d-inline d-lg-none">Measure</label>
                                     <validation-provider #default="{ errors }" name="transectionMeasurement"
                                       rules="required">
-                                      <b-form-input v-model="item.measurement" type="text" class="mb-0" />
+                                      <b-form-select v-model="item.measurement" type="text" class="mb-0"
+                                        :options="measureOptions" />
                                       <small class="text-danger">{{
                                         errors[0]
                                       }}</small>
@@ -4560,7 +4564,8 @@
                                     <label class="d-inline d-lg-none">Measure</label>
                                     <validation-provider #default="{ errors }" name="transectionMeasurement"
                                       rules="required">
-                                      <b-form-input v-model="item.measurement" type="text" class="mb-0" />
+                                    <b-form-select v-model="item.measurement" type="text" class="mb-0"
+                                          :options="measureOptions" />
                                       <small class="text-danger">{{
                                         errors[0]
                                       }}</small>
@@ -5144,6 +5149,12 @@ export default {
   },
   data() {
     return {
+      measureOptions: [
+        'кг.',
+        'бр.',
+        'литра',
+        'чифт'
+      ],
       bankProcess: '',
       banks: [],
       showLogo: false,
