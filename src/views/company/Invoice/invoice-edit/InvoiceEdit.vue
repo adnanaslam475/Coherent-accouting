@@ -2024,7 +2024,7 @@
                         ? 'color: black !important'
                         : 'color: white !important'
                         ">
-                        <p class="tm_invoice_number tm_m0">
+                        <p class="tm_invoice_number tm_m0 mb-1">
                           <!-- Invoice No: -->
                           {{ $t("add_invoice.invoice") }}:
 
@@ -2042,7 +2042,7 @@
                           </span>
                         </p>
 
-                        <div class="d-flex align-items-center mb-0">
+                        <div class="d-flex align-items-center  mb-0">
                           <span class="title mr-1">
                             {{ $t("add_invoice.due_date") }}:
                           </span>
