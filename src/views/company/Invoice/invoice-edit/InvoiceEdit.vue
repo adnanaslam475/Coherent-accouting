@@ -78,7 +78,7 @@
                         <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
                           class="cursor-pointer clear-all" />
                         <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                          @click="invoiceData.dueDate = ''" />
+                          @click="invoiceData.dueDate = null" />
                         <!-- <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider> -->
                       </div>
@@ -878,43 +878,10 @@
                     <b-col>
                       <span>{{ $t("add_invoice.bank") }}: </span>
                       <validation-provider #default="{ errors }" name="bank" rules="required">
-                        <v-select v-model="invoiceData.bankApi.name" :options="bankList" id="invoice-bank"
-                          name="invoice-bank" v-bind:placeholder="$t('Please select bank...')"
-                          :value="$store.state.selected" @input="selectBankName()">
-                          <template #selected-option="option" v-if="bankNameToSend !== ''">
-                            <div style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: left;
-                                grid-gap: 8px;
-                              ">
-                              {{ bankNameToSend }}
-                            </div>
-                          </template>
-                          <template #selected-option="option" v-else>
+                        <b-form-input v-model="invoiceData.bankApi.name" id="invoice-bank" name="invoice-bank"
+                          v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected">
 
-                            <div style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: left;
-                                grid-gap: 8px;
-                              ">
-                              {{ $t(option.label) }}
-                            </div>
-                          </template>
-
-                          <template v-slot:option="option">
-
-                            <span style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: left;
-                                grid-gap: 8px;
-                              ">
-                              {{ $t(option.name) }}
-                            </span>
-                          </template>
-                        </v-select>
+                        </b-form-input>
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
                     </b-col>
@@ -945,7 +912,7 @@
               </b-card-body>
             </b-card>
 
-            <b-row v-if="companyName.companyVatNumber != null || companyName.companyVatNumber != ''" class="mt-2">
+            <b-row v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''" class="mt-2">
 
               <b-col>
                 <b-card no-body class="">
@@ -1724,41 +1691,11 @@
 
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="bank" rules="required">
-                                <v-select v-model="invoiceData.bankApi.name" :options="bankList" id="invoice-bank"
-                                  name="invoice-bank" v-bind:placeholder="$t('Please select bank...')
-                                    " :value="$store.state.selected" @input="selectBankName()">
-                                  <template #selected-option="option" v-if="bankNameToSend !== ''">
-                                    <div style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ bankNameToSend }}
-                                    </div>
-                                  </template>
-                                  <template #selected-option="option" v-else>
-                                    <div style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ $t(option.label) }}
-                                    </div>
-                                  </template>
+                                <b-form-input v-model="invoiceData.bankApi.name" id="invoice-bank" name="invoice-bank"
+                                  v-bind:placeholder="$t('Please select bank...')
+                                    " :value="$store.state.selected">
 
-                                  <template v-slot:option="option">
-                                    <span style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ $t(option.name) }}
-                                    </span>
-                                  </template>
-                                </v-select>
+                                </b-form-input>
                                 <small class="text-danger">{{
                                   errors[0]
                                 }}</small>
@@ -1768,7 +1705,7 @@
 
                           <br />
                         </div>
-                        <div v-if="companyName.companyVatNumber != null || companyName.companyVatNumber != ''">
+                        <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
@@ -2749,41 +2686,11 @@
 
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="bank" rules="required">
-                                <v-select v-model="invoiceData.bankApi.name" :options="bankList" id="invoice-bank"
-                                  name="invoice-bank" v-bind:placeholder="$t('Please select bank...')
-                                    " :value="$store.state.selected" @input="selectBankName()">
-                                  <template #selected-option="option" v-if="bankNameToSend !== ''">
-                                    <div style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ bankNameToSend }}
-                                    </div>
-                                  </template>
-                                  <template #selected-option="option" v-else>
-                                    <div style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ $t(option.label) }}
-                                    </div>
-                                  </template>
+                                <b-form-input v-model="invoiceData.bankApi.name" id="invoice-bank" name="invoice-bank"
+                                  v-bind:placeholder="$t('Please select bank...')
+                                    " :value="$store.state.selected">
 
-                                  <template v-slot:option="option">
-                                    <span style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ $t(option.name) }}
-                                    </span>
-                                  </template>
-                                </v-select>
+                                </b-form-input>
                                 <small class="text-danger">{{
                                   errors[0]
                                 }}</small>
@@ -2792,7 +2699,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="companyName.companyVatNumber != null || companyName.companyVatNumber != ''">
+                        <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
@@ -3822,41 +3729,11 @@
 
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="bank" rules="required">
-                                <v-select v-model="invoiceData.bankApi.name" :options="bankList" id="invoice-bank"
-                                  name="invoice-bank" v-bind:placeholder="$t('Please select bank...')
-                                    " :value="$store.state.selected" @input="selectBankName()">
-                                  <template #selected-option="option" v-if="bankNameToSend !== ''">
-                                    <div style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ bankNameToSend }}
-                                    </div>
-                                  </template>
-                                  <template #selected-option="option" v-else>
-                                    <div style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ $t(option.label) }}
-                                    </div>
-                                  </template>
+                                <b-form-input v-model="invoiceData.bankApi.name" id="invoice-bank" name="invoice-bank"
+                                  v-bind:placeholder="$t('Please select bank...')
+                                    " :value="$store.state.selected">
 
-                                  <template v-slot:option="option">
-                                    <span style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ $t(option.name) }}
-                                    </span>
-                                  </template>
-                                </v-select>
+                                </b-form-input>
                                 <small class="text-danger">{{
                                   errors[0]
                                 }}</small>
@@ -3865,7 +3742,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="companyName.companyVatNumber != null || companyName.companyVatNumber != ''">
+                        <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
@@ -4838,41 +4715,11 @@
 
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="bank" rules="required">
-                                <v-select v-model="invoiceData.bankApi.name" :options="bankList" id="invoice-bank"
-                                  name="invoice-bank" v-bind:placeholder="$t('Please select bank...')
-                                    " :value="$store.state.selected" @input="selectBankName()">
-                                  <template #selected-option="option" v-if="bankNameToSend !== ''">
-                                    <div style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ bankNameToSend }}
-                                    </div>
-                                  </template>
-                                  <template #selected-option="option" v-else>
-                                    <div style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ $t(option.label) }}
-                                    </div>
-                                  </template>
+                                <b-form-input v-model="invoiceData.bankApi.name" id="invoice-bank" name="invoice-bank"
+                                  v-bind:placeholder="$t('Please select bank...')
+                                    " :value="$store.state.selected">
 
-                                  <template v-slot:option="option">
-                                    <span style="
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: left;
-                                        grid-gap: 8px;
-                                      ">
-                                      {{ $t(option.name) }}
-                                    </span>
-                                  </template>
-                                </v-select>
+                                </b-form-input>
                                 <small class="text-danger">{{
                                   errors[0]
                                 }}</small>
@@ -4881,7 +4728,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="companyName.companyVatNumber != null || companyName.companyVatNumber != ''">
+                        <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
                           <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
@@ -5408,7 +5255,7 @@ export default {
   mixins: [heightTransition],
   mounted() {
     // this.initTrHeight();
-    this.getPaymentProcess
+    this.getPaymentProcess()
   },
   created() {
     // window.addEventListener("resize", this.initTrHeight);
@@ -5439,6 +5286,17 @@ export default {
     },
   },
   methods: {
+    checkProcessType(type) {
+      let self = this
+      console.log(type, 'this sssss===>')
+      if (type == 'BANK_TRANSFER') {
+        this.isBank = true
+        this.invoiceData.bankApi.name = self.companyData?.companyBankName
+        this.invoiceData.bankApi.bic = self.companyData?.companyBankBic
+      } else {
+        this.isBank = false
+      }
+    },
     getPaymentProcess() {
       var config = {
         method: "get",
@@ -6217,6 +6075,7 @@ export default {
     //   console.log(supplierID.value)
 
     // };
+
     var companyName = ref("");
     axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
       headers: {
