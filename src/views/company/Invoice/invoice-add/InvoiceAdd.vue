@@ -5387,9 +5387,9 @@ export default {
       invoiceData.vatCondition = this.clauseToSend;
 
 
-      if (invoiceData.vatPercent !== "0") {
-        invoiceData.vatCondition = "";
-      }
+      // if (invoiceData.vatPercent !== "0") {
+      //   invoiceData.vatCondition = "";
+      // }
 
       // Company ID validation on the basis of transactionType
       if (invoiceData.transactionType === "INCOME") {
@@ -5429,32 +5429,35 @@ export default {
       // if (invoiceData.scheduled === false) {
       //   invoiceData.cronScheduleApi = "NO";
       // }
-      // if (validateVat) {
-      //   let validateRegExp = invoiceData.recipientCompany.companyVatEic;
-      //   validateRegExp = validateRegExp.replace(/\W|_/g, "");
-      //   let result = regExp.test(validateRegExp);
-      //   if (result) {
-      //     if (!this.vatPercentValidate) {
-      //       this.vatPercentValidate = true;
-      //       setTimeout(() => {
-      //         this.$refs.invoiceForm.validate();
-      //       }, 100);
-      //       return;
-      //     }
-      //   } else {
-      //     this.vatPercentValidate = false;
-      //   }
-      // } else {
-      //   this.vatPercentValidate = false;
-      // }
+      if (validateVat) {
+        let validateRegExp = invoiceData.recipientCompany.companyVatEic;
+        validateRegExp = validateRegExp.replace(/\W|_/g, "");
+        let result = regExp.test(validateRegExp);
+        if (result) {
+          if (!this.vatPercentValidate) {
+            this.vatPercentValidate = true;
+            setTimeout(() => {
+              this.$refs.invoiceForm.validate();
+            }, 100);
+            return;
+          }
+        } else {
+          this.vatPercentValidate = false;
+        }
+      } else {
+        this.vatPercentValidate = false;
+      }
 
-      if (this.invoiceData.bankApi == null) {
+      if (this.bankProcess == null || this.bankProcess == '') {
 
         this.notBank = true
+        return
 
+      } else {
+        this.notBank = false
       }
       this.$refs.invoiceForm.validate().then((success) => {
-        if (success && this.companyIDisInvalid === false && this.isWeekSelected === false && this.notBank == false) {
+        if (success && this.companyIDisInvalid === false && this.isWeekSelected === false) {
 
           if (
             success &&

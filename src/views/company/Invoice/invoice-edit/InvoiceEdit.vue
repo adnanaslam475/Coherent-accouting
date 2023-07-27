@@ -5255,7 +5255,7 @@ export default {
   mixins: [heightTransition],
   mounted() {
     // this.initTrHeight();
-    this.getPaymentProcess()
+
   },
   created() {
     // window.addEventListener("resize", this.initTrHeight);
