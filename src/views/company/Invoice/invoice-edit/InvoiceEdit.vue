@@ -2050,11 +2050,9 @@
                           <flat-pickr v-model="invoiceData.dueDate"
                             class="form-control invoice-edit-input invoice-input-top" />
                           <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
-                            class="cursor-pointer"
-                            style="position: relative; bottom: 31px; left: 188px; color: #6e6b7b;" />
+                            class="cursor-pointer" style="position: relative;  left: -32px; color: #6e6b7b;" />
                           <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer "
-                            style="position: relative; bottom: 31px; left: 128px; color: #6e6b7b;"
-                            @click="invoiceData.dueDate = ''" />
+                            style="position: relative; left: -32px; color: #6e6b7b;" @click="invoiceData.dueDate = ''" />
                           <!-- <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider> -->
                         </div>
@@ -2129,9 +2127,11 @@
                           <flat-pickr v-model="invoiceData.dateIssued"
                             class="form-control invoice-edit-input invoice-input-top" />
                           <feather-icon v-if="invoiceData.dateIssued === ''" size="16" icon="CalendarIcon"
-                            class="cursor-pointer" style="position: relative; bottom: 31px; left: 188px;" />
+                            class="cursor-pointer"
+                            style="position: relative; bottom: 31px; left: 188px; color: #6e6b7b;" />
                           <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer"
-                            @click="invoiceData.dateIssued = ''" style="position: relative; bottom: 31px; left: 188px;" />
+                            @click="invoiceData.dateIssued = ''"
+                            style="position: relative; bottom: 31px; left: 188px; color: #6e6b7b;" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </span>
@@ -3104,7 +3104,7 @@
                             </validation-provider>
                           </span>
                         </p>
-                        <div class="d-flex align-items-center mb-0">
+                        <div class=" mb-0">
                           <span class="title mr-1">
                             {{ $t("add_invoice.due_date") }}:
                           </span>
@@ -3112,9 +3112,9 @@
                           <flat-pickr v-model="invoiceData.dueDate"
                             class="form-control invoice-edit-input invoice-input-top" />
                           <feather-icon v-if="invoiceData.dueDate === ''" size="16" icon="CalendarIcon"
-                            class="cursor-pointer" style="position: relative; bottom: 31px; left: 148px;" />
+                            class="cursor-pointer" style="position: relative; bottom: 31px; left: 188px;" />
                           <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer "
-                            style="position: relative; left: -23px;" @click="invoiceData.dueDate = ''" />
+                            style="position: relative; bottom: 31px; left: 188px;" @click="invoiceData.dueDate = ''" />
                           <!-- <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider> -->
                         </div>
@@ -5304,6 +5304,7 @@ export default {
       console.log(type, 'this sssss===>')
       if (type == 'BANK_TRANSFER') {
         this.isBank = true
+        console.log(this.invoiceData, 'adfdfdddddd')
         this.invoiceData.bankApi.name = self.companyData?.companyBankName
         this.invoiceData.bankApi.bic = self.companyData?.companyBankBic
         this.invoiceData.bankApi.iban = self.companyData?.companyBankAccount
@@ -6089,7 +6090,7 @@ export default {
     //   console.log(supplierID.value)
 
     // };
-
+    var companyData = ref(null);
     var companyName = ref("");
     axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
       headers: {
@@ -6102,7 +6103,7 @@ export default {
         console.log(response, 'asdfasdf')
 
         companyName.value = response.data.companyName
-        companyName.value = response.data.companyName
+        companyData.value = response.data
         console.log(companyName.value, 'this is company name ')
         supplierID.value = response.data.companyIdentificationNumber
 
@@ -6642,6 +6643,7 @@ export default {
     };
 
     return {
+      companyData,
       isBank,
       companyName,
       companyInfo,

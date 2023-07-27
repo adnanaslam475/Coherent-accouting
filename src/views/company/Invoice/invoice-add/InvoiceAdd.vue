@@ -2620,7 +2620,7 @@
                           <br />
                         </div>
                         <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
-                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
                             <span style="width: 200px">
@@ -3644,7 +3644,7 @@
                           <br />
                         </div>
                         <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
-                         <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
@@ -4602,7 +4602,7 @@
                           <br />
                         </div>
                         <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
-                         <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
@@ -5150,6 +5150,7 @@ export default {
     },
     checkProcessType(type) {
       let self = this
+      this.notBank = false
       console.log(type, 'this sssss===>')
       if (type == 'BANK_TRANSFER') {
         this.isBank = true
@@ -5365,11 +5366,6 @@ export default {
       //assign the data of recipient and creator
       //creator supplier company
 
-      if (this.isBank === false) {
-
-        this.notBank = true
-
-      }
 
       if (invoiceData.scheduled == true) {
 
@@ -5433,27 +5429,32 @@ export default {
       // if (invoiceData.scheduled === false) {
       //   invoiceData.cronScheduleApi = "NO";
       // }
-      if (validateVat) {
-        let validateRegExp = invoiceData.recipientCompany.companyVatEic;
-        validateRegExp = validateRegExp.replace(/\W|_/g, "");
-        let result = regExp.test(validateRegExp);
-        if (result) {
-          if (!this.vatPercentValidate) {
-            this.vatPercentValidate = true;
-            setTimeout(() => {
-              this.$refs.invoiceForm.validate();
-            }, 100);
-            return;
-          }
-        } else {
-          this.vatPercentValidate = false;
-        }
-      } else {
-        this.vatPercentValidate = false;
-      }
+      // if (validateVat) {
+      //   let validateRegExp = invoiceData.recipientCompany.companyVatEic;
+      //   validateRegExp = validateRegExp.replace(/\W|_/g, "");
+      //   let result = regExp.test(validateRegExp);
+      //   if (result) {
+      //     if (!this.vatPercentValidate) {
+      //       this.vatPercentValidate = true;
+      //       setTimeout(() => {
+      //         this.$refs.invoiceForm.validate();
+      //       }, 100);
+      //       return;
+      //     }
+      //   } else {
+      //     this.vatPercentValidate = false;
+      //   }
+      // } else {
+      //   this.vatPercentValidate = false;
+      // }
 
+      if (this.invoiceData.bankApi == null) {
+
+        this.notBank = true
+
+      }
       this.$refs.invoiceForm.validate().then((success) => {
-        if (success && this.companyIDisInvalid === false && this.isWeekSelected === false) {
+        if (success && this.companyIDisInvalid === false && this.isWeekSelected === false && this.notBank == false) {
 
           if (
             success &&
