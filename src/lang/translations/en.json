@@ -2,21 +2,29 @@
   "reverse": "Reverse",
   "app_logo_title": "Coherent Accounting",
   "months": {
-"Jan": "Jan",
- "Feb": "Feb",
-        "Mar": "Mar",
-        "Apr":"Apr",
-        "May":"May",
-        "Jun": "Jun",
-        "Jul": "Jul",
-        "Aug": "Aug",
-        "Sep": "Sep",
-        "Oct": "Oct",
-        "Nov": "Nov",
-        "Dec": "Dec"
-
+    "Jan": "Jan",
+    "Feb": "Feb",
+    "Mar": "Mar",
+    "Apr": "Apr",
+    "May": "May",
+    "Jun": "Jun",
+    "Jul": "Jul",
+    "Aug": "Aug",
+    "Sep": "Sep",
+    "Oct": "Oct",
+    "Nov": "Nov",
+    "Dec": "Dec"
   },
-  
+  "paymentMethods": {
+    "CASH": "CASH",
+    "BANK_TRANSFER": "BANK TRANSFER",
+    "CARD": "CARD",
+    "CASH_ON_DELIVERY": "CASH ON DELIVERY",
+    "WITH_INTERCEPTION": "WITH INTERCEPTION",
+    "POST_ORDER": "POST ORDER",
+    "INTERNET": "INTERNET",
+    "PAYMENT_ORDER": "PAYMENT ORDER"
+  },
   "lbl": {
     "login": "Login",
     "register": "Register",
@@ -35,12 +43,12 @@
     "add_multiple_invoices": "Add Multiple Invoices",
     "list_invoices": "List Invoices"
   },
-  "features":{
-    "title":"Latest Features",
+  "features": {
+    "title": "Latest Features",
     "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs."
   },
-  "partners":{
-    "title":"Our Partners",
+  "partners": {
+    "title": "Our Partners",
     "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs."
   },
   "login": {
@@ -334,7 +342,6 @@
     "invoice_created_successfully": "Invoice Created Successfully",
     "invoice_updated_successfully": "Invoice Updated Successfully",
     "invoice_exported_successfully": "Invoice exported Successfully"
-
   },
   "modal": {
     "title": "Invoices for Vat Report",
@@ -403,7 +410,7 @@
     "active_until": "Active Until ",
     "we_will_send_you_a_notification": "We will send you a notification upon Subscription expiration"
   },
-  "notifications":{
+  "notifications": {
     "notification": "Notifications",
     "click": "You can download file by clicking",
     "here": "here",
@@ -435,7 +442,7 @@
   },
   "add_invoice": {
     "PleaseEnterTheCompanyID": "Please enter the company id of ",
-    "SupplierCompanyOwnerName" : "Supplier Company Owner Name...",
+    "SupplierCompanyOwnerName": "Supplier Company Owner Name...",
     "SupplierCompanyName": "Supplier Company Name...",
     "SupplierCompanyAddress": "Supplier Company Address..",
     "RecipientCompanyIDNumber": "Recipient Company ID Number....",
@@ -644,17 +651,17 @@
     "no": "No"
   },
   "incomeSalesServices": "Income Sales Services",
-   "incomeSalesGoods": "Income Sales Goods",
-   "GeneralExpenses": "General Expenses",
-   "Sales": "Sales",
-   "products": "Products",
-    "goods": "Goods",
-    "suppliers": "Suppliers",
-    "Tax": "Tax",
-    "expensesExternalServices": "Expenses External Services",
-    "taxPurchase": "Tax Purchase",
+  "incomeSalesGoods": "Income Sales Goods",
+  "GeneralExpenses": "General Expenses",
+  "Sales": "Sales",
+  "products": "Products",
+  "goods": "Goods",
+  "suppliers": "Suppliers",
+  "Tax": "Tax",
+  "expensesExternalServices": "Expenses External Services",
+  "taxPurchase": "Tax Purchase",
   "taxSales": "Tax Sales",
-   "userName": "User Name",
+  "userName": "User Name",
   "clients": "Clients",
   "home": "Home",
   "dashboard": "Dashboard",

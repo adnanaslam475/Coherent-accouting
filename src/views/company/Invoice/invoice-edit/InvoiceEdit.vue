@@ -5167,7 +5167,7 @@ export default {
         'бр.',
       ],
       bankProcess: '',
-      banks: [],
+
       isUploading: i18n.tc("add_invoice.upload_logo"),
 
       isTemplateFive: true,
@@ -5273,6 +5273,18 @@ export default {
         { name: this.$t('add_invoice.bank-5') },
       ];
     },
+    banks() {
+      return [
+        i18n.tc("paymentMethods.CASH"),
+        i18n.tc("paymentMethods.BANK_TRANSFER"),
+        i18n.tc("paymentMethods.CARD"),
+        i18n.tc("paymentMethods.CASH_ON_DELIVERY"),
+        i18n.tc("paymentMethods.WITH_INTERCEPTION"),
+        i18n.tc("paymentMethods.POST_ORDER"),
+        i18n.tc("paymentMethods.INTERNET"),
+        i18n.tc("paymentMethods.PAYMENT_ORDER"),
+      ]
+    },
     days() {
       return [
         { text: i18n.tc("company_info.MON"), value: "MON" },
@@ -5297,27 +5309,27 @@ export default {
         this.isBank = false
       }
     },
-    getPaymentProcess() {
-      var config = {
-        method: "get",
-        url: "/account/api/invoice/get-payment-processes",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          "Access-Control-Allow-Credentials": true,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:8080",
-        },
+    // getPaymentProcess() {
+    //   var config = {
+    //     method: "get",
+    //     url: "/account/api/invoice/get-payment-processes",
+    //     headers: {
+    //       Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    //       "Access-Control-Allow-Credentials": true,
+    //       "Content-Type": "application/json",
+    //       "Access-Control-Allow-Origin": "http://localhost:8080",
+    //     },
 
-      };
-      axios(config)
-        .then((response) => {
-          console.log(response.data);
-          this.banks = response.data
-          console.log(this.banks, 'there are banks')
+    //   };
+    //   axios(config)
+    //     .then((response) => {
+    //       console.log(response.data);
+    //       this.banks = response.data
+    //       console.log(this.banks, 'there are banks')
 
-        })
-        .catch(function (error) { });
-    },
+    //     })
+    //     .catch(function (error) { });
+    // },
     reverse() {
 
       let temp = this.invoiceData.supplierCompany
@@ -5883,7 +5895,7 @@ export default {
         invoiceData.value = response.data;
         if (invoiceData.value.bankApi != null) {
 
-          isBank.value = true
+          isBank.value = false
         }
         companyBankBic.value = response.data?.companyBankBic;
         // if (invoiceData.value.scheduled == false) {

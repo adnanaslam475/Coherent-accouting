@@ -5003,7 +5003,7 @@ export default {
         'бр.',
       ],
       bankProcess: '',
-      banks: [],
+
       showLogo: false,
       isUploading: i18n.tc("add_invoice.upload_logo"),
       logoToUpload: "",
@@ -5124,6 +5124,19 @@ export default {
       ]
     },
 
+    banks() {
+      return [
+        i18n.tc("paymentMethods.CASH"),
+        i18n.tc("paymentMethods.BANK_TRANSFER"),
+        i18n.tc("paymentMethods.CARD"),
+        i18n.tc("paymentMethods.CASH_ON_DELIVERY"),
+        i18n.tc("paymentMethods.WITH_INTERCEPTION"),
+        i18n.tc("paymentMethods.POST_ORDER"),
+        i18n.tc("paymentMethods.INTERNET"),
+        i18n.tc("paymentMethods.PAYMENT_ORDER"),
+      ]
+    },
+
   },
   methods: {
     fillBankApi() {
@@ -5143,27 +5156,27 @@ export default {
       }
     },
 
-    getPaymentProcess() {
-      var config = {
-        method: "get",
-        url: "/account/api/invoice/get-payment-processes",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          "Access-Control-Allow-Credentials": true,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:8080",
-        },
+    // getPaymentProcess() {
+    //   var config = {
+    //     method: "get",
+    //     url: "/account/api/invoice/get-payment-processes",
+    //     headers: {
+    //       Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    //       "Access-Control-Allow-Credentials": true,
+    //       "Content-Type": "application/json",
+    //       "Access-Control-Allow-Origin": "http://localhost:8080",
+    //     },
 
-      };
-      axios(config)
-        .then((response) => {
-          console.log(response.data);
-          this.banks = response.data
-          console.log(this.banks, 'there are banks')
+    //   };
+    //   axios(config)
+    //     .then((response) => {
+    //       console.log(response.data);
+    //       this.banks = response.data
+    //       console.log(this.banks, 'there are banks')
 
-        })
-        .catch(function (error) { });
-    },
+    //     })
+    //     .catch(function (error) { });
+    // },
     reverse() {
 
       let temp = this.invoiceData.supplierCompany
