@@ -1706,7 +1706,7 @@
                           <br />
                         </div>
                         <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
-                          <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
                             <span style="width: 200px">
@@ -2700,7 +2700,7 @@
                           <br />
                         </div>
                         <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
-                          <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
                             <span style="width: 200px">
@@ -3743,7 +3743,7 @@
                           <br />
                         </div>
                         <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
-                          <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
@@ -4729,7 +4729,7 @@
                           <br />
                         </div>
                         <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
-                          <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
@@ -5275,14 +5275,15 @@ export default {
     },
     banks() {
       return [
-        i18n.tc("paymentMethods.CASH"),
-        i18n.tc("paymentMethods.BANK_TRANSFER"),
-        i18n.tc("paymentMethods.CARD"),
-        i18n.tc("paymentMethods.CASH_ON_DELIVERY"),
-        i18n.tc("paymentMethods.WITH_INTERCEPTION"),
-        i18n.tc("paymentMethods.POST_ORDER"),
-        i18n.tc("paymentMethods.INTERNET"),
-        i18n.tc("paymentMethods.PAYMENT_ORDER"),
+        { text: i18n.tc("paymentMethods.CASH"), value: "CASH" },
+        { text: i18n.tc("paymentMethods.BANK_TRANSFER"), value: "BANK_TRANSFER" },
+        { text: i18n.tc("paymentMethods.CARD"), value: "CARD" },
+        { text: i18n.tc("paymentMethods.CASH_ON_DELIVERY"), value: "CASH_ON_DELIVERY" },
+        { text: i18n.tc("paymentMethods.WITH_INTERCEPTION"), value: "WITH_INTERCEPTION" },
+        { text: i18n.tc("paymentMethods.POST_ORDER"), value: "POST_ORDER" },
+        { text: i18n.tc("paymentMethods.INTERNET"), value: "INTERNET" },
+        { text: i18n.tc("paymentMethods.PAYMENT_ORDER"), value: "PAYMENT_ORDER" },
+
       ]
     },
     days() {
@@ -5305,6 +5306,7 @@ export default {
         this.isBank = true
         this.invoiceData.bankApi.name = self.companyData?.companyBankName
         this.invoiceData.bankApi.bic = self.companyData?.companyBankBic
+        this.invoiceData.bankApi.iban = self.companyData?.companyBankAccount
       } else {
         this.isBank = false
       }

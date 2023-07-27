@@ -864,6 +864,7 @@
                   @change="checkProcessType(bankProcess)">
 
                 </b-form-select>
+                <small class="text-danger" v-if="notBank">Please Select the payment type</small>
               </b-col>
             </b-row>
 
@@ -1673,7 +1674,7 @@
                           <br />
                         </div>
                         <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
-                          <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
                             <span style="width: 200px">
@@ -1967,7 +1968,8 @@
                               class="cursor-pointer "
                               style="position: relative; bottom: 31px; left: 188px; color: #6e6b7b;" />
                             <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer"
-                              @click="invoiceData.dueDate = ''" style="position: relative; bottom: 31px;left: 188px;" />
+                              @click="invoiceData.dueDate = ''"
+                              style="position: relative; bottom: 31px;left: 188px; color: #6e6b7b;" />
                           </span>
                         </p>
                       </div>
@@ -2618,7 +2620,7 @@
                           <br />
                         </div>
                         <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
-                          <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
+                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
                             <span style="width: 200px">
@@ -3642,7 +3644,7 @@
                           <br />
                         </div>
                         <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
-                          <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
+                         <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
@@ -4600,7 +4602,7 @@
                           <br />
                         </div>
                         <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
-                          <p class="tm_m0 d-inline-flex" style="margin-top: 10px">
+                         <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
@@ -4993,6 +4995,7 @@ export default {
   },
   data() {
     return {
+      notBank: false,
       measureOptions: [
         'кг.',
         'гр.',
@@ -5094,7 +5097,7 @@ export default {
   mixins: [heightTransition],
   mounted() {
     // this.initTrHeight();
-    this.getPaymentProcess()
+
   },
   created() {
     // window.addEventListener("resize", this.initTrHeight);
@@ -5126,14 +5129,15 @@ export default {
 
     banks() {
       return [
-        i18n.tc("paymentMethods.CASH"),
-        i18n.tc("paymentMethods.BANK_TRANSFER"),
-        i18n.tc("paymentMethods.CARD"),
-        i18n.tc("paymentMethods.CASH_ON_DELIVERY"),
-        i18n.tc("paymentMethods.WITH_INTERCEPTION"),
-        i18n.tc("paymentMethods.POST_ORDER"),
-        i18n.tc("paymentMethods.INTERNET"),
-        i18n.tc("paymentMethods.PAYMENT_ORDER"),
+        { text: i18n.tc("paymentMethods.CASH"), value: "CASH" },
+        { text: i18n.tc("paymentMethods.BANK_TRANSFER"), value: "BANK_TRANSFER" },
+        { text: i18n.tc("paymentMethods.CARD"), value: "CARD" },
+        { text: i18n.tc("paymentMethods.CASH_ON_DELIVERY"), value: "CASH_ON_DELIVERY" },
+        { text: i18n.tc("paymentMethods.WITH_INTERCEPTION"), value: "WITH_INTERCEPTION" },
+        { text: i18n.tc("paymentMethods.POST_ORDER"), value: "POST_ORDER" },
+        { text: i18n.tc("paymentMethods.INTERNET"), value: "INTERNET" },
+        { text: i18n.tc("paymentMethods.PAYMENT_ORDER"), value: "PAYMENT_ORDER" },
+
       ]
     },
 
@@ -5151,6 +5155,7 @@ export default {
         this.isBank = true
         this.invoiceData.bankApi.name = self.companyData?.companyBankName
         this.invoiceData.bankApi.bic = self.companyData?.companyBankBic
+        this.invoiceData.bankApi.iban = self.companyData?.companyBankAccount
       } else {
         this.isBank = false
       }
@@ -5361,11 +5366,9 @@ export default {
       //creator supplier company
 
       if (this.isBank === false) {
-        invoiceData.bankApi = {
-          name: "",
-          bic: "",
-          bank: "",
-        };
+
+        this.notBank = true
+
       }
 
       if (invoiceData.scheduled == true) {
@@ -5652,28 +5655,9 @@ export default {
     var AccountTypeOption = ref("company");
     var AccountTypeOptionToggleValue = false;
     var companyName = ref("");
-    var companyData = ref(null)
-    axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        "Access-Control-Allow-Credentials": true,
-        "Access-Control-Allow-Origin": "http://localhost:8080",
-      },
-    })
-      .then((response) => {
-        console.log(response, 'asdfasdf')
+    var companyData = ref(null);
+    var zeroVat = ref(false);
 
-
-        companyName.value = response.data.companyName
-        companyData.value = response.data
-        console.log(companyName.value, 'this is company name ')
-        supplierID.value = response.data.companyIdentificationNumber
-
-      })
-      .catch((error) => {
-        // console.log(error);
-
-      });
     let AccountTypeOptionToggle = (value) => {
       if (value) {
         AccountTypeOption.value = "person";
@@ -5909,7 +5893,30 @@ export default {
         tradeDiscountAmount;
       invoiceData.value.totalAmount = parseFloat(totalPrice).toFixed(2);
     };
+    axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+      },
+    })
+      .then((response) => {
+        console.log(response, 'asdfasdf')
 
+
+        companyName.value = response.data.companyName
+        companyData.value = response.data
+        if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
+          invoiceData.value.vatPercent = 0
+        }
+        console.log(companyName.value, 'this is company name ')
+        supplierID.value = response.data.companyIdentificationNumber
+
+      })
+      .catch((error) => {
+        // console.log(error);
+
+      });
     const clearForm = () => {
       invoiceData.value = {
         invoiceNumber: "",
