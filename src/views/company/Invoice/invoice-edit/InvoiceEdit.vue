@@ -5166,7 +5166,7 @@ export default {
         'стек',
         'бр.',
       ],
-      bankProcess: '',
+
 
       isUploading: i18n.tc("add_invoice.upload_logo"),
 
@@ -5796,6 +5796,7 @@ export default {
     },
   },
   setup() {
+    var bankProcess = ref('')
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
 
     // Register module
@@ -5898,7 +5899,8 @@ export default {
         invoiceData.value = response.data;
         if (invoiceData.value.bankApi != null) {
 
-          isBank.value = false
+          bankProcess.value = 'BANK_TRANSFER'
+          isBank.value = true
         }
         companyBankBic.value = response.data?.companyBankBic;
         // if (invoiceData.value.scheduled == false) {
@@ -6643,6 +6645,7 @@ export default {
     };
 
     return {
+      bankProcess,
       companyData,
       isBank,
       companyName,
