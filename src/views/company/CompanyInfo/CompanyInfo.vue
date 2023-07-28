@@ -83,6 +83,71 @@
                           }}</b-tooltip>
                         </div>
                       </div>
+
+
+
+
+
+
+                    </div>
+                    <!-- new fields  -->
+                    <!-- <div class="d-flex align-items-center">
+                      <feather-icon icon="InfoIcon" width="18px" height="18px"
+                        style="margin-left: 8px; margin-right: -5px" />
+                      <div class="ml-1">
+                        <p class="mb-0 text-capitalize font-weight-bold"> {{ $t('company_info.owner_egn') }} </p>
+                        <CopyToClipboard :text="companyOwnerEGN" @copy="copyTextNoInput(2)">
+                          <small v-if="companyOwnerEGN != null" id="comp-egn-copy" style="cursor: pointer">{{
+                            companyOwnerEGN }}</small>
+
+                        </CopyToClipboard>
+                        <b-tooltip target="comp-egn-copy">{{
+                          copyToClipboard
+                        }}</b-tooltip>
+                      </div>
+                    </div> -->
+                    <div class="d-flex align-items-center ml-1">
+                      <feather-icon icon="MapPinIcon" class="mr-75" />
+                      <div>
+                        <div>
+                          <span class="font-weight-bold text-capitalize">{{ $t('company_info.address') }}</span>
+                        </div>
+                        <div>
+                          <CopyToClipboard :text="companyAddress" @copy="copyTextNoInput(7)">
+                            <p id="comp-address-copy" style="
+                              width: fit-content;
+                              margin: 0px;
+                              cursor: pointer;
+                            ">
+                              {{ companyAddress.substr(0, 34) }}
+                            </p>
+                          </CopyToClipboard>
+                        </div>
+                        <b-tooltip target="comp-address-copy">{{
+                          copyToClipboard
+                        }}</b-tooltip>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center ml-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="mr-75 feather feather-globe">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="2" y1="12" x2="22" y2="12" />
+                        <path
+                          d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                      </svg>
+                      <div>
+                        <div>
+
+
+                          <span class="font-weight-bold text-capitalize">{{ $t('companies.country') }}</span>
+                        </div>
+                        <div>
+                          {{ companyDetails.companyCountry }}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -256,44 +321,9 @@
                           copyToClipboard
                         }}</b-tooltip>
                       </tr>
-                      <tr>
-                        <th class="pb-50">
-                          <feather-icon icon="MapPinIcon" class="mr-75" />
 
-                          <span class="font-weight-bold text-capitalize">{{ $t('company_info.address') }}</span>
-                        </th>
-                        <td class="pb-50">
-                          <CopyToClipboard :text="companyAddress" @copy="copyTextNoInput(7)">
-                            <p id="comp-address-copy" style="
-                              width: fit-content;
-                              margin: 0px;
-                              cursor: pointer;
-                            ">
-                              {{ companyAddress.substr(0, 34) }}
-                            </p>
-                          </CopyToClipboard>
-                        </td>
-                        <b-tooltip target="comp-address-copy">{{
-                          copyToClipboard
-                        }}</b-tooltip>
-                      </tr>
-                      <tr>
-                        <th class="pb-50">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="mr-75 feather feather-globe">
-                            <circle cx="12" cy="12" r="10" />
-                            <line x1="2" y1="12" x2="22" y2="12" />
-                            <path
-                              d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                          </svg>
 
-                          <span class="font-weight-bold text-capitalize">{{ $t('companies.country') }}</span>
-                        </th>
-                        <td class="pb-50">
-                          {{ companyDetails.companyCountry }}
-                        </td>
-                      </tr>
+
                     </table>
                   </b-col>
                 </b-row>

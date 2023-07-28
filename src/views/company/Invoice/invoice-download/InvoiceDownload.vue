@@ -153,12 +153,15 @@
                       <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                     </p>
                     <p class="tm_m0">
+                      <b>{{ $t('paymentProcess') }}: </b> {{ invoiceData.paymentProcess }}
+                    </p>
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>BIC: </b> {{ invoiceData.bankApi.bic }}
                     </p>
-                    <p class="tm_m0">
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                     </p>
-                    <p class="tm_m0">
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                     </p>
 
@@ -491,12 +494,15 @@
                       <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                     </p>
                     <p class="tm_m0">
+                      <b>{{ $t('paymentProcess') }}: </b> {{ invoiceData.paymentProcess }}
+                    </p>
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>BIC: </b> {{ invoiceData.bankApi.bic }}
                     </p>
-                    <p class="tm_m0">
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                     </p>
-                    <p class="tm_m0">
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                     </p>
                     <p class="tm_m0">
@@ -932,12 +938,15 @@
                       <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                     </p>
                     <p class="tm_m0">
+                      <b>{{ $t('paymentProcess') }}: </b> {{ invoiceData.paymentProcess }}
+                    </p>
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>BIC: </b> {{ invoiceData.bankApi.bic }}
                     </p>
-                    <p class="tm_m0">
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                     </p>
-                    <p class="tm_m0">
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                     </p>
 
@@ -1313,12 +1322,15 @@
                       <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                     </p>
                     <p class="tm_m0">
+                      <b>{{ $t('paymentProcess') }}: </b> {{ invoiceData.paymentProcess }}
+                    </p>
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>BIC: </b> {{ invoiceData.bankApi.bic }}
                     </p>
-                    <p class="tm_m0">
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                     </p>
-                    <p class="tm_m0">
+                    <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                     </p>
                     <p class="tm_m0">
@@ -1937,13 +1949,23 @@
       </b-card-body>
     </b-card>
 
-    <div class="mt-md-0 mt-2 flex-1" v-if="invoiceData.bankApi != null">
+    <div class="mt-md-0 mt-2 flex-1">
       <b-card no-body class="invoice-preview invoice-card mx-1">
         <b-card-header class="justify-content-center invoice-header">
           <h5 class="m-0">{{ $t("add_invoice.bank_details") }}</h5>
         </b-card-header>
         <b-card-body class="invoice-body">
-          <div class="mt-1" style="display: flex; justify-content: space-around">
+          <div>
+            <p class="invoice-date-title">
+              {{ $t("paymentProcess") }}
+            </p>
+            <p class="invoice-date">
+              {{ invoiceData.paymentProcess }}
+            </p>
+          </div>
+          <div class="mt-1" style="display: flex; justify-content: space-around"
+            v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
+
             <div>
               <div class="invoice-date-wrapper" style="border-bottom: none">
                 <p class="invoice-date-title">

@@ -37,7 +37,7 @@ export default {
     },
     setOCR(state, payload) {
       state.ocrInvoiceData = payload
-      console.log(state.ocrInvoiceData, '=p=p=p=p=p=p=p=p')
+
     }
   },
   actions: {},

@@ -15,6 +15,7 @@
     "Nov": "Nov",
     "Dec": "Dec"
   },
+  "paymentProcess": "Payment Process",
   "paymentMethods": {
     "CASH": "CASH",
     "BANK_TRANSFER": "BANK TRANSFER",

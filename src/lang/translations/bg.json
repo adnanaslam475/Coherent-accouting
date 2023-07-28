@@ -15,6 +15,7 @@
     "Nov": "Ное",
     "Dec": "Дек"
   },
+  "paymentProcess": "Процес на плащане",
   "paymentMethods": {
     "CASH": "ПАРИ В БРОЙ",
     "BANK_TRANSFER": "БАНКОВ ТРАНСФЕР",

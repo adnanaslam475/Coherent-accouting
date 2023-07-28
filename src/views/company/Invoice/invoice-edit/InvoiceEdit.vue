@@ -5672,6 +5672,7 @@ export default {
       // }
       let self = this
       console.log(self.isBank, 'banksssss')
+      invoiceData.paymentProcess = self.bankProcess
       if (self.isBank == false) {
         invoiceData.bankApi = null
       }
@@ -5958,9 +5959,11 @@ export default {
 
 
         invoiceData.value = response.data;
-        if (invoiceData.value.bankApi != null) {
 
-          bankProcess.value = 'BANK_TRANSFER'
+        bankProcess.value = response.data?.paymentProcess
+        if (response.data?.paymentProcess == 'BANK_TRANSFER') {
+
+
           isBank.value = true
         }
         companyBankBic.value = response.data?.companyBankBic;

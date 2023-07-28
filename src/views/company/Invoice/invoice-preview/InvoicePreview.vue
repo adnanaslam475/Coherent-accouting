@@ -224,25 +224,25 @@
                   {{ $t("paymentStatus.paymentStatus") }}:
                 </p>
                 <p class="invoice-date">
-                 {{
-                          invoiceData.paymentStatus == 'PAYED' ?
-                          $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
-                        }}
+                  {{
+                    invoiceData.paymentStatus == 'PAYED' ?
+                    $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
+                  }}
                 </p>
               </div>
             </b-card-header>
           </b-card>
         </div>
         <b-card no-body class="invoice-preview-card transaction-container" :style="isBlue === true
-          ? 'border: 1px solid #007aff'
-          : isGreen === true
-            ? 'border: 1px solid #8fce00'
-            : isPurple === true
-              ? 'border: 1px solid #ad3978'
-              : isOrange === true
-                ? 'border: 1px solid #FFA500'
-                : 'border:1px solid #f6d1ff'
-          ">
+              ? 'border: 1px solid #007aff'
+              : isGreen === true
+                ? 'border: 1px solid #8fce00'
+                : isPurple === true
+                  ? 'border: 1px solid #ad3978'
+                  : isOrange === true
+                    ? 'border: 1px solid #FFA500'
+                    : 'border:1px solid #f6d1ff'
+            ">
           <!-- Invoice Description: Table -->
           <!-- <b-table-lite
             responsive
@@ -560,9 +560,9 @@
           </b-card>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center"
-          v-if="invoiceData.vatPercent === '0' || invoiceData.vatPercent === 0">
-          <b-card no-body class="invoice-preview date-issued ml-0">
+        <div class="d-flex justify-content-between align-items-center">
+          <b-card no-body class="invoice-preview date-issued ml-0"
+            v-if="invoiceData.vatPercent === '0' || invoiceData.vatPercent === 0">
             <b-card-header class="justify-content-end">
               <div class="invoice-date-wrapper invoice-middle-content">
                 <p class="invoice-date-title">
@@ -570,6 +570,18 @@
                 </p>
                 <p class="invoice-date">
                   {{ invoiceData.vatCondition }}
+                </p>
+              </div>
+            </b-card-header>
+          </b-card>
+          <b-card no-body class="invoice-preview date-issued ml-0">
+            <b-card-header class="justify-content-end">
+              <div class="invoice-date-wrapper invoice-middle-content">
+                <p class="invoice-date-title">
+                  {{ $t("paymentProcess") }}:
+                </p>
+                <p class="invoice-date">
+                  {{ invoiceData.paymentProcess }}
                 </p>
               </div>
             </b-card-header>
@@ -735,12 +747,15 @@
                           <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
                         <p class="tm_m0">
+                          <b>{{ $t('paymentProcess') }}: </b> {{ invoiceData.paymentProcess }}
+                        </p>
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
                         </p>
-                        <p class="tm_m0">
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
-                        <p class="tm_m0">
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
                         <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
@@ -1081,12 +1096,15 @@
                           <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
                         <p class="tm_m0">
+                          <b>{{ $t('paymentProcess') }} </b> {{ invoiceData.paymentProcess }}
+                        </p>
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
                         </p>
-                        <p class="tm_m0">
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
-                        <p class="tm_m0">
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
                         <p class="tm_m0">
@@ -1100,8 +1118,8 @@
 
                       </div>
                       <p class="tm_m0" v-if="invoiceData.vatPercent == 0 ||
-                        invoiceData.vatPercent === '0'
-                        ">
+                          invoiceData.vatPercent === '0'
+                          ">
                         <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                         {{ invoiceData.vatCondition }}
                       </p>
@@ -1526,12 +1544,15 @@
                           <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
                         <p class="tm_m0">
+                          <b>{{ $t('paymentProcess') }}: </b> {{ invoiceData.paymentProcess }}
+                        </p>
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
                         </p>
-                        <p class="tm_m0">
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
-                        <p class="tm_m0">
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
 
@@ -1900,12 +1921,15 @@
                           <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
                         <p class="tm_m0">
+                          <b>{{ $t('paymentProcess') }} </b> {{ invoiceData.paymentProcess }}
+                        </p>
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
                         </p>
-                        <p class="tm_m0">
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
-                        <p class="tm_m0">
+                        <p class="tm_m0" v-if="hasBankDetails">
                           <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
                         <p class="tm_m0">
@@ -1917,8 +1941,8 @@
                         </p>
                       </div>
                       <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
-                        invoiceData.vatPercent === 0
-                        ">
+                          invoiceData.vatPercent === 0
+                          ">
                         <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                         {{ invoiceData.vatCondition }}
                       </p>
@@ -2284,7 +2308,7 @@ export default {
         else isGray.value = true;
 
         //
-        if (invoiceData.value.bankApi !== null) {
+        if (invoiceData.value.paymentProcess == 'BANK_TRANSFER') {
           if (
             invoiceData.value.bankApi.name !== "" ||
             invoiceData.value.bankApi.bic !== "" ||

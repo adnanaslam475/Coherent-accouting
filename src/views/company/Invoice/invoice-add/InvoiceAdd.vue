@@ -5458,6 +5458,7 @@ export default {
       // }
 
       // Company ID validation on the basis of transactionType
+      invoiceData.paymentProcess = this.bankProcess
       if (invoiceData.transactionType === "INCOME") {
         console.log('company eic======>', invoiceData.supplierCompany.companyEic, 'supplier ID=====>', this.supplierID)
         if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
@@ -5780,6 +5781,7 @@ export default {
         companyVatEic: "",
         companyAddress: "",
       },
+      paymentProcess: null,
       currency: "лв.",
       amountNonVat: 0,
       vatAmount: 0,
