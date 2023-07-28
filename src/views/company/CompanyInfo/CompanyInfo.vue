@@ -645,33 +645,33 @@ export default {
       this.$root.$emit("bv::hide::tooltip");
       switch (val) {
         case 1:
-          this.copiedText = "Owner name ";
+          this.copiedText = "МОЛ име ";
           break;
         case 2:
-          this.copiedText = "Owner EGN ";
+          this.copiedText = "МОЛ ЕГН ";
           break;
         case 3:
-          this.copiedText = "Company ID ";
+          this.copiedText = "ЕИК на фирма ";
           break;
         case 4:
-          this.copiedText = "Vat number ";
+          this.copiedText = "ДДС НОМЕР ";
           break;
         case 5:
-          this.copiedText = "Bank Account ";
+          this.copiedText = "Банкова сметка ";
           break;
         case 6:
-          this.copiedText = "Contact ";
+          this.copiedText = "Контакти ";
           break;
         case 7:
-          this.copiedText = "Address ";
+          this.copiedText = "Адрес ";
           break;
         default:
-          this.copiedText = "Company name ";
+          this.copiedText = "Фирмено име ";
       }
       this.$toast({
         component: ToastificationContent,
         props: {
-          title: this.copiedText + "copied",
+          title: this.copiedText + "копиран!",
           icon: "DeleteIcon",
           variant: "success",
         },
