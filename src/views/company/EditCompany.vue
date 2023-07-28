@@ -236,10 +236,33 @@
           </b-row> -->
           <b-form-row>
             <b-col>
+
+              <b-form-group id="input-group-1" :label="$t('Банка')" label-for="companyBankName">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
+                  <v-select v-model="companyBankName" :options="banks" :value="$store.state.selected" id="companyBankName"
+                    v-bind:placeholder="$t('Please select bank')">
+
+                  </v-select>
+
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+            <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_bank_account')"
                 label-for="company_bank_account">
                 <b-form-input id="company_bank_account" v-model="getBankAccount" type="text"
-                  placeholder="Company Bank Account" autocomplete="off" required></b-form-input> </b-form-group></b-col>
+                  placeholder="Банкова сметка" autocomplete="off" required></b-form-input> </b-form-group></b-col>
+
+          </b-form-row>
+          <b-form-row>
+            <b-col><b-form-group id="input-group-1" label="BIC" label-for="company_fin_year">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankBic')">
+                  <b-form-input id="companyBankBic" v-model="companyBankBic" placeholder="BIC" />
+
+                </validation-provider>
+              </b-form-group></b-col>
+
+
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_currency')"
                 label-for="company_currency">
@@ -296,6 +319,7 @@
               </b-form-group>
             </b-col>
 
+
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_email')" label-for="company_email">
                 <validation-provider #default="{ errors }" v-bind:name="$t('company email')" rules="required|email">
@@ -306,7 +330,8 @@
             </b-col>
           </b-form-row>
           <b-form-row>
-            <b-col><b-form-group id="input-group-1" :label="$t('create_company.company_fin_year')"
+            <b-col>
+              <b-form-group id="input-group-1" :label="$t('create_company.company_fin_year')"
                 label-for="company_fin_year">
 
                 <validation-provider #default="{ errors }" v-bind:name="$t('company_fin_year')" rules="required">
@@ -330,8 +355,8 @@
                   </div>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
-              </b-form-group></b-col>
-            <b-col></b-col>
+              </b-form-group>
+            </b-col>
           </b-form-row>
         </validation-observer>
       </tab-content>
@@ -341,7 +366,20 @@
         <validation-observer ref="exportRules" tag="form">
           <b-row>
             <b-col>
-              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
+              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status"
+                v-if="isEdit">
+                <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
+                  <b-form-select id="platformPropertiesSelect" v-model="exportProperties.platform"
+                    :options="modifiedArray" @change="checkChange"></b-form-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+                <div v-for="(value, label) in exportProperties.keyValues" :key="label">
+                  <b-form-group :label="$t(label)">
+                    <b-form-input v-model="exportProperties.keyValues[label]"></b-form-input>
+                  </b-form-group>
+                </div>
+              </b-form-group>
+              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status" v-else>
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
                   <b-form-select id="platformPropertiesSelect" v-model="selectedPlatformProperty"
                     :options="modifiedArray"></b-form-select>
@@ -426,6 +464,8 @@ export default {
   },
   data() {
     return {
+      banks: [],
+      isEdit: true,
       isStatusSelected: '',
       statusOptions: [
         { status: "ACTIVE" },
@@ -435,6 +475,8 @@ export default {
       companyRecord: [],
       getCompanyName: "",
       getCompanyEmail: "",
+      companyBankBic: '',
+      companyBankName: '',
       getCompanyAddress: "",
       getCompanyCountry: "",
       getCompOwnerName: "",
@@ -618,11 +660,12 @@ export default {
         { value: "ZMK", name: "Zambian Kwacha", symbol: "ZK" },
       ],
       platformProperties: [],
-      platformPropertiesOptions: [],  // Add this line
+
       selectedPlatformProperty: null,
       selectedPlatformProperties: [],  // new data property
       platformPropertiesData: {},
       exportProperties: {},
+      platformPropertiesOptions: [],
     };
   },
   computed: {
@@ -661,6 +704,30 @@ export default {
 
   methods: {
     //
+    SearchBankName() {
+      var config = {
+        method: "get",
+        url: "/account/api/company/list-bank-names",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+
+      };
+      axios(config)
+        .then((response) => {
+          console.log(response.data);
+          this.banks = response.data
+          console.log(this.banks, 'there are banks')
+
+        })
+        .catch(function (error) { });
+    },
+    checkChange() {
+      this.isEdit = false
+    },
     formatOwnerEGN(e) {
       return String(e).substring(0, 10);
     },
@@ -690,6 +757,8 @@ export default {
       }
 
       var data = JSON.stringify({
+        companyBankName: this.companyBankName,
+        companyBankBic: this.companyBankBic,
         companyAddress: this.getCompanyAddress,
         companyCountry: this.getCompanyCountry,
         companyIdentificationNumber: this.getCompanyID,
@@ -714,7 +783,9 @@ export default {
         status: this.getCompanyStatus,
         exportProperties: {
           id: this.exportProperties.id,
-          keyValues: this.selectedPlatformProperties,
+          keyValues: this.isEdit ? this.exportProperties.keyValues : this.selectedPlatformProperties,
+
+
           platform: this.selectedPlatformProperty
         }
       });
@@ -772,10 +843,13 @@ export default {
         .then((response) => {
           this.companyRecord = response.data;
           this.form = response.data;
-          this.getCompanyName = this.companyRecord.companyName;
+          this.companyBankName = this.companyRecord.companyBankName,
+            this.companyBankBic = this.companyRecord.companyBankBic,
+            this.getCompanyName = this.companyRecord.companyName;
           this.getCompanyID = this.companyRecord.companyIdentificationNumber;
           this.getCompanyAddress = this.companyRecord.companyAddress;
           this.getCompanyCountry = this.companyRecord.companyCountry;
+
           this.getCompOwnerName =
             this.companyRecord.companyOwnerApi.companyOwnerName;
           this.getCompOwnerEgn =
@@ -986,7 +1060,9 @@ export default {
     },
   },
 
-
+  mounted() {
+    this.SearchBankName()
+  },
 
   created: function () {
     this.companyID = this.$route.params.id;

@@ -1,18 +1,11 @@
 <template>
   <div>
+
     <form-wizard color="#0A64BC" :title="null" :subtitle="null" shape="square"
       :finish-button-text="$t('create_company.create')" :next-button-text="$t('create_company.next')" class="mb-3">
       <!-- First Tab: Company Details -->
       <tab-content :title="$t('create_company.company_details')" :before-change="validationForm">
         <validation-observer ref="companyRules" tag="form">
-          <b-row>
-            <b-col cols="12" class="mb-2">
-              <h5 class="mb-0">{{ $t("create_company.company_details") }}</h5>
-              <small class="text-muted">
-                {{ $t("create_company.create_details") }}
-              </small>
-            </b-col>
-          </b-row>
           <b-form-row>
             <!-- Company Name -->
             <b-col>
@@ -141,13 +134,14 @@
               <b-form-group id="input-group-6" :label="$t('company_info.owner_egn')" label-for="owner_egn">
                 <validation-provider #default="{ errors }" v-bind:name="$t('owner_egn')" rules="digits:10">
                   <b-form-input id="owner_egn" v-model="form.owner_egn" :state="errors.length > 0 ? false : null"
-                    placeholder="Owner EGN" type="number" :formatter="formatOwnerEGN" />
+                    placeholder="Попълнете ако искате да генерирате ДДС отчети" type="number" :formatter="formatOwnerEGN" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
           </b-form-row>
-          <b-form-row v-if="isVatCheck === true">
+
+          <b-form-row v-if="isVatCheck == true">
             <b-col><b-form-group id="input-group-7" :label="$t('add_invoice.company_vat')" label-for="company_vat_no">
                 <validation-provider #default="{ errors }" v-bind:name="$t('company_vat_number')" rules="required">
                   <b-form-input id="vat_number" v-model="form.vat_no" :state="errors.length > 0 || vatIsValid === 0 ? false : null
@@ -162,8 +156,10 @@
             <b-col></b-col>
           </b-form-row>
           <b-form-row>
+
             <b-col>
-              <b-form-checkbox id="vat-checkbox" name="vat-checkbox" value="accepted" @change="vatHandled()">
+              <b-form-checkbox id="vat-checkbox" v-model="form.companyVatAccepted" name="vat-checkbox" value="accepted"
+                @change="vatHandled()">
                 {{ $t("create_company.vat") }}
               </b-form-checkbox>
             </b-col>
@@ -173,20 +169,40 @@
       <!-- Second Tab: Account Details -->
       <tab-content :title="$t('create_company.account_details')" :before-change="validationFormTab2">
         <validation-observer ref="accountRules" tag="form">
-          <b-row>
-            <!-- <b-col cols="12" class="mb-2">
-              <h5 class="mb-0">{{ $t("create_company.account_details") }}</h5>
-              <small class="text-muted">
-                {{ $t("create_company.create_acc_details") }}
-              </small>
-            </b-col> -->
-          </b-row>
           <b-form-row>
+            <b-col>
+
+              <b-form-group id="input-group-5" :label="$t('Банка')" label-for="companyBankName">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
+                  <v-select v-model="form.companyBankName" :options="banks" :value="$store.state.selected"
+                    id="companyBankName" :state="errors.length > 0 ? false : null"
+                    v-bind:placeholder="$t('Please select bank')">
+
+                  </v-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_bank_account')"
                 label-for="company_bank_account">
-                <b-form-input id="company_bank_account" v-model="form.company_bank_account" type="text"
-                  placeholder="Company Bank Account" autocomplete="off" required></b-form-input>
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')"
+                  :rules="form.companyBankName == null ? '' : 'required'">
+                  <b-form-input id="company_bank_account" v-model="form.company_bank_account" type="text"
+                    placeholder="Банкова сметка" autocomplete="off"></b-form-input>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group></b-col>
+
+          </b-form-row>
+          <b-form-row>
+            <b-col><b-form-group id="input-group-1" label="BIC" label-for="company_fin_year">
+                <validation-provider #default="{ errors }" v-bind:name="$t('companyBankBic')"
+                  :rules="form.companyBankName == null ? '' : 'required'">
+                  <b-form-input id="companyBankBic" v-model="form.companyBankBic" placeholder="BIC" />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
               </b-form-group></b-col>
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_currency')"
@@ -232,6 +248,7 @@
               </b-form-group>
             </b-col>
           </b-form-row>
+
           <b-form-row>
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_phone_no')" label-for="company_phone">
@@ -278,8 +295,10 @@
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group></b-col>
-            <b-col></b-col>
+            <b-col> </b-col>
           </b-form-row>
+
+
         </validation-observer>
       </tab-content>
       <!-- Third Tab: Export:Details -->
@@ -373,6 +392,7 @@ export default {
   },
   data() {
     return {
+      banks: [],
       statusOptions: [
         { status: "ACTIVE" },
         { status: "INAVTIVE" },
@@ -401,9 +421,12 @@ export default {
         phone_no: null,
         vat_no: null,
         fin_year: null,
+        companyBankBic: null,
+        companyBankName: null
       },
       options: [],
       isCountrySelected: false,
+      platformPropertiesOptions: [],
       getCountries: [],
       // getCountries: [{ country: "" }, { isoAlpha2Country: "" }],
       selectedItem: "",
@@ -578,7 +601,7 @@ export default {
         { value: "ZMK", name: "Zambian Kwacha", symbol: "ZK" },
       ],
       platformProperties: [],
-      platformPropertiesOptions: [],  // Add this line
+
       selectedPlatformProperty: null,
       selectedPlatformProperties: [],  // new data property
       platformPropertiesData: {},
@@ -637,17 +660,30 @@ export default {
     //function to auto-fill some input fields
     autoCompletefn(item, val) {
       if (val === 1) {
+        this.autofillCountry = true;
+        if (this.autofillCountry === true) {
+
+          this.getCompanyISO = item.country;
+          for (let i = 0; i < this.getCountries.length; i++) {
+            if (this.getCountries[i].isoAlpha2Country === item.country) {
+              this.getCompanyCountry = this.getCountries[i].country;
+            }
+          }
+        }
         this.showSuggestions = false;
-        this.datalist.value = [];
+        // this.datalist.value = [];
+
       }
       if (val === 2) {
         this.showIDSuggestions = false;
         this.datalistID.value = [];
+
       }
       this.form.company_name = item.company_name;
       this.form.company_address = item.address;
       this.form.company_identification_number = item.eic;
       if (item.managers.length > 0) {
+
         this.form.owner_name = item.managers[0];
       } else {
         this.form.owner_name = "";
@@ -655,6 +691,7 @@ export default {
 
       this.autofillCountry = true;
       if (this.autofillCountry === true) {
+
         this.getCompanyISO = item.country;
         for (let i = 0; i < this.getCountries.length; i++) {
           if (this.getCountries[i].isoAlpha2Country === item.country) {
@@ -662,7 +699,37 @@ export default {
           }
         }
       }
+      axios.get(`/account/api/company-validate?vatNumber=BG` + this.form.company_identification_number, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+      })
+        .then((response) => {
+
+          console.log(response.data.valid)
+          if (response.data.valid) {
+            this.isVatCheck = true
+            this.form.companyVatAccepted = 'accepted'
+            this.form.vat_no = 'BG' + this.form.company_identification_number
+
+
+          }
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching company info",
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          });
+        });
+
     },
+
     // Searching a company by companyName
     async SearchCompanyName(val) {
 
@@ -691,6 +758,27 @@ export default {
             self.showSuggestions = false;
           }
           self.datalist = response.data;
+        })
+        .catch(function (error) { });
+    },
+    SearchBankName() {
+      var config = {
+        method: "get",
+        url: "/account/api/company/list-bank-names",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+
+      };
+      axios(config)
+        .then((response) => {
+          console.log(response.data);
+          this.banks = response.data
+          console.log(this.banks, 'there are banks')
+
         })
         .catch(function (error) { });
     },
@@ -791,7 +879,7 @@ export default {
     //
     vatHandled() {
       // this.isVatCheck = !this.isVatCheck;
-      if (this.isVatCheck === true) {
+      if (this.isVatCheck == true) {
         this.isVatCheck = false;
       } else {
         this.isVatCheck = true;
@@ -812,6 +900,8 @@ export default {
         currency = this.form.company_currency.value;
       }
       var data = JSON.stringify({
+        companyBankName: this.form.companyBankName,
+        companyBankBic: this.form.companyBankBic,
         companyName: this.form.company_name,
         companyCountry: this.getCompanyCountry,
         companyIsoAlpha2Country: this.getCompanyISO,
@@ -930,7 +1020,7 @@ export default {
 
       }
       arr.forEach((item) => {
-        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE" && item.value !== "XERO") {
+        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE" && item.value !== "XERO" && item.value !== "FRESH_BOOKS") {
           item.disabled = true;
         }
       });
@@ -957,6 +1047,10 @@ export default {
   },
   created() {
     this.populateCountries();
+
+  },
+  mounted() {
+    this.SearchBankName()
   },
 };
 </script>

@@ -305,7 +305,7 @@
     <!--  Loading Spinner Starts  -->
     <b-row class="text-center mb-2">
       <b-col cols="12">
-        <b-spinner v-if="!loadMore" large variant="primary" />
+        <b-spinner v-if="loadMore" large variant="primary" />
         <div v-else style="height: 35px"></div>
         <div ref="loadMoreObserver"></div>
       </b-col>

@@ -1,21 +1,35 @@
 {
   "reverse": "Обратен",
-
   "app_logo_title": "Coherent Accounting",
   "months": {
-"Jan": "Ян",
- "Feb": "Фев",
- "Mar": "Март",
- "Apr":"Апр",
- "May":"Май",
- "Jun": "Юни",
- "Jul": "Юли",
- "Aug": "Авг",
- "Sep": "Сеп",
- "Oct": "Окт",
- "Nov": "Ное",
- "Dec": "Дек"
-
+    "Jan": "Ян",
+    "Feb": "Фев",
+    "Mar": "Март",
+    "Apr": "Апр",
+    "May": "Май",
+    "Jun": "Юни",
+    "Jul": "Юли",
+    "Aug": "Авг",
+    "Sep": "Сеп",
+    "Oct": "Окт",
+    "Nov": "Ное",
+    "Dec": "Дек"
+  },
+  "paymentProcess": "Процес на плащане",
+  "paymentMethods": {
+    "CASH": "В БРОЙ",
+    "BANK_TRANSFER": "БАНКОВ ТРАНСФЕР",
+    "CARD": "С КАРТА",
+    "CASH_ON_DELIVERY": "НАЛОЖЕН ПЛАТЕЖ",
+    "WITH_INTERCEPTION": "С ПРИХВАЩАНЕ",
+    "POST_ORDER": "ПОЩЕНСКА ПОРЪЧКА",
+    "INTERNET": "ИНТЕРНЕТ",
+    "PAYMENT_ORDER": "ПЛАТЕЖНО НАРЕЖДЕНИЕ"
+  },
+  "paymentStatus": {
+    "paymentStatus": "Статус на плащането",
+    "payed": "платена",
+    "not_payed": "неплатена"
   },
   "lbl": {
     "login": "Вход",
@@ -34,12 +48,12 @@
     "add_multiple_invoices": "Качване на много фактури",
     "list_invoices": "Списък Фактури"
   },
-  "features":{
-    "title":"Най-новите функции",
+  "features": {
+    "title": "Най-новите функции",
     "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs."
   },
-  "partners":{
-    "title":"Нашите партньори",
+  "partners": {
+    "title": "Нашите партньори",
     "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs."
   },
   "login": {
@@ -261,7 +275,6 @@
   "company_tabs": {
     "CreditNotifications": "Кредитни известия",
     "DebitNotifications": "Дебитни известия",
-
     "multiple_upload": "Масов OCR",
     "vat_reports": "ДДС Отчети",
     "yearly_reports": "Годишни отчети",
@@ -322,10 +335,8 @@
     "transactionType": "Тип транзакция",
     "dateIssued": "Дата на издаване",
     "delete_invoice": "Изтриване на фактура"
-    
-
   },
-    "invoice_details": {
+  "invoice_details": {
     "invoiceNumber": "Номер на фактура",
     "recipientCompanyName": "Име на компанията получател: {name}",
     "supplierCompanyName": "Име на фирмата доставчик: {name}",
@@ -335,9 +346,6 @@
     "invoice_created_successfully": "Фактурата е създадена успешно",
     "invoice_updated_successfully": "Фактурата е актуализирана успешно",
     "invoice_exported_successfully": "Фактурата е експортирана успешно"
-
-
-
   },
   "dashboard_lbl": {
     "statistics": "Сатистики",
@@ -395,7 +403,7 @@
     "active_until": "Активен до: ",
     "we_will_send_you_a_notification": "Ние ще Ви уведомим когато плана Ви изтече"
   },
-  "notifications":{
+  "notifications": {
     "notification": "Известия",
     "click": "Можете да изтеглите файла, като щракнете",
     "here": "тук",
@@ -426,10 +434,10 @@
     "RESOLVED": "ОТГОВОРЕН"
   },
   "add_invoice": {
-     "PleaseEnterTheCompanyID": "Моля, въведете идентификационния номер на фирмата ",
-     "SupplierCompanyOwnerName" : "Име на собственика на компанията доставчик...",
-     "SupplierCompanyName": "Име на фирмата доставчик...",
-     "SupplierCompanyAddress": "Адрес на компанията доставчик..",
+    "PleaseEnterTheCompanyID": "Моля, въведете идентификационния номер на фирмата ",
+    "SupplierCompanyOwnerName": "Име на собственика на компанията доставчик...",
+    "SupplierCompanyName": "Име на фирмата доставчик...",
+    "SupplierCompanyAddress": "Адрес на компанията доставчик..",
     "RecipientCompanyIDNumber": "Идентификационен номер на компанията получател....",
     "RecipientPersonIDNumber": "Идентификационен номер на получателя...",
     "RecipientCompanyOwnerName": "Име на собственика на компанията получател....",
@@ -437,11 +445,6 @@
     "RecipientPersonName": "Име на лицето на получателя...",
     "RecipientCompanyAddress": "Адрес на компанията получател....",
     "RecipientCompanyVATNumber": "ДДС номер на компанията получател....",
-
-
-
-
-
     "bank-1": "Уникредит Булбанк",
     "bank-2": "Първа Инвестиционна Банка",
     "bank-3": "Централна Кооперативна Банка",
@@ -517,10 +520,11 @@
     "CREDIT_NOTIFICATION": "Кредитно известие",
     "DEBIT_NOTIFICATION": "Известие за дебит",
     "select_notification": "Изберете Известие",
-    "send_email": "Изпратете по имейл"
+    "send_email": "Изпратете по имейл",
+    "taxExclusive": "Основание за неначисляване на ДДС:"
   },
   "create_company": {
-     "software": "Статус",
+    "software": "Статус",
     "company_details": "Фирма детайли",
     "account_details": "Акаунт детайли",
     "create_details": "Въведете детайли за фирма",
@@ -530,7 +534,7 @@
     "export_details": "Подробности за експортиране",
     "company_id": "ЕИК",
     "company_status": "Софтуер",
-    "company_bank_account": "Фирмена банкова сметка",
+    "company_bank_account": "Банкова сметка",
     "company_currency": "Валута на фирма",
     "company_phone_no": "Фирмен телефонен номер",
     "company_email": "Фирмена поща",
@@ -541,13 +545,13 @@
     "create": "Създай",
     "update": "Промени",
     "userName": "Потребителско име",
-    "incomeSalesServices": "Услуги за продажби на приходи",
+    "incomeSalesServices": "Сметка покупки/разходи",
     "products": "Продукти",
     "goods": "Стоки",
     "expensesExternalServices": "Разходи Външни услуги",
     "taxPurchase": "Данъчна покупка",
-    "clients": "клиенти",
-    "taxSales": "Данъчни продажби",
+    "clients": "Клиенти",
+    "taxSales": "Данък за продажбите",
     "incomeSalesGoods": "Доход от продажба на стоки",
     "test": "Тест"
   },
@@ -639,19 +643,19 @@
     "yes": "ДА",
     "no": "НЕ"
   },
-  "incomeSalesServices": "Услуги за продажби на приходи",
+  "incomeSalesServices": "Сметка покупки/разходи",
   "incomeSalesGoods": "Доход от продажба на стоки",
-    "userName": "Потребителско име",
- "products": "Продукти",
-    "goods": "Стоки",
-    "suppliers": "Доставчици",
-   "Sales": "Продажби",
-   "GeneralExpenses": "Общи разходи",
-    "Tax": "Данък",
+  "userName": "Потребителско име",
+  "products": "Продукти",
+  "goods": "Стоки",
+  "suppliers": "Доставчици",
+  "Sales": "Продажби",
+  "GeneralExpenses": "Общи разходи",
+  "Tax": "Данък",
   "expensesExternalServices": "Разходи Външни услуги",
   "taxPurchase": "Данъчна покупка",
-  "taxSales": "Данъчни продажби",
-  "clients": "клиенти",
+  "taxSales": "Данък за продажбите",
+  "clients": "Сметка Клиенти",
   "home": "Начало",
   "dashboard": "Табло",
   "invoices": "Фактури",
