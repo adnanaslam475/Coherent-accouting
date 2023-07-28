@@ -106,28 +106,7 @@
                         }}</b-tooltip>
                       </div>
                     </div> -->
-                    <div class="d-flex align-items-center ml-1">
-                      <feather-icon icon="MapPinIcon" class="mr-75" />
-                      <div>
-                        <div>
-                          <span class="font-weight-bold text-capitalize">{{ $t('company_info.address') }}</span>
-                        </div>
-                        <div>
-                          <CopyToClipboard :text="companyAddress" @copy="copyTextNoInput(7)">
-                            <p id="comp-address-copy" style="
-                              width: fit-content;
-                              margin: 0px;
-                              cursor: pointer;
-                            ">
-                              {{ companyAddress.substr(0, 34) }}
-                            </p>
-                          </CopyToClipboard>
-                        </div>
-                        <b-tooltip target="comp-address-copy">{{
-                          copyToClipboard
-                        }}</b-tooltip>
-                      </div>
-                    </div>
+
 
                     <div class="d-flex align-items-center ml-1">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 24 24" fill="none"
@@ -287,22 +266,7 @@
                       <!-- Company Phone -->
                       <tr>
                         <th class="pb-50">
-                          <!-- <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="14px"
-                            height="14px"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="mr-75 feather feather-phone"
-                          >
-                            <path
-                              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-                            />
-                          </svg> -->
+
                           <feather-icon icon="PhoneIcon" class="mr-75" />
                           <span class="font-weight-bold text-capitalize">{{ $t('company_info.contact') }}</span>
                         </th>
@@ -322,7 +286,29 @@
                         }}</b-tooltip>
                       </tr>
 
+                      <tr>
 
+                        <th class="pb-50">
+                          <feather-icon icon="MapPinIcon" class="mr-75" />
+
+                          <span class="font-weight-bold text-capitalize">{{ $t('company_info.address') }}</span>
+                        </th>
+                        <td class="pb-50">
+                          <CopyToClipboard :text="companyAddress" @copy="copyTextNoInput(7)">
+                            <p id="comp-address-copy" style="
+                              width: fit-content;
+                              margin: 0px;
+                              cursor: pointer;
+                            ">
+                              {{ companyAddress.substr(0, 34) }}
+                            </p>
+                          </CopyToClipboard>
+                        </td>
+                        <b-tooltip target="comp-address-copy">{{
+                          copyToClipboard
+                        }}</b-tooltip>
+
+                      </tr>
 
                     </table>
                   </b-col>

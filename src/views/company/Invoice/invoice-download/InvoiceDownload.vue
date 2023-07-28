@@ -153,7 +153,7 @@
                       <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                     </p>
                     <p class="tm_m0">
-                      <b>{{ $t('paymentProcess') }}: </b> {{ invoiceData.paymentProcess }}
+                      <b>{{ $t('paymentProcess') }}: </b> {{ $t(`paymentMethods.${invoiceData.paymentProcess}`) }}
                     </p>
                     <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -494,7 +494,7 @@
                       <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                     </p>
                     <p class="tm_m0">
-                      <b>{{ $t('paymentProcess') }}: </b> {{ invoiceData.paymentProcess }}
+                      <b>{{ $t('paymentProcess') }}: </b> {{ $t(`paymentMethods.${invoiceData.paymentProcess}`) }}
                     </p>
                     <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -938,7 +938,7 @@
                       <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                     </p>
                     <p class="tm_m0">
-                      <b>{{ $t('paymentProcess') }}: </b> {{ invoiceData.paymentProcess }}
+                      <b>{{ $t('paymentProcess') }}: </b> {{ $t(`paymentMethods.${invoiceData.paymentProcess}`) }}
                     </p>
                     <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -1322,7 +1322,7 @@
                       <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                     </p>
                     <p class="tm_m0">
-                      <b>{{ $t('paymentProcess') }}: </b> {{ invoiceData.paymentProcess }}
+                      <b>{{ $t('paymentProcess') }}: </b> {{ $t(`paymentMethods.${invoiceData.paymentProcess}`) }}
                     </p>
                     <p class="tm_m0" v-if="invoiceData.paymentProcess == 'BANK_TRANSFER'">
                       <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -1960,7 +1960,7 @@
               {{ $t("paymentProcess") }}
             </p>
             <p class="invoice-date">
-              {{ invoiceData.paymentProcess }}
+              {{ $t(`paymentMethods.${invoiceData.paymentProcess}`) }}
             </p>
           </div>
           <div class="mt-1" style="display: flex; justify-content: space-around"
