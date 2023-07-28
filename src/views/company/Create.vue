@@ -6,14 +6,6 @@
       <!-- First Tab: Company Details -->
       <tab-content :title="$t('create_company.company_details')" :before-change="validationForm">
         <validation-observer ref="companyRules" tag="form">
-          <b-row>
-            <b-col cols="12" class="mb-2">
-              <h5 class="mb-0">{{ $t("create_company.company_details") }}</h5>
-              <small class="text-muted">
-                {{ $t("create_company.create_details") }}
-              </small>
-            </b-col>
-          </b-row>
           <b-form-row>
             <!-- Company Name -->
             <b-col>
@@ -142,7 +134,7 @@
               <b-form-group id="input-group-6" :label="$t('company_info.owner_egn')" label-for="owner_egn">
                 <validation-provider #default="{ errors }" v-bind:name="$t('owner_egn')" rules="digits:10">
                   <b-form-input id="owner_egn" v-model="form.owner_egn" :state="errors.length > 0 ? false : null"
-                    placeholder="Owner EGN" type="number" :formatter="formatOwnerEGN" />
+                    placeholder="Попълнете ако искате да генерирате ДДС отчети" type="number" :formatter="formatOwnerEGN" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -180,7 +172,7 @@
           <b-form-row>
             <b-col>
 
-              <b-form-group id="input-group-5" :label="$t('Company Bank Name')" label-for="companyBankName">
+              <b-form-group id="input-group-5" :label="$t('Банка')" label-for="companyBankName">
                 <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
                   <v-select v-model="form.companyBankName" :options="banks" :value="$store.state.selected"
                     id="companyBankName" :state="errors.length > 0 ? false : null"
@@ -198,17 +190,17 @@
                 <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')"
                   :rules="form.companyBankName == null ? '' : 'required'">
                   <b-form-input id="company_bank_account" v-model="form.company_bank_account" type="text"
-                    placeholder="Company Bank Account" autocomplete="off"></b-form-input>
+                    placeholder="Банкова сметка" autocomplete="off"></b-form-input>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group></b-col>
 
           </b-form-row>
           <b-form-row>
-            <b-col><b-form-group id="input-group-1" label="Company Bank Bic" label-for="company_fin_year">
+            <b-col><b-form-group id="input-group-1" label="BIC" label-for="company_fin_year">
                 <validation-provider #default="{ errors }" v-bind:name="$t('companyBankBic')"
                   :rules="form.companyBankName == null ? '' : 'required'">
-                  <b-form-input id="companyBankBic" v-model="form.companyBankBic" placeholder="Company Bank Bic" />
+                  <b-form-input id="companyBankBic" v-model="form.companyBankBic" placeholder="BIC" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group></b-col>

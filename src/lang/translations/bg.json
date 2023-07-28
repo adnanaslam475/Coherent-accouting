@@ -17,19 +17,19 @@
   },
   "paymentProcess": "Процес на плащане",
   "paymentMethods": {
-    "CASH": "ПАРИ В БРОЙ",
+    "CASH": "В БРОЙ",
     "BANK_TRANSFER": "БАНКОВ ТРАНСФЕР",
-    "CARD": "КАРТА",
+    "CARD": "С КАРТА",
     "CASH_ON_DELIVERY": "НАЛОЖЕН ПЛАТЕЖ",
     "WITH_INTERCEPTION": "С ПРИХВАЩАНЕ",
-    "POST_ORDER": "ПОСТЕНСКА ПОРЪЧКА",
+    "POST_ORDER": "ПОЩЕНСКА ПОРЪЧКА",
     "INTERNET": "ИНТЕРНЕТ",
     "PAYMENT_ORDER": "ПЛАТЕЖНО НАРЕЖДЕНИЕ"
   },
   "paymentStatus": {
     "paymentStatus": "Статус на плащането",
-    "payed": "платени",
-    "not_payed": "НЕПЛАТЕН"
+    "payed": "платена",
+    "not_payed": "неплатена"
   },
   "lbl": {
     "login": "Вход",
@@ -534,7 +534,7 @@
     "export_details": "Подробности за експортиране",
     "company_id": "ЕИК",
     "company_status": "Софтуер",
-    "company_bank_account": "Фирмена банкова сметка",
+    "company_bank_account": "Банкова сметка",
     "company_currency": "Валута на фирма",
     "company_phone_no": "Фирмен телефонен номер",
     "company_email": "Фирмена поща",
@@ -655,7 +655,7 @@
   "expensesExternalServices": "Разходи Външни услуги",
   "taxPurchase": "Данъчна покупка",
   "taxSales": "Данък за продажбите",
-  "clients": "клиенти",
+  "clients": "Сметка Клиенти",
   "home": "Начало",
   "dashboard": "Табло",
   "invoices": "Фактури",

@@ -222,7 +222,7 @@
                       <tr>
                         <th class="pb-50">
                           <feather-icon icon="HomeIcon" class="mr-75" />
-                          <span class="font-weight-bold text-capitalize">{{ $t('Bank Name') }}</span>
+                          <span class="font-weight-bold text-capitalize">{{ $t('Банка') }}</span>
                         </th>
                         <td v-if="companyDetails.companyBankName != null" class="pb-50">
                           <CopyToClipboard :text="companyDetails.companyBankName" @copy="copyTextNoInput(5)"
