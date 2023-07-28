@@ -479,6 +479,8 @@
                   </div>
                 </b-card-header>
               </b-card>
+
+              <!-- toggle orignal performa  -->
               <b-form-checkbox v-model="InvoiceTypeOptionToggleValue"
                 @change="InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)"
                 class="custom-control-primary custom-switch-btn-2 flex-1 text-center" name="AccountTypeOptionToggle"
@@ -490,6 +492,19 @@
                   {{ $t("add_invoice.ORIGINAL") }}
                 </span>
               </b-form-checkbox>
+              <!-- toggle payed and not payed  -->
+              <b-form-checkbox v-model="InvoicePayedToggleValue"
+                @change="InvoicePayedOptionToggle(InvoicePayedToggleValue)"
+                class="custom-control-primary custom-switch-btn-2 flex-1 text-center" name="AccountTypeOptionToggle"
+                switch>
+                <span class="switch-icon-left text-uppercase">
+                  {{ $t("paymentStatus.payed") }}
+                </span>
+                <span class="switch-icon-right text-uppercase">
+                  {{ $t("paymentStatus.not_payed") }}
+                </span>
+              </b-form-checkbox>
+
               <b-form-checkbox v-model="saleTypeOptionToggleValue"
                 @change="saleTypeOptionToggle(saleTypeOptionToggleValue)"
                 class="custom-control-primary custom-switch-btn-2 flex-1 text-center" name="AccountTypeOptionToggle"
@@ -1104,6 +1119,18 @@
                           {{ $t("add_invoice.company") }}
                         </span>
                       </b-form-checkbox>
+                      <!-- toggle payed and not payed  -->
+                      <b-form-checkbox v-model="InvoicePayedToggleValue"
+                        @change="InvoicePayedOptionToggle(InvoicePayedToggleValue)"
+                        class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                        name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left text-uppercase">
+                          {{ $t("paymentStatus.payed") }}
+                        </span>
+                        <span class="switch-icon-right text-uppercase">
+                          {{ $t("paymentStatus.not_payed") }}
+                        </span>
+                      </b-form-checkbox>
                     </div>
 
                     <!-- Schedule Type -->
@@ -1359,7 +1386,9 @@
                             {{ $t("add_invoice.no_vat") }}
                           </span>
                         </b-form-checkbox>
+
                       </div>
+
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -1401,6 +1430,7 @@
                           {{ $t("add_invoice.ORIGINAL") }}
                         </span>
                       </b-form-checkbox>
+
                       <b-form-checkbox v-model="saleTypeOptionToggleValue" @change="
                         saleTypeOptionToggle(saleTypeOptionToggleValue)
                         " class="custom-control-primary custom-switch-btn-2 flex-1 text-right"
@@ -2031,6 +2061,18 @@
                         </span>
                         <span class="switch-icon-right">
                           {{ $t("add_invoice.company") }}
+                        </span>
+                      </b-form-checkbox>
+                      <!-- toggle payed and not payed  -->
+                      <b-form-checkbox v-model="InvoicePayedToggleValue"
+                        @change="InvoicePayedOptionToggle(InvoicePayedToggleValue)"
+                        class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                        name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left text-uppercase">
+                          {{ $t("paymentStatus.payed") }}
+                        </span>
+                        <span class="switch-icon-right text-uppercase">
+                          {{ $t("paymentStatus.not_payed") }}
                         </span>
                       </b-form-checkbox>
                     </div>
@@ -3086,6 +3128,18 @@
                           {{ $t("add_invoice.company") }}
                         </span>
                       </b-form-checkbox>
+                      <!-- toggle payed and not payed  -->
+                      <b-form-checkbox v-model="InvoicePayedToggleValue"
+                        @change="InvoicePayedOptionToggle(InvoicePayedToggleValue)"
+                        class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                        name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left text-uppercase">
+                          {{ $t("paymentStatus.payed") }}
+                        </span>
+                        <span class="switch-icon-right text-uppercase">
+                          {{ $t("paymentStatus.not_payed") }}
+                        </span>
+                      </b-form-checkbox>
                     </div>
 
                     <!-- Schedule Type -->
@@ -4038,6 +4092,18 @@
                         </span>
                         <span class="switch-icon-right">
                           {{ $t("add_invoice.company") }}
+                        </span>
+                      </b-form-checkbox>
+                      <!-- toggle payed and not payed  -->
+                      <b-form-checkbox v-model="InvoicePayedToggleValue"
+                        @change="InvoicePayedOptionToggle(InvoicePayedToggleValue)"
+                        class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                        name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left text-uppercase">
+                          {{ $t("paymentStatus.payed") }}
+                        </span>
+                        <span class="switch-icon-right text-uppercase">
+                          {{ $t("paymentStatus.not_payed") }}
                         </span>
                       </b-form-checkbox>
                     </div>
@@ -5333,16 +5399,16 @@ export default {
         this.clauseToSend = this.invoiceData.vatCondition.clause;
       }
     },
-    selectBankName() {
-      let self = this
-      console.log('======>', this.invoiceData, self.companyBankBic,)
-      this.invoiceData.bankApi.bic = self.companyBankBic
-      if (this.invoiceData.bankApi.name === null) {
-        this.bankNameToSend = "";
-      } else {
-        this.bankNameToSend = this.invoiceData.bankApi.name.name;
-      }
-    },
+    // selectBankName() {
+    //   let self = this
+    //   console.log('======>', this.invoiceData, self.companyBankBic,)
+    //   this.invoiceData.bankApi.bic = self.companyBankBic
+    //   if (this.invoiceData.bankApi.name === null) {
+    //     this.bankNameToSend = "";
+    //   } else {
+    //     this.bankNameToSend = this.invoiceData.bankApi.name.name;
+    //   }
+    // },
     addNewItemInItemForm() {
       this.$refs.form.style.overflow = "hidden";
       this.invoiceData.transactions.push(
@@ -5383,7 +5449,7 @@ export default {
 
         }
       }
-      invoiceData.bankApi.name = this.bankNameToSend;
+      // invoiceData.bankApi.name = this.bankNameToSend;
       invoiceData.vatCondition = this.clauseToSend;
 
 
@@ -5847,6 +5913,7 @@ export default {
     ];
 
     var InvoiceTypeOptionToggleValue = false;
+    var InvoicePayedToggleValue = false
 
     let InvoiceTypeOptionToggle = (value) => {
       if (value) {
@@ -5856,6 +5923,13 @@ export default {
       }
     };
 
+    let InvoicePayedOptionToggle = (value) => {
+      if (value) {
+        invoiceData.value.paymentStatus = "PAYED";
+      } else {
+        invoiceData.value.paymentStatus = "NOT_PAYED";
+      }
+    };
     var saleTypeOptionToggleValue = false;
     let saleTypeOptionToggle = (value) => {
       if (value) {
@@ -6381,7 +6455,9 @@ export default {
       AccountTypeOptionToggleValue,
       AccountTypeOptionToggle,
       InvoiceTypeOptionToggleValue,
+      InvoicePayedToggleValue,
       InvoiceTypeOptionToggle,
+      InvoicePayedOptionToggle,
       saleTypeOptionToggleValue,
       saleTypeOptionToggle,
       invoiceData,

@@ -5,7 +5,8 @@ export default {
   state: {
     windowWidth: 0,
     shallShowOverlay: false,
-    ocrInvoiceData: {}
+    ocrInvoiceData: {},
+    isMultipleUploads: 1
   },
   getters: {
     currentBreakPoint: state => {
@@ -18,11 +19,18 @@ export default {
     },
     getOCR(state) {
       return state.ocrInvoiceData
+    },
+    getCurrentTab(state) {
+      return state.isMultipleUploads
     }
   },
   mutations: {
     UPDATE_WINDOW_WIDTH(state, val) {
       state.windowWidth = val
+    },
+    MULTIPLE_UPLOADS(state, val) {
+      state.isMultipleUploads = val
+
     },
     TOGGLE_OVERLAY(state, val) {
       state.shallShowOverlay = val !== undefined ? val : !state.shallShowOverlay

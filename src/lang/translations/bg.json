@@ -25,6 +25,11 @@
     "INTERNET": "ИНТЕРНЕТ",
     "PAYMENT_ORDER": "ПЛАТЕЖНО НАРЕЖДЕНИЕ"
   },
+  "paymentStatus": {
+    "paymentStatus": "Статус на плащането",
+    "payed": "платени",
+    "not_payed": "НЕПЛАТЕН"
+  },
   "lbl": {
     "login": "Вход",
     "register": "Регистрирай се",

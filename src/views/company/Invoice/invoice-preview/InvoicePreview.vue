@@ -216,6 +216,22 @@
               </div>
             </b-card-header>
           </b-card>
+
+          <b-card no-body class="invoice-preview date-issued">
+            <b-card-header class="justify-content-end">
+              <div class="invoice-date-wrapper invoice-middle-content">
+                <p class="invoice-date-title">
+                  {{ $t("paymentStatus.paymentStatus") }}:
+                </p>
+                <p class="invoice-date">
+                 {{
+                          invoiceData.paymentStatus == 'PAYED' ?
+                          $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
+                        }}
+                </p>
+              </div>
+            </b-card-header>
+          </b-card>
         </div>
         <b-card no-body class="invoice-preview-card transaction-container" :style="isBlue === true
           ? 'border: 1px solid #007aff'
@@ -600,6 +616,14 @@
                         $t("company_invoices." + invoiceData.transactionType)
                       }}</b>
                     </p>
+                    <p class="tm_invoice_date tm_m0">
+                      {{ $t("paymentStatus.paymentStatus") }}:
+                      <b class="tm_primary_color">
+                        {{
+                          invoiceData.paymentStatus == 'PAYED' ?
+                          $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
+                        }}</b>
+                    </p>
                   </div>
                 </div>
                 <div class="tm_invoice_head tm_mb10">
@@ -919,6 +943,7 @@
                         $t("company_invoices." + invoiceData.transactionType)
                       }}</b>
                     </p>
+
                   </div>
                   <div class="tm_invoice_seperator tm_accent_bg" :class="isBlue === true
                         ? 'tm_accent_bg'
@@ -1063,6 +1088,14 @@
                         </p>
                         <p class="tm_m0">
                           <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
+                        </p>
+                        <p class="tm_m0">
+                          <b>{{ $t("paymentStatus.paymentStatus") }}:
+                          </b>
+                          {{
+                            invoiceData.paymentStatus == 'PAYED' ?
+                            $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
+                          }}
                         </p>
 
                       </div>
@@ -1360,6 +1393,13 @@
                         $t("company_invoices." + invoiceData.transactionType)
                       }}</b>
                     </p>
+                    <p class="tm_invoice_date tm_m0">
+                      {{ $t("paymentStatus.paymentStatus") }}:
+                      <b class="tm_primary_color">{{
+                        invoiceData.paymentStatus == 'PAYED' ?
+                        $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
+                      }}</b>
+                    </p>
                   </div>
                 </div>
                 <div class="tm_invoice_head tm_mb10">
@@ -1494,14 +1534,14 @@
                         <p class="tm_m0">
                           <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
-                       
+
                       </div>
-                       <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
-                         invoiceData.vatPercent === 0
-                         ">
-                            <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
-                            {{ invoiceData.vatCondition }}
-                          </p>
+                      <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
+                        invoiceData.vatPercent === 0
+                        ">
+                        <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
+                        {{ invoiceData.vatCondition }}
+                      </p>
                       <div class="mt-4 d-flex" order="2" order-md="1">
                         <h2 class="invoiceTypeHeading mt-6 text-uppercase">
                           {{ $t("add_invoice." + invoiceData.invoiceType) }}
@@ -1868,7 +1908,13 @@
                         <p class="tm_m0">
                           <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
                         </p>
-
+                        <p class="tm_m0">
+                          <b>{{ $t("paymentStatus.paymentStatus") }}: </b>
+                          {{
+                            invoiceData.paymentStatus == 'PAYED' ?
+                            $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
+                          }}
+                        </p>
                       </div>
                       <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
                         invoiceData.vatPercent === 0

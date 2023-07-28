@@ -11,6 +11,7 @@
             No record found
           </div>
         </div>
+
         <div v-if="activeProjectUnverified" v-for="(transaction, index) in activeProjectUnverified" :key="index"
           class="transaction-item">
           <b-media no-body>
@@ -20,7 +21,8 @@
               </b-avatar>
             </b-media-aside>
             <b-media-body>
-              <b-link :to="{ name: 'CompanyView', params: { id: transaction.companyApi.id } }" class="font-weight-bold">
+              <b-link :to="{ name: 'CompanyView', params: { id: transaction.companyApi.id } }" class="font-weight-bold"
+                @click="showMultipleUploads">
                 <h6 class="transaction-title">
                   {{ transaction.companyApi.companyName }}
                 </h6>
@@ -77,6 +79,7 @@
 <script>
 import { ref } from "@vue/composition-api";
 import axios from "@/libs/axios";
+import store from '@/store'
 import {
   BCard,
   BCardHeader,
@@ -190,5 +193,11 @@ export default {
       ],
     };
   },
+  methods: {
+    showMultipleUploads() {
+
+      store.commit('app/MULTIPLE_UPLOADS', 3)
+    }
+  }
 };
 </script>

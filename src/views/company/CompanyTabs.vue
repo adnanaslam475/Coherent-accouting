@@ -1,7 +1,9 @@
 <template>
   <b-col>
+
     <b-tabs v-model="companyTab">
       <!-- Company-Info tab -->
+
       <b-tab>
         <template #title>
           <feather-icon icon="BriefcaseIcon" />
@@ -111,6 +113,8 @@ import Document from "./Documents/Document.vue";
 import PrivatePersons from "./user/users-list/UsersList.vue";
 import { codeIcon } from "./code";
 import axios from "@/libs/axios";
+import store from '@/store'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -137,7 +141,7 @@ export default {
       codeIcon,
       companyTab: this.$route.params.InvoiceId
         ? this.$route.params.InvoiceId
-        : 0,
+        : 2,
       invoiceTab: 0,
       addRecord: false,
       vatReportsTab: 0,
@@ -152,11 +156,23 @@ export default {
       privatePersonActive: this.$route.params.InvoiceId == 7 ? true : false,
     };
   },
+  computed: {
+    ...mapGetters('app', ['getCurrentTab']),
+
+  },
   mounted() {
     this.companyID = this.$route.params.id;
+
+
     this.getCompanyInfo();
   },
   created() {
+    if (this.getCurrentTab == 3) {
+      this.companyTab = 2
+      store.commit('app/MULTIPLE_UPLOADS', 0)
+    } else {
+      this.companyTab = 0
+    }
   },
   watch: {
     companyTab: function (newValue, oldValue) {

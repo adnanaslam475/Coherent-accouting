@@ -25,6 +25,11 @@
     "INTERNET": "INTERNET",
     "PAYMENT_ORDER": "PAYMENT ORDER"
   },
+  "paymentStatus": {
+    "paymentStatus": "Payment Status",
+    "payed": "PAYED",
+    "not_payed": "NOT PAYED"
+  },
   "lbl": {
     "login": "Login",
     "register": "Register",

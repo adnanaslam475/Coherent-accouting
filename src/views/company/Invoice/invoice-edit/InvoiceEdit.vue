@@ -502,6 +502,18 @@
                   {{ $t("add_invoice.service") }}
                 </span>
               </b-form-checkbox>
+              <!-- toggle payed and not payed  -->
+              <b-form-checkbox v-model="InvoicePayedToggleValue"
+                @change="InvoicePayedOptionToggle(InvoicePayedToggleValue)"
+                class="custom-control-primary custom-switch-btn-2 flex-1 text-center" name="AccountTypeOptionToggle"
+                switch>
+                <span class="switch-icon-left text-uppercase">
+                  {{ $t("paymentStatus.payed") }}
+                </span>
+                <span class="switch-icon-right text-uppercase">
+                  {{ $t("paymentStatus.not_payed") }}
+                </span>
+              </b-form-checkbox>
               <b-card no-body class="invoice-preview date-issued mb-0">
                 <b-card-header class="justify-content-end">
                   <div class="mt-md-0 mt-2">
@@ -912,7 +924,7 @@
               </b-card-body>
             </b-card>
 
-            <b-row v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''" class="mt-2">
+            <b-row v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''" class="mt-2">
 
               <b-col>
                 <b-card no-body class="">
@@ -1155,6 +1167,18 @@
                         </span>
                         <span class="switch-icon-right">
                           {{ $t("add_invoice.company") }}
+                        </span>
+                      </b-form-checkbox>
+                      <!-- toggle payed and not payed  -->
+                      <b-form-checkbox v-model="InvoicePayedToggleValue"
+                        @change="InvoicePayedOptionToggle(InvoicePayedToggleValue)"
+                        class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                        name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left text-uppercase">
+                          {{ $t("paymentStatus.payed") }}
+                        </span>
+                        <span class="switch-icon-right text-uppercase">
+                          {{ $t("paymentStatus.not_payed") }}
                         </span>
                       </b-form-checkbox>
                     </div>
@@ -1705,7 +1729,7 @@
 
                           <br />
                         </div>
-                        <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
+                        <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
@@ -2115,6 +2139,18 @@
                         </span>
                         <span class="switch-icon-right">
                           {{ $t("add_invoice.company") }}
+                        </span>
+                      </b-form-checkbox>
+                      <!-- toggle payed and not payed  -->
+                      <b-form-checkbox v-model="InvoicePayedToggleValue"
+                        @change="InvoicePayedOptionToggle(InvoicePayedToggleValue)"
+                        class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                        name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left text-uppercase">
+                          {{ $t("paymentStatus.payed") }}
+                        </span>
+                        <span class="switch-icon-right text-uppercase">
+                          {{ $t("paymentStatus.not_payed") }}
                         </span>
                       </b-form-checkbox>
                     </div>
@@ -2699,7 +2735,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
+                        <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
@@ -3186,6 +3222,18 @@
                         </span>
                         <span class="switch-icon-right">
                           {{ $t("add_invoice.company") }}
+                        </span>
+                      </b-form-checkbox>
+                      <!-- toggle payed and not payed  -->
+                      <b-form-checkbox v-model="InvoicePayedToggleValue"
+                        @change="InvoicePayedOptionToggle(InvoicePayedToggleValue)"
+                        class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                        name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left text-uppercase">
+                          {{ $t("paymentStatus.payed") }}
+                        </span>
+                        <span class="switch-icon-right text-uppercase">
+                          {{ $t("paymentStatus.not_payed") }}
                         </span>
                       </b-form-checkbox>
                     </div>
@@ -3742,7 +3790,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
+                        <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
@@ -4167,6 +4215,18 @@
                         </span>
                         <span class="switch-icon-right">
                           {{ $t("add_invoice.company") }}
+                        </span>
+                      </b-form-checkbox>
+                      <!-- toggle payed and not payed  -->
+                      <b-form-checkbox v-model="InvoicePayedToggleValue"
+                        @change="InvoicePayedOptionToggle(InvoicePayedToggleValue)"
+                        class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
+                        name="AccountTypeOptionToggle" switch>
+                        <span class="switch-icon-left text-uppercase">
+                          {{ $t("paymentStatus.payed") }}
+                        </span>
+                        <span class="switch-icon-right text-uppercase">
+                          {{ $t("paymentStatus.not_payed") }}
                         </span>
                       </b-form-checkbox>
                     </div>
@@ -4728,7 +4788,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="companyName.companyVatNumber == null || companyName.companyVatNumber == ''">
+                        <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
@@ -5867,6 +5927,7 @@ export default {
 
     var InvoiceTypeOptionToggleValue = ref(null);
     var saleTypeOptionToggleValue = ref(null);
+    var InvoicePayedToggleValue = ref(null)
     var isBank = ref(false)
 
     let uploadValue = {
@@ -6028,6 +6089,7 @@ export default {
           invoiceData?.value?.invoiceType == "PROFORMA" ? true : false;
         saleTypeOptionToggleValue.value =
           invoiceData?.value?.saleType == "GOODS" ? true : false;
+        InvoicePayedToggleValue.value = invoiceData?.value?.paymentStatus == "PAYED" ? true : false
         invoiceData.value.transactions = response?.data?.transactions?.map(
           (item) => {
             return item;
@@ -6085,6 +6147,13 @@ export default {
         invoiceData.value.saleType = "SERVICE";
       }
     };
+    let InvoicePayedOptionToggle = (value) => {
+      if (value) {
+        invoiceData.value.paymentStatus = "PAYED";
+      } else {
+        invoiceData.value.paymentStatus = "NOT_PAYED";
+      }
+    };
     // const handleChange = (item) => {
     //   console.log(item, 'here is handle change');
 
@@ -6108,7 +6177,9 @@ export default {
         companyData.value = response.data
         console.log(companyName.value, 'this is company name ')
         supplierID.value = response.data.companyIdentificationNumber
-
+        if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
+          invoiceData.value.vatPercent = 0
+        }
 
       })
       .catch((error) => {
@@ -6669,7 +6740,9 @@ export default {
       AccountTypeOptionToggle,
       InvoiceTypeOptionToggleValue,
       saleTypeOptionToggleValue,
+      InvoicePayedToggleValue,
       saleTypeOptionToggle,
+      InvoicePayedOptionToggle,
       InvoiceTypeOptionToggle,
       invoiceData,
       currencyOptions,
