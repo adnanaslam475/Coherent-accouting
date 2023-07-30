@@ -525,7 +525,7 @@
     "taxExclusive": "Основание за неначисляване на ДДС:"
   },
   "create_company": {
-    "software": "Статус",
+    "software": "Софтуер за експорт",
     "company_details": "Фирма детайли",
     "account_details": "Акаунт детайли",
     "create_details": "Въведете детайли за фирма",
@@ -534,7 +534,7 @@
     "update_acc_details": "Промени детайли за Вашия акаунт",
     "export_details": "Подробности за експортиране",
     "company_id": "ЕИК",
-    "company_status": "Софтуер",
+    "company_status": "Статус",
     "company_bank_account": "Банкова сметка",
     "company_currency": "Валута на фирма",
     "company_phone_no": "Фирмен телефонен номер",
