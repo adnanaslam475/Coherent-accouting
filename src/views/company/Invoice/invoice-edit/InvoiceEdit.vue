@@ -871,6 +871,7 @@
             <b-row>
               <b-col>
                 <b-col>
+                  <label class="">{{ $t('select_bank_process') }}</label>
                   <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
                     v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
                     @change="checkProcessType(bankProcess)">
@@ -926,7 +927,7 @@
 
             <b-row v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''" class="mt-2">
 
-              <b-col>
+              <b-col v-if="invoiceData.vatPercent == 0">
                 <b-card no-body class="">
                   <b-card-body class="invoice-padding form-item-section p-2 rounded">
                     <b-form-group id="input-group-4" :label="$t('add_invoice.taxExclusive')" label-for="non-vat-clause">
@@ -1658,6 +1659,7 @@
                     <!-- Bank Details Switch -->
                     <b-row class="mb-1">
                       <b-col>
+                        <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
                           v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
                           @change="checkProcessType(bankProcess)">
@@ -1730,7 +1732,8 @@
                           <br />
                         </div>
                         <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
-                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
+                            v-if="invoiceData.vatPercent == 0">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
                             <span style="width: 200px">
@@ -2667,6 +2670,7 @@
 
                     <b-row class="mb-1">
                       <b-col>
+                        <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
                           v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
                           @change="checkProcessType(bankProcess)">
@@ -2736,7 +2740,8 @@
                           <br />
                         </div>
                         <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
-                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
+                            v-if="invoiceData.vatPercent == 0">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
                             <span style="width: 200px">
@@ -3720,6 +3725,7 @@
                     </b-button>
                     <b-row class="mb-1">
                       <b-col>
+                        <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
                           v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
                           @change="checkProcessType(bankProcess)">
@@ -3791,7 +3797,8 @@
                           <br />
                         </div>
                         <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
-                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
+                            v-if="invoiceData.vatPercent == 0">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
@@ -4720,6 +4727,7 @@
 
                     <b-row class="mb-1">
                       <b-col>
+                        <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
                           v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
                           @change="checkProcessType(bankProcess)">
@@ -4789,7 +4797,8 @@
                           <br />
                         </div>
                         <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
-                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
+                            v-if="invoiceData.vatPercent == 0">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
