@@ -134,7 +134,7 @@
               <b-form-group id="input-group-6" :label="$t('company_info.owner_egn')" label-for="owner_egn">
                 <validation-provider #default="{ errors }" v-bind:name="$t('owner_egn')" rules="digits:10">
                   <b-form-input id="owner_name" v-model="getCompOwnerEgn" :state="errors.length > 0 ? false : null"
-                    type="number" :formatter="formatOwnerEGN" />
+                    placeholder="Попълнете ако искате да генерирате ДДС отчети"  type="number" :formatter="formatOwnerEGN" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
