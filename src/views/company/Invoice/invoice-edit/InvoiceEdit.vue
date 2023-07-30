@@ -871,6 +871,7 @@
             <b-row>
               <b-col>
                 <b-col>
+                   <label class="">{{ $t('select_bank_process') }}</label>
                   <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
                     v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
                     @change="checkProcessType(bankProcess)">
@@ -1658,6 +1659,7 @@
                     <!-- Bank Details Switch -->
                     <b-row class="mb-1">
                       <b-col>
+                         <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
                           v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
                           @change="checkProcessType(bankProcess)">
@@ -2667,6 +2669,7 @@
 
                     <b-row class="mb-1">
                       <b-col>
+                         <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
                           v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
                           @change="checkProcessType(bankProcess)">
@@ -3720,6 +3723,7 @@
                     </b-button>
                     <b-row class="mb-1">
                       <b-col>
+                         <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
                           v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
                           @change="checkProcessType(bankProcess)">
@@ -4720,6 +4724,7 @@
 
                     <b-row class="mb-1">
                       <b-col>
+                         <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
                           v-bind:placeholder="$t('Please select bank...')" :value="$store.state.selected"
                           @change="checkProcessType(bankProcess)">
