@@ -927,7 +927,7 @@
               </b-card-body>
             </b-card>
 
-            <b-row class="mt-2" v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
+            <b-row class="mt-2">
               <b-col v-if="invoiceData.vatPercent == 0">
                 <b-card no-body class="">
                   <b-card-body class="invoice-padding form-item-section p-2 rounded">
@@ -1705,7 +1705,7 @@
 
                           <br />
                         </div>
-                        <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
+                        <div>
                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
                             v-if="invoiceData.vatPercent == 0">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
@@ -2665,7 +2665,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
+                        <div>
                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
                             v-if="invoiceData.vatPercent == 0">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
@@ -3703,7 +3703,7 @@
                           </p>
                           <br />
                         </div>
-                        <div v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
+                        <div>
                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
                             v-if="invoiceData.vatPercent == 0">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
@@ -4677,8 +4677,7 @@
                         </div>
 
                         <div v-if="invoiceData.vatPercent == 0">
-                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
-                            v-if="companyData.companyVatNumber == null || companyData.companyVatNumber == ''">
+                          <p class="tm_m0" style="margin-top: 10px; width: 270px!important">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
