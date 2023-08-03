@@ -216,7 +216,7 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div class="d-flex align-items-center mb-1">
+                      <div class="d-flex align-items-center mb-1" v-if="companyInBG">
                         <span class="title mr-1">
                           {{ $t("add_invoice.company_id_no") }}:
                         </span>
@@ -241,7 +241,7 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div class="d-flex align-items-center mb-1">
+                      <div class="d-flex align-items-center mb-1" v-if="companyInBG">
                         <span class="title mr-1">{{ $t("add_invoice.company_owner") }}:
                         </span>
                         <b-input-group class="input-group invoice-edit-input-group">
@@ -252,7 +252,7 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="supplierVat" class="d-flex align-items-center mb-1">
+                      <div v-if="supplierVat && companyInBG" class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
                           {{ $t("add_invoice.company_vat") }}:
                         </span>
@@ -264,7 +264,7 @@
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </div>
-                      <div class="d-flex align-items-center mb-1">
+                      <div class="d-flex align-items-center mb-1" v-if="companyInBG">
                         <span class="mr-1"> {{ $t("add_invoice.vat") }}: </span>
                         <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-1"
                           name="check-button" switch>
@@ -372,7 +372,7 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div class="d-flex align-items-center mb-1">
+                      <div class="d-flex align-items-center mb-1" v-if="companyInBG">
                         <span class="title mr-1" v-if="AccountTypeOption == 'company'">{{ $t("add_invoice.company_id_no")
                         }}:</span>
                         <span class="title mr-1" v-if="AccountTypeOption == 'person'">{{ $t("add_invoice.person_id_no")
@@ -413,7 +413,7 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="AccountTypeOption == 'company'" class="d-flex align-items-center mb-1">
+                      <div v-if="AccountTypeOption == 'company' && companyInBG" class="d-flex align-items-center mb-1">
                         <span class="title mr-1">{{ $t("add_invoice.company_owner") }}:
                         </span>
                         <b-input-group class="input-group invoice-edit-input-group">
@@ -425,7 +425,8 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div v-if="AccountTypeOption == 'company' && recipientVat" class="d-flex align-items-center mb-1">
+                      <div v-if="AccountTypeOption == 'company' && recipientVat && companyInBG"
+                        class="d-flex align-items-center mb-1">
                         <span class="title mr-1">
                           {{ $t("add_invoice.company_vat") }}:
                         </span>
@@ -437,7 +438,7 @@
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
                       </div>
-                      <div v-if="AccountTypeOption == 'company'" class="d-flex align-items-center mb-1">
+                      <div v-if="AccountTypeOption == 'company' && companyInBG" class="d-flex align-items-center mb-1">
                         <span class="mr-1"> {{ $t("add_invoice.vat") }}: </span>
                         <b-form-checkbox v-model="recipientVat" class="custom-control-primary custom-switch-btn-1"
                           name="check-button" switch>
@@ -868,7 +869,7 @@
             </b-card>
 
             <!-- Bank Details Switch -->
-            <b-row>
+            <b-row v-if="companyInBG">
               <b-col>
                 <b-col>
                   <label class="">{{ $t('select_bank_process') }}</label>
@@ -1243,7 +1244,8 @@
                             {{ $t("add_invoice.supplier") }}:</b>
                         </h6>
 
-                        <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required">
+                        <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required"
+                          v-if="companyInBG">
                           <b-form-input v-model="invoiceData.supplierCompany.companyEic"
                             @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)" list="my-company_name"
                             autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)"
@@ -1261,7 +1263,8 @@
                           </small>
                         </validation-provider>
 
-                        <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
+                        <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required"
+                          v-if="companyInBG">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
                             :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
@@ -1291,7 +1294,7 @@
                             :placeholder="$t('add_invoice.SupplierCompanyAddress')" style="margin-bottom: 5px" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
-                        <div v-if="supplierVat">
+                        <div v-if="supplierVat && companyInBG">
                           <validation-provider #default="{ errors }" name="supplierVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.supplierCompany.companyVatEic
@@ -1302,7 +1305,7 @@
                         </div>
 
                         <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2"
-                          name="check-button" switch>
+                          name="check-button" switch v-if="companyInBG">
                           <span class="switch-icon-left text-uppercase">
                             {{ $t("add_invoice.vat") }}</span>
                           <span class="switch-icon-right text-uppercase">
@@ -1329,7 +1332,7 @@
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
                           ? 'recipientCompanyIdNumber'
                           : 'personIdNumber'
-                          " rules="required">
+                          " rules="required" v-if="companyInBG">
                           <b-form-input v-if="AccountTypeOption == 'company'"
                             v-model="invoiceData.recipientCompany.companyEic" @input="
                               SearchCompanyEicRecipient(
@@ -1369,7 +1372,7 @@
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="recipientCompanyOwner" :rules="AccountTypeOption == 'company' ? 'required' : ''
-                          ">
+                          " v-if="companyInBG">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
                             :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
@@ -1419,7 +1422,7 @@
                             :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
-                        <div v-if="AccountTypeOption == 'company' && recipientVat">
+                        <div v-if="AccountTypeOption == 'company' && recipientVat && companyInBG">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
@@ -1429,7 +1432,7 @@
                           </validation-provider>
                         </div>
 
-                        <b-form-checkbox v-if="AccountTypeOption == 'company'" v-model="recipientVat"
+                        <b-form-checkbox v-if="AccountTypeOption == 'company' && companyInBG" v-model="recipientVat"
                           class="custom-control-primary custom-switch-btn-2" name="check-button" switch>
                           <span class="switch-icon-left text-uppercase">
                             {{ $t("add_invoice.vat") }}</span>
@@ -1657,7 +1660,7 @@
                     </b-button>
 
                     <!-- Bank Details Switch -->
-                    <b-row class="mb-1">
+                    <b-row class="mb-1" v-if="companyInBG">
                       <b-col>
                         <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
@@ -2233,7 +2236,8 @@
                         <p class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}:</b>
                         </p>
-                        <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required">
+                        <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required"
+                          v-if="companyInBG">
                           <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="
                             SearchCompanyEic(
                               invoiceData.supplierCompany.companyEic
@@ -2256,7 +2260,8 @@
     companyName }}
                           </small>
                         </validation-provider>
-                        <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
+                        <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required"
+                          v-if="companyInBG">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
                             :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
@@ -2286,7 +2291,7 @@
                             :placeholder="$t('add_invoice.SupplierCompanyAddress')" style="margin-bottom: 5px" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
-                        <div v-if="supplierVat">
+                        <div v-if="supplierVat && companyInBG">
                           <validation-provider #default="{ errors }" name="supplierVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.supplierCompany.companyVatEic
@@ -2297,7 +2302,7 @@
                         </div>
 
                         <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2"
-                          name="check-button" switch>
+                          name="check-button" switch v-if="companyInBG">
                           <span class="switch-icon-left text-uppercase">
                             {{ $t("add_invoice.vat") }}</span>
                           <span class="switch-icon-right text-uppercase">
@@ -2321,7 +2326,7 @@
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
                           ? 'recipientCompanyIdNumber'
                           : 'personIdNumber'
-                          " rules="required">
+                          " rules="required" v-if="companyInBG">
                           <b-form-input v-if="AccountTypeOption == 'company'"
                             v-model="invoiceData.recipientCompany.companyEic" @input="
                               SearchCompanyEicRecipient(
@@ -2361,7 +2366,7 @@
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="recipientCompanyOwner" :rules="AccountTypeOption == 'company' ? 'required' : ''
-                          ">
+                          " v-if="companyInBG">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
                             :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
@@ -2413,7 +2418,7 @@
                             :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
-                        <div v-if="AccountTypeOption == 'company' && recipientVat">
+                        <div v-if="AccountTypeOption == 'company' && recipientVat && companyInBG">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
@@ -2423,7 +2428,7 @@
                           </validation-provider>
                         </div>
 
-                        <b-form-checkbox v-if="AccountTypeOption == 'company'" v-model="recipientVat"
+                        <b-form-checkbox v-if="AccountTypeOption == 'company' && companyInBG" v-model="recipientVat"
                           class="custom-control-primary custom-switch-btn-2" name="check-button" switch>
                           <span class="switch-icon-left text-uppercase">
                             {{ $t("add_invoice.vat") }}</span>
@@ -2668,7 +2673,7 @@
                       {{ $t("add_invoice.add_item") }}
                     </b-button>
 
-                    <b-row class="mb-1">
+                    <b-row class="mb-1" v-if="companyInBG">
                       <b-col>
                         <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
@@ -3299,7 +3304,8 @@
                         <p class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}:</b>
                         </p>
-                        <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required">
+                        <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required"
+                          v-if="companyInBG">
                           <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="
                             SearchCompanyEic(
                               invoiceData.supplierCompany.companyEic
@@ -3322,7 +3328,8 @@
                           </small>
                         </validation-provider>
 
-                        <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
+                        <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required"
+                          v-if="companyInBG">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
                             :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
@@ -3351,7 +3358,7 @@
                             :placeholder="$t('add_invoice.SupplierCompanyAddress')" style="margin-bottom: 5px" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
-                        <div v-if="supplierVat">
+                        <div v-if="supplierVat && companyInBG">
                           <validation-provider #default="{ errors }" name="supplierVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.supplierCompany.companyVatEic
@@ -3362,7 +3369,7 @@
                         </div>
 
                         <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2"
-                          name="check-button" switch>
+                          name="check-button" switch v-if="companyInBG">
                           <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.vat") }}</span>
                           <span class="switch-icon-right text-uppercase"> {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
@@ -3382,7 +3389,7 @@
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
                           ? 'recipientCompanyIdNumber'
                           : 'personIdNumber'
-                          " rules="required">
+                          " rules="required" v-if="companyInBG">
                           <b-form-input v-if="AccountTypeOption == 'company'"
                             v-model="invoiceData.recipientCompany.companyEic" @input="
                               SearchCompanyEicRecipient(
@@ -3422,7 +3429,7 @@
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="recipientCompanyOwner" :rules="AccountTypeOption == 'company' ? 'required' : ''
-                          ">
+                          " v-if="companyInBG">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
                             :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
@@ -3472,7 +3479,7 @@
                             :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
-                        <div v-if="AccountTypeOption == 'company' && recipientVat">
+                        <div v-if="AccountTypeOption == 'company' && recipientVat && companyInBG">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
@@ -3482,7 +3489,7 @@
                           </validation-provider>
                         </div>
 
-                        <b-form-checkbox v-if="AccountTypeOption == 'company'" v-model="recipientVat"
+                        <b-form-checkbox v-if="AccountTypeOption == 'company' && companyInBG" v-model="recipientVat"
                           class="custom-control-primary custom-switch-btn-2" name="check-button" switch>
                           <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.vat") }}</span>
                           <span class="switch-icon-right text-uppercase"> {{ $t("add_invoice.no_vat") }} </span>
@@ -3723,7 +3730,7 @@
                         ">
                       {{ $t("add_invoice.add_item") }}
                     </b-button>
-                    <b-row class="mb-1">
+                    <b-row class="mb-1" v-if="companyInBG">
                       <b-col>
                         <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
@@ -4295,7 +4302,8 @@
                         <p class="tm_mb2">
                           <b class="tm_primary_color"> {{ $t("add_invoice.supplier") }}</b>
                         </p>
-                        <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required">
+                        <validation-provider #default="{ errors }" name="supplierCompanyIdNumber" rules="required"
+                          v-if="companyInBG">
                           <b-form-input v-model="invoiceData.supplierCompany.companyEic" @input="
                             SearchCompanyEic(
                               invoiceData.supplierCompany.companyEic
@@ -4318,7 +4326,8 @@
                           </small>
                         </validation-provider>
 
-                        <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required">
+                        <validation-provider #default="{ errors }" name="supplierCompanyOwner" rules="required"
+                          v-if="companyInBG">
                           <b-form-input v-model="invoiceData.supplierCompany.companyOwnerName
                             " autocomplete="off" style="margin-bottom: 5px"
                             :placeholder="$t('add_invoice.SupplierCompanyOwnerName')" />
@@ -4348,7 +4357,7 @@
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
 
-                        <div v-if="supplierVat">
+                        <div v-if="supplierVat && companyInBG">
                           <validation-provider #default="{ errors }" name="supplierVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group">
                               <b-form-input v-model="invoiceData.supplierCompany.companyVatEic
@@ -4359,7 +4368,7 @@
                         </div>
 
                         <b-form-checkbox v-model="supplierVat" class="custom-control-primary custom-switch-btn-2"
-                          name="check-button" switch>
+                          name="check-button" switch v-if="companyInBG">
                           <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.vat") }}</span>
                           <span class="switch-icon-right text-uppercase"> {{ $t("add_invoice.no_vat") }} </span>
                         </b-form-checkbox>
@@ -4382,7 +4391,7 @@
                         <validation-provider #default="{ errors }" :name="AccountTypeOption == 'company'
                           ? 'recipientCompanyIdNumber'
                           : 'personIdNumber'
-                          " rules="required">
+                          " rules="required" v-if="companyInBG">
                           <b-form-input v-if="AccountTypeOption == 'company'"
                             v-model="invoiceData.recipientCompany.companyEic" @input="
                               SearchCompanyEicRecipient(
@@ -4422,7 +4431,7 @@
                         </validation-provider>
 
                         <validation-provider #default="{ errors }" name="recipientCompanyOwner" :rules="AccountTypeOption == 'company' ? 'required' : ''
-                          ">
+                          " v-if="companyInBG">
                           <b-form-input v-model="invoiceData.recipientCompany.companyOwnerName
                             " autocomplete="off" v-if="AccountTypeOption === 'company'" style="margin-bottom: 5px"
                             :placeholder="$t('add_invoice.RecipientCompanyOwnerName')" />
@@ -4472,7 +4481,7 @@
                             :placeholder="$t('add_invoice.RecipientCompanyAddress')" />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
-                        <div v-if="AccountTypeOption == 'company' && recipientVat">
+                        <div v-if="AccountTypeOption == 'company' && recipientVat && companyInBG">
                           <validation-provider #default="{ errors }" name="recipientVatNumber" rules="required">
                             <b-input-group class="input-group invoice-edit-input-group" style="margin-bottom: 5px">
                               <b-form-input v-model="invoiceData.recipientCompany.companyVatEic
@@ -4482,7 +4491,7 @@
                           </validation-provider>
                         </div>
 
-                        <b-form-checkbox v-if="AccountTypeOption == 'company'" v-model="recipientVat"
+                        <b-form-checkbox v-if="AccountTypeOption == 'company' && companyInBG" v-model="recipientVat"
                           class="custom-control-primary custom-switch-btn-2" name="check-button" switch>
                           <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.vat") }}</span>
                           <span class="switch-icon-right text-uppercase"> {{ $t("add_invoice.no_vat") }} </span>
@@ -4725,7 +4734,7 @@
                       {{ $t("add_invoice.add_item") }}
                     </b-button>
 
-                    <b-row class="mb-1">
+                    <b-row class="mb-1" v-if="companyInBG">
                       <b-col>
                         <label class="">{{ $t('select_bank_process') }}</label>
                         <b-form-select v-model="bankProcess" :options="banks" id="invoice-bank" name="invoice-bank"
@@ -5938,7 +5947,8 @@ export default {
     var InvoiceTypeOptionToggleValue = ref(null);
     var saleTypeOptionToggleValue = ref(null);
     var InvoicePayedToggleValue = ref(null)
-    var isBank = ref(false)
+    var isBank = ref(false);
+    var companyInBG = ref(false);
 
     let uploadValue = {
       companyOwnerName: "",
@@ -6184,7 +6194,10 @@ export default {
     })
       .then((response) => {
         console.log(response, 'asdfasdf')
-
+        if (response.data.companyCountry == 'Bulgaria') {
+          companyInBG.value = true
+         
+        }
         companyName.value = response.data.companyName
         companyData.value = response.data
         console.log(companyName.value, 'this is company name ')
@@ -6728,6 +6741,7 @@ export default {
     };
 
     return {
+      companyInBG,
       bankProcess,
       companyData,
       isBank,
@@ -9813,5 +9827,4 @@ hr {
   .tm_pagebreak {
     page-break-before: always;
   }
-}
-</style>
+}</style>
