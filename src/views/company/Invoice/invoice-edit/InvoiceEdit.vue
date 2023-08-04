@@ -928,7 +928,7 @@
 
             <b-row class="mt-2">
 
-              <b-col v-if="invoiceData.vatPercent == 0">
+              <b-col v-if="invoiceData.vatPercent == 0 && companyInBG">
                 <b-card no-body class="">
                   <b-card-body class="invoice-padding form-item-section p-2 rounded">
                     <b-form-group id="input-group-4" :label="$t('add_invoice.taxExclusive')" label-for="non-vat-clause">
@@ -1736,7 +1736,7 @@
                         </div>
                         <div>
                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
-                            v-if="invoiceData.vatPercent == 0">
+                            v-if="invoiceData.vatPercent == 0 && companyInBG">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
                             <span style="width: 200px">
@@ -2746,7 +2746,7 @@
                         </div>
                         <div>
                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
-                            v-if="invoiceData.vatPercent == 0">
+                            v-if="invoiceData.vatPercent == 0 && companyInBG">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}:
                               </b></span>
                             <span style="width: 200px">
@@ -3805,7 +3805,7 @@
                         </div>
                         <div>
                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
-                            v-if="invoiceData.vatPercent == 0">
+                            v-if="invoiceData.vatPercent == 0 && companyInBG">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
@@ -4807,7 +4807,7 @@
                         </div>
                         <div>
                           <p class="tm_m0" style="margin-top: 10px; width: 270px!important"
-                            v-if="invoiceData.vatPercent == 0">
+                            v-if="invoiceData.vatPercent == 0 && companyInBG">
                             <span style="width: 60px"><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span>
                             <span style="width: 200px">
                               <validation-provider #default="{ errors }" name="non-vat-clause" rules="required">
@@ -5607,10 +5607,10 @@ export default {
           }
         }
       }
-
+      let self = this
       // Company ID validation on the basis of transactionType
-      if (invoiceData.transactionType === "INCOME") {
-        let self = this
+      if (invoiceData.transactionType === "INCOME" && self.companyInBG) {
+
         this.companyIDisInvalid = false;
         if (invoiceData.supplierCompany.companyEic !== self.supplierID) {
           this.companyIDisInvalid = true;
@@ -5644,7 +5644,7 @@ export default {
       });
 
 
-      let self = this
+
       console.log(self.isBank, 'banksssss')
       invoiceData.paymentProcess = self.bankProcess
       if (self.isBank == false) {
