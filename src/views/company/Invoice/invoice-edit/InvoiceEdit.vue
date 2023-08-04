@@ -6158,9 +6158,9 @@ export default {
         companyData.value = response.data
         console.log(companyName.value, 'this is company name ')
         supplierID.value = response.data.companyIdentificationNumber
-        if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
-          invoiceData.value.vatPercent = 0
-        }
+        // if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
+        //   invoiceData.value.vatPercent = 0
+        // }
 
       })
       .catch((error) => {
