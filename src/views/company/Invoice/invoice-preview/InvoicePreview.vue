@@ -2258,7 +2258,7 @@ export default {
     const isGreen = ref(false);
     const isOrange = ref(false);
     const isGray = ref(false);
-    var companyInBG = ref(true);
+    var companyInBG = ref(false);
 
     // Invoice Description
     // ? Your real data will contain this information
@@ -2364,7 +2364,7 @@ export default {
       .then((response) => {
         console.log(response, 'asdfasdf')
         if (response.data.companyCountry == 'Bulgaria') {
-          companyInBG.value = false
+          companyInBG.value = true
           alert('company in bg')
         }
 

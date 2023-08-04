@@ -5594,29 +5594,6 @@ export default {
     },
 
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
-
-
-
-
-      // console.log('scheduleddd =====>', invoiceData.scheduled)
-
-      // let schedule = {
-      //   scheduleType: "",
-      //   dayOfWeek: null,
-      //   dayOfMonth: null,
-      // };
-      // if (this.isScheduled) {
-
-      //   schedule.scheduleType = this.offCaseScheduleType;
-      //   if (this.offCaseScheduleType == "MONTHLY") {
-      //     schedule.dayOfMonth = this.offCaseScheduleDayOfMonth;
-      //   } else {
-      //     schedule.dayOfWeek = this.offCaseScheduleDayOfWeek;
-      //   }
-      //   invoiceData.cronScheduleApi = schedule;
-      //   console.log(this.invoiceData);
-      // }
-      // return;
       if (invoiceData.scheduled == true) {
 
         if (invoiceData.cronScheduleApi !== null) {
@@ -5649,17 +5626,6 @@ export default {
         invoiceData.bankApi.name = this.bankNameToSend;
       }
 
-      // if (this.clauseToSend !== "") {
-      //   invoiceData.vatCondition = this.clauseToSend;
-      // }
-      // if (this.hasBankDetails === false) {
-      //   invoiceData.bankApi = {
-      //     name: "",
-      //     bic: "",
-      //     iban: "",
-      //   };
-      // }
-
       if (invoiceData.vatPercent != 0) {
         invoiceData.vatCondition = "";
       }
@@ -5677,17 +5643,7 @@ export default {
         return item;
       });
 
-      // if (this.isScheduled) {
-      //   if (invoiceData.cronScheduleApi !== null) {
-      //     if (invoiceData.cronScheduleApi.dayOfWeek) {
-      //       this.daySelected = false;
-      //     } else {
-      //       this.daySelected = true;
-      //     }
-      //   }
-      // } else {
-      //   invoiceData.cronScheduleApi = null;
-      // }
+
       let self = this
       console.log(self.isBank, 'banksssss')
       invoiceData.paymentProcess = self.bankProcess
@@ -6196,7 +6152,7 @@ export default {
         console.log(response, 'asdfasdf')
         if (response.data.companyCountry == 'Bulgaria') {
           companyInBG.value = true
-         
+
         }
         companyName.value = response.data.companyName
         companyData.value = response.data
@@ -9827,4 +9783,5 @@ hr {
   .tm_pagebreak {
     page-break-before: always;
   }
-}</style>
+}
+</style>

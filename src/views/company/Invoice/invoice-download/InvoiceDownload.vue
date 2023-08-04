@@ -1610,19 +1610,19 @@
                 {{ invoiceData.recipientCompany.companyAddress }}
               </p>
             </div>
-            <div class="invoice-date-wrapper">
+            <div class="invoice-date-wrapper" v-if="companyInBG">
               <p class="invoice-date-title">{{ $t("add_invoice.id_no") }}:</p>
               <p class="invoice-date">
                 {{ invoiceData.recipientCompany.companyEic }}
               </p>
             </div>
-            <div class="invoice-date-wrapper">
+            <div class="invoice-date-wrapper" v-if="companyInBG">
               <p class="invoice-date-title">{{ $t("add_invoice.owner") }}:</p>
               <p class="invoice-date">
                 {{ invoiceData.recipientCompany.companyOwnerName }}
               </p>
             </div>
-            <div v-if="invoiceData.recipientCompany.companyVatEic" class="invoice-date-wrapper">
+            <div v-if="invoiceData.recipientCompany.companyVatEic && companyInBG" class="invoice-date-wrapper">
               <p class="invoice-date-title">
                 {{ $t("add_invoice.vat_no") }}:
               </p>
@@ -1949,7 +1949,7 @@
       </b-card-body>
     </b-card>
 
-    <div class="mt-md-0 mt-2 flex-1">
+    <div class="mt-md-0 mt-2 flex-1" v-if="companyInBG">
       <b-card no-body class="invoice-preview invoice-card mx-1">
         <b-card-header class="justify-content-center invoice-header">
           <h5 class="m-0">{{ $t("add_invoice.bank_details") }}</h5>

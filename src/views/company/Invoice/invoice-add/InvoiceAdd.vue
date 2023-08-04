@@ -5548,6 +5548,9 @@ export default {
       } else {
         invoiceData.bankApi = null
       }
+      if (self.companyInBG == false) {
+        delete invoiceData.paymentProcess
+      }
 
       this.$refs.invoiceForm.validate().then((success) => {
         if (success && this.companyIDisInvalid === false && this.isWeekSelected === false) {
@@ -6012,7 +6015,7 @@ export default {
 
         if (response.data.companyCountry == 'Bulgaria') {
           companyInBG.value = true
-        
+
         }
         companyName.value = response.data.companyName
         companyData.value = response.data
