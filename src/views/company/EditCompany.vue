@@ -64,7 +64,7 @@
                         .indexOf(search.toLocaleLowerCase()) > -1
                     );
                   }
-                    " id="company-country" name="country" v-bind:placeholder="$t('Please select your country')"
+                    " id="company-country" name="country" v-bind:placeholder="$t('register.country_placeholder')"
                     :value="$store.state.selected" v-on:input="updateCountryStatus()">
 
 
@@ -134,7 +134,7 @@
               <b-form-group id="input-group-6" :label="$t('company_info.owner_egn')" label-for="owner_egn">
                 <validation-provider #default="{ errors }" v-bind:name="$t('owner_egn')" rules="digits:10">
                   <b-form-input id="owner_name" v-model="getCompOwnerEgn" :state="errors.length > 0 ? false : null"
-                    placeholder="Попълнете ако искате да генерирате ДДС отчети"  type="number" :formatter="formatOwnerEGN" />
+                    :placeholder="$t('please_fill_this')" type="number" :formatter="formatOwnerEGN" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -240,7 +240,7 @@
               <b-form-group id="input-group-1" :label="$t('Банка')" label-for="companyBankName">
                 <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
                   <v-select v-model="companyBankName" :options="banks" :value="$store.state.selected" id="companyBankName"
-                    v-bind:placeholder="$t('Please select bank')">
+                    v-bind:placeholder="$t('companies.please_select_bank')">
 
                   </v-select>
 
@@ -250,8 +250,8 @@
             <b-col>
               <b-form-group id="input-group-1" :label="$t('create_company.company_bank_account')"
                 label-for="company_bank_account">
-                <b-form-input id="company_bank_account" v-model="getBankAccount" type="text"
-                  placeholder="Банкова сметка" autocomplete="off" required></b-form-input> </b-form-group></b-col>
+                <b-form-input id="company_bank_account" v-model="getBankAccount" type="text" placeholder="Банкова сметка"
+                  autocomplete="off" required></b-form-input> </b-form-group></b-col>
 
           </b-form-row>
           <b-form-row>
