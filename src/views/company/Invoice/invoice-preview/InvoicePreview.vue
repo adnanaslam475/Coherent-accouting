@@ -2365,7 +2365,7 @@ export default {
         console.log(response, 'asdfasdf')
         if (response.data.companyCountry == 'Bulgaria') {
           companyInBG.value = true
-          alert('company in bg')
+
         }
 
 
