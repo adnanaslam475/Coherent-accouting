@@ -2,6 +2,7 @@
   "reverse": "Обратен",
   "app_logo_title": "Coherent Accounting",
   "select_bank_process": "Изберете начин на плащане",
+  "please_fill_this": "Попълнете ако искате да генерирате ДДС отчети",
   "months": {
     "Jan": "Ян",
     "Feb": "Фев",
@@ -227,7 +228,8 @@
     "period": "Период",
     "delete_company": "Изтрий фирма",
     "delete_confirmation": "Сигурни ли сте, че искате да изтриете тази фирма?",
-    "confirm": "Потвърди"
+    "confirm": "Потвърди",
+    "please_select_bank": "Моля, изберете банка"
   },
   "company_info": {
     "MON": "ПОН",
@@ -554,7 +556,8 @@
     "clients": "Клиенти",
     "taxSales": "Данък за продажбите",
     "incomeSalesGoods": "Доход от продажба на стоки",
-    "test": "Тест"
+    "test": "Тест",
+    "please_select_currency": "Моля, изберете валута"
   },
   "update_tickets": {
     "update_ticket": "Промени тикет",

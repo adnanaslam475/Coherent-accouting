@@ -76,7 +76,7 @@
                     {{ invoiceData.supplierCompany.companyAddress }}
                   </p>
                 </div>
-                <div class="invoice-date-wrapper">
+                <div class="invoice-date-wrapper" v-if="companyInBG">
                   <p class="invoice-date-title">
                     {{ $t("add_invoice.id_no") }}:
                   </p>
@@ -84,7 +84,7 @@
                     {{ invoiceData.supplierCompany.companyEic }}
                   </p>
                 </div>
-                <div class="invoice-date-wrapper">
+                <div class="invoice-date-wrapper" v-if="companyInBG">
                   <p class="invoice-date-title">
                     {{ $t("add_invoice.owner") }}:
                   </p>
@@ -92,7 +92,7 @@
                     {{ invoiceData.supplierCompany.companyOwnerName }}
                   </p>
                 </div>
-                <div v-if="invoiceData.supplierCompany.companyVatEic" class="invoice-date-wrapper">
+                <div v-if="invoiceData.supplierCompany.companyVatEic && companyInBG" class="invoice-date-wrapper">
                   <p class="invoice-date-title">
                     {{ $t("add_invoice.vat_no") }}:
                   </p>
@@ -149,7 +149,7 @@
                     {{ invoiceData.recipientCompany.companyAddress }}
                   </p>
                 </div>
-                <div class="invoice-date-wrapper">
+                <div class="invoice-date-wrapper" v-if="companyInBG">
                   <p class="invoice-date-title">
                     {{ $t("add_invoice.id_no") }}:
                   </p>
@@ -157,7 +157,7 @@
                     {{ invoiceData.recipientCompany.companyEic }}
                   </p>
                 </div>
-                <div class="invoice-date-wrapper">
+                <div class="invoice-date-wrapper" v-if="companyInBG">
                   <p class="invoice-date-title">
                     {{ $t("add_invoice.owner") }}:
                   </p>
@@ -165,7 +165,7 @@
                     {{ invoiceData.recipientCompany.companyOwnerName }}
                   </p>
                 </div>
-                <div v-if="invoiceData.recipientCompany.companyVatEic" class="invoice-date-wrapper">
+                <div v-if="invoiceData.recipientCompany.companyVatEic && companyInBG" class="invoice-date-wrapper">
                   <p class="invoice-date-title">
                     {{ $t("add_invoice.vat_no") }}:
                   </p>
@@ -518,7 +518,7 @@
             </div>
           </b-modal>
         </template>
-        <div class="mt-md-0 mt-2 flex-1" v-if="hasBankDetails">
+        <div class="mt-md-0 mt-2 flex-1" v-if="hasBankDetails && companyInBG">
           <b-card no-body class="invoice-preview invoice-card">
             <b-card-header class="justify-content-center invoice-header">
               <h5 class="m-0">{{ $t("add_invoice.bank_details") }}:</h5>
@@ -651,15 +651,15 @@
                     <p style="margin-bottom: 5px">
                       <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyEic }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic">
+                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic && companyInBG">
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
@@ -676,15 +676,15 @@
                     <p style="margin-bottom: 5px">
                       <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyEic }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic">
+                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic && companyInBG">
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
@@ -742,7 +742,7 @@
                   </div>
                   <div class="tm_invoice_footer mt-2">
                     <div class="tm_left_footer">
-                      <div v-if="invoiceData.bankApi !== null">
+                      <div v-if="invoiceData.bankApi !== null && companyInBG">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
@@ -984,15 +984,15 @@
                     <p style="margin-bottom: 5px">
                       <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyEic }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic">
+                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic && companyInBG">
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
@@ -1009,15 +1009,15 @@
                     <p style="margin-bottom: 5px">
                       <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyEic }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic">
+                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic && companyInBG">
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
@@ -1091,7 +1091,7 @@
                   <div class="tm_invoice_footer tm_border_top tm_mb15 tm_m0_md">
                     <div class="tm_left_footer">
 
-                      <div v-if="invoiceData.bankApi !== null">
+                      <div v-if="invoiceData.bankApi !== null && companyInBG">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
@@ -1433,15 +1433,15 @@
                     <p style="margin-bottom: 5px">
                       <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyEic }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic">
+                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic && companyInBG">
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
@@ -1458,15 +1458,15 @@
                     <p style="margin-bottom: 5px">
                       <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyEic }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic">
+                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic && companyInBG">
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
@@ -1539,7 +1539,7 @@
                   </div>
                   <div class="tm_invoice_footer">
                     <div class="tm_left_footer">
-                      <div v-if="invoiceData.bankApi !== null">
+                      <div v-if="invoiceData.bankApi !== null && companyInBG">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
@@ -1812,15 +1812,15 @@
                     <p style="margin-bottom: 5px">
                       <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyEic }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic">
+                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic && companyInBG">
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
@@ -1837,15 +1837,15 @@
                     <p style="margin-bottom: 5px">
                       <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyEic }}
                     </p>
-                    <p style="margin-bottom: 5px">
+                    <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic">
+                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic && companyInBG">
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
@@ -1916,7 +1916,7 @@
                   </div>
                   <div class="tm_invoice_footer mb-5" style="padding-bottom: 200px">
                     <div class="tm_left_footer">
-                      <div v-if="invoiceData.bankApi !== null">
+                      <div v-if="invoiceData.bankApi !== null && companyInBG">
                         <p class="tm_mb2">
                           <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
                         </p>
@@ -2258,6 +2258,7 @@ export default {
     const isGreen = ref(false);
     const isOrange = ref(false);
     const isGray = ref(false);
+    var companyInBG = ref(false);
 
     // Invoice Description
     // ? Your real data will contain this information
@@ -2351,11 +2352,33 @@ export default {
         }
       });
 
+
+
+    axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+      },
+    })
+      .then((response) => {
+        console.log(response, 'asdfasdf')
+        if (response.data.companyCountry == 'Bulgaria') {
+          companyInBG.value = true
+
+        }
+
+
+      })
+      .catch((error) => {
+        // console.log(error);
+      });
     const printInvoice = () => {
       window.print();
     };
 
     return {
+      companyInBG,
       logoToUpload,
       showLogo,
       isOriginal,

@@ -64,7 +64,7 @@
                         .indexOf(search.toLocaleLowerCase()) > -1
                     );
                   }
-                    " id="company-country" name="country" v-bind:placeholder="$t('Please select your country')"
+                    " id="company-country" name="country" v-bind:placeholder="$t('register.country_placeholder')"
                     :value="$store.state.selected" v-on:input="updateCountryStatus()">
 
 
@@ -134,7 +134,7 @@
               <b-form-group id="input-group-6" :label="$t('company_info.owner_egn')" label-for="owner_egn">
                 <validation-provider #default="{ errors }" v-bind:name="$t('owner_egn')" rules="digits:10">
                   <b-form-input id="owner_egn" v-model="form.owner_egn" :state="errors.length > 0 ? false : null"
-                    placeholder="Попълнете ако искате да генерирате ДДС отчети" type="number" :formatter="formatOwnerEGN" />
+                    :placeholder="$t('please_fill_this')" type="number" :formatter="formatOwnerEGN" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -172,11 +172,11 @@
           <b-form-row>
             <b-col>
 
-              <b-form-group id="input-group-5" :label="$t('Банка')" label-for="companyBankName">
+              <b-form-group id="input-group-5" :label="$t('add_invoice.bank')" label-for="companyBankName">
                 <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
                   <v-select v-model="form.companyBankName" :options="banks" :value="$store.state.selected"
                     id="companyBankName" :state="errors.length > 0 ? false : null"
-                    v-bind:placeholder="$t('Please select bank')">
+                    v-bind:placeholder="$t('companies.please_select_bank')">
 
                   </v-select>
                   <small class="text-danger">{{ errors[0] }}</small>
@@ -190,7 +190,7 @@
                 <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')"
                   :rules="form.companyBankName == null ? '' : 'required'">
                   <b-form-input id="company_bank_account" v-model="form.company_bank_account" type="text"
-                    placeholder="Банкова сметка" autocomplete="off"></b-form-input>
+                    :placeholder="$t('create_company.company_bank_account')" autocomplete="off"></b-form-input>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group></b-col>
@@ -210,8 +210,8 @@
                 <validation-provider #default="{ errors }" v-bind:name="$t('company_currency')" rules="required">
                   <v-select v-model="form.company_currency" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
                     :options="currencies" :value="$store.state.selected" id="company_currency"
-                    :state="errors.length > 0 ? false : null" v-bind:placeholder="$t('Please select currency')"
-                    v-on:input="updateCurrencyStatus()">
+                    :state="errors.length > 0 ? false : null"
+                    v-bind:placeholder="$t('create_company.please_select_currency')" v-on:input="updateCurrencyStatus()">
                     <template #selected-option="option" v-if="defaultCurrency === true">
                       <div style="
                           display: flex;
@@ -254,7 +254,7 @@
               <b-form-group id="input-group-1" :label="$t('create_company.company_phone_no')" label-for="company_phone">
                 <validation-provider #default="{ errors }" v-bind:name="$t('company_phone')" rules="required">
                   <b-form-input id="company_phone" v-model="form.phone_no" :state="errors.length > 0 ? false : null"
-                    placeholder="Company Phone Number" />
+                    :placeholder="$t('create_company.company_phone_no')" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -264,7 +264,7 @@
               <b-form-group id="input-group-1" :label="$t('create_company.company_email')" label-for="company_email">
                 <validation-provider #default="{ errors }" v-bind:name="$t('company email')" rules="required|email">
                   <b-form-input id="company_email" v-model="form.company_email" :state="errors.length > 0 ? false : null"
-                    placeholder="Company Email" />
+                    :placeholder="$t('create_company.company_email')" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
