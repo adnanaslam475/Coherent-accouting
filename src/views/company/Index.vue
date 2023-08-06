@@ -405,7 +405,7 @@ export default {
         // A regular column
         {
           key: "companyOwnerFirstName",
-          label: "Owner Name",
+          label: "Officer Name",
           sortable: true,
         },
         // A regular column

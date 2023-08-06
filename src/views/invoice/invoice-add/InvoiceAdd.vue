@@ -1552,7 +1552,7 @@
                             "
                             autocomplete="off"
                             style="margin-bottom: 5px"
-                            placeholder="Supplier Company Owner Name..."
+                            placeholder="Supplier Company Agent Name ..."
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
@@ -1743,7 +1743,7 @@
                             autocomplete="off"
                             v-if="AccountTypeOption === 'company'"
                             style="margin-bottom: 5px"
-                            placeholder="Recipient Company Owner Name...."
+                            placeholder="Recipient Company Agent Name ...."
                           />
                         </validation-provider>
 
@@ -2965,7 +2965,7 @@
                             "
                             autocomplete="off"
                             style="margin-bottom: 5px"
-                            placeholder="Supplier Company Owner Name..."
+                            placeholder="Supplier Company Agent Name ..."
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
@@ -3155,7 +3155,7 @@
                             autocomplete="off"
                             v-if="AccountTypeOption === 'company'"
                             style="margin-bottom: 5px"
-                            placeholder="Recipient Company Owner Name...."
+                            placeholder="Recipient Company Agent Name ...."
                           />
                         </validation-provider>
 
@@ -4376,7 +4376,7 @@
                             "
                             autocomplete="off"
                             style="margin-bottom: 5px"
-                            placeholder="Supplier Company Owner Name..."
+                            placeholder="Supplier Company Agent Name ..."
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
@@ -4567,7 +4567,7 @@
                             autocomplete="off"
                             v-if="AccountTypeOption === 'company'"
                             style="margin-bottom: 5px"
-                            placeholder="Recipient Company Owner Name...."
+                            placeholder="Recipient Company Agent Name ...."
                           />
                         </validation-provider>
 
@@ -5806,7 +5806,7 @@
                             "
                             autocomplete="off"
                             style="margin-bottom: 5px"
-                            placeholder="Supplier Company Owner Name..."
+                            placeholder="Supplier Company Agent Name ..."
                           />
                           <small class="text-danger">{{ errors[0] }}</small>
                         </validation-provider>
@@ -5998,7 +5998,7 @@
                             autocomplete="off"
                             v-if="AccountTypeOption === 'company'"
                             style="margin-bottom: 5px"
-                            placeholder="Recipient Company Owner Name...."
+                            placeholder="Recipient Company Agent Name ...."
                           />
                         </validation-provider>
 
