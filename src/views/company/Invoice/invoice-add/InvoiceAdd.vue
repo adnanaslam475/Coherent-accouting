@@ -5229,7 +5229,7 @@ export default {
         { text: i18n.tc("units.liter"), value: "liter" },
         { text: i18n.tc("units.ml"), value: "ml" },
         { text: i18n.tc("units.steak"), value: "steak" },
-        { text: i18n.tc("units.number"), value: "number" },
+        { text: i18n.tc("units.pcs"), value: "pcs" },
       ]
     },
 
