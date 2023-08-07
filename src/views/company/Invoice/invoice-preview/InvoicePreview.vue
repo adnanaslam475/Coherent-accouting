@@ -2165,15 +2165,15 @@
         </b-card>
       </b-col>
     </b-row>
-    <b-modal ref="my-modal" hide-footer title="Using Component Methods">
+    <b-modal ref="my-modal" hide-footer :title="$t('add_invoice.Using_Component_Methods')">
       <div class="d-block text-center">
         <form @submit.prevent="onSubmit" class="add-form">
-          <label>Title</label>
-          <input type="text" v-model="name" name="name" value="Title" placeholder="Your Title">
-          <label>Email</label>
-          <input type="email" v-model="email" required name="email" placeholder="Your Email">
-          <label>Message</label>
-          <textarea name="message" v-model="message" cols="30" rows="5" placeholder="Message">
+          <label>{{ $t('add_invoice.title') }}</label>
+          <input type="text" v-model="name" name="name" value="Title" :placeholder="$t('add_invoice.your_title')">
+          <label> {{ $t('add_invoice.email') }}</label>
+          <input type="email" v-model="email" required name="email" :placeholder="$t('add_invoice.your_email')">
+          <label>{{ $t('add_invoice.message') }}</label>
+          <textarea name="message" v-model="message" cols="30" rows="5" :placeholder="$t('add_invoice.Message')">
                     </textarea>
           <input type="submit" value="Send">
         </form>

@@ -45,7 +45,7 @@
 
             <b-form-file ref="imageUploader" class="file-input2" multiple @change="addExportFile" :disabled="!isActive" />
             <b-spinner v-if="fileLoadingExport" small variant="light" />
-            {{ $t("company_invoices.Export_invoice") }}
+            {{ $t("company_invoices.ocr_import") }}
             <!-- Add From File -->
 
           </b-button>

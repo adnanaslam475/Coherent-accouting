@@ -129,15 +129,33 @@
 
               <b-form-group label="Country" label-for="register-country">
                 <validation-provider #default="{ errors }" name="country" vid="country" rules="required">
-                  <!-- <b-form-select
-                    v-model="country"
-                    :options="items"
-                    id="register-country"
-                    name="register-country"
-                    :state="errors.length > 0 ? false:null"
-                  >
-                  </b-form-select> -->
-                  <v-select v-model="country" :options="options" :filterBy="(option, label, search) => {
+                  <b-form-select v-model="country" :options="countries" id="register-country" name="register-country"
+                    :state="errors.length > 0 ? false : null">
+                    <template #selected-option="option">
+                      {{ option }}
+                      <div style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: left;
+                          grid-gap: 8px;
+                        ">
+                        <img :src="getImg(option.src)" />
+                        {{ option.text }}
+                      </div>
+                    </template>
+                    <template #option="options">
+                      {{ option }}
+                      <span style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: left;
+                          grid-gap: 8px;
+                        ">
+                        <img :src="getImg(option.src)" /> {{ option.text }}
+                      </span>
+                    </template>
+                  </b-form-select>
+                  <!-- <v-select v-model="country" :options="options" :filterBy="(option, label, search) => {
                     return (
                       (option.text || '')
                         .toLocaleLowerCase()
@@ -168,7 +186,7 @@
                         <img :src="getImg(option.src)" /> {{ option.text }}
                       </span>
                     </template>
-                  </v-select>
+                  </v-select> -->
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -502,6 +520,8 @@
 import Vue from "vue";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import VuexyLogo from "@core/layouts/components/Logo.vue";
+import vSelect from "vue-select";
+
 import {
   BRow,
   BCol,
@@ -537,13 +557,14 @@ import { required, email, password } from "@validations";
 import { togglePasswordVisibility } from "@core/mixins/ui/forms";
 import store from "@/store/index";
 import useJwt from "@/auth/jwt/useJwt";
-import vSelect from "vue-select";
+
 import navbarAds from "./navbarAds.vue";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 export default {
   components: {
     VuexyLogo,
     BRow,
+
     BImg,
     BCol,
     BLink,
@@ -601,7 +622,7 @@ export default {
       selected: null,
       country: null,
       account: null,
-      options: [],
+      countries: [],
       accountType: [
         { value: null, text: "Please select account type", disabled: true },
         { value: "COMPANY", text: "COMPANY" },
@@ -712,7 +733,7 @@ export default {
             .countries(token)
             .then((response) => {
               response.data.map(function (value, key) {
-                optionsArr.options.push({
+                optionsArr.countries.push({
                   Country: value.isoAlpha2Country,
                   value: value.isoAlpha2Country,
                   text: value.country,
@@ -751,7 +772,8 @@ export default {
 /* eslint-disable global-require */
 </script>
 
-<style lang="scss" scoped>.p-list {
+<style lang="scss" scoped>
+.p-list {
   font-size: 1vw;
   color: #0A64BC;
   font-weight: bold;
@@ -765,4 +787,5 @@ export default {
 }
 
 @import "@core/scss/vue/pages/page-auth.scss";
-@import "@core/scss/vue/libs/vue-select.scss";</style>
+@import "@core/scss/vue/libs/vue-select.scss";
+</style>

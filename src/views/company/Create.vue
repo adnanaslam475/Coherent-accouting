@@ -124,7 +124,7 @@
               <b-form-group id="input-group-5" :label="$t('company_info.owner_name')" label-for="owner_name">
                 <validation-provider #default="{ errors }" v-bind:name="$t('owner_name')" rules="required">
                   <b-form-input id="owner_name" v-model="form.owner_name" :state="errors.length > 0 ? false : null"
-                    placeholder="Owner Name" />
+                    placeholder="Agent Name " /> 
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -417,7 +417,7 @@ export default {
         company_iso_country: null,
         owner_egn: null,
         company_bank_account: null,
-        company_currency: "BGN",
+        company_currency: "GBP",
         phone_no: null,
         vat_no: null,
         fin_year: null,

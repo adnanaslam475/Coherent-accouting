@@ -5235,15 +5235,7 @@ export default {
   },
   data() {
     return {
-      measureOptions: [
-        'кг.',
-        'гр.',
-        'тон',
-        'литър',
-        'мл.',
-        'стек',
-        'бр.',
-      ],
+     
 
 
       isUploading: i18n.tc("add_invoice.upload_logo"),
@@ -5350,6 +5342,19 @@ export default {
         { name: this.$t('add_invoice.bank-4') },
         { name: this.$t('add_invoice.bank-5') },
       ];
+    },
+     measureOptions() {
+
+      return [
+        { text: i18n.tc("units.kg"), value: "kg" },
+        { text: i18n.tc("units.city"), value: "city" },
+
+        { text: i18n.tc("units.tone"), value: "tone" },
+        { text: i18n.tc("units.liter"), value: "liter" },
+        { text: i18n.tc("units.Jr"), value: "Jr" },
+        { text: i18n.tc("units.stack"), value: "stack" },
+        { text: i18n.tc("units.no"), value: "no" },
+      ]
     },
     banks() {
       return [
@@ -5892,6 +5897,7 @@ export default {
       { value: "лв.", text: "лв." },
       { value: "$", text: "$" },
       { value: "€", text: "€" },
+      { value: '£', text: '£' },
     ];
     const transectionOptions = [
       { value: "INCOME", text: "INCOME" },

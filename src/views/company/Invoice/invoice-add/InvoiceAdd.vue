@@ -5083,15 +5083,7 @@ export default {
     return {
 
       notBank: false,
-      measureOptions: [
-        'кг.',
-        'гр.',
-        'тон',
-        'литър',
-        'мл.',
-        'стек',
-        'бр.',
-      ],
+
       bankProcess: '',
 
       showLogo: false,
@@ -5225,6 +5217,20 @@ export default {
         { text: i18n.tc("paymentMethods.INTERNET"), value: "INTERNET" },
         { text: i18n.tc("paymentMethods.PAYMENT_ORDER"), value: "PAYMENT_ORDER" },
 
+      ]
+    },
+
+    measureOptions() {
+
+      return [
+        { text: i18n.tc("units.kg"), value: "kg" },
+        { text: i18n.tc("units.city"), value: "city" },
+
+        { text: i18n.tc("units.tone"), value: "tone" },
+        { text: i18n.tc("units.liter"), value: "liter" },
+        { text: i18n.tc("units.Jr"), value: "Jr" },
+        { text: i18n.tc("units.stack"), value: "stack" },
+        { text: i18n.tc("units.no"), value: "no" },
       ]
     },
 
@@ -5938,6 +5944,7 @@ export default {
       { value: "лв.", text: "лв." },
       { value: "$", text: "$" },
       { value: "€", text: "€" },
+      { value: '£', text: '£' },
     ];
 
     const transectionOptions = [
