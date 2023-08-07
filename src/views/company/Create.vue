@@ -417,7 +417,7 @@ export default {
         company_iso_country: null,
         owner_egn: null,
         company_bank_account: null,
-        company_currency: "BGN",
+        company_currency: "GBP",
         phone_no: null,
         vat_no: null,
         fin_year: null,

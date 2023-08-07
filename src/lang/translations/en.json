@@ -17,6 +17,15 @@
     "Nov": "Nov",
     "Dec": "Dec"
   },
+  "units": {
+    "kg": "kg",
+    "city": "city",
+    "tone": "tone",
+    "liter": "liter",
+    "Jr": "Jr",
+    "stack": "stack",
+    "no": "no"
+  },
   "paymentProcess": "Payment Process",
   "paymentMethods": {
     "CASH": "CASH",
@@ -286,6 +295,7 @@
     "clients_or_recipients": "Clients"
   },
   "company_invoices": {
+    "ocr_import": "OCR Import",
     "add_invoice": "Add Invoice",
     "ok-title": "Exports",
     "add_from_file": "Add From File",
@@ -537,7 +547,13 @@
     "DEBIT_NOTIFICATION": "Debit Notification",
     "select_notification": "Select Notification",
     "send_email": "Send Email",
-    "taxExclusive": "Tax Exclusive:"
+    "taxExclusive": "Tax Exclusive:",
+    "Using_Component_Methods": "Using Component Methods",
+    "title": "Title",
+    "your_title": "Your Title",
+    "email": "Email",
+    "your_email": "Your Email",
+    "message": "Message"
   },
   "create_company": {
     "software": "Software",

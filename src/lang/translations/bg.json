@@ -17,6 +17,15 @@
     "Nov": "Ное",
     "Dec": "Дек"
   },
+  "units": {
+    "kg": "кг",
+    "city": "гр",
+    "tone": "тон",
+    "liter": "литър",
+    "Jr": "мл",
+    "stack": "стек",
+    "no": "бр"
+  },
   "paymentProcess": "Процес на плащане",
   "paymentMethods": {
     "CASH": "В БРОЙ",
@@ -285,6 +294,7 @@
     "clients_or_recipients": "Клиенти"
   },
   "company_invoices": {
+    "ocr_import": "OCR импортиране",
     "add_invoice": "Добави",
     "add_from_file": "OCR от Файл",
     "Export_invoice": "Експорт",
@@ -524,7 +534,13 @@
     "DEBIT_NOTIFICATION": "Известие за дебит",
     "select_notification": "Изберете Известие",
     "send_email": "Изпратете по имейл",
-    "taxExclusive": "Основание за неначисляване на ДДС:"
+    "taxExclusive": "Основание за неначисляване на ДДС:",
+    "Using_Component_Methods": "Използване на компонентни методи",
+    "title": "Заглавие",
+    "your_title": "Твоето заглавие",
+    "email": "електронна поща",
+    "your_email": "твоят имейл",
+    "message": "Съобщение"
   },
   "create_company": {
     "software": "Софтуер за експорт",

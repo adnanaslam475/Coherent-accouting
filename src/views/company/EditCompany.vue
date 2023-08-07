@@ -152,7 +152,7 @@
               </b-form-group></b-col>
             <!-- Company Status -->
             <b-col>
-              <b-form-group id="input-group-4" :label="$t('create_company.software')" label-for="status">
+              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status">
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
                   <v-select v-model="getCompanyStatus" :options="statusOptions" :filterBy="(option, search) => {
                     return (
@@ -237,7 +237,7 @@
           <b-form-row>
             <b-col>
 
-              <b-form-group id="input-group-1" :label="$t('Банка')" label-for="companyBankName">
+              <b-form-group id="input-group-1" :label="$t('add_invoice.bank')" label-for="companyBankName">
                 <validation-provider #default="{ errors }" v-bind:name="$t('companyBankName')">
                   <v-select v-model="companyBankName" :options="banks" :value="$store.state.selected" id="companyBankName"
                     v-bind:placeholder="$t('companies.please_select_bank')">
@@ -366,8 +366,7 @@
         <validation-observer ref="exportRules" tag="form">
           <b-row>
             <b-col>
-              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status"
-                v-if="isEdit">
+              <b-form-group id="input-group-4" :label="$t('create_company.software')" label-for="status" v-if="isEdit">
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
                   <b-form-select id="platformPropertiesSelect" v-model="exportProperties.platform"
                     :options="modifiedArray" @change="checkChange"></b-form-select>
@@ -379,7 +378,7 @@
                   </b-form-group>
                 </div>
               </b-form-group>
-              <b-form-group id="input-group-4" :label="$t('create_company.company_status')" label-for="status" v-else>
+              <b-form-group id="input-group-4" :label="$t('create_company.software')" label-for="status" v-else>
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
                   <b-form-select id="platformPropertiesSelect" v-model="selectedPlatformProperty"
                     :options="modifiedArray"></b-form-select>
