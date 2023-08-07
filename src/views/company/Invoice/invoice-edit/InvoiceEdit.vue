@@ -5897,6 +5897,7 @@ export default {
       { value: "лв.", text: "лв." },
       { value: "$", text: "$" },
       { value: "€", text: "€" },
+      { value: '£', text: '£' },
     ];
     const transectionOptions = [
       { value: "INCOME", text: "INCOME" },

@@ -19,12 +19,12 @@
   },
   "units": {
     "kg": "кг",
-    "city": "гр",
+    "grams": "гр",
     "tone": "тон",
     "liter": "литър",
-    "Jr": "мл",
-    "stack": "стек",
-    "no": "бр"
+    "ml": "мл",
+    "steak": "стек",
+    "number": "бр"
   },
   "paymentProcess": "Процес на плащане",
   "paymentMethods": {
@@ -253,7 +253,7 @@
     "pleaseSelect": "Моля изберете",
     "selectMonth": "Изберете месец",
     "yourTitle": "Заглавие",
-    "yourEmail": "Имейл на получател",
+    "yourEmail": "Имейл на контрагеннт",
     "Message": "Съобщение",
     "componentMethod": "Изпращане по емайл",
     "assets": "Документи",
