@@ -5347,13 +5347,12 @@ export default {
 
       return [
         { text: i18n.tc("units.kg"), value: "kg" },
-        { text: i18n.tc("units.city"), value: "city" },
-
+        { text: i18n.tc("units.grams"), value: "grams" },
         { text: i18n.tc("units.tone"), value: "tone" },
         { text: i18n.tc("units.liter"), value: "liter" },
-        { text: i18n.tc("units.Jr"), value: "Jr" },
-        { text: i18n.tc("units.stack"), value: "stack" },
-        { text: i18n.tc("units.no"), value: "no" },
+        { text: i18n.tc("units.ml"), value: "ml" },
+        { text: i18n.tc("units.steak"), value: "steak" },
+        { text: i18n.tc("units.number"), value: "number" },
       ]
     },
     banks() {

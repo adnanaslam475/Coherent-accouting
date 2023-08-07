@@ -19,12 +19,12 @@
   },
   "units": {
     "kg": "kg",
-    "city": "city",
+    "grams": "grams",
     "tone": "tone",
     "liter": "liter",
-    "Jr": "Jr",
-    "stack": "stack",
-    "no": "no"
+    "ml": "ml",
+    "steak": "steak",
+    "number": "number"
   },
   "paymentProcess": "Payment Process",
   "paymentMethods": {
