@@ -15,6 +15,7 @@ export default function useInvoicesList() {
   const tableColumns = [
     { key: 'invoiceNumber', sortable: true },
     { key: 'scheduled', sortable: true },
+    { key: 'exported', sortable: true },
 
     { key: 'invoiceDate', label: "date Issued", sortable: true },
     { key: 'transactionType', sortable: true },

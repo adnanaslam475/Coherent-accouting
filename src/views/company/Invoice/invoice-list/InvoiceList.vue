@@ -194,6 +194,20 @@
           <img src="@/assets/images/svg/clock.svg" alt="">
         </span>
       </template>
+
+      <!-- Column: exported  -->
+      <template #head(exported)>
+        {{ $t("company_invoices.Export_invoice") }}
+      </template>
+
+      <template #cell(exported)="data">
+        <span class="text-nowrap" v-if="data.item.exported" style="position: relative;
+    left: 27%;">
+
+          <img src="@/assets/images/svg/check.svg" alt="" height="20px" width="20px">
+
+        </span>
+      </template>
       <!-- Column: Issued Date -->
       <template #head(invoiceDate)>
         {{ $t("company_invoices.date_issued") }}

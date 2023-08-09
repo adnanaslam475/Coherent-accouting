@@ -11,16 +11,8 @@
           <!--            :src="optionsLocal.avatar"-->
           <!--            height="80"-->
           <!--          />-->
-          <feather-icon
-            v-if="userDetail.accountType === 'PERSONAL'"
-            icon="UserIcon"
-            size="80"
-          />
-          <feather-icon
-            v-if="userDetail.accountType === 'COMPANY'"
-            icon="HomeIcon"
-            size="80"
-          />
+          <feather-icon v-if="userDetail.accountType === 'PERSONAL'" icon="UserIcon" size="80" />
+          <feather-icon v-if="userDetail.accountType === 'COMPANY'" icon="HomeIcon" size="80" />
 
         </b-link>
         <!--/ avatar -->
@@ -34,220 +26,94 @@
 
     <!-- form -->
     <validation-observer ref="simpleRules">
-      <b-form
-        class="mt-2"
-        @submit.prevent="validationForm()"
-      >
+      <b-form class="mt-2" @submit.prevent="validationForm()">
         <b-row>
           <!-- First Name -->
           <b-col sm="6">
-            <b-form-group
-            :label='$t("general.first_name")'
-              label-for="first-name"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="First Name"
-                vid="First Name"
-                rules="required"
-              >
-                <b-form-input
-                  v-model="userDetail.firstName"
-                  :state="errors.length > 0 ? false:null"
-                  name="firstName"
-                  :placeholder='$t("general.first_name")'
-                />
+            <b-form-group :label='$t("general.first_name")' label-for="first-name">
+              <validation-provider #default="{ errors }" name="First Name" vid="First Name" rules="required">
+                <b-form-input v-model="userDetail.firstName" :state="errors.length > 0 ? false : null" name="firstName"
+                  :placeholder='$t("general.first_name")' />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
           <!-- Last Name -->
           <b-col sm="6">
-            <b-form-group
-            :label='$t("general.last_name")'
-              label-for="last-name"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="Last Name"
-                vid="Last Name"
-                rules="required"
-              >
-                <b-form-input
-                  v-model="userDetail.lastName"
-                  :state="errors.length > 0 ? false:null"
-                  name="lastName"
-                  :placeholder='$t("general.last_name")'
-                />
+            <b-form-group :label='$t("general.last_name")' label-for="last-name">
+              <validation-provider #default="{ errors }" name="Last Name" vid="Last Name" rules="required">
+                <b-form-input v-model="userDetail.lastName" :state="errors.length > 0 ? false : null" name="lastName"
+                  :placeholder='$t("general.last_name")' />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
           <!-- Account Type -->
           <b-col sm="6">
-            <b-form-group
-            :label='$t("general.account_type")'
-              label-for="account-type"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="Account Type"
-                vid="Account Type"
-                rules="required"
-              >
-                <b-form-select
-                  v-model="userDetail.accountType"
-                  :options="$store.state.ProfileSettings.userAccountTypes"
-                  name="accountType"
-                />
+            <b-form-group :label='$t("general.account_type")' label-for="account-type">
+              <validation-provider #default="{ errors }" name="Account Type" vid="Account Type" rules="required">
+                <b-form-select v-model="userDetail.accountType" :options="$store.state.ProfileSettings.userAccountTypes"
+                  name="accountType" />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
 
-              <!-- Account Type === Company -->
-          <b-col
-            v-if="userDetail.accountType === 'COMPANY'"
-            sm="6"
-          >
-            <b-form-group
-            :label='$t("register.lbl_c_name")'
-              label-for="account-company"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="Company Name"
-                vid="Company Name"
-                rules="required"
-              >
-                <b-form-input
-                  v-model="userDetail.companyName"
-                  :state="errors.length > 0 ? false:null"
-                  name="companyName"
-                  placeholder="Company name"
-                />
+          <!-- Account Type === Company -->
+          <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
+            <b-form-group :label='$t("register.lbl_c_name")' label-for="account-company">
+              <validation-provider #default="{ errors }" name="Company Name" vid="Company Name" rules="required">
+                <b-form-input v-model="userDetail.companyName" :state="errors.length > 0 ? false : null"
+                  name="companyName" placeholder="Company name" />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
-          <b-col
-            v-if="userDetail.accountType === 'COMPANY'"
-            sm="6"
-          >
-            <b-form-group
-            :label='$t("register.lbl_c_address")'
-              label-for="company-address"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="Company Address"
-                vid="Company Address"
-                rules="required"
-              >
-                <b-form-input
-                  v-model="userDetail.companyAddress"
-                  :state="errors.length > 0 ? false:null"
-                  name="companyAddress"
-                  placeholder="Company Address"
-                />
+          <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
+            <b-form-group :label='$t("register.lbl_c_address")' label-for="company-address">
+              <validation-provider #default="{ errors }" name="Company Address" vid="Company Address" rules="required">
+                <b-form-input v-model="userDetail.companyAddress" :state="errors.length > 0 ? false : null"
+                  name="companyAddress" placeholder="Company Address" />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
-          <b-col
-            v-if="userDetail.accountType === 'COMPANY'"
-            sm="6"
-          >
-            <b-form-group
-            :label='$t("register.lbl_c_vatNumber")'
-              label-for="vatNumber"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="Vat Number"
-                vid="Vat Number"
-              >
-                <b-form-input
-                  v-model="userDetail.vatNumber"
-                  :state="errors.length > 0 ? false:null"
-                  name="vatNumber"
-                  placeholder="Vat Number"
-                />
+          <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
+            <b-form-group :label='$t("register.lbl_c_vatNumber")' label-for="vatNumber">
+              <validation-provider #default="{ errors }" name="Vat Number" vid="Vat Number">
+                <b-form-input v-model="userDetail.vatNumber" :state="errors.length > 0 ? false : null" name="vatNumber"
+                  placeholder="Vat Number" />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
           <b-col sm="6">
-            <b-form-group
-              label="Email"
-              label-for="email"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="Email"
-                vid="Email"
-                rules="required"
-              >
-                <b-form-input
-                  v-model="userDetail.email"
-                  :state="errors.length > 0 ? false:null"
-                  name="email"
-                  placeholder="Email"
-                  disabled="disabled"
-                />
+            <b-form-group label="Email" label-for="email">
+              <validation-provider #default="{ errors }" name="Email" vid="Email" rules="required">
+                <b-form-input v-model="userDetail.email" :state="errors.length > 0 ? false : null" name="email"
+                  placeholder="Email" disabled="disabled" />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
-          <b-col
-            v-if="userDetail.accountType === 'COMPANY'"
-            sm="6"
-          >
-            <b-form-group
-            :label='$t("register.lbl_c_registrationNumber")'
-              label-for="company-register-number"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="Company Registration Number"
-                vid="Company Registration Number"
-                rules="required"
-              >
-                <b-form-input
-                  v-model="userDetail.companyRegistrationNumber"
-                  :state="errors.length > 0 ? false:null"
-                  name="companyRegistrationNumber"
-                  placeholder="Company Registration Number"
-                />
+          <b-col v-if="userDetail.accountType === 'COMPANY'" sm="6">
+            <b-form-group :label='$t("register.lbl_c_registrationNumber")' label-for="company-register-number">
+              <validation-provider #default="{ errors }" name="Company Registration Number"
+                vid="Company Registration Number" rules="required">
+                <b-form-input v-model="userDetail.companyRegistrationNumber" :state="errors.length > 0 ? false : null"
+                  name="companyRegistrationNumber" placeholder="Company Registration Number" />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
 
           <b-col sm="6">
-            <b-form-group
-            :label='$t("companies.country")'
-              label-for="country"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="Country"
-                vid="Country"
-                rules="required"
-              >
-                <v-select
-                  v-model="country"
-                  :options="options"
-                  :filterBy="(option, label, search)=> {
-                    return (option.text || '').toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1
-                  }"
-                  input-id="country"
-                  name="country"
-                  v-bind:placeholder="$t('register.country_placeholder')"
-                  :value="$store.state.selected"
-                  :state="errors.length > 0 ? false:null"
-                  :clearable="false"
-                >
+            <b-form-group :label='$t("companies.country")' label-for="country">
+              <validation-provider #default="{ errors }" name="Country" vid="Country" rules="required">
+                <v-select v-model="country" :options="options" :filterBy="(option, label, search) => {
+                  return (option.text || '').toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) > -1
+                }" input-id="country" name="country" v-bind:placeholder="$t('register.country_placeholder')"
+                  :value="$store.state.selected" :state="errors.length > 0 ? false : null" :clearable="false">
                   <template #selected-option="option">
                     <div style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
                       <img :src="getImg(option.src)">
@@ -255,9 +121,9 @@
                     </div>
                   </template>
                   <template v-slot:option="option">
-                      <span style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
-                        <img :src="getImg(option.src)">  {{ option.text }}
-                      </span>
+                    <span style="display: flex; align-items: center; justify-content: left; grid-gap: 8px;">
+                      <img :src="getImg(option.src)"> {{ option.text }}
+                    </span>
                   </template>
                 </v-select>
                 <small class="text-danger">{{ errors[0] }}</small>
@@ -265,25 +131,14 @@
             </b-form-group>
           </b-col>
 
-           <!-- Email Subscription -->
+          <!-- Email Subscription -->
           <b-col sm="6">
-            <b-form-group
-            :label='$t("general.email_subscription")'
-              label-for="marketingConfirmed"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="marketingConfirmed"
-                vid="marketingConfirmed"
-                rules="required"
-              >
-              <b-form-checkbox
-                  v-model="userDetail.marketingConfirmed"
-                  class="custom-control-primary custom-switch-btn-1"
-                  name="check-button"
-                  switch
-                  @change="validationForm()"
-                >
+            <b-form-group :label='$t("general.email_subscription")' label-for="marketingConfirmed">
+              <validation-provider #default="{ errors }" name="marketingConfirmed" vid="marketingConfirmed"
+                rules="required">
+                <b-form-checkbox v-model="userDetail.marketingConfirmed"
+                  class="custom-control-primary custom-switch-btn-1" name="check-button" switch
+                  @change="validationForm()">
                   <span class="switch-icon-left">
                     ON
                   </span>
@@ -295,24 +150,46 @@
               </validation-provider>
             </b-form-group>
           </b-col>
+          <b-col md="12">
 
-          <b-col cols="12">
-            <b-button
-              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-              type="submit"
-              variant="primary"
-              class="mt-2 mr-1"
-            >
-            {{ $t("change_password.save_changes") }}
+            <div class="d-flex">
+              <div>
+                API KEY
+              </div>
+              <div class="ml-4" v-if="isApiKey">
+                alksdfj34lakdfjk34lkjadf
+              </div>
+              <div class="ml-4" v-else>
+                *****************************
+              </div>
+              <feather-icon class="cursor-pointer" :icon="passwordToggleIcon" @click="togglePasswordVisibility" />
+              <img src="@/assets/images/svg/clipboard.svg" alt="" height="20px" width="20px" class="cursor-pointer"
+                @click="copyToClipBoard">
+            </div>
+            <div class="d-flex">
+              <div>
+                API KEY
+              </div>
+              <div class="ml-4">
+                alksdfj34lakdfjk34lkjadf
+              </div>
+            </div>
+
+          </b-col>
+          <b-col cols="6">
+            <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mt-2 mr-1">
+              {{ $t("change_password.save_changes") }}
             </b-button>
-            <b-button
-              v-ripple.400="'rgba(186, 191, 199, 0.15)'"
-              variant="outline-secondary"
-              type="reset"
-              class="mt-2"
-              @click.prevent="resetForm"
-            >
-             {{ $t("general.reset") }}
+            <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" type="reset" class="mt-2"
+              @click.prevent="resetForm">
+              {{ $t("general.reset") }}
+            </b-button>
+
+          </b-col>
+          <b-col cols="6">
+            <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="primary" class="mt-2 mr-1"
+              @click="generateApiKey">
+              Generate API key
             </b-button>
           </b-col>
         </b-row>
@@ -343,6 +220,7 @@ import {
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import { useInputImageRenderer } from '@core/comp-functions/forms/form-utils'
+
 import { ref } from '@vue/composition-api'
 import axios from '@/libs/axios'
 import useJwt from '@/auth/jwt/useJwt'
@@ -385,6 +263,7 @@ export default {
   directives: {
     Ripple,
   },
+
   props: {
     generalData: {
       type: Object,
@@ -397,7 +276,8 @@ export default {
       optionsLocal: JSON.parse(JSON.stringify(this.generalData)),
       profileFile: null,
       options: [],
-      country: null
+      country: null,
+      isApiKey: false
     }
   },
   created() {
@@ -407,6 +287,12 @@ export default {
   },
   mounted() {
     this.populateCountries();
+    this.generateApiKey()
+  },
+  computed: {
+    passwordToggleIcon() {
+      return this.isApiKey == false ? 'EyeIcon' : 'EyeOffIcon'
+    },
   },
   // watch: {
   //   'userDetail.accountType': function (newV, oldV) {
@@ -414,6 +300,9 @@ export default {
   //   },
   // },
   methods: {
+    togglePasswordVisibility() {
+      this.isApiKey = !this.isApiKey
+    },
     validationForm() {
       this.$refs.simpleRules.validate()
         .then(success => {
@@ -435,9 +324,9 @@ export default {
       }
     },
     resetForm() {
-      let resetForm = this.getUserDetail() 
-      if(resetForm){
-        this.userDetail = this.userDetailLocal 
+      let resetForm = this.getUserDetail()
+      if (resetForm) {
+        this.userDetail = this.userDetailLocal
       }
     },
     async getUserDetail() {
@@ -517,6 +406,27 @@ export default {
         variant,
         solid: false,
       })
+    },
+
+    generateApiKey() {
+      var config = {
+        method: "get",
+        url: "/account/api/api-key/add",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+
+      };
+      axios(config)
+        .then((response) => {
+          console.log(response.data);
+
+
+        })
+        .catch(function (error) { });
     },
   },
   setup() {
