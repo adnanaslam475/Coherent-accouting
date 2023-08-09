@@ -165,8 +165,8 @@
               <feather-icon class="cursor-pointer ml-3" icon="EyeIcon" v-if="!isApiKey" @click="isApiKey = true" />
               <feather-icon class="cursor-pointer ml-3" icon="EyeOffIcon" v-if="isApiKey" @click="isApiKey = false" />
 
-              <div class="cursor-pointer ml-1" @click="copyToClipboard(apiData.apiKey)">
-                copy
+              <div class="cursor-pointer ml-1" style="font-weight: bolder;" @click="copyToClipboard(apiData.apiKey)">
+                {{ $t("Copy") }}
               </div>
             </div>
 
