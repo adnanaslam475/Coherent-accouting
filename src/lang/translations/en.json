@@ -19,12 +19,12 @@
   },
   "units": {
     "kg": "kg",
-    "city": "city",
+    "grams": "grams",
     "tone": "tone",
     "liter": "liter",
-    "Jr": "Jr",
-    "stack": "stack",
-    "no": "no"
+    "ml": "ml",
+    "steak": "steak",
+    "pcs": "pcs"
   },
   "paymentProcess": "Payment Process",
   "paymentMethods": {
@@ -571,7 +571,7 @@
     "company_phone_no": "Company Phone Number",
     "company_email": "Company Email",
     "company_fin_year": "Company Financial Year",
-    "vat": "VAT",
+    "vat": "Tax Rate",
     "next": "Next",
     "previous": "Previous",
     "create": "Create",
@@ -599,74 +599,26 @@
   "videos_content": [
     {
       "video": {
-        "link": "https://www.youtube.com/embed/U2omQ7aMCQs",
-        "title": "Как да се регистрирам за БЕЗПЛАТНАТА платформа"
+        "link": "https://www.youtube.com/embed/bu2EzaNvhVQ",
+        "title": "FREE OCR for FRESH BOOKS!!! Digitalise Invoices and receipts and Import as Expenses in Freshbooks - REMOVE MANUAL WORK"
       }
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/j2-bzPTFTPU",
-        "title": "Създаване на фирмено досие за секунди"
+        "link": "https://www.youtube.com/embed/L4XnWvEe4yQ",
+        "title": "FREE OCR of invocies for XERO!!! Convert scanned invocies for import in XERO - REMOVE MANUAL WORK"
       }
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/PjoTtfjMxqo",
-        "title": "Бързи Copy and Paste бутони при фирмено досие"
+        "link": "https://www.youtube.com/embed/s0mOvbqwDJQ",
+        "title": "FREE OCR for XERO!!! Steps to verify and approve the invocies and prepare them for export to XERO"
       }
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/Z9O7AQhVrqw",
-        "title": "Създаване на красиви дизайнерски фактури с опция за лого и избор на цвят"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/asoqLGP1q0o",
-        "title": "Основно табло с напомняния и уиджети - какво има на него и как то ни помага"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/Den_y9vehdc",
-        "title": "Безплатен OCR на фактури - бързо и лесно"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/zSSf1znfJo4",
-        "title": "100 фактури конвертирани в котировки само за 1 минута и 40 секунди с Масов OCR на системата"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/vCt6p9DPQg0",
-        "title": "Безплатен Масов OCR на фактури - буквално за секунди и напълно безплатно"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/DASXrGxFNLo",
-        "title": "Експортиране на котировките за секунди към Микроинвест"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/0mmlSpC-zVw",
-        "title": "Периодични безплатни фактури (месечно или седмично) в нашата система"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/fNDQLuq4_40",
-        "title": "Генериране на Отчети по чл. 117, ал. 1 от ЗДДС за секунди"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/U2omQ7aMCQs",
-        "title": "Как се съхраняват фирмени документи за водене на фирма"
+        "link": "https://www.youtube.com/embed/RpODTA6jQ6g",
+        "title": "FREE OCR for XERO!!!Import sales and bill in xero platform"
       }
     }
   ],
