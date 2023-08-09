@@ -165,8 +165,9 @@
               <feather-icon class="cursor-pointer ml-3" icon="EyeIcon" v-if="!isApiKey" @click="isApiKey = true" />
               <feather-icon class="cursor-pointer ml-3" icon="EyeOffIcon" v-if="isApiKey" @click="isApiKey = false" />
 
-              <img src="@/assets/images/svg/clipboard.svg" alt="" height="20px" width="20px" class="cursor-pointer ml-1"
-                @click="copyToClipboard(apiData.apiKey)">
+              <div class="cursor-pointer ml-1" @click="copyToClipboard(apiData.apiKey)">
+                copy
+              </div>
             </div>
 
 
@@ -194,6 +195,7 @@
 </template>
 
 <script>
+
 import {
   BAlert,
   BButton,
@@ -309,6 +311,14 @@ export default {
       textArea.setSelectionRange(0, 99999);
       document.execCommand("copy");
       document.body.removeChild(textArea);
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: "API ключът е копиран",
+          icon: "DeleteIcon",
+          variant: "success",
+        },
+      });
     },
     validationForm() {
       this.$refs.simpleRules.validate()
