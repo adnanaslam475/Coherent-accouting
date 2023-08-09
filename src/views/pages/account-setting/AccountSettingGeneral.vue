@@ -150,30 +150,25 @@
               </validation-provider>
             </b-form-group>
           </b-col>
-          <b-col md="12">
+          <b-col md="12" v-if="userDetailLocal.apiKey != null">
 
             <div class="d-flex">
               <div>
                 API KEY
               </div>
               <div class="ml-4" v-if="isApiKey">
-                alksdfj34lakdfjk34lkjadf
+                {{ apiData.apiKey }}
               </div>
               <div class="ml-4" v-else>
-                *****************************
+                ****************************************************
               </div>
-              <feather-icon class="cursor-pointer" :icon="passwordToggleIcon" @click="togglePasswordVisibility" />
-              <img src="@/assets/images/svg/clipboard.svg" alt="" height="20px" width="20px" class="cursor-pointer"
-                @click="copyToClipBoard">
+              <feather-icon class="cursor-pointer ml-3" icon="EyeIcon" v-if="!isApiKey" @click="isApiKey = true" />
+              <feather-icon class="cursor-pointer ml-3" icon="EyeOffIcon" v-if="isApiKey" @click="isApiKey = false" />
+
+              <img src="@/assets/images/svg/clipboard.svg" alt="" height="20px" width="20px" class="cursor-pointer ml-1"
+                @click="copyToClipboard(apiData.apiKey)">
             </div>
-            <div class="d-flex">
-              <div>
-                API KEY
-              </div>
-              <div class="ml-4">
-                alksdfj34lakdfjk34lkjadf
-              </div>
-            </div>
+
 
           </b-col>
           <b-col cols="6">
@@ -186,7 +181,7 @@
             </b-button>
 
           </b-col>
-          <b-col cols="6">
+          <b-col cols="6" v-if="userDetailLocal.apiKey == null">
             <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="primary" class="mt-2 mr-1"
               @click="generateApiKey">
               Generate API key
@@ -277,7 +272,8 @@ export default {
       profileFile: null,
       options: [],
       country: null,
-      isApiKey: false
+      isApiKey: false,
+      apiData: {}
     }
   },
   created() {
@@ -287,12 +283,12 @@ export default {
   },
   mounted() {
     this.populateCountries();
-    this.generateApiKey()
+
   },
   computed: {
-    passwordToggleIcon() {
-      return this.isApiKey == false ? 'EyeIcon' : 'EyeOffIcon'
-    },
+    // passwordToggleIcon() {
+    //   return this.isApiKey == false ? 'EyeIcon' : 'EyeOffIcon'
+    // },
   },
   // watch: {
   //   'userDetail.accountType': function (newV, oldV) {
@@ -300,8 +296,18 @@ export default {
   //   },
   // },
   methods: {
-    togglePasswordVisibility() {
-      this.isApiKey = !this.isApiKey
+    copyToClipboard(text) {
+      if (!text) return; // If no text is provided, don't proceed
+
+      // Create a temporary textarea element
+
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      textArea.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
     },
     validationForm() {
       this.$refs.simpleRules.validate()
@@ -333,6 +339,7 @@ export default {
       const data = await axios.get('account/api/user/who-am-i')
       this.userDetail = data.data
       this.userDetailLocal = data.data
+      this.apiData = this.userDetailLocal.apiKey
       this.country = {
         Country: this.userDetail.isoAlpha2Country,
         value: this.userDetail.isoAlpha2Country,
@@ -423,7 +430,7 @@ export default {
       axios(config)
         .then((response) => {
           console.log(response.data);
-
+          this.apiData = response.data
 
         })
         .catch(function (error) { });
