@@ -150,7 +150,7 @@
               </validation-provider>
             </b-form-group>
           </b-col>
-          <b-col md="12" v-if="userDetailLocal.apiKey != null">
+          <b-col md="12" v-if="userApiKey">
 
             <div class="d-flex">
               <div>
@@ -181,7 +181,7 @@
             </b-button>
 
           </b-col>
-          <b-col cols="6" v-if="userDetailLocal.apiKey == null">
+          <b-col cols="6" v-if="!userApiKey">
             <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="primary" class="mt-2 mr-1"
               @click="generateApiKey">
               Generate API key
@@ -273,7 +273,8 @@ export default {
       options: [],
       country: null,
       isApiKey: false,
-      apiData: {}
+      apiData: {},
+      userApiKey: false
     }
   },
   created() {
@@ -339,7 +340,11 @@ export default {
       const data = await axios.get('account/api/user/who-am-i')
       this.userDetail = data.data
       this.userDetailLocal = data.data
-      this.apiData = this.userDetailLocal.apiKey
+      if (this.userDetailLocal.apiKey != null) {
+        this.apiData = this.userDetailLocal.apiKey
+        this.userApiKey = true
+      }
+
       this.country = {
         Country: this.userDetail.isoAlpha2Country,
         value: this.userDetail.isoAlpha2Country,
@@ -431,7 +436,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.apiData = response.data
-
+          this.userApiKey = true
         })
         .catch(function (error) { });
     },
