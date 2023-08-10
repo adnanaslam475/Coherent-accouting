@@ -5986,10 +5986,11 @@ export default {
       amountNonVat = amountNonVat ? amountNonVat : 0;
       var vatPercent = invoiceData.value.vatPercent
         ? invoiceData.value.vatPercent
-        : 0;
+        : 30;
       var tradeDiscountPercent = invoiceData.value.tradeDiscountPercent
         ? invoiceData.value.tradeDiscountPercent
         : 0;
+      invoiceData.value.vatPercent = parseFloat(vatPercent).toFixed(2);
 
       invoiceData.value.amountNonVat = parseFloat(amountNonVat).toFixed(2);
 
@@ -6027,9 +6028,9 @@ export default {
         }
         companyName.value = response.data.companyName
         companyData.value = response.data
-        if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
-          invoiceData.value.vatPercent = 0
-        }
+        // if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
+        //   invoiceData.value.vatPercent = 0
+        // }
         console.log(companyName.value, 'this is company name ')
         supplierID.value = response.data.companyIdentificationNumber
 
@@ -6059,7 +6060,7 @@ export default {
         currency: invoiceData.value.currency,
         amountNonVat: invoiceData.value.amountNonVat,
         vatAmount: invoiceData.value.vatAmount,
-        vatPercent: 20,
+        vatPercent: 0,
         tradeDiscountPercent: 0,
         tradeDiscountAmount: invoiceData.value.tradeDiscountAmount,
         totalAmount: invoiceData.value.totalAmount,
