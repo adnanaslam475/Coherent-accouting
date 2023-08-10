@@ -2,7 +2,7 @@
   <section class="invoice-add-wrapper">
     <TabList />
     <!--  -->
-    {{ invoiceData }}
+
     <validation-observer ref="invoiceForm" #default="{ invalid }">
       <b-form @submit.prevent="invoiceAdd(invoiceData, 'save', AccountTypeOption)">
         <b-row class="invoice-add">
