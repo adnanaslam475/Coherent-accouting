@@ -129,9 +129,9 @@
 
               <b-form-group label="Country" label-for="register-country">
                 <validation-provider #default="{ errors }" name="country" vid="country" rules="required">
-                  <b-form-select v-model="country" :options="countries" id="register-country" name="register-country"
+                  <!-- <b-form-select v-model="country" :options="countries" id="register-country" name="register-country"
                     :state="errors.length > 0 ? false : null">
-                    <template #selected-option="option">
+                    <template #option="{ option }">
                       {{ option }}
                       <div style="
                           display: flex;
@@ -143,10 +143,10 @@
                         {{ option.text }}
                       </div>
                     </template>
-                    <template #option="options">
+                    <template #option="option">
                       {{ option }}
                       <span style="
-                          display: flex;
+                          display: flex;++
                           align-items: center;
                           justify-content: left;
                           grid-gap: 8px;
@@ -154,8 +154,8 @@
                         <img :src="getImg(option.src)" /> {{ option.text }}
                       </span>
                     </template>
-                  </b-form-select>
-                  <!-- <v-select v-model="country" :options="options" :filterBy="(option, label, search) => {
+                  </b-form-select> -->
+                  <v-select v-model="country" :options="countries" :filterBy="(option, label, search) => {
                     return (
                       (option.text || '')
                         .toLocaleLowerCase()
@@ -186,7 +186,7 @@
                         <img :src="getImg(option.src)" /> {{ option.text }}
                       </span>
                     </template>
-                  </v-select> -->
+                  </v-select>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -718,6 +718,7 @@ export default {
       let defaultPath = require("../assets/flags/aw.png");
       let path = require("../assets/flags/" + img + ".png");
       try {
+
         return path;
       } catch (e) {
         return defaultPath;
@@ -773,6 +774,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@core/scss/vue/pages/page-auth.scss";
+@import "@core/scss/vue/libs/vue-select.scss";
+
 .p-list {
   font-size: 1vw;
   color: #0A64BC;
@@ -786,6 +790,36 @@ export default {
   padding-bottom: 0 !important;
 }
 
-@import "@core/scss/vue/pages/page-auth.scss";
+.v-select {
+
+  &.item-selector-title,
+  &.payment-selector {
+    background-color: #fff;
+
+    .dark-layout & {
+      background-color: unset;
+    }
+  }
+}
+
+.v-select {
+  margin-top: 3px !important;
+}
+</style>
+
+
+<style lang="scss">
 @import "@core/scss/vue/libs/vue-select.scss";
+@import "@core/scss/vue/libs/vue-flatpicker.scss";
+
+.invoice-add-wrapper {
+  .add-new-client-header {
+    padding: $options-padding-y $options-padding-x;
+    color: $success;
+
+    &:hover {
+      background-color: rgba($success, 0.12);
+    }
+  }
+}
 </style>

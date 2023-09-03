@@ -5978,15 +5978,46 @@ export default {
       }
     };
 
+    axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+      },
+    })
+      .then((response) => {
+        console.log(response, 'asdfasdf')
+
+        if (response.data.companyCountry == 'Bulgaria') {
+          companyInBG.value = true
+
+        }
+        companyName.value = response.data.companyName
+        companyData.value = response.data
+
+        if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
+          invoiceData.value.vatPercent = 0
+        }
+        console.log(companyName.value, 'this is company name ')
+        supplierID.value = response.data.companyIdentificationNumber
+
+      })
+      .catch((error) => {
+        // console.log(error);
+
+      });
+
     var populateValues = () => {
       var amountNonVat = invoiceData.value.transactions.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
-
+      if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
+        invoiceData.value.vatPercent = 0
+      }
       amountNonVat = amountNonVat ? amountNonVat : 0;
       var vatPercent = invoiceData.value.vatPercent
         ? invoiceData.value.vatPercent
-        : 30;
+        : 20;
       var tradeDiscountPercent = invoiceData.value.tradeDiscountPercent
         ? invoiceData.value.tradeDiscountPercent
         : 0;
@@ -6012,33 +6043,7 @@ export default {
       invoiceData.value.totalAmount = parseFloat(totalPrice).toFixed(2);
     };
 
-    axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        "Access-Control-Allow-Credentials": true,
-        "Access-Control-Allow-Origin": "http://localhost:8080",
-      },
-    })
-      .then((response) => {
-        console.log(response, 'asdfasdf')
 
-        if (response.data.companyCountry == 'Bulgaria') {
-          companyInBG.value = true
-
-        }
-        companyName.value = response.data.companyName
-        companyData.value = response.data
-        // if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
-        //   invoiceData.value.vatPercent = 0
-        // }
-        console.log(companyName.value, 'this is company name ')
-        supplierID.value = response.data.companyIdentificationNumber
-
-      })
-      .catch((error) => {
-        // console.log(error);
-
-      });
     const clearForm = () => {
       invoiceData.value = {
         invoiceNumber: "",
