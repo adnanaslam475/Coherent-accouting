@@ -85,7 +85,7 @@
       <!-- Name of company -->
       <b-tab title-item-class="ml-auto" :title-link-class="'pb-0'" disabled>
         <template #title>
-          <span>
+          <span style="width: 150px !important">
             <h4 style="color: #0a64bc; font-size: 1vw;">
               <b>{{ companyName }}</b>
             </h4>

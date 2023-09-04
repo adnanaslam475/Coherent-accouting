@@ -585,7 +585,7 @@
                           <b-col cols="12" lg="1">
                             {{ $t("add_invoice.currency") }}
                           </b-col>
-                          <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                          <b-col cols="12" lg="2" v-if="invoiceData.hasDropDown">
                             {{ $t("Account") }}
                           </b-col>
                           <b-col cols="12" lg="2">
@@ -655,7 +655,7 @@
                             </validation-provider>
                           </b-col>
 
-                          <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                          <b-col cols="12" lg="2" v-if="invoiceData.hasDropDown">
                             <label class="d-inline d-lg-none">Account</label>
                             <validation-provider #default="{ errors }" name="transectionCurrency" rules="required">
                               <b-form-select v-model="invoiceData.transactions[index].account" :options="accounts">
@@ -1538,7 +1538,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold tm_primary_color tm_gray_bg">
                                     {{ $t("add_invoice.currency") }}
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                  <b-col cols="12" lg="2" v-if="invoiceData.hasDropDown">
                                     {{ $t("Account") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="tm_semi_bold tm_primary_color tm_gray_bg">
@@ -1627,7 +1627,7 @@
                                       }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                  <b-col cols="12" lg="2" v-if="invoiceData.hasDropDown">
                                     <label class="d-inline d-lg-none">Account</label>
                                     <validation-provider #default="{ errors }" name="transectionCurrency"
                                       rules="required">
@@ -2559,7 +2559,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.currency") }}
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                  <b-col cols="12" lg="2" v-if="invoiceData.hasDropDown">
                                     {{ $t("Account") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="tm_semi_bold">
@@ -2647,7 +2647,7 @@
                                       }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                  <b-col cols="12" lg="2" v-if="invoiceData.hasDropDown">
                                     <label class="d-inline d-lg-none">Account</label>
                                     <validation-provider #default="{ errors }" name="transectionCurrency"
                                       rules="required">
@@ -3630,7 +3630,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.currency") }}
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                  <b-col cols="12" lg="2" v-if="invoiceData.hasDropDown">
                                     {{ $t("Account") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="tm_semi_bold">
@@ -3719,7 +3719,7 @@
                                       }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                  <b-col cols="12" lg="2" v-if="invoiceData.hasDropDown">
                                     <label class="d-inline d-lg-none">Account</label>
                                     <validation-provider #default="{ errors }" name="transectionCurrency"
                                       rules="required">
@@ -4645,7 +4645,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.currency") }}
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                  <b-col cols="12" lg="2" v-if="invoiceData.hasDropDown">
                                     {{ $t("Account") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="tm_semi_bold">
@@ -4734,7 +4734,7 @@
                                       }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                  <b-col cols="12" lg="2" v-if="invoiceData.hasDropDown">
                                     <label class="d-inline d-lg-none">Account</label>
                                     <validation-provider #default="{ errors }" name="transectionCurrency"
                                       rules="required">
@@ -9857,4 +9857,5 @@ hr {
   .tm_pagebreak {
     page-break-before: always;
   }
-}</style>
+}
+</style>
