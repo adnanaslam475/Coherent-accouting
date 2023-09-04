@@ -570,7 +570,7 @@
                           <b-col cols="12" lg="1">
                             {{ $t("add_invoice.s_no") }}
                           </b-col>
-                          <b-col cols="12" lg="4">
+                          <b-col cols="12" lg="2">
                             {{ $t("add_invoice.item_service") }}
                           </b-col>
                           <b-col cols="12" lg="1">
@@ -584,6 +584,9 @@
                           </b-col>
                           <b-col cols="12" lg="1">
                             {{ $t("add_invoice.currency") }}
+                          </b-col>
+                          <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                            {{ $t("Account") }}
                           </b-col>
                           <b-col cols="12" lg="2">
                             {{ $t("add_invoice.total_price") }}
@@ -603,7 +606,7 @@
                             <b-form-input :value="index + 1" type="text" class="mb-0 text-left" disabled />
                           </b-col>
 
-                          <b-col cols="12" lg="4">
+                          <b-col cols="12" lg="2">
                             <label class="d-inline d-lg-none">Item name or Service</label>
                             <validation-provider #default="{ errors }" name="transectionServiceOrItemDescription"
                               rules="required">
@@ -647,6 +650,15 @@
                             <label class="d-inline d-lg-none">Currency</label>
                             <validation-provider #default="{ errors }" name="transectionCurrency" rules="required">
                               <b-form-select v-model="invoiceData.currency" :options="currencyOptions">
+                              </b-form-select>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </b-col>
+
+                          <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                            <label class="d-inline d-lg-none">Account</label>
+                            <validation-provider #default="{ errors }" name="transectionCurrency" rules="required">
+                              <b-form-select v-model="invoiceData.transactions[index].account" :options="accounts">
                               </b-form-select>
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -1511,7 +1523,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold tm_primary_color tm_gray_bg">
                                     {{ $t("add_invoice.s_no") }}
                                   </b-col>
-                                  <b-col cols="12" lg="4" class="tm_semi_bold tm_primary_color tm_gray_bg">
+                                  <b-col cols="12" lg="2" class="tm_semi_bold tm_primary_color tm_gray_bg">
                                     {{ $t("add_invoice.item_service") }}
                                   </b-col>
                                   <b-col cols="12" lg="1" class="tm_semi_bold tm_primary_color tm_gray_bg">
@@ -1525,6 +1537,9 @@
                                   </b-col>
                                   <b-col cols="12" lg="1" class="tm_semi_bold tm_primary_color tm_gray_bg">
                                     {{ $t("add_invoice.currency") }}
+                                  </b-col>
+                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                    {{ $t("Account") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="tm_semi_bold tm_primary_color tm_gray_bg">
                                     {{ $t("add_invoice.total_price") }}
@@ -1547,7 +1562,7 @@
                                       style="background-color: #f5f6fa" />
                                   </b-col>
 
-                                  <b-col cols="12" lg="4">
+                                  <b-col cols="12" lg="2">
                                     <label class="d-inline d-lg-none">Item name or Service</label>
                                     <validation-provider #default="{ errors }" name="transectionServiceOrItemDescription"
                                       rules="required">
@@ -1610,6 +1625,16 @@
                                       <small class="text-danger">{{
                                         errors[0]
                                       }}</small>
+                                    </validation-provider>
+                                  </b-col>
+                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                    <label class="d-inline d-lg-none">Account</label>
+                                    <validation-provider #default="{ errors }" name="transectionCurrency"
+                                      rules="required">
+                                      <b-form-select v-model="invoiceData.transactions[index].account"
+                                        :options="accounts">
+                                      </b-form-select>
+                                      <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" lg="2">
@@ -2519,7 +2544,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.s_no") }}
                                   </b-col>
-                                  <b-col cols="12" lg="4" class="tm_semi_bold">
+                                  <b-col cols="12" lg="2" class="tm_semi_bold">
                                     {{ $t("add_invoice.item_service") }}
                                   </b-col>
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
@@ -2533,6 +2558,9 @@
                                   </b-col>
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.currency") }}
+                                  </b-col>
+                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                    {{ $t("Account") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="tm_semi_bold">
                                     {{ $t("add_invoice.total_price") }}
@@ -2554,7 +2582,7 @@
                                     <b-form-input :value="index + 1" type="text" class="mb-0 text-left" disabled />
                                   </b-col>
 
-                                  <b-col cols="12" lg="4">
+                                  <b-col cols="12" lg="2">
                                     <label class="d-inline d-lg-none">Item name or Service</label>
                                     <validation-provider #default="{ errors }" name="transectionServiceOrItemDescription"
                                       rules="required">
@@ -2617,6 +2645,16 @@
                                       <small class="text-danger">{{
                                         errors[0]
                                       }}</small>
+                                    </validation-provider>
+                                  </b-col>
+                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                    <label class="d-inline d-lg-none">Account</label>
+                                    <validation-provider #default="{ errors }" name="transectionCurrency"
+                                      rules="required">
+                                      <b-form-select v-model="invoiceData.transactions[index].account"
+                                        :options="accounts">
+                                      </b-form-select>
+                                      <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" lg="2">
@@ -3577,7 +3615,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.s_no") }}
                                   </b-col>
-                                  <b-col cols="12" lg="4" class="tm_semi_bold">
+                                  <b-col cols="12" lg="2" class="tm_semi_bold">
                                     {{ $t("add_invoice.item_service") }}
                                   </b-col>
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
@@ -3591,6 +3629,9 @@
                                   </b-col>
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.currency") }}
+                                  </b-col>
+                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                    {{ $t("Account") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="tm_semi_bold">
                                     {{ $t("add_invoice.total_price") }}
@@ -3613,7 +3654,7 @@
                                       style="background-color: #f5f6fa" />
                                   </b-col>
 
-                                  <b-col cols="12" lg="4">
+                                  <b-col cols="12" lg="2">
                                     <label class="d-inline d-lg-none">Item name or Service</label>
                                     <validation-provider #default="{ errors }" name="transectionServiceOrItemDescription"
                                       rules="required">
@@ -3676,6 +3717,16 @@
                                       <small class="text-danger">{{
                                         errors[0]
                                       }}</small>
+                                    </validation-provider>
+                                  </b-col>
+                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                    <label class="d-inline d-lg-none">Account</label>
+                                    <validation-provider #default="{ errors }" name="transectionCurrency"
+                                      rules="required">
+                                      <b-form-select v-model="invoiceData.transactions[index].account"
+                                        :options="accounts">
+                                      </b-form-select>
+                                      <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" lg="2">
@@ -4579,7 +4630,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.s_no") }}
                                   </b-col>
-                                  <b-col cols="12" lg="4" class="tm_semi_bold">
+                                  <b-col cols="12" lg="2" class="tm_semi_bold">
                                     {{ $t("add_invoice.item_service") }}
                                   </b-col>
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
@@ -4593,6 +4644,9 @@
                                   </b-col>
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.currency") }}
+                                  </b-col>
+                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                    {{ $t("Account") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="tm_semi_bold">
                                     {{ $t("add_invoice.total_price") }}
@@ -4615,7 +4669,7 @@
                                       style="background-color: #f5f6fa" />
                                   </b-col>
 
-                                  <b-col cols="12" lg="4">
+                                  <b-col cols="12" lg="2">
                                     <label class="d-inline d-lg-none">Item name or Service</label>
                                     <validation-provider #default="{ errors }" name="transectionServiceOrItemDescription"
                                       rules="required">
@@ -4678,6 +4732,16 @@
                                       <small class="text-danger">{{
                                         errors[0]
                                       }}</small>
+                                    </validation-provider>
+                                  </b-col>
+                                  <b-col cols="12" lg="2" v-if="!companyInBG && isQuickBook">
+                                    <label class="d-inline d-lg-none">Account</label>
+                                    <validation-provider #default="{ errors }" name="transectionCurrency"
+                                      rules="required">
+                                      <b-form-select v-model="invoiceData.transactions[index].account"
+                                        :options="accounts">
+                                      </b-form-select>
+                                      <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" lg="2">
@@ -5235,8 +5299,8 @@ export default {
   },
   data() {
     return {
-     
 
+      accounts: [],
 
       isUploading: i18n.tc("add_invoice.upload_logo"),
 
@@ -5325,7 +5389,7 @@ export default {
   mixins: [heightTransition],
   mounted() {
     // this.initTrHeight();
-
+    this.getAccounts()
   },
   created() {
     // window.addEventListener("resize", this.initTrHeight);
@@ -5343,7 +5407,7 @@ export default {
         { name: this.$t('add_invoice.bank-5') },
       ];
     },
-     measureOptions() {
+    measureOptions() {
 
       return [
         { text: i18n.tc("units.kg"), value: "kg" },
@@ -5394,27 +5458,28 @@ export default {
         this.isBank = false
       }
     },
-    // getPaymentProcess() {
-    //   var config = {
-    //     method: "get",
-    //     url: "/account/api/invoice/get-payment-processes",
-    //     headers: {
-    //       Authorization: "Bearer " + localStorage.getItem("accessToken"),
-    //       "Access-Control-Allow-Credentials": true,
-    //       "Content-Type": "application/json",
-    //       "Access-Control-Allow-Origin": "http://localhost:8080",
-    //     },
+    getAccounts() {
+      var config = {
+        method: "get",
+        url: "/account/api/invoice/get-accounts",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
 
-    //   };
-    //   axios(config)
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       this.banks = response.data
-    //       console.log(this.banks, 'there are banks')
+      };
+      axios(config)
+        .then((response) => {
+          console.log(response.data);
+          this.accounts = response.data
+          // this.banks = response.data
+          // console.log(this.banks, 'there are banks')
 
-    //     })
-    //     .catch(function (error) { });
-    // },
+        })
+        .catch(function (error) { });
+    },
     reverse() {
 
       let temp = this.invoiceData.supplierCompany
@@ -5910,6 +5975,7 @@ export default {
     var InvoicePayedToggleValue = ref(null)
     var isBank = ref(false);
     var companyInBG = ref(false);
+    var isQuickBook = ref(false);
 
     let uploadValue = {
       companyOwnerName: "",
@@ -6158,6 +6224,9 @@ export default {
         if (response.data.companyCountry == 'Bulgaria') {
           companyInBG.value = true
 
+        }
+        if (response.data.exportProperties.platform == 'QUICK_BOOKS') {
+          isQuickBook.value = true
         }
         companyName.value = response.data.companyName
         companyData.value = response.data
@@ -9788,5 +9857,4 @@ hr {
   .tm_pagebreak {
     page-break-before: always;
   }
-}
-</style>
+}</style>
