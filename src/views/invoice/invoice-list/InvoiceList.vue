@@ -60,7 +60,7 @@
           <b-modal id="modal-invoices-export" ref="modal_exportValue"
             :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE' ? companyinfo.exportProperties.platform : ''"
             title-class="w-100 text-center" :ok-title="$t('company_invoices.Export_invoicess')"
-            :cancel-title="$t('company_invoices.Cancel')" scrollable :ok-disabled="modalDisabled" class="p-3"
+            :cancel-title="$t('company_invoices.cancel')" scrollable :ok-disabled="modalDisabled" class="p-3"
             @ok="getExportFile()">
             <form ref="form" class="border p-3 bg-light" @submit.stop.prevent="handleMonthSelect">
               <!-- display exportDto data -->
