@@ -570,7 +570,7 @@
                           <b-col cols="12" lg="1">
                             {{ $t("add_invoice.s_no") }}
                           </b-col>
-                          <b-col cols="12" :lg="invoiceData.hasDropDown ? '1' : '4'">
+                          <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'">
                             {{ $t("add_invoice.item_service") }}
                           </b-col>
                           <b-col cols="12" lg="1">
@@ -606,7 +606,7 @@
                             <b-form-input :value="index + 1" type="text" class="mb-0 text-left" disabled />
                           </b-col>
 
-                          <b-col cols="12" :lg="invoiceData.hasDropDown ? 1 : 4">
+                          <b-col cols="12" :lg="invoiceData.hasDropDown ? 2 : 4">
                             <label class="d-inline d-lg-none">Item name or Service</label>
                             <validation-provider #default="{ errors }" name="transectionServiceOrItemDescription"
                               rules="required">
@@ -1523,7 +1523,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold tm_primary_color tm_gray_bg">
                                     {{ $t("add_invoice.s_no") }}
                                   </b-col>
-                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '1' : '4'"
+                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'"
                                     class="tm_semi_bold tm_primary_color tm_gray_bg">
                                     {{ $t("add_invoice.item_service") }}
                                   </b-col>
@@ -1563,7 +1563,7 @@
                                       style="background-color: #f5f6fa" />
                                   </b-col>
 
-                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '1' : '4'">
+                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'">
                                     <label class="d-inline d-lg-none">Item name or Service</label>
                                     <validation-provider #default="{ errors }" name="transectionServiceOrItemDescription"
                                       rules="required">
@@ -2545,7 +2545,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.s_no") }}
                                   </b-col>
-                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '1' : '4'" class="tm_semi_bold">
+                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'" class="tm_semi_bold">
                                     {{ $t("add_invoice.item_service") }}
                                   </b-col>
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
@@ -2583,7 +2583,7 @@
                                     <b-form-input :value="index + 1" type="text" class="mb-0 text-left" disabled />
                                   </b-col>
 
-                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '1' : '4'">
+                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'">
                                     <label class="d-inline d-lg-none">Item name or Service</label>
                                     <validation-provider #default="{ errors }" name="transectionServiceOrItemDescription"
                                       rules="required">
@@ -3616,7 +3616,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.s_no") }}
                                   </b-col>
-                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '1' : '4'" class="tm_semi_bold">
+                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'" class="tm_semi_bold">
                                     {{ $t("add_invoice.item_service") }}
                                   </b-col>
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
@@ -3655,7 +3655,7 @@
                                       style="background-color: #f5f6fa" />
                                   </b-col>
 
-                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '1' : '4'">
+                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'">
                                     <label class="d-inline d-lg-none">Item name or Service</label>
                                     <validation-provider #default="{ errors }" name="transectionServiceOrItemDescription"
                                       rules="required">
@@ -4631,7 +4631,7 @@
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
                                     {{ $t("add_invoice.s_no") }}
                                   </b-col>
-                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '1' : '4'" class="tm_semi_bold">
+                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'" class="tm_semi_bold">
                                     {{ $t("add_invoice.item_service") }}
                                   </b-col>
                                   <b-col cols="12" lg="1" class="tm_semi_bold">
@@ -4670,7 +4670,7 @@
                                       style="background-color: #f5f6fa" />
                                   </b-col>
 
-                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '1' : '4'">
+                                  <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'">
                                     <label class="d-inline d-lg-none">Item name or Service</label>
                                     <validation-provider #default="{ errors }" name="transectionServiceOrItemDescription"
                                       rules="required">
