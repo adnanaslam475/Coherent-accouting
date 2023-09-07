@@ -209,7 +209,7 @@
     "label_fdi_5": "Opportunity for remote work from home or \"Home office\" without the need to carry your laptop or computer home.",
     "title_abt_6": "",
     "label_fdi_6": "Create an account completely free and use the full functionality of the system for 2 months."
-},
+  },
   "why_choose_use": {
     "title": "Защо да изберете нас?",
     "title_1": "Нашата платформа е напълно БЕЗПЛАТНА за всички функционалности на системата. Вие можете 1) да експортирате фактурите, които вашият клиент е създал в системата или 2) ако не са създадени в системата, да ги превърнете в котировки с нашия OCR. Имате и експорт на котировки към счетоводен софтуер с две кликвания на мишката.",
@@ -222,6 +222,7 @@
     "title_8": "Фирмени досиета, направа на дизайнерски фактури безплатно, Достъп от всякъде,  Отчети чл. 117, ал. 1 от ЗДДС подходяща за Freelancers, Автоматично извличане на котировки от фактури."
   },
   "companies": {
+    "platform": "Platform",
     "unfinished_vat_reports": "Unfinished Vat Reports",
     "unverified_invoice": "Unverified Invoice",
     "add_company": "Add Company",
@@ -664,5 +665,19 @@
   "unlimited_space": "Unlimited Space",
   "unlimited_digital_invoices": "Unlimited Digital Invoices",
   "click_monthly_vat_report": "1 click Monthly Vat Reports (incl. txt and excel)",
-  "yearly_reports": "Yearly Reports (excel)"
+  "yearly_reports": "Yearly Reports (excel)",
+  "featureLable1": "Free beautiful invoices with logo option",
+  "featureLable2": "Конвертиране на фактури от системата на Микроинвест към други счетоводни програми.",
+  "featureLable3": "Безплатен OCR на фактури",
+  "featureLable4": "Екпорт на фактури към други Счетоводни програми",
+  "featureLable5": "Екпорт на създадените в системата фактури към други Счетоводни програми",
+  "featureLable6": "Напомняния и известия",
+  "featureLable7": "Стена с напомняния за ненаправени ДДС отчети.",
+  "featureLable8": "Темплейти за създаване на оферти към други фирми",
+  "featureLable9": "Качване на документи и файлове свързани с наеми и пълномощни и документи на фирма",
+  "featureLable10": "Фунционалности и туулове за цялостно менажиране на фирма на едно място което може да достъпвате от всякъде",
+  "featureLable11": "Авотоматични попълване на полета за фактури без да се въвеждат всички данни",
+  "featureLable12": "Отчети по чл. 117, ал. 1 от ЗДДС",
+  "featureLable13": "Красив и модерен дизайн лесен за научаване",
+  "featureLable14": "Фирмени досиета"
 }
