@@ -51,8 +51,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex align-items-center mt-2">
-                      <div class="d-flex align-items-center" style="margin-right: 5px">
+                    <div class="d-flex justify-space-between align-items-center mt-2">
+                      <div class="d-flex align-items-center" style="margin-right: 5px; width: 167px;">
                         <feather-icon icon="UserIcon" width="18px" height="18px"
                           style="margin-left: 8px; margin-right: -5px" />
                         <div class="ml-1">
@@ -108,26 +108,56 @@
                     </div> -->
 
 
-                    <div class="d-flex align-items-center ml-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="mr-75 feather feather-globe">
-                        <circle cx="12" cy="12" r="10" />
-                        <line x1="2" y1="12" x2="22" y2="12" />
-                        <path
-                          d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                      </svg>
-                      <div>
+                    <div class="d-flex justify-space-between align-items-center ml-1">
+                      <div class="d-flex" style="width: 167px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          class="mr-75 feather feather-globe mt-1">
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="2" y1="12" x2="22" y2="12" />
+                          <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg>
                         <div>
+                          <div>
 
 
-                          <span class="font-weight-bold text-capitalize">{{ $t('companies.country') }}</span>
-                        </div>
-                        <div>
-                          {{ companyDetails.companyCountry }}
+                            <span class="font-weight-bold text-capitalize">{{ $t('companies.country') }}</span>
+                          </div>
+                          <div>
+                            {{ companyDetails.companyCountry }}
+                          </div>
                         </div>
                       </div>
+
+                      <div class="d-flex mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          class="mr-75 feather feather-globe ">
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="2" y1="12" x2="22" y2="12" />
+                          <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg>
+                        <div>
+                          <div>
+
+
+                            <span class="font-weight-bold text-capitalize">{{ $t('companies.platform') }}</span>
+                          </div>
+                          <div>
+                            {{ companyDetails.exportProperties.platform }}
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
                     </div>
+
+
+
                   </div>
                 </div>
               </div>

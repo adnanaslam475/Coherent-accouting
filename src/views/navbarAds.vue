@@ -45,6 +45,9 @@
           <b-nav-item href="/features">
             {{ $t("lbl.features") }}
           </b-nav-item>
+          <!-- <b-nav-item href="https://app.theneo.io/my-coheren/coherent-accounting" target="_blank">
+            API DOC
+          </b-nav-item> -->
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

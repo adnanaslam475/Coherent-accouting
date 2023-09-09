@@ -5224,13 +5224,12 @@ export default {
 
       return [
         { text: i18n.tc("units.kg"), value: "kg" },
-        { text: i18n.tc("units.city"), value: "city" },
-
+        { text: i18n.tc("units.grams"), value: "grams" },
         { text: i18n.tc("units.tone"), value: "tone" },
         { text: i18n.tc("units.liter"), value: "liter" },
-        { text: i18n.tc("units.Jr"), value: "Jr" },
-        { text: i18n.tc("units.stack"), value: "stack" },
-        { text: i18n.tc("units.no"), value: "no" },
+        { text: i18n.tc("units.ml"), value: "ml" },
+        { text: i18n.tc("units.steak"), value: "steak" },
+        { text: i18n.tc("units.pcs"), value: "pcs" },
       ]
     },
 
@@ -5979,18 +5978,50 @@ export default {
       }
     };
 
+    axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+      },
+    })
+      .then((response) => {
+        console.log(response, 'asdfasdf')
+
+        if (response.data.companyCountry == 'Bulgaria') {
+          companyInBG.value = true
+
+        }
+        companyName.value = response.data.companyName
+        companyData.value = response.data
+
+        if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
+          invoiceData.value.vatPercent = 0
+        }
+        console.log(companyName.value, 'this is company name ')
+        supplierID.value = response.data.companyIdentificationNumber
+
+      })
+      .catch((error) => {
+        // console.log(error);
+
+      });
+
     var populateValues = () => {
       var amountNonVat = invoiceData.value.transactions.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
-
+      if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
+        invoiceData.value.vatPercent = 0
+      }
       amountNonVat = amountNonVat ? amountNonVat : 0;
       var vatPercent = invoiceData.value.vatPercent
         ? invoiceData.value.vatPercent
-        : 0;
+        : 20;
       var tradeDiscountPercent = invoiceData.value.tradeDiscountPercent
         ? invoiceData.value.tradeDiscountPercent
         : 0;
+      invoiceData.value.vatPercent = parseFloat(vatPercent).toFixed(2);
 
       invoiceData.value.amountNonVat = parseFloat(amountNonVat).toFixed(2);
 
@@ -6012,33 +6043,7 @@ export default {
       invoiceData.value.totalAmount = parseFloat(totalPrice).toFixed(2);
     };
 
-    axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        "Access-Control-Allow-Credentials": true,
-        "Access-Control-Allow-Origin": "http://localhost:8080",
-      },
-    })
-      .then((response) => {
-        console.log(response, 'asdfasdf')
 
-        if (response.data.companyCountry == 'Bulgaria') {
-          companyInBG.value = true
-
-        }
-        companyName.value = response.data.companyName
-        companyData.value = response.data
-        if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
-          invoiceData.value.vatPercent = 0
-        }
-        console.log(companyName.value, 'this is company name ')
-        supplierID.value = response.data.companyIdentificationNumber
-
-      })
-      .catch((error) => {
-        // console.log(error);
-
-      });
     const clearForm = () => {
       invoiceData.value = {
         invoiceNumber: "",
@@ -6060,7 +6065,7 @@ export default {
         currency: invoiceData.value.currency,
         amountNonVat: invoiceData.value.amountNonVat,
         vatAmount: invoiceData.value.vatAmount,
-        vatPercent: 20,
+        vatPercent: 0,
         tradeDiscountPercent: 0,
         tradeDiscountAmount: invoiceData.value.tradeDiscountAmount,
         totalAmount: invoiceData.value.totalAmount,

@@ -76,7 +76,7 @@
           <b-modal id="modal-invoices-export" ref="modal_exportValue"
             :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE' ? companyinfo.exportProperties.platform : ''"
             title-class="w-100 text-center" :ok-title="$t('company_invoices.Export_invoicess')"
-            :cancel-title="$t('company_invoices.Cancel')" scrollable @ok="getExportFile()" :ok-disabled="modalDisabled"
+            :cancel-title="$t('company_invoices.cancel')" scrollable @ok="getExportFile()" :ok-disabled="modalDisabled"
             class="p-3">
             <form ref="form" @submit.stop.prevent="handleMonthSelect" class="border p-3 bg-light">
               <!-- display exportDto data -->
@@ -192,6 +192,20 @@
     left: 27%;">
 
           <img src="@/assets/images/svg/clock.svg" alt="">
+        </span>
+      </template>
+
+      <!-- Column: exported  -->
+      <template #head(exported)>
+        {{ $t("company_invoices.Export_invoice") }}
+      </template>
+
+      <template #cell(exported)="data">
+        <span class="text-nowrap" v-if="data.item.exported" style="position: relative;
+    left: 27%;">
+
+          <img src="@/assets/images/svg/check.svg" alt="" height="20px" width="20px">
+
         </span>
       </template>
       <!-- Column: Issued Date -->

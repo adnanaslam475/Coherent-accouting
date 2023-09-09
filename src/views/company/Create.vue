@@ -124,7 +124,7 @@
               <b-form-group id="input-group-5" :label="$t('company_info.owner_name')" label-for="owner_name">
                 <validation-provider #default="{ errors }" v-bind:name="$t('owner_name')" rules="required">
                   <b-form-input id="owner_name" v-model="form.owner_name" :state="errors.length > 0 ? false : null"
-                    placeholder="Agent Name " /> 
+                    placeholder="Agent Name " />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -306,10 +306,11 @@
         <validation-observer ref="exportRules" tag="form">
           <b-row>
             <b-col>
+
               <b-form-group id="input-group-4" :label="$t('create_company.software')" label-for="status">
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
                   <b-form-select id="platformPropertiesSelect" v-model="selectedPlatformProperty"
-                    :options="modifiedArray"></b-form-select>
+                    :options="platformPropertiesOptions"></b-form-select>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
                 <div v-for="(value, label) in selectedPlatformProperties" :key="label">
@@ -1020,7 +1021,7 @@ export default {
 
       }
       arr.forEach((item) => {
-        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE" && item.value !== "XERO" && item.value !== "FRESH_BOOKS") {
+        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE" && item.value !== "XERO" && item.value !== "FRESH_BOOKS" && item.value !== "QUICK_BOOKS") {
           item.disabled = true;
         }
       });

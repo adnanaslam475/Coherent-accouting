@@ -369,7 +369,7 @@
               <b-form-group id="input-group-4" :label="$t('create_company.software')" label-for="status" v-if="isEdit">
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
                   <b-form-select id="platformPropertiesSelect" v-model="exportProperties.platform"
-                    :options="modifiedArray" @change="checkChange"></b-form-select>
+                    :options="platformPropertiesOptions" @change="checkChange"></b-form-select>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
                 <div v-for="(value, label) in exportProperties.keyValues" :key="label">
@@ -381,7 +381,7 @@
               <b-form-group id="input-group-4" :label="$t('create_company.software')" label-for="status" v-else>
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
                   <b-form-select id="platformPropertiesSelect" v-model="selectedPlatformProperty"
-                    :options="modifiedArray"></b-form-select>
+                    :options="platformPropertiesOptions"></b-form-select>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
                 <div v-for="(value, label) in selectedPlatformProperties" :key="label">

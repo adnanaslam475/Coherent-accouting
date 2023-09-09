@@ -1,5 +1,6 @@
 {
   "reverse": "Reverse",
+  "Copy": "Copy",
   "please_fill_this": "Please fill this if you want to generate Tax reports",
   "app_logo_title": "Coherent Accounting",
   "select_bank_process": "Select bank process",
@@ -19,12 +20,12 @@
   },
   "units": {
     "kg": "kg",
-    "city": "city",
+    "grams": "grams",
     "tone": "tone",
     "liter": "liter",
-    "Jr": "Jr",
-    "stack": "stack",
-    "no": "no"
+    "ml": "ml",
+    "steak": "steak",
+    "pcs": "pcs"
   },
   "paymentProcess": "Payment Process",
   "paymentMethods": {
@@ -61,7 +62,7 @@
     "list_invoices": "List Invoices"
   },
   "features": {
-    "title": "Latest Features",
+    "title": "Our FREE Features",
     "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs."
   },
   "partners": {
@@ -162,66 +163,67 @@
     "free_trial": "Start 14-day FREE trial"
   },
   "about": {
-    "title": "За нас",
-    "label_abt_1": "Какво е Coherent Accounting?",
-    "desc_abt_1": "Coherent Accounting е безплатна революционна платформа за счетоводство, предназначена за счетоводни кантори или счетоводители, които водят счетоводството на дадена фирма. Тя намалява ръчния труд за въвеждане на котировки от хартиени фактури до 80%. Направена е от счетоводители с голям опит, за счетоводители, които искат да бъдат по-продуктивни и да пестят време от ръчна работа. С OCR и изкуствен интелект се извличат всички данни от фактурата в PDF формат.",
-    "label_abt_2": "OCR на фактури и дигитализация",
-    "desc_abt_2": "Безплатната платформа използва OCR и изкуствен интелект, които превръщат хартиените фактури в дигитални котировки за секунди. Извлича котировки от следните формати: JPEG, JPG, PDF. Разпознава следните данни: дата на издаване, номер на фактурата, доставчик на фактурата, получател на фактурата, валута, данъчна основа, ДДС, единична цена и други. Дори със снимка от смартфон с добро качество може да се извлечат данни за фактурата. С всяка качена фактура изкуственият интелект се обучава и усъвършенства.",
-    "label_abt_3": "Безплатен модул за дигитални фактури",
-    "desc_abt_3": "Безплатният модул позволява създаване на фактури, което може да се използва от вашите клиенти. Вие само трябва да ги експортирате към нужния счетоводен софтуер, който използвате - Ажур, Бизнес Навигатор, Микроинвест, Плюс Минус и други.",
-    "label_abt_4": "Отчети по чл. 117, ал. 1 от ЗДДС",
-    "desc_abt_4": "Системата генерира следните файлове, готови за отчет съгласно чл. 117, ал. 1 от ЗДДС и готови за качване в системата на НАП:\n- Дневник на продажбите във формат txt + xlsx. Единият за НАП, а другият в четим вид за вашите клиенти.\n- Дневник на покупките във формат txt + xlsx. Единият за НАП, а другият в четим вид за вашите клиенти.\n- Справка-декларация по ЗДДС във формат txt + xlsx. Единият за НАП, а другият в четим вид за вашите клиент.\n- VIES справка за фирми извън България и членки на Европейския съюз.\nВсичко това е възможно само с едно натискане на бутон.",
-    "label_abt_5": "Фирмени досиета",
-    "desc_abt_5": "Платформата е лесна за употреба, интуитивна и с модерен съвременен дизайн. Не е необходимо да обучавате себе си или своите служители на сложни менюта и подменюта, както при стандартния счетоводен софтуер. Няма подсистеми, портали и объркващи менюта или досадни грешки, които се появяват, ако не въведете нещо правилно. Всичко е на едно удобно място, като единствената необходимост е интернет връзката. Човек може да се научи да работи с платформата само за 1 ден, благодарение на предоставените видеа уроци.",
-    "label_abt_6": "Бързина при генериране на счетоводни котировки и експорт",
-    "desc_abt_6": "Платформата може да създаде счетоводни котировки от фактури за няколко секунди. Освен това, котировките могат да бъдат експортирани от фактурите към всички популярни счетоводни софтуери, като Микроинвест, Бизнес Навигатор, Плюс Минус и други."
+    "title": "About us",
+    "label_abt_1": "What is Coherent Accounting?",
+    "desc_abt_1": "Coherent Accounting is FREE revolutional platform for accountants and bookkeepers. It reduces the manual work for inputting invoices data into Accouning platform such as XERO, Quick Books, FreshBooks, WAVE, Zoho and etc.It reduces the manual work up to 80%. Specially for people who want to be more productive and to safe boring manual tasks. With OCR and Artiffiicaial Intelligence the system extract all data from the invocies.",
+    "label_abt_2": "OCR of Invoices annd Digitalization",
+    "desc_abt_2": "You can reduce the paper waste and help the nature while go paperless. You only digital invoices and together we will safe the planet",
+    "label_abt_3": "FREE Invoices module",
+    "desc_abt_3": "The free module allows for invoice creation, which can be used by your clients. You only need to export them to the necessary accounting software you use - such as XERO, QuickBooks, FreshBooks, WAVE , Zoho and others.",
+    "label_abt_4": "Tax Reports",
+    "desc_abt_4": "The system generates the following files, ready for reporting according to Article 117, paragraph 1 of the Value Added Tax Act (VATA), and ready for uploading into the National Revenue Agency (NRA) system.",
+    "label_abt_5": "Company Portfolios",
+    "desc_abt_5": "The platform is user-friendly, intuitive, and features a modern design. There's no need to train yourself or your employees on complex menus and submenus, as is often required with traditional accounting software. There are no subsystems, portals, confusing menus, or frustrating errors that arise from incorrect inputs. Everything is conveniently located in one place, with the only requirement being an internet connection. A person can learn to operate the platform in just 1 day, thanks to the provided video tutorials.",
+    "label_abt_6": "Speed in generating accounting quotes and exporting",
+    "desc_abt_6": "The platform can generate accounting quotes from invoices in a matter of seconds. Additionally, the quotes can be exported from the invoices to all popular accounting software such as  XERO, QuickBooks, FreshBooks, WAVE, Zoho and others."
   },
   "questions": {
-    "title": "Често задавани въпорси",
-    "question_qst_1": "Трябва ли да се инсталира програмата на компютъра на всеки счетоводител?",
-    "answer_qst_1": "Не! Програмата е инсталирана на Клуд-а. Може да се достъпи от всеки, който има достъп до интернет и компютър. Скоро ще бъде достъпна и чрез мобилно приложение.",
-    "question_qst_2": "Когато правя фактура, трябва ли да си направя моя списък с клиенти, за да не ги въвеждам всеки път?",
-    "answer_qst_2": "Не! Вие имате достъп до всички компании в България и ако въведете ЕИК номера или име, ще Ви се попълнят автоматично всички данни за компанията.",
-    "question_qst_3": "Ако кача фактура за разпознаване с OCR и не ми разпознае никакви котировки, какво да правя?",
-    "answer_qst_3": "Ако това се случи, моля пишете ни на admin@coherent-accounting.com и ни изпратете фактурата. Ние ще я обработим и ще обучим системата безплатно за Вас.",
-    "question_qst_4": "За кого е най-подходяща платформата?",
-    "answer_qst_4": "Платформата е изключително подходяща за счетоводни кантори, които обслужват много фирми. Това се дължи на факта, че осчетоводяването на една фирма става 80% по-бързо. Ако сте въвеждали всички фактури за една фирма ръчно, сега всичката тази дейност се автоматизира с OCR и изкуствен интелект, който дигитализира фактурите.",
-    "question_qst_5": "С платформата мога ли да правя отчети, свързани с ЗДДС и годишни отчети за фирми и физически лица?",
-    "answer_qst_5": "Да, това е основната функционалност на платформата. С едно натискане на бутон се прави ДДС отчет за фирмата и се генерират 3 готови txt файла, предназначени за пращане към НАП. Отделно се генерират 3 екселски файла със справка на покупките и продажбите, които може да се изпратят в четим вид за вашата фирмена клиентела.",
-    "question_qst_6": "Каква е цената за използване на платформата?",
-    "answer_qst_6": "Не, няма никакви такси - тя е напълно безплатна. Можете да използвате системата напълно безплатно с всичките й функционалности.",
-    "question_qst_7": "Има ли модул за дигитални фактури?",
-    "answer_qst_7": "Да, има. Дори е напълно безплатен и достъпен за всички. Безплатен е, за да може да го дадете на вашите клиенти, за да могат те да правят безплатно фактурите си в дигитален вид, а после вие само да ги експортирате към предпочитания от вас счетоводен софтуер. Или може да използвате OCR функционалността и да въведете всякакъв друг формат на фактури в системата.",
-    "question_qst_8": "Какво да правя след като въведа всички фактури за месеца с помощта на OCR?",
-    "answer_qst_8": "С един бутон можете да експортирате котировките в подходящ формат за Ажур, Бизнес Навигатор, Микроинвест и други и да улесните счетоводството на фирмата."
+    "title": "Frequently Asked Questions",
+    "question_qst_1": "Do accountants need to install the program on their computers?",
+    "answer_qst_1": "No, the program is installed on the Cloud. It can be accessed by anyone with internet access and a computer. Soon, it will also be accessible through a mobile application.",
+    "question_qst_2": "In which platforms can you import the extracted data from the invoices?",
+    "answer_qst_2": "The platform supports: XERO, QuickBooks, FreshBooks, WAVE, Sage and Zoho. Others platforms will be added soon.",
+    "question_qst_3": "What should be done if some data is not extracted from the invoice?",
+    "answer_qst_3": "If this happens, you can manually add the missing data or upload the invoice again to re-recognize the missing data. We try to make it perfect as we can. We will help you to reduce the manual work but not to remove it completely.",
+    "question_qst_4": "Does the platform have access to my documents in XERO?",
+    "answer_qst_4": "No, the platform uses CSV files for import and does not have access to your clients' data in XERO or other platforms. This makes us unique and ensures the safety of your data.",
+    "question_qst_5": "Can the platform be used only in specific regions?",
+    "answer_qst_5": "The platform can be used worldwide with any type of invoice, as it extracts data and taxes from the invoice without making individual calculations based on the region.",
+    "question_qst_6": "What is the price of the platform?",
+    "answer_qst_6": "It is free, and you can use all its functions.",
+    "question_qst_7": "What languages are supported for data extraction by the platform?",
+    "answer_qst_7": "It can extract data from invoices in English.",
+    "question_qst_8": "What should be done with the invoices after data extraction?",
+    "answer_qst_8": "You must verify that the data is correctly extracted and then export them to CSV to import into XERO, QuickBooks, FreshBooks, WAVE, and Zoho."
   },
   "free_digital_invoices": {
-    "title": "Безплатни фактури",
+    "title": "Free Invoices",
     "title_abt_1": "",
-    "label_fdi_1": "Безплатен модул за направа на дигитални фактури, който можете да предоставите на вашите клиенти, за да не Ви дават ръчно написани фактури. По този наичн спестявате време на тях и на Вас.",
+    "label_fdi_1": "A free module for creating digital invoices that you can provide to your clients, so they don't have to manually write invoices. This saves time for both them and you.",
     "title_abt_2": "",
-    "label_fdi_2": "Autocomplete на данните за получател на фактурата и издал фактурата. Мигновенно попълване на данните без да се налага да ги въвеждате в собствен сипък който да ползвате после,както повечето системи за фактуриране ползват. Имате целия списък на всички фирми в България, техните ЕИК, име на фирмата, собственник и адрес \"на готово\"!",
+    "label_fdi_2": "Autocomplete of data for invoice recipient and issuer. Instant data filling without the need to enter them manually into a template to use later, as most invoicing systems do. You have the complete list of all companies in Bulgaria, their VAT numbers, company names, owners, and addresses \"ready to use\"!",
     "title_abt_3": "",
-    "label_fdi_3": "Осчетоводяване от всяка една точка на България само с достъп до интернет.",
+    "label_fdi_3": "Accounting from any point in Bulgaria with just an internet connection.",
     "title_abt_4": "",
-    "label_fdi_4": "Проверка и счетоводни справи през телефона Ви без да се налга да достъпвате компютъра си в офиса.",
+    "label_fdi_4": "Check and manage accounting matters through your phone without having to access your office computer.",
     "title_abt_5": "",
-    "label_fdi_5": "Възможност за дистанционна работа от вкъщи и \"Home office\" без да се налага да носите лаптопа или компютъра си до вкъщи.",
+    "label_fdi_5": "Opportunity for remote work from home or \"Home office\" without the need to carry your laptop or computer home.",
     "title_abt_6": "",
-    "label_fdi_6": "Направете си акаунт напълно безплатно и ползвайте пълната фунционалност на системата за 2 месеца."
+    "label_fdi_6": "Create an account completely free and use the full functionality of the system for 2 months."
   },
   "why_choose_use": {
-    "title": "Защо да изберете нас?",
-    "title_1": "Нашата платформа е напълно БЕЗПЛАТНА за всички функционалности на системата. Вие можете 1) да експортирате фактурите, които вашият клиент е създал в системата или 2) ако не са създадени в системата, да ги превърнете в котировки с нашия OCR. Имате и експорт на котировки към счетоводен софтуер с две кликвания на мишката.",
-    "title_2": "One-click генериране на ДДС месечен отчет и списък с покупки и продажби. В точен формат txt, готови за пращане към НАП и ексел файлове за клиента. Няма нужда да въвеждате всичко ръчно, всички фактури се качват с OCR в системата за секунди.",
-    "title_3": "OCR обработка и дигитализиране на фактури и котировки за секунди, без ограничение на броя или размера.",
-    "title_4": "GO-GREEN! GO PAPERLESS! Ние се грижим за природата и за нейната опазване. Като използваме дигитални фактури вместо хартиени, спасяваме дървесина всеки ден. Това е нашата мисия и цел. Присъедини се и ти.",
-    "title_5": "Лесен за използване UX. Лесни менюта и функционалности, за разлика от други платформи с тежки менюта и сложности за работа.",
-    "title_6": "Модерен дизайн, приятен за работа.",
-    "title_7": "Екпорт на котировките към всички счетоводни платфоми на пазара в точния формат. Кажете на Вашите фирми клиенти да правят фактурите си в нашата система с красиви дизайнерски с лого и после Вие само ги екпортирайте и спестете време от тяхното ръчно въвеждане.",
-    "title_8": "Фирмени досиета, направа на дизайнерски фактури безплатно, Достъп от всякъде,  Отчети чл. 117, ал. 1 от ЗДДС подходяща за Freelancers, Автоматично извличане на котировки от фактури."
+    "title": "Why choose our platform",
+    "title_1": "Our platform is completely FREE for all system functionalities. You can extarct data from any type of invoices and to import in Xero, Freshbooks QucickBooks, Wave, Sage, Zoho etc.",
+    "title_2": "Super fast data extarction of invoices. You can relax with coffee and leave the heavy lifting to us.",
+    "title_3": "OCR processing and digitization of invoices and data extraction in seconds, with no limits on the number or size",
+    "title_4": "GO-GREEN! GO PAPERLESS! We care about nature and its preservation. By using digital invoices instead of paper ones, we save trees every day. This is our mission and goal. Join us.",
+    "title_5": "User-friendly UX. Easy-to-navigate menus and features, unlike other platforms with cumbersome menus and complexities.",
+    "title_6": "Modern design, pleasant to work with.",
+    "title_7": "Import in the following platforms : XERO, Qucik Books, FresBooks, Sage, Wave, Zoho and etc",
+    "title_8": "Corporate profiles, free designer invoice creation, access from anywhere, Automatic extraction of data from invoices no matter of the template and type."
   },
   "companies": {
+    "platform": "Platform",
     "unfinished_vat_reports": "Unfinished Vat Reports",
     "unverified_invoice": "Unverified Invoice",
     "add_company": "Add Company",
@@ -599,74 +601,26 @@
   "videos_content": [
     {
       "video": {
-        "link": "https://www.youtube.com/embed/U2omQ7aMCQs",
-        "title": "Как да се регистрирам за БЕЗПЛАТНАТА платформа"
+        "link": "https://www.youtube.com/embed/bu2EzaNvhVQ",
+        "title": "FREE OCR for FRESH BOOKS!!! Digitalise Invoices and receipts and Import as Expenses in Freshbooks - REMOVE MANUAL WORK"
       }
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/j2-bzPTFTPU",
-        "title": "Създаване на фирмено досие за секунди"
+        "link": "https://www.youtube.com/embed/L4XnWvEe4yQ",
+        "title": "FREE OCR of invocies for XERO!!! Convert scanned invocies for import in XERO - REMOVE MANUAL WORK"
       }
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/PjoTtfjMxqo",
-        "title": "Бързи Copy and Paste бутони при фирмено досие"
+        "link": "https://www.youtube.com/embed/s0mOvbqwDJQ",
+        "title": "FREE OCR for XERO!!! Steps to verify and approve the invocies and prepare them for export to XERO"
       }
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/Z9O7AQhVrqw",
-        "title": "Създаване на красиви дизайнерски фактури с опция за лого и избор на цвят"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/asoqLGP1q0o",
-        "title": "Основно табло с напомняния и уиджети - какво има на него и как то ни помага"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/Den_y9vehdc",
-        "title": "Безплатен OCR на фактури - бързо и лесно"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/zSSf1znfJo4",
-        "title": "100 фактури конвертирани в котировки само за 1 минута и 40 секунди с Масов OCR на системата"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/vCt6p9DPQg0",
-        "title": "Безплатен Масов OCR на фактури - буквално за секунди и напълно безплатно"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/DASXrGxFNLo",
-        "title": "Експортиране на котировките за секунди към Микроинвест"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/0mmlSpC-zVw",
-        "title": "Периодични безплатни фактури (месечно или седмично) в нашата система"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/fNDQLuq4_40",
-        "title": "Генериране на Отчети по чл. 117, ал. 1 от ЗДДС за секунди"
-      }
-    },
-    {
-      "video": {
-        "link": "https://www.youtube.com/embed/U2omQ7aMCQs",
-        "title": "Как се съхраняват фирмени документи за водене на фирма"
+        "link": "https://www.youtube.com/embed/RpODTA6jQ6g",
+        "title": "FREE OCR for XERO!!!Import sales and bill in xero platform"
       }
     }
   ],
@@ -712,5 +666,19 @@
   "unlimited_space": "Unlimited Space",
   "unlimited_digital_invoices": "Unlimited Digital Invoices",
   "click_monthly_vat_report": "1 click Monthly Vat Reports (incl. txt and excel)",
-  "yearly_reports": "Yearly Reports (excel)"
+  "yearly_reports": "Yearly Reports (excel)",
+  "featureLable1": "FREE data extraction from invoices",
+  "featureLable2": "FREE OCR of invoices",
+  "featureLable3": "Export and Import of extracted data from the invoices to XERO Online",
+  "featureLable4": "Export and Import of extracted data from the invoices to Quick Books",
+  "featureLable5": "Export and Import of extracted data from the invoices to Fresh Books",
+  "featureLable6": "Free designer digital invoices with logo",
+  "featureLable7": "Wall reminder for the unverified invoices",
+  "featureLable8": "Reminders for scheduled invoices",
+  "featureLable9": "Upload of company documents for managing a company",
+  "featureLable10": "Online Acces from internet from every point of the world",
+  "featureLable11": "Autocomplete of the company data during creation of a company dossier",
+  "featureLable12": "Super easy to use and export",
+  "featureLable13": "Beautiful design",
+  "featureLable14": "Enjoy the FREE platform"
 }
