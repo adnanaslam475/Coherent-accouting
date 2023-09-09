@@ -387,11 +387,11 @@ export default {
       await this.getUserLocationViaIp(myJson.ip)
     },
     async getUserLocationViaIp(ip) {
-      const response = await fetch(`http://ip-api.com/json/${ip}`)
+      const response = await fetch(`https://ipapi.co/${ip}/json/`)
       const myJson = await response.json()
       localStorage.setItem('location', JSON.stringify(myJson))
-      if (myJson.countryCode.toLowerCase() === 'bg') {
-        myJson.locale = myJson.countryCode.toLowerCase()
+      if (myJson.country.toLowerCase() === 'bg') {
+        myJson.locale = myJson.country.toLowerCase()
         this.changeLanguage(myJson)
         localStorage.setItem('language', 'bg')
       } else {
