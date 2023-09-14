@@ -6,11 +6,9 @@
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
       <b-form @submit.prevent="invoiceEdit(invoiceData, 'save', AccountTypeOption)">
         <b-row v-if='invoiceData.binaryId' class="invoice-add">
-          <b-col cols="12" xl="4" md="4">
+          <b-col cols="12" xl="3" md="3">
             <div ref="viewerContainer">
-              <img
-                src="https://media.istockphoto.com/id/1358918776/photo/water-drops-on-the-stalks-of-the-field-grass-natural-plant-texture-in-green-natural-tones.webp?b=1&s=612x612&w=0&k=20&c=sfzJgbf2a25-VJeTLKW0w5FCopn8abkvqUOZvOS9Etc="
-                data-original="image1.jpg" alt="Image 1">
+              <img :src="invoiceImage" data-original="image1.jpg" alt="Image 1">
             </div>
             <button @click="zoomIn()">Zoom In</button>
             <button @click="zoomOut()">Zoom Out</button>
@@ -19,7 +17,7 @@
 
           </b-col>
 
-          <b-col cols="12" xl="6" md="6">
+          <b-col cols="12" xl="7" md="7">
             <b-tabs v-model="companyTab">
               <!-- Company-Info tab -->
               <b-tab>
@@ -6683,6 +6681,7 @@ export default {
     const showLogo = ref(null);
 
     const logoToUpload = ref("");
+    const invoiceImage = ref("")
 
     const isBlue = ref(false);
     const isPurple = ref(false);
@@ -6815,6 +6814,31 @@ export default {
                     response.data.creatorSignature; // Add this if you have a signature
                   invoiceData.value.recipientSignature =
                     response.data.recipientSignature;
+                };
+              }
+            })
+            .catch();
+        }
+        if (invoiceData.value.binaryId) {
+          axios
+            .get(
+              `${axios.defaults.baseURL}/binaries/api/get-binary/${invoiceData.value.binaryId}/${router.currentRoute.params.companyId}`,
+              { responseType: "blob" }
+            )
+            .then((response) => {
+              if (response.status === 200) {
+
+
+                const reader = new FileReader();
+                reader.readAsDataURL(response.data);
+
+                reader.onload = function () {
+                  const filePath = reader.result;
+                  invoiceImage.value = filePath;
+
+
+                  console.log(filePath);
+
                 };
               }
             })
@@ -7512,6 +7536,7 @@ export default {
       companyInfo,
       populateValues,
       logoToUpload,
+      invoiceImage,
       showLogo,
       isUploading,
       isTemplateFive,
