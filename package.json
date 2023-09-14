@@ -55,6 +55,7 @@
     "uuid": "^7.0.3",
     "validate-vat": "^0.9.0",
     "vee-validate": "3.4.5",
+    "viewerjs": "^1.11.5",
     "vue": "2.6.12",
     "vue-apexcharts": "1.6.0",
     "vue-autosuggest": "2.2.0",
