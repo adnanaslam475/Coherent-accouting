@@ -62,7 +62,7 @@
     "list_invoices": "List Invoices"
   },
   "features": {
-    "title": "Latest Features",
+    "title": "Our FREE Features",
     "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs."
   },
   "partners": {
@@ -167,6 +167,7 @@
     "label_abt_1": "What is Coherent Accounting?",
     "desc_abt_1": "Coherent Accounting is FREE revolutional platform for accountants and bookkeepers. It reduces the manual work for inputting invoices data into Accouning platform such as XERO, Quick Books, FreshBooks, WAVE, Zoho and etc.It reduces the manual work up to 80%. Specially for people who want to be more productive and to safe boring manual tasks. With OCR and Artiffiicaial Intelligence the system extract all data from the invocies.",
     "label_abt_2": "OCR of Invoices annd Digitalization",
+    "desc_abt_2": "You can reduce the paper waste and help the nature while go paperless. You only digital invoices and together we will safe the planet",
     "label_abt_3": "FREE Invoices module",
     "desc_abt_3": "The free module allows for invoice creation, which can be used by your clients. You only need to export them to the necessary accounting software you use - such as XERO, QuickBooks, FreshBooks, WAVE , Zoho and others.",
     "label_abt_4": "Tax Reports",
@@ -180,10 +181,10 @@
     "title": "Frequently Asked Questions",
     "question_qst_1": "Do accountants need to install the program on their computers?",
     "answer_qst_1": "No, the program is installed on the Cloud. It can be accessed by anyone with internet access and a computer. Soon, it will also be accessible through a mobile application.",
-    "question_qst_2": "Which platforms can you export the extracted data from the invoices to?",
-    "answer_qst_2": "The platform supports: XERO, QuickBooks, FreshBooks, WAVE, and Zoho. Others platforms will be added soon.",
+    "question_qst_2": "In which platforms can you import the extracted data from the invoices?",
+    "answer_qst_2": "The platform supports: XERO, QuickBooks, FreshBooks, WAVE, Sage and Zoho. Others platforms will be added soon.",
     "question_qst_3": "What should be done if some data is not extracted from the invoice?",
-    "answer_qst_3": "If this happens, you can manually add the missing data or upload the invoice again to re-recognize the missing data.",
+    "answer_qst_3": "If this happens, you can manually add the missing data or upload the invoice again to re-recognize the missing data. We try to make it perfect as we can. We will help you to reduce the manual work but not to remove it completely.",
     "question_qst_4": "Does the platform have access to my documents in XERO?",
     "answer_qst_4": "No, the platform uses CSV files for import and does not have access to your clients' data in XERO or other platforms. This makes us unique and ensures the safety of your data.",
     "question_qst_5": "Can the platform be used only in specific regions?",
@@ -211,15 +212,15 @@
     "label_fdi_6": "Create an account completely free and use the full functionality of the system for 2 months."
   },
   "why_choose_use": {
-    "title": "Защо да изберете нас?",
-    "title_1": "Нашата платформа е напълно БЕЗПЛАТНА за всички функционалности на системата. Вие можете 1) да експортирате фактурите, които вашият клиент е създал в системата или 2) ако не са създадени в системата, да ги превърнете в котировки с нашия OCR. Имате и експорт на котировки към счетоводен софтуер с две кликвания на мишката.",
-    "title_2": "One-click генериране на ДДС месечен отчет и списък с покупки и продажби. В точен формат txt, готови за пращане към НАП и ексел файлове за клиента. Няма нужда да въвеждате всичко ръчно, всички фактури се качват с OCR в системата за секунди.",
-    "title_3": "OCR обработка и дигитализиране на фактури и котировки за секунди, без ограничение на броя или размера.",
-    "title_4": "GO-GREEN! GO PAPERLESS! Ние се грижим за природата и за нейната опазване. Като използваме дигитални фактури вместо хартиени, спасяваме дървесина всеки ден. Това е нашата мисия и цел. Присъедини се и ти.",
-    "title_5": "Лесен за използване UX. Лесни менюта и функционалности, за разлика от други платформи с тежки менюта и сложности за работа.",
-    "title_6": "Модерен дизайн, приятен за работа.",
-    "title_7": "Екпорт на котировките към всички счетоводни платфоми на пазара в точния формат. Кажете на Вашите фирми клиенти да правят фактурите си в нашата система с красиви дизайнерски с лого и после Вие само ги екпортирайте и спестете време от тяхното ръчно въвеждане.",
-    "title_8": "Фирмени досиета, направа на дизайнерски фактури безплатно, Достъп от всякъде,  Отчети чл. 117, ал. 1 от ЗДДС подходяща за Freelancers, Автоматично извличане на котировки от фактури."
+    "title": "Why choose our platform",
+    "title_1": "Our platform is completely FREE for all system functionalities. You can extarct data from any type of invoices and to import in Xero, Freshbooks QucickBooks, Wave, Sage, Zoho etc.",
+    "title_2": "Super fast data extarction of invoices. You can relax with coffee and leave the heavy lifting to us.",
+    "title_3": "OCR processing and digitization of invoices and data extraction in seconds, with no limits on the number or size",
+    "title_4": "GO-GREEN! GO PAPERLESS! We care about nature and its preservation. By using digital invoices instead of paper ones, we save trees every day. This is our mission and goal. Join us.",
+    "title_5": "User-friendly UX. Easy-to-navigate menus and features, unlike other platforms with cumbersome menus and complexities.",
+    "title_6": "Modern design, pleasant to work with.",
+    "title_7": "Import in the following platforms : XERO, Qucik Books, FresBooks, Sage, Wave, Zoho and etc",
+    "title_8": "Corporate profiles, free designer invoice creation, access from anywhere, Automatic extraction of data from invoices no matter of the template and type."
   },
   "companies": {
     "platform": "Platform",
