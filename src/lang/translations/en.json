@@ -298,7 +298,7 @@
   },
   "company_invoices": {
     "ocr_import": "OCR Import",
-    "add_invoice": "Add Invoice",
+    "add_invoice": "Add Document",
     "ok-title": "Exports",
     "add_from_file": "Add From File",
     "update_invoice": "Update",
