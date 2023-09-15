@@ -438,19 +438,19 @@
     "readAll": "Read all notifications"
   },
   "clients_or_recipients": {
-    "add_user": "Add User",
-    "user": "User",
-    "identification_no": "Identification Number",
-    "vat_id": "Vat Identification Number",
-    "id_card": "ID Card Number",
+    "add_user": "Add Customer",
+    "user": "Customer Name",
+    "identification_no": "Company ID",
+    "vat_id": "Tax ID",
+    "id_card": "Bank ID",
     "entries": "Entries",
     "show": "Show",
-    "add_new_user": "Add New User",
-    "full_name": "Full Name",
+    "add_new_user": "Add New Customer",
+    "full_name": "Company Name",
     "add": "Add",
     "cancel": "Cancel",
-    "delete_client": "Delete Client",
-    "delete_client_confirm": "Are you sure you want to delete this Client?"
+    "delete_client": "Delete Customer",
+    "delete_client_confirm": "Are you sure you want to delete this Customer?"
   },
   "tickets_page": {
     "add_new_ticket": "Add New Ticket",
