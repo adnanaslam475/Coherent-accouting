@@ -290,10 +290,10 @@
   "company_tabs": {
     "CreditNotifications": "Credit Notifications",
     "DebitNotifications": "Debit Notifications",
-    "multiple_upload": "Multiple Uploads",
+    "multiple_upload": "Bulk OCR Docs",
     "vat_reports": "Tax Reports",
     "yearly_reports": "Yearly Reports",
-    "company_documents": "Company Documents",
+    "company_documents": "Files Storage",
     "clients_or_recipients": "Customers"
   },
   "company_invoices": {
