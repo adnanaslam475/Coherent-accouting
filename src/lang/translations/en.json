@@ -294,7 +294,7 @@
     "vat_reports": "Vat Reports",
     "yearly_reports": "Yearly Reports",
     "company_documents": "Company Documents",
-    "clients_or_recipients": "Clients"
+    "clients_or_recipients": "Customers"
   },
   "company_invoices": {
     "ocr_import": "OCR Import",
@@ -383,7 +383,7 @@
     "reports": "Reports"
   },
   "company_documents": {
-    "add_asset": "Add Asset",
+    "add_asset": "Add Document",
     "media": "Media",
     "notes": "Notes",
     "create": "Create",
@@ -542,7 +542,7 @@
     "bank_name": "Банка",
     "non_vat_clause": "Non VAT Clause",
     "not_recognised_01": "If your invoice is not recognized, Please send it to email: ",
-    "not_recognised_02": "coherent-accounting@gmail.com ",
+    "not_recognised_02": "admin@coherent-accounting.com",
     "not_recognised_03": "and we will make it work for FREE for you.",
     "verify": "Approve",
     "CREDIT_NOTIFICATION": "Credit Notification",
@@ -584,7 +584,7 @@
     "goods": "Goods",
     "expensesExternalServices": "Expenses External Services",
     "taxPurchase": "Tax Purchase",
-    "clients": "Clients",
+    "clients": "Customers",
     "taxSales": "Tax Sales",
     "incomeSalesGoods": "Income Sales Goods",
     "test": "Test",
@@ -642,10 +642,10 @@
   "taxPurchase": "Tax Purchase",
   "taxSales": "Tax Sales",
   "userName": "User Name",
-  "clients": "Clients",
+  "clients": "Customers", 
   "home": "Home",
   "dashboard": "Dashboard",
-  "invoices": "Invoices",
+  "invoices": "Approved Documents",
   "videos": "Video lessons",
   "tickets": "Tickets",
   "my-plans": "My Plans",

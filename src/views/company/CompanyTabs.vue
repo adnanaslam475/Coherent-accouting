@@ -42,7 +42,7 @@
           @state="updateVatReportsTab($event)" />
       </b-tab>
 
-      <!-- credit notifications Tab -->
+      <!-- credit notifications 
       <b-tab>
         <template #title>
           <feather-icon icon="CreditCardIcon" />
@@ -52,7 +52,7 @@
         <YearlyReport v-if="companyTab == 4 || creditNotifications" />
       </b-tab>
 
-      <!-- debit notifications Tab -->
+
       <b-tab>
         <template #title>
           <feather-icon icon="CreditCardIcon" />
@@ -61,7 +61,7 @@
         </template>
         <YearlyReport v-if="companyTab == 5 || debitNotifications" />
       </b-tab>
-
+      Tab -->
 
       <!-- Documents tab -->
       <b-tab>
@@ -69,7 +69,7 @@
           <feather-icon icon="FolderIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.company_documents') }}</span>
         </template>
-        <Document v-if="companyTab == 6 || companyDocumentsActive" />
+        <Document v-if="companyTab == 4 || companyDocumentsActive" />
       </b-tab>
 
       <!--Private Person tab -->
@@ -78,7 +78,7 @@
           <feather-icon icon="UserIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t('company_tabs.clients_or_recipients') }}</span>
         </template>
-        <PrivatePersons v-if="companyTab == 7 || privatePersonActive" :add-record="addRecord"
+        <PrivatePersons v-if="companyTab == 5 || privatePersonActive" :add-record="addRecord"
           @state="updateAddRecord($event)" />
       </b-tab>
 
