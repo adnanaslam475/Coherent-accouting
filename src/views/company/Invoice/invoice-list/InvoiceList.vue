@@ -14,7 +14,38 @@
               :clearable="false"
               class="per-page-selector d-inline-block ml-50 mr-1"
             /> -->
-          <b-button variant="primary" class="mr-1" :to="{
+
+            <b-dropdown text="Add Document" variant="primary"  class="mr-1" id="invoice-add" >
+                  <b-dropdown-item :to="{
+                 name: 'company-invoice-add',
+                 params: {
+                  companyId: $route.params.companyId
+                     ? $route.params.companyId
+                   : $route.params.id,
+             },
+          }" @click="actionTab"> 
+          <feather-icon icon="CommandIcon" class="mr-1" />  
+          {{ $t("company_invoices.manual") }}
+        </b-dropdown-item>
+                <b-dropdown-item @click="UploadFile()"> 
+                   <feather-icon icon="UploadCloudIcon" class="mr-1"/> 
+                         {{ $t("company_invoices.upload") }}
+      
+       <!-- <label class="">
+        {{ $t("company_invoices.upload") }}
+          <input type="file" style="display: none" @click.prevent @input="addfile(companyId)"/>
+        </label> -->
+
+      <!-- <feather-icon icon="UploadCloudIcon" class="mr-1"/>
+           <b-spinner v-if="fileLoading" small variant="light" /> 
+           <feather-icon icon="UploadCloudIcon" class="mr-1" v-else/>  -->
+      <!-- <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" /> --> 
+                    </b-dropdown-item>
+                  </b-dropdown>
+                  <b-tooltip target="invoice-add" placement="bottom">Add Receipts, Invoices and Bills</b-tooltip>
+
+          
+                  <!-- <b-button variant="primary" class="mr-1" :to="{
             name: 'company-invoice-add',
             params: {
               companyId: $route.params.companyId
@@ -23,22 +54,23 @@
             },
           }" @click="actionTab">
             {{ $t("company_invoices.add_invoice") }}
-            <!-- Add Invoice -->
-          </b-button>
-          <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
+          </b-button> -->
+          
+          <!-- <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
             <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" />
 
             <b-spinner v-if="fileLoading" small variant="light" />
             {{ $t("company_invoices.add_from_file") }}
-            <!-- Add From File -->
+         
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
-          </b-button>
-          <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive" v-else>
+          </b-button> -->
+          <!-- <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive" v-else>
 
             {{ $t("company_invoices.add_from_file") }}
-            <!-- Add From File -->
+           
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
-          </b-button>
+          </b-button> -->
+
           <!--Add the third button name export-->
           <!-- Export Invoice Button -->
           <b-button variant="primary" class="mr-1 cursor-button" :disabled="!isActive" v-if="platform == 'FRESH_BOOKS'">
@@ -46,6 +78,7 @@
             <b-form-file ref="imageUploader" class="file-input2" multiple @change="addExportFile" :disabled="!isActive" />
             <b-spinner v-if="fileLoadingExport" small variant="light" />
             {{ $t("company_invoices.ocr_import") }}
+          
             <!-- Add From File -->
 
           </b-button>
@@ -54,6 +87,30 @@
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>
+
+          <!-- Add From File Modal -->
+          <b-modal id="add_invoice" ref="add_invoice_modal" title="Add From File" hide-footer="true"
+            :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" @show="resetModal" @ok="handleOk">
+            <b-row  class="text-center my-3">
+              <b-col md="12">
+            <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
+            <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" />
+
+            <b-spinner v-if="fileLoading" small variant="light"  class="mr-1" />
+            {{ $t("company_invoices.add_from_file") }}
+            <!-- Add From File -->
+            <svg-icon width="20" height="20" class="file-upload " type="mdi" :path="path" />
+          </b-button>
+          <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive" v-else>
+            {{ $t("company_invoices.add_from_file") }}
+            <!-- Add From File -->
+            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
+          </b-button>
+        </b-col>
+      </b-row>
+    </b-modal>
+
+
 
           <!-- Date Picker Modal -->
 
@@ -678,6 +735,10 @@ export default {
 
 
   methods: {
+    UploadFile() {
+      this.$refs.add_invoice_modal.show();
+    },
+
     getMyCurrentPlan() {
       let token = useJwt.getToken();
       useJwt
@@ -1201,9 +1262,7 @@ export default {
     },
 
     addfile(companyId) {
-
-
-
+    
       this.fileLoading = true;
       const token = useJwt.getToken();
       const formData = new FormData();

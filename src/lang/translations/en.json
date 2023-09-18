@@ -297,6 +297,8 @@
     "clients_or_recipients": "Customers"
   },
   "company_invoices": {
+    "upload": "Upload",
+    "manual": "Manual (typed)",
     "ocr_import": "OCR Import",
     "add_invoice": "Add Document",
     "ok-title": "Exports",
