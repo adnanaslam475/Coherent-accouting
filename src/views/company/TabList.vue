@@ -41,7 +41,7 @@
         <feather-icon icon="FlagIcon" />
         {{ $t("company_tabs.vat_reports") }}
       </b-nav-item>
-      <b-nav-item
+      <!-- <b-nav-item
         :to="{
           name: 'CompanyView',
           params: { InvoiceId: 4, id: $route.params.companyId },
@@ -50,8 +50,8 @@
       >
         <feather-icon icon="CreditCardIcon" />
         {{ $t("company_tabs.CreditNotifications") }}
-      </b-nav-item>
-      <b-nav-item
+      </b-nav-item> -->
+      <!-- <b-nav-item
         :to="{
           name: 'CompanyView',
           params: { InvoiceId: 4, id: $route.params.companyId },
@@ -60,7 +60,7 @@
       >
         <feather-icon icon="CreditCardIcon" />
         {{ $t("company_tabs.DebitNotifications") }}
-      </b-nav-item>
+      </b-nav-item> -->
       <b-nav-item
         :to="{
           name: 'CompanyView',

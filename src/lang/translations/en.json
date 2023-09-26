@@ -297,6 +297,7 @@
     "clients_or_recipients": "Customers"
   },
   "company_invoices": {
+    "close": "Close",
     "upload": "Upload",
     "manual": "Manual (typed)",
     "ocr_import": "OCR Import",
@@ -644,7 +645,7 @@
   "taxPurchase": "Tax Purchase",
   "taxSales": "Tax Sales",
   "userName": "User Name",
-  "clients": "Customers", 
+  "clients": "Customers",
   "home": "Home",
   "dashboard": "Dashboard",
   "invoices": "Approved Documents",
