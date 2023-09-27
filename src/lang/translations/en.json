@@ -465,6 +465,8 @@
     "RESOLVED": "RESOLVED"
   },
   "add_invoice": {
+    "caetgory": "CATEGORY",
+    "job_cost_code": "JOB COST CODE",
     "PleaseEnterTheCompanyID": "Please enter the company id of ",
     "SupplierCompanyOwnerName": "Supplier Company Agent Name ...",
     "SupplierCompanyName": "Supplier Company Name...",

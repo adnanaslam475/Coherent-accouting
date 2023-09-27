@@ -29,7 +29,7 @@
             </b-row>
 
             <b-row class="w-100 mx-0">
-              <b-col cols="12" xl="4" md="4" class="p-2" style="">
+              <b-col cols="12" xl="6" md="6" class="p-2" style="">
                 <!-- <XeroInvvoices v-if='invoiceData.binaryId' :invoiceData='invoiceData' :binaryImage='invoiceImage'/> -->
                 <!-- <image-zoom :regular="invoiceImage" :zoom="invoiceImage"> </image-zoom> -->
 
@@ -76,7 +76,7 @@
                 </div>
               </b-col>
 
-              <b-col cols="12" xl="8" md="8" style="border-left: 1px dashed lightgrey">
+              <b-col cols="12" xl="6" md="6" style="border-left: 1px dashed lightgrey">
                 <b-tabs v-model="companyTab">
                   <!-- Company-Info tab -->
 
@@ -225,20 +225,46 @@
                         </div>
                       </b-col>
                       <b-col class="px-0 text-end">
-                        <div class="d-flex mr-0text-end" style="flex-direction: column; float: right">
+                        <div class="d-flex mr-0 flex-column float-right">
                           <div class="text-uppercase grey-text-color">INVOICE #</div>
                           <div class="pt-1">
-                            {{ invoiceData.invoiceNumber }}
+                            <b-button
+                              class="p-0 m-0"
+                              variant="link"
+                              @click="showInvoiceInput = true"
+                              v-if="!showInvoiceInput"
+                              >{{ invoiceData.invoiceNumber }}</b-button
+                            >
+                            <b-form-input
+                              v-if="showInvoiceInput"
+                              v-model="invoiceData.invoiceNumber"
+                              type="text"
+                              class="mb-0"
+                              style="width: 130px"
+                            />
                           </div>
                         </div>
                       </b-col>
                     </b-row>
-                    <b-row class="mt-2 mx-0 pb-3">
+                    <b-row class="mt-2 mx-0 pb-1">
                       <b-col class="pl-0">
                         <div class="d-flex" style="flex-direction: column">
-                          <div class="text-uppercase grey-text-color">Currency</div>
+                          <div class="text-uppercase grey-text-color">{{ $t("add_invoice.currency") }}</div>
                           <div class="pt-1">
-                            {{ invoiceData.currency }}
+                            <b-button
+                              class="p-0 m-0"
+                              variant="link"
+                              @click="showinvoiceCurrency = true"
+                              v-if="!showinvoiceCurrency"
+                              >{{ invoiceData.currency }}</b-button
+                            >
+                            <b-form-input
+                              v-if="showinvoiceCurrency"
+                              v-model="invoiceData.currency"
+                              type="text"
+                              class="mb-0"
+                              style="width: 100px"
+                            />
                           </div>
                         </div>
                       </b-col>
@@ -257,7 +283,34 @@
                         </div> -->
                         <div class="d-flex" style="flex-direction: column; float: right">
                           <div class="text-uppercase grey-text-color">TOTAL</div>
-                          <div class="pt-1">00</div>
+                          <h4 style="color: #625f6e">{{ invoiceData.totalAmount }}</h4>
+                        </div>
+                      </b-col>
+                    </b-row>
+                    <b-row class="pb-3">
+                      <b-col cols="9">
+                        <p class="invoice-total-title">{{ $t("add_invoice.vat") }}:</p>
+                      </b-col>
+                      <b-col cols="3">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-amount">
+                            <validation-provider #default="{ errors }" name="vat" ref="vatPercent">
+                              <b-input-group class="input-group-merge invoice-edit-input-group">
+                                <b-form-input
+                                  v-model="invoiceData.vatPercent"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+
+                                <b-input-group-append is-text>
+                                  <span>%</span>
+                                </b-input-group-append>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
                         </div>
                       </b-col>
                     </b-row>
@@ -273,7 +326,7 @@
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div class="d-none d-lg-flex p-custom">
                                 <b-row
-                                  class="flex-grow-1 px-1 invoice-add-transections pb-1"
+                                  class="flex-grow-1 invoice-add-transections pb-1"
                                   style="border-bottom: 1px solid lightgrey"
                                 >
                                   <!-- Single Item Form Headers -->
@@ -294,7 +347,7 @@
                                     class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
-                                    CATEGORY
+                                    {{ $t("add_invoice.caetgory") }}
                                   </b-col>
                                   <b-col
                                     v-if="invoiceData.xero"
@@ -303,7 +356,7 @@
                                     class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
-                                    JOB COST CODE
+                                    {{ $t("add_invoice.job_cost_code") }}
                                   </b-col>
 
                                   <b-col
@@ -370,18 +423,14 @@
                                 {{ $t("add_invoice.total_price") }}
                               </b-col> -->
                                 </b-row>
-                                <div class="form-item-action-col" />
+                                <!-- <div class="form-item-action-col" /> -->
                               </div>
 
                               <!-- Form Input Fields OR content inside bordered area  -->
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
-                              <div
-                                v-for="(item, index) in invoiceData.transactions"
-                                :key="index"
-                                class="d-flex px-custom"
-                              >
+                              <div v-for="(item, index) in invoiceData.transactions" :key="index" class="d-flex pl-2">
                                 <b-row
-                                  class="flex-grow-1 py-1 px-1 invoice-add-transections"
+                                  class="flex-grow-1 py-1 invoice-add-transections"
                                   style="border-bottom: 1px solid lightgrey"
                                 >
                                   <!-- Single Item Form Headers -->
@@ -404,7 +453,10 @@
                                   <b-col cols="12" lg="2" v-if="invoiceData.xero">
                                     <label class="d-inline d-lg-none">Category</label>
                                     <validation-provider #default="{ errors }" name="selectCategory" rules="required">
-                                      <b-form-select :options="categoryItems" v-model="selectedCategory">
+                                      <b-form-select
+                                        :options="categoryItems"
+                                        v-model="invoiceData.transactions[index].account"
+                                      >
                                       </b-form-select>
                                       <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
@@ -412,7 +464,11 @@
                                   <b-col cols="12" lg="2" v-if="invoiceData.xero">
                                     <label class="d-inline d-lg-none">Job Post Code</label>
                                     <validation-provider #default="{ errors }" name="postCode" rules="required">
-                                      <b-form-select :options="jobPostItems" v-model="jobPostSelected"> </b-form-select>
+                                      <b-form-select
+                                        :options="jobPostItems"
+                                        v-model="invoiceData.transactions[index].taxType"
+                                      >
+                                      </b-form-select>
                                       <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
                                   </b-col>
@@ -490,6 +546,7 @@
                                       <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
                                   </b-col>
+                                  <!-- <b-col cols="12" lg="1"></b-col> -->
                                   <!-- <b-col cols="12" lg="1">
                                 <label class="d-inline d-lg-none">Currency</label>
                                 <validation-provider #default="{ errors }" name="transectionCurrency" rules="required">
@@ -531,13 +588,13 @@
                                     </validation-provider>
                                   </b-col>
                                 </b-row>
-                                <div class="d-flex justify-content-center py-50 px-25 position-relative top-custom">
+                                <div class="d-flex justify-content-center py-50 position-relative top-custom m-0">
                                   <feather-icon
                                     v-if="invoiceData.transactions.length !== 1"
                                     size="16"
                                     icon="Trash2Icon"
                                     color="red"
-                                    class="cursor-pointer"
+                                    class="cursor-pointer m-0"
                                     @click="removeItem(index)"
                                   />
                                   <feather-icon
@@ -545,7 +602,7 @@
                                     size="16"
                                     icon="Trash2Icon"
                                     color="red"
-                                    class="cursor-pointer invisible"
+                                    class="cursor-pointer invisible m-0"
                                   />
                                 </div>
                               </div>
@@ -570,24 +627,24 @@
                     >
                       <!-- Items Section -->
                       <div class="invoice-padding p-0">
-                        <div ref="form" class="repeater-form h-auto px-3">
-                          <b-row class="flex-grow-1 py-1 px-1 invoice-add-transections px-5">
+                        <div ref="form" class="repeater-form h-auto">
+                          <b-row class="flex-grow-1 py-1 px-1 invoice-add-transections">
                             <!-- Single Item Form Headers -->
 
-                            <b-col cols="12" lg="3" v-if="invoiceData.hasDropDown"></b-col>
+                            <!-- <b-col cols="12" lg="3" v-if="invoiceData.hasDropDown"></b-col>
                             <b-col cols="12" lg="3"></b-col>
-                            <b-col cols="12" lg="2"></b-col>
-                            <b-col cols="12" lg="2"></b-col>
-                            <b-col cols="12" lg="1"></b-col>
-                            <b-col cols="12" lg="2"> </b-col>
-                            <b-col cols="12" lg="1" class="pl-3">
+                            <b-col cols="12" lg="2"></b-col> -->
+                            <!-- <b-col cols="12" lg="2"></b-col> -->
+                            <!-- <b-col cols="12" lg="1"></b-col> -->
+                            <b-col cols="12" lg="10"> </b-col>
+                            <b-col cols="12" lg="1" class="pl-1">
                               <span> 0.00</span>
                             </b-col>
-                            <b-col cols="12" lg="1" class="pl-3">
+                            <b-col cols="12" lg="1" class="pl-1 text-truncate">
                               {{ invoiceData.totalAmount }}
                             </b-col>
                           </b-row>
-                          <div class="d-flex justify-content-center py-50 px-25 position-relative top-custom"></div>
+                          <div class="d-flex justify-content-center py-50 position-relative top-custom"></div>
                         </div>
                       </div>
                     </div>
@@ -8095,6 +8152,7 @@ export default {
     },
     removeItem(index) {
       this.invoiceData.transactions.splice(index, 1)
+      this.populateValues()
     },
     initTrHeight() {
       this.trSetHeight(null)
@@ -8322,6 +8380,8 @@ export default {
     },
   },
   setup() {
+    var showInvoiceInput = ref(false)
+    var showinvoiceCurrency = ref(false)
     var modelShow = ref(false)
     const categoryItems = ref()
     const jobPostItems = ref()
@@ -8332,7 +8392,20 @@ export default {
 
     function closeModel() {
       this.modelShow = false
-      this.$router.go(-1)
+      // this.$router.push({
+      //   name: "CompanyView",
+      //   params: {
+      //     id: this.$route.params.companyId,
+      //     InvoiceId: 2,
+      //   },
+      // })
+      this.$router.push({
+        name: "CompanyView",
+        params: {
+          id: router.currentRoute.params.companyId,
+          InvoiceId: 2,
+        },
+      })
     }
 
     // Register module
@@ -8435,6 +8508,7 @@ export default {
             : response.data.currency
 
         invoiceData.value = response.data
+
         if (invoiceData.value.xero) {
           axios
             .get(`${axios.defaults.baseURL}/account/api/export/get-accounts-codes-xero`, {
@@ -9189,6 +9263,8 @@ export default {
     }
 
     return {
+      showinvoiceCurrency,
+      showInvoiceInput,
       selectedCategory,
       jobPostSelected,
       jobPostItems,
