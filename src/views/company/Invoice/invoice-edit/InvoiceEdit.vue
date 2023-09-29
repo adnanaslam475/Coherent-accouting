@@ -4,7 +4,7 @@
     <!--  -->
 
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
-      <b-form @submit.prevent="invoiceEdit(invoiceData, 'save', AccountTypeOption)">
+      <b-form>
         <!-- {{ invoiceData }}
         <b-button @click="modelShow = !modelShow">Toggle Sidebar</b-button> -->
         <b-modal
@@ -185,20 +185,30 @@
                                       : ' border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
                                   "
                                   class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.documentType = 'RECEIPT'
+                                    }
+                                  "
                                   >Receipt</b-button
                                 >
                                 <b-button
                                   variant=""
                                   :style="
-                                    invoiceData.documentType == 'BILL'
+                                    invoiceData.documentType == 'INVOICE'
                                       ? 'background-color: #007AFF !important; color: white;'
                                       : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
                                   "
                                   class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.documentType = 'INVOICE'
+                                    }
+                                  "
                                   >Bill</b-button
                                 >
                               </b-button-group>
-                              <b-button-group size="md" class=" " v-else>
+                              <b-button-group size="md" v-else>
                                 <b-button
                                   variant=""
                                   :style="
@@ -207,6 +217,11 @@
                                       : ' border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
                                   "
                                   class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.documentType = 'RECEIPT'
+                                    }
+                                  "
                                   >Receipt</b-button
                                 >
                                 <b-button
@@ -217,6 +232,11 @@
                                       : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
                                   "
                                   class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.documentType = 'INVOICE'
+                                    }
+                                  "
                                   >INVOICE</b-button
                                 >
                               </b-button-group>
@@ -251,18 +271,23 @@
                         <div class="d-flex" style="flex-direction: column">
                           <div class="text-uppercase grey-text-color">{{ $t("add_invoice.currency") }}</div>
                           <div class="pt-1">
-                            <b-button
+                            <!-- <b-button
                               class="p-0 m-0"
                               variant="link"
                               @click="showinvoiceCurrency = true"
                               v-if="!showinvoiceCurrency"
                               >{{ invoiceData.currency }}</b-button
-                            >
-                            <b-form-input
+                            > -->
+                            <!-- <b-form-input
                               v-if="showinvoiceCurrency"
                               v-model="invoiceData.currency"
                               type="text"
                               class="mb-0"
+                              style="width: 100px"
+                            /> -->
+                            <b-form-select
+                              v-model="invoiceData.currency"
+                              :options="currencyOptions"
                               style="width: 100px"
                             />
                           </div>
@@ -284,6 +309,10 @@
                         <div class="d-flex" style="flex-direction: column; float: right">
                           <div class="text-uppercase grey-text-color">TOTAL</div>
                           <h4 style="color: #625f6e">{{ invoiceData.totalAmount }}</h4>
+                        </div>
+                        <div class="d-flex mr-4" style="flex-direction: column; float: right">
+                          <div class="text-uppercase grey-text-color">TAX</div>
+                          <h4 style="color: #625f6e">{{ totalTax }}</h4>
                         </div>
                       </b-col>
                     </b-row>
@@ -559,7 +588,10 @@
 
                                   <b-col cols="12" lg="1" class="pl-2" style="padding-top: 10px">
                                     <label class="d-inline d-lg-none">Tax</label>
-                                    <span> 0.00</span>
+                                    <!-- <span>{{ item.transactions[index].tax }}</span> -->
+                                    <span>{{
+                                      parseFloat(item.vatAmountTransaction) ? parseFloat(item.vatAmountTransaction) : 0
+                                    }}</span>
                                   </b-col>
 
                                   <b-col cols="12" lg="1" class="pl-2" style="padding-top: 10px">
@@ -588,7 +620,10 @@
                                     </validation-provider>
                                   </b-col>
                                 </b-row>
-                                <div class="d-flex justify-content-center py-50 position-relative top-custom m-0">
+                                <div
+                                  class="d-flex justify-content-center position-relative top-custom m-0"
+                                  style="padding-top: 4px"
+                                >
                                   <feather-icon
                                     v-if="invoiceData.transactions.length !== 1"
                                     size="16"
@@ -620,22 +655,16 @@
                       + {{ $t("add_invoice.add_item") }}
                     </div>
 
-                    <div
+                    <!-- <div
                       no-body
                       class="invoice-add-card mb-1"
                       style="border-bottom: 1px solid lightgrey; border-top: 1px solid lightgrey"
                     >
-                      <!-- Items Section -->
+               
                       <div class="invoice-padding p-0">
                         <div ref="form" class="repeater-form h-auto">
                           <b-row class="flex-grow-1 py-1 px-1 invoice-add-transections">
-                            <!-- Single Item Form Headers -->
-
-                            <!-- <b-col cols="12" lg="3" v-if="invoiceData.hasDropDown"></b-col>
-                            <b-col cols="12" lg="3"></b-col>
-                            <b-col cols="12" lg="2"></b-col> -->
-                            <!-- <b-col cols="12" lg="2"></b-col> -->
-                            <!-- <b-col cols="12" lg="1"></b-col> -->
+                       
                             <b-col cols="12" lg="10"> </b-col>
                             <b-col cols="12" lg="1" class="pl-1">
                               <span> 0.00</span>
@@ -647,7 +676,7 @@
                           <div class="d-flex justify-content-center py-50 position-relative top-custom"></div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
 
                     <!-- Bank Details Switch -->
                     <b-row v-if="companyInBG">
@@ -1025,9 +1054,9 @@
                   <b-button
                     v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                     variant="outline-primary"
-                    type="submit"
                     class="mr-2"
                     :disabled="loading"
+                    @click="invoiceEdit(invoiceData, 'save', AccountTypeOption)"
                   >
                     <b-spinner v-if="loading" small variant="light" />
                     {{ $t("add_invoice.save") }}
@@ -7697,8 +7726,8 @@ import router from "@/router"
 import { setTimeout } from "timers"
 import axios from "@/libs/axios"
 import { i18n } from "@/main.js"
-import Viewer from "viewerjs"
-import "viewerjs/dist/viewer.css"
+// import Viewer from "viewerjs"
+// import "viewerjs/dist/viewer.css"
 import VueEasyLightbox, { useEasyLightbox } from "vue-easy-lightbox"
 // const modelShow = ref(false)
 const zoomAmount = ref(1)
@@ -7755,7 +7784,6 @@ export default {
     return {
       companyTab: 0,
       accounts: [],
-      Viewer: viewer,
       isUploading: i18n.tc("add_invoice.upload_logo"),
       isTemplateFive: true,
       isTemplateOne: false,
@@ -7855,7 +7883,7 @@ export default {
         "чл.42 от ЗДДС",
         "чл.46, ал.1, т.1 от ЗДДС",
       ],
-      loading: false,
+      // loading: false,
       required,
       email,
       confirmed,
@@ -7875,13 +7903,13 @@ export default {
   mounted() {
     // this.initTrHeight();
     this.getAccounts()
-    const viewer = new Viewer(this.$refs.viewerContainer, {
-      // Enable zooming with mouse wheel
-      zoomable: true,
-      // Enable rotation with mouse drag
-      rotatable: true,
-      // Other Viewer.js options can be added here
-    })
+    // const viewer = new Viewer(this.$refs.viewerContainer, {
+    //   // Enable zooming with mouse wheel
+    //   zoomable: true,
+    //   // Enable rotation with mouse drag
+    //   rotatable: true,
+    //   // Other Viewer.js options can be added here
+    // })
   },
   created() {
     // window.addEventListener("resize", this.initTrHeight);
@@ -7945,16 +7973,16 @@ export default {
       this.visible = false
     },
     zoomIn() {
-      this.viewer.zoom(0.1) // Zoom in by 10%
+      // this.viewer.zoom(0.1) // Zoom in by 10%
     },
     zoomOut() {
-      this.viewer.zoom(-0.1) // Zoom out by 10%
+      // this.viewer.zoom(-0.1) // Zoom out by 10%
     },
     rotateLeft() {
-      this.viewer.rotate(-90) // Rotate left by 90 degrees
+      // this.viewer.rotate(-90) // Rotate left by 90 degrees
     },
     rotateRight() {
-      this.viewer.rotate(90) // Rotate right by 90 degrees
+      // this.viewer.rotate(90) // Rotate right by 90 degrees
     },
     checkProcessType(type) {
       let self = this
@@ -8190,7 +8218,8 @@ export default {
       }
 
       if (this.bankNameToSend !== "") {
-        invoiceData.bankApi.name = this.bankNameToSend
+        // console.log(this.bankNameToSend)
+        // invoiceData.bankApi.name = this.bankNameToSend
       }
 
       if (invoiceData.vatPercent != 0) {
@@ -8209,108 +8238,110 @@ export default {
         return item
       })
 
-      console.log(self.isBank, "banksssss")
       invoiceData.paymentProcess = self.bankProcess
       if (self.isBank == false) {
         invoiceData.bankApi = null
       }
-
+      // console.log(this.$refs.invoiceEditForm.validate())
       this.$refs.invoiceEditForm.validate().then((success) => {
-        if (success && this.companyIDisInvalid === false && this.isWeekSelected === false) {
-          if (
-            success &&
-            this.isTemplateOne === false &&
-            this.isTemplateTwo === false &&
-            this.isTemplateThree === false &&
-            this.isTemplateFour === false &&
-            this.isTemplateFive === false
-          ) {
-            this.$toast({
-              component: ToastificationContent,
-              props: {
-                title: `Please choose some template...`,
-                icon: "EditIcon",
-                variant: "danger",
-              },
-            })
-          } else {
-            this.loading = true
+        // if (this.companyIDisInvalid === false && this.isWeekSelected === false) {
+        if (
+          this.isTemplateOne === false &&
+          this.isTemplateTwo === false &&
+          this.isTemplateThree === false &&
+          this.isTemplateFour === false &&
+          this.isTemplateFive === false
+        ) {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Please choose some template...`,
+              icon: "EditIcon",
+              variant: "danger",
+            },
+          })
+        } else {
+          this.loading = true
+          console.log("control ->")
 
-            // if (!invoiceData.sechduled) {
-            //   invoiceData.cronScheduleApi = null
+          // if (!invoiceData.sechduled) {
+          //   invoiceData.cronScheduleApi = null
 
-            // }
-            if (redirectPage == "verify") {
-              invoiceData.verified = true
-            }
-
-            let token = useJwt.getToken()
-            useJwt
-              .EditCompanyInvoice(
-                token,
-                router.currentRoute.params.id,
-                router.currentRoute.params.companyId,
-                invoiceData
-              )
-              .then((response) => {
-                this.loading = false
-                // invoice.cronScheduleApi = {
-
-                //   scheduleType: "",
-                //   dayOfWeek: null,
-                //   dayOfMonth: null,
-
-                // };
-                this.$toast({
-                  component: ToastificationContent,
-                  props: {
-                    title: this.$t("invoice_details.invoice_updated_successfully"),
-                    icon: "EditIcon",
-                    variant: "success",
-                  },
-                })
-
-                if (redirectPage == "invoices") {
-                  return this.$router.push({
-                    name: "CompanyView",
-                    params: {
-                      id: router.currentRoute.params.companyId,
-                      InvoiceId: 1,
-                    },
-                  })
-                } else if (redirectPage == "preview") {
-                  return this.$router.push({
-                    name: "company-invoice-preview",
-                    params: {
-                      id: invoiceData.id,
-                      companyId: router.currentRoute.params.companyId,
-                    },
-                  })
-                } else if (redirectPage == "verify") {
-                  return this.$router.push({
-                    name: "CompanyView",
-                    params: {
-                      id: router.currentRoute.params.companyId,
-                      InvoiceId: 2,
-                    },
-                  })
-                } else {
-                  return true
-                }
-              })
-              .catch((error) => {
-                this.loading = false
-                this.$toast({
-                  component: ToastificationContent,
-                  props: {
-                    title: `${error.response.data.errorMessage}`,
-                    icon: "AlertTriangleIcon",
-                    variant: "danger",
-                  },
-                })
-              })
+          // }
+          if (redirectPage == "verify") {
+            invoiceData.verified = true
           }
+
+          let token = useJwt.getToken()
+          useJwt
+            .EditCompanyInvoice(token, router.currentRoute.params.id, router.currentRoute.params.companyId, invoiceData)
+            .then((response) => {
+              this.loading = false
+              // invoice.cronScheduleApi = {
+
+              //   scheduleType: "",
+              //   dayOfWeek: null,
+              //   dayOfMonth: null,
+
+              // };
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: this.$t("invoice_details.invoice_updated_successfully"),
+                  icon: "EditIcon",
+                  variant: "success",
+                },
+              })
+
+              if (redirectPage == "invoices") {
+                return this.$router.push({
+                  name: "CompanyView",
+                  params: {
+                    id: router.currentRoute.params.companyId,
+                    InvoiceId: 1,
+                  },
+                })
+              } else if (redirectPage == "preview") {
+                return this.$router.push({
+                  name: "company-invoice-preview",
+                  params: {
+                    id: invoiceData.id,
+                    companyId: router.currentRoute.params.companyId,
+                  },
+                })
+              } else if (redirectPage == "verify") {
+                return this.$router.push({
+                  name: "CompanyView",
+                  params: {
+                    id: router.currentRoute.params.companyId,
+                    InvoiceId: 2,
+                  },
+                })
+              } else {
+                console.log("save")
+
+                return this.$router.push({
+                  name: "CompanyView",
+                  params: {
+                    id: router.currentRoute.params.companyId,
+                    InvoiceId: 2,
+                  },
+                })
+              }
+            })
+            .catch((error) => {
+              this.loading = false
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `${error.response.data.errorMessage}`,
+                  icon: "AlertTriangleIcon",
+                  variant: "danger",
+                },
+              })
+            })
         }
+        // }
       })
     },
     showMsgBoxTwo(id, invoiceData) {
@@ -8380,6 +8411,10 @@ export default {
     },
   },
   setup() {
+    var loading = ref(false)
+    var trHeight = ref(0)
+    // var totalTax = ref(0)
+
     var showInvoiceInput = ref(false)
     var showinvoiceCurrency = ref(false)
     var modelShow = ref(false)
@@ -8435,6 +8470,7 @@ export default {
       quantity: 0,
       measurement: "",
       transactionTotalAmountNonVat: "",
+      vatAmountTransaction: 0,
     }
 
     const invoiceData = ref(null)
@@ -8482,6 +8518,14 @@ export default {
     var companyInBG = ref(false)
     var isQuickBook = ref(false)
 
+    const totalTax = computed(() => {
+      return invoiceData.value.transactions
+        .reduce((acc, ele) => {
+          return acc + parseFloat(ele.vatAmountTransaction)
+        }, 0)
+        .toFixed(2)
+    })
+
     let uploadValue = {
       companyOwnerName: "",
       companName: "",
@@ -8508,7 +8552,7 @@ export default {
             : response.data.currency
 
         invoiceData.value = response.data
-
+        console.log(invoiceData.value)
         if (invoiceData.value.xero) {
           axios
             .get(`${axios.defaults.baseURL}/account/api/export/get-accounts-codes-xero`, {
@@ -8517,7 +8561,6 @@ export default {
               },
             })
             .then((response) => {
-              console.log(response.data)
               categoryItems.value = Object.entries(response.data).map(([key, value]) => ({
                 value: key,
                 text: value,
@@ -8626,8 +8669,6 @@ export default {
                 reader.onload = function () {
                   const filePath = reader.result
                   invoiceImage.value = filePath
-
-                  console.log(filePath)
                 }
               }
             })
@@ -8683,7 +8724,7 @@ export default {
             hasBankDetails.value = true
           }
         }
-        console.log(invoiceData.value.scheduled, invoiceData.value.cronScheduleApi)
+        // console.log(invoiceData.value.scheduled, invoiceData.value.cronScheduleApi)
         if (invoiceData.value.scheduled) {
           checkSchedule.value = true
           isScheduled.value = true
@@ -8814,6 +8855,16 @@ export default {
       amountNonVat = amountNonVat ? amountNonVat : 0
       var vatPercent = invoiceData.value.vatPercent ? invoiceData.value.vatPercent : 0
       var tradeDiscountPercent = invoiceData.value.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
+
+      invoiceData.value.transactions.forEach((item, index) => {
+        invoiceData.value.transactions[index].vatAmountTransaction =
+          (parseFloat(
+            invoiceData.value.transactions[index].quantity *
+              invoiceData.value.transactions[index].singleAmountTransaction
+          ) *
+            vatPercent) /
+          100
+      })
 
       invoiceData.value.amountNonVat = parseFloat(amountNonVat).toFixed(2)
 
@@ -9263,6 +9314,9 @@ export default {
     }
 
     return {
+      totalTax,
+      trHeight,
+      loading,
       showinvoiceCurrency,
       showInvoiceInput,
       selectedCategory,
