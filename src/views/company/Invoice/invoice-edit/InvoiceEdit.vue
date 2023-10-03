@@ -616,7 +616,7 @@
                                     ).toFixed(2)
                                       " disabled class="mb-0" />
                                   </b-input-group> -->
-                                      <small class="text-danger">{{ errors[0] }}</small>
+                                      <!-- <small class="text-danger">{{ errors[0] }}</small> -->
                                     </validation-provider>
                                   </b-col>
                                 </b-row>
@@ -944,9 +944,10 @@
                         </b-input-group>
                       </div>
 
-                      <h6 style="color: #625f6e" class="mb-1">{{ $t("Recipient") }}</h6>
-
-                      <div class="mb-1">
+                      <h6 style="color: #625f6e" class="mb-1" v-if="invoiceData.documentType == 'INVOICE'">
+                        {{ $t("Recipient") }}
+                      </h6>
+                      <div class="mb-1" v-if="invoiceData.documentType == 'INVOICE'">
                         <span class="title mr-1" style="width: 307px">{{ $t("Recipient") }}:</span>
 
                         <b-input-group class="input-group invoice-edit-input-group">
@@ -1000,7 +1001,11 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-                      <div class="mb-3 pb-2" style="border-bottom: 1px solid lightgrey">
+                      <div
+                        class="mb-3 pb-2"
+                        style="border-bottom: 1px solid lightgrey"
+                        v-if="invoiceData.documentType == 'INVOICE'"
+                      >
                         <span class="title mr-1" style="width: 307px">{{ $t("Recipient Address") }}:</span>
 
                         <b-input-group class="input-group invoice-edit-input-group">
@@ -8319,14 +8324,7 @@ export default {
                 })
               } else {
                 console.log("save")
-
-                return this.$router.push({
-                  name: "CompanyView",
-                  params: {
-                    id: router.currentRoute.params.companyId,
-                    InvoiceId: 2,
-                  },
-                })
+                return true
               }
             })
             .catch((error) => {
