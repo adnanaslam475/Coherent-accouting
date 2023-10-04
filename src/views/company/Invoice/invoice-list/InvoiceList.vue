@@ -1,20 +1,51 @@
 <template>
   <!--  Table Container Card Starts  -->
-  <b-card no-body class="scroll-container">
+  <b-card no-body>
     <div class="m-2">
       <!--  Table Top Starts  -->
       <b-row>
         <!-- Per Page -->
-        <b-col cols="12" md="6" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
+        <b-col cols="12" md="4" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
           <!-- <label>Entries</label>
             <v-select
-              v-model="perPage"
+              v-model="perPage" 
               :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
               :options="perPageOptions"
               :clearable="false"
               class="per-page-selector d-inline-block ml-50 mr-1"
             /> -->
-          <b-button variant="primary" class="mr-1" :to="{
+
+          <b-dropdown text="Add Document" variant="primary" class="mr-1" id="invoice-add">
+            <b-dropdown-item
+              :to="{
+                name: 'company-invoice-add',
+                params: {
+                  companyId: $route.params.companyId ? $route.params.companyId : $route.params.id,
+                },
+              }"
+              @click="actionTab"
+            >
+              <feather-icon icon="CommandIcon" class="mr-1" />
+              {{ $t("company_invoices.manual") }}
+            </b-dropdown-item>
+            <b-dropdown-item @click="UploadFile()">
+              <feather-icon icon="UploadCloudIcon" class="mr-1" />
+              {{ $t("company_invoices.upload") }}
+
+              <!-- <label class="">
+        {{ $t("company_invoices.upload") }}
+          <input type="file" style="display: none" @click.prevent @input="addfile(companyId)"/>
+        </label> -->
+
+              <!-- <feather-icon icon="UploadCloudIcon" class="mr-1"/>
+           <b-spinner v-if="fileLoading" small variant="light" /> 
+           <feather-icon icon="UploadCloudIcon" class="mr-1" v-else/>  -->
+              <!-- <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" /> -->
+            </b-dropdown-item>
+          </b-dropdown>
+          <b-tooltip target="invoice-add" placement="bottom">Add Receipts, Invoices and Bills</b-tooltip>
+
+          <!-- <b-button variant="primary" class="mr-1" :to="{
             name: 'company-invoice-add',
             params: {
               companyId: $route.params.companyId
@@ -23,53 +54,139 @@
             },
           }" @click="actionTab">
             {{ $t("company_invoices.add_invoice") }}
-            <!-- Add Invoice -->
-          </b-button>
-          <b-button variant="primary" class="mr-1 position-relative p-set">
+          </b-button> -->
+
+          <!-- <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
             <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" />
 
             <b-spinner v-if="fileLoading" small variant="light" />
             {{ $t("company_invoices.add_from_file") }}
-            <!-- Add From File -->
+         
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
-          </b-button>
+          </b-button> -->
+          <!-- <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive" v-else>
+
+            {{ $t("company_invoices.add_from_file") }}
+           
+            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
+          </b-button> -->
+
           <!--Add the third button name export-->
           <!-- Export Invoice Button -->
-          <b-button variant="primary" class="mr-1" @click="showDatePickerModal">
+          <b-button variant="primary" class="mr-1 cursor-button" :disabled="!isActive" v-if="platform == 'FRESH_BOOKS'">
+            <b-form-file
+              ref="imageUploader"
+              class="file-input2"
+              multiple
+              @change="addExportFile"
+              :disabled="!isActive"
+            />
+            <b-spinner v-if="fileLoadingExport" small variant="light" />
+            {{ $t("company_invoices.ocr_import") }}
+
+            <!-- Add From File -->
+          </b-button>
+          <b-button
+            variant="primary"
+            style="cursor: pointer"
+            class="mr-1"
+            @click="showDatePickerModal"
+            :disabled="!isActive"
+            v-else
+          >
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>
 
+          <!-- Add From File Modal -->
+          <b-modal
+            id="add_invoice"
+            ref="add_invoice_modal"
+            title="Add From File"
+            :hide-footer="true"
+            :ok-title="$t('modal_labels.ok')"
+            :cancel-title="$t('modal_labels.close')"
+            @show="resetModal"
+            @ok="handleOk"
+          >
+            <b-row class="text-center my-3">
+              <b-col md="12">
+                <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
+                  <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" />
+
+                  <b-spinner v-if="fileLoading" small variant="light" class="mr-1" />
+                  {{ $t("company_invoices.add_from_file") }}
+                  <!-- Add From File -->
+                  <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
+                </b-button>
+                <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive" v-else>
+                  {{ $t("company_invoices.add_from_file") }}
+                  <!-- Add From File -->
+                  <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
+                </b-button>
+              </b-col>
+            </b-row>
+          </b-modal>
+
           <!-- Date Picker Modal -->
 
-          <b-modal id="modal-prevent-closing-invoice" ref="export_model" title="Select Month"
-            :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" :ok-disabled="modalDisabledMonth"
-            @show="resetModal" @hidden="resetModal" @ok="handleOk">
+          <b-modal
+            id="modal-prevent-closing-invoice"
+            ref="export_model"
+            :title="$t('company_info.selectMonth')"
+            :ok-title="$t('modal_labels.ok')"
+            :cancel-title="$t('modal_labels.close')"
+            @show="resetModal"
+            @ok="handleOk"
+            :ok-disabled="modalDisabledMonth"
+          >
             <form ref="form" @submit.stop.prevent="handleMonthSelect">
               <validation-observer ref="selectMonthRules" tag="form">
                 <validation-provider #default="{ errors }" :name="$t('month_selected')" rules="required">
-                  <vue-monthly-picker id="month_selected" v-model="selectedMonthData.date" name="month_selected"
-                    date-format="Y-MM" :month-labels="monthLabels" :class="errors.length > 0 ? 'is-invalid' : null"
-                    place-holder="Please Select: " />
+                  <vue-monthly-picker
+                    id="month_selected"
+                    v-model="selectedMonthData.date"
+                    name="month_selected"
+                    date-format="Y-MM"
+                    :month-labels="monthLabels"
+                    :class="errors.length > 0 ? 'is-invalid' : null"
+                    :place-holder="$t('company_info.pleaseSelect')"
+                  />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </validation-observer>
             </form>
           </b-modal>
 
-          <b-modal id="modal-invoices-export" ref="modal_exportValue"
-            :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE' ? companyinfo.exportProperties.platform : ''"
-            title-class="w-100 text-center" :ok-title="$t('company_invoices.Export_invoicess')"
-            :cancel-title="$t('company_invoices.cancel')" scrollable :ok-disabled="modalDisabled" class="p-3"
-            @ok="getExportFile()">
-            <form ref="form" class="border p-3 bg-light" @submit.stop.prevent="handleMonthSelect">
+          <b-modal
+            id="modal-invoices-export"
+            ref="modal_exportValue"
+            :title="
+              companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE'
+                ? companyinfo.exportProperties.platform
+                : ''
+            "
+            title-class="w-100 text-center"
+            :ok-title="$t('company_invoices.Export_invoicess')"
+            :cancel-title="$t('company_invoices.cancel')"
+            scrollable
+            @ok="getExportFile()"
+            :ok-disabled="modalDisabled"
+            class="p-3"
+          >
+            <form ref="form" @submit.stop.prevent="handleMonthSelect" class="border p-3 bg-light">
               <!-- display exportDto data -->
               <!-- display companyinfo.keyValues data -->
+
               <div v-if="companyinfo && companyinfo.exportProperties" class="mb-3">
                 <div v-for="(value, key) in companyinfo.exportProperties.keyValues" :key="key" class="mb-2">
                   <label :for="'input-' + key" class="form-label">{{ key }} :</label>
-                  <input :id="'input-' + key" v-model="companyinfo.exportProperties.keyValues[key]" class="form-control"
-                    readonly>
+                  <input
+                    :id="'input-' + key"
+                    class="form-control"
+                    v-model="companyinfo.exportProperties.keyValues[key]"
+                    readonly
+                  />
                 </div>
               </div>
               <div v-else>
@@ -85,11 +202,20 @@
         </b-col>
 
         <!-- Search -->
-        <b-col cols="12" md="6">
-          <div class="d-flex align-items-center justify-content-end">
-            <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="startDate" class="form-control invoice-edit-input invoice-input-top"
-                :placeholder="$t('company_invoices.start_date')" />
+        <b-col cols="12" md="8" class="px-0 pl-md-5 pl-1">
+          <div class="d-flex">
+            <b-form-select class="mr-1" v-model="documentType" :options="['INVOICE', 'RECEIPT']" />
+
+            <b-form-select class="mr-1" v-model="transactionType" :options="['INCOME', 'EXPENSE']" />
+
+            <b-form-select class="mr-1" v-model="lastDays" :options="lastDaysItems" />
+
+            <div class="position-relative mr-1" style="min-width: 8vw">
+              <flat-pickr
+                v-model="startDate"
+                class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.start_date')"
+              />
               <feather-icon v-if="startDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="startDate = ''" />
               <!-- <feather-icon
@@ -99,9 +225,13 @@
                   @click="dateFrom = ''"
                 /> -->
             </div>
-            <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top"
-                :placeholder="$t('company_invoices.end_date')" />
+
+            <div class="position-relative mr-1" style="min-width: 8vw">
+              <flat-pickr
+                v-model="endDate"
+                class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.end_date')"
+              />
               <feather-icon v-if="endDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="endDate = ''" />
               <!-- <feather-icon
@@ -111,11 +241,20 @@
                   @click="dateTo = ''"
                 /> -->
             </div>
-            <div class="position-relative flex-1">
-              <b-form-input v-model="searchQuery" class="d-inline-block mr-1" :placeholder="$t('company_invoices.search')"
-                @input="handleSearchSelect()" />
-              <feather-icon size="16" icon="XIcon" class="cursor-pointer clear-all" @click="searchQuery = ''" />
-            </div>
+
+            <b-form-input
+              v-model="searchQuery"
+              class="d-inline-block"
+              :placeholder="$t('company_invoices.search')"
+              @input="handleSearchSelect()"
+            />
+            <feather-icon
+              size="16"
+              icon="XIcon"
+              class="cursor-pointer clear-all"
+              style="right: 6px"
+              @click="searchQuery = ''"
+            />
           </div>
         </b-col>
       </b-row>
@@ -134,254 +273,304 @@
     </b-row>
     <!--  Error Message Starts  -->
 
-    <div>
-      <!--  Table Starts  -->
-      <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" id="company-invoices"
-        :fields="tableColumns" responsive primary-key="Math.floor(100000 + Math.random() * 900000)" :sort-by.sync="sortBy"
-        show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc"
-        class="position-relative invoiceList h-100">
+    <!--  Table Starts  -->
 
-        <template #empty="scope">
-          <div class="d-flex align-items-center justify-content-center">
-            <div class="mb-1 start-chat-icon">
-              <feather-icon icon="FolderIcon" size="20" />
-            </div>
-            <h5 class="sidebar-toggle start-chat-text">
-              No records found
-            </h5>
+    <b-table
+      ref="refInvoiceListTable"
+      :items="isCheck === false ? fetchInvoices : invoices"
+      :fields="tableColumns"
+      responsive
+      primary-key="id"
+      :sort-by.sync="sortBy"
+      show-empty
+      empty-text="No matching records found"
+      :sort-desc.sync="isSortDirDesc"
+      class="position-relative invoiceList h-100"
+      id="company-invoices"
+    >
+      <template #empty="scope">
+        <div class="d-flex align-items-center justify-content-center">
+          <div class="mb-1 start-chat-icon">
+            <feather-icon icon="FolderIcon" size="20" />
           </div>
-        </template>
+          <h5 class="sidebar-toggle start-chat-text">No records found</h5>
+        </div>
+      </template>
 
-        <template #head(invoiceStatus)>
-          <feather-icon icon="TrendingUpIcon" class="mx-auto" />
-          <!-- {{ $t('company_invoices.invoice_number') }} -->
-        </template>
+      <template #head(invoiceStatus)>
+        <feather-icon icon="TrendingUpIcon" class="mx-auto" />
+        <!-- {{ $t('company_invoices.invoice_number') }} -->
+      </template>
 
-        <!-- Column: invoiceNumber -->
-        <template #head(invoiceNumber)>
-          {{ $t("company_invoices.invoice_no") }}
-        </template>
+      <!-- Column: invoiceNumber -->
+      <template #head(invoiceNumber)>
+        {{ $t("company_invoices.invoice_no") }}
+      </template>
 
-        <template #cell(invoiceNumber)="data">
-          <b-link :key="data.id + Math.floor(100000 + Math.random() * 900000)"
-            :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId }, }"
-            class="font-weight-bold">
-            <span class="text-nowrap">{{ data.value }}</span>
-          </b-link>
-        </template>
+      <template #cell(invoiceNumber)="data">
+        <b-link
+          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId } }"
+          class="font-weight-bold"
+        >
+          <span class="text-nowrap">{{ data.value }}</span>
+        </b-link>
+      </template>
+      <!-- Column: scheduled -->
+      <template #head(scheduled)>
+        {{ $t("add_invoice.scheduled") }}
+      </template>
 
-        <!-- Column: Issued Date -->
-        <template #head(invoiceDate)>
-          {{ $t("company_invoices.date_issued") }}
-        </template>
+      <template #cell(scheduled)="data">
+        <span class="text-nowrap" v-if="data.item.scheduled" style="position: relative; left: 27%">
+          <img src="@/assets/images/svg/clock.svg" alt="" />
+        </span>
+      </template>
 
-        <template #cell(invoiceDate)="data">
-          <span :key="data.id + Math.floor(100000 + Math.random() * 900000)" class="text-nowrap">
-            {{ data.item.dateIssued }}
-          </span>
-        </template>
+      <!-- Column: exported  -->
+      <template #head(exported)>
+        {{ $t("company_invoices.Export_invoice") }}
+      </template>
 
-        <!-- Column: Transaction type -->
-        <template #head(transactionType)>
-          {{ $t("company_invoices.transaction_type") }}
-        </template>
+      <template #cell(exported)="data">
+        <span class="text-nowrap" v-if="data.item.exported" style="position: relative; left: 27%">
+          <img src="@/assets/images/svg/check.svg" alt="" height="20px" width="20px" />
+        </span>
+      </template>
+      <!-- Column: Issued Date -->
+      <template #head(invoiceDate)>
+        {{ $t("company_invoices.date_issued") }}
+      </template>
 
-        <template #cell(transactionType)="data">
-          <b-link :key="data.id + Math.floor(100000 + Math.random() * 900000)"
-            :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId }, }"
-            class="font-weight-bold">
-            <span :id="`transactionType-row-${data.item.id}`" class="text-nowrap">
-              <b-badge pill :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'}`"
-                class="text-capitalize">
-                {{ $t("company_invoices." + data.value) }}
-              </b-badge>
-            </span>
-          </b-link>
-        </template>
+      <template #cell(invoiceDate)="data">
+        <span class="text-nowrap">
+          {{ data.item.dateIssued }}
+        </span>
+      </template>
 
-        <!-- Column: recipientCompany -->
-        <template #head(recipientCompanyName)>
-          {{ $t("company_invoices.recipient_company") }}
-        </template>
+      <!-- Column: Transaction type -->
+      <template #head(transactionType)>
+        {{ $t("company_invoices.transaction_type") }}
+      </template>
 
-        <template #cell(recipientCompanyName)="data">
-          <span :id="`recipientCompany-row-${data.item.id}`" :key="data.id + Math.floor(100000 + Math.random() * 900000)"
-            class="text-nowrap">
-            <b-badge pill :variant="`light-success`" class="text-capitalize">
-              <!-- {{ data.item.recipientCompany }} -->
-              {{ data.item.recipientCompany.companName }}
+      <template #cell(transactionType)="data">
+        <b-link
+          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId } }"
+          class="font-weight-bold"
+        >
+          <span :id="`transactionType-row-${data.item.id}`" class="text-nowrap">
+            <b-badge
+              pill
+              :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'}`"
+              class="text-capitalize"
+            >
+              {{ $t("company_invoices." + data.value) }}
             </b-badge>
           </span>
-          <b-tooltip :target="`recipientCompany-row-${data.item.id}`" placement="top">
-            <p class="mb-0">
-              {{ data.item.recipientCompany.companName }}
-            </p>
-            <p class="mb-0">
-              Eic: {{ data.item.recipientCompany.companyEic }}
-            </p>
-            <p class="mb-0">
-              {{ data.item.recipientCompany.companyOwnerName }}
-            </p>
-            <!-- <p class="mb-0">
-              Company Vat Eic: {{ data.item.recipientCompany.companyVatEic }}
-            </p>
-            <p class="mb-0">
-              Company Address: {{ data.item.recipientCompany.companyAddress }}
-            </p>
-            <p class="mb-0">
-              Owner EGN: {{ data.item.recipientCompany.ownerEGN }}
-            </p> -->
-          </b-tooltip>
-        </template>
+        </b-link>
+      </template>
 
-        <!-- Column: supplierCompany -->
+      <!-- Column: recipientCompany -->
+      <template #head(recipientCompanyName)>
+        {{ $t("company_invoices.recipient_company") }}
+      </template>
 
-        <template #head(supplierCompanyName)>
-          {{ $t("company_invoices.supplier_company") }}
-        </template>
-        <template #cell(supplierCompanyName)="data">
-          <span :id="`supplierCompany-row-${data.item.id}`" :key="data.id + Math.floor(100000 + Math.random() * 900000)"
-            class="text-nowrap">
-            <b-badge pill :variant="`light-success`" class="text-capitalize">
-              {{ data.item.supplierCompany.companName }}
-            </b-badge>
-          </span>
-          <b-tooltip :target="`supplierCompany-row-${data.item.id}`" placement="top">
-            <p class="mb-0">
-              {{ data.item.supplierCompany.companName }}
-            </p>
-            <p class="mb-0">
-              Eic: {{ data.item.supplierCompany.companyEic }}
-            </p>
-            <p class="mb-0">
-              {{ data.item.supplierCompany.companyOwnerName }}
-            </p>
-            <!-- <p class="mb-0">
-              Company Vat Eic: {{ data.item.supplierCompany.companyVatEic }}
-            </p>
-            <p class="mb-0">
-              Company Address: {{ data.item.supplierCompany.companyAddress }}
-            </p>
-            <p class="mb-0">
-              Owner EGN: {{ data.item.supplierCompany.ownerEGN }}
-            </p> -->
-          </b-tooltip>
-        </template>
+      <template #cell(recipientCompanyName)="data">
+        <span :id="`recipientCompany-row-${data.item.id}`" class="text-nowrap">
+          <b-badge pill :variant="`light-success`" class="text-capitalize">
+            <!-- {{ data.item.recipientCompany }} -->
+            {{ data.item.recipientCompany.companName }}
+          </b-badge>
+        </span>
+        <b-tooltip :target="`recipientCompany-row-${data.item.id}`" placement="top">
+          <p class="mb-0">
+            {{ data.item.recipientCompany.companName }}
+          </p>
+          <p class="mb-0">Eic: {{ data.item.recipientCompany.companyEic }}</p>
+          <p class="mb-0">
+            {{ data.item.recipientCompany.companyOwnerName }}
+          </p>
+          <!-- <p class="mb-0">
+            Company Vat Eic: {{ data.item.recipientCompany.companyVatEic }}
+          </p>
+          <p class="mb-0">
+            Company Address: {{ data.item.recipientCompany.companyAddress }}
+          </p>
+          <p class="mb-0">
+            Owner EGN: {{ data.item.recipientCompany.ownerEGN }}
+          </p> -->
+        </b-tooltip>
+      </template>
 
-        <!-- Column: amount non vat -->
-        <template #head(amountNonVat)>
-          {{ $t("company_invoices.amount_non_vat") }}
-        </template>
-        <template #cell(amountNonVat)="data">
-          <span :key="data.id + Math.floor(100000 + Math.random() * 900000)" class="text-nowrap">
-            <span v-if="data.item.currency === 'lv' ||
-              data.item.currency === 'лв' ||
-              data.item.currency === 'лв.'
-              ">лв. {{ data.value }}</span>
-            <span v-else>{{ data.item.currency }} {{ data.value }}</span>
-          </span>
-        </template>
+      <!-- Column: supplierCompany -->
 
-        <!-- Column: totalAmount -->
-        <template #head(totalAmount)>
-          {{ $t("company_invoices.total_amount") }}
-        </template>
-        <template #cell(totalAmount)="data">
-          <span :key="data.id + Math.floor(100000 + Math.random() * 900000)" class="text-nowrap">
-            <span v-if="data.item.currency === 'lv' ||
-              data.item.currency === 'лв' ||
-              data.item.currency === 'лв.'
-              ">лв. {{ data.value }}</span>
-            <span v-else>{{ data.item.currency }} {{ data.value }}</span>
-          </span>
-        </template>
+      <template #head(supplierCompanyName)>
+        {{ $t("company_invoices.supplier_company") }}
+      </template>
+      <template #cell(supplierCompanyName)="data">
+        <span :id="`supplierCompany-row-${data.item.id}`" class="text-nowrap">
+          <b-badge pill :variant="`light-success`" class="text-capitalize">
+            {{ data.item.supplierCompany.companName }}
+          </b-badge>
+        </span>
+        <b-tooltip :target="`supplierCompany-row-${data.item.id}`" placement="top">
+          <p class="mb-0">
+            {{ data.item.supplierCompany.companName }}
+          </p>
+          <p class="mb-0">Eic: {{ data.item.supplierCompany.companyEic }}</p>
+          <p class="mb-0">
+            {{ data.item.supplierCompany.companyOwnerName }}
+          </p>
+          <!-- <p class="mb-0">
+            Company Vat Eic: {{ data.item.supplierCompany.companyVatEic }}
+          </p>
+          <p class="mb-0">
+            Company Address: {{ data.item.supplierCompany.companyAddress }}
+          </p>
+          <p class="mb-0">
+            Owner EGN: {{ data.item.supplierCompany.ownerEGN }}
+          </p> -->
+        </b-tooltip>
+      </template>
 
-        <!-- Column: vatAmount -->
-        <template #head(vatAmount)>
-          {{ $t("company_invoices.vat_amount") }}
-        </template>
-        <template #cell(vatAmount)="data">
-          <span :key="data.id + Math.floor(100000 + Math.random() * 900000)" class="text-nowrap">
-            <span v-if="data.item.currency === 'lv' ||
-              data.item.currency === 'лв' ||
-              data.item.currency === 'лв.'
-              ">лв. {{ data.value }}</span>
-            <span v-else>{{ data.item.currency }} {{ data.value }}</span>
-          </span>
-        </template>
+      <!-- Column: amount non vat -->
+      <template #head(amountNonVat)>
+        {{ $t("company_invoices.amount_non_vat") }}
+      </template>
+      <template #cell(amountNonVat)="data">
+        <span class="text-nowrap">
+          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'"
+            >лв. {{ data.value }}</span
+          >
+          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
+        </span>
+      </template>
 
-        <!-- Column: currency -->
-        <!-- <template #cell(currency)="data">
-          <span class="text-nowrap">
-            {{ data.value }}
-          </span>
-        </template> -->
+      <!-- Column: totalAmount -->
+      <template #head(totalAmount)>
+        {{ $t("company_invoices.total_amount") }}
+      </template>
+      <template #cell(totalAmount)="data">
+        <span class="text-nowrap">
+          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'"
+            >лв. {{ data.value }}</span
+          >
+          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
+        </span>
+      </template>
 
-        <!-- Column: Actions -->
-        <template #head(actions)>
-          {{ $t("companies.actions") }}
-        </template>
+      <!-- Column: vatAmount -->
+      <template #head(vatAmount)>
+        {{ $t("company_invoices.vat_amount") }}
+      </template>
+      <template #cell(vatAmount)="data">
+        <span class="text-nowrap">
+          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'"
+            >лв. {{ data.value }}</span
+          >
+          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
+        </span>
+      </template>
 
-        <template #cell(actions)="data">
+      <!-- Column: currency -->
+      <!-- <template #cell(currency)="data">
+        <span class="text-nowrap">
+          {{ data.value }}
+        </span>
+      </template> -->
 
-          <div :key="data.id + Math.floor(100000 + Math.random() * 900000)" class="text-nowrap">
-            <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16"
-              class="mr-1 cursor-pointer" @click="
-                $router.push({
-                  name: 'company-invoice-preview',
-                  params: { id: data.item.id, companyId: companyId },
-                })
-                " />
-            <b-tooltip title="Preview Invoice" class="cursor-pointer"
-              :target="`invoice-row-${data.item.id}-preview-icon`" />
+      <!-- Column: Actions -->
+      <template #head(actions)>
+        {{ $t("companies.actions") }}
+      </template>
 
-            <!-- Dropdown -->
-            <b-dropdown variant="link" toggle-class="p-0" no-caret dropleft :right="$store.state.appConfig.isRTL">
-              <template #button-content>
-                <feather-icon icon="MoreVerticalIcon" size="16" class="align-middle text-body" />
-              </template>
-              <b-dropdown-item @click="generatePDF(data.item.id)">
-                <feather-icon icon="DownloadIcon" />
-                <span class="align-middle ml-50">Download</span>
-              </b-dropdown-item>
-              <b-dropdown-item :to="{
+      <template #cell(actions)="data">
+        <div class="text-nowrap">
+          <feather-icon
+            :id="`invoice-row-${data.item.id}-preview-icon`"
+            icon="EyeIcon"
+            size="16"
+            class="mr-1 cursor-pointer"
+            @click="
+              $router.push({
+                name: 'company-invoice-preview',
+                params: { id: data.item.id, companyId: companyId },
+              })
+            "
+          />
+          <b-tooltip
+            :title="$t('company_info.previewInvoice')"
+            class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-preview-icon`"
+          />
+
+          <!-- Dropdown -->
+          <b-dropdown variant="link" toggle-class="p-0" no-caret dropleft :right="$store.state.appConfig.isRTL">
+            <template #button-content>
+              <feather-icon icon="MoreVerticalIcon" size="16" class="align-middle text-body" />
+            </template>
+            <b-dropdown-item @click="generatePDF(data.item.id)">
+              <feather-icon icon="DownloadIcon" />
+              <span class="align-middle ml-50">{{ $t("download") }}</span>
+            </b-dropdown-item>
+            <b-dropdown-item
+              :to="{
                 name: 'company-invoice-edit',
                 params: { id: data.item.id, companyId: companyId },
-              }">
-                <feather-icon icon="EditIcon" />
-                <span class="align-middle ml-50">Edit</span>
-              </b-dropdown-item>
-              <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
-                <feather-icon icon="TrashIcon" />
-                <span class="align-middle ml-50">Delete</span>
-              </b-dropdown-item>
-            </b-dropdown>
+              }"
+            >
+              <feather-icon icon="EditIcon" />
+              <span class="align-middle ml-50">{{ $t("company_info.edit") }}</span>
+            </b-dropdown-item>
+            <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
+              <feather-icon icon="TrashIcon" />
+              <span class="align-middle ml-50">{{ $t("company_info.delete") }}</span>
+            </b-dropdown-item>
+          </b-dropdown>
 
-            <!-- Duplicate -->
-            <feather-icon :id="`invoice-row-${data.item.id}-duplicate-icon`" icon="LayersIcon" size="16"
-              class="mx-1 cursor-pointer" @click="duplicateInvoice(data.item)" />
-            <b-tooltip title="Duplicate Invoice" class="cursor-pointer"
-              :target="`invoice-row-${data.item.id}-duplicate-icon`" />
-            <vue-html2pdf :ref="`invoicePdf${data.item.id}`" :show-layout="false" :float-layout="true"
-              :enable-download="true" :preview-modal="false" :paginate-elements-by-height="1100" filename="invoice"
-              :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait"
-              pdf-content-width="1125px" @progress="onProgress($event)">
-              <section slot="pdf-content" class="invoice-pdf invoice-preview-list">
-                <invoice-download :invoice-data="data.item" />
-              </section>
-            </vue-html2pdf>
-          </div>
-        </template>
-      </b-table>
-      <!--  Table Ends  -->
-    </div>
+          <!-- Duplicate -->
+          <feather-icon
+            :id="`invoice-row-${data.item.id}-duplicate-icon`"
+            icon="LayersIcon"
+            size="16"
+            class="mx-1 cursor-pointer"
+            @click="duplicateInvoice(data.item)"
+          />
+          <b-tooltip
+            :title="$t('company_info.duplicate')"
+            class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-duplicate-icon`"
+          />
+          <vue-html2pdf
+            :show-layout="false"
+            :float-layout="true"
+            :enable-download="true"
+            :ref="`invoicePdf${data.item.id}`"
+            :preview-modal="false"
+            :paginate-elements-by-height="1100"
+            filename="invoice"
+            :pdf-quality="2"
+            :manual-pagination="false"
+            pdf-format="a3"
+            :pdf-margin="10"
+            pdf-orientation="portrait"
+            pdf-content-width="1125px"
+            @progress="onProgress($event)"
+          >
+            <section slot="pdf-content" class="invoice-pdf invoice-preview-list">
+              <invoice-download :invoice-data="data.item" />
+            </section>
+          </vue-html2pdf>
+        </div>
+      </template>
+    </b-table>
+    <!--  Table Ends  -->
 
     <!--  Loading Spinner Starts  -->
     <b-row class="text-center mb-2">
       <b-col cols="12">
         <b-spinner v-if="loadMore" large variant="primary" />
-        <div v-else style="height: 35px" />
-        <div ref="loadMoreObserver" />
+        <div v-else style="height: 35px"></div>
+        <div ref="loadMoreObserver"></div>
       </b-col>
     </b-row>
     <!--  Loading Spinner Ends  -->
@@ -439,6 +628,7 @@
 
 <script>
 import {
+  BFormSelect,
   BCard,
   BRow,
   BCol,
@@ -461,27 +651,28 @@ import {
   BCardHeader,
   BFormFile,
   BSpinner,
-} from 'bootstrap-vue'
-import { avatarText } from '@core/utils/filter'
-import vSelect from 'vue-select'
-import { onUnmounted } from '@vue/composition-api'
-import store from '@/store'
-import VueHtml2pdf from 'vue-html2pdf'
-import useJwt from '@/auth/jwt/useJwt'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import router from '@/router'
-import SvgIcon from '@jamescoyle/vue-icon'
-import { mdiTrayArrowUp } from '@mdi/js'
-import flatPickr from 'vue-flatpickr-component'
-import Ripple from 'vue-ripple-directive'
-import { i18n } from '@/main.js'
-import { watch, ref } from 'vue'
-import axios from '@/libs/axios'
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
-import VueMonthlyPicker from 'vue-monthly-picker'
-import invoiceStoreModule from '../invoiceStoreModule'
-import useInvoicesList from './useInvoiceList'
-import InvoiceDownload from '../invoice-download/InvoiceDownload.vue'
+} from "bootstrap-vue"
+import { avatarText } from "@core/utils/filter"
+import vSelect from "vue-select"
+import { onUnmounted } from "@vue/composition-api"
+import store from "@/store"
+import VueHtml2pdf from "vue-html2pdf"
+import useJwt from "@/auth/jwt/useJwt"
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue"
+import router from "@/router"
+import SvgIcon from "@jamescoyle/vue-icon"
+import { mdiTrayArrowUp } from "@mdi/js"
+import flatPickr from "vue-flatpickr-component"
+import Ripple from "vue-ripple-directive"
+import InvoiceDownload from "../invoice-download/InvoiceDownload.vue"
+import invoiceStoreModule from "../invoiceStoreModule"
+import useInvoicesList from "./useInvoiceList"
+import { i18n } from "@/main.js"
+import { watch, ref } from "vue"
+import axios from "@/libs/axios"
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate"
+import VueMonthlyPicker from "vue-monthly-picker"
+import { saveAs } from "file-saver"
 
 export default {
   directives: {
@@ -489,6 +680,7 @@ export default {
   },
 
   components: {
+    BFormSelect,
     BCard,
     BRow,
     BCol,
@@ -516,19 +708,27 @@ export default {
     BSpinner,
     SvgIcon,
     flatPickr,
-    ValidationProvider,
-    ValidationObserver,
+    ValidationProvider: ValidationProvider,
+    ValidationObserver: ValidationObserver,
     VueMonthlyPicker,
   },
 
-  props: ['invoiceTab'],
+  props: ["invoiceTab", "companyDetails"],
 
   data() {
     return {
+      EIC: "",
+      exportFiles: null,
+      fileLoadingExport: false,
+      platform: null,
+      isActive: false,
       loadMore: false,
       isExportModalVisible: false,
-      startDate: '',
-      endDate: '',
+      documentType: "",
+      transactionType: null,
+      lastDays: null,
+      startDate: "",
+      endDate: "",
       perPageRecords: 10,
       pageNum: 1,
       isCheck: false,
@@ -537,87 +737,81 @@ export default {
       fileLoading: false,
       path: mdiTrayArrowUp,
       observer: null,
-      loadModal: 'Next',
+      loadModal: "Next",
       modalDisabledMonth: false,
-      searchQuery: '', // assuming it's a string
+      searchQuery: "", // assuming it's a string
       isLoading: false, // assuming it's a boolean indicating a loading state
       // other data properties...
       companyinfo: null,
       isSortDirDesc: true, // or any default value
       sortBy: null, // or any default value
       exportDto: {
-        companyId: '',
-        date: '',
-        platformName: '',
+        companyId: "",
+        date: "",
+        platformName: "",
       },
       invoicesForReport: [],
       selectedMonthData: {
-        companyId: '85',
-        date: ' ',
+        companyId: "85",
+        date: " ",
         pageNumber: 1,
         pageSize: 5000,
         invoicesForReport: null,
       },
-      companyID: '',
-      monthLabels: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-      ],
+      companyID: "",
+
       InvoicesTableColumns: [
-        { key: 'isChecked', label: '' },
-        { key: 'invoiceNumber' },
-        { key: 'recipientCompanyName' },
-        { key: 'supplierCompanyName' },
-        { key: 'transactionType' },
-        { key: 'dateIssued' },
+        { key: "isChecked", label: "" },
+        { key: "invoiceNumber" },
+        { key: "recipientCompanyName" },
+        { key: "supplierCompanyName" },
+        { key: "transactionType" },
+        { key: "dateIssued" },
+      ],
+      lastDaysItems: [
+        { value: 5000, text: "All" },
+        { value: 0, text: "Today" },
+        { value: 1, text: "Yesterday" },
+        { value: 7, text: "Last week" },
+        { value: 30, text: "Last month" },
+        { value: 365, text: "This year" },
       ],
     }
   },
 
-  computed: {
-
-    modalDisabled() {
-      // your condition here...
-      return !this.exportDto || !this.companyinfo
-    },
-
-  },
-
   watch: {
-
-    startDate() {
+    startDate: function () {
       this.handleSearchSelect()
     },
 
-    endDate() {
+    endDate: function () {
+      this.handleSearchSelect()
+    },
+
+    documentType: function () {
+      this.handleSearchSelect()
+    },
+    transactionType: function () {
+      this.handleSearchSelect()
+    },
+    lastDays: function () {
       this.handleSearchSelect()
     },
 
     companyID(newVal) {
-      console.log('companyID watcher triggered', newVal)
+      console.log("companyID watcher triggered", newVal)
       this.exportDto.companyId = newVal
     },
 
-    'selectedMonthData.date': function (newVal) {
-      console.log('selectedMonthData.date watcher triggered', newVal)
+    "selectedMonthData.date"(newVal) {
+      console.log("selectedMonthData.date watcher triggered", newVal)
       this.exportDto.date = newVal
     },
 
-    'companyinfo.exportProperties.platform': function (newVal) {
-      console.log('companyinfo.exportProperties.platform watcher triggered', newVal)
+    "companyinfo.exportProperties.platform"(newVal) {
+      console.log("companyinfo.exportProperties.platform watcher triggered", newVal)
       this.exportDto.platformName = newVal || null
     },
-
   },
 
   mounted() {
@@ -625,15 +819,62 @@ export default {
       this.isCheck = true
     }, 1500)
     // this.fetchInvoices();
-    // this.observeScroll()
+    this.observeScroll()
+
+    this.getCompany()
+    this.getMyCurrentPlan()
   },
 
-  created() {
-    window.addEventListener("scroll", this.handleScroll);
-    // this.handleOk = this.handleOk.bind(this)
+  computed: {
+    monthLabels() {
+      let arr = [
+        this.$t("months.Jan"),
+        this.$t("months.Feb"),
+        this.$t("months.Mar"),
+        this.$t("months.Apr"),
+
+        this.$t("months.May"),
+        this.$t("months.Jun"),
+        this.$t("months.Jul"),
+        this.$t("months.Aug"),
+        this.$t("months.Sep"),
+        this.$t("months.Oct"),
+        this.$t("months.Nov"),
+        this.$t("months.Dec"),
+      ]
+      return arr
+    },
+    modalDisabled() {
+      // your condition here...
+      return !this.exportDto || !this.companyinfo
+    },
   },
 
   methods: {
+    UploadFile() {
+      this.$refs.add_invoice_modal.show()
+    },
+
+    getMyCurrentPlan() {
+      let token = useJwt.getToken()
+      useJwt
+        .getUserCurrentPlan(token)
+        .then((response) => {
+          this.currentPlan = response.data
+
+          this.isActive = this.currentPlan.active
+        })
+        .catch(() => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Error fetching current plan`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          })
+        })
+    },
 
     /*
     async fetchInvoices() {
@@ -667,17 +908,20 @@ export default {
       // Fetch the invoices first
       await this.fetchInvoices()
       // Populate the exportDto object
-      console.log('exportModal method called', this.companyID, this.selectedMonthData.date, this.companyinfo)
+      console.log("exportModal method called", this.companyID, this.selectedMonthData.date, this.companyinfo)
       this.exportDto.companyId = this.companyID
       this.exportDto.date = this.selectedMonthData.date
-      this.exportDto.platformName = this.companyinfo && this.companyinfo.exportProperties && this.companyinfo.exportProperties.platform ? this.companyinfo.exportProperties.platform : 'Ajure'
+      this.exportDto.platformName =
+        this.companyinfo && this.companyinfo.exportProperties && this.companyinfo.exportProperties.platform
+          ? this.companyinfo.exportProperties.platform
+          : "Ajure"
       // Validate if the required fields have a value
       if (!this.exportDto.companyId || !this.exportDto.date || !this.exportDto.platformName) {
-        console.error('exportDto data is not complete!')
+        console.error("exportDto data is not complete!")
         return
       }
       // Show the modal
-      this.$bvModal.show('export-info-modal')
+      this.$bvModal.show("export-info-modal")
       // Then get the export file
       await this.getExportFile()
       // Toggle the visibility of the modal
@@ -691,6 +935,22 @@ export default {
     showDatePickerModal() {
       this.$refs.export_model.show()
     },
+    async getCompany() {
+      let companyID = this.$route.params.id
+      try {
+        const response = await axios.get(`/account/api/company/${companyID}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            "Access-Control-Allow-Credentials": true,
+          },
+        })
+        console.log(response.data.platform, "here is the company info")
+        this.platform = response.data.exportProperties.platform
+        this.EIC = response.data.companyIdentificationNumber
+      } catch (error) {
+        console.log(error)
+      }
+    },
 
     handleOk(bvModalEvent) {
       // Prevent modal from closing
@@ -700,94 +960,120 @@ export default {
     },
 
     async getExportFile() {
+      console.log(this.companyDetails, "companyDetails")
+
       this.$nextTick(() => {
-        this.$bvModal.show('modal-spinner')
+        this.$bvModal.show("modal-spinner")
       })
+
       this.exportDto.companyId = router.currentRoute.params.id // Set companyId to 85
-      this.exportDto.date = new Date().toISOString().split('T')[0] // Set date to current date
+      this.exportDto.date = this.selectedMonthData.date // Set date to current date
       this.exportDto.platformName = this.exportDto.platformName // Set platformName to "AJURE"
+      let companyName = this.companyDetails
+      console.log(companyName)
+      const dateString = new Date()
+      const date = new Date(dateString)
+
+      const options = { day: "2-digit", month: "2-digit", year: "numeric" }
+      const formattedDate = date.toLocaleDateString("en-US", options)
+      let fileName = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`
+      console.log(fileName, "here is file Name")
       try {
-        const response = await axios.post('https://coherent-accounting.com/account/api/export', this.exportDto, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // assuming accessToken is correct
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-          responseType: 'blob',
-        }).then(response => {
-          const blobData = response.data
-          const exportDataBlob = new Blob([blobData], { type: blobData.type })
-          const url = window.URL.createObjectURL(exportDataBlob)
-          const link = document.createElement('a')
-          link.href = url
-          if (blobData.type == 'application/zip') {
-            link.setAttribute('download', `${router.currentRoute.params.id}.zip`) // download as .zip
-          } else {
-            link.setAttribute('download', `${router.currentRoute.params.id}.txt`) // download as .txt
-          }
-          document.body.appendChild(link)
-          link.click()
-          link.remove()
-        })
+        await axios
+          .post("https://coherent-accounting.com/account/api/export", this.exportDto, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("accessToken"), // assuming accessToken is correct
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+            responseType: "blob",
+          })
+          .then(function (response) {
+            const headers = response.headers
+            const contentDisposition = headers["Content-Disposition"]
+            console.log(contentDisposition, "alsdkj")
+            const blobData = response.data
+            const exportDataBlob = new Blob([blobData], { type: blobData.type })
+            const url = window.URL.createObjectURL(exportDataBlob)
+            const link = document.createElement("a")
+            link.href = url
+            if (blobData.type == "application/zip") {
+              console.log("this.companyDetails.companyName", companyName)
+              link.setAttribute("download", fileName + ".zip") // download as .zip
+            } else {
+              link.setAttribute("download", fileName + ".txt") // download as .txt
+            }
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
+          })
         this.$nextTick(() => {
-          this.$bvModal.hide('modal-spinner')
+          this.$bvModal.hide("modal-spinner")
         })
         this.$toast({
           component: ToastificationContent,
           props: {
-            title: 'The file has been downloaded',
-            icon: 'DeleteIcon',
-            variant: 'success',
+            title: "The file has been downloaded",
+            icon: "DeleteIcon",
+            variant: "success",
           },
         })
         this.$refs.modal_exportValue.hide()
       } catch (error) {
-        console.error('Error:', error)
-        if (error.response) {
-          console.log('Error status:', error.response.status)
-          console.log('Error data:', error.response.data)
-        }
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: 'Something went wrong',
-            icon: 'AlertTriangleIcon',
-            variant: 'danger',
-          },
-        })
+        console.error("Error:", error)
+        if (error.response.status === 409) {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Няма фактури за този период!`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          })
+        } else
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Something went wrong`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          })
         this.$nextTick(() => {
-          this.$bvModal.hide('modal-spinner')
+          this.$bvModal.hide("modal-spinner")
         })
       }
     },
 
     resetModal() {
-      this.selectedMonthData.date = ''
+      this.selectedMonthData.date = ""
       this.modalDisabledMonth = false
-      this.loadModal = 'Next'
+      this.loadModal = "Next"
     },
 
     async handleMonthSelect() {
       const success = await this.$refs.selectMonthRules.validate()
       if (success) {
-        this.loadModal = 'Loading...'
+        this.loadModal = "Loading..."
         this.modalDisabledMonth = true
         this.invoicesForReport = []
         const tPeriod = this.selectedMonthData.date._i
         const year = tPeriod.substring(0, 4)
         const month = tPeriod.substring(5, tPeriod.length)
         this.selectedMonthData.date = month.length === 1 ? `${year}-0${month}-01` : `${year}-${month}-01`
-        const companyID = this.$route.params.id
+        let companyID = this.$route.params.id
+
         try {
           const response = await axios.get(`/account/api/company/${companyID}`, {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-              'Access-Control-Allow-Credentials': true,
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+              "Access-Control-Allow-Credentials": true,
             },
           })
           this.companyinfo = response.data
           this.$refs.export_model.hide()
           this.$refs.modal_exportValue.show()
+          console.log("this.selectedMonthData.date", this.selectedMonthData.date)
         } catch (error) {
           console.log(error)
         }
@@ -795,8 +1081,8 @@ export default {
     },
 
     async refreshList() {
-      const tableAreaBusy = document.getElementById('company-invoices')
-      tableAreaBusy.style.opacity = '0.5'
+      var tableAreaBusy = document.getElementById("company-invoices")
+      tableAreaBusy.style.opacity = "0.5"
       this.isCheck = true
       const totalRecordss = this.invoices.length
       let Records = (totalRecordss / 10) * 10
@@ -811,32 +1097,36 @@ export default {
       }
       const config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           // sortField: this.sortBy,
-          sortField: 'id',
-          verified: 'true',
+          sortField: "id",
+          verified: "true",
           searchTerm: this.searchQuery,
         },
       }
       const config1 = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           // sortField: this.sortBy,
-          sortField: 'id',
-          verified: 'true',
+          sortField: "id",
+          verified: "true",
         },
       }
       try {
-        if (this.startDate === '' && this.endDate === '' && this.searchQuery === '') {
+        if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
           this.companyId = router.currentRoute.params.id
           const data = await axios.get(`/account/api/invoice/list/${this.companyId}/1/${Records}`, config1)
           this.invoices = data.data.elements
         } else {
           this.companyId = router.currentRoute.params.id
-          const data1 = await axios.post(`/account/api/invoice/search/${this.companyId}/1/${Records}`, payLoadDates, config)
+          const data1 = await axios.post(
+            `/account/api/invoice/search/${this.companyId}/1/${Records}`,
+            payLoadDates,
+            config
+          )
           this.invoices = data1.data.elements
         }
-        tableAreaBusy.style.opacity = '1'
+        tableAreaBusy.style.opacity = "1"
       } catch (error) {
         console.log(error)
       }
@@ -845,19 +1135,18 @@ export default {
     observeScroll() {
       const options = {
         root: null,
-        rootMargin: '0px',
+        rootMargin: "0px",
         threshold: 1.0,
       }
-      const observer = new IntersectionObserver(async entries => {
-        console.log(JSON.stringify(entries), 'ABC')
+      const observer = new IntersectionObserver(async (entries) => {
         this.loadMore = true
         if (entries[0].isIntersecting) {
-          if (this.startDate === '' && this.endDate === '' && this.searchQuery === '') {
+          if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
             await this.listInvoices()
           } else {
             await this.searchInvoices()
           }
-          if (this.invoices.length === this.totalInvoices) {
+          if (this.invoices !== null && this.invoices.length === this.totalInvoices) {
             this.loadMore = false
           } else {
             setTimeout(() => {
@@ -868,88 +1157,61 @@ export default {
       }, options)
       observer.observe(this.$refs.loadMoreObserver)
     },
-    async handleScroll1() {
-      const scrollContainer = document.querySelector('.scroll-container')
-      const scrollThreshold = 100 // Adjust this value as needed
 
-      if (
-        scrollContainer.scrollTop + scrollContainer.clientHeight
-        >= scrollContainer.scrollHeight - scrollThreshold
-      ) {
-        // Call your event or perform desired action
-        await this.myEventOnScrollDown()
-      }
-    },
-    async myEventOnScrollDown() {
-      // Event logic or action to perform on scroll down
-      if (this.startDate === '' && this.endDate === '' && this.searchQuery === '') {
-        await this.listInvoices()
-      } else {
-        await this.searchInvoices()
-      }
-      if (this.invoices.length === this.totalInvoices) {
-        this.loadMore = false
-      } else {
-        setTimeout(() => {
-          this.loadMore = false
-        }, 300)
-      }
-      console.log('Scrolled down!')
-    },
-
-    handleSearchSelect() {
-
-      const tableAreaBusy = document.getElementById('company-invoices')
-      tableAreaBusy.style.opacity = '0.5'
+    async handleSearchSelect() {
+      var tableAreaBusy = document.getElementById("company-invoices")
+      tableAreaBusy.style.opacity = "0.5"
       this.isCheck = true
       this.pageNum = 1
       this.perPageRecords = 10
-      const data1 = {
+      let data1 = {
         dateFrom: this.startDate,
         dateTo: this.endDate,
+        documentType: this.documentType,
+        transactionType: this.transactionType,
+        lastDays: this.lastDays,
       }
-      const config = {
+      let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
-          sortField: this.sortBy,
-          verified: 'true',
+          direction: this.isSortDirDesc ? "desc" : "asc",
+          sortField: "id",
+          verified: "true",
           searchTerm: this.searchQuery,
         },
       }
       this.companyId = router.currentRoute.params.id
-      // const data = await axios.post(
-      //   `/account/api/invoice/search/${this.companyId}/1/${this.perPageRecords}`,
-      //   data1,
-      //   config,
-      // )
+      const data = await axios
+        .post(`/account/api/invoice/search/${this.companyId}/1/${this.perPageRecords}`, data1, config)
+        .then((res) => {
+          console.log("response ========>", res)
+          this.invoices = res.data.elements
+          tableAreaBusy.style.opacity = "1"
+          this.loadMore = false
+        })
 
-      this.invoices = data.data.elements
-      tableAreaBusy.style.opacity = '1'
+      // this.invoices = data.data.elements;
+      // tableAreaBusy.style.opacity = "1";
     },
 
     async listInvoices() {
       this.pageNum += 1
-      const config = {
+      let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           // sortField: this.sortBy,
-          sortField: 'id',
-          verified: 'true',
+          sortField: "id",
+          verified: "true",
         },
       }
       this.companyId = router.currentRoute.params.id
-      const data = await axios.get(
-        `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
-        config,
-      )
-      console.log(data.data.elements.length, "asdsadsa")
-      if (data.data.elements.length > 0) {
+      const data = await axios.get(`/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`, config)
+      console.log(data.data.elements.length, this.totalInvoices)
+      if (data.data.elements.length > 1) {
         this.loadMore = true
-        //this.invoices.push(...data.data.elements)
         if (this.pageNum > 1) {
           this.invoices.push(...data.data.elements)
           if (data.data.elements.length === 0) {
-            //this.pageNum -= 1
+            this.pageNum -= 1
           }
         }
       } else {
@@ -960,27 +1222,23 @@ export default {
 
     async searchInvoices() {
       this.pageNum += 1
-      const data1 = {
+      let data1 = {
         dateFrom: this.startDate,
         dateTo: this.endDate,
       }
-      const config = {
+      let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
-          sortField: this.sortBy,
-          verified: 'true',
+          direction: this.isSortDirDesc ? "desc" : "asc",
+          sortField: "id",
+          verified: "true",
           searchTerm: this.searchQuery,
         },
       }
       this.companyId = router.currentRoute.params.id
-      const data = await axios.post(
-        `/account/api/invoice/search/${this.companyId}/${this.pageNum}/10`,
-        data1,
-        config,
-      )
+      const data = await axios.post(`/account/api/invoice/search/${this.companyId}/${this.pageNum}/10`, data1, config)
       this.invoices.push(...data.data.elements)
       this.loadMore = false
-      const val = data.data.elements.length
+      let val = data.data.elements.length
       if (val === 0) {
         this.pageNum -= 1
       }
@@ -988,23 +1246,13 @@ export default {
 
     async handleScroll() {
       // Check if the user has scrolled to the bottom
-      const scrollHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-      )
-      const scrollTop = Math.max(
-        document.body.scrollTop,
-        document.documentElement.scrollTop,
-      )
-      const { clientHeight } = document.documentElement
+      const scrollHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+      const scrollTop = Math.max(document.body.scrollTop, document.documentElement.scrollTop)
+      const clientHeight = document.documentElement.clientHeight
       if (scrollHeight - (scrollTop + clientHeight) <= 1) {
         this.loadMore = true
         setTimeout(async () => {
-          if (
-            this.startDate === ''
-            && this.endDate === ''
-            && this.searchQuery === ''
-          ) {
+          if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
             await this.listInvoices()
           } else {
             await this.searchInvoices()
@@ -1026,7 +1274,7 @@ export default {
     },
 
     actionTab() {
-      this.$emit('state', this.state())
+      this.$emit("state", this.state())
     },
 
     onProgress(event) {
@@ -1041,21 +1289,19 @@ export default {
       const h = this.$createElement
       // Using HTML string
       // More complex structure
-      const messageVNode = h('div', { class: ['bvModalFont'] }, [
-        h('p', { class: ['text-center card-text'] }, [
-          i18n.tc('company_invoices.delete_invoice_confirm'),
-        ]),
+      const messageVNode = h("div", { class: ["bvModalFont"] }, [
+        h("p", { class: ["text-center card-text"] }, [i18n.tc("company_invoices.delete_invoice_confirm")]),
       ])
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: i18n.tc('company_invoices.delete_invoice'),
-          okVariant: 'primary',
-          okTitle: i18n.tc('companies.confirm'),
-          cancelTitle: i18n.tc('clients_or_recipients.cancel'),
+          title: i18n.tc("company_invoices.delete_invoice"),
+          okVariant: "primary",
+          okTitle: i18n.tc("companies.confirm"),
+          cancelTitle: i18n.tc("clients_or_recipients.cancel"),
           hideHeaderClose: false,
           centered: true,
         })
-        .then(value => {
+        .then((value) => {
           if (value) {
             this.invoiceDelete(id, refetchData)
           }
@@ -1064,54 +1310,52 @@ export default {
 
     // duplicating an invoice
     duplicateInvoice(item) {
-      const config = item
+      let config = item
       config.invoiceNumber = Date.now()
-      config.id = ''
-      const companyID = this.$route.params.id
-      const token = useJwt.getToken()
-      useJwt
-        .addCompanyInvoice(token, companyID, config)
-        .then(async response => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Invoice Duplicated Successfully',
-              icon: 'EditIcon',
-              variant: 'success',
-            },
-          })
-          // refetchData();
-          const tableAreaBusy = document.getElementById('company-invoices')
-          tableAreaBusy.style.opacity = '0.5'
-          this.refreshList()
+      config.id = ""
+      let companyID = this.$route.params.id
+      let token = useJwt.getToken()
+      useJwt.addCompanyInvoice(token, companyID, config).then(async (response) => {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `Invoice Duplicated Successfully`,
+            icon: "EditIcon",
+            variant: "success",
+          },
         })
+        // refetchData();
+        var tableAreaBusy = document.getElementById("company-invoices")
+        tableAreaBusy.style.opacity = "0.5"
+        this.refreshList()
+      })
     },
 
     invoiceDelete(id, refetchData) {
       const token = useJwt.getToken()
       useJwt
         .DeleteCompanyInvoice(token, id)
-        .then(response => {
+        .then((response) => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Invoice Deleted Successfully',
-              icon: 'DeleteIcon',
-              variant: 'success',
+              title: "Invoice Deleted Successfully",
+              icon: "DeleteIcon",
+              variant: "success",
             },
           })
           // refetchData();
-          const tableAreaBusy = document.getElementById('company-invoices')
-          tableAreaBusy.style.opacity = '0.5'
+          var tableAreaBusy = document.getElementById("company-invoices")
+          tableAreaBusy.style.opacity = "0.5"
           this.refreshList()
         })
-        .catch(error => {
+        .catch((error) => {
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
           })
         })
@@ -1121,49 +1365,100 @@ export default {
       this.fileLoading = true
       const token = useJwt.getToken()
       const formData = new FormData()
-      formData.append('file', this.file)
+      formData.append("file", this.file)
       this.file = null
+
       useJwt
         .addFileInvoice(token, companyId, formData)
-        .then(response => {
+        .then((response) => {
           this.fileLoading = false
+
+          // const t = Object.entries(response)
+          // console.log(t)
+
           return this.$router.push({
-            name: 'company-invoice-add',
+            name: "company-invoice-add",
             params: {
               companyId,
               invoiceData: response.data,
             },
           })
         })
-        .catch(error => {
+        .catch((error) => {
           this.fileLoading = false
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `${error.response.data.errorMessage}`,
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          })
+        })
+    },
+    addExportFile(event) {
+      console.log(event, "sdasdf")
+      this.exportFiles = event.target.files
+
+      this.fileLoadingExport = true
+      const token = useJwt.getToken()
+      const formData = new FormData()
+      for (let i = 0; i < this.exportFiles.length; i++) {
+        formData.append("files", this.exportFiles[i])
+      }
+      let companyID = this.$route.params.id
+      const dateString = new Date()
+      const date = new Date(dateString)
+
+      const options = { day: "2-digit", month: "2-digit", year: "numeric" }
+      const formattedDate = date.toLocaleDateString("en-US", options)
+      useJwt
+        .addMultipleExportFiles(token, companyID, formData)
+        .then((response) => {
+          this.fileLoadingExport = false
+          console.log(response.data)
+          const blob = new Blob([response.data], { type: "text/csv" })
+
+          // Save the Blob as a file using FileSaver.js
+          saveAs(blob, `EIC_${this.EIC}_DATE_${formattedDate}`)
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: this.$t("invoice_details.invoice_exported_successfully"),
+              icon: "AlertTriangleIcon",
+              variant: "success",
+            },
+          })
+        })
+        .catch((error) => {
+          this.fileLoading = false
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
           })
         })
     },
   },
 
+  created() {
+    // window.addEventListener("scroll", this.handleScroll);
+    this.handleOk = this.handleOk.bind(this)
+  },
+
   setup() {
-    const INVOICE_APP_STORE_MODULE_NAME = 'app-invoice'
+    const INVOICE_APP_STORE_MODULE_NAME = "app-invoice"
     // Register module
-    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule)
+    if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
+      store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule)
     // UnRegister on leave
     onUnmounted(() => {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
     })
-    const statusOptions = [
-      'Downloaded',
-      'Draft',
-      'Paid',
-      'Partial Payment',
-      'Past Due',
-    ]
+    const statusOptions = ["Downloaded", "Draft", "Paid", "Partial Payment", "Past Due"]
     const {
       fetchInvoices,
       tableColumns,
@@ -1185,7 +1480,9 @@ export default {
       resolveInvoiceStatusVariantAndIcon,
       resolveClientAvatarVariant,
     } = useInvoicesList()
-    companyId.value = router.currentRoute.params.companyId ? router.currentRoute.params.companyId : router.currentRoute.params.id
+    companyId.value = router.currentRoute.params.companyId
+      ? router.currentRoute.params.companyId
+      : router.currentRoute.params.id
     return {
       fetchInvoices,
       tableColumns,
@@ -1210,7 +1507,6 @@ export default {
       resolveClientAvatarVariant,
     }
   },
-
 }
 </script>
 
@@ -1235,6 +1531,10 @@ export default {
 <style lang="scss">
 @import "@core/scss/vue/libs/vue-select.scss";
 @import "@core/scss/vue/libs/vue-flatpicker.scss";
+
+.cursor-button .custom-file label {
+  cursor: pointer;
+}
 
 .invoiceList th {
   position: relative;
@@ -1344,6 +1644,16 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+}
+
+.file-input2 {
+  position: absolute;
+  left: 336px !important;
+  top: 0;
+  width: 15%;
   height: 100%;
   margin: 0;
   opacity: 0;
