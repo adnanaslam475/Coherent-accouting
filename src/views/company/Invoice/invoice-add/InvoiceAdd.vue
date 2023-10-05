@@ -7991,7 +7991,7 @@ export default {
     invoiceAdd(invoiceData, redirectPage, AccountTypeOption) {
       //assign the data of recipient and creator
       //creator supplier company
-      if (redirectPage === "save" && !this.formIsValid) return
+      if ((redirectPage === "save" || redirectPage === "verify") && !this.formIsValid) return
       var self = this
 
       if (invoiceData.scheduled == true) {
@@ -8446,7 +8446,7 @@ export default {
           .then((response) => {
             categoryItems.value = Object.entries(response.data).map(([key, value]) => ({
               value: key,
-              text: value,
+              text: `${key}-${value}`,
             }))
           })
       }

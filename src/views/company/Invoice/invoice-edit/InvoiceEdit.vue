@@ -398,7 +398,7 @@
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="text-uppercase grey-text-color"
+                                    class="text-uppercase grey-text-color pl-1"
                                     style="font-size: 14px"
                                   >
                                     {{ $t("add_invoice.qty") }}
@@ -466,7 +466,7 @@
                                   <b-col cols="12" lg="3" v-if="invoiceData.hasDropDown">
                                     <label class="d-inline d-lg-none">Account</label>
                                     <validation-provider
-                                      #default="{ errors }"
+                                      #default="{ errors, invalid }"
                                       name="Account"
                                       rules="required"
                                       ref="account"
@@ -477,13 +477,14 @@
                                         :options="accounts"
                                       >
                                       </b-form-select>
-                                      <small class="text-danger">{{ errors[0] }}</small>
+                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
+                                      <!-- <small class="text-danger">{{ errors[0] }}</small> -->
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" lg="2" v-if="invoiceData.xero">
                                     <label class="d-inline d-lg-none">Category</label>
                                     <validation-provider
-                                      #default="{ errors }"
+                                      #default="{ errors, invalid }"
                                       name="Category"
                                       rules="required"
                                       ref="selectCategory"
@@ -492,15 +493,14 @@
                                         id="selectCategory"
                                         :options="categoryItems"
                                         v-model="invoiceData.transactions[index].account"
-                                      >
-                                      </b-form-select>
-                                      <small class="text-danger">{{ errors[0] }}</small>
+                                      />
+                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" lg="2" v-if="invoiceData.xero">
                                     <label class="d-inline d-lg-none">Job Post Code</label>
                                     <validation-provider
-                                      #default="{ errors }"
+                                      #default="{ errors, invalid }"
                                       name="Job Post Code"
                                       rules="required"
                                       ref="postCode"
@@ -511,13 +511,13 @@
                                         v-model="invoiceData.transactions[index].taxType"
                                       >
                                       </b-form-select>
-                                      <small class="text-danger">{{ errors[0] }}</small>
+                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" lg="2">
                                     <label class="d-inline d-lg-none">Description</label>
                                     <validation-provider
-                                      #default="{ errors }"
+                                      #default="{ errors, invalid }"
                                       ref="transectionServiceOrItemDescription"
                                       name="Description"
                                       rules="required"
@@ -529,7 +529,7 @@
                                         type="text"
                                         class="mb-0"
                                       />
-                                      <small class="text-danger">{{ errors[0] }}</small>
+                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
 
@@ -608,14 +608,16 @@
                                   <b-col cols="12" class="pl-2" lg="1" style="padding-top: 10px">
                                     <label class="d-inline d-lg-none">Tax</label>
                                     <!-- <span>{{ item.transactions[index].tax }}</span> -->
-                                    <span v-if="invoiceData.documentType === 'INVOICE'">{{
-                                      parseFloat(item.vatAmountTransaction) ? parseFloat(item.vatAmountTransaction) : 0
+                                    <span>{{
+                                      parseFloat(item.vatAmountTransaction)
+                                        ? parseFloat(item.vatAmountTransaction).toFixed(2)
+                                        : 0
                                     }}</span>
-                                    <span v-if="invoiceData.documentType === 'RECEIPT'">{{
+                                    <!-- <span v-if="invoiceData.documentType === 'RECEIPT'">{{
                                       parseFloat(item.transactionTotalAmountNonVat)
                                         ? parseFloat(item.transactionTotalAmountNonVat)
                                         : 0
-                                    }}</span>
+                                    }}</span> -->
                                   </b-col>
 
                                   <b-col cols="12" lg="1" class="pl-2" style="padding-top: 10px">
@@ -1068,7 +1070,7 @@
                   </b-tab>
                 </b-tabs>
 
-                <b-card class="d-flex" style="text-align: end">
+                <b-card variant="light" class="d-flex" style="text-align: end; box-shadow: none">
                   <b-button
                     v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                     variant="outline-primary"
@@ -8249,7 +8251,7 @@ export default {
     },
 
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
-      if (redirectPage === "save" && !this.formIsValid) return
+      if ((redirectPage === "save" || redirectPage === "verify") && !this.formIsValid) return
       if (invoiceData.scheduled == true) {
         if (invoiceData.cronScheduleApi !== null) {
           if (!invoiceData.cronScheduleApi.dayOfWeek) {
@@ -8477,13 +8479,6 @@ export default {
 
     function closeModel() {
       this.modelShow = false
-      // this.$router.push({
-      //   name: "CompanyView",
-      //   params: {
-      //     id: this.$route.params.companyId,
-      //     InvoiceId: 2,
-      //   },
-      // })
       this.$router.push({
         name: "CompanyView",
         params: {
@@ -8519,8 +8514,8 @@ export default {
       singleAmountTransaction: 0.0,
       quantity: 0,
       measurement: "",
-      transactionTotalAmountNonVat: "",
       vatAmountTransaction: 0,
+      transactionTotalAmountNonVat: 0,
     }
 
     const invoiceData = ref(null)
@@ -8571,9 +8566,9 @@ export default {
     const totalTax = computed(() => {
       return invoiceData.value.transactions
         .reduce((acc, ele) => {
-          const tax =
-            invoiceData.value.documentType === "INVOICE" ? ele.vatAmountTransaction : ele.transactionTotalAmountNonVat
-          return acc + parseFloat(tax)
+          // const tax =
+          //   invoiceData.value.documentType === "INVOICE" ? ele.vatAmountTransaction : ele.transactionTotalAmountNonVat
+          return acc + parseFloat(ele.vatAmountTransaction)
         }, 0)
         .toFixed(2)
     })
@@ -8618,7 +8613,7 @@ export default {
             .then((response) => {
               categoryItems.value = Object.entries(response.data).map(([key, value]) => ({
                 value: key,
-                text: value,
+                text: `${key}-${value}`,
               }))
             })
         }
@@ -8917,7 +8912,7 @@ export default {
             invoiceData.value.transactions[index].quantity *
               invoiceData.value.transactions[index].singleAmountTransaction
           ) *
-            vatPercent) /
+            parseFloat(vatPercent)) /
           100
       })
 

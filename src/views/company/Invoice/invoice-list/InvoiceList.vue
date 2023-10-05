@@ -202,13 +202,61 @@
         </b-col>
 
         <!-- Search -->
-        <b-col cols="12" md="8" class="px-0 pl-md-5 pl-1">
+        <b-col cols="12" md="8" class="px-0 pl-md-2 pl-1">
           <div class="d-flex">
-            <b-form-select class="mr-1" v-model="documentType" :options="['INVOICE', 'RECEIPT']" />
+            <div class="position-relative pr-1" style="min-width: 110px">
+              <b-form-select
+                class="mr-1"
+                style="background: none"
+                v-model="documentType"
+                :options="['INVOICE', 'RECEIPT']"
+              />
+              <feather-icon
+                v-if="documentType"
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all position-absolute"
+                style="right: 18px"
+                @click="documentType = null"
+              />
+            </div>
+            <!-- <b-form-select class="mr-1" v-model="transactionType" :options="['INCOME', 'EXPENSE']" /> -->
+            <!-- <b-form-select v-model="documentType" :options="documentTypeItems">
+              <b-form-select-option :value="item" v-for="(item, index) in documentTypeItems" :key="index">{{
+                item
+              }}</b-form-select-option>
+            </b-form-select> -->
 
-            <b-form-select class="mr-1" v-model="transactionType" :options="['INCOME', 'EXPENSE']" />
+            <div class="position-relative pr-1" style="min-width: 110px">
+              <b-form-select
+                class="mr-1"
+                style="background: none"
+                v-model="transactionType"
+                :options="['INCOME', 'EXPENSE']"
+              />
+              <feather-icon
+                v-if="transactionType"
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all position-absolute"
+                style="right: 18px"
+                @click="transactionType = null"
+              />
+            </div>
 
-            <b-form-select class="mr-1" v-model="lastDays" :options="lastDaysItems" />
+            <div class="position-relative pr-1" style="min-width: 110px">
+              <b-form-select class="mr-1" style="background: none" v-model="lastDays" :options="lastDaysItems" />
+              <feather-icon
+                v-if="lastDays"
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all position-absolute"
+                style="right: 18px"
+                @click="lastDays = null"
+              />
+            </div>
+
+            <!-- <b-form-select class="mr-1" v-model="lastDays" :options="lastDaysItems" /> -->
 
             <div class="position-relative mr-1" style="min-width: 8vw">
               <flat-pickr
@@ -724,7 +772,7 @@ export default {
       isActive: false,
       loadMore: false,
       isExportModalVisible: false,
-      documentType: "",
+      documentType: null,
       transactionType: null,
       lastDays: null,
       startDate: "",
@@ -768,6 +816,7 @@ export default {
         { key: "transactionType" },
         { key: "dateIssued" },
       ],
+      documentTypeItems: ["INVOICE", "RECEIPT"],
       lastDaysItems: [
         { value: 5000, text: "All" },
         { value: 0, text: "Today" },
