@@ -99,10 +99,10 @@
             </template>
 
             <!-- Media -->
-            <template #head(Media)>
+            <template #head(binaryId)>
               {{  $t('company_documents.media') }}
             </template>
-            <template #cell(Media)="data">
+            <template #cell(binaryId)="data">
               <div>
                 <!-- :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type])"-->
                 <!-- :src="!!images[data.item.id] ? images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type]) : ''"-->
@@ -116,7 +116,7 @@
                   :src="getMediaType(images1[data.item.id].type)"
                   rounded
                   style="width: 60px; height: 70px"
-                  @click="showImageDetail(data.item.binaryId,data.item.id, images1[data.item.id].type)
+                  @click="showImageDetail(data.item.binaryId, data.item.id, images1[data.item.id].type)
                   "
                 />
               </div>
@@ -468,7 +468,11 @@ export default {
         },
       },
       fields: [
-        "Media",
+        {
+          key: 'binaryId',
+          label: 'Media',
+        },
+        // "Media",
         // {
         //   key: 'binaryId',
         //   label: 'Binary Id',
@@ -495,9 +499,11 @@ export default {
   methods: {
     //getting media icons
     getMediaType(val) {
+      console.log("src "+val)
+      if(val.length > 0){
       var source;
-      if(val === "png"){
-        source = "png";
+      if(val == "png"){
+        source = "jpg";
       }
       if (val === "jpg" || val === "jpeg") {
         source = "jpg";
@@ -512,8 +518,12 @@ export default {
       } else if (val === "txt") {
         source = "txt";
       } else {
+        source = ''
       }
-      return require("@/assets/images/icons/" + source + ".png");
+      if(source != ''){
+      return require("@/assets/images/icons/"+ source + ".png");
+      }
+    }
     },
     checkStatus(ctx) {
       if (ctx.sortDesc === false) {
@@ -527,17 +537,37 @@ export default {
     //getting the list of assets
     async getAssets() {
       const self = this;
+      self.images1 = []
+      console.log(self.images1)
       axios.get(
         `/account/api/asset/list/${router.currentRoute.params.id}/${this.currentPage}/${this.perPage}?sortField=id&direction=desc&type=ASSET`
       )
       .then((response) => {
+
+         this.items = response.data.elements;
+
+        // for(let i=0; i < response.data.elements.length; i++){
+        //   const data = JSON.parse(response.data.elements[i].binaryId);
+        //   var dotIndex = data.binaryId?.lastIndexOf(".");
+
+        //   var ext = data.binaryId?.substring(dotIndex);
+
+        //   self.images1[response.data.elements[i].id] = {
+        //   image: "",
+        //   type: ext.substr(1),
+        //   id: response.data.elements[i].id,
+        // };
+
+
+        // }
+        
           // eslint-disable-next-line no-restricted-syntax
       for (const item of response.data.elements) {
         const data = JSON.parse(item.binaryId);
 
         //extracting the extension
-        var dotIndex = data.binaryId.lastIndexOf(".");
-        var ext = data.binaryId.substring(dotIndex);
+        var dotIndex = data.binaryId?.lastIndexOf(".");
+        var ext = data.binaryId?.substring(dotIndex);
        
         self.images1[item.id] = {
           image: "",
@@ -547,7 +577,7 @@ export default {
         // eslint-disable-next-line no-await-in-loop
         // await this.getImage(JSON.parse(item.binaryId), item.id)
       }
-      this.items = response.data.elements;
+  
       this.totalRecords = response.data.totalElements;
       this.totalPages = Math.ceil(this.totalRecords / this.perPage);
         })

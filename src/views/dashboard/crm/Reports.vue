@@ -2,7 +2,7 @@
   <b-card-code no-body>
     <b-card-header>
       <div>
-        <b-card-title>{{ $t('dashboard_lbl.reports') }}</b-card-title>
+        <b-card-title>{{ $t('dashboard_lbl.reports') }} </b-card-title>
       </div>
     </b-card-header>
     <b-card-body>
@@ -42,7 +42,7 @@
                 <span class="v-avatar__underlay"></span>
               </b-avatar>
             </b-media>
-            <span>{{ $t("invoices") }}</span>
+            <span class="text-center">{{ $t("invoices") }}</span>
           </template>
           <vue-apex-charts
             type="bar"
@@ -335,4 +335,9 @@ export default {
   left: 0;
   pointer-events: none;
 }
+
+.report-tabs .nav-tabs .nav-link {
+  width: fit-content
+}
+
 </style>
