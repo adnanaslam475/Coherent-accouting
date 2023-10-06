@@ -204,12 +204,16 @@
         <!-- Search -->
         <b-col cols="12" md="8" class="px-0 pl-md-2 pl-1">
           <div class="d-flex">
-            <div class="position-relative pr-1" style="min-width: 110px">
+            <div class="position-relative pr-1" style="min-width: 9vw">
               <b-form-select
                 class="mr-1"
                 style="background: none"
                 v-model="documentType"
-                :options="['INVOICE', 'RECEIPT']"
+                :options="[
+                  { value: null, text: 'Document type' },
+                  { text: 'INVOICE', value: 'INVOICE' },
+                  { text: 'RECEIPT', value: 'RECEIPT' },
+                ]"
               />
               <feather-icon
                 v-if="documentType"
@@ -227,12 +231,16 @@
               }}</b-form-select-option>
             </b-form-select> -->
 
-            <div class="position-relative pr-1" style="min-width: 110px">
+            <div class="position-relative pr-1" style="min-width: 9vw">
               <b-form-select
                 class="mr-1"
                 style="background: none"
                 v-model="transactionType"
-                :options="['INCOME', 'EXPENSE']"
+                :options="[
+                  { value: null, text: 'Transaction type' },
+                  { text: 'INCOME', value: 'INCOME' },
+                  { text: 'EXPENSE', value: 'INCOME' },
+                ]"
               />
               <feather-icon
                 v-if="transactionType"
@@ -244,7 +252,7 @@
               />
             </div>
 
-            <div class="position-relative pr-1" style="min-width: 110px">
+            <div class="position-relative pr-1" style="min-width: 9vw">
               <b-form-select class="mr-1" style="background: none" v-model="lastDays" :options="lastDaysItems" />
               <feather-icon
                 v-if="lastDays"
@@ -289,20 +297,17 @@
                   @click="dateTo = ''"
                 /> -->
             </div>
-
-            <b-form-input
-              v-model="searchQuery"
-              class="d-inline-block"
-              :placeholder="$t('company_invoices.search')"
-              @input="handleSearchSelect()"
-            />
-            <feather-icon
-              size="16"
-              icon="XIcon"
-              class="cursor-pointer clear-all"
-              style="right: 6px"
-              @click="searchQuery = ''"
-            />
+            <div class="position-relative mr-1" style="min-width: 5vw">
+              <b-form-input v-model="searchQuery" class="d-inline-block" :placeholder="$t('company_invoices.search')" />
+              <feather-icon
+                v-if="searchQuery"
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                style="right: 6px"
+                @click="searchQuery = ''"
+              />
+            </div>
           </div>
         </b-col>
       </b-row>
@@ -818,6 +823,7 @@ export default {
       ],
       documentTypeItems: ["INVOICE", "RECEIPT"],
       lastDaysItems: [
+        { value: null, text: "Select days" },
         { value: 5000, text: "All" },
         { value: 0, text: "Today" },
         { value: 1, text: "Yesterday" },
@@ -844,6 +850,9 @@ export default {
       this.handleSearchSelect()
     },
     lastDays: function () {
+      this.handleSearchSelect()
+    },
+    searchQuery: function () {
       this.handleSearchSelect()
     },
 
