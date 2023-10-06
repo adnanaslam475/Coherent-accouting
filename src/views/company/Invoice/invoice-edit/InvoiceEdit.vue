@@ -389,7 +389,7 @@
 
                                   <b-col
                                     cols="12"
-                                    lg="2"
+                                    lg="4"
                                     class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
@@ -398,7 +398,7 @@
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="text-uppercase grey-text-color pl-1"
+                                    class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
                                     {{ $t("add_invoice.qty") }}
@@ -411,14 +411,14 @@
                                   >
                                     {{ $t("add_invoice.single_price") }}
                                   </b-col>
-                                  <b-col
+                                  <!-- <b-col
                                     cols="12"
                                     lg="1"
                                     class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
                                     Tax
-                                  </b-col>
+                                  </b-col> -->
                                   <b-col
                                     cols="12"
                                     lg="1"
@@ -514,7 +514,7 @@
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2">
+                                  <b-col cols="12" lg="4">
                                     <label class="d-inline d-lg-none">Description</label>
                                     <validation-provider
                                       #default="{ errors, invalid }"
@@ -545,7 +545,7 @@
                                         id="transectionQuantity"
                                         v-model="item.quantity"
                                         type="number"
-                                        class="mb-0"
+                                        class="mb-0 p-0 text-center"
                                         placeholder="0"
                                         step="0.0000000001"
                                         @input="populateValues()"
@@ -605,20 +605,16 @@
                                 
                               </b-col> -->
 
-                                  <b-col cols="12" class="pl-2" lg="1" style="padding-top: 10px">
+                                  <!-- <b-col cols="12" class="pl-2" lg="1" style="padding-top: 10px">
                                     <label class="d-inline d-lg-none">Tax</label>
-                                    <!-- <span>{{ item.transactions[index].tax }}</span> -->
+                                
                                     <span>{{
                                       parseFloat(item.vatAmountTransaction)
                                         ? parseFloat(item.vatAmountTransaction).toFixed(2)
                                         : 0
                                     }}</span>
-                                    <!-- <span v-if="invoiceData.documentType === 'RECEIPT'">{{
-                                      parseFloat(item.transactionTotalAmountNonVat)
-                                        ? parseFloat(item.transactionTotalAmountNonVat)
-                                        : 0
-                                    }}</span> -->
-                                  </b-col>
+                                   
+                                  </b-col> -->
 
                                   <b-col cols="12" lg="1" class="pl-2" style="padding-top: 10px">
                                     <label class="d-inline d-lg-none">Total Price</label>
@@ -648,7 +644,11 @@
                                 </b-row>
                                 <div
                                   class="d-flex justify-content-end position-relative top-custom m-0"
-                                  style="padding-top: 4px; left: 3px"
+                                  :style="
+                                    invoiceData.hasDropDown
+                                      ? 'padding-top: 2px; left: 3px'
+                                      : 'padding-top: 2px; left: 22px'
+                                  "
                                 >
                                   <feather-icon
                                     v-if="invoiceData.transactions.length !== 1"
@@ -7966,9 +7966,9 @@ export default {
           temp.push(this.$refs.postCode[i].flags.valid)
         }
 
-        // if (this.invoiceData.hasDropDown) {
-        //   requiredField.push(this.$refs.account[i].flags.valid)
-        // }
+        if (this.invoiceData.hasDropDown) {
+          requiredField.push(this.$refs.account[i].flags.valid)
+        }
 
         requiredField.push(...temp)
 

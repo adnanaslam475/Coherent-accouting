@@ -320,10 +320,8 @@
                           </div>
                         </b-col>
                       </b-row>
-                      <b-row class="pb-3">
-                        <b-col cols="9">
-                          <p class="invoice-total-title">{{ $t("add_invoice.vat") }}:</p>
-                        </b-col>
+                      <b-row class="pb-3 d-flex justify-content-end align-items-center">
+                        <p class="invoice-total-title">{{ $t("add_invoice.tax") }}:</p>
                         <b-col cols="3">
                           <div class="invoice-total-item">
                             <p class="invoice-total-amount">
@@ -394,7 +392,7 @@
 
                                     <b-col
                                       cols="12"
-                                      lg="3"
+                                      lg="4"
                                       class="text-uppercase grey-text-color"
                                       style="font-size: 14px"
                                     >
@@ -416,14 +414,14 @@
                                     >
                                       {{ $t("add_invoice.single_price") }}
                                     </b-col>
-                                    <b-col
+                                    <!-- <b-col
                                       cols="12"
                                       lg="1"
                                       class="text-uppercase grey-text-color"
                                       style="font-size: 14px"
                                     >
                                       Tax
-                                    </b-col>
+                                    </b-col> -->
                                     <b-col
                                       cols="12"
                                       lg="1"
@@ -471,7 +469,7 @@
                                     <b-col cols="12" lg="3" v-if="invoiceData.hasDropDown">
                                       <label class="d-inline d-lg-none">Account</label>
                                       <validation-provider
-                                        #default="{ errors }"
+                                        #default="{ errors, invalid }"
                                         name="transectionCurrency"
                                         rules="required"
                                       >
@@ -480,13 +478,13 @@
                                           :options="accounts"
                                         >
                                         </b-form-select>
-                                        <small class="text-danger">{{ errors[0] }}</small>
+                                        <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       </validation-provider>
                                     </b-col>
                                     <b-col cols="12" lg="2" v-if="invoiceData.xero">
                                       <label class="d-inline d-lg-none">Category</label>
                                       <validation-provider
-                                        #default="{ errors }"
+                                        #default="{ errors, invalid }"
                                         name="Category"
                                         ref="selectCategory"
                                         rules="required"
@@ -497,13 +495,13 @@
                                           v-model="invoiceData.transactions[index].account"
                                         >
                                         </b-form-select>
-                                        <small class="text-danger">{{ errors[0] }}</small>
+                                        <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       </validation-provider>
                                     </b-col>
                                     <b-col cols="12" lg="2" v-if="invoiceData.xero">
                                       <label class="d-inline d-lg-none">Job Post Code</label>
                                       <validation-provider
-                                        #default="{ errors }"
+                                        #default="{ errors, invalid }"
                                         name="Post Code"
                                         rules="required"
                                         ref="postCode"
@@ -514,13 +512,13 @@
                                           v-model="invoiceData.transactions[index].taxType"
                                         >
                                         </b-form-select>
-                                        <small class="text-danger">{{ errors[0] }}</small>
+                                        <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       </validation-provider>
                                     </b-col>
-                                    <b-col cols="12" lg="3">
+                                    <b-col cols="12" lg="4">
                                       <label class="d-inline d-lg-none">Description</label>
                                       <validation-provider
-                                        #default="{ errors }"
+                                        #default="{ errors, invalid }"
                                         name="Description"
                                         rules="required"
                                         ref="transectionServiceOrItemDescription"
@@ -532,7 +530,7 @@
                                           type="text"
                                           class="mb-0"
                                         />
-                                        <small class="text-danger">{{ errors[0] }}</small>
+                                        <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       </validation-provider>
                                     </b-col>
 
@@ -548,7 +546,7 @@
                                           id="transectionQuantity"
                                           v-model="item.quantity"
                                           type="number"
-                                          class="mb-0"
+                                          class="mb-0 p-0 text-center"
                                           placeholder="0"
                                           step="0.0000000001"
                                           @input="populateValues()"
@@ -608,15 +606,14 @@
                                 
                               </b-col> -->
 
-                                    <b-col cols="12" lg="1" class="pl-2" style="padding-top: 10px">
+                                    <!-- <b-col cols="12" lg="1" class="pl-2" style="padding-top: 10px">
                                       <label class="d-inline d-lg-none">Tax</label>
-                                      <!-- <span>{{ item.transactions[index].tax }}</span> -->
                                       <span>{{
                                         parseFloat(item.vatAmountTransaction)
                                           ? parseFloat(item.vatAmountTransaction).toFixed(2)
                                           : 0
                                       }}</span>
-                                    </b-col>
+                                    </b-col> -->
 
                                     <b-col cols="12" lg="1" class="pl-2" style="padding-top: 10px">
                                       <label class="d-inline d-lg-none">Total Price</label>
@@ -650,12 +647,16 @@
                                     </b-col>
                                   </b-row>
                                   <div
-                                    class="d-flex justify-content-center position-relative top-custom m-0"
-                                    style="padding-top: 4px"
+                                    class="d-flex justify-content-end position-relative top-custom m-0"
+                                    :style="
+                                      invoiceData.hasDropDown
+                                        ? 'padding-top: 2px; left: 3px'
+                                        : 'padding-top: 2px; left: 22px'
+                                    "
                                   >
                                     <feather-icon
                                       v-if="invoiceData.transactions.length !== 1"
-                                      size="16"
+                                      size="14"
                                       icon="Trash2Icon"
                                       color="red"
                                       class="cursor-pointer m-0"
@@ -663,7 +664,7 @@
                                     />
                                     <feather-icon
                                       v-if="invoiceData.transactions.length == 1"
-                                      size="16"
+                                      size="14"
                                       icon="Trash2Icon"
                                       color="red"
                                       class="cursor-pointer invisible m-0"
@@ -7694,6 +7695,7 @@ export default {
   },
   mixins: [heightTransition],
   mounted() {
+    this.getAccounts()
     // this.initTrHeight();
   },
   created() {
@@ -7720,9 +7722,9 @@ export default {
           temp.push(this.$refs.postCode[i].flags.valid)
         }
 
-        // if (this.invoiceData.hasDropDown) {
-        //   requiredField.push(this.$refs.account[i].flags.valid)
-        // }
+        if (this.invoiceData.hasDropDown) {
+          requiredField.push(this.$refs.account[i].flags.valid)
+        }
 
         requiredField.push(...temp)
 
@@ -7777,6 +7779,26 @@ export default {
     },
   },
   methods: {
+    getAccounts() {
+      var config = {
+        method: "get",
+        url: "/account/api/invoice/get-accounts",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+      }
+      axios(config)
+        .then((response) => {
+          console.log(response.data)
+          this.accounts = response.data
+          // this.banks = response.data
+          // console.log(this.banks, 'there are banks')
+        })
+        .catch(function (error) {})
+    },
     fillBankApi() {
       let self = this
 
