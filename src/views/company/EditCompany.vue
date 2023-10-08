@@ -368,6 +368,7 @@
             <b-col>
               <b-form-group id="input-group-4" :label="$t('create_company.software')" label-for="status" v-if="isEdit">
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
+
                   <b-form-select id="platformPropertiesSelect" v-model="exportProperties.platform"
                     :options="platformPropertiesOptions" @change="checkChange"></b-form-select>
                   <small class="text-danger">{{ errors[0] }}</small>
@@ -380,6 +381,7 @@
               </b-form-group>
               <b-form-group id="input-group-4" :label="$t('create_company.software')" label-for="status" v-else>
                 <validation-provider #default="{ errors }" v-bind:name="$t('status')" rules="required">
+                  {{ selectedPlatformProperty }}
                   <b-form-select id="platformPropertiesSelect" v-model="selectedPlatformProperty"
                     :options="platformPropertiesOptions"></b-form-select>
                   <small class="text-danger">{{ errors[0] }}</small>
@@ -669,36 +671,36 @@ export default {
   },
   computed: {
     platformPropertiesOptions() {
-      const keysToKeep = ['micro_invest', 'ajure'];
+      const keysToKeep = [];
       const filteredProperties = this.platformProperties.filter(property => keysToKeep.includes(property));
       return filteredProperties.map(property => ({ value: property, text: property }));
     },
-    modifiedArray() {
-      const arr = [...this.platformPropertiesOptions]; // Create a copy of the input array
+    // modifiedArray() {
+    //   const arr = [...this.platformPropertiesOptions]; // Create a copy of the input array
 
-      const microInvestIndex = arr.findIndex(
-        (item) => item.value === "MICRO_INVEST"
-      );
-      const ajureIndex = arr.findIndex((item) => item.value === "AJURE");
+    //   const microInvestIndex = arr.findIndex(
+    //     (item) => item.value === "MICRO_INVEST"
+    //   );
+    //   const ajureIndex = arr.findIndex((item) => item.value === "AJURE");
 
-      // Check if the element is found before performing modifications
-      if (microInvestIndex !== -1 && ajureIndex !== -1) {
-        const removedMicroInvest = arr.splice(microInvestIndex, 1)[0];
-        const removedAjure = arr.splice(
-          ajureIndex - (ajureIndex > microInvestIndex ? 1 : 0),
-          1
-        )[0];
+    //   // Check if the element is found before performing modifications
+    //   if (microInvestIndex !== -1 && ajureIndex !== -1) {
+    //     const removedMicroInvest = arr.splice(microInvestIndex, 1)[0];
+    //     const removedAjure = arr.splice(
+    //       ajureIndex - (ajureIndex > microInvestIndex ? 1 : 0),
+    //       1
+    //     )[0];
 
-        arr.unshift({ ...removedAjure, disabled: false });
-        arr.unshift({ ...removedMicroInvest, disabled: false });
-      }
-      arr.forEach((item) => {
-        if (item.value !== "MICRO_INVEST" && item.value !== "AJURE" && item.value !== "XERO" && item.value !== "FRESH_BOOKS") {
-          item.disabled = true;
-        }
-      });
-      return arr;
-    },
+    //     arr.unshift({ ...removedAjure, disabled: false });
+    //     arr.unshift({ ...removedMicroInvest, disabled: false });
+    //   }
+    //   arr.forEach((item) => {
+    //     if (item.value !== "MICRO_INVEST" && item.value !== "AJURE" && item.value !== "XERO" && item.value !== "FRESH_BOOKS") {
+    //       item.disabled = true;
+    //     }
+    //   });
+    //   return arr;
+    // },
   },
 
   methods: {
@@ -726,6 +728,7 @@ export default {
     },
     checkChange() {
       this.isEdit = false
+      this.selectedPlatformProperty = this.exportProperties.platform
     },
     formatOwnerEGN(e) {
       return String(e).substring(0, 10);
