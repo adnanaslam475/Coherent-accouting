@@ -223,7 +223,7 @@
                         </div>
                         <div class="d-flex mr-4" style="flex-direction: column; float: right">
                           <div class="text-uppercase grey-text-color">TAX</div>
-                          <h4 style="color: #625f6e">{{ invoiceData.vatPercent }}</h4>
+                          <h4 style="color: #625f6e">{{ invoiceData.vatAmount }}</h4>
                         </div>
                       </b-col>
                     </b-row>
@@ -235,7 +235,7 @@
                           <p class="invoice-total-amount">
                             <validation-provider #default="{ errors }" name="vat" ref="vatPercent">
                               <b-input-group class="input-group-merge invoice-edit-input-group">
-                                <b-form-input v-model="invoiceData.vatPercent" step="any" type="number" class="text-right"
+                                <b-form-input v-model="invoiceData.vatAmount" step="any" type="number" class="text-right"
                                   @input="populateValues()" />
 
                                 <b-input-group-append is-text>
