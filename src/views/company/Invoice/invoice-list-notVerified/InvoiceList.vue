@@ -855,7 +855,7 @@ export default {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Ще намерите фактурите в таб "Масов OCR" на фирмата',
+              title: 'Please check tab "Bull OCR Docs" of the company',
               icon: "EditIcon",
               variant: "success",
             },
