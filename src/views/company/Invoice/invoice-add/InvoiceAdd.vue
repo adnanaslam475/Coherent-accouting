@@ -239,7 +239,7 @@
                             <p class="invoice-total-amount">
                               <validation-provider #default="{ errors }" name="vat" ref="vatPercent">
                                 <b-input-group class="input-group-merge invoice-edit-input-group">
-                                  <b-form-input v-model="invoiceData.vatAmount" step="any" type="number"
+                                  <b-form-input v-model="invoiceData.vatPercent" step="any" type="number"
                                     class="text-right" @input="populateValues()" />
 
                                   <b-input-group-append is-text>
