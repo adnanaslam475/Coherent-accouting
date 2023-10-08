@@ -13,7 +13,7 @@
               <feather-icon size="16" icon="XIcon" class="cursor-pointer ml-auto" @click="closeModel" />
             </template>
             <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0">
-              {{ invoiceData.vatPercent }}
+
               <b-row class="my-2 w-100 mx-0" style="border-bottom: 1px solid lightgrey">
                 <b-col cols="12" xl="12" md="12" class="" style="text-align: end">
                   <h4 style="color: #625f6e">{{ invoiceData.currency }} {{ invoiceData.totalAmount }}</h4>
@@ -21,7 +21,7 @@
               </b-row>
 
               <b-row class="w-100 mx-0">
-                <b-col cols="12" xl="6" md="6" class="p-2" style="">
+                <b-col cols="12" xl="5" md="5" class="p-2" style="">
                   <!-- <XeroInvvoices v-if='invoiceData.binaryId' :invoiceData='invoiceData' :binaryImage='invoiceImage'/> -->
                   <!-- <image-zoom :regular="invoiceImage" :zoom="invoiceImage"> </image-zoom> -->
 
@@ -62,7 +62,7 @@
                   </div>
                 </b-col>
 
-                <b-col cols="12" xl="6" md="6" style="border-left: 1px dashed lightgrey">
+                <b-col cols="12" xl="7" md="7" style="border-left: 1px dashed lightgrey">
                   <b-tabs v-model="companyTab">
                     <!-- Company-Info tab -->
 
