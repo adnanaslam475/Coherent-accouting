@@ -6399,9 +6399,9 @@ export default {
         companyName.value = response.data.companyName
         companyData.value = response.data
 
-        if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == "") {
-          invoiceData.value.vatPercent = 0
-        }
+        // if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == "") {
+        //   invoiceData.value.vatPercent = 0
+        // }
         console.log(companyName.value, "this is company name ")
         supplierID.value = response.data.companyIdentificationNumber
       })

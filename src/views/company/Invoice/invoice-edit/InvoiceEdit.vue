@@ -6358,7 +6358,7 @@ export default {
         console.log(invoiceData.value)
         if (invoiceData.value.xero) {
           axios
-            .get(`${axios.defaults.baseURL}/account/api/export/get-accounts-codes-xero${router.currentRoute.params.companyId}`, {
+            .get(`${axios.defaults.baseURL}/account/api/export/get-accounts-codes-xero/${router.currentRoute.params.companyId}`, {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
               },
