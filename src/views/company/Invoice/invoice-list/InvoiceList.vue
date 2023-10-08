@@ -16,15 +16,12 @@
             /> -->
 
           <b-dropdown text="Add Document" variant="primary" class="mr-1" id="invoice-add">
-            <b-dropdown-item
-              :to="{
-                name: 'company-invoice-add',
-                params: {
-                  companyId: $route.params.companyId ? $route.params.companyId : $route.params.id,
-                },
-              }"
-              @click="actionTab"
-            >
+            <b-dropdown-item :to="{
+              name: 'company-invoice-add',
+              params: {
+                companyId: $route.params.companyId ? $route.params.companyId : $route.params.id,
+              },
+            }" @click="actionTab">
               <feather-icon icon="CommandIcon" class="mr-1" />
               {{ $t("company_invoices.manual") }}
             </b-dropdown-item>
@@ -74,41 +71,21 @@
           <!--Add the third button name export-->
           <!-- Export Invoice Button -->
           <b-button variant="primary" class="mr-1 cursor-button" :disabled="!isActive" v-if="platform == 'FRESH_BOOKS'">
-            <b-form-file
-              ref="imageUploader"
-              class="file-input2"
-              multiple
-              @change="addExportFile"
-              :disabled="!isActive"
-            />
+            <b-form-file ref="imageUploader" class="file-input2" multiple @change="addExportFile" :disabled="!isActive" />
             <b-spinner v-if="fileLoadingExport" small variant="light" />
             {{ $t("company_invoices.ocr_import") }}
 
             <!-- Add From File -->
           </b-button>
-          <b-button
-            variant="primary"
-            style="cursor: pointer"
-            class="mr-1"
-            @click="showDatePickerModal"
-            :disabled="!isActive"
-            v-else
-          >
+          <b-button variant="primary" style="cursor: pointer" class="mr-1" @click="showDatePickerModal"
+            :disabled="!isActive" v-else>
             {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>
 
           <!-- Add From File Modal -->
-          <b-modal
-            id="add_invoice"
-            ref="add_invoice_modal"
-            title="Add From File"
-            :hide-footer="true"
-            :ok-title="$t('modal_labels.ok')"
-            :cancel-title="$t('modal_labels.close')"
-            @show="resetModal"
-            @ok="handleOk"
-          >
+          <b-modal id="add_invoice" ref="add_invoice_modal" title="Add From File" :hide-footer="true"
+            :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" @show="resetModal" @ok="handleOk">
             <b-row class="text-center my-3">
               <b-col md="12">
                 <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
@@ -130,50 +107,27 @@
 
           <!-- Date Picker Modal -->
 
-          <b-modal
-            id="modal-prevent-closing-invoice"
-            ref="export_model"
-            :title="$t('company_info.selectMonth')"
-            :ok-title="$t('modal_labels.ok')"
-            :cancel-title="$t('modal_labels.close')"
-            @show="resetModal"
-            @ok="handleOk"
-            :ok-disabled="modalDisabledMonth"
-          >
+          <b-modal id="modal-prevent-closing-invoice" ref="export_model" :title="$t('company_info.selectMonth')"
+            :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" @show="resetModal" @ok="handleOk"
+            :ok-disabled="modalDisabledMonth">
             <form ref="form" @submit.stop.prevent="handleMonthSelect">
               <validation-observer ref="selectMonthRules" tag="form">
                 <validation-provider #default="{ errors }" :name="$t('month_selected')" rules="required">
-                  <vue-monthly-picker
-                    id="month_selected"
-                    v-model="selectedMonthData.date"
-                    name="month_selected"
-                    date-format="Y-MM"
-                    :month-labels="monthLabels"
-                    :class="errors.length > 0 ? 'is-invalid' : null"
-                    :place-holder="$t('company_info.pleaseSelect')"
-                  />
+                  <vue-monthly-picker id="month_selected" v-model="selectedMonthData.date" name="month_selected"
+                    date-format="Y-MM" :month-labels="monthLabels" :class="errors.length > 0 ? 'is-invalid' : null"
+                    :place-holder="$t('company_info.pleaseSelect')" />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </validation-observer>
             </form>
           </b-modal>
 
-          <b-modal
-            id="modal-invoices-export"
-            ref="modal_exportValue"
-            :title="
-              companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE'
-                ? companyinfo.exportProperties.platform
-                : ''
-            "
-            title-class="w-100 text-center"
-            :ok-title="$t('company_invoices.Export_invoicess')"
-            :cancel-title="$t('company_invoices.cancel')"
-            scrollable
-            @ok="getExportFile()"
-            :ok-disabled="modalDisabled"
-            class="p-3"
-          >
+          <b-modal id="modal-invoices-export" ref="modal_exportValue" :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE'
+              ? companyinfo.exportProperties.platform
+              : ''
+            " title-class="w-100 text-center" :ok-title="$t('company_invoices.Export_invoicess')"
+            :cancel-title="$t('company_invoices.cancel')" scrollable @ok="getExportFile()" :ok-disabled="modalDisabled"
+            class="p-3">
             <form ref="form" @submit.stop.prevent="handleMonthSelect" class="border p-3 bg-light">
               <!-- display exportDto data -->
               <!-- display companyinfo.keyValues data -->
@@ -181,12 +135,8 @@
               <div v-if="companyinfo && companyinfo.exportProperties" class="mb-3">
                 <div v-for="(value, key) in companyinfo.exportProperties.keyValues" :key="key" class="mb-2">
                   <label :for="'input-' + key" class="form-label">{{ key }} :</label>
-                  <input
-                    :id="'input-' + key"
-                    class="form-control"
-                    v-model="companyinfo.exportProperties.keyValues[key]"
-                    readonly
-                  />
+                  <input :id="'input-' + key" class="form-control" v-model="companyinfo.exportProperties.keyValues[key]"
+                    readonly />
                 </div>
               </div>
               <div v-else>
@@ -205,24 +155,13 @@
         <b-col cols="12" md="8" class="px-0 pl-md-2 pl-1">
           <div class="d-flex">
             <div class="position-relative pr-1" style="min-width: 9vw">
-              <b-form-select
-                class="mr-1"
-                style="background: none"
-                v-model="documentType"
-                :options="[
-                  { value: null, text: 'Document type' },
-                  { text: 'INVOICE', value: 'INVOICE' },
-                  { text: 'RECEIPT', value: 'RECEIPT' },
-                ]"
-              />
-              <feather-icon
-                v-if="documentType"
-                size="16"
-                icon="XIcon"
-                class="cursor-pointer clear-all position-absolute"
-                style="right: 18px"
-                @click="documentType = null"
-              />
+              <b-form-select class="mr-1" style="background: none" v-model="documentType" :options="[
+                { value: null, text: 'Document type' },
+                { text: 'INVOICE', value: 'INVOICE' },
+                { text: 'RECEIPT', value: 'RECEIPT' },
+              ]" />
+              <feather-icon v-if="documentType" size="16" icon="XIcon" class="cursor-pointer clear-all position-absolute"
+                style="right: 18px" @click="documentType = null" />
             </div>
             <!-- <b-form-select class="mr-1" v-model="transactionType" :options="['INCOME', 'EXPENSE']" /> -->
             <!-- <b-form-select v-model="documentType" :options="documentTypeItems">
@@ -232,46 +171,26 @@
             </b-form-select> -->
 
             <div class="position-relative pr-1" style="min-width: 9vw">
-              <b-form-select
-                class="mr-1"
-                style="background: none"
-                v-model="transactionType"
-                :options="[
-                  { value: null, text: 'Transaction type' },
-                  { text: 'INCOME', value: 'INCOME' },
-                  { text: 'EXPENSE', value: 'INCOME' },
-                ]"
-              />
-              <feather-icon
-                v-if="transactionType"
-                size="16"
-                icon="XIcon"
-                class="cursor-pointer clear-all position-absolute"
-                style="right: 18px"
-                @click="transactionType = null"
-              />
+              <b-form-select class="mr-1" style="background: none" v-model="transactionType" :options="[
+                { value: null, text: 'Transaction type' },
+                { text: 'INCOME', value: 'INCOME' },
+                { text: 'EXPENSE', value: 'INCOME' },
+              ]" />
+              <feather-icon v-if="transactionType" size="16" icon="XIcon"
+                class="cursor-pointer clear-all position-absolute" style="right: 18px" @click="transactionType = null" />
             </div>
 
             <div class="position-relative pr-1" style="min-width: 9vw">
               <b-form-select class="mr-1" style="background: none" v-model="lastDays" :options="lastDaysItems" />
-              <feather-icon
-                v-if="lastDays"
-                size="16"
-                icon="XIcon"
-                class="cursor-pointer clear-all position-absolute"
-                style="right: 18px"
-                @click="lastDays = null"
-              />
+              <feather-icon v-if="lastDays" size="16" icon="XIcon" class="cursor-pointer clear-all position-absolute"
+                style="right: 18px" @click="lastDays = null" />
             </div>
 
             <!-- <b-form-select class="mr-1" v-model="lastDays" :options="lastDaysItems" /> -->
 
             <div class="position-relative mr-1" style="min-width: 8vw">
-              <flat-pickr
-                v-model="startDate"
-                class="form-control invoice-edit-input invoice-input-top"
-                :placeholder="$t('company_invoices.start_date')"
-              />
+              <flat-pickr v-model="startDate" class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.start_date')" />
               <feather-icon v-if="startDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="startDate = ''" />
               <!-- <feather-icon
@@ -283,11 +202,8 @@
             </div>
 
             <div class="position-relative mr-1" style="min-width: 8vw">
-              <flat-pickr
-                v-model="endDate"
-                class="form-control invoice-edit-input invoice-input-top"
-                :placeholder="$t('company_invoices.end_date')"
-              />
+              <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.end_date')" />
               <feather-icon v-if="endDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
               <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="endDate = ''" />
               <!-- <feather-icon
@@ -299,14 +215,8 @@
             </div>
             <div class="position-relative mr-1" style="min-width: 5vw">
               <b-form-input v-model="searchQuery" class="d-inline-block" :placeholder="$t('company_invoices.search')" />
-              <feather-icon
-                v-if="searchQuery"
-                size="16"
-                icon="XIcon"
-                class="cursor-pointer clear-all"
-                style="right: 6px"
-                @click="searchQuery = ''"
-              />
+              <feather-icon v-if="searchQuery" size="16" icon="XIcon" class="cursor-pointer clear-all" style="right: 6px"
+                @click="searchQuery = ''" />
             </div>
           </div>
         </b-col>
@@ -328,19 +238,9 @@
 
     <!--  Table Starts  -->
 
-    <b-table
-      ref="refInvoiceListTable"
-      :items="isCheck === false ? fetchInvoices : invoices"
-      :fields="tableColumns"
-      responsive
-      primary-key="id"
-      :sort-by.sync="sortBy"
-      show-empty
-      empty-text="No matching records found"
-      :sort-desc.sync="isSortDirDesc"
-      class="position-relative invoiceList h-100"
-      id="company-invoices"
-    >
+    <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns"
+      responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found"
+      :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100" id="company-invoices">
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
@@ -361,10 +261,8 @@
       </template>
 
       <template #cell(invoiceNumber)="data">
-        <b-link
-          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId } }"
-          class="font-weight-bold"
-        >
+        <b-link :to="{ name: 'company-invoice-edit', params: { id: data.item.id, companyId: companyId } }"
+          class="font-weight-bold">
           <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
@@ -406,16 +304,11 @@
       </template>
 
       <template #cell(transactionType)="data">
-        <b-link
-          :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId } }"
-          class="font-weight-bold"
-        >
+        <b-link :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId } }"
+          class="font-weight-bold">
           <span :id="`transactionType-row-${data.item.id}`" class="text-nowrap">
-            <b-badge
-              pill
-              :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'}`"
-              class="text-capitalize"
-            >
+            <b-badge pill :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'}`"
+              class="text-capitalize">
               {{ $t("company_invoices." + data.value) }}
             </b-badge>
           </span>
@@ -491,9 +384,8 @@
       </template>
       <template #cell(amountNonVat)="data">
         <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'"
-            >лв. {{ data.value }}</span
-          >
+          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'">лв. {{
+            data.value }}</span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -504,9 +396,8 @@
       </template>
       <template #cell(totalAmount)="data">
         <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'"
-            >лв. {{ data.value }}</span
-          >
+          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'">лв. {{
+            data.value }}</span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -517,9 +408,8 @@
       </template>
       <template #cell(vatAmount)="data">
         <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'"
-            >лв. {{ data.value }}</span
-          >
+          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'">лв. {{
+            data.value }}</span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -538,23 +428,15 @@
 
       <template #cell(actions)="data">
         <div class="text-nowrap">
-          <feather-icon
-            :id="`invoice-row-${data.item.id}-preview-icon`"
-            icon="EyeIcon"
-            size="16"
-            class="mr-1 cursor-pointer"
-            @click="
+          <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16"
+            class="mr-1 cursor-pointer" @click="
               $router.push({
                 name: 'company-invoice-preview',
                 params: { id: data.item.id, companyId: companyId },
               })
-            "
-          />
-          <b-tooltip
-            :title="$t('company_info.previewInvoice')"
-            class="cursor-pointer"
-            :target="`invoice-row-${data.item.id}-preview-icon`"
-          />
+              " />
+          <b-tooltip :title="$t('company_info.previewInvoice')" class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-preview-icon`" />
 
           <!-- Dropdown -->
           <b-dropdown variant="link" toggle-class="p-0" no-caret dropleft :right="$store.state.appConfig.isRTL">
@@ -565,12 +447,10 @@
               <feather-icon icon="DownloadIcon" />
               <span class="align-middle ml-50">{{ $t("download") }}</span>
             </b-dropdown-item>
-            <b-dropdown-item
-              :to="{
-                name: 'company-invoice-edit',
-                params: { id: data.item.id, companyId: companyId },
-              }"
-            >
+            <b-dropdown-item :to="{
+              name: 'company-invoice-edit',
+              params: { id: data.item.id, companyId: companyId },
+            }">
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">{{ $t("company_info.edit") }}</span>
             </b-dropdown-item>
@@ -581,34 +461,14 @@
           </b-dropdown>
 
           <!-- Duplicate -->
-          <feather-icon
-            :id="`invoice-row-${data.item.id}-duplicate-icon`"
-            icon="LayersIcon"
-            size="16"
-            class="mx-1 cursor-pointer"
-            @click="duplicateInvoice(data.item)"
-          />
-          <b-tooltip
-            :title="$t('company_info.duplicate')"
-            class="cursor-pointer"
-            :target="`invoice-row-${data.item.id}-duplicate-icon`"
-          />
-          <vue-html2pdf
-            :show-layout="false"
-            :float-layout="true"
-            :enable-download="true"
-            :ref="`invoicePdf${data.item.id}`"
-            :preview-modal="false"
-            :paginate-elements-by-height="1100"
-            filename="invoice"
-            :pdf-quality="2"
-            :manual-pagination="false"
-            pdf-format="a3"
-            :pdf-margin="10"
-            pdf-orientation="portrait"
-            pdf-content-width="1125px"
-            @progress="onProgress($event)"
-          >
+          <feather-icon :id="`invoice-row-${data.item.id}-duplicate-icon`" icon="LayersIcon" size="16"
+            class="mx-1 cursor-pointer" @click="duplicateInvoice(data.item)" />
+          <b-tooltip :title="$t('company_info.duplicate')" class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-duplicate-icon`" />
+          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true"
+            :ref="`invoicePdf${data.item.id}`" :preview-modal="false" :paginate-elements-by-height="1100"
+            filename="invoice" :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10"
+            pdf-orientation="portrait" pdf-content-width="1125px" @progress="onProgress($event)">
             <section slot="pdf-content" class="invoice-pdf invoice-preview-list">
               <invoice-download :invoice-data="data.item" />
             </section>
