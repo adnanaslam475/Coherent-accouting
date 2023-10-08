@@ -5588,7 +5588,7 @@ export default {
     getAccounts() {
       var config = {
         method: "get",
-        url: "/account/api/invoice/get-accounts",
+        url: `/account/api/invoice/get-accounts/${router.currentRoute.params.companyId}`,
         headers: {
           Authorization: "Bearer " + localStorage.getItem("accessToken"),
           "Access-Control-Allow-Credentials": true,
@@ -6266,7 +6266,7 @@ export default {
 
       if (invoiceData.value.xero) {
         axios
-          .get(`${axios.defaults.baseURL}/account/api/export/get-accounts-codes-xero`, {
+          .get(`${axios.defaults.baseURL}/account/api/export/get-accounts-codes-xero/${router.currentRoute.params.companyId}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },

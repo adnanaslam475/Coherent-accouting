@@ -20,34 +20,8 @@
             </b-row>
 
             <b-row class="w-100 mx-0">
-              <b-col cols="12" xl="6" md="6" class="p-2" style="">
-                <!-- <XeroInvvoices v-if='invoiceData.binaryId' :invoiceData='invoiceData' :binaryImage='invoiceImage'/> -->
-                <!-- <image-zoom :regular="invoiceImage" :zoom="invoiceImage"> </image-zoom> -->
+              <b-col cols="12" xl="5" md="5" class="p-2" style="">
 
-                <!-- <vue-easy-lightbox
-                  moveDisabled
-                  :visible="visible"
-                  :hide="!visible"
-                  :imgs="invoiceImage"
-                  @hide="
-                    () => {
-                      visible = false
-                    }
-                  "
-                ></vue-easy-lightbox> -->
-                <!-- <div
-                  ref="viewerContainer"
-                  style="border: 1px solid lightgrey; box-shadow: 0 4px 24px 0 rgba(34, 41, 60, 0.1); cursor: pointer"
-                  @click="showSingle"
-                >
-                  <img :src="invoiceImage" data-original="image1.jpg" alt="Image 1" />
-                  
-                </div> -->
-
-                <!-- <button @click="zoomIn()" class="mt-1">Zoom In</button>
-            <button @click="zoomOut()" class="mt-1">Zoom Out</button>
-            <button @click="rotateLeft()" class="mt-1">Rotate Left</button>
-            <button @click="rotateRight()" class="mt-1">Rotate Right</button> -->
                 <div>
                   <div
                     style="border: 1px solid lightgrey; box-shadow: 0 4px 24px 0 rgba(34, 41, 60, 0.1); cursor: pointer">
@@ -58,7 +32,7 @@
                 </div>
               </b-col>
 
-              <b-col cols="12" xl="6" md="6" style="border-left: 1px dashed lightgrey">
+              <b-col cols="12" xl="7" md="7" style="border-left: 1px dashed lightgrey">
                 <b-tabs v-model="companyTab">
                   <!-- Company-Info tab -->
 
@@ -5837,7 +5811,7 @@ export default {
     getAccounts() {
       var config = {
         method: "get",
-        url: "/account/api/invoice/get-accounts",
+        url: `/account/api/invoice/get-accounts/${router.currentRoute.params.companyId}`,
         headers: {
           Authorization: "Bearer " + localStorage.getItem("accessToken"),
           "Access-Control-Allow-Credentials": true,
@@ -6384,7 +6358,7 @@ export default {
         console.log(invoiceData.value)
         if (invoiceData.value.xero) {
           axios
-            .get(`${axios.defaults.baseURL}/account/api/export/get-accounts-codes-xero`, {
+            .get(`${axios.defaults.baseURL}/account/api/export/get-accounts-codes-xero${router.currentRoute.params.companyId}`, {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
               },
