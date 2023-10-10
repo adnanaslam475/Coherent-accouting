@@ -24,7 +24,7 @@
             <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0">
               <b-row class="my-2 w-100 mx-0" style="border-bottom: 1px solid lightgrey">
                 <b-col cols="12" xl="12" md="12" class="" style="text-align: end">
-                  <h4 style="color: #625f6e">{{ invoiceData.currency }} {{ invoiceData.totalAmount }}</h4>
+                  <h4 style="color: #625f6e">{{ invoiceData.currency }} {{ invoiceData.totalAmount.toFixed(2) }}</h4>
                 </b-col>
               </b-row>
 
@@ -254,15 +254,14 @@
                           <div class="d-flex mr-0 flex-column float-right">
                             <div class="text-uppercase grey-text-color">INVOICE #</div>
                             <div class="pt-1">
-                              <b-button
+                              <!-- <b-button
                                 class="p-0 m-0"
                                 variant="link"
                                 @click="showInvoiceInput = true"
                                 v-if="!showInvoiceInput"
                                 >{{ invoiceData.invoiceNumber }}</b-button
-                              >
+                              > -->
                               <b-form-input
-                                v-if="showInvoiceInput"
                                 v-model="invoiceData.invoiceNumber"
                                 type="text"
                                 class="mb-0"
@@ -299,7 +298,7 @@
                             </div>
                           </div>
                         </b-col>
-                        <b-col>
+                        <b-col class="px-0">
                           <!-- <div class="d-flex" style="flex-direction: column; float: right">
                           <div class="text-uppercase grey-text-color">SHIPPING</div>
                           <div class="pt-1">00</div>
@@ -314,11 +313,22 @@
                         </div> -->
                           <div class="d-flex" style="flex-direction: column; float: right">
                             <div class="text-uppercase grey-text-color">TOTAL</div>
-                            <h4 style="color: #625f6e">{{ invoiceData.totalAmount }}</h4>
+                            <!-- <h4 style="color: #625f6e">{{ invoiceData.totalAmount }}</h4> -->
+                            <h4 style="color: #625f6e" class="pt-1">
+                              <b-form-input
+                                v-model="totalAmountInDecimal"
+                                type="text"
+                                class="mb-0"
+                                style="width: 140px"
+                              />
+                            </h4>
                           </div>
-                          <div class="d-flex mr-4" style="flex-direction: column; float: right">
+                          <div class="d-flex mr-2" style="flex-direction: column; float: right">
                             <div class="text-uppercase grey-text-color">TAX</div>
-                            <h4 style="color: #625f6e">{{ invoiceData.vatAmount }}</h4>
+                            <!-- <h4 style="color: #625f6e">{{ invoiceData.vatAmount }}</h4> -->
+                            <h4 style="color: #625f6e" class="pt-1">
+                              <b-form-input v-model="totalTaxInDecimal" type="text" class="mb-0" style="width: 140px" />
+                            </h4>
                           </div>
                         </b-col>
                       </b-row>
@@ -625,8 +635,9 @@
                                         rules="required"
                                       >
                                         {{
-                                          parseFloat(item.singleAmountTransaction) *
-                                          parseFloat(item.quantity).toFixed(2)
+                                          (
+                                            parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
+                                          ).toFixed(2)
                                         }}
                                         <!-- <b-input-group class="input-group-merge invoice-edit-input-group"> -->
                                         <!-- <b-input-group-prepend is-text class="mb-0">
@@ -653,7 +664,7 @@
                                     :style="
                                       invoiceData.hasDropDown
                                         ? 'padding-top: 2px; left: 3px'
-                                        : 'padding-top: 2px; left: 22px'
+                                        : 'padding-top: 2px; left: 28px'
                                     "
                                   >
                                     <feather-icon
@@ -8317,6 +8328,27 @@ export default {
         .toFixed(2)
     })
 
+    const totalAmountInDecimal = computed({
+      get() {
+        if (invoiceData.value.totalAmount.toString().includes(".")) return invoiceData.value.totalAmount
+        return invoiceData.value.totalAmount.toFixed(2)
+      },
+      set(newVal) {
+        // invoiceData.value.totalAmount
+        console.log(newVal)
+        invoiceData.value.totalAmount = +newVal
+      },
+    })
+    const totalTaxInDecimal = computed({
+      get() {
+        if (invoiceData.value.vatAmount.toString().includes(".")) return invoiceData.value.vatAmount
+        return invoiceData.value.vatAmount.toFixed(2)
+      },
+      set(newVal) {
+        invoiceData.value.vatAmount = +newVal
+      },
+    })
+
     function closeModel() {
       this.modelShow = false
       // this.$router.push({
@@ -9094,6 +9126,8 @@ export default {
       }
     })
     return {
+      totalTaxInDecimal,
+      totalAmountInDecimal,
       companyTab,
       totalTax,
       showInvoiceInput,

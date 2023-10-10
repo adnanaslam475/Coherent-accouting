@@ -24,7 +24,7 @@
           <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0">
             <b-row class="my-2 w-100 mx-0" style="border-bottom: 1px solid lightgrey">
               <b-col cols="12" xl="12" md="12" class="" style="text-align: end">
-                <h4 style="color: #625f6e">{{ invoiceData.currency }} {{ invoiceData.totalAmount }}</h4>
+                <h4 style="color: #625f6e">{{ invoiceData.currency }} {{ invoiceData.totalAmount.toFixed(2) }}</h4>
               </b-col>
             </b-row>
 
@@ -223,15 +223,14 @@
                         <div class="d-flex mr-0 flex-column float-right">
                           <div class="text-uppercase grey-text-color">INVOICE #</div>
                           <div class="pt-1">
-                            <b-button
+                            <!-- <b-button
                               class="p-0 m-0"
                               variant="link"
                               @click="showInvoiceInput = true"
                               v-if="!showInvoiceInput"
                               >{{ invoiceData.invoiceNumber }}</b-button
-                            >
+                            > -->
                             <b-form-input
-                              v-if="showInvoiceInput"
                               v-model="invoiceData.invoiceNumber"
                               type="text"
                               class="mb-0"
@@ -268,7 +267,7 @@
                           </div>
                         </div>
                       </b-col>
-                      <b-col>
+                      <b-col class="px-0">
                         <!-- <div class="d-flex" style="flex-direction: column; float: right">
                           <div class="text-uppercase grey-text-color">SHIPPING</div>
                           <div class="pt-1">00</div>
@@ -284,41 +283,34 @@
                         <div class="d-flex" style="flex-direction: column; float: right">
                           <div class="text-uppercase grey-text-color">TOTAL</div>
                           <!-- <h4 style="color: #625f6e">{{ invoiceData.totalAmount }}</h4> -->
-                          <h4 style="color: #625f6e">
-                            <b-button
+                          <h4 style="color: #625f6e" class="pt-1">
+                            <!-- <b-button
                               class="p-0 m-0"
                               variant="link"
                               @click="showTotalInput = true"
                               v-if="!showTotalInput"
-                              >{{ invoiceData.totalAmount }}</b-button
-                            >
+                              >{{ invoiceData.totalAmount }}</b-button 
+                            >-->
                             <b-form-input
-                              v-if="showTotalInput"
-                              v-model="invoiceData.totalAmount"
+                              v-model="totalAmountInDecimal"
                               type="text"
                               class="mb-0"
                               style="width: 130px"
                             />
                           </h4>
                         </div>
-                        <div class="d-flex mr-4" style="flex-direction: column; float: right">
+                        <div class="d-flex mr-2" style="flex-direction: column; float: right">
                           <div class="text-uppercase grey-text-color">TAX</div>
                           <!-- <h4 style="color: #625f6e">{{ invoiceData.vatAmount }}</h4> -->
-                          <h4 style="color: #625f6e">
-                            <b-button
+                          <h4 style="color: #625f6e" class="pt-1">
+                            <!-- <b-button
                               class="p-0 m-0"
                               variant="link"
                               @click="showTaxInput = true"
                               v-if="!showTaxInput"
                               >{{ invoiceData.vatAmount }}</b-button
-                            >
-                            <b-form-input
-                              v-if="showTaxInput"
-                              v-model="invoiceData.vatAmount"
-                              type="text"
-                              class="mb-0"
-                              style="width: 130px"
-                            />
+                            > -->
+                            <b-form-input v-model="totalTaxInDecimal" type="text" class="mb-0" style="width: 130px" />
                           </h4>
                         </div>
                       </b-col>
@@ -626,9 +618,19 @@
                                   <b-col cols="12" lg="1" class="pl-2" style="padding-top: 10px">
                                     <label class="d-inline d-lg-none">Total Price</label>
                                     <validation-provider #default="{ errors }" name="transectionTotal" rules="required">
-                                      {{
-                                        parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity).toFixed(2)
-                                      }}
+                                      <span
+                                        v-if="
+                                          item.transactionTotalAmountNonVat && item.transactionTotalAmountNonVat > 0
+                                        "
+                                        >{{ item.transactionTotalAmountNonVat.toFixed(2) }}</span
+                                      >
+                                      <span v-else>
+                                        {{
+                                          (
+                                            parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
+                                          ).toFixed(2)
+                                        }}</span
+                                      >
                                       <!-- <b-input-group class="input-group-merge invoice-edit-input-group"> -->
                                       <!-- <b-input-group-prepend is-text class="mb-0">
                                       <span>{{ invoiceData.currency }}</span>
@@ -654,7 +656,7 @@
                                   :style="
                                     invoiceData.hasDropDown
                                       ? 'padding-top: 2px; left: 3px'
-                                      : 'padding-top: 2px; left: 22px'
+                                      : 'padding-top: 2px; left: 26px'
                                   "
                                 >
                                   <feather-icon
@@ -8585,6 +8587,26 @@ export default {
         }, 0)
         .toFixed(2)
     })
+    const totalAmountInDecimal = computed({
+      get() {
+        if (invoiceData.value.totalAmount.toString().includes(".")) return invoiceData.value.totalAmount
+        return invoiceData.value.totalAmount.toFixed(2)
+      },
+      set(newVal) {
+        // invoiceData.value.totalAmount
+        console.log(newVal)
+        invoiceData.value.totalAmount = +newVal
+      },
+    })
+    const totalTaxInDecimal = computed({
+      get() {
+        if (invoiceData.value.vatAmount.toString().includes(".")) return invoiceData.value.vatAmount
+        return invoiceData.value.vatAmount.toFixed(2)
+      },
+      set(newVal) {
+        invoiceData.value.vatAmount = +newVal
+      },
+    })
     // const formIsValid = computed(() => {
 
     // })
@@ -9383,6 +9405,8 @@ export default {
       showTaxInput,
       showTotalInput,
       totalTax,
+      totalTaxInDecimal,
+      totalAmountInDecimal,
       trHeight,
       loading,
       showinvoiceCurrency,
