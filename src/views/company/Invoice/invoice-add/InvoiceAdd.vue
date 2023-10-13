@@ -3,7 +3,7 @@
     <TabList />
     <!--  -->
 
-    <validation-observer ref="invoiceForm" #default="{ invalid }">
+    <validation-observer ref="invoiceForm">
       <!-- {{ invoiceData }} -->
       <b-form>
         <b-row class="invoice-add mx-0" v-if="invoiceData.binaryId">
@@ -24,7 +24,9 @@
             <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0">
               <b-row class="my-2 w-100 mx-0" style="border-bottom: 1px solid lightgrey">
                 <b-col cols="12" xl="12" md="12" class="" style="text-align: end">
-                  <h4 style="color: #625f6e">{{ invoiceData.currency }} {{ invoiceData.totalAmount.toFixed(2) }}</h4>
+                  <h4 style="color: #625f6e">
+                    {{ invoiceData.currency }} {{ parseFloat(invoiceData.totalAmount).toFixed(2) }}
+                  </h4>
                 </b-col>
               </b-row>
 
@@ -484,12 +486,9 @@
                                         #default="{ errors, invalid }"
                                         name="transectionCurrency"
                                         rules="required"
+                                        immediate
                                       >
-                                        <b-form-select
-                                          v-model="invoiceData.transactions[index].account"
-                                          :options="accounts"
-                                        >
-                                        </b-form-select>
+                                        <b-form-select v-model="item.account" :options="accounts"> </b-form-select>
                                         <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       </validation-provider>
                                     </b-col>
@@ -500,11 +499,12 @@
                                         name="Category"
                                         ref="selectCategory"
                                         rules="required"
+                                        immediate
                                       >
                                         <b-form-select
                                           id="selectCategory"
                                           :options="categoryItems"
-                                          v-model="invoiceData.transactions[index].account"
+                                          v-model="item.account"
                                         >
                                         </b-form-select>
                                         <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
@@ -517,12 +517,9 @@
                                         name="Post Code"
                                         rules="required"
                                         ref="postCode"
+                                        immediate
                                       >
-                                        <b-form-select
-                                          id="postCode"
-                                          :options="jobPostItems"
-                                          v-model="invoiceData.transactions[index].taxType"
-                                        >
+                                        <b-form-select id="postCode" :options="jobPostItems" v-model="item.taxType">
                                         </b-form-select>
                                         <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       </validation-provider>
@@ -534,6 +531,7 @@
                                         name="Description"
                                         rules="required"
                                         ref="transectionServiceOrItemDescription"
+                                        immediate
                                       >
                                         <b-form-input
                                           id="transectionServiceOrItemDescription"
@@ -553,6 +551,7 @@
                                         name="Qty"
                                         rules="required"
                                         ref="transectionQuantity"
+                                        immediate
                                       >
                                         <b-form-input
                                           id="transectionQuantity"
@@ -588,6 +587,7 @@
                                         name="Single Price"
                                         rules="required|singlePriceValid"
                                         ref="transectionSingleAmountTransaction"
+                                        immediate
                                       >
                                         <!-- <b-input-group class="input-group-merge invoice-edit-input-group"> -->
                                         <!-- <b-input-group-prepend is-text class="mb-0">
@@ -663,8 +663,8 @@
                                     class="d-flex justify-content-end position-relative top-custom m-0"
                                     :style="
                                       invoiceData.hasDropDown
-                                        ? 'padding-top: 2px; left: 3px'
-                                        : 'padding-top: 2px; left: 28px'
+                                        ? 'padding-top: 2px; left: 3px; z-index:5 !important'
+                                        : 'padding-top: 2px; left: 28px; z-index:5 !important'
                                     "
                                   >
                                     <feather-icon
@@ -1106,7 +1106,7 @@
                       variant="outline-primary"
                       class="mr-2"
                       :disabled="loading"
-                      @click="invoiceAdd(invoiceData, 'save', AccountTypeOption)"
+                      type="submit"
                     >
                       <b-spinner v-if="loading" small variant="light" />
                       {{ $t("add_invoice.save") }}
@@ -1574,7 +1574,7 @@
                         <b-input-group class="input-group invoice-edit-input-group">
                           <validation-provider
                             #default="{ errors }"
-                            :name="AccountTypeOption == 'company' ? 'recipientCompanyName' : 'personName'"
+                            :name="AccountTypeOption == 'company' ? 'company name' : 'person name'"
                             rules="required"
                           >
                             <b-form-input
@@ -1640,7 +1640,7 @@
                         <b-input-group class="input-group invoice-edit-input-group">
                           <validation-provider
                             #default="{ errors }"
-                            :name="AccountTypeOption == 'company' ? 'recipientCompanyAddress' : 'personAddress'"
+                            :name="AccountTypeOption == 'company' ? 'company address' : 'person address'"
                             rules="required"
                           >
                             <b-form-input v-model="invoiceData.recipientCompany.companyAddress" autocomplete="off" />
@@ -1838,9 +1838,9 @@
               <b-card no-body class="invoice-preview date-issued mb-0">
                 <b-card-header class="justify-content-end">
                   <div class="mt-md-0 mt-2">
-                    <div class="d-flex align-items-center mb-0">
+                    <div class="d-flex align-items-center mb-0 position-relative">
                       <span class="title mr-1"> {{ $t("add_invoice.date") }}: </span>
-                      <validation-provider #default="{ errors }" name="dateIssued" rules="required">
+                      <validation-provider #default="{ errors }" name="date" rules="required">
                         <flat-pickr
                           v-model="invoiceData.dateIssued"
                           class="form-control invoice-edit-input invoice-input-top"
@@ -1849,14 +1849,16 @@
                           v-if="invoiceData.dateIssued === ''"
                           size="16"
                           icon="CalendarIcon"
-                          class="cursor-pointer clear-all"
+                          class="cursor-pointer"
+                          style="position: absolute; top: 6px; right: 0"
                         />
                         <feather-icon
                           v-else
                           size="16"
                           icon="XIcon"
-                          class="cursor-pointer clear-all"
+                          class="cursor-pointer"
                           @click="invoiceData.dateIssued = ''"
+                          style="position: absolute; top: 6px; right: 0"
                         />
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
@@ -1947,11 +1949,7 @@
 
                           <b-col cols="12" lg="4">
                             <label class="d-inline d-lg-none">Item name or Service</label>
-                            <validation-provider
-                              #default="{ errors }"
-                              name="transectionServiceOrItemDescription"
-                              rules="required"
-                            >
+                            <validation-provider #default="{ errors }" name="item name or service" rules="required">
                               <b-form-input
                                 v-model="item.serviceOrItemDescription"
                                 :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
@@ -1963,7 +1961,7 @@
                           </b-col>
                           <b-col cols="12" lg="1">
                             <label class="d-inline d-lg-none">Qty</label>
-                            <validation-provider #default="{ errors }" name="transectionQuantity" rules="required">
+                            <validation-provider #default="{ errors }" name="qty" rules="required">
                               <b-form-input
                                 v-model="item.quantity"
                                 type="number"
@@ -1977,7 +1975,7 @@
                           </b-col>
                           <b-col cols="12" lg="1">
                             <label class="d-inline d-lg-none">Measure</label>
-                            <validation-provider #default="{ errors }" name="transectionMeasurement" rules="required">
+                            <validation-provider #default="{ errors }" name="measure" rules="required">
                               <b-form-select v-model="item.measurement" class="mb-0" :options="measureOptions" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
@@ -1986,7 +1984,7 @@
                             <label class="d-inline d-lg-none">Single Price</label>
                             <validation-provider
                               #default="{ errors }"
-                              name="transectionSingleAmountTransaction"
+                              name="single Price"
                               rules="required|singlePriceValid"
                             >
                               <b-input-group class="input-group-merge invoice-edit-input-group">
@@ -2008,14 +2006,14 @@
                           </b-col>
                           <b-col cols="12" lg="1">
                             <label class="d-inline d-lg-none">Currency</label>
-                            <validation-provider #default="{ errors }" name="transectionCurrency" rules="required">
+                            <validation-provider #default="{ errors }" name="currency" rules="required">
                               <b-form-select v-model="invoiceData.currency" :options="currencyOptions"> </b-form-select>
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </b-col>
                           <b-col cols="12" lg="2">
                             <label class="d-inline d-lg-none">Total Price</label>
-                            <validation-provider #default="{ errors }" name="transectionTotal" rules="required">
+                            <validation-provider #default="{ errors }" name="transectionTotal">
                               <b-input-group class="input-group-merge invoice-edit-input-group">
                                 <b-input-group-prepend is-text class="mb-0">
                                   <span>{{ invoiceData.currency }}</span>
@@ -7367,7 +7365,7 @@
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 variant="outline-primary"
                 block
-                type="submit"
+                @click="invoiceAdd(invoiceData, 'save', AccountTypeOption)"
                 :disabled="loading"
               >
                 <b-spinner v-if="loading" small variant="light" />
@@ -8007,7 +8005,7 @@ export default {
     //   }
     // },
     addNewItemInItemForm() {
-      this.$refs.form.style.overflow = "hidden"
+      // this.$refs.form.style.overflow = "hidden"
       this.invoiceData.transactions.push(JSON.parse(JSON.stringify(this.itemFormBlankItem)))
     },
     removeItem(index) {
@@ -8026,7 +8024,10 @@ export default {
     invoiceAdd(invoiceData, redirectPage, AccountTypeOption) {
       //assign the data of recipient and creator
       //creator supplier company
-      if ((redirectPage === "save" || redirectPage === "verify") && !this.formIsValid) return
+      if (this.invoiceData?.binaryId && this.invoiceData.binaryId !== null) {
+        if ((redirectPage === "save" || redirectPage === "verify") && !this.formIsValid) return
+      }
+
       var self = this
 
       if (invoiceData.scheduled == true) {
@@ -8124,6 +8125,9 @@ export default {
 
       this.$refs.invoiceForm.validate().then((success) => {
         // if (success && this.companyIDisInvalid === false && this.isWeekSelected === false) {
+        if (!success) {
+          return
+        }
         if (
           success &&
           this.isTemplateOne === false &&
@@ -8393,6 +8397,8 @@ export default {
       measurement: "",
       transactionTotalAmountNonVat: 0,
       vatAmountTransaction: 0,
+      taxType: "",
+      account: "",
     }
     var companyInBG = ref(false)
     const isBlue = ref(true)

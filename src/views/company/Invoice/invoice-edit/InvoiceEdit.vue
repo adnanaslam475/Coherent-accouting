@@ -24,7 +24,10 @@
           <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0">
             <b-row class="my-2 w-100 mx-0" style="border-bottom: 1px solid lightgrey">
               <b-col cols="12" xl="12" md="12" class="" style="text-align: end">
-                <h4 style="color: #625f6e">{{ invoiceData.currency }} {{ invoiceData.totalAmount.toFixed(2) }}</h4>
+                <h4 style="color: #625f6e">
+                  {{ invoiceData.currency }}
+                  {{ parseFloat(invoiceData.totalAmount).toFixed(2) }}
+                </h4>
               </b-col>
             </b-row>
 
@@ -470,11 +473,7 @@
                                       rules="required"
                                       ref="account"
                                     >
-                                      <b-form-select
-                                        id="account"
-                                        v-model="invoiceData.transactions[index].account"
-                                        :options="accounts"
-                                      >
+                                      <b-form-select id="account" v-model="item.account" :options="accounts">
                                       </b-form-select>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       <!-- <small class="text-danger">{{ errors[0] }}</small> -->
@@ -491,7 +490,7 @@
                                       <b-form-select
                                         id="selectCategory"
                                         :options="categoryItems"
-                                        v-model="invoiceData.transactions[index].account"
+                                        v-model="item.account"
                                       />
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
@@ -504,11 +503,7 @@
                                       rules="required"
                                       ref="postCode"
                                     >
-                                      <b-form-select
-                                        id="postCode"
-                                        :options="jobPostItems"
-                                        v-model="invoiceData.transactions[index].taxType"
-                                      >
+                                      <b-form-select id="postCode" :options="jobPostItems" v-model="item.taxType">
                                       </b-form-select>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
@@ -622,7 +617,7 @@
                                         v-if="
                                           item.transactionTotalAmountNonVat && item.transactionTotalAmountNonVat > 0
                                         "
-                                        >{{ item.transactionTotalAmountNonVat.toFixed(2) }}</span
+                                        >{{ parseFloat(item.transactionTotalAmountNonVat).toFixed(2) }}</span
                                       >
                                       <span v-else>
                                         {{
@@ -655,8 +650,8 @@
                                   class="d-flex justify-content-end position-relative top-custom m-0"
                                   :style="
                                     invoiceData.hasDropDown
-                                      ? 'padding-top: 2px; left: 3px'
-                                      : 'padding-top: 2px; left: 26px'
+                                      ? 'padding-top: 2px; left: 3px; z-index:5 !important'
+                                      : 'padding-top: 2px; left: 26px; z-index:5 !important'
                                   "
                                 >
                                   <feather-icon
@@ -7580,7 +7575,7 @@
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 variant="outline-primary"
                 block
-                type="submit"
+                @click="invoiceEdit(invoiceData, 'save', AccountTypeOption)"
                 :disabled="loading"
               >
                 <b-spinner v-if="loading" small variant="light" />
@@ -8242,7 +8237,7 @@ export default {
       }
     },
     addNewItemInItemForm() {
-      this.$refs.form.style.overflow = "hidden"
+      // this.$refs.form.style.overflow = "hidden"
       this.invoiceData.transactions.push(JSON.parse(JSON.stringify(this.itemFormBlankItem)))
     },
     removeItem(index) {
@@ -8260,7 +8255,9 @@ export default {
     },
 
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
-      if ((redirectPage === "save" || redirectPage === "verify") && !this.formIsValid) return
+      if (this.invoiceData?.binaryId && this.invoiceData.binaryId !== null) {
+        if ((redirectPage === "save" || redirectPage === "verify") && !this.formIsValid) return
+      }
       if (invoiceData.scheduled == true) {
         if (invoiceData.cronScheduleApi !== null) {
           if (!invoiceData.cronScheduleApi.dayOfWeek) {
@@ -8531,6 +8528,8 @@ export default {
       measurement: "",
       vatAmountTransaction: 0,
       transactionTotalAmountNonVat: 0,
+      taxType: "",
+      account: "",
     }
 
     const invoiceData = ref(null)
@@ -8593,8 +8592,6 @@ export default {
         return invoiceData.value.totalAmount.toFixed(2)
       },
       set(newVal) {
-        // invoiceData.value.totalAmount
-        console.log(newVal)
         invoiceData.value.totalAmount = +newVal
       },
     })
