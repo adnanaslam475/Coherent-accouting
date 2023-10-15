@@ -49,18 +49,18 @@
                       <b-col cols="12" xl="12" md="12" class="px-0" style="text-align: end">
                         <b-button-group size="md" class=" " style="transform: translate(0px, -50px)">
                           <b-button variant="" :style="invoiceData.transactionType == 'INCOME'
-                              ? 'background-color: #007AFF !important; color: white;'
-                              : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                            ? 'background-color: #007AFF !important; color: white;'
+                            : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
                             " @click="() => {
-      invoiceData.transactionType = 'INCOME'
-    }
+    invoiceData.transactionType = 'INCOME'
+  }
     ">Income</b-button>
                           <b-button variant="" :style="invoiceData.transactionType == 'EXPENSE'
-                              ? 'background-color: #007AFF !important; color: white;'
-                              : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                            ? 'background-color: #007AFF !important; color: white;'
+                            : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
                             " @click="() => {
-      invoiceData.transactionType = 'EXPENSE'
-    }
+    invoiceData.transactionType = 'EXPENSE'
+  }
     ">Expense</b-button>
                         </b-button-group>
                       </b-col>
@@ -110,36 +110,36 @@
                             <div class="position-relative pt-1">
                               <b-button-group size="md" class=" " v-if="invoiceData.transactionType == 'EXPENSE'">
                                 <b-button variant="" :style="invoiceData.documentType == 'RECEIPT'
-                                    ? 'background-color: #007AFF !important; color: white;'
-                                    : ' border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  ? 'background-color: #007AFF !important; color: white;'
+                                  : ' border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
                                   " class="text-uppercase" @click="() => {
-      invoiceData.documentType = 'RECEIPT'
-      invoiceData.recipientCompany = {}
-    }
+    invoiceData.documentType = 'RECEIPT'
+    invoiceData.recipientCompany = {}
+  }
     ">Receipt</b-button>
                                 <b-button variant="" :style="invoiceData.documentType == 'INVOICE'
-                                    ? 'background-color: #007AFF !important; color: white;'
-                                    : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  ? 'background-color: #007AFF !important; color: white;'
+                                  : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
                                   " class="text-uppercase" @click="() => {
-      invoiceData.documentType = 'INVOICE'
-    }
+    invoiceData.documentType = 'INVOICE'
+  }
     ">Bill</b-button>
                               </b-button-group>
                               <b-button-group size="md" v-else>
                                 <b-button variant="" :style="invoiceData.documentType == 'RECEIPT'
-                                    ? 'background-color: #007AFF !important; color: white;'
-                                    : ' border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  ? 'background-color: #007AFF !important; color: white;'
+                                  : ' border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
                                   " class="text-uppercase" @click="() => {
-      invoiceData.documentType = 'RECEIPT'
-      invoiceData.recipientCompany = {}
-    }
+    invoiceData.documentType = 'RECEIPT'
+    invoiceData.recipientCompany = {}
+  }
     ">Receipt</b-button>
                                 <b-button variant="" :style="invoiceData.documentType == 'INVOICE'
-                                    ? 'background-color: #007AFF !important; color: white'
-                                    : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  ? 'background-color: #007AFF !important; color: white'
+                                  : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
                                   " class="text-uppercase" @click="() => {
-      invoiceData.documentType = 'INVOICE'
-    }
+    invoiceData.documentType = 'INVOICE'
+  }
     ">INVOICE</b-button>
                               </b-button-group>
                             </div>
@@ -211,7 +211,7 @@
                               v-if="!showTotalInput"
                               >{{ invoiceData.totalAmount }}</b-button 
                             >-->
-                            <b-form-input v-model="totalAmountInDecimal" type="number" class="mb-0"
+                            <b-form-input v-model="totalAmountInDecimal" type="number" class="mb-0" placeholder='0.00'
                               style="width: 130px" />
                           </h4>
                         </div>
@@ -890,8 +890,8 @@
                         <span class="title mr-1"> {{ $t("add_invoice.schedule_type") }}: </span>
                         <validation-provider #default="{ errors }" name="scheduleType" rules="required">
                           <b-form-select v-model="invoiceData.cronScheduleApi.scheduleType" @change="() => {
-                              companyIDisInvalid = false
-                            }
+                            companyIDisInvalid = false
+                          }
                             ">
                             <b-form-select-option value="WEEKLY">{{ $t("add_invoice.WEEKLY") }}</b-form-select-option>
                             <b-form-select-option value="MONTHLY">{{ $t("add_invoice.MONTHLY") }}</b-form-select-option>
@@ -949,8 +949,8 @@
                         <span class="title mr-1"> {{ $t("add_invoice.select_date") }}: </span>
                         <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
                           <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth" @change="() => {
-                              companyIDisInvalid = false
-                            }
+                            companyIDisInvalid = false
+                          }
                             " :options="dates">
                             <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{
                               date.text
@@ -991,24 +991,24 @@
                 class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2 invoice-add-input invoice-input-middle mb-md-0">
                 <div class="mt-md-0 mt-2 flex-1">
                   <b-card no-body class="invoice-add invoice-card" :style="isBlue === true
-                      ? 'border: 1px solid #007aff !important'
-                      : isGreen === true
-                        ? 'border: 1px solid #8fce00 !important'
-                        : isPurple === true
-                          ? 'border: 1px solid #ad3978 !important'
-                          : isOrange === true
-                            ? 'border: 1px solid #FFA500 !important'
-                            : 'border:1px solid #f6d1ff !important'
+                    ? 'border: 1px solid #007aff !important'
+                    : isGreen === true
+                      ? 'border: 1px solid #8fce00 !important'
+                      : isPurple === true
+                        ? 'border: 1px solid #ad3978 !important'
+                        : isOrange === true
+                          ? 'border: 1px solid #FFA500 !important'
+                          : 'border:1px solid #f6d1ff !important'
                     ">
                     <b-card-header class="justify-content-center invoice-header mb-1" :class="isBlue === true
-                        ? 'tm_accent_bg'
-                        : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
                       ">
                       <h5 class="m-0" :style="isGray === true ? 'color: black !important' : 'color: white !important'">
                         {{ $t("add_invoice.supplier") }}
@@ -1054,8 +1054,8 @@
                               @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)" list="my-company_name"
                               autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)"
                               @mousedown="() => {
-                                  companyIDisInvalid = false
-                                }
+                                companyIDisInvalid = false
+                              }
                                 " />
                             <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions"
                               style="width: 100%">
@@ -1112,24 +1112,24 @@
                 </div>
                 <div class="mt-md-0 mt-2 flex-1">
                   <b-card no-body class="invoice-add invoice-card" :style="isBlue === true
-                      ? 'border: 1px solid #007aff !important'
-                      : isGreen === true
-                        ? 'border: 1px solid #8fce00 !important'
-                        : isPurple === true
-                          ? 'border: 1px solid #ad3978 !important'
-                          : isOrange === true
-                            ? 'border: 1px solid #FFA500 !important'
-                            : 'border:1px solid #f6d1ff !important'
+                    ? 'border: 1px solid #007aff !important'
+                    : isGreen === true
+                      ? 'border: 1px solid #8fce00 !important'
+                      : isPurple === true
+                        ? 'border: 1px solid #ad3978 !important'
+                        : isOrange === true
+                          ? 'border: 1px solid #FFA500 !important'
+                          : 'border:1px solid #f6d1ff !important'
                     ">
                     <b-card-header class="justify-content-center invoice-header mb-1" :class="isBlue === true
-                        ? 'tm_accent_bg'
-                        : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
                       ">
                       <h5 class="m-0" :style="isGray === true ? 'color: black !important' : 'color: white !important'">
                         {{ $t("add_invoice.recipient") }}
@@ -1275,8 +1275,8 @@
                       <span class="title mr-1"> {{ $t("company_invoices.transaction_type") }}: </span>
                       <validation-provider #default="{ errors }" name="transectionType" rules="required">
                         <b-form-select v-model="invoiceData.transactionType" @change="() => {
-                            companyIDisInvalid = false
-                          }
+                          companyIDisInvalid = false
+                        }
                           ">
                           <b-form-select-option value="EXPENSE">{{
                             $t("company_invoices.EXPENSE")
@@ -1353,25 +1353,25 @@
                     <!-- Item Form -->
                     <!-- ? This will be in loop => So consider below markup for single item -->
                     <b-col cols="12" class="p-0" :style="isBlue === true
-                        ? 'border: 1px solid #007aff'
-                        : isGreen === true
-                          ? 'border: 1px solid #8fce00'
-                          : isPurple === true
-                            ? 'border: 1px solid #ad3978'
-                            : isOrange === true
-                              ? 'border: 1px solid #FFA500'
-                              : 'border:1px solid #f6d1ff'
+                      ? 'border: 1px solid #007aff'
+                      : isGreen === true
+                        ? 'border: 1px solid #8fce00'
+                        : isPurple === true
+                          ? 'border: 1px solid #ad3978'
+                          : isOrange === true
+                            ? 'border: 1px solid #FFA500'
+                            : 'border:1px solid #f6d1ff'
                       ">
                       <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                       <div class="d-none d-lg-flex p-custom" :class="isBlue === true
-                          ? 'tm_accent_bg'
-                          : isGreen === true
-                            ? 'green_bg'
-                            : isPurple === true
-                              ? 'purple_bg'
-                              : isOrange === true
-                                ? 'orange_bg'
-                                : 'gray_bg'
+                        ? 'tm_accent_bg'
+                        : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                            ? 'purple_bg'
+                            : isOrange === true
+                              ? 'orange_bg'
+                              : 'gray_bg'
                         " :style="isGray === true ? 'color: black !important' : 'color: white !important'">
                         <b-row class="flex-grow-1 px-1 invoice-add-transections">
                           <!-- Single Item Form Headers -->
@@ -1504,14 +1504,14 @@
             </b-card>
             <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="addNewItemInItemForm" class="mb-2"
               :style="isBlue === true
-                  ? 'background-color: #007aff !important; color: white !important'
-                  : isGreen === true
-                    ? 'background-color: #8fce00 !important; color: white !important'
-                    : isPurple === true
-                      ? 'background-color: #ad3978 !important; color: white !important'
-                      : isOrange === true
-                        ? 'background-color: #FFA500 !important; color: white !important'
-                        : 'background-color: #f6d1ff !important; color: black !important'
+                ? 'background-color: #007aff !important; color: white !important'
+                : isGreen === true
+                  ? 'background-color: #8fce00 !important; color: white !important'
+                  : isPurple === true
+                    ? 'background-color: #ad3978 !important; color: white !important'
+                    : isOrange === true
+                      ? 'background-color: #FFA500 !important; color: white !important'
+                      : 'background-color: #f6d1ff !important; color: black !important'
                 ">
               {{ $t("add_invoice.add_item") }}
             </b-button>
@@ -1519,14 +1519,14 @@
             <b-card no-body class="invoice-add-card mb-1">
               <b-card-body class="invoice-padding form-item-section p-0">
                 <b-row class="pb-0 m-0 transaction-container" :style="isBlue === true
-                    ? 'border: 1px solid #007aff'
-                    : isGreen === true
-                      ? 'border: 1px solid #8fce00'
-                      : isPurple === true
-                        ? 'border: 1px solid #ad3978'
-                        : isOrange === true
-                          ? 'border: 1px solid #FFA500'
-                          : 'border:1px solid #f6d1ff'
+                  ? 'border: 1px solid #007aff'
+                  : isGreen === true
+                    ? 'border: 1px solid #8fce00'
+                    : isPurple === true
+                      ? 'border: 1px solid #ad3978'
+                      : isOrange === true
+                        ? 'border: 1px solid #FFA500'
+                        : 'border:1px solid #f6d1ff'
                   ">
                   <!-- Col: Sales Persion -->
                   <b-col cols="12" class="border border-0 row m-0 py-2">
@@ -1814,11 +1814,11 @@
                               style="width: 80px; height: 80px; border: 1px solid black" v-if="showLogo" />
                             <feather-icon v-if="showLogo" size="16" icon="XSquareIcon" color="red" class="cursor-pointer"
                               style="position: absolute; left: 70px; top: -7px" @click="() => {
-                                  showLogo = false
-                                  logoToUpload = ''
-                                  isUploading = i18n.tc('add_invoice.upload_logo')
-                                  invoiceData.logoId = ''
-                                }
+                                showLogo = false
+                                logoToUpload = ''
+                                isUploading = i18n.tc('add_invoice.upload_logo')
+                                invoiceData.logoId = ''
+                              }
                                 " />
                             <span>
                               <label for="invoiceLogo1">
@@ -1916,8 +1916,8 @@
                               <validation-provider #default="{ errors }" name="scheduleType" rules="required">
                                 <b-form-select :disabled="!invoiceData.scheduled"
                                   v-model="invoiceData.cronScheduleApi.scheduleType" @change="() => {
-                                      companyIDisInvalid = false
-                                    }
+                                    companyIDisInvalid = false
+                                  }
                                     ">
                                   <b-form-select-option value="WEEKLY">{{
                                     $t("add_invoice.WEEKLY")
@@ -1976,8 +1976,8 @@
                               <span class="title mr-1"> {{ $t("add_invoice.select_date") }}: </span>
                               <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
                                 <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth" @change="() => {
-                                    companyIDisInvalid = false
-                                  }
+                                  companyIDisInvalid = false
+                                }
                                   " :options="dates">
                                   <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{
                                     date.text }}</b-form-select-option>
@@ -2027,8 +2027,8 @@
                             @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)" list="my-company_name"
                             autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)"
                             @mousedown="() => {
-                                companyIDisInvalid = false
-                              }
+                              companyIDisInvalid = false
+                            }
                               " style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEic" :key="data.eic"
@@ -2206,8 +2206,8 @@
                               <span class="title mr-1"> {{ $t("company_invoices.transaction_type") }}: </span>
                               <validation-provider #default="{ errors }" name="transectionType" rules="required">
                                 <b-form-select v-model="invoiceData.transactionType" @change="() => {
-                                    companyIDisInvalid = false
-                                  }
+                                  companyIDisInvalid = false
+                                }
                                   ">
                                   <b-form-select-option value="EXPENSE">{{
                                     $t("company_invoices.EXPENSE")
@@ -2371,8 +2371,8 @@
                                         </b-input-group-prepend>
 
                                         <b-form-input :value="(
-                                            parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
-                                          ).toFixed(2)
+                                          parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
+                                        ).toFixed(2)
                                           " disabled class="mb-0" style="background-color: #f5f6fa" />
                                       </b-input-group>
                                       <small class="text-danger">{{ errors[0] }}</small>
@@ -2667,14 +2667,14 @@
 
                                     cursor: pointer;
                                   " :class="isBlue === true
-                                      ? 'tm_accent_bg'
-                                      : isGreen === true
-                                        ? 'green_bg'
-                                        : isPurple === true
-                                          ? 'purple_bg'
-                                          : isOrange === true
-                                            ? 'orange_bg'
-                                            : 'gray_bg'
+                                    ? 'tm_accent_bg'
+                                    : isGreen === true
+                                      ? 'green_bg'
+                                      : isPurple === true
+                                        ? 'purple_bg'
+                                        : isOrange === true
+                                          ? 'orange_bg'
+                                          : 'gray_bg'
                                     " :style="isGray === true ? 'color: black !important' : 'color: white !important'">
                                   {{ $t("add_invoice.upload_logo") }}
                                 </div>
@@ -2691,14 +2691,14 @@
 
                                     cursor: pointer;
                                   " :class="isBlue === true
-                                      ? 'tm_accent_bg'
-                                      : isGreen === true
-                                        ? 'green_bg'
-                                        : isPurple === true
-                                          ? 'purple_bg'
-                                          : isOrange === true
-                                            ? 'orange_bg'
-                                            : 'gray_bg'
+                                    ? 'tm_accent_bg'
+                                    : isGreen === true
+                                      ? 'green_bg'
+                                      : isPurple === true
+                                        ? 'purple_bg'
+                                        : isOrange === true
+                                          ? 'orange_bg'
+                                          : 'gray_bg'
                                     " :style="isGray === true ? 'color: black !important' : 'color: white !important'">
                                   {{ $t("add_invoice.change_logo") }}
                                 </div>
@@ -2716,14 +2716,14 @@
                         </div>
                       </div>
                       <div class="tm_shape_bg tm_mobile_hide" :class="isBlue === true
-                          ? 'tm_accent_bg'
-                          : isGreen === true
-                            ? 'green_bg'
-                            : isPurple === true
-                              ? 'purple_bg'
-                              : isOrange === true
-                                ? 'orange_bg'
-                                : 'gray_bg'
+                        ? 'tm_accent_bg'
+                        : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                            ? 'purple_bg'
+                            : isOrange === true
+                              ? 'orange_bg'
+                              : 'gray_bg'
                         "></div>
                     </div>
                     <div class="tm_invoice_info tm_mb25">
@@ -2762,14 +2762,14 @@
                         </div>
                       </div>
                       <div class="tm_invoice_seperator tm_accent_bg" :class="isBlue === true
-                          ? 'tm_accent_bg'
-                          : isGreen === true
-                            ? 'green_bg'
-                            : isPurple === true
-                              ? 'purple_bg'
-                              : isOrange === true
-                                ? 'orange_bg'
-                                : 'gray_bg'
+                        ? 'tm_accent_bg'
+                        : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
+                            ? 'purple_bg'
+                            : isOrange === true
+                              ? 'orange_bg'
+                              : 'gray_bg'
                         "></div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-2 accountType">
@@ -2788,8 +2788,8 @@
                               <validation-provider #default="{ errors }" name="scheduleType" rules="required">
                                 <b-form-select :disabled="!invoiceData.scheduled"
                                   v-model="invoiceData.cronScheduleApi.scheduleType" @change="() => {
-                                      companyIDisInvalid = false
-                                    }
+                                    companyIDisInvalid = false
+                                  }
                                     ">
                                   <b-form-select-option value="WEEKLY">{{
                                     $t("add_invoice.WEEKLY")
@@ -2865,8 +2865,8 @@
                               <span class="title mr-1"> {{ $t("add_invoice.select_date") }}: </span>
                               <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
                                 <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth" @change="() => {
-                                    companyIDisInvalid = false
-                                  }
+                                  companyIDisInvalid = false
+                                }
                                   " :options="dates">
                                   <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{
                                     date.text }}</b-form-select-option>
@@ -2916,8 +2916,8 @@
                             @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)" list="my-company_name"
                             autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)"
                             @mousedown="() => {
-                                companyIDisInvalid = false
-                              }
+                              companyIDisInvalid = false
+                            }
                               " style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions"
                             style="width: 47%">
@@ -3096,8 +3096,8 @@
                               <span class="title mr-1"> {{ $t("company_invoices.transaction_type") }}: </span>
                               <validation-provider #default="{ errors }" name="transectionType" rules="required">
                                 <b-form-select v-model="invoiceData.transactionType" @change="() => {
-                                    companyIDisInvalid = false
-                                  }
+                                  companyIDisInvalid = false
+                                }
                                   ">
                                   <b-form-select-option value="EXPENSE">{{
                                     $t("company_invoices.EXPENSE")
@@ -3147,14 +3147,14 @@
                             <b-col cols="12" class="p-0 border">
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div class="d-none d-lg-flex p-custom" :class="isBlue === true
-                                  ? 'tm_accent_bg'
-                                  : isGreen === true
-                                    ? 'green_bg'
-                                    : isPurple === true
-                                      ? 'purple_bg'
-                                      : isOrange === true
-                                        ? 'orange_bg'
-                                        : 'gray_bg'
+                                ? 'tm_accent_bg'
+                                : isGreen === true
+                                  ? 'green_bg'
+                                  : isPurple === true
+                                    ? 'purple_bg'
+                                    : isOrange === true
+                                      ? 'orange_bg'
+                                      : 'gray_bg'
                                 " :style="isGray === true ? 'color: black !important' : 'color: white !important'">
                                 <b-row class="flex-grow-1 px-1 invoice-add-transections">
                                   <!-- Single Item Form Headers -->
@@ -3267,8 +3267,8 @@
                                           <span>{{ invoiceData.currency }}</span>
                                         </b-input-group-prepend>
                                         <b-form-input :value="(
-                                            parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
-                                          ).toFixed(2)
+                                          parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
+                                        ).toFixed(2)
                                           " disabled class="mb-0" />
                                       </b-input-group>
                                       <small class="text-danger">{{ errors[0] }}</small>
@@ -3290,14 +3290,14 @@
 
                     <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="addNewItemInItemForm"
                       class="mb-2" style="border: 1px solid white; padding: 10px; border-radius: 30px" :style="isBlue === true
-                          ? 'background-color: #007aff !important; color: white !important'
-                          : isGreen === true
-                            ? 'background-color: #8fce00 !important; color: white !important'
-                            : isPurple === true
-                              ? 'background-color: #ad3978 !important; color: white !important'
-                              : isOrange === true
-                                ? 'background-color: #FFA500 !important; color: white !important'
-                                : 'background-color: #f6d1ff !important; color: black !important'
+                        ? 'background-color: #007aff !important; color: white !important'
+                        : isGreen === true
+                          ? 'background-color: #8fce00 !important; color: white !important'
+                          : isPurple === true
+                            ? 'background-color: #ad3978 !important; color: white !important'
+                            : isOrange === true
+                              ? 'background-color: #FFA500 !important; color: white !important'
+                              : 'background-color: #f6d1ff !important; color: black !important'
                         ">
                       {{ $t("add_invoice.add_item") }}
                     </b-button>
@@ -3542,115 +3542,115 @@
                 <div class="tm_invoice tm_style1 tm_type2" id="tm_download_section">
                   <div class="tm_bars">
                     <span :class="isBlue === true
-                        ? 'tm_accent_bg'
-                        : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
                       "></span>
                     <span :class="isBlue === true
-                        ? 'tm_accent_bg'
-                        : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
                       "></span>
                     <span :class="isBlue === true
-                        ? 'tm_accent_bg'
-                        : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
                       "></span>
                   </div>
                   <div class="tm_bars tm_type1">
                     <span :class="isBlue === true
-                        ? 'tm_accent_bg'
-                        : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
                       "></span>
                     <span :class="isBlue === true
-                        ? 'tm_accent_bg'
-                        : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
                       "></span>
                     <span :class="isBlue === true
-                        ? 'tm_accent_bg'
-                        : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
                       "></span>
                   </div>
                   <div class="tm_shape">
                     <div class="tm_shape_in" :class="isBlue === true
-                        ? 'tm_accent_bg'
-                        : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
                       "></div>
                   </div>
                   <div class="tm_shape_2 tm_primary_color">
                     <div class="tm_shape_2_in tm_accent_color" :style="isBlue === true
-                        ? 'color: #007aff;'
-                        : isGreen === true
-                          ? 'color: #8fce00'
-                          : isPurple === true
-                            ? 'color: #ad3978'
-                            : isOrange === true
-                              ? 'color: #FFA500'
-                              : 'color: #f6d1ff'
+                      ? 'color: #007aff;'
+                      : isGreen === true
+                        ? 'color: #8fce00'
+                        : isPurple === true
+                          ? 'color: #ad3978'
+                          : isOrange === true
+                            ? 'color: #FFA500'
+                            : 'color: #f6d1ff'
                       "></div>
                   </div>
                   <div class="tm_shape_2 tm_type1 tm_primary_color">
                     <div class="tm_shape_2_in tm_accent_color" :style="isBlue === true
-                        ? 'color: #007aff;'
-                        : isGreen === true
-                          ? 'color: #8fce00'
-                          : isPurple === true
-                            ? 'color: #ad3978'
-                            : isOrange === true
-                              ? 'color: #FFA500'
-                              : 'color: #f6d1ff'
+                      ? 'color: #007aff;'
+                      : isGreen === true
+                        ? 'color: #8fce00'
+                        : isPurple === true
+                          ? 'color: #ad3978'
+                          : isOrange === true
+                            ? 'color: #FFA500'
+                            : 'color: #f6d1ff'
                       "></div>
                   </div>
                   <!-- <div class="tm_shape_4 tm_primary_bg"></div> -->
                   <div class="tm_shape tm_type1">
                     <div class="tm_shape_in" :class="isBlue === true
-                        ? 'tm_accent_bg'
-                        : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                            ? 'orange_bg'
+                            : 'gray_bg'
                       "></div>
                   </div>
                   <div class="tm_invoice_in">
@@ -3663,11 +3663,11 @@
                               style="width: 80px; height: 80px; border: 1px solid black" v-if="showLogo" />
                             <feather-icon v-if="showLogo" size="16" icon="XSquareIcon" color="red" class="cursor-pointer"
                               style="position: absolute; left: 70px; top: -7px" @click="() => {
-                                  showLogo = false
-                                  logoToUpload = ''
-                                  isUploading = i18n.tc('add_invoice.upload_logo')
-                                  invoiceData.logoId = ''
-                                }
+                                showLogo = false
+                                logoToUpload = ''
+                                isUploading = i18n.tc('add_invoice.upload_logo')
+                                invoiceData.logoId = ''
+                              }
                                 " />
                             <span>
                               <label for="invoiceLogo3">
@@ -3678,14 +3678,14 @@
 
                                     cursor: pointer;
                                   " :class="isBlue === true
-                                      ? 'tm_accent_bg'
-                                      : isGreen === true
-                                        ? 'green_bg'
-                                        : isPurple === true
-                                          ? 'purple_bg'
-                                          : isOrange === true
-                                            ? 'orange_bg'
-                                            : 'gray_bg'
+                                    ? 'tm_accent_bg'
+                                    : isGreen === true
+                                      ? 'green_bg'
+                                      : isPurple === true
+                                        ? 'purple_bg'
+                                        : isOrange === true
+                                          ? 'orange_bg'
+                                          : 'gray_bg'
                                     " :style="isGray === true ? 'color: black !important' : 'color: white !important'">
                                   {{ isUploading }}
                                 </div>
@@ -3766,8 +3766,8 @@
                               <validation-provider #default="{ errors }" name="scheduleType" rules="required">
                                 <b-form-select :disabled="!invoiceData.scheduled"
                                   v-model="invoiceData.cronScheduleApi.scheduleType" @change="() => {
-                                      companyIDisInvalid = false
-                                    }
+                                    companyIDisInvalid = false
+                                  }
                                     ">
                                   <b-form-select-option value="WEEKLY">{{
                                     $t("add_invoice.WEEKLY")
@@ -3826,8 +3826,8 @@
                               <span class="title mr-1"> {{ $t("add_invoice.select_date") }}: </span>
                               <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
                                 <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth" @change="() => {
-                                    companyIDisInvalid = false
-                                  }
+                                  companyIDisInvalid = false
+                                }
                                   " :options="dates">
                                   <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{
                                     date.text }}</b-form-select-option>
@@ -3875,8 +3875,8 @@
                             @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)" list="my-company_name"
                             autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)"
                             @mousedown="() => {
-                                companyIDisInvalid = false
-                              }
+                              companyIDisInvalid = false
+                            }
                               " style="margin-bottom: 5px" placeholder="Supplier Company ID Number...." />
                           <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEic" :key="data.eic"
@@ -4048,8 +4048,8 @@
                               <span class="title mr-1"> {{ $t("company_invoices.transaction_type") }}: </span>
                               <validation-provider #default="{ errors }" name="transectionType" rules="required">
                                 <b-form-select v-model="invoiceData.transactionType" @change="() => {
-                                    companyIDisInvalid = false
-                                  }
+                                  companyIDisInvalid = false
+                                }
                                   ">
                                   <b-form-select-option value="EXPENSE">{{
                                     $t("company_invoices.EXPENSE")
@@ -4099,14 +4099,14 @@
                             <b-col cols="12" class="p-0 border">
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div class="d-none d-lg-flex p-custom" :class="isBlue === true
-                                  ? 'tm_accent_bg'
-                                  : isGreen === true
-                                    ? 'green_bg'
-                                    : isPurple === true
-                                      ? 'purple_bg'
-                                      : isOrange === true
-                                        ? 'orange_bg'
-                                        : 'gray_bg'
+                                ? 'tm_accent_bg'
+                                : isGreen === true
+                                  ? 'green_bg'
+                                  : isPurple === true
+                                    ? 'purple_bg'
+                                    : isOrange === true
+                                      ? 'orange_bg'
+                                      : 'gray_bg'
                                 " :style="isGray === true ? 'color: black !important' : 'color: white !important'">
                                 <b-row class="flex-grow-1 px-1 invoice-add-transections">
                                   <!-- Single Item Form Headers -->
@@ -4220,8 +4220,8 @@
                                           <span>{{ invoiceData.currency }}</span>
                                         </b-input-group-prepend>
                                         <b-form-input :value="(
-                                            parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
-                                          ).toFixed(2)
+                                          parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
+                                        ).toFixed(2)
                                           " disabled class="mb-0" style="background-color: #f5f6fa" />
                                       </b-input-group>
                                       <small class="text-danger">{{ errors[0] }}</small>
@@ -4243,14 +4243,14 @@
 
                     <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="addNewItemInItemForm"
                       class="mb-2" style="border: 1px solid white; padding: 10px; border-radius: 30px" :style="isBlue === true
-                          ? 'background-color: #007aff !important; color: white !important'
-                          : isGreen === true
-                            ? 'background-color: #8fce00 !important; color: white !important'
-                            : isPurple === true
-                              ? 'background-color: #ad3978 !important; color: white !important'
-                              : isOrange === true
-                                ? 'background-color: #FFA500 !important; color: white !important'
-                                : 'background-color: #f6d1ff !important; color: black !important'
+                        ? 'background-color: #007aff !important; color: white !important'
+                        : isGreen === true
+                          ? 'background-color: #8fce00 !important; color: white !important'
+                          : isPurple === true
+                            ? 'background-color: #ad3978 !important; color: white !important'
+                            : isOrange === true
+                              ? 'background-color: #FFA500 !important; color: white !important'
+                              : 'background-color: #f6d1ff !important; color: black !important'
                         ">
                       {{ $t("add_invoice.add_item") }}
                     </b-button>
@@ -4504,14 +4504,14 @@
                       <path
                         d="M850 0.889398H0V150.889H184.505C216.239 150.889 246.673 141.531 269.113 124.872L359.112 58.0565C381.553 41.3977 411.987 32.0391 443.721 32.0391H850V0.889398Z"
                         :fill="isBlue === true
-                            ? '#007aff'
-                            : isGreen === true
-                              ? '#8fce00'
-                              : isPurple === true
-                                ? '#ad3978'
-                                : isOrange === true
-                                  ? '#FFA500'
-                                  : '#f6d1ff'
+                          ? '#007aff'
+                          : isGreen === true
+                            ? '#8fce00'
+                            : isPurple === true
+                              ? '#ad3978'
+                              : isOrange === true
+                                ? '#FFA500'
+                                : '#f6d1ff'
                           " fill-opacity="1" />
                     </svg>
                   </div>
@@ -4520,14 +4520,14 @@
                       <path
                         d="M0 150.889H850V0.889408H665.496C633.762 0.889408 603.327 10.2481 580.887 26.9081L490.888 93.7224C468.447 110.381 438.014 119.74 406.279 119.74H0V150.889Z"
                         :fill="isBlue === true
-                            ? '#007aff'
-                            : isGreen === true
-                              ? '#8fce00'
-                              : isPurple === true
-                                ? '#ad3978'
-                                : isOrange === true
-                                  ? '#FFA500'
-                                  : '#f6d1ff'
+                          ? '#007aff'
+                          : isGreen === true
+                            ? '#8fce00'
+                            : isPurple === true
+                              ? '#ad3978'
+                              : isOrange === true
+                                ? '#FFA500'
+                                : '#f6d1ff'
                           " fill-opacity="1" />
                     </svg>
                   </div>
@@ -4541,12 +4541,12 @@
                               style="width: 80px; height: 80px; border: 1px solid black" v-if="showLogo" />
                             <feather-icon v-if="showLogo" size="16" icon="XSquareIcon" color="red" class="cursor-pointer"
                               style="position: absolute; left: 70px; top: -7px" @click="() => {
-                                  showLogo = false
-                                  logoToUpload = ''
+                                showLogo = false
+                                logoToUpload = ''
 
-                                  isUploading = i18n.tc('add_invoice.upload_logo')
-                                  invoiceData.logoId = ''
-                                }
+                                isUploading = i18n.tc('add_invoice.upload_logo')
+                                invoiceData.logoId = ''
+                              }
                                 " />
                             <span>
                               <label for="invoiceLogo4">
@@ -4631,14 +4631,14 @@
                           </span>
                         </p>
                         <div class="tm_invoice_info_list_bg" :class="isBlue === true
-                            ? 'tm_accent_bg'
-                            : isGreen === true
-                              ? 'green_bg'
-                              : isPurple === true
-                                ? 'purple_bg'
-                                : isOrange === true
-                                  ? 'orange_bg'
-                                  : 'gray_bg'
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                            ? 'green_bg'
+                            : isPurple === true
+                              ? 'purple_bg'
+                              : isOrange === true
+                                ? 'orange_bg'
+                                : 'gray_bg'
                           "></div>
                       </div>
                     </div>
@@ -4660,8 +4660,8 @@
                               <validation-provider #default="{ errors }" name="scheduleType" rules="required">
                                 <b-form-select :disabled="!invoiceData.scheduled"
                                   v-model="invoiceData.cronScheduleApi.scheduleType" @change="() => {
-                                      companyIDisInvalid = false
-                                    }
+                                    companyIDisInvalid = false
+                                  }
                                     ">
                                   <b-form-select-option value="WEEKLY">{{
                                     $t("add_invoice.WEEKLY")
@@ -4720,8 +4720,8 @@
                               <span class="title mr-1"> {{ $t("add_invoice.select_date") }}: </span>
                               <validation-provider #default="{ errors }" name="dayOfMonth" rules="required">
                                 <b-form-select v-model="invoiceData.cronScheduleApi.dayOfMonth" @change="() => {
-                                    companyIDisInvalid = false
-                                  }
+                                  companyIDisInvalid = false
+                                }
                                   " :options="dates">
                                   <b-form-select-option :value="date.value" v-for="(date, index) in dates" :key="index">{{
                                     date.text }}</b-form-select-option>
@@ -4770,8 +4770,8 @@
                             @input="SearchCompanyEic(invoiceData.supplierCompany.companyEic)" list="my-company_name"
                             autocomplete="off" @blur="hideSuggestionEic()" @focus="ShowSuggestionEic(datalistEic)"
                             @mousedown="() => {
-                                companyIDisInvalid = false
-                              }
+                              companyIDisInvalid = false
+                            }
                               " style="margin-bottom: 5px" />
                           <b-list-group v-if="showSuggestionsEic" id="my-company_name" class="input-suggesstions">
                             <b-list-group-item v-for="data in datalistEic" :key="data.eic"
@@ -4947,8 +4947,8 @@
                               <span class="title mr-1"> {{ $t("company_invoices.transaction_type") }}: </span>
                               <validation-provider #default="{ errors }" name="transectionType" rules="required">
                                 <b-form-select v-model="invoiceData.transactionType" @change="() => {
-                                    companyIDisInvalid = false
-                                  }
+                                  companyIDisInvalid = false
+                                }
                                   ">
                                   <b-form-select-option value="EXPENSE">{{
                                     $t("company_invoices.EXPENSE")
@@ -4998,14 +4998,14 @@
                             <b-col cols="12" class="p-0 border">
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div class="d-none d-lg-flex p-custom" :class="isBlue === true
-                                  ? 'tm_accent_bg'
-                                  : isGreen === true
-                                    ? 'green_bg'
-                                    : isPurple === true
-                                      ? 'purple_bg'
-                                      : isOrange === true
-                                        ? 'orange_bg'
-                                        : 'gray_bg'
+                                ? 'tm_accent_bg'
+                                : isGreen === true
+                                  ? 'green_bg'
+                                  : isPurple === true
+                                    ? 'purple_bg'
+                                    : isOrange === true
+                                      ? 'orange_bg'
+                                      : 'gray_bg'
                                 " :style="isGray === true ? 'color: black !important' : 'color: white !important'">
                                 <b-row class="flex-grow-1 px-1 invoice-add-transections">
                                   <!-- Single Item Form Headers -->
@@ -5120,8 +5120,8 @@
                                         </b-input-group-prepend>
 
                                         <b-form-input :value="(
-                                            parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
-                                          ).toFixed(2)
+                                          parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
+                                        ).toFixed(2)
                                           " disabled class="mb-0" style="background-color: #f5f6fa" />
                                       </b-input-group>
                                       <small class="text-danger">{{ errors[0] }}</small>
@@ -5143,14 +5143,14 @@
 
                     <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" size="sm" @click="addNewItemInItemForm"
                       class="mb-2" style="border: 1px solid black; padding: 10px; border-radius: 30px" :style="isBlue === true
-                          ? 'background-color: #007aff !important; color: white !important'
-                          : isGreen === true
-                            ? 'background-color: #8fce00 !important; color: white !important'
-                            : isPurple === true
-                              ? 'background-color: #ad3978 !important; color: white !important'
-                              : isOrange === true
-                                ? 'background-color: #FFA500 !important; color: white !important'
-                                : 'background-color: #f6d1ff !important; color: black !important'
+                        ? 'background-color: #007aff !important; color: white !important'
+                        : isGreen === true
+                          ? 'background-color: #8fce00 !important; color: white !important'
+                          : isPurple === true
+                            ? 'background-color: #ad3978 !important; color: white !important'
+                            : isOrange === true
+                              ? 'background-color: #FFA500 !important; color: white !important'
+                              : 'background-color: #f6d1ff !important; color: black !important'
                         ">
                       {{ $t("add_invoice.add_item") }}
                     </b-button>
@@ -6371,7 +6371,7 @@ export default {
     const totalAmountInDecimal = computed({
       get() {
         if (invoiceData.value.totalAmount.toString().includes(".")) return invoiceData.value.totalAmount
-        return invoiceData.value.totalAmount.toFixed(2)
+        return invoiceData.value.totalAmount.toFixed(0)
       },
       set(newVal) {
         invoiceData.value.totalAmount = +newVal || null
@@ -6380,7 +6380,7 @@ export default {
     const totalTaxInDecimal = computed({
       get() {
         if (invoiceData.value.vatAmount.toString().includes(".")) return invoiceData.value.vatAmount
-        return invoiceData.value.vatAmount.toFixed(2)
+        return invoiceData.value.vatAmount.toFixed(0)
       },
       set(newVal) {
         invoiceData.value.vatAmount = +newVal || null

@@ -6142,7 +6142,7 @@ export default {
     const totalAmountInDecimal = computed({
       get() {
         if (invoiceData.value.totalAmount.toString().includes(".")) return invoiceData.value.totalAmount
-        return invoiceData.value.totalAmount.toFixed(2)
+        return invoiceData.value.totalAmount.toFixed(0)
       },
       set(newVal) {
         // invoiceData.value.totalAmount
@@ -6153,7 +6153,7 @@ export default {
     const totalTaxInDecimal = computed({
       get() {
         if (invoiceData.value.vatAmount.toString().includes(".")) return invoiceData.value.vatAmount
-        return invoiceData.value.vatAmount.toFixed(2)
+        return invoiceData.value.vatAmount.toFixed(0)
       },
       set(newVal) {
         invoiceData.value.vatAmount = +newVal || null
