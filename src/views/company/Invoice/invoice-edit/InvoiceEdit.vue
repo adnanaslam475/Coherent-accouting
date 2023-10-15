@@ -211,7 +211,7 @@
                               v-if="!showTotalInput"
                               >{{ invoiceData.totalAmount }}</b-button 
                             >-->
-                            <b-form-input v-model="totalAmountInDecimal" type="number" class="mb-0" placeholder='0.00'
+                            <b-form-input v-model="totalAmountInDecimal" type="number" class="mb-0"
                               style="width: 130px" />
                           </h4>
                         </div>
