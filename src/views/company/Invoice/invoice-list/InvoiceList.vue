@@ -123,8 +123,8 @@
           </b-modal>
 
           <b-modal id="modal-invoices-export" ref="modal_exportValue" :title="companyinfo && companyinfo.exportProperties && companyinfo.exportProperties.platform === 'AJURE'
-              ? companyinfo.exportProperties.platform
-              : ''
+            ? companyinfo.exportProperties.platform
+            : ''
             " title-class="w-100 text-center" :ok-title="$t('company_invoices.Export_invoicess')"
             :cancel-title="$t('company_invoices.cancel')" scrollable @ok="getExportFile()" :ok-disabled="modalDisabled"
             class="p-3">
@@ -174,7 +174,7 @@
               <b-form-select class="mr-1" style="background: none" v-model="transactionType" :options="[
                 { value: null, text: 'Transaction type' },
                 { text: 'INCOME', value: 'INCOME' },
-                { text: 'EXPENSE', value: 'INCOME' },
+                { text: 'EXPENSE', value: 'EXPENSE' },
               ]" />
               <feather-icon v-if="transactionType" size="16" icon="XIcon"
                 class="cursor-pointer clear-all position-absolute" style="right: 18px" @click="transactionType = null" />
@@ -1060,7 +1060,7 @@ export default {
         this.loadMore = true
         if (entries[0].isIntersecting) {
           if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
-            await this.listInvoices()
+            await this.handleSearchSelect()
           } else {
             await this.searchInvoices()
           }
