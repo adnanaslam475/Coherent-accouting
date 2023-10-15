@@ -319,7 +319,7 @@
                             <h4 style="color: #625f6e" class="pt-1">
                               <b-form-input
                                 v-model="totalAmountInDecimal"
-                                type="text"
+                                type="number"
                                 class="mb-0"
                                 style="width: 140px"
                               />
@@ -329,7 +329,7 @@
                             <div class="text-uppercase grey-text-color">TAX</div>
                             <!-- <h4 style="color: #625f6e">{{ invoiceData.vatAmount }}</h4> -->
                             <h4 style="color: #625f6e" class="pt-1">
-                              <b-form-input v-model="totalTaxInDecimal" type="text" class="mb-0" style="width: 140px" />
+                              <b-form-input v-model="totalTaxInDecimal" type="number" class="mb-0" style="width: 140px" />
                             </h4>
                           </div>
                         </b-col>

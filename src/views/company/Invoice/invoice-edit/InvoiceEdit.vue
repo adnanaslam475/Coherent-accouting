@@ -296,7 +296,7 @@
                             >-->
                             <b-form-input
                               v-model="totalAmountInDecimal"
-                              type="text"
+                              type="number"
                               class="mb-0"
                               style="width: 130px"
                             />
@@ -313,7 +313,7 @@
                               v-if="!showTaxInput"
                               >{{ invoiceData.vatAmount }}</b-button
                             > -->
-                            <b-form-input v-model="totalTaxInDecimal" type="text" class="mb-0" style="width: 130px" />
+                            <b-form-input v-model="totalTaxInDecimal" type="number" class="mb-0" style="width: 130px" />
                           </h4>
                         </div>
                       </b-col>
