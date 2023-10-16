@@ -46,7 +46,7 @@
           <feather-icon icon="FileIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">Bluk OCR Statements</span>
         </template>
-        <NotVerifiedInvoice v-if="companyTab == 4 || blukStatementsActive" />
+        <NotVarifiedBanks v-if="companyTab == 4 || blukStatementsActive" />
       </b-tab>
       <!-- Vat Reports tab -->
       <b-tab>
@@ -132,6 +132,7 @@ import axios from "@/libs/axios"
 import store from "@/store"
 import { mapGetters } from "vuex"
 import Banks from './BankStatements/bank-list/BanksList.vue'
+import NotVarifiedBanks from './BankStatements/bank-list-notVerified/InvoiceList.vue'
 
 export default {
   components: {
@@ -149,6 +150,7 @@ export default {
     BCardText,
     BCard,
     Banks,
+    NotVarifiedBanks
   },
   data() {
     return {

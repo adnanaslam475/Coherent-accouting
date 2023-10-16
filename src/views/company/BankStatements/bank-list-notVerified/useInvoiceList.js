@@ -20,9 +20,12 @@ export default function useInvoicesList() {
     { key: 'fromDate', label: "From Date", sortable: true },
     { key: 'toDate', label: "To Date", sortable: true },
 
+    // { key: 'vatPercent', sortable: true, formatter: val => `${val}%` },
+    // { key: 'tradeDiscountAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
+    // { key: 'tradeDiscountPercent', sortable: true, formatter: val => `${val}%` },
 
-
-    // { key: 'actions' },
+    // { key: 'currency', sortable: true },
+    { key: 'actions' },
   ]
   const perPage = ref(10)
   const totalInvoices = ref(0)
@@ -55,13 +58,11 @@ export default function useInvoicesList() {
   })
 
   const fetchInvoices = (ctx, callback) => {
-
     store
-
       .dispatch('app-invoice/fetchInvoices', {
         sortField: sortBy.value,
         direction: isSortDirDesc.value,
-        verified: true,
+        verified: false,
         currentPage: currentPage.value,
         perPage: perPage.value,
         q: searchQuery.value,
@@ -70,7 +71,7 @@ export default function useInvoicesList() {
         dateTo: dateTo.value
       })
       .then(response => {
-        const { elements } = response.data;
+        const { elements } = response.data
         invoices.value = response.data.elements;
         if (callback) {
           callback(elements)
@@ -78,7 +79,6 @@ export default function useInvoicesList() {
         }
       })
       .catch((err) => {
-        console.log(err);
         toast({
           component: ToastificationContent,
           props: {
@@ -133,6 +133,6 @@ export default function useInvoicesList() {
     resolveInvoiceStatusVariantAndIcon,
     resolveClientAvatarVariant,
     refetchData,
-    invoices
+    invoices,
   }
 }
