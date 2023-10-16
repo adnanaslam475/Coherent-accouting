@@ -736,7 +736,7 @@ export default {
     setTimeout(() => {
       this.isCheck = true
     }, 1500)
-    // this.fetchInvoices();
+    // this.fetchInvoices();  
     this.observeScroll()
 
     this.getCompany()

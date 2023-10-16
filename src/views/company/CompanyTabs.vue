@@ -8,12 +8,8 @@
           <feather-icon icon="BriefcaseIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("lbl.company_info") }}</span>
         </template>
-        <CompanyInfo
-          v-if="companyTab == 0 || infoActive"
-          :company-tab="companyTab"
-          @state="update($event)"
-          :companyDetails="companyDetails"
-        />
+        <CompanyInfo v-if="companyTab == 0 || infoActive" :company-tab="companyTab" @state="update($event)"
+          :companyDetails="companyDetails" />
       </b-tab>
 
       <!-- invoices tab -->
@@ -23,12 +19,8 @@
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("invoices") }}</span>
         </template>
 
-        <Invoice
-          v-if="companyTab == 1 || invoicesActive"
-          :invoice-tab="invoiceTab"
-          @state="updateInvoiceTab($event)"
-          :companyDetails="companyDetails"
-        />
+        <Invoice v-if="companyTab == 1 || invoicesActive" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)"
+          :companyDetails="companyDetails" />
       </b-tab>
 
       <!-- Multiple Uploads tab -->
@@ -39,18 +31,31 @@
         </template>
         <NotVerifiedInvoice v-if="companyTab == 2 || multipleUploadActive" />
       </b-tab>
-
+      <!-- bank statements  -->
+      <b-tab>
+        <template #title>
+          <feather-icon icon="FileIcon" />
+          <span style="font-size: 0.8vw" class="text-capitalize">Approve Bank Statements</span>
+        </template>
+        <Banks v-if="companyTab == 3 || bankStatementsActive" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)"
+          :companyDetails="companyDetails" />
+      </b-tab>
+      <!-- bulk bank statements  -->
+      <b-tab>
+        <template #title>
+          <feather-icon icon="FileIcon" />
+          <span style="font-size: 0.8vw" class="text-capitalize">Bluk OCR Statements</span>
+        </template>
+        <NotVerifiedInvoice v-if="companyTab == 4 || blukStatementsActive" />
+      </b-tab>
       <!-- Vat Reports tab -->
       <b-tab>
         <template #title>
           <feather-icon icon="FlagIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("company_tabs.vat_reports") }} </span>
         </template>
-        <VatReports
-          v-if="companyTab == 3 || vatReportsActive"
-          :vat-reports-tab="vatReportsTab"
-          @state="updateVatReportsTab($event)"
-        />
+        <VatReports v-if="companyTab == 5 || vatReportsActive" :vat-reports-tab="vatReportsTab"
+          @state="updateVatReportsTab($event)" />
       </b-tab>
 
       <!-- credit notifications 
@@ -80,7 +85,7 @@
           <feather-icon icon="FolderIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("company_tabs.company_documents") }}</span>
         </template>
-        <Document v-if="companyTab == 4 || companyDocumentsActive" />
+        <Document v-if="companyTab == 6 || companyDocumentsActive" />
       </b-tab>
 
       <!--Private Person tab -->
@@ -89,11 +94,8 @@
           <feather-icon icon="UserIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("company_tabs.clients_or_recipients") }}</span>
         </template>
-        <PrivatePersons
-          v-if="companyTab == 5 || privatePersonActive"
-          :add-record="addRecord"
-          @state="updateAddRecord($event)"
-        />
+        <PrivatePersons v-if="companyTab == 7 || privatePersonActive" :add-record="addRecord"
+          @state="updateAddRecord($event)" />
       </b-tab>
 
       <!-- Name of company -->
@@ -129,6 +131,7 @@ import { codeIcon } from "./code"
 import axios from "@/libs/axios"
 import store from "@/store"
 import { mapGetters } from "vuex"
+import Banks from './BankStatements/bank-list/BanksList.vue'
 
 export default {
   components: {
@@ -145,6 +148,7 @@ export default {
     PrivatePersons,
     BCardText,
     BCard,
+    Banks,
   },
   data() {
     return {
@@ -160,9 +164,13 @@ export default {
       infoActive: this.$route.params.InvoiceId && this.$route.params.InvoiceId !== 0 ? false : true,
       invoicesActive: this.$route.params.InvoiceId == 1 ? true : false,
       multipleUploadActive: this.$route.params.InvoiceId == 2 ? true : false,
-      vatReportsActive: this.$route.params.InvoiceId == 3 ? true : false,
-      creditNotifications: this.$route.params.InvoiceId == 4 ? true : false,
-      debitNotifications: this.$route.params.InvoiceId == 5 ? true : false,
+      bankStatementsActive: this.$route.params.InvoiceId == 3 ? true : false,
+      blukStatementsActive: this.$route.params.InvoiceId == 4 ? true : false,
+
+
+      vatReportsActive: this.$route.params.InvoiceId == 5 ? true : false,
+      // creditNotifications: this.$route.params.InvoiceId == 6 ? true : false,
+      // debitNotifications: this.$route.params.InvoiceId == 7 ? true : false,
 
       companyDocumentsActive: this.$route.params.InvoiceId == 6 ? true : false,
       privatePersonActive: this.$route.params.InvoiceId == 7 ? true : false,
@@ -195,19 +203,24 @@ export default {
           this.multipleUploadActive = true
           break
         case 3:
+          this.bankStatementsActive = true
+        case 4:
+          this.blukStatementsActive = true
+        case 5:
           this.vatReportsActive = true
           break
-        case 4:
-          this.creditNotifications = true
-          break
-        case 5:
-          this.debitNotifications = true
-          break
+        // case 4:
+        //   this.creditNotifications = true
+        //   break
+        // case 5:
+        //   this.debitNotifications = true
+        //   break
         case 6:
           this.companyDocumentsActive = true
           break
         case 7:
           this.privatePersonActive = true
+
           break
         default:
       }

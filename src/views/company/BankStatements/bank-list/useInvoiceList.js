@@ -13,22 +13,19 @@ export default function useInvoicesList() {
 
   // Table Handlers
   const tableColumns = [
-    { key: 'invoiceNumber', sortable: true },
-    { key: 'scheduled', sortable: true },
+    { key: 'description', label: "Description", sortable: true },
+
     { key: 'exported', sortable: true },
 
-    { key: 'invoiceDate', label: "date Issued", sortable: true },
-    { key: 'transactionType', sortable: true },
-    { key: 'recipientCompanyName', label: "recipient Company", sortable: true },
-    { key: 'supplierCompanyName', label: "supplier Company", sortable: true },
-    { key: 'amountNonVat', sortable: true },
-    { key: 'totalAmount', sortable: true },
-    { key: 'vatAmount', sortable: true },
+    { key: 'fromDate', label: "From Date", sortable: true },
+    { key: 'toDate', label: "To Date", sortable: true },
+
+
     // { key: 'vatPercent', sortable: true, formatter: val => `${val}%` },
     // { key: 'tradeDiscountAmount', sortable: true, formatter: val => `$${val?val:"0"}` },
     // { key: 'tradeDiscountPercent', sortable: true, formatter: val => `${val}%` },
     // { key: 'currency', sortable: true },
-    { key: 'actions' },
+    // { key: 'actions' },
   ]
   const perPage = ref(10)
   const totalInvoices = ref(0)
