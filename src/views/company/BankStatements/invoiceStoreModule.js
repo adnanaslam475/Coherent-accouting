@@ -62,6 +62,14 @@ export default {
       }
     },
 
+    fetchInvoice(ctx, { id }) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`/account/api/bank-statement/${id}`)
+          .then(response => resolve(response))
+          .catch(error => reject(error))
+      })
+    },
     fetchClients() {
       return new Promise((resolve, reject) => {
         axios

@@ -168,14 +168,15 @@ const router = new VueRouter({
         layout: 'full',
       },
     },
-    { path: '/features',
-    name: 'features',
-    component:()=> import('@/views/Features.vue'),
-    meta:{
-      layout:'full',
-    }
-  },
-   
+    {
+      path: '/features',
+      name: 'features',
+      component: () => import('@/views/Features.vue'),
+      meta: {
+        layout: 'full',
+      }
+    },
+
     {
       path: '/error-404',
       name: 'error-404',
@@ -279,6 +280,13 @@ const router = new VueRouter({
       path: '/company/:companyId/invoice/edit/:id',
       name: 'company-invoice-edit',
       component: () => import('@/views/company/Invoice/invoice-edit/InvoiceEdit.vue'),
+    },
+
+    // bank statements 
+    {
+      path: '/company/:companyId/bank-statement/edit/:id',
+      name: 'bank-statement-edit',
+      component: () => import('@/views/company/BankStatements/bank-edit/BankEdit.vue'),
     },
 
     // Company Vat Reports

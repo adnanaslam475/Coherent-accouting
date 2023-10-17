@@ -205,12 +205,12 @@
       </template>
 
       <!-- Column: invoiceNumber -->
-      <template #head(invoiceNumber)>
+      <template #head(description)>
         {{ $t("company_invoices.invoice_no") }}
       </template>
 
-      <template #cell(invoiceNumber)="data">
-        <b-link :to="{ name: 'company-invoice-edit', params: { id: data.item.id, companyId: companyId } }"
+      <template #cell(description)="data">
+        <b-link :to="{ name: 'bank-statement-edit', params: { id: data.item.id, companyId: companyId } }"
           class="font-weight-bold">
           <span class="text-nowrap">{{ data.value }}</span>
         </b-link>

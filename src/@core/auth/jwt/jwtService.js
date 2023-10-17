@@ -243,6 +243,12 @@ export default class JwtService {
       ...args
     );
   }
+  EditBankStatement(token, id, ...args) {
+    return this.axiosIns.put(
+      `${this.jwtConfig.bankStatementEditEndpoint}/${id}`,
+      ...args
+    );
+  }
 
   DeleteCompanyInvoice(token, id) {
     return this.axiosIns.delete(
