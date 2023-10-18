@@ -22,7 +22,7 @@ export default function useInvoicesList() {
 
 
 
-    // { key: 'actions' },
+    { key: 'actions' },
   ]
   const perPage = ref(10)
   const totalInvoices = ref(0)

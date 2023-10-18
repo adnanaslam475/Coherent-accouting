@@ -22,6 +22,7 @@ export default {
   CompanyInvoiceAddEndpoint: '/account/api/invoice/create',
   companyInvoiceEditEndpoint: '/account/api/invoice',
   bankStatementEditEndpoint: '/account/api/bank-statement/update',
+  bankStatementDeleteEndpoint: '/account/api/bank-statement',
 
   companyInvoiceDeleteEndpoint: '/account/api/invoice',
   UserCompanyDeleteEndpoint: '/account/api/person',

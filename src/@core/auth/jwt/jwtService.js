@@ -249,7 +249,11 @@ export default class JwtService {
       ...args
     );
   }
-
+  DeleteBankStatement(token, id) {
+    return this.axiosIns.delete(
+      `${this.jwtConfig.bankStatementDeleteEndpoint}/${id}`
+    );
+  }
   DeleteCompanyInvoice(token, id) {
     return this.axiosIns.delete(
       `${this.jwtConfig.companyInvoiceDeleteEndpoint}/${id}`

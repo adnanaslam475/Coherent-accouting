@@ -14,14 +14,7 @@
             <feather-icon size="16" icon="XIcon" class="cursor-pointer ml-auto" @click="closeModel" />
           </template>
           <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0">
-            <!-- <b-row class="my-2 w-100 mx-0" style="border-bottom: 1px solid lightgrey">
-              <b-col cols="12" xl="12" md="12" class="" style="text-align: end">
-                <h4 style="color: #625f6e">
-                  {{ invoiceData.currency }}
-                  {{ parseFloat(invoiceData.totalAmount).toFixed(2) }}
-                </h4>
-              </b-col>
-            </b-row> -->
+
 
             <b-row class="w-100 mx-0">
               <b-col cols="12" xl="5" md="5" class="p-2" style="">
@@ -119,7 +112,15 @@
                       </b-col>
                     </b-row>
 
+                    <b-row>
+                      <b-col>
 
+                        <b-form-checkbox id="vat-checkbox" v-model="isAccount" name="vat-checkbox"
+                          @click="isAccount = !isAccount">
+                          Show Accounts
+                        </b-form-checkbox>
+                      </b-col>
+                    </b-row>
                     <div no-body class="invoice-add-card mb-1">
                       <!-- Items Section -->
                       <div class="invoice-padding p-0">
@@ -135,14 +136,14 @@
                                   <!-- Single Item Form Headers -->
 
                                   <b-col cols="12" lg="3" class="text-uppercase grey-text-color" style="font-size: 14px"
-                                    v-if="invoiceData.platform == 'QUICK_BOOKS'">
+                                    v-if="invoiceData.platform == 'QUICK_BOOKS' && isAccount">
                                     {{ $t("Account") }}
                                   </b-col>
-                                  <b-col v-if="invoiceData.platform == 'XERO'" cols="12" lg="2"
+                                  <b-col v-if="invoiceData.platform == 'XERO' && isAccount" cols="12" lg="2"
                                     class="text-uppercase grey-text-color" style="font-size: 14px">
                                     {{ $t("add_invoice.caetgory") }}
                                   </b-col>
-                                  <b-col v-if="invoiceData.platform == 'XERO'" cols="12" lg="2"
+                                  <b-col v-if="invoiceData.platform == 'XERO' && isAccount" cols="12" lg="2"
                                     class="text-uppercase grey-text-color" style="font-size: 14px">
                                     {{ $t("add_invoice.job_cost_code") }}
                                   </b-col>
@@ -150,13 +151,20 @@
                                   <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
                                     Description
                                   </b-col>
-                                  <b-col cols="12" lg="1" class="text-uppercase grey-text-color" style="font-size: 14px">
+                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
+                                    style="font-size: 14px">
                                     Payee
                                   </b-col>
-                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
+                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
+                                    style="font-size: 14px">
+                                    Date
+                                  </b-col>
+                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
+                                    style="font-size: 14px">
                                     Debit
                                   </b-col>
-                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
+                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
+                                    style="font-size: 14px">
                                     Credit
                                   </b-col>
                                   <!-- <b-col
@@ -184,7 +192,7 @@
                                   style="border-bottom: 1px solid lightgrey">
                                   <!-- Single Item Form Headers -->
 
-                                  <b-col cols="12" lg="3" v-if="invoiceData.platform == 'QUICK_BOOKS'">
+                                  <b-col cols="12" lg="3" v-if="invoiceData.platform == 'QUICK_BOOKS' && isAccount">
                                     <label class="d-inline d-lg-none">Account</label>
                                     <validation-provider #default="{ errors, invalid }" name="Account" rules="required"
                                       ref="account">
@@ -194,7 +202,7 @@
                                       <!-- <small class="text-danger">{{ errors[0] }}</small> -->
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="invoiceData.platform == 'XERO'">
+                                  <b-col cols="12" lg="2" v-if="invoiceData.platform == 'XERO' && isAccount">
                                     <label class="d-inline d-lg-none">Category</label>
                                     <validation-provider #default="{ errors, invalid }" name="Category" rules=""
                                       ref="selectCategory">
@@ -203,7 +211,7 @@
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="invoiceData.platform == 'XERO'">
+                                  <b-col cols="12" lg="2" v-if="invoiceData.platform == 'XERO' && isAccount">
                                     <label class="d-inline d-lg-none">Job Post Code</label>
                                     <validation-provider #default="{ errors, invalid }" name="Job Post Code"
                                       rules="required" ref="postCode">
@@ -222,7 +230,7 @@
                                     </validation-provider>
                                   </b-col>
 
-                                  <b-col cols="12" lg="1">
+                                  <b-col cols="12" :lg="isAccount ? '1' : '2'">
                                     <label class="d-inline d-lg-none">Payee</label>
                                     <validation-provider #default="{ errors }" name="Payee" rules="required"
                                       ref="transectionQuantity">
@@ -231,9 +239,19 @@
                                       <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
                                   </b-col>
+                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="pl-0">
+                                    <label class="d-inline d-lg-none">Date</label>
+                                    <validation-provider #default="{ errors }" name="fromDate" rules="required">
+                                      <div class="position-relative d-inline-flex">
+                                        <flat-pickr v-model="invoiceData.fromDate"
+                                          class="form-control invoice-edit-input " placeholder="Date" />
 
+                                      </div>
+                                    </validation-provider>
 
-                                  <b-col cols="12" lg="2">
+                                  </b-col>
+
+                                  <b-col cols="12" :lg="isAccount ? '1' : '2'">
                                     <label class="d-inline d-lg-none">Debit</label>
                                     <validation-provider #default="{ errors }" name="Debit" rules="required" ref="debit">
 
@@ -244,7 +262,7 @@
                                       <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2">
+                                  <b-col cols="12" :lg="isAccount ? '1' : '2'">
                                     <label class="d-inline d-lg-none">Credit</label>
                                     <validation-provider #default="{ errors }" name="Credit" rules="required"
                                       ref="credit">
@@ -286,106 +304,12 @@
                       + {{ $t("add_invoice.add_item") }}
                     </div>
 
-                    <!-- <div
-                      no-body
-                      class="invoice-add-card mb-1"
-                      style="border-bottom: 1px solid lightgrey; border-top: 1px solid lightgrey"
-                    >
-               
-                      <div class="invoice-padding p-0">
-                        <div ref="form" class="repeater-form h-auto">
-                          <b-row class="flex-grow-1 py-1 px-1 invoice-add-transections">
-                       
-                            <b-col cols="12" lg="10"> </b-col>
-                            <b-col cols="12" lg="1" class="pl-1">
-                              <span> 0.00</span>
-                            </b-col>
-                            <b-col cols="12" lg="1" class="pl-1 text-truncate">
-                              {{ invoiceData.totalAmount }}
-                            </b-col>
-                          </b-row>
-                          <div class="d-flex justify-content-center py-50 position-relative top-custom"></div>
-                        </div>
-                      </div>
-                    </div> -->
-
-                    <!-- Bank Details Switch -->
-
-                    <!-- Bank Details -->
 
 
-                    <b-row class="mt-2">
 
-                      <b-col> </b-col>
-                      <b-col> </b-col>
-                    </b-row>
                   </b-tab>
 
-                  <!-- Vendor Tab -->
-                  <!-- <b-tab>
-                    <template #title>
-                      <feather-icon icon="UserIcon" />
-                      <span style="font-size: 0.8vw" class="text-capitalize">Vendor</span>
-                    </template>
-                    <div>
-                      
-                      <div class="mb-1">
-                        <h6 style="color: #625f6e" class="mb-1">{{ $t("Supplier") }}</h6>
 
-                        <span class="title mr-1 grey-text-color" style="width: 307px">{{ $t("add_invoice.name") }}:
-                        </span>
-                        <b-input-group class="input-group invoice-edit-input-group pt-1 w-100">
-                          <validation-provider #default="{ errors }" name="supplierCompanyName" rules="required"
-                            class="w-100">
-
-                            <b-list-group v-if="showSuggestions" id="my-company_name" class="input-suggesstions"
-                              style="width: 100%">
-                              <b-list-group-item v-for="data in datalist" :key="data.eic" @click="autoCompletefn(data)"
-                                @mousedown="autoCompletefn(data)">
-                                {{ data.company_name }}
-                              </b-list-group-item>
-                            </b-list-group>
-                            <small class="text-danger">{{ errors[0] }}</small>
-                          </validation-provider>
-                        </b-input-group>
-                      </div>
-                      <div class="mb-1 pb-2" style="border-bottom: 1px solid lightgrey">
-                        <span class="title mr-1 grey-text-color" style="width: 307px">
-                          {{ $t("Supplier Address") }}:
-                        </span>
-
-
-                      </div>
-
-                      <h6 style="color: #625f6e" class="mb-1" v-if="invoiceData.documentType == 'INVOICE'">
-                        {{ $t("Recipient") }}
-                      </h6>
-                      <div class="mb-1" v-if="invoiceData.documentType == 'INVOICE'">
-                        <span class="title mr-1" style="width: 307px">{{ $t("Recipient") }}:</span>
-
-                        <b-input-group class="input-group invoice-edit-input-group">
-                          <validation-provider #default="{ errors }"
-                            :name="AccountTypeOption == 'company' ? 'recipientCompanyName' : 'personName'"
-                            rules="required" class="w-100">
-
-                            <b-list-group v-if="showSuggestionsRecipient" id="my-company_name" class="input-suggesstions"
-                              style="width: 100%">
-                              <b-list-group-item button v-for="data in datalistRecipient" :key="data.eic"
-                                @click="autoCompletefnRecipient(data)" @mousedown="autoCompletefnRecipient(data)">
-                                {{ data.company_name }}
-                              </b-list-group-item>
-                            </b-list-group>
-
-
-                            <small class="text-danger">{{ errors[0] }}</small>
-                          </validation-provider>
-                        </b-input-group>
-                      </div>
-
-
-
-                    </div>
-                  </b-tab> -->
                 </b-tabs>
 
                 <b-card variant="light" class="d-flex" style="text-align: end; box-shadow: none">
@@ -415,68 +339,18 @@
               </b-col>
             </b-row>
 
-            <!-- <b-col cols="12" md="2" xl="2" class="invoice-actions mt-md-0 mt-2">
-          
-            <b-card>
-             
-              <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" class="mb-75" block
-                type="button" :disabled="loading" @click="invoiceEdit(invoiceData, 'preview', AccountTypeOption)">
-                {{ $t("add_invoice.preview") }}
 
-              </b-button>
-
-             
-              <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" block type="submit"
-                :disabled="loading">
-                <b-spinner v-if="loading" small variant="light" />
-                {{ $t("add_invoice.save") }}
-              </b-button>
-              <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" block type="button"
-                @click="clearForm">
-                {{ $t("add_invoice.clear") }}
-              </b-button>
-
-              <b-button v-if="!invoiceData.verified" v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary"
-                type="button" block :disabled="loading" @click="invoiceEdit(invoiceData, 'verify', AccountTypeOption)">
-                <b-spinner v-if="loading" small variant="light" />
-                {{ $t("add_invoice.verify") }}
-              </b-button>
-            </b-card>
-          </b-col> -->
           </b-row>
         </b-modal>
         <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0"></b-row>
-        <b-row class="invoice-add" v-else>
-          <!-- Col: Left (Invoice Container) -->
-          <!-- template 05 -->
 
-
-
-          <!-- template 01 -->
-
-
-          <!-- template 02 -->
-
-
-          <!-- template 03 -->
-
-
-          <!-- template 04 -->
-
-
-          <!-- Right Col: Card -->
-
-        </b-row>
       </b-form>
     </validation-observer>
     <invoice-sidebar-add-new-customer />
   </section>
 </template>
 
-<!-- <script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jspdf.min.js"></script>
-<script src="assets/js/html2canvas.min.js"></script>
-<script src="assets/js/main.js"></script> -->
+
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate"
 import { required, email, confirmed, password, regex, vatPercentValid, singlePriceValid, qtyValid } from "@validations"
@@ -612,6 +486,7 @@ export default {
       singlePriceValid,
       qtyValid,
       isWeekSelected: false,
+      isAccount: false,
     }
   },
   directives: {
@@ -645,12 +520,12 @@ export default {
 
         ]
 
-        if (this.invoiceData.platform == 'XERO') {
+        if (this.invoiceData.platform == 'XERO' && this.isAccount) {
           temp.push(this.$refs.selectCategory[i].flags.valid)
           temp.push(this.$refs.postCode[i].flags.valid)
         }
 
-        if (this.invoiceData.platform == 'QUICK_BOOKS') {
+        if (this.invoiceData.platform == 'QUICK_BOOKS' && this.isAccount) {
           requiredField.push(this.$refs.account[i].flags.valid)
         }
 

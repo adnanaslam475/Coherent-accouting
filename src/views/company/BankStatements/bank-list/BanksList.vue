@@ -215,16 +215,7 @@
           <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
-      <!-- Column: scheduled -->
-      <template #head(scheduled)>
-        {{ $t("add_invoice.scheduled") }}
-      </template>
 
-      <template #cell(scheduled)="data">
-        <span class="text-nowrap" v-if="data.item.scheduled" style="position: relative; left: 27%">
-          <img src="@/assets/images/svg/clock.svg" alt="" />
-        </span>
-      </template>
 
       <!-- Column: exported  -->
       <template #head(exported)>
@@ -247,130 +238,9 @@
         </span>
       </template>
 
-      <!-- Column: Transaction type -->
-      <template #head(transactionType)>
-        {{ $t("company_invoices.transaction_type") }}
-      </template>
 
-      <template #cell(transactionType)="data">
-        <b-link :to="{ name: 'company-invoice-preview', params: { id: data.item.id, companyId: companyId } }"
-          class="font-weight-bold">
-          <span :id="`transactionType-row-${data.item.id}`" class="text-nowrap">
-            <b-badge pill :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'}`"
-              class="text-capitalize">
-              {{ $t("company_invoices." + data.value) }}
-            </b-badge>
-          </span>
-        </b-link>
-      </template>
 
-      <!-- Column: recipientCompany -->
-      <template #head(recipientCompanyName)>
-        {{ $t("company_invoices.recipient_company") }}
-      </template>
 
-      <template #cell(recipientCompanyName)="data">
-        <span :id="`recipientCompany-row-${data.item.id}`" class="text-nowrap">
-          <b-badge pill :variant="`light-success`" class="text-capitalize">
-            <!-- {{ data.item.recipientCompany }} -->
-            {{ data.item.recipientCompany.companName }}
-          </b-badge>
-        </span>
-        <b-tooltip :target="`recipientCompany-row-${data.item.id}`" placement="top">
-          <p class="mb-0">
-            {{ data.item.recipientCompany.companName }}
-          </p>
-          <p class="mb-0">Eic: {{ data.item.recipientCompany.companyEic }}</p>
-          <p class="mb-0">
-            {{ data.item.recipientCompany.companyOwnerName }}
-          </p>
-          <!-- <p class="mb-0">
-            Company Vat Eic: {{ data.item.recipientCompany.companyVatEic }}
-          </p>
-          <p class="mb-0">
-            Company Address: {{ data.item.recipientCompany.companyAddress }}
-          </p>
-          <p class="mb-0">
-            Owner EGN: {{ data.item.recipientCompany.ownerEGN }}
-          </p> -->
-        </b-tooltip>
-      </template>
-
-      <!-- Column: supplierCompany -->
-
-      <template #head(supplierCompanyName)>
-        {{ $t("company_invoices.supplier_company") }}
-      </template>
-      <template #cell(supplierCompanyName)="data">
-        <span :id="`supplierCompany-row-${data.item.id}`" class="text-nowrap">
-          <b-badge pill :variant="`light-success`" class="text-capitalize">
-            {{ data.item.supplierCompany.companName }}
-          </b-badge>
-        </span>
-        <b-tooltip :target="`supplierCompany-row-${data.item.id}`" placement="top">
-          <p class="mb-0">
-            {{ data.item.supplierCompany.companName }}
-          </p>
-          <p class="mb-0">Eic: {{ data.item.supplierCompany.companyEic }}</p>
-          <p class="mb-0">
-            {{ data.item.supplierCompany.companyOwnerName }}
-          </p>
-          <!-- <p class="mb-0">
-            Company Vat Eic: {{ data.item.supplierCompany.companyVatEic }}
-          </p>
-          <p class="mb-0">
-            Company Address: {{ data.item.supplierCompany.companyAddress }}
-          </p>
-          <p class="mb-0">
-            Owner EGN: {{ data.item.supplierCompany.ownerEGN }}
-          </p> -->
-        </b-tooltip>
-      </template>
-
-      <!-- Column: amount non vat -->
-      <template #head(amountNonVat)>
-        {{ $t("company_invoices.amount_non_vat") }}
-      </template>
-      <template #cell(amountNonVat)="data">
-        <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'">лв. {{
-            data.value }}</span>
-          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
-        </span>
-      </template>
-
-      <!-- Column: totalAmount -->
-      <template #head(totalAmount)>
-        {{ $t("company_invoices.total_amount") }}
-      </template>
-      <template #cell(totalAmount)="data">
-        <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'">лв. {{
-            data.value }}</span>
-          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
-        </span>
-      </template>
-
-      <!-- Column: vatAmount -->
-      <template #head(vatAmount)>
-        {{ $t("company_invoices.vat_amount") }}
-      </template>
-      <template #cell(vatAmount)="data">
-        <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' || data.item.currency === 'лв' || data.item.currency === 'лв.'">лв. {{
-            data.value }}</span>
-          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
-        </span>
-      </template>
-
-      <!-- Column: currency -->
-      <!-- <template #cell(currency)="data">
-        <span class="text-nowrap">
-          {{ data.value }}
-        </span>
-      </template> -->
-
-      <!-- Column: Actions -->
       <template #head(actions)>
         {{ $t("companies.actions") }}
       </template>
@@ -380,7 +250,7 @@
           <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16"
             class="mr-1 cursor-pointer" @click="
               $router.push({
-                name: 'company-invoice-preview',
+                name: 'bank-statement-edit',
                 params: { id: data.item.id, companyId: companyId },
               })
               " />
@@ -392,12 +262,9 @@
             <template #button-content>
               <feather-icon icon="MoreVerticalIcon" size="16" class="align-middle text-body" />
             </template>
-            <b-dropdown-item @click="generatePDF(data.item.id)">
-              <feather-icon icon="DownloadIcon" />
-              <span class="align-middle ml-50">{{ $t("download") }}</span>
-            </b-dropdown-item>
+
             <b-dropdown-item :to="{
-              name: 'company-invoice-edit',
+              name: 'bank-statement-edit',
               params: { id: data.item.id, companyId: companyId },
             }">
               <feather-icon icon="EditIcon" />
@@ -410,18 +277,8 @@
           </b-dropdown>
 
           <!-- Duplicate -->
-          <feather-icon :id="`invoice-row-${data.item.id}-duplicate-icon`" icon="LayersIcon" size="16"
-            class="mx-1 cursor-pointer" @click="duplicateInvoice(data.item)" />
-          <b-tooltip :title="$t('company_info.duplicate')" class="cursor-pointer"
-            :target="`invoice-row-${data.item.id}-duplicate-icon`" />
-          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true"
-            :ref="`invoicePdf${data.item.id}`" :preview-modal="false" :paginate-elements-by-height="1100"
-            filename="invoice" :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10"
-            pdf-orientation="portrait" pdf-content-width="1125px" @progress="onProgress($event)">
-            <section slot="pdf-content" class="invoice-pdf invoice-preview-list">
-              <invoice-download :invoice-data="data.item" />
-            </section>
-          </vue-html2pdf>
+
+
         </div>
       </template>
     </b-table>
@@ -736,33 +593,7 @@ export default {
         })
     },
 
-    /*
-    async fetchInvoices() {
-      // try {
-      //   const response = await axios.get("/api/export", {
-      //     headers: {
-      //       'Authorization': 'Bearer ' + localStorage.getItem("accessToken"),
-      //       'Content-Type': 'application/json'
-      //  },
-      //});
-      // this.selectedMonthData.invoicesForReport = response.data;
-      //} catch (error) {
-      //   console.error(error);
-      // }
-      let token = useJwt.getToken();
-      let exportDto = {
-        companyId: '',
-        date: '',
-        platformName: '',
-      };
-      useJwt
-        .export(token, exportDto)
-        .then(async (response) => {
-        }
-        )
-        .catch()
-    },
-    */
+
 
     async exportModal() {
       // Fetch the invoices first
@@ -1143,20 +974,18 @@ export default {
       console.log(`Processed: ${event} / 100`)
     },
 
-    generatePDF(itemID) {
-      this.$refs[`invoicePdf${itemID}`].generatePdf()
-    },
+
 
     showMsgBoxTwo(id, refetchData) {
       const h = this.$createElement
       // Using HTML string
       // More complex structure
       const messageVNode = h("div", { class: ["bvModalFont"] }, [
-        h("p", { class: ["text-center card-text"] }, [i18n.tc("company_invoices.delete_invoice_confirm")]),
+        h("p", { class: ["text-center card-text"] }, [i18n.tc("Are you sure you want to delete this Bank Statement?")]),
       ])
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: i18n.tc("company_invoices.delete_invoice"),
+          title: 'Delete Bank Statement',
           okVariant: "primary",
           okTitle: i18n.tc("companies.confirm"),
           cancelTitle: i18n.tc("clients_or_recipients.cancel"),
@@ -1170,38 +999,17 @@ export default {
         })
     },
 
-    // duplicating an invoice
-    duplicateInvoice(item) {
-      let config = item
-      config.invoiceNumber = Date.now()
-      config.id = ""
-      let companyID = this.$route.params.id
-      let token = useJwt.getToken()
-      useJwt.addCompanyInvoice(token, companyID, config).then(async (response) => {
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: `Invoice Duplicated Successfully`,
-            icon: "EditIcon",
-            variant: "success",
-          },
-        })
-        // refetchData();
-        var tableAreaBusy = document.getElementById("company-invoices")
-        tableAreaBusy.style.opacity = "0.5"
-        this.refreshList()
-      })
-    },
+
 
     invoiceDelete(id, refetchData) {
       const token = useJwt.getToken()
       useJwt
-        .DeleteCompanyInvoice(token, id)
+        .DeleteBankStatement(token, id)
         .then((response) => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: "Invoice Deleted Successfully",
+              title: "Bank Statement Deleted Successfully",
               icon: "DeleteIcon",
               variant: "success",
             },

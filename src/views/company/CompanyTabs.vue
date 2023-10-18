@@ -35,7 +35,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="FileIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">Approve Bank Statements</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">Approve Bank St.</span>
         </template>
         <Banks v-if="companyTab == 3 || bankStatementsActive" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)"
           :companyDetails="companyDetails" />
@@ -44,7 +44,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="FileIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">Bluk OCR Statements</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">Bluk OCR St.</span>
         </template>
         <NotVarifiedBanks v-if="companyTab == 4 || blukStatementsActive" />
       </b-tab>

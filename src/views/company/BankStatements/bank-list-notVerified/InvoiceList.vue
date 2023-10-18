@@ -97,17 +97,13 @@
       </template>
 
       <!-- Column: invoiceNumber -->
-      <template #head(invoiceNumber)>
-        {{ $t("company_invoices.invoice_no") }}
+      <template #head(description)>
+        Description
       </template>
-      <template #cell(invoiceNumber)="data">
-        <b-link :to="{
-          name: 'company-invoice-edit',
-          params: { id: data.item.id, companyId: companyId },
-        }" class="font-weight-bold">
-          <span class="text-nowrap">
-            {{ data.value }}
-          </span>
+      <template #cell(description)="data">
+        <b-link :to="{ name: 'bank-statement-edit', params: { id: data.item.id, companyId: companyId } }"
+          class="font-weight-bold">
+          <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
 
@@ -123,127 +119,17 @@
       </template>
 
       <!-- Column: Transaction type -->
-      <template #head(transactionType)>
-        {{ $t("company_invoices.transaction_type") }}
-      </template>
 
-      <template #cell(transactionType)="data">
-        <b-link :to="{
-          name: 'company-invoice-edit',
-          params: { id: data.item.id, companyId: companyId },
-        }" class="font-weight-bold">
-          <span :id="`transactionType-row-${data.item.id}`" class="text-nowrap">
-            <b-badge pill :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'
-              }`" class="text-capitalize">
-              {{ $t("company_invoices." + data.value) }}
-            </b-badge>
-          </span>
-        </b-link>
-      </template>
 
       <!-- Column: recipientCompany -->
-      <template #head(recipientCompanyName)>
-        {{ $t("company_invoices.recipient_company") }}
-      </template>
-      <template #cell(recipientCompanyName)="data">
-        <span :id="`recipientCompany-row-${data.item.id}`" class="text-nowrap">
-          <b-badge pill :variant="`light-success`" class="text-capitalize">
-            {{ data.item.recipientCompany.companName }}
-          </b-badge>
-        </span>
-        <b-tooltip :target="`recipientCompany-row-${data.item.id}`" placement="top">
-          <p class="mb-0">
-            {{ data.item.recipientCompany.companName }}
-          </p>
-          <p class="mb-0">Eic: {{ data.item.recipientCompany.companyEic }}</p>
-          <p class="mb-0">
-            {{ data.item.recipientCompany.companyOwnerName }}
-          </p>
-
-          <!-- <p class="mb-0">
-            Company Vat Eic: {{ data.item.recipientCompany.companyVatEic }}
-          </p>
-          <p class="mb-0">
-            Company Address: {{ data.item.recipientCompany.companyAddress }}
-          </p>
-          <p class="mb-0">
-            Owner EGN: {{ data.item.recipientCompany.ownerEGN }}
-          </p> -->
-        </b-tooltip>
-      </template>
 
       <!-- Column: supplierCompany -->
-      <template #head(supplierCompanyName)>
-        {{ $t("company_invoices.supplier_company") }}
-      </template>
-      <template #cell(supplierCompanyName)="data">
-        <span :id="`supplierCompany-row-${data.item.id}`" class="text-nowrap">
-          <b-badge pill :variant="`light-success`" class="text-capitalize">
-            {{ data.item.supplierCompany.companName }}
-          </b-badge>
-        </span>
-        <b-tooltip :target="`supplierCompany-row-${data.item.id}`" placement="top">
-          <p class="mb-0">
-            {{ data.item.supplierCompany.companName }}
-          </p>
-          <p class="mb-0">Eic: {{ data.item.supplierCompany.companyEic }}</p>
-          <p class="mb-0">
-            {{ data.item.supplierCompany.companyOwnerName }}
-          </p>
 
-          <!-- <p class="mb-0">
-            Company Vat Eic: {{ data.item.supplierCompany.companyVatEic }}
-          </p>
-          <p class="mb-0">
-            Company Address: {{ data.item.supplierCompany.companyAddress }}
-          </p>
-          <p class="mb-0">
-            Owner EGN: {{ data.item.supplierCompany.ownerEGN }}
-          </p> -->
-        </b-tooltip>
-      </template>
 
       <!-- Column: amount non vat -->
-      <template #head(amountNonVat)>
-        {{ $t("company_invoices.amount_non_vat") }}
-      </template>
-      <template #cell(amountNonVat)="data">
-        <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' ||
-            data.item.currency === 'лв' ||
-            data.item.currency === 'лв.'
-            ">лв. {{ data.value }}</span>
-          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
-        </span>
-      </template>
 
-      <!-- Column: totalAmount -->
-      <template #head(totalAmount)>
-        {{ $t("company_invoices.total_amount") }}
-      </template>
-      <template #cell(totalAmount)="data">
-        <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' ||
-            data.item.currency === 'лв' ||
-            data.item.currency === 'лв.'
-            ">лв. {{ data.value }}</span>
-          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
-        </span>
-      </template>
 
-      <!-- Column: vatAmount -->
-      <template #head(vatAmount)>
-        {{ $t("company_invoices.vat_amount") }}
-      </template>
-      <template #cell(vatAmount)="data">
-        <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' ||
-            data.item.currency === 'лв' ||
-            data.item.currency === 'лв.'
-            ">лв. {{ data.value }}</span>
-          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
-        </span>
-      </template>
+
 
       <!-- Column: currency -->
       <!-- <template #cell(currency)="data">
@@ -261,7 +147,7 @@
           <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16"
             class="mx-1 cursor-pointer" @click="
               $router.push({
-                name: 'company-invoice-edit',
+                name: 'bank-statement-edit',
                 params: { id: data.item.id, companyId: companyId },
               })
               " />
@@ -273,30 +159,17 @@
             <template #button-content>
               <feather-icon icon="MoreVerticalIcon" size="16" class="align-middle text-body" />
             </template>
-            <b-dropdown-item @click="generatePDF(data.item.id)">
-              <feather-icon icon="DownloadIcon" />
-              <span class="align-middle ml-50">{{ $t("download") }}</span>
-            </b-dropdown-item>
+
             <b-dropdown-item :to="{
-              name: 'company-invoice-edit',
+              name: 'bank-statement-edit',
               params: { id: data.item.id, companyId: companyId },
             }">
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">{{ $t("company_info.edit") }}</span>
             </b-dropdown-item>
-            <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">{{ $t("company_info.delete") }}</span>
-            </b-dropdown-item>
+
           </b-dropdown>
-          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true"
-            :ref="`invoicePdf${data.item.id}`" :preview-modal="false" :paginate-elements-by-height="1100"
-            filename="invoice" :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10"
-            pdf-orientation="portrait" pdf-content-width="1125px" @progress="onProgress($event)">
-            <section slot="pdf-content" class="invoice-pdf invoice-preview-list">
-              <invoice-download :invoice-data="data.item" />
-            </section>
-          </vue-html2pdf>
+
         </div>
       </template>
     </b-table>
