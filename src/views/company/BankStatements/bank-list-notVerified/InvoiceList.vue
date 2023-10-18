@@ -669,12 +669,12 @@ export default {
     invoiceDelete(id, refetchData) {
       const token = useJwt.getToken();
       useJwt
-        .DeleteCompanyInvoice(token, id)
+        .DeleteBankStatement(token, id)
         .then((response) => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: "Invoice Deleted Successfully",
+              title: "Bank Statement Deleted Successfully",
               icon: "DeleteIcon",
               variant: "success",
             },
