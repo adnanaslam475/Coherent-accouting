@@ -242,11 +242,14 @@
 
 
       <template #head(actions)>
-        {{ $t("companies.actions") }}
+        <span style="display: flex; justify-content: center">
+          {{ $t("companies.actions") }}
+        </span>
+
       </template>
 
       <template #cell(actions)="data">
-        <div class="text-nowrap">
+        <div class="text-nowrap" style="display: flex; justify-content: center">
           <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16"
             class="mr-1 cursor-pointer" @click="
               $router.push({

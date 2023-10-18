@@ -38,26 +38,7 @@
                       <span style="font-size: 0.8vw" class="text-capitalize">Data</span>
                     </template>
 
-                    <b-row class="mt-0 mb-2 mx-0" style="height: 5px; border-top: 1px solid lightgrey">
-                      <b-col cols="12" xl="12" md="12" class="px-0" style="text-align: end">
-                        <b-button-group size="md" class=" " style="transform: translate(0px, -50px)">
-                          <b-button variant="" :style="invoiceData.transactionType == 'INCOME'
-                            ? 'background-color: #007AFF !important; color: white;'
-                            : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
-                            " @click="() => {
-    invoiceData.transactionType = 'INCOME'
-  }
-    ">Income</b-button>
-                          <b-button variant="" :style="invoiceData.transactionType == 'EXPENSE'
-                            ? 'background-color: #007AFF !important; color: white;'
-                            : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
-                            " @click="() => {
-    invoiceData.transactionType = 'EXPENSE'
-  }
-    ">Expense</b-button>
-                        </b-button-group>
-                      </b-col>
-                    </b-row>
+
 
                     <b-row class="mt-2 mx-0 pb-2" style="border-bottom: 1px solid lightgrey">
                       <b-col cols="12" md="6" class="pl-0">
@@ -153,7 +134,7 @@
                                   </b-col>
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
                                     style="font-size: 14px">
-                                    Payee
+                                    Ref
                                   </b-col>
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
                                     style="font-size: 14px">
@@ -194,8 +175,7 @@
 
                                   <b-col cols="12" lg="3" v-if="invoiceData.platform == 'QUICK_BOOKS' && isAccount">
                                     <label class="d-inline d-lg-none">Account</label>
-                                    <validation-provider #default="{ errors, invalid }" name="Account" rules="required"
-                                      ref="account">
+                                    <validation-provider #default="{ errors, invalid }" name="Account" ref="account">
                                       <b-form-select id="account" v-model="item.account" :options="accounts">
                                       </b-form-select>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
@@ -204,8 +184,8 @@
                                   </b-col>
                                   <b-col cols="12" lg="2" v-if="invoiceData.platform == 'XERO' && isAccount">
                                     <label class="d-inline d-lg-none">Category</label>
-                                    <validation-provider #default="{ errors, invalid }" name="Category" rules=""
-                                      ref="selectCategory">
+                                    <validation-provider #default="{ errors, invalid }" name="Category"
+                                      :rules="isAccount ? 'required' : ''" ref="selectCategory">
                                       <b-form-select id="selectCategory" :options="categoryItems"
                                         v-model="item.account" />
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
@@ -214,7 +194,7 @@
                                   <b-col cols="12" lg="2" v-if="invoiceData.platform == 'XERO' && isAccount">
                                     <label class="d-inline d-lg-none">Job Post Code</label>
                                     <validation-provider #default="{ errors, invalid }" name="Job Post Code"
-                                      rules="required" ref="postCode">
+                                      :rules="isAccount ? 'required' : ''" ref="postCode">
                                       <b-form-select id="postCode" :options="jobPostItems" v-model="item.taxType">
                                       </b-form-select>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
@@ -231,12 +211,12 @@
                                   </b-col>
 
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'">
-                                    <label class="d-inline d-lg-none">Payee</label>
-                                    <validation-provider #default="{ errors }" name="Payee" rules="required"
+                                    <label class="d-inline d-lg-none">Ref</label>
+                                    <validation-provider #default="{ errors, invalid }" name="reference" rules="required"
                                       ref="transectionQuantity">
-                                      <b-form-input id="transectionQuantity" v-model="item.payee"
+                                      <b-form-input id="transectionQuantity" v-model="item.reference"
                                         class="mb-0 p-0 text-center" />
-                                      <small class="text-danger">{{ errors[0] }}</small>
+                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'" class="pl-0">
@@ -563,7 +543,7 @@ export default {
     totalCredit() {
       let total = 0;
       for (let item of this.invoiceData.bankStatementTransactions) {
-        total += item.credit;
+        total += Number(item.credit);
       }
 
       return total;
@@ -571,7 +551,7 @@ export default {
     totalDebit() {
       let total = 0;
       for (let item of this.invoiceData.bankStatementTransactions) {
-        total += item.debit;
+        total += Number(item.debit);
       }
 
       return total;

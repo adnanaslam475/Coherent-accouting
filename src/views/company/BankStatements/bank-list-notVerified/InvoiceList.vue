@@ -140,10 +140,13 @@
 
       <!-- Column: Actions -->
       <template #head(actions)>
-        {{ $t("companies.actions") }}
+        <span style="display: flex; justify-content: center">
+          {{ $t("companies.actions") }}
+        </span>
+
       </template>
       <template #cell(actions)="data">
-        <div class="text-nowrap">
+        <div class="text-nowrap" style="display: flex; justify-content: center">
           <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16"
             class="mx-1 cursor-pointer" @click="
               $router.push({
@@ -167,7 +170,10 @@
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">{{ $t("company_info.edit") }}</span>
             </b-dropdown-item>
-
+            <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
+              <feather-icon icon="TrashIcon" />
+              <span class="align-middle ml-50">{{ $t("company_info.delete") }}</span>
+            </b-dropdown-item>
           </b-dropdown>
 
         </div>
@@ -471,13 +477,16 @@ export default {
       let data1 = {
         dateFrom: this.startDate,
         dateTo: this.endDate,
+        documentType: null,
+        transactionType: null,
+        lastDays: null
       };
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: 'id',
-          verified: "false",
-          searchTerm: this.searchQuery,
+          sortField: "id",
+          verified: "true",
+          queryString: this.searchQuery,
         },
       };
 
@@ -612,13 +621,11 @@ export default {
       // Using HTML string
       // More complex structure
       const messageVNode = h("div", { class: ["bvModalFont"] }, [
-        h("p", { class: ["text-center card-text"] }, [
-          this.$t('company_invoices.delete_invoice_confirm'),
-        ]),
-      ]);
+        h("p", { class: ["text-center card-text"] }, ["Are you sure you want to delete this Bank Statement?"]),
+      ])
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: this.$t('company_invoices.delete_invoice'),
+          title: 'Delete Bank Statement',
           okVariant: "primary",
           okTitle: this.$t('companies.confirm'),
           cancelTitle: this.$t('company_invoices.cancel'),
