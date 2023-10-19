@@ -6,45 +6,9 @@
       <b-row>
         <!-- Per Page -->
         <b-col cols="12" md="4" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
-          <!-- <label>Entries</label>
-            <v-select
-              v-model="perPage" 
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-              :options="perPageOptions"
-              :clearable="false"
-              class="per-page-selector d-inline-block ml-50 mr-1"
-            /> -->
 
 
-          <b-tooltip target="invoice-add" placement="bottom">Add Receipts, Invoices and Bills</b-tooltip>
 
-          <!-- <b-button variant="primary" class="mr-1" :to="{
-            name: 'company-invoice-add',
-            params: {
-              companyId: $route.params.companyId
-                ? $route.params.companyId
-                : $route.params.id,
-            },
-          }" @click="actionTab">
-            {{ $t("company_invoices.add_invoice") }}
-          </b-button> -->
-
-          <!-- <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
-            <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" />
-
-            <b-spinner v-if="fileLoading" small variant="light" />
-            {{ $t("company_invoices.add_from_file") }}
-         
-            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
-          </b-button> -->
-          <!-- <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive" v-else>
-
-            {{ $t("company_invoices.add_from_file") }}
-           
-            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
-          </b-button> -->
-
-          <!--Add the third button name export-->
           <!-- Export Invoice Button -->
           <b-button variant="primary" class="mr-1 cursor-button" :disabled="!isActive" v-if="platform == 'FRESH_BOOKS'">
             <b-form-file ref="imageUploader" class="file-input2" multiple @change="addExportFile" :disabled="!isActive" />
@@ -59,27 +23,7 @@
             <!-- Export Invoice -->
           </b-button>
 
-          <!-- Add From File Modal -->
-          <b-modal id="add_invoice" ref="add_invoice_modal" title="Add From File" :hide-footer="true"
-            :ok-title="$t('modal_labels.ok')" :cancel-title="$t('modal_labels.close')" @show="resetModal" @ok="handleOk">
-            <b-row class="text-center my-3">
-              <b-col md="12">
-                <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
-                  <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" />
 
-                  <b-spinner v-if="fileLoading" small variant="light" class="mr-1" />
-                  {{ $t("company_invoices.add_from_file") }}
-                  <!-- Add From File -->
-                  <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
-                </b-button>
-                <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive" v-else>
-                  {{ $t("company_invoices.add_from_file") }}
-                  <!-- Add From File -->
-                  <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
-                </b-button>
-              </b-col>
-            </b-row>
-          </b-modal>
 
           <!-- Date Picker Modal -->
 
@@ -129,7 +73,7 @@
 
         <!-- Search -->
         <b-col cols="12" md="8" class="px-0 pl-md-2 pl-1">
-          <div class="d-flex">
+          <div class="d-flex" style="justify-content: end">
 
 
 
@@ -206,7 +150,7 @@
 
       <!-- Column: invoiceNumber -->
       <template #head(description)>
-        {{ $t("company_invoices.invoice_no") }}
+        Description
       </template>
 
       <template #cell(description)="data">
@@ -228,14 +172,25 @@
         </span>
       </template>
       <!-- Column: Issued Date -->
-      <template #head(invoiceDate)>
-        {{ $t("company_invoices.date_issued") }}
+      <template #head(fromDate)>
+        From Date
       </template>
 
-      <template #cell(invoiceDate)="data">
-        <span class="text-nowrap">
-          {{ data.item.dateIssued }}
-        </span>
+      <template #cell(fromDate)="data">
+        <b-link :to="{ name: 'bank-statement-edit', params: { id: data.item.id, companyId: companyId } }"
+          class="font-weight-bold">
+          <span class="text-nowrap">{{ data.value }}</span>
+        </b-link>
+      </template>
+      <template #head(toDate)>
+        To Date
+      </template>
+
+      <template #cell(toDate)="data">
+        <b-link :to="{ name: 'bank-statement-edit', params: { id: data.item.id, companyId: companyId } }"
+          class="font-weight-bold">
+          <span class="text-nowrap">{{ data.value }}</span>
+        </b-link>
       </template>
 
 

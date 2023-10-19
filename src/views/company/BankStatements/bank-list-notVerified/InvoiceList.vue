@@ -106,18 +106,35 @@
           <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
-
-      <!-- Column: Issued Date -->
-      <template #head(invoiceDate)>
-        {{ $t("company_invoices.date_issued") }}
+      <template #head(exported)>
+        {{ $t("company_invoices.Export_invoice") }}
       </template>
 
-      <template #cell(invoiceDate)="data">
-        <span class="text-nowrap">
-          {{ data.item.dateIssued }}
+      <template #cell(exported)="data">
+        <span class="text-nowrap" v-if="data.item.exported" style="position: relative; left: 27%">
+          <img src="@/assets/images/svg/check.svg" alt="" height="20px" width="20px" />
         </span>
       </template>
+      <template #head(fromDate)>
+        From Date
+      </template>
 
+      <template #cell(fromDate)="data">
+        <b-link :to="{ name: 'bank-statement-edit', params: { id: data.item.id, companyId: companyId } }"
+          class="font-weight-bold">
+          <span class="text-nowrap">{{ data.value }}</span>
+        </b-link>
+      </template>
+      <template #head(toDate)>
+        To Date
+      </template>
+
+      <template #cell(toDate)="data">
+        <b-link :to="{ name: 'bank-statement-edit', params: { id: data.item.id, companyId: companyId } }"
+          class="font-weight-bold">
+          <span class="text-nowrap">{{ data.value }}</span>
+        </b-link>
+      </template>
       <!-- Column: Transaction type -->
 
 

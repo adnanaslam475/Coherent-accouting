@@ -156,7 +156,7 @@
                                   >
                                     Tax
                                   </b-col> -->
-                                  <b-col cols="12" lg="1" class="text-uppercase grey-text-color" style="font-size: 14px">
+                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
                                     Balance
                                   </b-col>
 
@@ -221,30 +221,33 @@
                                   </b-col>
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'" class="pl-0">
                                     <label class="d-inline d-lg-none">Date</label>
-                                    <validation-provider #default="{ errors }" name="fromDate" rules="required">
+                                    <validation-provider #default="{ errors, invalid }" name="fromDate" rules="required">
                                       <div class="position-relative d-inline-flex">
                                         <flat-pickr v-model="invoiceData.fromDate"
                                           class="form-control invoice-edit-input " placeholder="Date" />
-
+                                        <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       </div>
+
                                     </validation-provider>
 
                                   </b-col>
 
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'">
                                     <label class="d-inline d-lg-none">Debit</label>
-                                    <validation-provider #default="{ errors }" name="Debit" rules="required" ref="debit">
+                                    <validation-provider #default="{ errors, invalid }" name="Debit" rules="required"
+                                      ref="debit">
 
 
                                       <b-form-input id="debit" v-model="item.debit" type="number" class="mb-0" step="any"
                                         placeholder="0.00" />
                                       <!-- </b-input-group> -->
                                       <small class="text-danger">{{ errors[0] }}</small>
+                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'">
                                     <label class="d-inline d-lg-none">Credit</label>
-                                    <validation-provider #default="{ errors }" name="Credit" rules="required"
+                                    <validation-provider #default="{ errors, invalid }" name="Credit" rules="required"
                                       ref="credit">
 
 
@@ -252,15 +255,22 @@
                                         step="any" placeholder="0.00" />
                                       <!-- </b-input-group> -->
                                       <small class="text-danger">{{ errors[0] }}</small>
+                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
 
 
-                                  <b-col cols="12" lg="1" class="pl-2" style="padding-top: 10px">
+                                  <b-col cols="12" md="2">
                                     <label class="d-inline d-lg-none">Balance</label>
-                                    <validation-provider #default="{ errors }" name="balance" rules="required">
-                                      {{ item.balance }}
+                                    <validation-provider #default="{ errors, invalid }" name="Balance" rules="required"
+                                      ref="balance">
 
+
+                                      <b-form-input id="balance" v-model="item.balance" type="number" class="mb-0"
+                                        step="any" placeholder="0.00" />
+                                      <!-- </b-input-group> -->
+                                      <small class="text-danger">{{ errors[0] }}</small>
+                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
                                 </b-row>
