@@ -58,6 +58,10 @@
                   <input :id="'input-' + key" class="form-control" v-model="companyinfo.exportProperties.keyValues[key]"
                     readonly />
                 </div>
+
+                <b-form-checkbox id="vat-checkbox" v-model="isGeneric" name="vat-checkbox">
+                  Generic
+                </b-form-checkbox>
               </div>
               <div v-else>
                 <div>No data to display</div>
@@ -328,6 +332,7 @@ import {
   BCardHeader,
   BFormFile,
   BSpinner,
+  BFormCheckbox,
 } from "bootstrap-vue"
 import { avatarText } from "@core/utils/filter"
 import vSelect from "vue-select"
@@ -373,6 +378,7 @@ export default {
     BPagination,
     BTooltip,
     vSelect,
+    BFormCheckbox,
     BCardBody,
     BTableLite,
     BCardText,
@@ -395,6 +401,7 @@ export default {
   data() {
     return {
       EIC: "",
+      isGeneric: false,
       exportFiles: null,
       fileLoadingExport: false,
       platform: null,
@@ -611,13 +618,11 @@ export default {
     async getExportFile() {
       console.log(this.companyDetails, "companyDetails")
 
-      this.$nextTick(() => {
-        this.$bvModal.show("modal-spinner")
-      })
+
 
       this.exportDto.companyId = router.currentRoute.params.id // Set companyId to 85
       this.exportDto.date = this.selectedMonthData.date // Set date to current date
-      this.exportDto.platformName = this.exportDto.platformName // Set platformName to "AJURE"
+      this.exportDto.platformName = this.isGeneric ? 'GENERIC' : this.exportDto.platformName // Set platformName to "AJURE"
       let companyName = this.companyDetails
       console.log(companyName)
       const dateString = new Date()
@@ -626,10 +631,14 @@ export default {
       const options = { day: "2-digit", month: "2-digit", year: "numeric" }
       const formattedDate = date.toLocaleDateString("en-US", options)
       let fileName = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`
-      console.log(fileName, "here is file Name")
+      console.log(this.exportDto, this.isGeneric, "here is file Name")
+
+      this.$nextTick(() => {
+        this.$bvModal.show("modal-spinner")
+      })
       try {
         await axios
-          .post("https://coherent-accounting.com/account/api/export", this.exportDto, {
+          .post("https://coherent-accounting.com/account/api/export-bank-statements", this.exportDto, {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("accessToken"), // assuming accessToken is correct
               "Content-Type": "application/json",

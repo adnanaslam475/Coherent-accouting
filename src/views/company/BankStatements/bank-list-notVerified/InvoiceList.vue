@@ -12,14 +12,14 @@
           <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
             <b-form-file ref="imageUploader" class="file-input" multiple @change="addMultiplefile" />
             <b-spinner v-if="multiplefileLoading" small variant="light" />
-            {{ $t("lbl.add_multiple_invoices") }}
+            Add Multiple Bank St.
             <!-- Add Multiple Invoices -->
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path1" />
           </b-button>
           <b-button variant="primary" class="mr-1 position-relative p-set" :disabled=!isActive v-else>
 
             <b-spinner v-if="multiplefileLoading" small variant="light" />
-            {{ $t("lbl.add_multiple_invoices") }}
+            Add Multiple Bank St.
             <!-- Add Multiple Invoices -->
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path1" />
           </b-button>

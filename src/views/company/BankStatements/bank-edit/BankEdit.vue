@@ -41,19 +41,49 @@
 
 
                     <b-row class="mt-2 mx-0 pb-2" style="border-bottom: 1px solid lightgrey">
-                      <b-col cols="12" md="6" class="pl-0">
+                      <b-col cols="12" md="4" class="pl-0">
                         <div class="d-flex pl-0" style="flex-direction: column">
-                          <span class="grey-text-color"> DOCUMENT DATE </span>
+                          <span class="grey-text-color"> From St. Period </span>
                           <span>
                             <validation-provider #default="{ errors }" name="fromDate" rules="required">
                               <div class="position-relative d-inline-flex">
                                 <flat-pickr v-model="invoiceData.fromDate"
-                                  class="form-control invoice-edit-input invoice-input-top" placeholder="Document Date" />
+                                  class="form-control invoice-edit-input invoice-input-top"
+                                  placeholder="From St. Period" />
                                 <feather-icon v-if="invoiceData.fromDate === ''" size="16" icon="CalendarIcon"
                                   class="cursor-pointer clear-all" />
                                 <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
                                   @click="invoiceData.fromDate = ''" />
                               </div>
+                            </validation-provider>
+                          </span>
+                        </div>
+                      </b-col>
+
+                      <b-col cols="12" md="4" class="pl-0">
+                        <div class="d-flex pl-0" style="flex-direction: column">
+                          <span class="grey-text-color"> To St. Period </span>
+                          <span>
+                            <validation-provider #default="{ errors }" name="toDate" rules="required">
+                              <div class="position-relative d-inline-flex">
+                                <flat-pickr v-model="invoiceData.toDate"
+                                  class="form-control invoice-edit-input invoice-input-top" placeholder="To St. Period" />
+                                <feather-icon v-if="invoiceData.toDate === ''" size="16" icon="CalendarIcon"
+                                  class="cursor-pointer clear-all" />
+                                <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
+                                  @click="invoiceData.toDate = ''" />
+                              </div>
+                            </validation-provider>
+                          </span>
+                        </div>
+                      </b-col>
+
+                      <b-col cols="12" md="4" class="pl-0">
+                        <div class="d-flex pl-0" style="flex-direction: column">
+                          <span class="grey-text-color"> Description </span>
+                          <span>
+                            <validation-provider #default="{ errors }" name="description">
+                              <b-form-input v-model="invoiceData.description" class="mb-0" />
                             </validation-provider>
                           </span>
                         </div>
