@@ -338,6 +338,7 @@ export default {
       multiplefile: null,
       multiplefileLoading: false,
       path1: mdiCloudUploadOutline,
+      companyPlatform: ''
     };
   },
 
@@ -362,6 +363,7 @@ export default {
     }, 1500);
     this.observeScroll();
     this.getMyCurrentPlan()
+    this.getCompany()
   },
 
   methods: {
@@ -711,11 +713,13 @@ export default {
     },
 
     addMultiplefile(event) {
+
       const self = this;
+
       this.multiplefile = event.target.files;
       this.multiplefileLoading = true;
-      const companyID = router.currentRoute.params.companyId
-        ? router.currentRoute.params.companyId
+      const companyID = router.currentRoute.params.id
+        ? router.currentRoute.params.id
         : router.currentRoute.params.id;
       const token = useJwt.getToken();
       const formData = new FormData();
@@ -743,7 +747,7 @@ export default {
       }, 5000);
 
       useJwt
-        .addMultipleFileInvoice(token, companyID, formData)
+        .addMultipleBankStatemtents(token, companyID, this.companyPlatform, formData)
         .then((response) => {
           this.multiplefileLoading = false;
           self.refetchData();
@@ -770,6 +774,24 @@ export default {
           });
         });
     },
+    getCompany() {
+      console.log(router.currentRoute)
+      axios
+        .get(`/account/api/company/${router.currentRoute.params.id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "http://localhost:8080",
+          },
+        })
+        .then((response) => {
+          console.log(response, "asdfasdf")
+          this.companyPlatform = response.data.exportProperties.platform
+        })
+        .catch((error) => {
+          // console.log(error);
+        })
+    }
   },
 
   created() {

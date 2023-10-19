@@ -366,6 +366,12 @@ export default class JwtService {
       files
     );
   }
+  addMultipleBankStatemtents(token, CompanyId, platform, files) {
+    return this.axiosIns.post(
+      `${this.jwtConfig.multipleFileBankStatement}/${CompanyId}?platform=${platform}`,
+      files
+    );
+  }
   addMultipleExportFiles(token, CompanyId, files) {
     return this.axiosIns.post(
       `${this.jwtConfig.multipleExportFileEndpoint}/${CompanyId}`,

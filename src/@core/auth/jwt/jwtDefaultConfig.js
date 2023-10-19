@@ -31,6 +31,7 @@ export default {
   searchEicPersonCompanies: '/account/api/person/search',
   fileInvoiceEndpoint: '/index/api/invoice/ocr',
   multipleFileInvoiceEndpoint: '/index/api/multiple/invoice/ocr',
+  multipleFileBankStatement: '/index/api/multiple/bank-statement/ocr',
   multipleExportFileEndpoint: '/account/api/export',
 
 

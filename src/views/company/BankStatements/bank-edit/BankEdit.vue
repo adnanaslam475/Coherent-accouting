@@ -117,14 +117,14 @@
                                   <!-- Single Item Form Headers -->
 
                                   <b-col cols="12" lg="3" class="text-uppercase grey-text-color" style="font-size: 14px"
-                                    v-if="invoiceData.platform == 'QUICK_BOOKS' && isAccount">
+                                    v-if="isQuickBook && isAccount">
                                     {{ $t("Account") }}
                                   </b-col>
-                                  <b-col v-if="invoiceData.platform == 'XERO' && isAccount" cols="12" lg="2"
+                                  <b-col v-if="isXero && isAccount" cols="12" lg="2"
                                     class="text-uppercase grey-text-color" style="font-size: 14px">
                                     {{ $t("add_invoice.caetgory") }}
                                   </b-col>
-                                  <b-col v-if="invoiceData.platform == 'XERO' && isAccount" cols="12" lg="2"
+                                  <b-col v-if="isXero && isAccount" cols="12" lg="2"
                                     class="text-uppercase grey-text-color" style="font-size: 14px">
                                     {{ $t("add_invoice.job_cost_code") }}
                                   </b-col>
@@ -173,7 +173,7 @@
                                   style="border-bottom: 1px solid lightgrey">
                                   <!-- Single Item Form Headers -->
 
-                                  <b-col cols="12" lg="3" v-if="invoiceData.platform == 'QUICK_BOOKS' && isAccount">
+                                  <b-col cols="12" lg="3" v-if="isQuickBook && isAccount">
                                     <label class="d-inline d-lg-none">Account</label>
                                     <validation-provider #default="{ errors, invalid }" name="Account" ref="account">
                                       <b-form-select id="account" v-model="item.account" :options="accounts">
@@ -182,7 +182,7 @@
                                       <!-- <small class="text-danger">{{ errors[0] }}</small> -->
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="invoiceData.platform == 'XERO' && isAccount">
+                                  <b-col cols="12" lg="2" v-if="isXero && isAccount">
                                     <label class="d-inline d-lg-none">Category</label>
                                     <validation-provider #default="{ errors, invalid }" name="Category"
                                       :rules="isAccount ? 'required' : ''" ref="selectCategory">
@@ -191,7 +191,7 @@
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="invoiceData.platform == 'XERO' && isAccount">
+                                  <b-col cols="12" lg="2" v-if="isXero && isAccount">
                                     <label class="d-inline d-lg-none">Job Post Code</label>
                                     <validation-provider #default="{ errors, invalid }" name="Job Post Code"
                                       :rules="isAccount ? 'required' : ''" ref="postCode">
@@ -274,7 +274,7 @@
                                     </validation-provider>
                                   </b-col>
                                 </b-row>
-                                <div class="d-flex justify-content-end position-relative top-custom m-0" :style="invoiceData.platform == 'QUICK_BOOKS'
+                                <div class="d-flex justify-content-end position-relative top-custom m-0" :style="isQuickBook
                                   ? 'padding-top: 2px; left: 3px; z-index:5 !important'
                                   : 'padding-top: 2px; left: 26px; z-index:5 !important'
                                   ">
@@ -510,14 +510,14 @@ export default {
 
         ]
 
-        if (this.invoiceData.platform == 'XERO' && this.isAccount) {
-          temp.push(this.$refs.selectCategory[i].flags.valid)
-          temp.push(this.$refs.postCode[i].flags.valid)
-        }
+        // if (this.invoiceData.platform == 'XERO' && this.isAccount) {
+        //   temp.push(this.$refs.selectCategory[i].flags.valid)
+        //   temp.push(this.$refs.postCode[i].flags.valid)
+        // }
 
-        if (this.invoiceData.platform == 'QUICK_BOOKS' && this.isAccount) {
-          requiredField.push(this.$refs.account[i].flags.valid)
-        }
+        // if (this.isQuickBook && this.isAccount) {
+        //   requiredField.push(this.$refs.account[i].flags.valid)
+        // }
 
         requiredField.push(...temp)
 
@@ -898,6 +898,7 @@ export default {
     var isBank = ref(false)
     var companyInBG = ref(false)
     var isQuickBook = ref(false)
+    var isXero = ref(false)
 
 
 
@@ -1055,6 +1056,9 @@ export default {
         }
         if (response.data.exportProperties.platform == "QUICK_BOOKS") {
           isQuickBook.value = true
+        }
+        if (response.data.exportProperties.platform == "XERO") {
+          isXero.value = true
         }
         companyName.value = response.data.companyName
         companyData.value = response.data
@@ -1556,8 +1560,8 @@ export default {
     return {
       showTaxInput,
       showTotalInput,
-
-
+      isQuickBook,
+      isXero,
 
       trHeight,
       loading,
