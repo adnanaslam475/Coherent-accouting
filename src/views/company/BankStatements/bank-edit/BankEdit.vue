@@ -126,8 +126,7 @@
                     <b-row>
                       <b-col>
 
-                        <b-form-checkbox id="vat-checkbox" v-model="isAccount" name="vat-checkbox"
-                          @click="isAccount = !isAccount">
+                        <b-form-checkbox id="vat-checkbox" v-model="isAccount" name="vat-checkbox" @click="checkAccount">
                           Show Accounts
                         </b-form-checkbox>
                       </b-col>
@@ -486,11 +485,7 @@ export default {
     BModal,
 
   },
-  directives: {
-    Ripple,
-    "b-tooltip": VBTooltip,
-    "b-toggle": VBToggle,
-  },
+
   data() {
     return {
       companyTab: 0,
@@ -520,6 +515,7 @@ export default {
   },
   directives: {
     Ripple,
+    "b-tooltip": VBTooltip,
     "b-toggle": VBToggle,
   },
   mixins: [heightTransition],
@@ -857,7 +853,7 @@ export default {
         name: "CompanyView",
         params: {
           id: router.currentRoute.params.companyId,
-          InvoiceId: 2,
+          InvoiceId: 4,
         },
       })
     }
@@ -1051,6 +1047,7 @@ export default {
     // };
     var companyData = ref(null)
     var companyName = ref("")
+
     axios
       .get(`/account/api/company/${router.currentRoute.params.companyId}`, {
         headers: {
@@ -1060,52 +1057,33 @@ export default {
         },
       })
       .then((response) => {
+        companyData.value = response.data
         console.log(response, "asdfasdf")
         if (response.data.companyCountry == "Bulgaria") {
           companyInBG.value = true
         }
-        if (response.data.exportProperties.platform == "QUICK_BOOKS") {
-          let statements = invoiceData.value.bankStatementTransactions
-          for (let statement of statements) {
-            console.log(statement, 'this is statement quick books')
-            if (statement.account != '' || statement.account != null) {
-
-              isQuickBook.value = true
-              isAccount.value = true
-            } else {
-              isAccount.value = false
+        let statements = invoiceData.value.bankStatementTransactions
+        for (let statement of statements) {
+          if (response.data.exportProperties.platform == "QUICK_BOOKS") {
+            if (statement.account == null) {
+              console.log('quickeeee')
               isQuickBook.value = false
-            }
-
-          }
-
-        }
-        if (response.data.exportProperties.platform == "XERO") {
-
-          // isAccount.value = true
-          let statements = invoiceData.value.bankStatementTransactions
-          for (let statement of statements) {
-            if (statement.account != '' || statement.account != null || statement.accountCode != null) {
-              console.log('hereee')
-              isXero.value = true
-              isAccount.value = true
-            } else {
               isAccount.value = false
-              isXero.value = false
+            } else {
+              console.log('elsesss')
+              isAccount.value = true
+              isQuickBook.value = true
             }
-          }
-          // for (let statement of statements) {
-          //   console.log(statement, 'this is statement xero')
-          //   if (statement.account != '') {
-          //     
-          //    
 
-          //   }
-          // }
+          }
+          console.log(statement, 'this is statement quick books')
+
 
         }
+
+
         companyName.value = response.data.companyName
-        companyData.value = response.data
+
         console.log(companyName.value, "this is company name ")
         supplierID.value = response.data.companyIdentificationNumber
         // if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
@@ -1115,6 +1093,22 @@ export default {
       .catch((error) => {
         // console.log(error);
       })
+
+    const checkAccount = () => {
+      console.log(companyData.value, '----------')
+      if (companyData.value.exportProperties.platform == "XERO") {
+        isAccount.value = !isAccount.value
+        isXero.value = true
+
+
+      }
+      if (companyData.value.exportProperties.platform == "QUICK_BOOKS") {
+        isAccount.value = !isAccount.value
+        isQuickBook.value = true
+
+      }
+    }
+
 
     const amountNonVat = (item) => {
       let totalAmountNonVat = item.reduce((acc, ele) => {
@@ -1323,7 +1317,7 @@ export default {
       showLogo,
       isUploading,
 
-
+      checkAccount,
       supplierID,
 
       AccountTypeOption,

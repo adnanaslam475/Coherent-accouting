@@ -654,31 +654,7 @@ export default {
     },
 
     // duplicating an invoice
-    duplicateInvoice(item) {
-      let config = item;
-      config.invoiceNumber = Date.now();
-      config.id = "";
-      let companyID = this.$route.params.id;
-      let token = useJwt.getToken();
-      useJwt
-        .addCompanyInvoice(token, companyID, config)
-        .then(async (response) => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Invoice Duplicated Successfully`,
-              icon: "EditIcon",
-              variant: "success",
-            },
-          });
-          // refetchData();
-          var tableAreaBusy = document.getElementById(
-            "company-invoices-not-verified"
-          );
-          tableAreaBusy.style.opacity = "0.5";
-          this.refreshList();
-        });
-    },
+
 
     invoiceDelete(id, refetchData) {
       const token = useJwt.getToken();
