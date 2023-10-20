@@ -205,9 +205,13 @@
 
                                   <b-col cols="12" lg="3" v-if="isQuickBook && isAccount">
                                     <label class="d-inline d-lg-none">Account</label>
+
+
                                     <validation-provider #default="{ errors, invalid }" name="Account" ref="account">
-                                      <b-form-select id="account" v-model="item.account" :options="accounts">
+                                      <b-form-select id="account" v-model="item.account" :options="accounts"
+                                        v-b-tooltip.hover :title="item.account">
                                       </b-form-select>
+
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       <!-- <small class="text-danger">{{ errors[0] }}</small> -->
                                     </validation-provider>
@@ -216,8 +220,8 @@
                                     <label class="d-inline d-lg-none">Category</label>
                                     <validation-provider #default="{ errors, invalid }" name="Category"
                                       :rules="isAccount ? 'required' : ''" ref="selectCategory">
-                                      <b-form-select id="selectCategory" :options="categoryItems"
-                                        v-model="item.account" />
+                                      <b-form-select id="selectCategory" :options="categoryItems" v-model="item.account"
+                                        v-b-tooltip.hover :title="item.account" />
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
@@ -225,7 +229,8 @@
                                     <label class="d-inline d-lg-none">Job Post Code</label>
                                     <validation-provider #default="{ errors, invalid }" name="Job Post Code"
                                       :rules="isAccount ? 'required' : ''" ref="postCode">
-                                      <b-form-select id="postCode" :options="jobPostItems" v-model="item.taxType">
+                                      <b-form-select id="postCode" :options="jobPostItems" v-model="item.taxType"
+                                        v-b-tooltip.hover :title="item.tax.type">
                                       </b-form-select>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
@@ -235,7 +240,8 @@
                                     <validation-provider #default="{ errors, invalid }"
                                       ref="transectionServiceOrItemDescription" name="Description" rules="required">
                                       <b-form-input id="transectionServiceOrItemDescription" v-model="item.description"
-                                        :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" type="text" class="mb-0" />
+                                        :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" type="text" class="mb-0"
+                                        v-b-tooltip.hover :title="item.description" />
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
@@ -245,7 +251,7 @@
                                     <validation-provider #default="{ errors, invalid }" name="reference" rules="required"
                                       ref="transectionQuantity">
                                       <b-form-input id="transectionQuantity" v-model="item.reference"
-                                        class="mb-0 p-0 text-center" />
+                                        class="mb-0 p-0 text-center" v-b-tooltip.hover :title="item.reference" />
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
@@ -254,7 +260,7 @@
                                     <validation-provider #default="{ errors, invalid }" name="fromDate" rules="required">
                                       <div class="position-relative d-inline-flex">
                                         <flat-pickr v-model="item.date" class="form-control invoice-edit-input "
-                                          placeholder="Date" />
+                                          placeholder="Date" v-b-tooltip.hover :title="item.date" />
                                         <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       </div>
 
@@ -269,7 +275,7 @@
 
 
                                       <b-form-input id="debit" v-model="item.debit" type="number" class="mb-0" step="any"
-                                        placeholder="0.00" />
+                                        placeholder="0.00" v-b-tooltip.hover :title="item.debit" />
                                       <!-- </b-input-group> -->
                                       <small class="text-danger">{{ errors[0] }}</small>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
@@ -282,7 +288,7 @@
 
 
                                       <b-form-input id="credit" v-model="item.credit" type="number" class="mb-0"
-                                        step="any" placeholder="0.00" />
+                                        step="any" placeholder="0.00" v-b-tooltip.hover :title="item.credit" />
                                       <!-- </b-input-group> -->
                                       <small class="text-danger">{{ errors[0] }}</small>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
@@ -297,7 +303,7 @@
 
 
                                       <b-form-input id="balance" v-model="item.balance" type="number" class="mb-0"
-                                        step="any" placeholder="0.00" />
+                                        step="any" placeholder="0.00" v-b-tooltip.hover :title="item.balance" />
                                       <!-- </b-input-group> -->
                                       <small class="text-danger">{{ errors[0] }}</small>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
@@ -412,6 +418,7 @@ import {
   BFormRadioGroup,
   BButtonGroup,
   BModal,
+  VBTooltip
 } from "bootstrap-vue"
 import vSelect from "vue-select"
 import flatPickr from "vue-flatpickr-component"
@@ -477,17 +484,19 @@ export default {
     BFormRadioGroup,
     BButtonGroup,
     BModal,
+
+  },
+  directives: {
+    Ripple,
+    "b-tooltip": VBTooltip,
+    "b-toggle": VBToggle,
   },
   data() {
     return {
       companyTab: 0,
       accounts: [],
       isUploading: i18n.tc("add_invoice.upload_logo"),
-      isTemplateFive: true,
-      isTemplateOne: false,
-      isTemplateTwo: false,
-      isTemplateThree: false,
-      isTemplateFour: false,
+
       companyIDisInvalid: false,
       scheduleOptionToggleValue: false,
       scheduleTypes: ["WEEKLY", "MONTHLY"],
@@ -865,15 +874,9 @@ export default {
     //   getCompanyInfo()
     // })
     var AccountTypeOption = ref("company")
-    var AccountTypeOptionToggleValue = false
 
-    let AccountTypeOptionToggle = (value) => {
-      if (value) {
-        AccountTypeOption.value = "person"
-      } else {
-        AccountTypeOption.value = "company"
-      }
-    }
+
+
     const itemFormBlankItem = {
       description: "",
       debit: 0.0,
@@ -887,14 +890,10 @@ export default {
 
     const invoiceData = ref(null)
 
-    const hasBankDetails = ref(false)
     const visible = ref(false)
 
-    const isTemplateFive = ref(false)
-    const isTemplateOne = ref(false)
-    const isTemplateTwo = ref(false)
-    const isTemplateThree = ref(false)
-    const isTemplateFour = ref(false)
+
+
     var supplierID = ref(null)
     var companyName = ref("")
     const isUploading = ref("")
@@ -916,16 +915,13 @@ export default {
       { value: "€", text: "€" },
       { value: "£", text: "£" },
     ]
-    const transectionOptions = [
-      { value: "INCOME", text: "INCOME" },
-      { value: "EXPENSE", text: "EXPENSE" },
-    ]
-    var supplierVat = ref(false)
-    var recipientVat = ref(false)
 
-    var InvoiceTypeOptionToggleValue = ref(null)
-    var saleTypeOptionToggleValue = ref(null)
-    var InvoicePayedToggleValue = ref(null)
+
+
+
+
+
+
     var isBank = ref(false)
     var companyInBG = ref(false)
     var isQuickBook = ref(false)
@@ -1042,28 +1038,10 @@ export default {
         // }
       })
 
-    let InvoiceTypeOptionToggle = (value) => {
-      if (value) {
-        invoiceData.value.invoiceType = "PROFORMA"
-      } else {
-        invoiceData.value.invoiceType = "ORIGINAL"
-      }
-    }
 
-    let saleTypeOptionToggle = (value) => {
-      if (value) {
-        invoiceData.value.saleType = "GOODS"
-      } else {
-        invoiceData.value.saleType = "SERVICE"
-      }
-    }
-    let InvoicePayedOptionToggle = (value) => {
-      if (value) {
-        invoiceData.value.paymentStatus = "PAYED"
-      } else {
-        invoiceData.value.paymentStatus = "NOT_PAYED"
-      }
-    }
+
+
+
     // const handleChange = (item) => {
     //   console.log(item, 'here is handle change');
 
@@ -1255,8 +1233,8 @@ export default {
         dueDate: "",
       }
     }
-    var datalist = ref([])
-    var showSuggestions = ref(false)
+
+
 
     var isScheduled = ref(false)
     var isNotScheduled = ref(false)
@@ -1268,340 +1246,34 @@ export default {
     var offCaseScheduleDayOfMonth = ref("")
     var offCaseScheduleDayOfWeek = ref("")
 
-    const SearchCompanyName = (companyName) => {
-      if (companyName.length > 0) {
-        let token = useJwt.getToken()
-        useJwt
-          .SearchCompanyName(token, { companyName })
-          .then((response) => {
-            if (response?.data != undefined || response?.data.length != 0) {
-              showSuggestions.value = true
-            } else {
-              showSuggestions.value = false
-            }
-            datalist.value = response?.data
-          })
-          .catch((error) => {
-            console.log("error", error)
-          })
-      } else {
-        showSuggestions.value = false
-      }
-    }
-
-    const autoCompletefn = (item) => {
-
-      if (item.eic) {
-        invoiceData.value.supplierCompany.companyEic = item.eic
-      }
-      if (item.managers && item.managers[0]) {
-        let managers = ""
-        item?.managers?.map((item, index) => {
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.supplierCompany.companyOwnerName = managers
-      }
-      showSuggestions.value = false
-      datalist.value = []
-    }
-
-    const hideSuggestion = () => {
-      setTimeout(() => {
-        if (showSuggestions.value) {
-          showSuggestions.value = false
-        }
-      }, 100)
-    }
-
-    const ShowSuggestion = (items) => {
-      if (items != undefined || items.length != 0) {
-        showSuggestions.value = true
-      } else {
-        showSuggestions.value = false
-      }
-    }
-
-    var datalistEic = ref([])
-    var showSuggestionsEic = ref(false)
-
-    const SearchCompanyEic = (companyEic) => {
-      if (companyEic) {
-        let token = useJwt.getToken()
-        useJwt
-          .SearchCompanyEic(token, companyEic)
-          .then((response) => {
-            if (response?.data != undefined || response?.data.length != 0) {
-              showSuggestionsEic.value = true
-            } else {
-              showSuggestionsEic.value = false
-            }
-            datalistEic.value = response?.data
-          })
-          .catch((error) => {
-            console.log("error", error)
-          })
-      } else {
-        showSuggestionsEic.value = false
-      }
-    }
-
-    const autoCompletefnEic = (item) => {
-
-
-      if (item.eic) {
-        invoiceData.value.supplierCompany.companyEic = item.eic
-      }
-      if (item.managers && item.managers[0]) {
-        let managers = ""
-        item?.managers?.map((item, index) => {
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.supplierCompany.companyOwnerName = managers
-      }
-      showSuggestionsEic.value = false
-      datalistEic.value = []
-    }
-
-    const hideSuggestionEic = () => {
-      setTimeout(() => {
-        if (showSuggestionsEic.value) {
-          showSuggestionsEic.value = false
-        }
-      }, 100)
-    }
-
-    const ShowSuggestionEic = (items) => {
-      if (items != undefined || items.length != 0) {
-        showSuggestionsEic.value = true
-      } else {
-        showSuggestionsEic.value = false
-      }
-    }
-
-    var datalistRecipient = ref([])
-    var showSuggestionsRecipient = ref(false)
-
-    const SearchCompanyNameRecipient = (companyName) => {
-      if (companyName.length > 0) {
-        let token = useJwt.getToken()
-        useJwt
-          .SearchCompanyName(token, { companyName })
-          .then((response) => {
-            if (response?.data != undefined || response?.data.length != 0) {
-              showSuggestionsRecipient.value = true
-            } else {
-              showSuggestionsRecipient.value = false
-            }
-            datalistRecipient.value = response?.data
-          })
-          .catch((error) => {
-            console.log("error", error)
-          })
-      } else {
-        showSuggestionsRecipient.value = false
-      }
-    }
-
-    const autoCompletefnRecipient = (item) => {
-
-
-      if (item.eic) {
-        invoiceData.value.recipientCompany.companyEic = item.eic
-      }
-      if (item.managers && item.managers[0]) {
-        let managers = ""
-        item?.managers?.map((item, index) => {
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.recipientCompany.companyOwnerName = managers
-      }
-      showSuggestionsRecipient.value = false
-      datalistRecipient.value = []
-    }
-
-    const hideSuggestionRecipient = () => {
-      setTimeout(() => {
-        if (showSuggestionsRecipient.value) {
-          showSuggestionsRecipient.value = false
-        }
-      }, 100)
-    }
-
-    const ShowSuggestionRecipient = (items) => {
-      if (items != undefined || items.length != 0) {
-        showSuggestionsRecipient.value = true
-      } else {
-        showSuggestionsRecipient.value = false
-      }
-    }
 
     var datalistEicRecipient = ref([])
     var showSuggestionsEicRecipient = ref(false)
 
-    const SearchCompanyEicRecipient = (companyEic) => {
-      if (companyEic) {
-        let token = useJwt.getToken()
-        useJwt
-          .SearchCompanyEic(token, companyEic)
-          .then((response) => {
-            if (response?.data != undefined || response?.data.length != 0) {
-              showSuggestionsEicRecipient.value = true
-            } else {
-              showSuggestionsEicRecipient.value = false
-            }
-            datalistEicRecipient.value = response?.data
-          })
-          .catch((error) => {
-            console.log("error", error)
-          })
-      } else {
-        showSuggestionsEicRecipient.value = false
-      }
-    }
 
-    const autoCompletefnEicRecipient = (item) => {
 
-      if (item.eic) {
-        invoiceData.value.recipientCompany.companyEic = item.eic
-      }
-      if (item.managers && item.managers[0]) {
-        let managers = ""
-        item?.managers?.map((item, index) => {
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.recipientCompany.companyOwnerName = managers
-      }
-      showSuggestionsEicRecipient.value = false
-      datalistEicRecipient.value = []
-    }
 
-    const hideSuggestionEicRecipient = () => {
-      setTimeout(() => {
-        if (showSuggestionsEicRecipient.value) {
-          showSuggestionsEicRecipient.value = false
-        }
-      }, 100)
-    }
 
-    const ShowSuggestionEicRecipient = (items) => {
-      if (items != undefined || items.length != 0) {
-        showSuggestionsEicRecipient.value = true
-      } else {
-        showSuggestionsEicRecipient.value = false
-      }
-    }
+
 
     var datalistPerson = ref([])
     var showSuggestionsPerson = ref(false)
 
-    const SearchCompanyPerson = (companyPerson) => {
-      if (companyPerson) {
-        let token = useJwt.getToken()
-        useJwt
-          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {
-            direction: "desc",
-            sortField: "id",
-            searchTerm: companyPerson,
-          })
-          .then((response) => {
-            if (response?.data != undefined || response?.data.length != 0) {
-              showSuggestionsPerson.value = true
-            } else {
-              showSuggestionsPerson.value = false
-            }
-            datalistPerson.value = response?.data?.elements
-          })
-          .catch((error) => {
-            console.log("error", error)
-          })
-      } else {
-        showSuggestionsPerson.value = false
-      }
-    }
 
-    const autoCompletefnPerson = (item) => {
-      if (item.firstMiddleAndLastName) {
-        invoiceData.value.recipientCompany.companyOwnerName = item.firstMiddleAndLastName
-      }
 
-      if (item.identificationNumber) {
-        invoiceData.value.recipientCompany.companyEic = item.identificationNumber
-      }
-      showSuggestionsPerson.value = false
-      datalistPerson.value = []
-    }
 
-    const hideSuggestionPerson = () => {
-      setTimeout(() => {
-        if (showSuggestionsPerson.value) {
-          showSuggestionsPerson.value = false
-        }
-      }, 100)
-    }
 
-    const ShowSuggestionPerson = (items) => {
-      if (items != undefined || items.length != 0) {
-        showSuggestionsPerson.value = true
-      } else {
-        showSuggestionsPerson.value = false
-      }
-    }
+
+
 
     var datalistPersonIdNumber = ref([])
     var showSuggestionsPersonIdNumber = ref(false)
 
-    const SearchCompanyPersonIdNumber = (companyPersonIdNumber) => {
-      if (companyPersonIdNumber) {
-        let token = useJwt.getToken()
-        useJwt
-          .SearchCompaniesPerson(token, router.currentRoute.params.companyId, {
-            direction: "desc",
-            sortField: "id",
-            searchTerm: companyPersonIdNumber,
-          })
-          .then((response) => {
-            if (response?.data != undefined || response?.data.length != 0) {
-              showSuggestionsPersonIdNumber.value = true
-            } else {
-              showSuggestionsPersonIdNumber.value = false
-            }
-            datalistPersonIdNumber.value = response?.data?.elements
-          })
-          .catch((error) => {
-            console.log("error", error)
-          })
-      } else {
-        showSuggestionsPersonIdNumber.value = false
-      }
-    }
 
-    const autoCompletefnPersonIdNumber = (item) => {
-      if (item.firstMiddleAndLastName) {
-        invoiceData.value.recipientCompany.companyOwnerName = item.firstMiddleAndLastName
-      }
 
-      if (item.identificationNumber) {
-        invoiceData.value.recipientCompany.companyEic = item.identificationNumber
-      }
-      showSuggestionsPersonIdNumber.value = false
-      datalistPersonIdNumber.value = []
-    }
 
-    const hideSuggestionPersonIdNumber = () => {
-      setTimeout(() => {
-        if (showSuggestionsPersonIdNumber.value) {
-          showSuggestionsPersonIdNumber.value = false
-        }
-      }, 100)
-    }
 
-    const ShowSuggestionPersonIdNumber = (items) => {
-      if (items != undefined || items.length != 0) {
-        showSuggestionsPersonIdNumber.value = true
-      } else {
-        showSuggestionsPersonIdNumber.value = false
-      }
-    }
+
 
     const clearAll = (type) => {
       if (type == "supplier") {
@@ -1650,69 +1322,58 @@ export default {
       invoiceImage,
       showLogo,
       isUploading,
-      isTemplateFive,
-      isTemplateOne,
-      isTemplateTwo,
-      isTemplateThree,
-      isTemplateFour,
+
 
       supplierID,
-      hasBankDetails,
+
       AccountTypeOption,
-      recipientVat,
-      supplierVat,
-      AccountTypeOptionToggleValue,
-      AccountTypeOptionToggle,
-      InvoiceTypeOptionToggleValue,
-      saleTypeOptionToggleValue,
-      InvoicePayedToggleValue,
-      saleTypeOptionToggle,
-      InvoicePayedOptionToggle,
-      InvoiceTypeOptionToggle,
+
+
+
+
+
+
+
+
+
       invoiceData,
       currencyOptions,
-      transectionOptions,
+
       itemFormBlankItem,
       vatAmount,
       totalPrice,
       amountNonVat,
       tradeDiscountAmount,
-      datalist,
-      showSuggestions,
-      SearchCompanyName,
-      autoCompletefn,
-      hideSuggestion,
-      ShowSuggestion,
-      datalistEic,
-      showSuggestionsEic,
-      SearchCompanyEic,
-      autoCompletefnEic,
-      hideSuggestionEic,
-      ShowSuggestionEic,
-      datalistRecipient,
-      showSuggestionsRecipient,
-      SearchCompanyNameRecipient,
-      autoCompletefnRecipient,
-      hideSuggestionRecipient,
-      ShowSuggestionRecipient,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       datalistEicRecipient,
       showSuggestionsEicRecipient,
-      SearchCompanyEicRecipient,
-      autoCompletefnEicRecipient,
-      hideSuggestionEicRecipient,
-      ShowSuggestionEicRecipient,
+
+
       datalistPerson,
       showSuggestionsPerson,
-      SearchCompanyPerson,
-      autoCompletefnPerson,
-      hideSuggestionPerson,
-      ShowSuggestionPerson,
+
+
+
       datalistPersonIdNumber,
       showSuggestionsPersonIdNumber,
-      SearchCompanyPersonIdNumber,
-      autoCompletefnPersonIdNumber,
-      hideSuggestionPersonIdNumber,
-      ShowSuggestionPersonIdNumber,
+
+
+
+
       clearForm,
       clearAll,
       isGray,
