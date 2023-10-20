@@ -506,7 +506,7 @@ export default {
       singlePriceValid,
       qtyValid,
       isWeekSelected: false,
-      isAccount: false,
+
     }
   },
   directives: {
@@ -829,7 +829,7 @@ export default {
     var loading = ref(false)
     var trHeight = ref(0)
     // var totalTax = ref(0)
-
+    var isAccount = ref(false)
     var showInvoiceInput = ref(false)
     var showTaxInput = ref(false)
     var showTotalInput = ref(false)
@@ -959,6 +959,7 @@ export default {
               : response.data.currency
 
         invoiceData.value = response.data
+
         console.log(invoiceData.value)
         if (invoiceData.value.platform == 'XERO') {
           axios
@@ -1086,10 +1087,44 @@ export default {
           companyInBG.value = true
         }
         if (response.data.exportProperties.platform == "QUICK_BOOKS") {
-          isQuickBook.value = true
+          let statements = invoiceData.value.bankStatementTransactions
+          for (let statement of statements) {
+            console.log(statement, 'this is statement quick books')
+            if (statement.account != '' || statement.account != null) {
+
+              isQuickBook.value = true
+              isAccount.value = true
+            } else {
+              isAccount.value = false
+              isQuickBook.value = false
+            }
+
+          }
+
         }
         if (response.data.exportProperties.platform == "XERO") {
-          isXero.value = true
+
+          // isAccount.value = true
+          let statements = invoiceData.value.bankStatementTransactions
+          for (let statement of statements) {
+            if (statement.account != '' || statement.account != null || statement.accountCode != null) {
+              console.log('hereee')
+              isXero.value = true
+              isAccount.value = true
+            } else {
+              isAccount.value = false
+              isXero.value = false
+            }
+          }
+          // for (let statement of statements) {
+          //   console.log(statement, 'this is statement xero')
+          //   if (statement.account != '') {
+          //     
+          //    
+
+          //   }
+          // }
+
         }
         companyName.value = response.data.companyName
         companyData.value = response.data
@@ -1685,7 +1720,7 @@ export default {
       isGreen,
       isOrange,
       isBlue,
-
+      isAccount,
       isScheduled,
       isNotScheduled,
       checkSchedule,
