@@ -253,8 +253,8 @@
                                     <label class="d-inline d-lg-none">Date</label>
                                     <validation-provider #default="{ errors, invalid }" name="fromDate" rules="required">
                                       <div class="position-relative d-inline-flex">
-                                        <flat-pickr v-model="invoiceData.fromDate"
-                                          class="form-control invoice-edit-input " placeholder="Date" />
+                                        <flat-pickr v-model="item.date" class="form-control invoice-edit-input "
+                                          placeholder="Date" />
                                         <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       </div>
 
@@ -661,7 +661,7 @@ export default {
 
     addNewItemInItemForm() {
       // this.$refs.form.style.overflow = "hidden"
-      this.invoiceData.bankStatementTransactions.push(this.itemFormBlankItem)
+      this.invoiceData.bankStatementTransactions.push(JSON.parse(JSON.stringify(this.itemFormBlankItem)))
     },
     removeItem(index) {
       this.invoiceData.bankStatementTransactions.splice(index, 1)
