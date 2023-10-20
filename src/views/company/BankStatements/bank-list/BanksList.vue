@@ -663,7 +663,7 @@ export default {
               console.log("this.companyDetails.companyName", companyName)
               link.setAttribute("download", fileName + ".zip") // download as .zip
             } else {
-              link.setAttribute("download", fileName + ".txt") // download as .txt
+              link.setAttribute("download", fileName + ".csv") // download as .txt
             }
             document.body.appendChild(link)
             link.click()
