@@ -661,7 +661,7 @@ export default {
 
     addNewItemInItemForm() {
       // this.$refs.form.style.overflow = "hidden"
-      this.invoiceData.bankStatementTransactions.push(JSON.parse(JSON.stringify(this.itemFormBlankItem)))
+      this.invoiceData.bankStatementTransactions.push(this.itemFormBlankItem)
     },
     removeItem(index) {
       this.invoiceData.bankStatementTransactions.splice(index, 1)
@@ -702,6 +702,7 @@ export default {
           invoiceData.verified = true
         }
         invoiceData.companyId = router.currentRoute.params.companyId
+        invoiceData.currency = invoiceData.currency
         let token = useJwt.getToken()
         useJwt
           .EditBankStatement(token, router.currentRoute.params.id, invoiceData)
@@ -879,7 +880,7 @@ export default {
       credit: 0.0,
       payee: "",
       balance: 0,
-
+      date: '',
       taxType: "",
       account: "",
     }

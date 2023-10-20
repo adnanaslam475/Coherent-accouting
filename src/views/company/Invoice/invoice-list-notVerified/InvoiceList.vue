@@ -549,7 +549,7 @@ export default {
     getMoreLoadInv(event) {
       console.log(" Coming here data ", event);
       this.handleSearchSelect(event);
-      //this.observeScroll();
+
     },
     observeScroll() {
       const options = {

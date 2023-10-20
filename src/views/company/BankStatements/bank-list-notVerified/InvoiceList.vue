@@ -409,7 +409,7 @@ export default {
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: this.sortBy,
+          sortField: 'id',
           verified: "false",
           searchTerm: this.searchQuery,
         },
@@ -417,7 +417,7 @@ export default {
       let config1 = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: this.sortBy,
+          sortField: 'id',
           verified: "false",
         },
       };
@@ -444,11 +444,7 @@ export default {
       tableAreaBusy.style.opacity = "1";
       this.loadMore = false;
     },
-    getMoreLoadInv(event) {
-      console.log(" Coming here data ", event);
-      this.handleSearchSelect(event);
-      //this.observeScroll();
-    },
+
     observeScroll() {
       const options = {
         root: null,
@@ -484,42 +480,41 @@ export default {
     },
 
     // Hadling DateSelects and Search field
-    async handleSearchSelect(pageNumData) {
-
-      var tableAreaBusy = document.getElementById("company-invoices-not-verified");
-      tableAreaBusy.style.opacity = "0.5";
-      this.isCheck = true;
-      this.pageNum = 1;
-      //this.perPageRecords = 10
-      this.perPageRecords = pageNumData
-
+    async handleSearchSelect() {
+      var tableAreaBusy = document.getElementById("company-invoices-not-verified")
+      tableAreaBusy.style.opacity = "0.5"
+      this.isCheck = true
+      this.pageNum = 1
+      this.perPageRecords = 10
       let data1 = {
         dateFrom: this.startDate,
         dateTo: this.endDate,
         documentType: null,
         transactionType: null,
         lastDays: null
-      };
+
+      }
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
           sortField: "id",
-          verified: "true",
+          verified: "false",
           queryString: this.searchQuery,
+
         },
-      };
+      }
+      this.companyId = router.currentRoute.params.id
+      const data = await axios
+        .post(`/account/api/bank-statement/search/${this.companyId}/1/${this.perPageRecords}`, data1, config)
+        .then((res) => {
+          console.log("response ========>", res)
+          this.invoices = res.data.elements
+          tableAreaBusy.style.opacity = "1"
+          this.loadMore = false
+        })
 
-      await axios.post(
-        `/account/api/bank-statement/search/${this.companyId}/1/${this.perPageRecords}`,
-        data1,
-        config
-      ).then((res) => {
-        this.invoices = res.data.elements;
-        tableAreaBusy.style.opacity = "1";
-        this.loadMore = false
-      })
-
-
+      // this.invoices = data.data.elements;
+      // tableAreaBusy.style.opacity = "1";
     },
 
     async listInvoices() {

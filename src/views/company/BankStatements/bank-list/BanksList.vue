@@ -500,7 +500,7 @@ export default {
     setTimeout(() => {
       this.isCheck = true
     }, 1500)
-    // this.fetchInvoices();  
+    // this.fetchInvoices();
     this.observeScroll()
 
     this.getCompany()
@@ -622,7 +622,7 @@ export default {
 
       this.exportDto.companyId = router.currentRoute.params.id // Set companyId to 85
       this.exportDto.date = this.selectedMonthData.date // Set date to current date
-      this.exportDto.platformName = this.isGeneric ? 'GENERIC' : this.exportDto.platformName // Set platformName to "AJURE"
+
       let companyName = this.companyDetails
       console.log(companyName)
       const dateString = new Date()
@@ -630,15 +630,19 @@ export default {
 
       const options = { day: "2-digit", month: "2-digit", year: "numeric" }
       const formattedDate = date.toLocaleDateString("en-US", options)
-      let fileName = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`
-      console.log(this.exportDto, this.isGeneric, "here is file Name")
+      let fileName = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`;
+      const payload = {
+        companyId: this.exportDto.companyId,
+        date: this.exportDto.date,
+        platformName: this.isGeneric ? 'GENERIC' : this.exportDto.platformName
+      }
 
       this.$nextTick(() => {
         this.$bvModal.show("modal-spinner")
       })
       try {
         await axios
-          .post("https://coherent-accounting.com/account/api/export-bank-statements", this.exportDto, {
+          .post("https://coherent-accounting.com/account/api/export-bank-statements", payload, {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("accessToken"), // assuming accessToken is correct
               "Content-Type": "application/json",
@@ -676,6 +680,7 @@ export default {
             variant: "success",
           },
         })
+        this.isGeneric = false
         this.$refs.modal_exportValue.hide()
       } catch (error) {
         console.error("Error:", error)
