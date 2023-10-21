@@ -126,7 +126,7 @@
                     <b-row>
                       <b-col>
 
-                        <b-form-checkbox id="vat-checkbox" v-model="isAccount" name="vat-checkbox" @click="checkAccount">
+                        <b-form-checkbox v-model="isAccount" name="is-account" @change="checkAccount">
                           Show Accounts
                         </b-form-checkbox>
                       </b-col>
@@ -562,29 +562,9 @@ export default {
       return requiredField.every((item) => (item === true ? true : false))
     },
 
-    measureOptions() {
-      return [
-        { text: i18n.tc("units.kg"), value: "kg" },
-        { text: i18n.tc("units.grams"), value: "grams" },
-        { text: i18n.tc("units.tone"), value: "tone" },
-        { text: i18n.tc("units.liter"), value: "liter" },
-        { text: i18n.tc("units.ml"), value: "ml" },
-        { text: i18n.tc("units.steak"), value: "steak" },
-        { text: i18n.tc("units.pcs"), value: "pcs" },
-      ]
-    },
 
-    days() {
-      return [
-        { text: i18n.tc("company_info.MON"), value: "MON" },
-        { text: i18n.tc("company_info.TUE"), value: "TUE" },
-        { text: i18n.tc("company_info.WED"), value: "WED" },
-        { text: i18n.tc("company_info.THU"), value: "THU" },
-        { text: i18n.tc("company_info.FRI"), value: "FRI" },
-        { text: i18n.tc("company_info.SAT"), value: "SAT" },
-        { text: i18n.tc("company_info.SUN"), value: "SUN" },
-      ]
-    },
+
+
     totalCredit() {
       let total = 0;
       for (let item of this.invoiceData.bankStatementTransactions) {
@@ -603,15 +583,9 @@ export default {
     },
   },
   methods: {
-    showSingle() {
-      this.openLightbox()
-    },
-    openLightbox() {
-      this.visible = true
-    },
-    closeLightbox() {
-      this.visible = false
-    },
+
+
+
     zoomIn() {
       // this.viewer.zoom(0.1) // Zoom in by 10%
     },
@@ -624,19 +598,7 @@ export default {
     rotateRight() {
       // this.viewer.rotate(90) // Rotate right by 90 degrees
     },
-    checkProcessType(type) {
-      let self = this
-      console.log(type, "this sssss===>")
-      if (type == "BANK_TRANSFER") {
-        this.isBank = true
-        console.log(this.invoiceData, "adfdfdddddd")
-        this.invoiceData.bankApi.name = self.companyData?.companyBankName
-        this.invoiceData.bankApi.bic = self.companyData?.companyBankBic
-        this.invoiceData.bankApi.iban = self.companyData?.companyBankAccount
-      } else {
-        this.isBank = false
-      }
-    },
+
     getAccounts() {
       var config = {
         method: "get",
@@ -678,9 +640,7 @@ export default {
         this.trSetHeight(this.$refs.form.scrollHeight)
       })
     },
-    toggleDaySelected() {
-      this.daySelected = false
-    },
+
 
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
       console.log(this.formIsValid)
@@ -911,20 +871,10 @@ export default {
       { value: "€", text: "€" },
       { value: "£", text: "£" },
     ]
-
-
-
-
-
-
-
     var isBank = ref(false)
     var companyInBG = ref(false)
     var isQuickBook = ref(false)
     var isXero = ref(false)
-
-
-
     let uploadValue = {
       companyOwnerName: "",
 
@@ -1017,26 +967,15 @@ export default {
             : [JSON.parse(JSON.stringify(itemFormBlankItem))]
         // invoiceData.value.vatPercent = invoiceData?.value?.vatPercent ? invoiceData.value.vatPercent : 20
 
-
-
-
-
         invoiceData.value.transactions = response?.data?.transactions?.map((item) => {
           return item
         })
-
-
-
       })
       .catch((error) => {
         // if (error.response.status === 404) {
         //   invoiceData.value = undefined
         // }
       })
-
-
-
-
 
     // const handleChange = (item) => {
     //   console.log(item, 'here is handle change');
@@ -1076,6 +1015,18 @@ export default {
             }
 
           }
+          if (response.data.exportProperties.platform == "XERO") {
+            if (statement.account == null) {
+              console.log('quickeeee')
+              isXero.value = false
+              isAccount.value = false
+            } else {
+              console.log('elsesss')
+              isAccount.value = true
+              isXero.value = true
+            }
+
+          }
           console.log(statement, 'this is statement quick books')
 
 
@@ -1095,7 +1046,8 @@ export default {
       })
 
     const checkAccount = () => {
-      console.log(companyData.value, '----------')
+
+      console.log(companyData.value.exportProperties.platform, '----------')
       if (companyData.value.exportProperties.platform == "XERO") {
         isAccount.value = !isAccount.value
         isXero.value = true
@@ -1103,8 +1055,9 @@ export default {
 
       }
       if (companyData.value.exportProperties.platform == "QUICK_BOOKS") {
-        isAccount.value = !isAccount.value
+
         isQuickBook.value = true
+
 
       }
     }
@@ -1227,9 +1180,6 @@ export default {
         dueDate: "",
       }
     }
-
-
-
     var isScheduled = ref(false)
     var isNotScheduled = ref(false)
     var checkSchedule = ref(false)
@@ -1244,31 +1194,11 @@ export default {
     var datalistEicRecipient = ref([])
     var showSuggestionsEicRecipient = ref(false)
 
-
-
-
-
-
-
     var datalistPerson = ref([])
     var showSuggestionsPerson = ref(false)
 
-
-
-
-
-
-
-
     var datalistPersonIdNumber = ref([])
     var showSuggestionsPersonIdNumber = ref(false)
-
-
-
-
-
-
-
     const clearAll = (type) => {
       if (type == "supplier") {
         invoiceData.value.supplierCompany = {
@@ -1321,15 +1251,6 @@ export default {
       supplierID,
 
       AccountTypeOption,
-
-
-
-
-
-
-
-
-
       invoiceData,
       currencyOptions,
 
@@ -1338,36 +1259,12 @@ export default {
       totalPrice,
       amountNonVat,
       tradeDiscountAmount,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       datalistEicRecipient,
       showSuggestionsEicRecipient,
-
-
       datalistPerson,
       showSuggestionsPerson,
-
-
-
       datalistPersonIdNumber,
       showSuggestionsPersonIdNumber,
-
-
-
-
       clearForm,
       clearAll,
       isGray,
