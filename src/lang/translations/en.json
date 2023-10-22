@@ -294,7 +294,7 @@
     "vat_reports": "Tax Reports",
     "yearly_reports": "Yearly Reports",
     "company_documents": "Files Storage",
-    "clients_or_recipients": "Customers"
+    "clients_or_recipients": "Suppliers"
   },
   "company_invoices": {
     "close": "Close",
@@ -441,14 +441,14 @@
     "readAll": "Read all notifications"
   },
   "clients_or_recipients": {
-    "add_user": "Add Customer",
+    "add_user": "Add Supplier",
     "user": "Customer Name",
     "identification_no": "Company ID",
     "vat_id": "Tax ID",
     "id_card": "Bank ID",
     "entries": "Entries",
     "show": "Show",
-    "add_new_user": "Add New Customer",
+    "add_new_user": "Add New Supplier",
     "full_name": "Company Name",
     "add": "Add",
     "cancel": "Cancel",
@@ -589,7 +589,7 @@
     "goods": "Goods",
     "expensesExternalServices": "Expenses External Services",
     "taxPurchase": "Tax Purchase",
-    "clients": "Customers",
+    "clients": "Suppliers",
     "taxSales": "Tax Sales",
     "incomeSalesGoods": "Income Sales Goods",
     "test": "Test",
@@ -647,7 +647,7 @@
   "taxPurchase": "Tax Purchase",
   "taxSales": "Tax Sales",
   "userName": "User Name",
-  "clients": "Customers",
+  "clients": "Suppliers",
   "home": "Home",
   "dashboard": "Dashboard",
   "invoices": "Approved Documents",
