@@ -7,8 +7,8 @@
       <b-form>
         <!-- {{ invoiceData }}
         <b-button @click="modelShow = !modelShow">Toggle Sidebar</b-button> -->
-        <b-modal body-class="m-0" content-class="m-0" dialog-class="my-1" v-model="modelShow" size="xl"
-          :hide-backdrop="false" :hide-footer="true" :scrollable="false" :no-close-on-backdrop="true">
+        <b-modal body-class="m-0 " content-class="m-0 " dialog-class="my-1 " v-model="modelShow" :hide-backdrop="false"
+          :hide-footer="true" :scrollable="false" :no-close-on-backdrop="true" size="xl" no-close-on-esc>
           <template #modal-header="slotProps">
 
             <feather-icon size="16" icon="XIcon" class="cursor-pointer ml-auto" @click="closeModel" />
@@ -145,7 +145,7 @@
                                   style="border-bottom: 1px solid lightgrey">
                                   <!-- Single Item Form Headers -->
 
-                                  <b-col cols="12" lg="3" class="text-uppercase grey-text-color" style="font-size: 14px"
+                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px"
                                     v-if="isQuickBook && isAccount">
                                     {{ $t("Account") }}
                                   </b-col>
@@ -158,7 +158,8 @@
                                     {{ $t("add_invoice.job_cost_code") }}
                                   </b-col>
 
-                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
+                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
+                                    style="font-size: 14px">
                                     Description
                                   </b-col>
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
@@ -169,12 +170,10 @@
                                     style="font-size: 14px">
                                     Date
                                   </b-col>
-                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
-                                    style="font-size: 14px">
+                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
                                     Debit
                                   </b-col>
-                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
-                                    style="font-size: 14px">
+                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
                                     Credit
                                   </b-col>
                                   <!-- <b-col
@@ -202,7 +201,7 @@
                                   style="border-bottom: 1px solid lightgrey">
                                   <!-- Single Item Form Headers -->
 
-                                  <b-col cols="12" lg="3" v-if="isQuickBook && isAccount">
+                                  <b-col cols="12" lg="2" v-if="isQuickBook && isAccount">
                                     <label class="d-inline d-lg-none">Account</label>
 
 
@@ -234,7 +233,7 @@
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2">
+                                  <b-col cols="12" :lg="isAccount ? '1' : '2'">
                                     <label class="d-inline d-lg-none">Description</label>
                                     <validation-provider #default="{ errors, invalid }"
                                       ref="transectionServiceOrItemDescription" name="Description" rules="required">
@@ -267,28 +266,38 @@
 
                                   </b-col>
 
-                                  <b-col cols="12" :lg="isAccount ? '1' : '2'">
+                                  <b-col cols="12" lg="2">
                                     <label class="d-inline d-lg-none">Debit</label>
                                     <validation-provider #default="{ errors, invalid }" name="Debit" rules="required"
                                       ref="debit">
 
+                                      <b-input-group>
+                                        <b-form-input id="debit" v-model="item.debit" type="number" class="mb-0"
+                                          step="any" placeholder="0.00" v-b-tooltip.hover :title="item.debit">
 
-                                      <b-form-input id="debit" v-model="item.debit" type="number" class="mb-0" step="any"
-                                        placeholder="0.00" v-b-tooltip.hover :title="item.debit" />
-                                      <!-- </b-input-group> -->
+                                        </b-form-input>
+
+                                        <feather-icon v-if="item.debit != 0" size="20" icon="XIcon" style="position: relative; 
+    right: 24px;
+    top: 6px;" @click='item.debit = 0' />
+                                      </b-input-group>
                                       <small class="text-danger">{{ errors[0] }}</small>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" :lg="isAccount ? '1' : '2'">
+                                  <b-col cols="12" lg="2">
                                     <label class="d-inline d-lg-none">Credit</label>
                                     <validation-provider #default="{ errors, invalid }" name="Credit" rules="required"
                                       ref="credit">
 
-
-                                      <b-form-input id="credit" v-model="item.credit" type="number" class="mb-0"
-                                        step="any" placeholder="0.00" v-b-tooltip.hover :title="item.credit" />
-                                      <!-- </b-input-group> -->
+                                      <b-input-group>
+                                        <b-form-input id="credit" v-model="item.credit" type="number" class="mb-0"
+                                          step="any" placeholder="0.00" v-b-tooltip.hover
+                                          :title="item.credit"></b-form-input>
+                                        <feather-icon v-if="item.credit != 0" size="20" icon="XIcon" style="position: relative; 
+    right: 24px;
+    top: 6px;" @click='item.credit = 0' />
+                                      </b-input-group>
                                       <small class="text-danger">{{ errors[0] }}</small>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
@@ -300,10 +309,13 @@
                                     <validation-provider #default="{ errors, invalid }" name="Balance" rules="required"
                                       ref="balance">
 
-
-                                      <b-form-input id="balance" v-model="item.balance" type="number" class="mb-0"
-                                        step="any" placeholder="0.00" v-b-tooltip.hover :title="item.balance" />
-                                      <!-- </b-input-group> -->
+                                      <b-input-group>
+                                        <b-form-input id="balance" v-model="item.balance" type="number" class="mb-0"
+                                          step="any" placeholder="0.00" v-b-tooltip.hover :title="item.balance" />
+                                        <feather-icon v-if="item.balance != 0" size="20" icon="XIcon" style="position: relative; 
+    right: 24px;
+    top: 6px;" @click='item.balance = 0' />
+                                      </b-input-group>
                                       <small class="text-danger">{{ errors[0] }}</small>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
@@ -325,7 +337,7 @@
                       </div>
                     </div>
                     <div size="sm" @click="addNewItemInItemForm" class="mb-2 grey-text-color curspor-pointer"
-                      style="background-color: transparent !important; border: 0px; color: #007aff !important">
+                      style="background-color: transparent !important; border: 0px; color: #007aff !important; cursor: pointer">
                       + {{ $t("add_invoice.add_item") }}
                     </div>
 
@@ -1289,10 +1301,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+:v-deep .modal-xl {
+  width: 104% !important;
+  margin: 0 !important;
+
+}
+
 .reverse-button {
   position: relative;
   top: 50%;
 }
+
 
 .myModelClass {
   min-width: 100vw !important;
@@ -1323,6 +1342,8 @@ export default {
 <style lang="scss" scoped>
 @import "~@core/scss/base/pages/app-invoice.scss";
 @import "~@core/scss/base/components/variables-dark";
+
+
 
 .flatpickr-input {
   background-color: white !important;

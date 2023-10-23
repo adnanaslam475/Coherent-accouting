@@ -338,7 +338,8 @@
                                     <label class="d-inline d-lg-none">Account</label>
                                     <validation-provider #default="{ errors, invalid }" name="Account" rules="required"
                                       ref="account">
-                                      <b-form-select id="account" v-model="item.account" :options="accounts">
+                                      <b-form-select id="account" v-model="item.account" :options="accounts"
+                                        v-b-tooltip.hover :title="item.account">
                                       </b-form-select>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                       <!-- <small class="text-danger">{{ errors[0] }}</small> -->
@@ -349,7 +350,7 @@
                                     <validation-provider #default="{ errors, invalid }" name="Category" rules="required"
                                       ref="selectCategory">
                                       <b-form-select id="selectCategory" :options="categoryItems"
-                                        v-model="item.account" />
+                                        v-model="item.account" v-b-tooltip.hover :title="item.account"/>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
@@ -357,7 +358,7 @@
                                     <label class="d-inline d-lg-none">Job Post Code</label>
                                     <validation-provider #default="{ errors, invalid }" name="Job Post Code"
                                       rules="required" ref="postCode">
-                                      <b-form-select id="postCode" :options="jobPostItems" v-model="item.taxType">
+                                      <b-form-select id="postCode" :options="jobPostItems" v-model="item.taxType" v-b-tooltip.hover :title="item.taxType">
                                       </b-form-select>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
@@ -368,7 +369,7 @@
                                       ref="transectionServiceOrItemDescription" name="Description" rules="required">
                                       <b-form-input id="transectionServiceOrItemDescription"
                                         v-model="item.serviceOrItemDescription"
-                                        :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" type="text" class="mb-0" />
+                                        :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" type="text" class="mb-0" v-b-tooltip.hover :title="item.serviceOrItemDescription"/>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
@@ -379,7 +380,7 @@
                                       ref="transectionQuantity">
                                       <b-form-input id="transectionQuantity" v-model="item.quantity" type="number"
                                         class="mb-0 p-0 text-center" placeholder="0" step="0.0000000001"
-                                        @input="populateValues()" />
+                                        @input="populateValues()" v-b-tooltip.hover :title="item.quantity"/>
                                       <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
                                   </b-col>
@@ -409,7 +410,7 @@
 
                                       <b-form-input id="transectionSingleAmountTransaction"
                                         v-model="item.singleAmountTransaction" type="number" class="mb-0" step="any"
-                                        placeholder="0.00" @input="populateValues()" />
+                                        placeholder="0.00" @input="populateValues()" v-b-tooltip.hover :title="item.singleAmountTransaction"/>
                                       <!-- </b-input-group> -->
                                       <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
@@ -440,8 +441,8 @@
                                     <label class="d-inline d-lg-none">Total Price</label>
                                     <validation-provider #default="{ errors }" name="transectionTotal" rules="required">
                                       <span v-if="item.transactionTotalAmountNonVat && item.transactionTotalAmountNonVat > 0
-                                        ">{{ parseFloat(item.transactionTotalAmountNonVat).toFixed(2) }}</span>
-                                      <span v-else>
+                                        " v-b-tooltip.hover :title="item.transactionTotalAmountNonVat">{{ parseFloat(item.transactionTotalAmountNonVat).toFixed(2) }}</span>
+                                      <span v-else transactionTotalAmountNonVat>
                                         {{
                                           (
                                             parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
@@ -5530,6 +5531,7 @@ import {
   BFormFile,
   BFormRadioGroup,
   BButtonGroup,
+  VBTooltip,
   BModal,
 } from "bootstrap-vue"
 import vSelect from "vue-select"
@@ -5715,6 +5717,7 @@ export default {
   directives: {
     Ripple,
     "b-toggle": VBToggle,
+    "b-tooltip": VBTooltip,
   },
   mixins: [heightTransition],
   mounted() {

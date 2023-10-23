@@ -77,8 +77,9 @@
 // Modal XL
 @media (min-width: 1200px) {
   .modal-xl {
-    margin-left: 3%;
-    margin-right: 3%;
+    margin-left: 0%;
+    margin-right: 0%;
+    max-width: 99%;
   }
 }
 
@@ -91,13 +92,13 @@
 
 .modal-slide-in {
   .modal-dialog {
-    position: fixed;
+    position: relative;
     top: 0;
     right: 0;
     bottom: 0;
-    left: auto;
+    left: 0;
     margin: 0;
-    max-width: none;
+    max-width: 100%;
     width: ($modal-slide-in-width-sm - 5);
 
     .modal-content {

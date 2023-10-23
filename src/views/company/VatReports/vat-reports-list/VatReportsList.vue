@@ -35,8 +35,8 @@
     </div>
 
     <!-- Modal pop-up to select month -->
-    <b-modal id="modal-prevent-closing" ref="modal" :title="$t('company_info.selectMonth')" :ok-title="loadModal" cancel-title="Close"
-      @show="resetModal" @hidden="resetModal" @ok="handleOk" :ok-disabled="modalDisabledMonth">
+    <b-modal id="modal-prevent-closing" ref="modal" :title="$t('company_info.selectMonth')" :ok-title="loadModal"
+      cancel-title="Close" @show="resetModal" @hidden="resetModal" @ok="handleOk" :ok-disabled="modalDisabledMonth">
       <form ref="form" @submit.stop.prevent="handleMonthSelected">
         <validation-observer ref="selectMonthRules" tag="form">
           <validation-provider #default="{ errors }" :name="$t('month_selected')" rules="required">
@@ -55,7 +55,7 @@
       <form ref="form" @submit.stop.prevent="handleMonthSelected">
         <!-- invoices-for-vat-reports Table -->
         <b-table :items="invoicesForReport" responsive :fields="InvoicesTableColumns" primary-key="id" show-empty
-  empty-text="No matching records found" class="position-relative invoiceList">           
+          empty-text="No matching records found" class="position-relative invoiceList">
           <template #empty="scope">
             <div class="d-flex align-items-center justify-content-center">
               <div class="mb-1 start-chat-icon">
@@ -117,7 +117,8 @@
     </b-modal>
 
     <!-- Add Assets -->
-    <b-modal id="add-asset-modal" ref="modal" :title="$t('company_documents.add_asset')" :ok-title="$t('clients_or_recipients.add')" :cancel-title="$t('update_tickets.close')" @ok="createAsset()">
+    <b-modal id="add-asset-modal" ref="modal" :title="$t('company_documents.add_asset')"
+      :ok-title="$t('clients_or_recipients.add')" :cancel-title="$t('update_tickets.close')" @ok="createAsset()">
       <b-row>
         <b-col class="pb-2" cols="12">
           <b-input-group class="input-group-merge">
@@ -267,7 +268,8 @@
                 params: { id: data.item.id, companyId: companyID },
               })
               " />
-          <b-tooltip :title="$t('company_info.preview')" class="cursor-pointer" :target="`report-row-${data.item.id}-preview-icon`" />
+          <b-tooltip :title="$t('company_info.preview')" class="cursor-pointer"
+            :target="`report-row-${data.item.id}-preview-icon`" />
 
           <!-- Dropdown -->
           <b-dropdown variant="link" toggle-class="p-0" no-caret :right="$store.state.appConfig.isRTL">
@@ -283,20 +285,20 @@
               params: { companyId: companyID, id: data.item.id },
             }">
               <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">{{ $t("company_info.edit")}}</span>
+              <span class="align-middle ml-50">{{ $t("company_info.edit") }}</span>
             </b-dropdown-item>
             <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
               <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">{{ $t("company_info.delete")}}</span>
+              <span class="align-middle ml-50">{{ $t("company_info.delete") }}</span>
             </b-dropdown-item>
           </b-dropdown>
 
           <!-- assets check -->
           <feather-icon v-if="data.item.asset === null" :id="`report-row-${data.item.id}-no-asset-icon`"
             icon="DatabaseIcon" size="16" color="red" class="mx-1 cursor-pointer" v-b-modal.add-asset-modal @click="() => {
-                vatIdtoUpdate = data.item.id;
-                vatReport = data.item;
-              }
+              vatIdtoUpdate = data.item.id;
+              vatReport = data.item;
+            }
               " />
           <!--  @click="gotoAddAsset()"  
                 $router.push({
@@ -306,9 +308,11 @@
               }) -->
           <feather-icon v-else :id="`report-row-${data.item.id}-asset-icon`" icon="DatabaseIcon" size="16" color="green"
             class="mx-1 cursor-pointer" />
-          <b-tooltip :title="$t('company_documents.add_asset')" class="cursor-pointer" :target="`report-row-${data.item.id}-no-asset-icon`" />
+          <b-tooltip :title="$t('company_documents.add_asset')" class="cursor-pointer"
+            :target="`report-row-${data.item.id}-no-asset-icon`" />
 
-          <b-tooltip :title="$t('company_info.assets')" class="cursor-pointer" :target="`report-row-${data.item.id}-asset-icon`" />
+          <b-tooltip :title="$t('company_info.assets')" class="cursor-pointer"
+            :target="`report-row-${data.item.id}-asset-icon`" />
         </div>
       </template>
     </b-table>
@@ -544,17 +548,17 @@ export default {
     };
   },
   computed: {
-  InvoicesTableColumns() {
-    return [
-      { key: "isChecked", label: this.$t('invoiceTable.isChecked') },
-      { key: "invoiceNumber", label: this.$t('invoiceTable.invoiceNumber') },
-      { key: "recipientCompanyName", label: this.$t('invoiceTable.recipientCompanyName') },
-      { key: "supplierCompanyName", label: this.$t('invoiceTable.supplierCompanyName') },
-      { key: "transactionType", label: this.$t('invoiceTable.transactionType') },
-      { key: "dateIssued", label: this.$t('invoiceTable.dateIssued') },
-    ];
-  }
-},
+    InvoicesTableColumns() {
+      return [
+        { key: "isChecked", label: this.$t('invoiceTable.isChecked') },
+        { key: "invoiceNumber", label: this.$t('invoiceTable.invoiceNumber') },
+        { key: "recipientCompanyName", label: this.$t('invoiceTable.recipientCompanyName') },
+        { key: "supplierCompanyName", label: this.$t('invoiceTable.supplierCompanyName') },
+        { key: "transactionType", label: this.$t('invoiceTable.transactionType') },
+        { key: "dateIssued", label: this.$t('invoiceTable.dateIssued') },
+      ];
+    }
+  },
   created() {
     this.companyID = this.$route.params.id;
     this.selectedMonthData.companyId = this.companyID;
@@ -1044,7 +1048,7 @@ export default {
 
 @media (min-width: 576px) {
   .modal-dialog {
-    margin: 16rem auto auto auto;
+    margin: 1rem auto auto auto;
   }
 
   #modal-invoices-for-report .modal-dialog {

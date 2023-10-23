@@ -805,7 +805,7 @@ export default {
         this.loadMore = true
         if (entries[0].isIntersecting) {
           if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
-            await this.handleSearchSelect()
+            await this.listInvoices()
           } else {
             await this.searchInvoices()
           }
