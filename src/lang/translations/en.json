@@ -270,13 +270,13 @@
     "bank_account": "Bank Account",
     "contact": "Contact",
     "address": "Аddress",
-    "total_assets": "Total Assets",
+    "total_assets": "Total Files",
     "assets": "Assets",
-    "total_invoices": "Total Invoices",
-    "total_not_verified_invoices": "Total NotVerified Invoices",
-    "total_private_person": "Total Private Person",
-    "total_vat_reports": "Total Vat Reports",
-    "total_yearly_reports": "Total Yearly Reports",
+    "total_invoices": "Total Documents",
+    "total_not_verified_invoices": "Total NotVerified Documents",
+    "total_private_person": "Total Suppliers",
+    "total_vat_reports": "Total Tax Reports",
+    "total_yearly_reports": "Total Bank Statements",
     "report_timeline": "Report Timeline",
     "reports_have_been_created": "Reports have been created",
     "invoices_per_month": "Invoices Per Month",
@@ -294,7 +294,7 @@
     "vat_reports": "Tax Reports",
     "yearly_reports": "Yearly Reports",
     "company_documents": "Files Storage",
-    "clients_or_recipients": "Customers"
+    "clients_or_recipients": "Suppliers"
   },
   "company_invoices": {
     "close": "Close",
@@ -316,9 +316,9 @@
     "transaction_type": "Transaction Type",
     "recipient_company": "Recipient Company",
     "supplier_company": "Supplier Company",
-    "amount_non_vat": "Amount non Vat",
+    "amount_non_vat": "Amount non Tax",
     "total_amount": "Total Amount",
-    "vat_amount": "Vat Amount",
+    "vat_amount": "Tax Amount",
     "EXPENSE": "EXPENSE",
     "INCOME": "INCOME",
     "delete_invoice": "Delete Invoice",
@@ -337,16 +337,16 @@
     "period": "Period",
     "company_name_and_address": "Company Name and Address",
     "total_sum_base_taxes": "Total Sum Base Taxes",
-    "total_vat": "Total Vat",
+    "total_vat": "Total Tax",
     "base_tax_addition": "Base Tax and Addition",
     "with_full_tax_credit": "With Full Tax Credit",
     "total_tax_credit": "Total Tax Credit",
-    "vat_to_pay": "Vat To Pay",
-    "vat_to_exclude": "Vat to Exclude",
+    "vat_to_pay": "Tax To Pay",
+    "vat_to_exclude": "Tax to Exclude",
     "tax_to_pay": "Tax to Pay",
     "tax_to_pay_effective": "Tax to Pay Effective",
     "delete_vat": "Delete Vat Report",
-    "delete_vat_confirm": "Are you sure you want to delete this Vat Report?"
+    "delete_vat_confirm": "Are you sure you want to delete this Tax Report?"
   },
   "invoiceTable": {
     "isChecked": "Checked",
@@ -368,7 +368,7 @@
     "invoice_exported_successfully": "Invoice exported Successfully"
   },
   "modal": {
-    "title": "Invoices for Vat Report",
+    "title": "Invoices for Tax Report",
     "okTitle": "Download Zip",
     "cancelTitle": "Close",
     "emptyText": "No matching records found",
@@ -441,14 +441,14 @@
     "readAll": "Read all notifications"
   },
   "clients_or_recipients": {
-    "add_user": "Add Customer",
+    "add_user": "Add Supplier",
     "user": "Customer Name",
     "identification_no": "Company ID",
     "vat_id": "Tax ID",
     "id_card": "Bank ID",
     "entries": "Entries",
     "show": "Show",
-    "add_new_user": "Add New Customer",
+    "add_new_user": "Add New Supplier",
     "full_name": "Company Name",
     "add": "Add",
     "cancel": "Cancel",
@@ -477,7 +477,7 @@
     "RecipientCompanyName": "Recipient Company Name....",
     "RecipientPersonName": "Recipient Person Name....",
     "RecipientCompanyAddress": "Recipient Company Address....",
-    "RecipientCompanyVATNumber": "Recipient Company VAT Number....",
+    "RecipientCompanyVATNumber": "Recipient Company Tax Number....",
     "bank-1": "bank-01",
     "bank-2": "bank-02",
     "bank-3": "bank-03",
@@ -487,11 +487,11 @@
     "company_address": "Company Address",
     "company_id_no": "Company ID Number",
     "company_owner": "Company Owner",
-    "company_vat": "Company VAT No",
+    "company_vat": "Company Tax No",
     "person_name": "Person Name",
     "person_address": "Person Address",
     "person_id_no": "Person ID Number",
-    "vat": "Vat",
+    "vat": "Tax",
     "yes": "YES",
     "no": "NO",
     "supplier": "Supplier",
@@ -522,7 +522,7 @@
     "currency": "Currency",
     "add_item": "Add Item",
     "total_price": "Total Price",
-    "total_price_non_vat": "Total Price NonVat",
+    "total_price_non_vat": "Total Price Non Tax",
     "discount_percent": "Discount Percent",
     "discount_sum": "Discount Sum",
     "save": "Save",
@@ -532,8 +532,8 @@
     "id_no": "ID Number",
     "owner": "Owner",
     "vat_no": "Vat No",
-    "transaction_total_nonVat": "Transaction Total Amount Non VAT",
-    "no_vat": "no vat",
+    "transaction_total_nonVat": "Transaction Total Amount Non Tax",
+    "no_vat": "no tax",
     "bank": "Bank",
     "no_bank": "no bank",
     "upload_logo": "Upload Logo here",
@@ -545,7 +545,7 @@
     "bank_details": "Bank Details",
     "payment_info": "Payment Info",
     "bank_name": "Банка",
-    "non_vat_clause": "Non VAT Clause",
+    "non_vat_clause": "Non Tax Clause",
     "not_recognised_01": "If your invoice is not recognized, Please send it to email: ",
     "not_recognised_02": "admin@coherent-accounting.com",
     "not_recognised_03": "and we will make it work for FREE for you.",
@@ -589,7 +589,7 @@
     "goods": "Goods",
     "expensesExternalServices": "Expenses External Services",
     "taxPurchase": "Tax Purchase",
-    "clients": "Customers",
+    "clients": "Suppliers",
     "taxSales": "Tax Sales",
     "incomeSalesGoods": "Income Sales Goods",
     "test": "Test",
@@ -606,26 +606,33 @@
   "videos_content": [
     {
       "video": {
-        "link": "https://www.youtube.com/embed/bu2EzaNvhVQ",
-        "title": "FREE OCR for FRESH BOOKS!!! Digitalise Invoices and receipts and Import as Expenses in Freshbooks - REMOVE MANUAL WORK"
+        "link": "https://www.youtube.com/embed/05O4AsrPZ1o",
+        "title": "FREE OCR of invocies and receipts for QuickBooks!!! Convert scanned invocies for import in QuickBooks - REMOVE MANUAL WORK"
       }
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/L4XnWvEe4yQ",
-        "title": "FREE OCR of invocies for XERO!!! Convert scanned invocies for import in XERO - REMOVE MANUAL WORK"
+        "link": "https://www.youtube.com/embed/UtB49-U-MAc",
+        "title": "FREE OCR of invocies and receipts for XERO!!! Convert scanned invocies for import in QuickBooks - REMOVE MANUAL WORK"
       }
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/s0mOvbqwDJQ",
-        "title": "FREE OCR for XERO!!! Steps to verify and approve the invocies and prepare them for export to XERO"
+        "link": "https://www.youtube.com/embed/HKZeZpN7cJc",
+        "title": "FREE OCR Bank Statements transactions in Generic format fit all softwares - REMOVE MANUAL WORK"
       }
     },
     {
       "video": {
-        "link": "https://www.youtube.com/embed/RpODTA6jQ6g",
-        "title": "FREE OCR for XERO!!!Import sales and bill in xero platform"
+        "link": "https://www.youtube.com/embed/mB5zHIP5Mc0",
+        "title": "Create company file and add suppliers for 30 seconds"
+      }
+    },
+
+    {
+      "video": {
+        "link": "https://www.youtube.com/embed/QZMuX8Fsev4",
+        "title": "3 Reasons why using Coherent Accounting will not harm your XERO or QuickBooks account"
       }
     }
   ],
@@ -647,7 +654,7 @@
   "taxPurchase": "Tax Purchase",
   "taxSales": "Tax Sales",
   "userName": "User Name",
-  "clients": "Customers",
+  "clients": "Suppliers",
   "home": "Home",
   "dashboard": "Dashboard",
   "invoices": "Approved Documents",
@@ -670,7 +677,7 @@
   "unlimited_ocr_invoices": "Unlimited OCR Invoices",
   "unlimited_space": "Unlimited Space",
   "unlimited_digital_invoices": "Unlimited Digital Invoices",
-  "click_monthly_vat_report": "1 click Monthly Vat Reports (incl. txt and excel)",
+  "click_monthly_vat_report": "1 click Monthly Tax Reports (incl. txt and excel)",
   "yearly_reports": "Yearly Reports (excel)",
   "featureLable1": "FREE data extraction from invoices",
   "featureLable2": "FREE OCR of invoices",
