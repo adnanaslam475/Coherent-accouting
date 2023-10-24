@@ -1,5 +1,14 @@
 {
   "reverse": "Reverse",
+  "Data": "Data",
+  "from_period": "From St. Period",
+  "to_period": "To St. Period",
+  "total_debit": "Total Debit",
+  "total_cerdit": "Total Credit",
+  "show_accounts": "Show Accounts",
+  "Debit": "Debit",
+  "Credit": "Credit",
+  "Balance": "Balance",
   "Copy": "Copy",
   "please_fill_this": "Please fill this if you want to generate Tax reports",
   "app_logo_title": "Coherent Accounting",
@@ -628,7 +637,6 @@
         "title": "Create company file and add suppliers for 30 seconds"
       }
     },
-
     {
       "video": {
         "link": "https://www.youtube.com/embed/QZMuX8Fsev4",

@@ -497,7 +497,7 @@
                         </div>
                       </div>
                       <div size="sm" @click="addNewItemInItemForm" class="mb-2 grey-text-color curspor-pointer"
-                        style="background-color: transparent !important; border: 0px; color: #007aff !important">
+                        style="background-color: transparent !important; cursor:pointer; border: 0px; color: #007aff !important">
                         + {{ $t("add_invoice.add_item") }}
                       </div>
 

@@ -35,7 +35,7 @@
                     <template #title>
 
                       <feather-icon icon="FileTextIcon" />
-                      <span style="font-size: 0.8vw" class="text-capitalize">Data</span>
+                      <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("Data") }}</span>
                     </template>
 
 
@@ -43,7 +43,7 @@
                     <b-row class="mt-2 mx-0 pb-2" style="border-bottom: 1px solid lightgrey">
                       <b-col cols="12" md="4" class="pl-0">
                         <div class="d-flex pl-0" style="flex-direction: column">
-                          <span class="grey-text-color"> From St. Period </span>
+                          <span class="grey-text-color"> {{ $t("from_period") }} </span>
                           <span>
                             <validation-provider #default="{ errors }" name="fromDate" rules="required">
                               <div class="position-relative d-inline-flex">
@@ -62,7 +62,7 @@
 
                       <b-col cols="12" md="4" class="pl-0">
                         <div class="d-flex pl-0" style="flex-direction: column">
-                          <span class="grey-text-color"> To St. Period </span>
+                          <span class="grey-text-color"> {{ $t("to_period") }} </span>
                           <span>
                             <validation-provider #default="{ errors }" name="toDate" rules="required">
                               <div class="position-relative d-inline-flex">
@@ -80,7 +80,7 @@
 
                       <b-col cols="12" md="4" class="pl-0">
                         <div class="d-flex pl-0" style="flex-direction: column">
-                          <span class="grey-text-color"> Description </span>
+                          <span class="grey-text-color"> {{ $t("update_tickets.description") }} </span>
                           <span>
                             <validation-provider #default="{ errors }" name="description">
                               <b-form-input v-model="invoiceData.description" class="mb-0" />
@@ -105,7 +105,7 @@
                       <b-col class="px-0">
 
                         <div class="d-flex" style="flex-direction: column; float: right">
-                          <div class="text-uppercase grey-text-color">DEBIT TOTAL</div>
+                          <div class="text-uppercase grey-text-color">{{ $t("total_debit") }}</div>
                           <!-- <h4 style="color: #625f6e">{{ invoiceData.totalAmount }}</h4> -->
                           <h4 style="color: #625f6e" class="pt-1">
 
@@ -113,7 +113,7 @@
                           </h4>
                         </div>
                         <div class="d-flex mr-2" style="flex-direction: column; float: right">
-                          <div class="text-uppercase grey-text-color">CREDIT TOTAL</div>
+                          <div class="text-uppercase grey-text-color">{{ $t("total_credit") }}</div>
                           <!-- <h4 style="color: #625f6e">{{ invoiceData.vatAmount }}</h4> -->
                           <h4 style="color: #625f6e" class="pt-1">
 
@@ -127,7 +127,7 @@
                       <b-col>
 
                         <b-form-checkbox v-model="isAccount" name="is-account" @change="checkAccount">
-                          Show Accounts
+                          {{ $t("show_accounts") }}
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
@@ -158,9 +158,8 @@
                                     {{ $t("add_invoice.job_cost_code") }}
                                   </b-col>
 
-                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
-                                    style="font-size: 14px">
-                                    Description
+                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
+                                    {{ $t("update_tickets.description") }}
                                   </b-col>
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
                                     style="font-size: 14px">
@@ -168,13 +167,13 @@
                                   </b-col>
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
                                     style="font-size: 14px">
-                                    Date
+                                    {{ $t("add_invoice.date") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
-                                    Debit
+                                    {{ $t("Debit") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
-                                    Credit
+                                    {{ $t("Credit") }}
                                   </b-col>
                                   <!-- <b-col
                                     cols="12"
@@ -185,7 +184,7 @@
                                     Tax
                                   </b-col> -->
                                   <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
-                                    Balance
+                                    {{ $t("Balance") }}
                                   </b-col>
 
 
@@ -207,7 +206,7 @@
 
                                     <validation-provider #default="{ errors, invalid }" name="Account" ref="account">
                                       <b-form-select id="account" v-model="item.account" :options="accounts"
-                                        v-b-tooltip.hover :title="item.account">
+                                        v-b-tooltip.hover :title="item.account" rules="required" immediate>
                                       </b-form-select>
 
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
@@ -233,7 +232,7 @@
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" :lg="isAccount ? '1' : '2'">
+                                  <b-col cols="12" lg="2">
                                     <label class="d-inline d-lg-none">Description</label>
                                     <validation-provider #default="{ errors, invalid }"
                                       ref="transectionServiceOrItemDescription" name="Description" rules="required">
@@ -256,7 +255,7 @@
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'" class="pl-0">
                                     <label class="d-inline d-lg-none">Date</label>
                                     <validation-provider #default="{ errors, invalid }" name="fromDate" rules="required">
-                                      <div class="position-relative d-inline-flex">
+                                      <div class="position-relative">
                                         <flat-pickr v-model="item.date" class="form-control invoice-edit-input "
                                           placeholder="Date" v-b-tooltip.hover :title="item.date" />
                                         <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
@@ -271,16 +270,17 @@
                                     <validation-provider #default="{ errors, invalid }" name="Debit" rules="required"
                                       ref="debit">
 
-                                      <b-input-group>
-                                        <b-form-input id="debit" v-model="item.debit" type="number" class="mb-0"
-                                          step="any" placeholder="0.00" v-b-tooltip.hover :title="item.debit">
 
-                                        </b-form-input>
+                                      <b-form-input id="debit" v-model="item.debit" type="number" class="mb-0" step="any"
+                                        placeholder="0.00" v-b-tooltip.hover :title="item.debit"
+                                        prepend-html='<i class="fa fa-pencil">asdf</i>'>
 
-                                        <feather-icon v-if="item.debit != 0" size="20" icon="XIcon" style="position: relative; 
-    right: 24px;
-    top: 6px;" @click='item.debit = 0' />
-                                      </b-input-group>
+                                      </b-form-input>
+
+                                      <feather-icon v-if="item.debit != 0" size="20" icon="XIcon" style="position: relative; 
+   bottom: 29px;
+    left: 88px;" @click='item.debit = 0' />
+
                                       <small class="text-danger">{{ errors[0] }}</small>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
@@ -290,14 +290,14 @@
                                     <validation-provider #default="{ errors, invalid }" name="Credit" rules="required"
                                       ref="credit">
 
-                                      <b-input-group>
-                                        <b-form-input id="credit" v-model="item.credit" type="number" class="mb-0"
-                                          step="any" placeholder="0.00" v-b-tooltip.hover
-                                          :title="item.credit"></b-form-input>
-                                        <feather-icon v-if="item.credit != 0" size="20" icon="XIcon" style="position: relative; 
-    right: 24px;
-    top: 6px;" @click='item.credit = 0' />
-                                      </b-input-group>
+
+                                      <b-form-input id="credit" v-model="item.credit" type="number" class="mb-0"
+                                        step="any" placeholder="0.00" v-b-tooltip.hover
+                                        :title="item.credit"></b-form-input>
+                                      <feather-icon v-if="item.credit != 0" size="20" icon="XIcon" style="position: relative; 
+   bottom: 29px;
+    left: 88px;" @click='item.credit = 0' />
+
                                       <small class="text-danger">{{ errors[0] }}</small>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
@@ -309,13 +309,13 @@
                                     <validation-provider #default="{ errors, invalid }" name="Balance" rules="required"
                                       ref="balance">
 
-                                      <b-input-group>
-                                        <b-form-input id="balance" v-model="item.balance" type="number" class="mb-0"
-                                          step="any" placeholder="0.00" v-b-tooltip.hover :title="item.balance" />
-                                        <feather-icon v-if="item.balance != 0" size="20" icon="XIcon" style="position: relative; 
-    right: 24px;
-    top: 6px;" @click='item.balance = 0' />
-                                      </b-input-group>
+
+                                      <b-form-input id="balance" v-model="item.balance" type="number" class="mb-0"
+                                        step="any" placeholder="0.00" v-b-tooltip.hover :title="item.balance" />
+                                      <feather-icon v-if="item.balance != 0" size="20" icon="XIcon" style="position: relative; 
+    bottom: 29px;
+    left: 88px;" @click='item.balance = 0' />
+
                                       <small class="text-danger">{{ errors[0] }}</small>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
@@ -337,7 +337,7 @@
                       </div>
                     </div>
                     <div size="sm" @click="addNewItemInItemForm" class="mb-2 grey-text-color curspor-pointer"
-                      style="background-color: transparent !important; border: 0px; color: #007aff !important; cursor: pointer">
+                      style="background-color: transparent !important; border: 0px; width: 100px; color: #007aff !important; cursor: pointer">
                       + {{ $t("add_invoice.add_item") }}
                     </div>
 
@@ -557,14 +557,15 @@ export default {
 
         ]
 
-        // if (this.invoiceData.platform == 'XERO' && this.isAccount) {
-        //   temp.push(this.$refs.selectCategory[i].flags.valid)
-        //   temp.push(this.$refs.postCode[i].flags.valid)
-        // }
+        if (this.isXero && this.isAccount) {
+          temp.push(this.$refs.selectCategory[i].flags.valid)
+          temp.push(this.$refs.postCode[i].flags.valid)
+        }
 
-        // if (this.isQuickBook && this.isAccount) {
-        //   requiredField.push(this.$refs.account[i].flags.valid)
-        // }
+        if (this.isQuickBook && this.isAccount) {
+          console.log(this.$refs.account[i].flags.valid)
+          requiredField.push(this.$refs.account[i].flags.valid)
+        }
 
         requiredField.push(...temp)
 

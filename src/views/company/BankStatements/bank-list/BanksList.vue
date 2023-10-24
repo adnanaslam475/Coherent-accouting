@@ -1062,7 +1062,7 @@ export default {
           const blob = new Blob([response.data], { type: "text/csv" })
 
           // Save the Blob as a file using FileSaver.js
-          saveAs(blob, `EIC_${this.EIC}_DATE_${formattedDate}`)
+          saveAs(blob, `EIC_${this.EIC}_Bank_Statements_DATE_${formattedDate}`)
           this.$toast({
             component: ToastificationContent,
             props: {

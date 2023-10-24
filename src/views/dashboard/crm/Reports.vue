@@ -8,20 +8,7 @@
     <b-card-body>
       <b-tabs class="report-tabs" v-model="reportTab">
         <!-- Vat Reports Tab-->
-        <b-tab
-          :style="`display: block !important; position: ${reportTab != 0 ? 'absolute' : 'relative'}; visibility: ${reportTab != 0 ? 'hidden' : 'visible'}; `">
-          <template #title>
-            <b-media no-body>
-              <b-avatar size="38" class="text-success bg-transparent position-relative">
-                <svg-icon class="mx-auto" type="mdi" :path="path1"> </svg-icon>
-                <span class="v-avatar__underlay"></span>
-              </b-avatar>
-            </b-media>
-            <span class="text-center">{{ $t('company_tabs.vat_reports') }}</span>
-          </template>
 
-          <vue-apex-charts type="bar" height="400" :options="columnChart1.chartOptions" :series="columnChart1.series" />
-        </b-tab>
 
         <!-- Invoices Tab -->
         <b-tab>
@@ -41,8 +28,8 @@
         <b-tab>
           <template #title>
             <b-media no-body>
-              <b-avatar size="38" class="text-primary bg-transparent position-relative">
-                <svg-icon class="mx-auto" type="mdi" :path="path"> </svg-icon>
+              <b-avatar size="38" class="text-danger bg-transparent position-relative">
+                <svg-icon class="mx-auto" type="mdi" :path="bankIcon"> </svg-icon>
                 <span class="v-avatar__underlay"></span>
               </b-avatar>
             </b-media>
@@ -51,6 +38,20 @@
           <vue-apex-charts type="bar" height="400" :options="columnChart2.chartOptions" :series="columnChart2.series" />
         </b-tab>
 
+        <b-tab
+          :style="`display: block !important; position: ${reportTab != 0 ? 'absolute' : 'relative'}; visibility: ${reportTab != 0 ? 'hidden' : 'visible'}; `">
+          <template #title>
+            <b-media no-body>
+              <b-avatar size="38" class="text-success bg-transparent position-relative">
+                <svg-icon class="mx-auto" type="mdi" :path="path1"> </svg-icon>
+                <span class="v-avatar__underlay"></span>
+              </b-avatar>
+            </b-media>
+            <span class="text-center">{{ $t('company_tabs.vat_reports') }}</span>
+          </template>
+
+          <vue-apex-charts type="bar" height="400" :options="columnChart1.chartOptions" :series="columnChart1.series" />
+        </b-tab>
       </b-tabs>
     </b-card-body>
   </b-card-code>
@@ -59,7 +60,7 @@
 <script>
 import BCardCode from "@core/components/b-card-code";
 import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiReceiptTextOutline } from "@mdi/js";
+import { mdiReceiptTextOutline, mdiBank } from "@mdi/js";
 import { mdiBallot } from "@mdi/js";
 import { ref } from "@vue/composition-api";
 import {
@@ -374,6 +375,7 @@ export default {
   data() {
     return {
       path: mdiReceiptTextOutline,
+      bankIcon: mdiBank,
       path1: mdiBallot,
       reportTab: 0
     };

@@ -219,7 +219,7 @@
       <b-tab>
         <template #title>
           <feather-icon icon="LayersIcon" />
-          <span style="font-size: 13px">Unverified Companies</span>
+          <span style="font-size: 13px">Unverified Documents</span>
         </template>
         <div class="row">
           <!-- <input data-v-9a6e255c="" type="text" placeholder="Search..." class="d-inline-block mr-1 form-control col-4"
