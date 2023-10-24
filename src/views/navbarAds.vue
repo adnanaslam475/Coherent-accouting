@@ -36,7 +36,7 @@
           <!-- <b-nav-item href="/pricing">
         {{ $t("navbar.prices") }}
     </b-nav-item> -->
-          <b-nav-item href="https://my.visme.co/view/6x8g07m3-comparison-hubdoc-vs-coherent-accounting" target="_blank">
+          <b-nav-item href="https://my.visme.co/view/6x8g07m3-comparison-coherent-accounting-vs-others" target="_blank">
             Comparison Coherent vs Others
           </b-nav-item>
           <b-nav-item href="/why-choose-us">
