@@ -390,6 +390,7 @@ export default {
         });
     },
     async refreshList() {
+
       var tableAreaBusy = document.getElementById(
         "company-invoices-not-verified"
       );

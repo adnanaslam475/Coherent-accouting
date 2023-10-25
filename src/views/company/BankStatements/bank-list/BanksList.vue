@@ -630,7 +630,7 @@ export default {
 
       const options = { day: "2-digit", month: "2-digit", year: "numeric" }
       const formattedDate = date.toLocaleDateString("en-US", options)
-      let fileName = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`;
+      let fileName = `EIC_${companyName.companyIdentificationNumber}_bank_statements_date_${formattedDate}`;
       const payload = {
         companyId: this.exportDto.companyId,
         date: this.exportDto.date,

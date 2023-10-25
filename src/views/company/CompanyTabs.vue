@@ -24,12 +24,12 @@
       </b-tab>
 
       <!-- Multiple Uploads tab -->
-      <b-tab>
+      <b-tab @click="notVerifiedInvoces">
         <template #title>
           <feather-icon icon="FileIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("company_tabs.multiple_upload") }}</span>
         </template>
-        <NotVerifiedInvoice v-if="companyTab == 2 || multipleUploadActive" />
+        <NotVerifiedInvoice ref="notVerifiedInvoces" />
       </b-tab>
       <!-- bank statements  -->
       <b-tab>
@@ -41,12 +41,12 @@
           :companyDetails="companyDetails" />
       </b-tab>
       <!-- bulk bank statements  -->
-      <b-tab>
+      <b-tab @click="notVerifiedBanks">
         <template #title>
           <feather-icon icon="FileIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">OCR Bank St.</span>
         </template>
-        <NotVarifiedBanks v-if="companyTab == 4 || blukStatementsActive" />
+        <NotVarifiedBanks ref="banks" />
       </b-tab>
       <!-- Vat Reports tab -->
       <b-tab>
@@ -206,8 +206,10 @@ export default {
           break
         case 3:
           this.bankStatementsActive = true
+
         case 4:
           this.blukStatementsActive = true
+          console.log(this.$refs.banks, 'sdsdasadfddd===')
         case 5:
           this.vatReportsActive = true
           break
@@ -273,6 +275,13 @@ export default {
     updateVatReportsTab(value) {
       this.vatReportsTab = value
     },
+    notVerifiedBanks() {
+      console.log(this.$refs, 'ddddd')
+      this.$refs.banks.refreshList()
+    },
+    notVerifiedInvoces() {
+      this.$refs.notVerifiedInvoces.refreshList()
+    }
   },
 }
 </script>

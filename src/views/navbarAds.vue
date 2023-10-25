@@ -197,6 +197,7 @@ export default {
   letter-spacing: 0.01rem;
   font-size: 1.45rem;
   animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+  width: 136px;
 }
 
 .brand-logo.nav-logo {
