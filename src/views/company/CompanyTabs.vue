@@ -32,12 +32,12 @@
         <NotVerifiedInvoice ref="notVerifiedInvoces" />
       </b-tab>
       <!-- bank statements  -->
-      <b-tab>
+      <b-tab @click="refreshBanks">
         <template #title>
           <feather-icon icon="FileIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">Approved Bank St.</span>
         </template>
-        <Banks v-if="companyTab == 3 || bankStatementsActive" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)"
+        <Banks ref="bankStatements" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)"
           :companyDetails="companyDetails" />
       </b-tab>
       <!-- bulk bank statements  -->
@@ -281,6 +281,9 @@ export default {
     },
     notVerifiedInvoces() {
       this.$refs.notVerifiedInvoces.refreshList()
+    },
+    refreshBanks() {
+      this.$refs.bankStatements.refreshList()
     }
   },
 }
