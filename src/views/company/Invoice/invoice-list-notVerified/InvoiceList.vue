@@ -9,14 +9,16 @@
 
           <!-- <label>Entries</label>
           <v-select v-model="perPage" @input="getMoreLoadInv" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :options="perPageOptions" :clearable="false" class="per-page-selector d-inline-block ml-50 mr-1" /> -->
-          <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
+          <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive"
+            :disabled="multiplefileLoading">
             <b-form-file ref="imageUploader" class="file-input" multiple @change="addMultiplefile" />
             <b-spinner v-if="multiplefileLoading" small variant="light" />
             {{ $t("lbl.add_multiple_invoices") }}
             <!-- Add Multiple Invoices -->
             <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path1" />
           </b-button>
-          <b-button variant="primary" class="mr-1 position-relative p-set" :disabled=!isActive v-else>
+          <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive || multiplefileLoading"
+            v-else>
 
             <b-spinner v-if="multiplefileLoading" small variant="light" />
             {{ $t("lbl.add_multiple_invoices") }}
