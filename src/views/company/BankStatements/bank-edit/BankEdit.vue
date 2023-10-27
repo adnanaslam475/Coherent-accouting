@@ -169,10 +169,12 @@
                                     style="font-size: 14px">
                                     {{ $t("add_invoice.date") }}
                                   </b-col>
-                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
+                                  <b-col cols="12" :lg="isXero ? '1' : '2'" class="text-uppercase grey-text-color"
+                                    style="font-size: 14px">
                                     {{ $t("Debit") }}
                                   </b-col>
-                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
+                                  <b-col cols="12" :lg="isXero ? '1' : '2'" class="text-uppercase grey-text-color"
+                                    style="font-size: 14px">
                                     {{ $t("Credit") }}
                                   </b-col>
                                   <!-- <b-col
@@ -215,6 +217,7 @@
                                   </b-col>
                                   <b-col cols="12" lg="2" v-if="isXero && isAccount">
                                     <label class="d-inline d-lg-none">Category</label>
+
                                     <validation-provider #default="{ errors, invalid }" name="Category"
                                       :rules="isAccount ? 'required' : ''" ref="selectCategory">
                                       <b-form-select id="selectCategory" :options="categoryItems" v-model="item.account"
@@ -223,11 +226,13 @@
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" lg="2" v-if="isXero && isAccount">
-                                    <label class="d-inline d-lg-none">Job Post Code</label>
-                                    <validation-provider #default="{ errors, invalid }" name="Job Post Code"
+
+                                    <label class="d-inline d-lg-none">Tax Type</label>
+
+                                    <validation-provider #default="{ errors, invalid }" name="taxType"
                                       :rules="isAccount ? 'required' : ''" ref="postCode">
                                       <b-form-select id="postCode" :options="jobPostItems" v-model="item.taxType"
-                                        v-b-tooltip.hover :title="item.tax.type">
+                                        v-b-tooltip.hover :title="item.taxType">
                                       </b-form-select>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
@@ -265,7 +270,7 @@
 
                                   </b-col>
 
-                                  <b-col cols="12" lg="2">
+                                  <b-col cols="12" :lg="isXero ? '1' : '2'">
                                     <label class="d-inline d-lg-none">Debit</label>
                                     <validation-provider #default="{ errors, invalid }" name="Debit" rules="required"
                                       ref="debit">
@@ -285,7 +290,7 @@
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2">
+                                  <b-col cols="12" :lg="isXero ? '1' : '2'">
                                     <label class="d-inline d-lg-none">Credit</label>
                                     <validation-provider #default="{ errors, invalid }" name="Credit" rules="required"
                                       ref="credit">
@@ -1062,7 +1067,7 @@ export default {
 
       console.log(companyData.value.exportProperties.platform, '----------')
       if (companyData.value.exportProperties.platform == "XERO") {
-        isAccount.value = !isAccount.value
+
         isXero.value = true
 
 

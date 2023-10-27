@@ -364,6 +364,7 @@ export default {
       this.isCheck = true;
     }, 1500);
     this.observeScroll();
+    this.refreshList()
     this.getMyCurrentPlan()
     this.getCompany()
   },
@@ -398,13 +399,13 @@ export default {
       );
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
-      let totalRecordss = this.invoices.length;
-      let Records = (totalRecordss / 10) * 10;
-      this.pageNum = Records / 10;
-      if (totalRecordss < 10) {
-        Records = 10;
-        this.pageNum = 1;
-      }
+      // let totalRecordss = this.invoices.length;
+      let Records;
+      // this.pageNum = Records / 10;
+      // if (totalRecordss < 10) {
+      Records = 10;
+      this.pageNum = 1;
+      // }
       let payLoadDates = {
         startDate: this.startDate,
         endDate: this.endDate,
@@ -432,7 +433,7 @@ export default {
       ) {
         const data = await axios.get(
           `/account/api/bank-statement/list/${this.companyId}/1/${Records}`,
-          config1
+          config
         );
         this.invoices = data.data.elements;
       } else {

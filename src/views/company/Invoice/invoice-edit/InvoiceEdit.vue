@@ -441,7 +441,11 @@
                                     <label class="d-inline d-lg-none">Total Price</label>
                                     <validation-provider #default="{ errors }" name="transectionTotal" rules="required">
                                       <span v-if="item.transactionTotalAmountNonVat && item.transactionTotalAmountNonVat > 0
-                                        " v-b-tooltip.hover :title="item.transactionTotalAmountNonVat">{{ parseFloat(item.transactionTotalAmountNonVat).toFixed(2) }}</span>
+                                        " v-b-tooltip.hover :title="item.transactionTotalAmountNonVat">{{
+                                          (
+                                            parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
+                                          ).toFixed(2)
+                                        }}</span>
                                       <span v-else transactionTotalAmountNonVat>
                                         {{
                                           (
