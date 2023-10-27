@@ -1068,7 +1068,7 @@ export default {
       console.log(companyData.value.exportProperties.platform, '----------')
       if (companyData.value.exportProperties.platform == "XERO") {
 
-        isXero.value = true
+        isXero.value = !isXero.value
 
 
       }
