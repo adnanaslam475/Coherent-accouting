@@ -684,6 +684,13 @@ export default {
         if (redirectPage == "verify") {
           invoiceData.verified = true
         }
+        if (!self.isAccount) {
+          invoiceData.bankStatementTransactions.forEach(item => {
+            item.taxType = null;
+            item.account = null;
+          });
+        }
+
         invoiceData.companyId = router.currentRoute.params.companyId
         invoiceData.currency = invoiceData.currency
         let token = useJwt.getToken()

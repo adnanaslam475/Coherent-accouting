@@ -84,14 +84,12 @@
                           </span>
                         </div>
                       </b-col>
-                      <b-col class="px-0 text-end">
+                      <b-col class="px-0 text-end" v-if="invoiceData.possibleDuplicate">
                         <div class="d-flex mr-0 text-end" style="flex-direction: column; float: right">
-                          <div class="text-uppercase grey-text-color">Possible Duplicate</div>
+                          <div class="text-uppercase grey-text-color" style='color: red'>Possible Duplicate</div>
                           <div class="pt-1">
-                            <feather-icon size="16"
-                              :icon="invoiceData.possibleDuplicate ? 'CheckCircleIcon' : 'XCircleIcon'"
-                              class="cursor-pointer ml-auto" :stroke="invoiceData.possibleDuplicate ? 'green' : 'red'"
-                              @click="changePossibleDuplicate(invoiceData.possibleDuplicate)" />
+                            <feather-icon size="16" icon="XCircleIcon" class="cursor-pointer ml-auto" stroke="red"
+                              @click="changePossibleDuplicate(false)" />
                           </div>
                         </div>
                       </b-col>
