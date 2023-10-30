@@ -6626,7 +6626,7 @@ export default {
 
 
     let changePossibleDuplicate = (type) => {
-      invoiceData.value.possibleDuplicate = !type
+      invoiceData.value.possibleDuplicate = type
     }
 
 
