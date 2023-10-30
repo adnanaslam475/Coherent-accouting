@@ -978,7 +978,11 @@ export default {
             .catch()
         }
 
-
+        if (invoiceData.value.bankStatementTransactions[0].account || invoiceData.value.bankStatementTransactions[0].taxType) {
+          isAccount.value = true
+        } else {
+          isAccount.value = false
+        }
         invoiceData.value.bankStatementTransactions =
           invoiceData?.value?.bankStatementTransactions?.length > 0
             ? invoiceData.value.bankStatementTransactions

@@ -84,14 +84,17 @@
                           </span>
                         </div>
                       </b-col>
-                      <!-- <b-col class="px-0 text-end">
+                      <b-col class="px-0 text-end">
                         <div class="d-flex mr-0 text-end" style="flex-direction: column; float: right">
-                          <div class="text-uppercase grey-text-color">DOCUMENT CREATED</div>
+                          <div class="text-uppercase grey-text-color">Possible Duplicate</div>
                           <div class="pt-1">
-                            <p>{{ invoiceData.dateIssued }}</p>
+                            <feather-icon size="16"
+                              :icon="invoiceData.possibleDuplicate ? 'CheckCircleIcon' : 'XCircleIcon'"
+                              class="cursor-pointer ml-auto" :stroke="invoiceData.possibleDuplicate ? 'green' : 'red'"
+                              @click="changePossibleDuplicate(invoiceData.possibleDuplicate)" />
                           </div>
                         </div>
-                      </b-col> -->
+                      </b-col>
                     </b-row>
 
                     <!-- <b-row class="mt-2">
@@ -349,8 +352,8 @@
                                     <label class="d-inline d-lg-none">Category</label>
                                     <validation-provider #default="{ errors, invalid }" name="Category" rules="required"
                                       ref="selectCategory">
-                                      <b-form-select id="selectCategory" :options="categoryItems"
-                                        v-model="item.account" v-b-tooltip.hover :title="item.account"/>
+                                      <b-form-select id="selectCategory" :options="categoryItems" v-model="item.account"
+                                        v-b-tooltip.hover :title="item.account" />
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
@@ -358,7 +361,8 @@
                                     <label class="d-inline d-lg-none">Job Post Code</label>
                                     <validation-provider #default="{ errors, invalid }" name="Job Post Code"
                                       rules="required" ref="postCode">
-                                      <b-form-select id="postCode" :options="jobPostItems" v-model="item.taxType" v-b-tooltip.hover :title="item.taxType">
+                                      <b-form-select id="postCode" :options="jobPostItems" v-model="item.taxType"
+                                        v-b-tooltip.hover :title="item.taxType">
                                       </b-form-select>
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
@@ -369,7 +373,8 @@
                                       ref="transectionServiceOrItemDescription" name="Description" rules="required">
                                       <b-form-input id="transectionServiceOrItemDescription"
                                         v-model="item.serviceOrItemDescription"
-                                        :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" type="text" class="mb-0" v-b-tooltip.hover :title="item.serviceOrItemDescription"/>
+                                        :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" type="text" class="mb-0"
+                                        v-b-tooltip.hover :title="item.serviceOrItemDescription" />
                                       <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
                                     </validation-provider>
                                   </b-col>
@@ -380,7 +385,7 @@
                                       ref="transectionQuantity">
                                       <b-form-input id="transectionQuantity" v-model="item.quantity" type="number"
                                         class="mb-0 p-0 text-center" placeholder="0" step="0.0000000001"
-                                        @input="populateValues()" v-b-tooltip.hover :title="item.quantity"/>
+                                        @input="populateValues()" v-b-tooltip.hover :title="item.quantity" />
                                       <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
                                   </b-col>
@@ -410,7 +415,8 @@
 
                                       <b-form-input id="transectionSingleAmountTransaction"
                                         v-model="item.singleAmountTransaction" type="number" class="mb-0" step="any"
-                                        placeholder="0.00" @input="populateValues()" v-b-tooltip.hover :title="item.singleAmountTransaction"/>
+                                        placeholder="0.00" @input="populateValues()" v-b-tooltip.hover
+                                        :title="item.singleAmountTransaction" />
                                       <!-- </b-input-group> -->
                                       <small class="text-danger">{{ errors[0] }}</small>
                                     </validation-provider>
@@ -442,10 +448,10 @@
                                     <validation-provider #default="{ errors }" name="transectionTotal" rules="required">
                                       <span v-if="item.transactionTotalAmountNonVat && item.transactionTotalAmountNonVat > 0
                                         " v-b-tooltip.hover :title="item.transactionTotalAmountNonVat">{{
-                                          (
-                                            parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
-                                          ).toFixed(2)
-                                        }}</span>
+    (
+      parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
+    ).toFixed(2)
+  }}</span>
                                       <span v-else transactionTotalAmountNonVat>
                                         {{
                                           (
@@ -6619,6 +6625,13 @@ export default {
         }
       })
 
+
+
+    let changePossibleDuplicate = (type) => {
+      invoiceData.value.possibleDuplicate = !type
+    }
+
+
     let InvoiceTypeOptionToggle = (value) => {
       if (value) {
         invoiceData.value.invoiceType = "PROFORMA"
@@ -7295,6 +7308,7 @@ export default {
       offCaseScheduleDayOfMonth,
       offCaseScheduleDayOfWeek,
       visible,
+      changePossibleDuplicate,
     }
   },
 }

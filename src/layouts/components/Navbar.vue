@@ -4,14 +4,8 @@
     <!-- Nav Menu Toggler -->
     <ul class="nav navbar-nav d-xl-none">
       <li class="nav-item">
-        <b-link
-          class="nav-link"
-          @click="toggleVerticalMenuActive"
-        >
-          <feather-icon
-            icon="MenuIcon"
-            size="21"
-          />
+        <b-link class="nav-link" @click="toggleVerticalMenuActive">
+          <feather-icon icon="MenuIcon" size="21" />
         </b-link>
       </li>
     </ul>
@@ -24,90 +18,48 @@
     <b-navbar-nav class="nav align-items-center ml-auto">
       <dark-Toggler class="d-none d-lg-block" />
       <!-- For Multilingual -->
-      <b-nav-item-dropdown
-        id="dropdown-grouped"
-        variant="link"
-        class="dropdown-language"
-        right
-      >
+      <b-nav-item-dropdown id="dropdown-grouped" variant="link" class="dropdown-language" right>
         <template #button-content>
-          <b-img
-            :src="currentLocale.img"
-            height="14px"
-            width="22px"
-            :alt="currentLocale.locale"
-          />
+          <b-img :src="currentLocale.img" height="14px" width="22px" :alt="currentLocale.locale" />
           <span class="ml-50 text-body">{{ currentLocale.name }}</span>
         </template>
-        <b-dropdown-item
-          v-for="localeObj in locales"
-          :key="localeObj.locale"
-          @click="changeLanguage(localeObj)"
-        >
-          <b-img
-            :src="localeObj.img"
-            height="14px"
-            width="22px"
-            :alt="localeObj.locale"
-          />
+        <b-dropdown-item v-for="localeObj in locales" :key="localeObj.locale" @click="changeLanguage(localeObj)">
+          <b-img :src="localeObj.img" height="14px" width="22px" :alt="localeObj.locale" />
           <span class="ml-50">{{ localeObj.name }}</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
       <!-- For Multilingual -->
-      <b-nav-item-dropdown
-        class="dropdown-notification mr-25"
-        menu-class="dropdown-menu-media"
-        right
-      >
+      <b-nav-item-dropdown class="dropdown-notification mr-25" menu-class="dropdown-menu-media" right>
         <template #button-content>
-          <feather-icon
-            :badge="notificationCount"
-            badge-classes="bg-danger"
-            class="text-body"
-            icon="BellIcon"
-            size="21"
-          />
+          <feather-icon :badge="notificationCount" badge-classes="bg-danger" class="text-body" icon="BellIcon"
+            size="21" />
         </template>
 
         <!-- Header -->
         <li class="dropdown-menu-header">
           <div class="dropdown-header d-flex">
             <h4 class="notification-title mb-0 mr-auto">
-              {{ $t("notifications.notification")}}
+              {{ $t("notifications.notification") }}
             </h4>
-            <b-badge
-              pill
-              variant="light-primary"
-            >
+            <b-badge pill variant="light-primary">
               {{ notificationCount }} New
             </b-badge>
           </div>
         </li>
 
         <!-- Notifications -->
-        <vue-perfect-scrollbar
-          :settings="perfectScrollbarSettings"
-          class="scrollable-container media-list scroll-area notification-scroll"
-          tagname="li"
-          @ps-scroll-y="handleScroll"
-        >
-          <b-link
-            v-for="(notification, index) in notifications"
-            :key="index"
-            @click="markNotificationAsRead(notification.id)"
-          >
+        <vue-perfect-scrollbar :settings="perfectScrollbarSettings"
+          class="scrollable-container media-list scroll-area notification-scroll" tagname="li"
+          @ps-scroll-y="handleScroll">
+          <b-link v-for="(notification, index) in notifications" :key="index"
+            @click="markNotificationAsRead(notification.id)">
             <b-media :class="notification.read ? '' : 'unread'">
               <template #aside>
-                <b-avatar
-                  size="32"
-                  :variant="notification.notificationSeverityType === 'INFO' ? 'light-success' :
-                    notification.notificationSeverityType === 'WARNING' ? 'light-info' : 'light-danger'"
-                >
+                <b-avatar size="32" :variant="notification.notificationSeverityType === 'INFO' ? 'light-success' :
+                  notification.notificationSeverityType === 'WARNING' ? 'light-info' : 'light-danger'">
                   <feather-icon
-                    :icon="
-                      notification.notificationSeverityType === 'INFO' ? 'CheckIcon' :
-                      notification.notificationSeverityType === 'WARNING' ? 'AlertTriangleIcon' : 'AlertTriangleIcon'"
-                  />
+                    :icon="notification.notificationSeverityType === 'INFO' ? 'CheckIcon' :
+                        notification.notificationSeverityType === 'WARNING' ? 'AlertTriangleIcon' : 'AlertTriangleIcon'" />
                 </b-avatar>
               </template>
               <b-row class="justify-content-between m-0">
@@ -117,21 +69,13 @@
                   </span>
                 </p>
                 <b-link class="icon-trash-notifications">
-                  <feather-icon
-                    :badge="notificationCount"
-                    badge-classes="bg-danger"
-                    class="text-body"
-                    icon="Trash2Icon"
-                    size="21"
-                    @click="deleteNotification(notification.id)"
-                  />
+                  <feather-icon :badge="notificationCount" badge-classes="bg-danger" class="text-body" icon="Trash2Icon"
+                    size="21" @click="deleteNotification(notification.id)" />
                 </b-link>
               </b-row>
               <small class="notification-text">
-                {{ $t("notifications.click")}} <a
-                  href="javascript:void(0)"
-                  @click="downloadFile(notification)"
-                >{{ $t("notifications.here")}}</a>
+                {{ $t("notifications.click") }} <a href="javascript:void(0)" @click="downloadFile(notification)">{{
+                  $t("notifications.here") }}</a>
                 <!--                <a-->
                 <!--                  v-if="fullIndex !== notification.id"-->
                 <!--                  href="javascript:void(0)"-->
@@ -146,23 +90,14 @@
 
         <!-- Cart Footer -->
         <li class="dropdown-menu-footer">
-          <b-button
-            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-            :disabled="notificationCount === 0"
-            variant="primary"
-            block
-            @click="markNotificationReadAll()"
-          >{{ $t("notifications.readAll")}}
+          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" :disabled="notificationCount === 0" variant="primary" block
+            @click="markNotificationReadAll()">{{ $t("notifications.readAll") }}
           </b-button>
         </li>
       </b-nav-item-dropdown>
 
-      <b-nav-item-dropdown
-        v-if="Object.keys(userDetail).length > 0"
-        right
-        toggle-class="d-flex align-items-center dropdown-user-link"
-        class="dropdown-user"
-      >
+      <b-nav-item-dropdown v-if="Object.keys(userDetail).length > 0" right
+        toggle-class="d-flex align-items-center dropdown-user-link" class="dropdown-user">
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
             <p class="user-name font-weight-bolder mb-0">
@@ -170,15 +105,8 @@
             </p>
             <span class="user-status">Admin | {{ $t('home') }}</span>
           </div>
-          <b-avatar
-            size="40"
-            variant="light-primary"
-            badge
-            :src="userDetail.firstName[0] + userDetail.lastName[0]"
-            :text="userDetail.firstName[0] + userDetail.lastName[0]"
-            class="badge-minimal"
-            badge-variant="success"
-          />
+          <b-avatar size="40" variant="light-primary" badge :src="userDetail.firstName[0] + userDetail.lastName[0]"
+            :text="userDetail.firstName[0] + userDetail.lastName[0]" class="badge-minimal" badge-variant="success" />
         </template>
 
         <!-- <b-dropdown-item link-class="d-flex align-items-center">
@@ -190,28 +118,14 @@
           <span>Profile</span>
         </b-dropdown-item> -->
 
-        <b-dropdown-item
-          :to="{ name:'settings' }"
-          link-class="d-flex align-items-center"
-        >
-          <feather-icon
-            size="16"
-            icon="UserIcon"
-            class="mr-50"
-          />
-          <span>{{$t('my_profile')}}</span>
+        <b-dropdown-item :to="{ name: 'settings' }" link-class="d-flex align-items-center">
+          <feather-icon size="16" icon="UserIcon" class="mr-50" />
+          <span>{{ $t('my_profile') }}</span>
         </b-dropdown-item>
         <b-dropdown-divider />
-        <b-dropdown-item
-          :to="{ name:'tickets' }"
-          link-class="d-flex align-items-center"
-        >
-          <feather-icon
-            size="16"
-            icon="TagIcon"
-            class="mr-50"
-          />
-          <span>{{$t('tickets')}}</span>
+        <b-dropdown-item :to="{ name: 'tickets' }" link-class="d-flex align-items-center">
+          <feather-icon size="16" icon="TagIcon" class="mr-50" />
+          <span>{{ $t('tickets') }}</span>
         </b-dropdown-item>
 
         <!--        <b-dropdown-item link-class="d-flex align-items-center">-->
@@ -242,35 +156,21 @@
         <!--        </b-dropdown-item>-->
         <b-dropdown-divider />
 
-        <!--        <b-dropdown-item-->
-        <!--          :to="{name:'my-plans'}"-->
-        <!--          link-class="d-flex align-items-center"-->
-        <!--        >-->
-        <!--          <feather-icon-->
-        <!--            size="16"-->
-        <!--            icon="CreditCardIcon"-->
-        <!--            class="mr-50"-->
-        <!--          />-->
-        <!--          <span>Pricing</span>-->
-        <!--        </b-dropdown-item>-->
-        <!--        <b-dropdown-item link-class="d-flex align-items-center">-->
-        <!--          <feather-icon-->
-        <!--            size="16"-->
-        <!--            icon="InfoIcon"-->
-        <!--            class="mr-50"-->
-        <!--          />-->
-        <!--          <span>FAQ</span>-->
-        <!--        </b-dropdown-item>-->
-        <b-dropdown-item
-          link-class="d-flex align-items-center"
-          @click="logout"
-        >
-          <feather-icon
-            size="16"
-            icon="LogOutIcon"
-            class="mr-50"
-          />
-          <span>{{$t('logout')}}</span>
+        <b-dropdown-item :to="{ name: 'my-plans' }" link-class="d-flex align-items-center">
+          <feather-icon size="16" icon="CreditCardIcon" class="mr-50" />
+          <span>Pricing</span>
+        </b-dropdown-item>
+        <!-- <b-dropdown-item link-class="d-flex align-items-center">
+                 <feather-icon
+                   size="16"
+                   icon="InfoIcon"
+                   class="mr-50"
+                 />
+                 <span>FAQ</span>
+               </b-dropdown-item> -->
+        <b-dropdown-item link-class="d-flex align-items-center" @click="logout">
+          <feather-icon size="16" icon="LogOutIcon" class="mr-50" />
+          <span>{{ $t('logout') }}</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
@@ -532,16 +432,15 @@ export default {
 </script>
 
 <style scoped>
-.notifWidth{
+.notifWidth {
   width: 92%;
 }
-.header-navbar .navbar-container .dropdown-menu-media .media-list .media 
-{
+
+.header-navbar .navbar-container .dropdown-menu-media .media-list .media {
   padding: 0.9rem 1.7rem 0.9rem 1.28rem;
 }
 
-li.ps-container.scrollable-container.media-list.scroll-area.ps.ps--active-y{
+li.ps-container.scrollable-container.media-list.scroll-area.ps.ps--active-y {
   width: unset;
 }
-
 </style>
