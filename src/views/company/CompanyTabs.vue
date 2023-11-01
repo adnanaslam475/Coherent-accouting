@@ -1,8 +1,6 @@
 <template>
   <b-col>
     <b-tabs v-model="companyTab">
-      <!-- Company-Info tab -->
-
       <b-tab>
         <template #title>
           <feather-icon icon="BriefcaseIcon" />

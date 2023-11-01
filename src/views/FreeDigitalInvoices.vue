@@ -14,14 +14,18 @@
     <!--/ search input -->
     <section class="invoice-add-wrapper">
       <validation-observer ref="previewForm" #default="{ invalid }">
-        <b-form @submit.prevent="invoicePreview(invoiceData, AccountTypeOption)">
+        <b-form
+          @submit.prevent="invoicePreview(invoiceData, AccountTypeOption)"
+        >
           <b-row class="invoice-add m-0">
             <!-- Col: Left (Invoice Container) -->
             <b-col cols="12" xl="10" md="10">
               <b-card no-body class="invoice-add">
                 <b-card-header class="justify-content-center">
                   <div class="d-flex align-items-center mb-0">
-                    <h4 class="title mr-1 mb-0">{{  $t('add_invoice.invoice') }}</h4>
+                    <h4 class="title mr-1 mb-0">
+                      {{ $t("add_invoice.invoice") }}
+                    </h4>
                     <validation-provider
                       #default="{ errors }"
                       name="invoiceNumber"
@@ -55,7 +59,7 @@
                     value="company"
                     class="d-none"
                   >
-                    <h5>{{  $t('add_invoice.company') }}</h5>
+                    <h5>{{ $t("add_invoice.company") }}</h5>
                   </b-form-radio>
                   <b-form-radio
                     v-model="AccountTypeOption"
@@ -64,20 +68,22 @@
                     value="person"
                     class="d-none"
                   >
-                    <h5>{{  $t('add_invoice.person') }}</h5>
+                    <h5>{{ $t("add_invoice.person") }}</h5>
                   </b-form-radio>
                   <b-form-checkbox
                     v-model="AccountTypeOptionToggleValue"
-                    @change="AccountTypeOptionToggle(AccountTypeOptionToggleValue)"
+                    @change="
+                      AccountTypeOptionToggle(AccountTypeOptionToggleValue)
+                    "
                     class="custom-control-primary custom-switch-btn"
                     name="AccountTypeOptionToggle"
                     switch
                   >
                     <span class="switch-icon-left">
-                      {{  $t('add_invoice.person') }}
+                      {{ $t("add_invoice.person") }}
                     </span>
                     <span class="switch-icon-right">
-                      {{  $t('add_invoice.company') }}
+                      {{ $t("add_invoice.company") }}
                     </span>
                   </b-form-checkbox>
                 </div>
@@ -90,7 +96,7 @@
                       <b-card-header
                         class="justify-content-center invoice-header mb-1"
                       >
-                        <h5 class="m-0"> {{  $t('add_invoice.supplier') }}</h5>
+                        <h5 class="m-0">{{ $t("add_invoice.supplier") }}</h5>
                       </b-card-header>
                       <b-card-body class="invoice-body">
                         <div
@@ -104,7 +110,9 @@
                           />
                         </div>
                         <div class="d-flex align-items-center mb-1">
-                          <span class="title mr-1">{{  $t('companies.company_name') }}: </span>
+                          <span class="title mr-1"
+                            >{{ $t("companies.company_name") }}:
+                          </span>
                           <b-input-group
                             class="input-group invoice-edit-input-group"
                           >
@@ -143,7 +151,9 @@
                           </b-input-group>
                         </div>
                         <div class="d-flex align-items-center mb-1">
-                          <span class="title mr-1"> {{  $t('add_invoice.company_address') }}: </span>
+                          <span class="title mr-1">
+                            {{ $t("add_invoice.company_address") }}:
+                          </span>
 
                           <b-input-group
                             class="input-group invoice-edit-input-group"
@@ -164,7 +174,9 @@
                           </b-input-group>
                         </div>
                         <div class="d-flex align-items-center mb-1">
-                          <span class="title mr-1"> {{  $t('add_invoice.company_id_no') }}: </span>
+                          <span class="title mr-1">
+                            {{ $t("add_invoice.company_id_no") }}:
+                          </span>
                           <b-input-group
                             class="input-group invoice-edit-input-group"
                           >
@@ -203,7 +215,9 @@
                           </b-input-group>
                         </div>
                         <div class="d-flex align-items-center mb-1">
-                          <span class="title mr-1">{{  $t('add_invoice.company_owner') }}: </span>
+                          <span class="title mr-1"
+                            >{{ $t("add_invoice.company_owner") }}:
+                          </span>
                           <b-input-group
                             class="input-group invoice-edit-input-group"
                           >
@@ -226,7 +240,9 @@
                           v-if="supplierVat == 'true'"
                           class="d-flex align-items-center mb-1"
                         >
-                          <span class="title mr-1">  {{  $t('add_invoice.company_vat') }}: </span>
+                          <span class="title mr-1">
+                            {{ $t("add_invoice.company_vat") }}:
+                          </span>
                           <validation-provider
                             #default="{ errors }"
                             name="supplierVatNumber"
@@ -247,7 +263,7 @@
                         </div>
                         <div class="d-flex align-items-center mb-1">
                           <span class="mr-1">
-                            {{  $t('add_invoice.vat') }}:
+                            {{ $t("add_invoice.vat") }}:
                           </span>
                           <b-form-checkbox
                             v-model="supplierVat"
@@ -256,10 +272,10 @@
                             switch
                           >
                             <span class="switch-icon-left">
-                              {{  $t('add_invoice.yes') }}
+                              {{ $t("add_invoice.yes") }}
                             </span>
                             <span class="switch-icon-right">
-                              {{  $t('add_invoice.no') }}
+                              {{ $t("add_invoice.no") }}
                             </span>
                           </b-form-checkbox>
                         </div>
@@ -272,7 +288,7 @@
                       <b-card-header
                         class="justify-content-center invoice-header mb-1"
                       >
-                        <h5 class="m-0">{{  $t('add_invoice.recipient') }}</h5>
+                        <h5 class="m-0">{{ $t("add_invoice.recipient") }}</h5>
                       </b-card-header>
                       <b-card-body class="invoice-body">
                         <div
@@ -289,12 +305,12 @@
                           <span
                             v-if="AccountTypeOption == 'company'"
                             class="title mr-1"
-                            >{{  $t('companies.company_name') }}:</span
+                            >{{ $t("companies.company_name") }}:</span
                           >
                           <span
                             v-if="AccountTypeOption == 'person'"
                             class="title mr-1"
-                            >{{  $t('add_invoice.person_name') }}:</span
+                            >{{ $t("add_invoice.person_name") }}:</span
                           >
                           <b-input-group
                             class="input-group invoice-edit-input-group"
@@ -354,12 +370,12 @@
                           <span
                             class="title mr-1"
                             v-if="AccountTypeOption == 'company'"
-                            >{{  $t('add_invoice.company_address') }}:</span
+                            >{{ $t("add_invoice.company_address") }}:</span
                           >
                           <span
                             class="title mr-1"
                             v-if="AccountTypeOption == 'person'"
-                            >{{  $t('add_invoice.person_address') }}:</span
+                            >{{ $t("add_invoice.person_address") }}:</span
                           >
                           <b-input-group
                             class="input-group invoice-edit-input-group"
@@ -387,12 +403,12 @@
                           <span
                             class="title mr-1"
                             v-if="AccountTypeOption == 'company'"
-                            >{{  $t('add_invoice.company_id_no') }}:</span
+                            >{{ $t("add_invoice.company_id_no") }}:</span
                           >
                           <span
                             class="title mr-1"
                             v-if="AccountTypeOption == 'person'"
-                            >{{  $t('add_invoice.person_id_no') }}:</span
+                            >{{ $t("add_invoice.person_id_no") }}:</span
                           >
                           <b-input-group
                             class="input-group invoice-edit-input-group"
@@ -456,7 +472,9 @@
                           v-if="AccountTypeOption == 'company'"
                           class="d-flex align-items-center mb-1"
                         >
-                          <span class="title mr-1">{{  $t('add_invoice.company_owner') }}: </span>
+                          <span class="title mr-1"
+                            >{{ $t("add_invoice.company_owner") }}:
+                          </span>
                           <b-input-group
                             class="input-group invoice-edit-input-group"
                           >
@@ -484,21 +502,23 @@
                           "
                           class="d-flex align-items-center mb-1"
                         >
-                          <span class="title mr-1">  {{  $t('add_invoice.company_vat') }}: </span>
+                          <span class="title mr-1">
+                            {{ $t("add_invoice.company_vat") }}:
+                          </span>
                           <validation-provider
                             #default="{ errors }"
                             name="recipientVatNumber"
                             rules="required"
                           >
                             <b-input-group
-                            class="input-group invoice-edit-input-group"
-                          >
-                            <b-form-input
-                              v-model="
-                                invoiceData.recipientCompany.companyVatEic
-                              "
-                              autocomplete="off"
-                            />
+                              class="input-group invoice-edit-input-group"
+                            >
+                              <b-form-input
+                                v-model="
+                                  invoiceData.recipientCompany.companyVatEic
+                                "
+                                autocomplete="off"
+                              />
                             </b-input-group>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
@@ -508,7 +528,7 @@
                           class="d-flex align-items-center mb-1"
                         >
                           <span class="mr-1">
-                            {{  $t('add_invoice.vat') }}:
+                            {{ $t("add_invoice.vat") }}:
                           </span>
                           <b-form-checkbox
                             v-model="recipientVat"
@@ -517,10 +537,10 @@
                             switch
                           >
                             <span class="switch-icon-left">
-                              {{  $t('add_invoice.yes') }}
+                              {{ $t("add_invoice.yes") }}
                             </span>
                             <span class="switch-icon-right">
-                              {{  $t('add_invoice.no') }}
+                              {{ $t("add_invoice.no") }}
                             </span>
                           </b-form-checkbox>
                         </div>
@@ -529,45 +549,49 @@
                   </div>
                 </div>
               </div>
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <b-card
-                  no-body
-                  class="invoice-preview date-issued mb-0 ml-0"
-                >
-                  <b-card-header class="justify-content-end"> 
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <b-card no-body class="invoice-preview date-issued mb-0 ml-0">
+                  <b-card-header class="justify-content-end">
                     <div class="mt-md-0 mt-2">
                       <div class="d-flex align-items-center mb-0">
-                        <span class="title mr-1"> {{$t('company_invoices.transaction_type')}}: </span>
+                        <span class="title mr-1">
+                          {{ $t("company_invoices.transaction_type") }}:
+                        </span>
                         <validation-provider
-                        #default="{ errors }"
-                        name="transectionType"
-                        rules="required"
-                      >
-                        
-                        <b-form-select
-                            v-model="invoiceData.transactionType"
-                          >
-                          <b-form-select-option value="EXPENSE">{{$t('company_invoices.EXPENSE')}}</b-form-select-option>
-                        <b-form-select-option value="INCOME">{{$t('company_invoices.INCOME')}}</b-form-select-option>
-                        </b-form-select>
-                        <small class="text-danger">{{ errors[0] }}</small>
-                      </validation-provider>
+                          #default="{ errors }"
+                          name="transectionType"
+                          rules="required"
+                        >
+                          <b-form-select v-model="invoiceData.transactionType">
+                            <b-form-select-option value="EXPENSE">{{
+                              $t("company_invoices.EXPENSE")
+                            }}</b-form-select-option>
+                            <b-form-select-option value="INCOME">{{
+                              $t("company_invoices.INCOME")
+                            }}</b-form-select-option>
+                          </b-form-select>
+                          <small class="text-danger">{{ errors[0] }}</small>
+                        </validation-provider>
                       </div>
                     </div>
                   </b-card-header>
                 </b-card>
                 <b-form-checkbox
                   v-model="InvoiceTypeOptionToggleValue"
-                  @change="InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)"
+                  @change="
+                    InvoiceTypeOptionToggle(InvoiceTypeOptionToggleValue)
+                  "
                   class="custom-control-primary custom-switch-btn-2 flex-1 text-center"
                   name="AccountTypeOptionToggle"
                   switch
                 >
                   <span class="switch-icon-left text-uppercase">
-                    {{  $t('add_invoice.PROFORMA') }}
+                    {{ $t("add_invoice.PROFORMA") }}
                   </span>
                   <span class="switch-icon-right text-uppercase">
-                    {{  $t('add_invoice.ORIGINAL') }}
+                    {{ $t("add_invoice.ORIGINAL") }}
                   </span>
                 </b-form-checkbox>
                 <b-form-checkbox
@@ -578,17 +602,19 @@
                   switch
                 >
                   <span class="switch-icon-left text-uppercase">
-                    {{  $t('add_invoice.goods') }}
+                    {{ $t("add_invoice.goods") }}
                   </span>
                   <span class="switch-icon-right text-uppercase">
-                    {{  $t('add_invoice.service') }}
+                    {{ $t("add_invoice.service") }}
                   </span>
                 </b-form-checkbox>
                 <b-card no-body class="invoice-preview date-issued mb-0">
                   <b-card-header class="justify-content-end">
                     <div class="mt-md-0 mt-2">
                       <div class="d-flex align-items-center mb-0">
-                        <span class="title mr-1"> {{  $t('add_invoice.date') }}: </span>
+                        <span class="title mr-1">
+                          {{ $t("add_invoice.date") }}:
+                        </span>
                         <validation-provider
                           #default="{ errors }"
                           name="dateIssued"
@@ -606,57 +632,71 @@
                 </b-card>
               </div>
 
-              <b-card no-body class="invoice-add-card mb-1">           
-              <!-- Items Section -->
+              <b-card no-body class="invoice-add-card mb-1">
+                <!-- Items Section -->
                 <b-card-body class="invoice-padding form-item-section p-0">
-                  <div             
+                  <div
                     ref="form"
                     class="repeater-form h-auto border transaction-container border-1 border-primary"
                     :style="{ height: trHeight }"
                   >
-                    <b-row
-                      ref="row"
-                      class="pb-0 m-0"
-                    >
+                    <b-row ref="row" class="pb-0 m-0">
                       <!-- Item Form -->
                       <!-- ? This will be in loop => So consider below markup for single item -->
                       <b-col cols="12" class="p-0 border border-0">
                         <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
-                        <div class="d-none d-lg-flex bg-primary p-custom text-white">
-                          <b-row class="flex-grow-1 px-1 invoice-add-transections">
+                        <div
+                          class="d-none d-lg-flex bg-primary p-custom text-white"
+                        >
+                          <b-row
+                            class="flex-grow-1 px-1 invoice-add-transections"
+                          >
                             <!-- Single Item Form Headers -->
-                            <b-col cols="12" lg="1"> {{  $t('add_invoice.s_no') }} </b-col>
-                          <b-col cols="12" lg="4"> {{  $t('add_invoice.item_service') }} </b-col>
-                          <b-col cols="12" lg="1"> {{  $t('add_invoice.qty') }} </b-col>
-                          <b-col cols="12" lg="1"> {{  $t('add_invoice.measure') }} </b-col>
-                          <b-col cols="12" lg="2"> {{  $t('add_invoice.single_price') }} </b-col>
-                          <b-col cols="12" lg="1"> {{  $t('add_invoice.currency') }} </b-col>
-                          <b-col cols="12" lg="2"> {{  $t('add_invoice.total_price') }} </b-col>
+                            <b-col cols="12" lg="1">
+                              {{ $t("add_invoice.s_no") }}
+                            </b-col>
+                            <b-col cols="12" lg="4">
+                              {{ $t("add_invoice.item_service") }}
+                            </b-col>
+                            <b-col cols="12" lg="1">
+                              {{ $t("add_invoice.qty") }}
+                            </b-col>
+                            <b-col cols="12" lg="1">
+                              {{ $t("add_invoice.measure") }}
+                            </b-col>
+                            <b-col cols="12" lg="2">
+                              {{ $t("add_invoice.single_price") }}
+                            </b-col>
+                            <b-col cols="12" lg="1">
+                              {{ $t("add_invoice.currency") }}
+                            </b-col>
+                            <b-col cols="12" lg="2">
+                              {{ $t("add_invoice.total_price") }}
+                            </b-col>
                           </b-row>
                           <div class="form-item-action-col" />
                         </div>
 
                         <!-- Form Input Fields OR content inside bordered area  -->
                         <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
-                        <div 
+                        <div
                           v-for="(item, index) in invoiceData.transactions"
                           :key="index"
                           class="d-flex px-custom"
                         >
-                          <b-row class="flex-grow-1 py-1 px-1 invoice-add-transections">
+                          <b-row
+                            class="flex-grow-1 py-1 px-1 invoice-add-transections"
+                          >
                             <!-- Single Item Form Headers -->
                             <b-col cols="12" lg="1">
-                              <label class="d-inline d-lg-none"
-                                >No.</label
-                              >
-                              
+                              <label class="d-inline d-lg-none">No.</label>
+
                               <b-form-input
-                                :value="index+1"
+                                :value="index + 1"
                                 type="text"
                                 class="mb-0 text-left"
                                 disabled
                               />
-                              
                             </b-col>
 
                             <b-col cols="12" lg="4">
@@ -676,7 +716,9 @@
                                   type="text"
                                   class="mb-0"
                                 />
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </b-col>
                             <b-col cols="12" lg="1">
@@ -691,13 +733,13 @@
                                   type="number"
                                   class="mb-0"
                                 />
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </b-col>
                             <b-col cols="12" lg="1">
-                              <label class="d-inline d-lg-none"
-                                >Measure</label
-                              >
+                              <label class="d-inline d-lg-none">Measure</label>
                               <validation-provider
                                 #default="{ errors }"
                                 name="transectionMeasurement"
@@ -708,7 +750,9 @@
                                   type="text"
                                   class="mb-0"
                                 />
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </b-col>
                             <b-col cols="12" lg="2">
@@ -735,7 +779,9 @@
                                     placeholder="0.00"
                                   />
                                 </b-input-group>
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </b-col>
                             <b-col cols="12" lg="1">
@@ -745,13 +791,14 @@
                                 name="transectionCurrency"
                                 rules="required"
                               >
-                                
                                 <b-form-select
-                                    v-model="invoiceData.currency"
-                                    :options="currencyOptions"
-                                  >
+                                  v-model="invoiceData.currency"
+                                  :options="currencyOptions"
+                                >
                                 </b-form-select>
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </b-col>
                             <b-col cols="12" lg="2">
@@ -771,12 +818,19 @@
                                   </b-input-group-prepend>
 
                                   <b-form-input
-                                    :value="(item.singleAmountTransaction * item.quantity).toFixed(2)"
+                                    :value="
+                                      (
+                                        item.singleAmountTransaction *
+                                        item.quantity
+                                      ).toFixed(2)
+                                    "
                                     disabled
                                     class="mb-0"
                                   />
                                 </b-input-group>
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </b-col>
                           </b-row>
@@ -800,27 +854,26 @@
                         </div>
                       </b-col>
                     </b-row>
-                  </div>             
+                  </div>
                 </b-card-body>
               </b-card>
               <b-button
-                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                    size="sm"
-                    variant="primary"
-                    @click="addNewItemInItemForm"
-                    class="mb-2"
-                  >
-                  {{  $t('add_invoice.add_item') }}
+                v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                size="sm"
+                variant="primary"
+                @click="addNewItemInItemForm"
+                class="mb-2"
+              >
+                {{ $t("add_invoice.add_item") }}
               </b-button>
-              
-              <b-card no-body class="invoice-add-card mb-1">  
+
+              <b-card no-body class="invoice-add-card mb-1">
                 <b-card-body class="invoice-padding form-item-section p-0">
-                  <b-row class="pb-0 m-0 border transaction-container border-1 border-primary">
+                  <b-row
+                    class="pb-0 m-0 border transaction-container border-1 border-primary"
+                  >
                     <!-- Col: Sales Persion -->
-                    <b-col
-                      cols="12"
-                      class="border border-0 row m-0 py-2"
-                    >
+                    <b-col cols="12" class="border border-0 row m-0 py-2">
                       <b-col
                         cols="12"
                         md="7"
@@ -828,9 +881,9 @@
                         order="2"
                         order-md="1"
                       >
-                      <h1 class="invoiceTypeHeading text-uppercase">
-                        {{ $t('add_invoice.'+invoiceData.invoiceType) }}
-                      </h1>
+                        <h1 class="invoiceTypeHeading text-uppercase">
+                          {{ $t("add_invoice." + invoiceData.invoiceType) }}
+                        </h1>
                       </b-col>
 
                       <!-- Col: Total -->
@@ -843,7 +896,9 @@
                       >
                         <div class="invoice-total-wrapper">
                           <div class="invoice-total-item">
-                            <p class="invoice-total-title">{{  $t('add_invoice.total_price_non_vat') }}:</p>
+                            <p class="invoice-total-title">
+                              {{ $t("add_invoice.total_price_non_vat") }}:
+                            </p>
                             <p class="invoice-total-amount">
                               <validation-provider
                                 #default="{ errors }"
@@ -858,16 +913,24 @@
                                   </b-input-group-prepend>
 
                                   <b-form-input
-                                    :value="amountNonVat(invoiceData.transactions) ? amountNonVat(invoiceData.transactions) : 0"
+                                    :value="
+                                      amountNonVat(invoiceData.transactions)
+                                        ? amountNonVat(invoiceData.transactions)
+                                        : 0
+                                    "
                                     disabled
                                   />
                                 </b-input-group>
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </p>
                           </div>
                           <div class="invoice-total-item">
-                            <p class="invoice-total-title">{{ $t('add_invoice.vat') }}:</p>
+                            <p class="invoice-total-title">
+                              {{ $t("add_invoice.vat") }}:
+                            </p>
                             <p class="invoice-total-amount">
                               <validation-provider
                                 #default="{ errors }"
@@ -893,12 +956,16 @@
                                     <span>%</span>
                                   </b-input-group-append>
                                 </b-input-group>
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </p>
                           </div>
                           <div class="invoice-total-item">
-                            <p class="invoice-total-title">{{  $t('company_invoices.vat_amount') }}:</p>
+                            <p class="invoice-total-title">
+                              {{ $t("company_invoices.vat_amount") }}:
+                            </p>
                             <p class="invoice-total-amount">
                               <validation-provider
                                 #default="{ errors }"
@@ -911,18 +978,27 @@
                                   <b-input-group-prepend is-text>
                                     <span>{{ invoiceData.currency }}</span>
                                   </b-input-group-prepend>
-                                  <b-form-input                    
-                                    :value="vatAmount(invoiceData.transactions,invoiceData.vatPercent)"
+                                  <b-form-input
+                                    :value="
+                                      vatAmount(
+                                        invoiceData.transactions,
+                                        invoiceData.vatPercent
+                                      )
+                                    "
                                     type="number"
                                     disabled
                                   />
                                 </b-input-group>
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </p>
                           </div>
                           <div class="invoice-total-item">
-                            <p class="invoice-total-title">{{  $t('add_invoice.discount_percent') }}:</p>
+                            <p class="invoice-total-title">
+                              {{ $t("add_invoice.discount_percent") }}:
+                            </p>
                             <p class="invoice-total-amount">
                               <validation-provider
                                 #default="{ errors }"
@@ -948,12 +1024,16 @@
                                     <span>%</span>
                                   </b-input-group-append>
                                 </b-input-group>
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </p>
                           </div>
                           <div class="invoice-total-item">
-                            <p class="invoice-total-title">{{  $t('add_invoice.discount_sum') }}:</p>
+                            <p class="invoice-total-title">
+                              {{ $t("add_invoice.discount_sum") }}:
+                            </p>
                             <p class="invoice-total-amount">
                               <validation-provider
                                 #default="{ errors }"
@@ -984,12 +1064,18 @@
                                     disabled
                                   />
                                 </b-input-group>
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </p>
                           </div>
                           <div class="invoice-total-item">
-                            <p class="invoice-total-title font-weight-bolder custom-font">{{  $t('add_invoice.total_price') }}:</p>
+                            <p
+                              class="invoice-total-title font-weight-bolder custom-font"
+                            >
+                              {{ $t("add_invoice.total_price") }}:
+                            </p>
                             <p class="invoice-total-amount">
                               <validation-provider
                                 #default="{ errors }"
@@ -1021,7 +1107,9 @@
                                     class="opacity-1 font-weight-bolder custom-font"
                                   />
                                 </b-input-group>
-                                <small class="text-danger">{{ errors[0] }}</small>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
                               </validation-provider>
                             </p>
                           </div>
@@ -1047,7 +1135,7 @@
                   :disabled="loading"
                 >
                   <b-spinner v-if="loading" small variant="light" />
-                  {{  $t('add_invoice.preview') }}
+                  {{ $t("add_invoice.preview") }}
                 </b-button>
 
                 <!-- Button: Print -->
@@ -1059,7 +1147,7 @@
                   type="button"
                   @click="clearForm"
                 >
-                {{  $t('add_invoice.clear') }}
+                  {{ $t("add_invoice.clear") }}
                 </b-button>
               </b-card>
             </b-col>
@@ -1092,15 +1180,13 @@ import {
   VBToggle,
   BSpinner,
   BFormRadio,
-  BListGroup, 
+  BListGroup,
   BListGroupItem,
-  BFormSelectOption
+  BFormSelectOption,
 } from "bootstrap-vue";
 import navbarAds from "./navbarAds.vue";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import {
-  required, email, confirmed, password,
-} from '@validations'
+import { required, email, confirmed, password } from "@validations";
 import Logo from "@core/layouts/components/Logo.vue";
 import { ref, onUnmounted } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
@@ -1110,7 +1196,7 @@ import vSelect from "vue-select";
 import flatPickr from "vue-flatpickr-component";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
-import router from '@/router'
+import router from "@/router";
 export default {
   components: {
     BRow,
@@ -1137,16 +1223,19 @@ export default {
     ValidationProvider,
     ValidationObserver,
     BFormRadio,
-    BListGroup, 
+    BListGroup,
     BListGroupItem,
     navbarAds,
-    BFormSelectOption
+    BFormSelectOption,
   },
   data() {
     return {
       knowledgeBaseSearchQuery: "",
       loading: false,
-      required, email, confirmed, password,
+      required,
+      email,
+      confirmed,
+      password,
     };
   },
   directives: {
@@ -1179,59 +1268,65 @@ export default {
         this.trSetHeight(this.$refs.form.scrollHeight);
       });
     },
-    invoicePreview(invoiceData,AccountTypeOption) {
+    invoicePreview(invoiceData, AccountTypeOption) {
       this.$refs.previewForm.validate().then((success) => {
-          if (success) {
-      if(AccountTypeOption == 'person'){
-         invoiceData.recipientCompany.companName = invoiceData.recipientCompany.companyOwnerName
-         invoiceData.recipientCompany.companyVatEic = ''
-      }
-      
-      invoiceData?.transactions?.map(item =>{
-        item.transactionTotalAmountNonVat = (parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)).toFixed(2)
-        return item
-      })
+        if (success) {
+          if (AccountTypeOption == "person") {
+            invoiceData.recipientCompany.companName =
+              invoiceData.recipientCompany.companyOwnerName;
+            invoiceData.recipientCompany.companyVatEic = "";
+          }
 
-      return this.$router.push({
-          name: "free-digital-invoices-preview",
-          params: {
+          invoiceData?.transactions?.map((item) => {
+            item.transactionTotalAmountNonVat = (
+              parseFloat(item.singleAmountTransaction) *
+              parseFloat(item.quantity)
+            ).toFixed(2);
+            return item;
+          });
+
+          return this.$router.push({
+            name: "free-digital-invoices-preview",
+            params: {
               invoiceData: invoiceData,
-          },
+            },
+          });
+        }
       });
-    }
-      })
-    }
+    },
   },
   setup() {
+    useJwt
+      .login({
+        grant_type: "password",
+        username: "amazon_6011_@abv.bg",
+        password: "1234",
+      })
+      .then((response) => {
+        useJwt.setToken(response.data.access_token);
+        useJwt.setRefreshToken(response.data.refresh_token);
+      })
+      .catch((error) => {
+        //
+      });
 
-    useJwt.login({
-      grant_type: "password",
-      username: 'amazon_6011_@abv.bg',
-      password: '1234'
-    }).then(response => {
-      useJwt.setToken(response.data.access_token)
-      useJwt.setRefreshToken(response.data.refresh_token)
-    }).catch(error => {
-      // 
-    })
-  
-    var AccountTypeOption = ref("company")
-    var AccountTypeOptionToggleValue = false
-    
-    let AccountTypeOptionToggle = (value)=>{
-      if(value){
-        AccountTypeOption.value = "person"
-      } else{
-        AccountTypeOption.value = "company"
+    var AccountTypeOption = ref("company");
+    var AccountTypeOptionToggleValue = false;
+
+    let AccountTypeOptionToggle = (value) => {
+      if (value) {
+        AccountTypeOption.value = "person";
+      } else {
+        AccountTypeOption.value = "company";
       }
-    }
-    
+    };
+
     const itemFormBlankItem = {
       serviceOrItemDescription: "",
-      singleAmountTransaction: 0.00,
+      singleAmountTransaction: 0.0,
       quantity: 0,
       measurement: "",
-      transactionTotalAmountNonVat: ""
+      transactionTotalAmountNonVat: "",
     };
 
     var invoiceData = ref({
@@ -1253,7 +1348,7 @@ export default {
       },
       currency: "лв.",
       amountNonVat: "",
-      vatAmount:"",
+      vatAmount: "",
       vatPercent: 20,
       tradeDiscountPercent: 0,
       tradeDiscountAmount: "",
@@ -1265,75 +1360,99 @@ export default {
       invoiceType: "ORIGINAL",
       saleType: "SERVICE",
       documentType: "INVOICE",
-      verified: true
+      verified: true,
     });
 
-    var supplierVat = ref(false)
-    var recipientVat = ref(false)
+    var supplierVat = ref(false);
+    var recipientVat = ref(false);
 
-    invoiceData.value = router?.currentRoute?.params?.invoiceData ? router.currentRoute.params.invoiceData : invoiceData.value
-    invoiceData.value.currency = invoiceData?.value?.currency?.toLowerCase().trim() == 'lv' ? "лв." : invoiceData?.value?.currency?.toLowerCase().trim() == 'bgn' ? "лв." : invoiceData.value.currency
-    invoiceData.value.verified = true
-    invoiceData.value.tradeDiscountPercent = invoiceData?.value?.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
-    invoiceData.value.vatPercent = invoiceData?.value?.vatPercent ? invoiceData.value.vatPercent : 20
-    supplierVat.value = invoiceData?.value?.supplierCompany?.companyVatEic ? true : false
-    recipientVat.value = invoiceData?.value?.recipientCompany?.companyVatEic ? true : false
-        
-    invoiceData?.value?.transactions?.map((item,index)=>{
-        item.index = index + 1
-        return item
-    })
-    
-    const currencyOptions =  [
-      { value: 'лв.', text: 'лв.' },
-      { value: '$', text: '$' },
-      { value: '€', text: '€' },
-      { value: '£', text: '£' },
-    ]
+    invoiceData.value = router?.currentRoute?.params?.invoiceData
+      ? router.currentRoute.params.invoiceData
+      : invoiceData.value;
+    invoiceData.value.currency =
+      invoiceData?.value?.currency?.toLowerCase().trim() == "lv"
+        ? "лв."
+        : invoiceData?.value?.currency?.toLowerCase().trim() == "bgn"
+        ? "лв."
+        : invoiceData.value.currency;
+    invoiceData.value.verified = true;
+    invoiceData.value.tradeDiscountPercent = invoiceData?.value
+      ?.tradeDiscountPercent
+      ? invoiceData.value.tradeDiscountPercent
+      : 0;
+    invoiceData.value.vatPercent = invoiceData?.value?.vatPercent
+      ? invoiceData.value.vatPercent
+      : 20;
+    supplierVat.value = invoiceData?.value?.supplierCompany?.companyVatEic
+      ? true
+      : false;
+    recipientVat.value = invoiceData?.value?.recipientCompany?.companyVatEic
+      ? true
+      : false;
+
+    invoiceData?.value?.transactions?.map((item, index) => {
+      item.index = index + 1;
+      return item;
+    });
+
+    const currencyOptions = [
+      { value: "лв.", text: "лв." },
+      { value: "$", text: "$" },
+      { value: "€", text: "€" },
+      { value: "£", text: "£" },
+    ];
     const transectionOptions = [
-      { value: 'INCOME', text: 'INCOME' },
-      { value: 'EXPENSE', text: 'EXPENSE' },
-    ]
-    var InvoiceTypeOptionToggleValue = invoiceData.value.invoiceType == "PROFORMA" ? true : false
-    
-    let InvoiceTypeOptionToggle = (value)=>{
-      if(value){
-        invoiceData.value.invoiceType = "PROFORMA"
-      } else{
-        invoiceData.value.invoiceType = "ORIGINAL"
-      }
-    }
+      { value: "INCOME", text: "INCOME" },
+      { value: "EXPENSE", text: "EXPENSE" },
+    ];
+    var InvoiceTypeOptionToggleValue =
+      invoiceData.value.invoiceType == "PROFORMA" ? true : false;
 
-    var saleTypeOptionToggleValue = invoiceData.value.saleType == "GOODS" ? true : false
-    
-    let saleTypeOptionToggle = (value)=>{
-      if(value){
-        invoiceData.value.saleType = "PROFORMA"
-      } else{
-        invoiceData.value.saleType = "ORIGINAL"
+    let InvoiceTypeOptionToggle = (value) => {
+      if (value) {
+        invoiceData.value.invoiceType = "PROFORMA";
+      } else {
+        invoiceData.value.invoiceType = "ORIGINAL";
       }
-    }
+    };
 
-    const vatAmount = (item, vatPercent)=> {
+    var saleTypeOptionToggleValue =
+      invoiceData.value.saleType == "GOODS" ? true : false;
+
+    let saleTypeOptionToggle = (value) => {
+      if (value) {
+        invoiceData.value.saleType = "PROFORMA";
+      } else {
+        invoiceData.value.saleType = "ORIGINAL";
+      }
+    };
+
+    const vatAmount = (item, vatPercent) => {
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
-      let totalVatAmount = parseFloat(amountNonVat) * (parseFloat(vatPercent)/100)
+      let totalVatAmount =
+        parseFloat(amountNonVat) * (parseFloat(vatPercent) / 100);
       invoiceData.value.vatAmount = parseFloat(totalVatAmount).toFixed(2);
       return parseFloat(totalVatAmount).toFixed(2);
-    }
+    };
 
-    const amountNonVat = (item)=> {
+    const amountNonVat = (item) => {
       let totalAmountNonVat = item.reduce((acc, ele) => {
-        return acc + parseFloat(ele.quantity) * parseFloat(ele.singleAmountTransaction);
+        return (
+          acc +
+          parseFloat(ele.quantity) * parseFloat(ele.singleAmountTransaction)
+        );
       }, 0);
-      invoiceData.value.amountNonVat = parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
+      invoiceData.value.amountNonVat = parseFloat(
+        totalAmountNonVat ? totalAmountNonVat : 0
+      ).toFixed(2);
       return parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
-    }
+    };
 
-    const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent)=> {
-      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
-      vatPercent = vatPercent ? vatPercent : 0
+    const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent) => {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0;
+      vatPercent = vatPercent ? vatPercent : 0;
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
@@ -1341,13 +1460,15 @@ export default {
         (parseFloat(tradeDiscountPercent) / 100) *
         (parseFloat(amountNonVat) +
           (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat));
-      invoiceData.value.tradeDiscountAmount = parseFloat(totaltradeDiscountAmount).toFixed(2);
+      invoiceData.value.tradeDiscountAmount = parseFloat(
+        totaltradeDiscountAmount
+      ).toFixed(2);
       return parseFloat(totaltradeDiscountAmount).toFixed(2);
-    }
+    };
 
-    const totalPrice = (item, vatPercent, tradeDiscountPercent)=> {
-      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
-      vatPercent = vatPercent ? vatPercent : 0
+    const totalPrice = (item, vatPercent, tradeDiscountPercent) => {
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0;
+      vatPercent = vatPercent ? vatPercent : 0;
       let amountNonVat = item.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
       }, 0);
@@ -1362,7 +1483,7 @@ export default {
         tradeDiscountAmount;
       invoiceData.value.totalAmount = parseFloat(totalPrice).toFixed(2);
       return parseFloat(totalPrice).toFixed(2);
-    }
+    };
 
     const clearForm = () => {
       invoiceData.value = {
@@ -1384,7 +1505,7 @@ export default {
         },
         currency: invoiceData.value.currency,
         amountNonVat: "",
-        vatAmount:"",
+        vatAmount: "",
         vatPercent: 20,
         tradeDiscountPercent: 0,
         tradeDiscountAmount: "",
@@ -1396,283 +1517,272 @@ export default {
         invoiceType: invoiceData.value.invoiceType,
         saleType: invoiceData.value.saleType,
         documentType: "INVOICE",
-        verified: invoiceData.value.verified
-      }
-    }
-    var datalist = ref([])
-    var showSuggestions = ref(false)
-    
-    const SearchCompanyName = (companyName)=>{   
-      if(companyName.length > 0){
-        let token = useJwt.getToken()
+        verified: invoiceData.value.verified,
+      };
+    };
+    var datalist = ref([]);
+    var showSuggestions = ref(false);
+
+    const SearchCompanyName = (companyName) => {
+      if (companyName.length > 0) {
+        let token = useJwt.getToken();
         useJwt
           .SearchCompanyName(token, { companyName })
           .then((response) => {
-            if(response?.data != undefined || response?.data.length != 0 ){
-              showSuggestions.value = true
+            if (response?.data != undefined || response?.data.length != 0) {
+              showSuggestions.value = true;
+            } else {
+              showSuggestions.value = false;
             }
-            else{
-              showSuggestions.value = false
-            }
-            datalist.value = response?.data
+            datalist.value = response?.data;
           })
           .catch((error) => {
-            console.log("error",error)
+            console.log("error", error);
           });
-      } else{
-        showSuggestions.value  = false
+      } else {
+        showSuggestions.value = false;
       }
-    }
+    };
 
-    const autoCompletefn = (item) =>{      
-      if(item.company_name){
-        invoiceData.value.supplierCompany.companName = item.company_name
+    const autoCompletefn = (item) => {
+      if (item.company_name) {
+        invoiceData.value.supplierCompany.companName = item.company_name;
       }
-      if(item.address){
-        invoiceData.value.supplierCompany.companyAddress = item.address
+      if (item.address) {
+        invoiceData.value.supplierCompany.companyAddress = item.address;
       }
-      if(item.eic){
-        invoiceData.value.supplierCompany.companyEic = item.eic
+      if (item.eic) {
+        invoiceData.value.supplierCompany.companyEic = item.eic;
       }
-      if( item.managers && item.managers[0]){
-        let managers = ""
-        item?.managers?.map((item,index)=>{
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.supplierCompany.companyOwnerName = managers
+      if (item.managers && item.managers[0]) {
+        let managers = "";
+        item?.managers?.map((item, index) => {
+          managers = index == 0 ? managers + item : managers + ", " + item;
+        });
+        invoiceData.value.supplierCompany.companyOwnerName = managers;
       }
-      showSuggestions.value  = false
-      datalist.value = []
-    }
+      showSuggestions.value = false;
+      datalist.value = [];
+    };
 
     const hideSuggestion = () => {
       setTimeout(() => {
-        if(showSuggestions.value){
-         showSuggestions.value = false
+        if (showSuggestions.value) {
+          showSuggestions.value = false;
         }
       }, 100);
-    }
+    };
 
     const ShowSuggestion = (items) => {
-      if(items != undefined || items.length != 0 ){
-        showSuggestions.value = true
+      if (items != undefined || items.length != 0) {
+        showSuggestions.value = true;
+      } else {
+        showSuggestions.value = false;
       }
-      else{
-        showSuggestions.value = false
-      }
-    }
+    };
 
-    var datalistEic = ref([])
-    var showSuggestionsEic = ref(false)
-    
-    const SearchCompanyEic = (companyEic)=>{   
-      if(companyEic){
-        let token = useJwt.getToken()
+    var datalistEic = ref([]);
+    var showSuggestionsEic = ref(false);
+
+    const SearchCompanyEic = (companyEic) => {
+      if (companyEic) {
+        let token = useJwt.getToken();
         useJwt
           .SearchCompanyEic(token, companyEic)
           .then((response) => {
-            if(response?.data != undefined || response?.data.length != 0 ){
-              showSuggestionsEic.value = true
+            if (response?.data != undefined || response?.data.length != 0) {
+              showSuggestionsEic.value = true;
+            } else {
+              showSuggestionsEic.value = false;
             }
-            else{
-              showSuggestionsEic.value = false
-            }
-            datalistEic.value = response?.data
+            datalistEic.value = response?.data;
           })
           .catch((error) => {
-            console.log("error",error)
+            console.log("error", error);
           });
-      } else{
-        showSuggestionsEic.value  = false
+      } else {
+        showSuggestionsEic.value = false;
       }
-    }
+    };
 
-    const autoCompletefnEic = (item) =>{      
-      if(item.company_name){
-        invoiceData.value.supplierCompany.companName = item.company_name
+    const autoCompletefnEic = (item) => {
+      if (item.company_name) {
+        invoiceData.value.supplierCompany.companName = item.company_name;
       }
-      if(item.address){
-        invoiceData.value.supplierCompany.companyAddress = item.address
+      if (item.address) {
+        invoiceData.value.supplierCompany.companyAddress = item.address;
       }
-      if(item.eic){
-        invoiceData.value.supplierCompany.companyEic = item.eic
+      if (item.eic) {
+        invoiceData.value.supplierCompany.companyEic = item.eic;
       }
-      if( item.managers && item.managers[0]){
-        let managers = ""
-        item?.managers?.map((item,index)=>{
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.supplierCompany.companyOwnerName = managers
+      if (item.managers && item.managers[0]) {
+        let managers = "";
+        item?.managers?.map((item, index) => {
+          managers = index == 0 ? managers + item : managers + ", " + item;
+        });
+        invoiceData.value.supplierCompany.companyOwnerName = managers;
       }
-      showSuggestionsEic.value  = false
-      datalistEic.value = []
-    }
+      showSuggestionsEic.value = false;
+      datalistEic.value = [];
+    };
 
     const hideSuggestionEic = () => {
       setTimeout(() => {
-        if(showSuggestionsEic.value){
-          showSuggestionsEic.value = false
+        if (showSuggestionsEic.value) {
+          showSuggestionsEic.value = false;
         }
       }, 100);
-    }
+    };
 
     const ShowSuggestionEic = (items) => {
-      if(items != undefined || items.length != 0 ){
-        showSuggestionsEic.value = true
+      if (items != undefined || items.length != 0) {
+        showSuggestionsEic.value = true;
+      } else {
+        showSuggestionsEic.value = false;
       }
-      else{
-        showSuggestionsEic.value = false
-      }
-    }
-    
-    var datalistRecipient = ref([])
-    var showSuggestionsRecipient = ref(false)
-    
-    const SearchCompanyNameRecipient = (companyName)=>{   
-      if(companyName.length > 0){
-        let token = useJwt.getToken()
+    };
+
+    var datalistRecipient = ref([]);
+    var showSuggestionsRecipient = ref(false);
+
+    const SearchCompanyNameRecipient = (companyName) => {
+      if (companyName.length > 0) {
+        let token = useJwt.getToken();
         useJwt
           .SearchCompanyName(token, { companyName })
           .then((response) => {
-            if(response?.data != undefined || response?.data.length != 0 ){
-              showSuggestionsRecipient.value = true
+            if (response?.data != undefined || response?.data.length != 0) {
+              showSuggestionsRecipient.value = true;
+            } else {
+              showSuggestionsRecipient.value = false;
             }
-            else{
-              showSuggestionsRecipient.value = false
-            }
-            datalistRecipient.value = response?.data
+            datalistRecipient.value = response?.data;
           })
           .catch((error) => {
-            console.log("error",error)
+            console.log("error", error);
           });
-      } else{
-        showSuggestionsRecipient.value  = false
+      } else {
+        showSuggestionsRecipient.value = false;
       }
-    }
+    };
 
-    const autoCompletefnRecipient = (item) =>{      
-      if(item.company_name){
-        invoiceData.value.recipientCompany.companName = item.company_name
+    const autoCompletefnRecipient = (item) => {
+      if (item.company_name) {
+        invoiceData.value.recipientCompany.companName = item.company_name;
       }
-      if(item.address){
-        invoiceData.value.recipientCompany.companyAddress = item.address
+      if (item.address) {
+        invoiceData.value.recipientCompany.companyAddress = item.address;
       }
-      if(item.eic){
-        invoiceData.value.recipientCompany.companyEic = item.eic
+      if (item.eic) {
+        invoiceData.value.recipientCompany.companyEic = item.eic;
       }
-      if( item.managers && item.managers[0]){
-        let managers = ""
-        item?.managers?.map((item,index)=>{
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.recipientCompany.companyOwnerName = managers
+      if (item.managers && item.managers[0]) {
+        let managers = "";
+        item?.managers?.map((item, index) => {
+          managers = index == 0 ? managers + item : managers + ", " + item;
+        });
+        invoiceData.value.recipientCompany.companyOwnerName = managers;
       }
-      showSuggestionsRecipient.value  = false
-      datalistRecipient.value = []
-    }
+      showSuggestionsRecipient.value = false;
+      datalistRecipient.value = [];
+    };
 
     const hideSuggestionRecipient = () => {
       setTimeout(() => {
-        if(showSuggestionsRecipient.value){
-         showSuggestionsRecipient.value = false
+        if (showSuggestionsRecipient.value) {
+          showSuggestionsRecipient.value = false;
         }
       }, 100);
-    }
+    };
 
     const ShowSuggestionRecipient = (items) => {
-      if(items != undefined || items.length != 0 ){
-        showSuggestionsRecipient.value = true
+      if (items != undefined || items.length != 0) {
+        showSuggestionsRecipient.value = true;
+      } else {
+        showSuggestionsRecipient.value = false;
       }
-      else{
-        showSuggestionsRecipient.value = false
-      }
-    }
+    };
 
-    var datalistEicRecipient = ref([])
-    var showSuggestionsEicRecipient = ref(false)
-    
-    const SearchCompanyEicRecipient = (companyEic)=>{   
-      if(companyEic){
-        let token = useJwt.getToken()
+    var datalistEicRecipient = ref([]);
+    var showSuggestionsEicRecipient = ref(false);
+
+    const SearchCompanyEicRecipient = (companyEic) => {
+      if (companyEic) {
+        let token = useJwt.getToken();
         useJwt
           .SearchCompanyEic(token, companyEic)
           .then((response) => {
-            if(response?.data != undefined || response?.data.length != 0 ){
-              showSuggestionsEicRecipient.value = true
+            if (response?.data != undefined || response?.data.length != 0) {
+              showSuggestionsEicRecipient.value = true;
+            } else {
+              showSuggestionsEicRecipient.value = false;
             }
-            else{
-              showSuggestionsEicRecipient.value = false
-            }
-            datalistEicRecipient.value = response?.data
+            datalistEicRecipient.value = response?.data;
           })
           .catch((error) => {
-            console.log("error",error)
+            console.log("error", error);
           });
-      } else{
-        showSuggestionsEicRecipient.value  = false
+      } else {
+        showSuggestionsEicRecipient.value = false;
       }
-    }
+    };
 
-    const autoCompletefnEicRecipient = (item) =>{      
-      if(item.company_name){
-        invoiceData.value.recipientCompany.companName = item.company_name
+    const autoCompletefnEicRecipient = (item) => {
+      if (item.company_name) {
+        invoiceData.value.recipientCompany.companName = item.company_name;
       }
-      if(item.address){
-        invoiceData.value.recipientCompany.companyAddress = item.address
+      if (item.address) {
+        invoiceData.value.recipientCompany.companyAddress = item.address;
       }
-      if(item.eic){
-        invoiceData.value.recipientCompany.companyEic = item.eic
+      if (item.eic) {
+        invoiceData.value.recipientCompany.companyEic = item.eic;
       }
-      if( item.managers && item.managers[0]){
-        let managers = ""
-        item?.managers?.map((item,index)=>{
-          managers = index == 0 ? managers + item : managers + ", " + item
-        })
-        invoiceData.value.recipientCompany.companyOwnerName = managers
+      if (item.managers && item.managers[0]) {
+        let managers = "";
+        item?.managers?.map((item, index) => {
+          managers = index == 0 ? managers + item : managers + ", " + item;
+        });
+        invoiceData.value.recipientCompany.companyOwnerName = managers;
       }
-      showSuggestionsEicRecipient.value  = false
-      datalistEicRecipient.value = []
-    }
+      showSuggestionsEicRecipient.value = false;
+      datalistEicRecipient.value = [];
+    };
 
     const hideSuggestionEicRecipient = () => {
       setTimeout(() => {
-        if(showSuggestionsEicRecipient.value){
-          showSuggestionsEicRecipient.value = false
+        if (showSuggestionsEicRecipient.value) {
+          showSuggestionsEicRecipient.value = false;
         }
       }, 100);
-    }
+    };
 
     const ShowSuggestionEicRecipient = (items) => {
-      if(items != undefined || items.length != 0 ){
-        showSuggestionsEicRecipient.value = true
+      if (items != undefined || items.length != 0) {
+        showSuggestionsEicRecipient.value = true;
+      } else {
+        showSuggestionsEicRecipient.value = false;
       }
-      else{
-        showSuggestionsEicRecipient.value = false
-      }
-    }
+    };
 
-    
-
-    const clearAll = (type)=>{
-      if(type == 'supplier'){
-        invoiceData.value.supplierCompany =  {
+    const clearAll = (type) => {
+      if (type == "supplier") {
+        invoiceData.value.supplierCompany = {
           companyOwnerName: "",
           companName: "",
           companyEic: "",
           companyVatEic: "",
           companyAddress: "",
-        }
-     
-      } else if(type == 'recipient'){
+        };
+      } else if (type == "recipient") {
         invoiceData.value.recipientCompany = {
           companyOwnerName: "",
           companName: "",
           companyEic: "",
           companyVatEic: "",
           companyAddress: "",
-        }
+        };
       }
-    }
+    };
 
     return {
       AccountTypeOption,
@@ -1717,14 +1827,13 @@ export default {
       hideSuggestionEicRecipient,
       ShowSuggestionEicRecipient,
       clearForm,
-      clearAll
+      clearAll,
     };
   },
 };
 </script>
 
 <style lang="scss">
-
 @import "@core/scss/vue/libs/vue-select.scss";
 @import "@core/scss/vue/libs/vue-flatpicker.scss";
 @import "@core/scss/vue/pages/page-knowledge-base.scss";
@@ -1784,7 +1893,7 @@ export default {
   grid-gap: 20px;
 }
 
-.accountType{
+.accountType {
   display: flex;
   gap: 10px;
   justify-content: end;
@@ -1798,7 +1907,7 @@ export default {
   width: 5rem !important;
   min-width: 5rem !important;
 }
-.input-suggesstions{
+.input-suggesstions {
   position: absolute;
   z-index: 99;
   width: 100%;
@@ -1807,34 +1916,32 @@ export default {
   max-height: 15rem;
   overflow: auto;
 }
-.dark-layout .input-suggesstions{
+.dark-layout .input-suggesstions {
   border-color: #3b4253;
 }
-.input-suggesstions .list-group-item{
+.input-suggesstions .list-group-item {
   border-bottom: 0 !important;
-  border-radius: 0 !important; 
+  border-radius: 0 !important;
   background-color: #f8f8f8 !important;
   cursor: pointer;
 }
-.dark-layout .input-suggesstions .list-group-item{
+.dark-layout .input-suggesstions .list-group-item {
   background-color: #161d31 !important;
 }
- 
 
- 
-.dark-layout .card.invoice-card{
-  border-color: #3b4253!important;
+.dark-layout .card.invoice-card {
+  border-color: #3b4253 !important;
 }
 
-.card-header.invoice-header h5{
+.card-header.invoice-header h5 {
   color: #fff !important;
 }
- 
-.invoice-input-top{
-  width: 16rem; 
+
+.invoice-input-top {
+  width: 16rem;
   max-width: 100%;
 }
-.invoice-input-middle .input-group.invoice-edit-input-group span{
+.invoice-input-middle .input-group.invoice-edit-input-group span {
   width: 100%;
 }
 </style>

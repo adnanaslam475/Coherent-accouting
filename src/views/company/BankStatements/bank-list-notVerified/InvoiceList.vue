@@ -760,7 +760,6 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response, "asdfasdf")
           this.companyPlatform = response.data.exportProperties.platform
         })
         .catch((error) => {

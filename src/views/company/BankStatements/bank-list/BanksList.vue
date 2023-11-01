@@ -600,7 +600,6 @@ export default {
             "Access-Control-Allow-Credentials": true,
           },
         })
-        console.log(response.data.platform, "here is the company info")
         this.platform = response.data.exportProperties.platform
         this.EIC = response.data.companyIdentificationNumber
       } catch (error) {

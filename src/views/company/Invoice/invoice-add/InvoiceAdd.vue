@@ -6439,7 +6439,6 @@ export default {
         },
       })
       .then((response) => {
-        console.log(response, "asdfasdf")
 
         if (response.data.companyCountry == "Bulgaria") {
           companyInBG.value = true
