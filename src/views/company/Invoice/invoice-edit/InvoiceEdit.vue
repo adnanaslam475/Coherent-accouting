@@ -10682,9 +10682,7 @@ export default {
   mounted() {
     this.getAccounts();
   },
-  updated() {
-    console.log("isSyncing", this.isSyncing);
-  },
+
   created() {},
   destroyed() {},
   computed: {
