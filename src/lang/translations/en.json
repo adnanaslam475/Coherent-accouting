@@ -366,6 +366,7 @@
     "dateIssued": "Date Issued"
   },
   "invoice_details": {
+    "published": "Successfully published to Quickbooks",
     "invoiceNumber": "Invoice Number",
     "recipientCompanyName": "Recipient Company Name: {name}",
     "supplierCompanyName": "Supplier Company Name: {name}",
