@@ -10775,7 +10775,7 @@ export default {
     showSingle() {
       this.openLightbox();
     },
-     
+
     openLightbox() {
       this.visible = true;
     },
@@ -11838,7 +11838,6 @@ export default {
 
     async function syncWithQuickBookHandler() {
       this.isSyncing = true;
-      console.log("this..", this.isSyncing,   invoiceData.value);
       try {
         let token = useJwt.getToken();
         const { data } = await useJwt.syncWithQuickBook(
@@ -11847,8 +11846,15 @@ export default {
           router.currentRoute.params.companyId,
           invoiceData.value
         );
-      } catch (e) {
-        console.log("e========", e);
+      } catch (error) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `${error.response?.data?.errorMessage}`,
+            icon: "AlertTriangleIcon",
+            variant: "danger",
+          },
+        });
       } finally {
         this.isSyncing = false;
       }
