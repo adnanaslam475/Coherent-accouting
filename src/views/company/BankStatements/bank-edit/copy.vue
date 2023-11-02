@@ -9283,10 +9283,8 @@ export default {
   methods: {
     checkProcessType(type) {
       let self = this;
-      console.log(type, "this sssss===>");
       if (type == "BANK_TRANSFER") {
         this.isBank = true;
-        console.log(this.invoiceData, "adfdfdddddd");
         this.invoiceData.bankApi.name = self.companyData?.companyBankName;
         this.invoiceData.bankApi.bic = self.companyData?.companyBankBic;
         this.invoiceData.bankApi.iban = self.companyData?.companyBankAccount;

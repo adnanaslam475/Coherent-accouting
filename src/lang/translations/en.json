@@ -315,6 +315,7 @@
     "add_from_file": "Add From File",
     "update_invoice": "Update",
     "Export_invoice": "Export",
+    "Exported_invoice": "Exported",
     "Export_invoicess": "Export",
     "cancel": " Cancel ",
     "start_date": "Start Date",

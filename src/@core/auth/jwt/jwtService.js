@@ -272,7 +272,6 @@ export default class JwtService {
   }
 
   syncWithQuickBook(t, invoiceId, companyId, body) {
-    console.log("bdy=>", body);
     return this.axiosIns.post(
       `${this.jwtConfig.syncwithQuickBookPostEndPoint}/${invoiceId}/${companyId}`,
       body,
@@ -284,6 +283,13 @@ export default class JwtService {
     );
   }
 
+  getSupportedPlatforms(t) {
+    return this.axiosIns.get(`${this.jwtConfig.getSupportedPlatformsEndPoint} `, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+  }
   DeleteCompanyInvoice(token, id) {
     return this.axiosIns.delete(
       `${this.jwtConfig.companyInvoiceDeleteEndpoint}/${id}`

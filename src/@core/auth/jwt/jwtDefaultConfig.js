@@ -56,6 +56,7 @@ export default {
   wrongOldPasswordEndPoint: "/account/api/user/change-password",
   validateVat: "/account/api/company-validate",
   syncwithQuickBookPostEndPoint: "/account/api/qbo-sync-invoice",
+  getSupportedPlatformsEndPoint: "/api/export/get-supported-platforms",
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>
   tokenType: "Bearer",

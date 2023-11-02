@@ -216,7 +216,7 @@
                           </div>
                           <div>
                             {{
-                              companyDetails.exportProperties.platform
+                              companyDetails.exportProperties
                                 ? companyDetails.exportProperties.platform
                                 : ""
                             }}

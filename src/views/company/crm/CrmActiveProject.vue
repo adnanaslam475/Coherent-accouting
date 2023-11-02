@@ -26,7 +26,11 @@
       <template #cell(Country)="data">
         <div>
           <img
-            :src='"@/assets/flags/" + data.item.companyApi.companyIsoAlpha2Country.toLowerCase() + ".png"'
+            :src="
+              '@/assets/flags/' +
+              data.item.companyApi.companyIsoAlpha2Country.toLowerCase() +
+              '.png'
+            "
             style="width: 30px; height: 20px; margin-left: 10px"
           />
         </div>
@@ -143,7 +147,7 @@
       </template>
 
       <template #cell(period)="data">
-          {{ data.value }}
+        {{ data.value }}
         <!-- <div>{{data.item.companyIdentificationNumber}}</div> -->
       </template>
 
