@@ -80,6 +80,7 @@
             :ok-title="$t('company_invoices.Export_invoice')"
             :cancel-title="$t('company_invoices.cancel')"
             @show="resetModal"
+            :no-close-on-backdrop="true"
             @ok="exportRequestApiHandler"
             :ok-disabled="!selectedCompany || exporting"
           >
@@ -741,7 +742,6 @@ export default {
       this.exportData = d;
     },
     async exportRequestApiHandler() {
-      console.log("runnnnnn");
       this.exporting = true;
       const { data } = await axios.post(
         "https://coherent-accounting.com/account/api/export-single-bank-statement",
@@ -764,7 +764,6 @@ export default {
       const formattedDate = date.toLocaleDateString("en-US", options);
       // Save the Blob as a file using FileSaver.js
       saveAs(blob, `EIC_${this.EIC}_DATE_${formattedDate}`);
-      console.log("dddddddddd", data);
       try {
         this.$toast({
           component: ToastificationContent,
