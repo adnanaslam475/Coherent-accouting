@@ -16,6 +16,11 @@
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
+      <div class="mr-2">
+
+        <feather-icon icon="ClockIcon" size="16" stroke="red" />
+        <span style="color: red;">Your trial ends in <b>{{ currentPlan.daysLeft }}</b> days</span>
+      </div>
       <dark-Toggler class="d-none d-lg-block" />
       <!-- For Multilingual -->
       <b-nav-item-dropdown id="dropdown-grouped" variant="link" class="dropdown-language" right>
@@ -59,7 +64,7 @@
                   notification.notificationSeverityType === 'WARNING' ? 'light-info' : 'light-danger'">
                   <feather-icon
                     :icon="notification.notificationSeverityType === 'INFO' ? 'CheckIcon' :
-                        notification.notificationSeverityType === 'WARNING' ? 'AlertTriangleIcon' : 'AlertTriangleIcon'" />
+                      notification.notificationSeverityType === 'WARNING' ? 'AlertTriangleIcon' : 'AlertTriangleIcon'" />
                 </b-avatar>
               </template>
               <b-row class="justify-content-between m-0">
@@ -232,6 +237,11 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      currentPlan: {}
+    }
+  },
   computed: {
     currentLocale() {
       return this.locales.find(l => l.locale === this.$i18n.locale)
@@ -245,6 +255,7 @@ export default {
     window.addEventListener('scroll', this.handleScroll)
   },
   mounted() {
+    this.getMyCurrentPlan()
     const self = this
     EventBus.$on('zip-downloaded', () => {
       self.getNotificationCount()
@@ -255,6 +266,28 @@ export default {
     parseMessage(value) {
       const data = JSON.parse(value.message)
       return `You can download file by clicking <a href="javascript:void(0)" v-on:click="downloadFile(${data})">here</a>`
+    },
+    getMyCurrentPlan() {
+      let token = useJwt.getToken();
+      useJwt
+        .getUserCurrentPlan(token)
+        .then((response) => {
+          this.currentPlan = response.data;
+
+
+
+
+        })
+        .catch(() => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Error fetching current plan`,
+              icon: 'AlertTriangleIcon',
+              variant: 'danger',
+            },
+          })
+        });
     },
     async downloadFile(message) {
       const data = JSON.parse(message.message)

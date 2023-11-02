@@ -49,13 +49,22 @@
         <NotVarifiedBanks ref="banks" />
       </b-tab>
       <!-- Vat Reports tab -->
-      <b-tab>
+      <b-tab v-if="companyDetails.companyCountry == 'Bulgaria'">
         <template #title>
           <feather-icon icon="FlagIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("company_tabs.vat_reports") }} </span>
         </template>
         <VatReports v-if="companyTab == 5 || vatReportsActive" :vat-reports-tab="vatReportsTab"
           @state="updateVatReportsTab($event)" />
+      </b-tab>
+
+
+      <b-tab v-else>
+        <template #title>
+          <feather-icon icon="Share2Icon" />
+          <span style="font-size: 0.8vw" class="text-capitalize">Connections </span>
+        </template>
+        <Connections v-if="companyTab == 5 || vatReportsActive" :vat-reports-tab="vatReportsTab" />
       </b-tab>
 
       <!-- credit notifications 
@@ -122,6 +131,7 @@ import { BTabs, BTab, BCardText, BCol, BCard } from "bootstrap-vue"
 import CompanyInfo from "./CompanyInfo/CompanyInfo.vue"
 import Invoice from "./Invoice/invoice-list/InvoiceList.vue"
 import VatReports from "./VatReports/vat-reports-list/VatReportsList.vue"
+import Connections from "../connections/Connections.vue"
 import VATMonthReport from "./VATMonthReports/VATMonthReport.vue"
 import YearlyReport from "./YearlyReports/YearlyReport.vue"
 import NotVerifiedInvoice from "./Invoice/invoice-list-notVerified/InvoiceList.vue"
@@ -150,7 +160,8 @@ export default {
     BCardText,
     BCard,
     Banks,
-    NotVarifiedBanks
+    NotVarifiedBanks,
+    Connections
   },
   data() {
     return {
@@ -242,7 +253,9 @@ export default {
         })
         .then((response) => {
           let companyRecord = response.data
+
           this.companyDetails = companyRecord
+          console.log(this.companyDetails.companyCountry, 'this is details')
           this.companyName = companyRecord.companyName
           this.companyNameLength = this.companyName.length
         })
