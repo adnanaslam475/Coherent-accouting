@@ -96,7 +96,7 @@
               <v-select
                 style="width: 50%"
                 class=""
-                v-model="selected"
+                v-model="selectedCompany"
                 label="Select company"
                 placeholder="Select company..."
                 aria-placeholder="asaaa"
@@ -282,7 +282,6 @@
           :key="field.key"
           :style="{
             width: field.key === 'description' ? '12px' : '180px',
-            border: field.key === 'description' ? '2px solid blue' : '180px',
           }"
         />
         <div class="d-flex align-items-center justify-content-center">
@@ -313,19 +312,6 @@
         </b-link>
       </template>
 
-      <template #head(export)> Export </template>
-
-      <template #cell(export)="data">
-        <b-button
-          size="sm"
-          variant="primary"
-          @click="(e) => togglenewExportModal(data.item)"
-          class="btn-tour-finish"
-        >
-          <span class="mr-25 align-middle">Export</span>
-        </b-button>
-      </template>
-
       <!-- Column: exported  -->
       <template #head(exported)>
         {{ $t("company_invoices.Exported_invoice") }}
@@ -344,6 +330,19 @@
             width="20px"
           />
         </span>
+      </template>
+
+      <template #head(export)> Export </template>
+
+      <template #cell(export)="data">
+        <b-button
+          size="sm"
+          variant="primary"
+          @click="(e) => togglenewExportModal(data.item)"
+          class="btn-tour-finish"
+        >
+          <span class="mr-25 align-middle">Export</span>
+        </b-button>
       </template>
       <!-- Column: Issued Date -->
       <template #head(fromDate)> From Date </template>
@@ -1524,7 +1523,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 100px;
+  width: 190px;
 }
 .invoice-pdf {
   background-color: #f8f8f8;

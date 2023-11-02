@@ -15,10 +15,14 @@ export default function useInvoicesList() {
   const tableColumns = [
     { key: "fromDate", label: "From Date", sortable: true },
     { key: "toDate", label: "To Date", sortable: true },
-    { key: "description", label: "Description", sortable: true },
+    {
+      key: "description",
+      label: "Description",
+      sortable: true,
+    },
 
-    { key: "export", label: "Export" },
     { key: "exported", label: "Exported", sortable: true },
+    { key: "export", label: "Export" },
 
     { key: "actions" },
   ];

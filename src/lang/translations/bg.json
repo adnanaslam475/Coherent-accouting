@@ -65,6 +65,7 @@
     "features": "Функционалности",
     "companies": "Фирми",
     "company_info": "Информация",
+
     "company_invoices": "Фирмени Фактури",
     "add_multiple_invoices": "Качване на много фактури",
     "list_invoices": "Списък Фактури"
@@ -275,6 +276,7 @@
     "owner_name": "МОЛ",
     "owner_egn": "МОЛ ЕГН",
     "company_id": "ЕИК",
+    "enable_autosync": "активиране на автоматична синхронизация",
     "vat_number": "ДДС Номер",
     "bank_account": "Банкова сметка",
     "contact": "Контакти",

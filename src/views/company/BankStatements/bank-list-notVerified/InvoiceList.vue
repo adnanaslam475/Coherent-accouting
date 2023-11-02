@@ -5,39 +5,86 @@
       <!--  Table Top Starts  -->
       <b-row>
         <!-- Per Page -->
-        <b-col cols="12" md="7" class="d-flex align-items-center justify-content-start mb-1 mb-md-0 pr-0">
-
+        <b-col
+          cols="12"
+          md="7"
+          class="d-flex align-items-center justify-content-start mb-1 mb-md-0 pr-0"
+        >
           <!-- <label>Entries</label>
           <v-select v-model="perPage" @input="getMoreLoadInv" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :options="perPageOptions" :clearable="false" class="per-page-selector d-inline-block ml-50 mr-1" /> -->
-          <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive"
-            :disabled="multiplefileLoading">
-            <b-form-file ref="imageUploader" class="file-input" multiple @change="addMultiplefile" />
+          <b-button
+            variant="primary"
+            class="mr-1 position-relative p-set"
+            v-if="isActive"
+            :disabled="multiplefileLoading"
+          >
+            <b-form-file
+              ref="imageUploader"
+              class="file-input"
+              multiple
+              @change="addMultiplefile"
+            />
             <b-spinner v-if="multiplefileLoading" small variant="light" />
             Add Multiple Bank St.
             <!-- Add Multiple Invoices -->
-            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path1" />
+            <svg-icon
+              width="20"
+              height="20"
+              class="file-upload"
+              type="mdi"
+              :path="path1"
+            />
           </b-button>
-          <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive || multiplefileLoading"
-            v-else>
-
+          <b-button
+            variant="primary"
+            class="mr-1 position-relative p-set"
+            :disabled="!isActive || multiplefileLoading"
+            v-else
+          >
             <b-spinner v-if="multiplefileLoading" small variant="light" />
             Add Multiple Bank St.
             <!-- Add Multiple Invoices -->
-            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path1" />
+            <svg-icon
+              width="20"
+              height="20"
+              class="file-upload"
+              type="mdi"
+              :path="path1"
+            />
           </b-button>
-          <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" @click="refreshList()">
+          <b-button
+            v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+            variant="outline-primary"
+            @click="refreshList()"
+          >
             <feather-icon icon="RefreshCcwIcon" />
           </b-button>
           <!-- Progressbar -->
           <div class="progress-item d-flex flex-column w-50 ml-2">
             <h5 class="text-center">{{ progressStatus }}</h5>
-            <b-progress v-if="progressCount == 100" :value="progressCount" :max="100" variant="success" show-value>
-              <b-progress-bar :value="progressCount"
-                :label="`${((progressCount / 100) * 100).toFixed(2)}%`"></b-progress-bar>
+            <b-progress
+              v-if="progressCount == 100"
+              :value="progressCount"
+              :max="100"
+              variant="success"
+              show-value
+            >
+              <b-progress-bar
+                :value="progressCount"
+                :label="`${((progressCount / 100) * 100).toFixed(2)}%`"
+              ></b-progress-bar>
             </b-progress>
-            <b-progress v-else :value="progressCount" :max="100" variant="primary" show-value>
-              <b-progress-bar :value="progressCount"
-                :label="`${((progressCount / 100) * 100).toFixed(2)}%`"></b-progress-bar>
+            <b-progress
+              v-else
+              :value="progressCount"
+              :max="100"
+              variant="primary"
+              show-value
+            >
+              <b-progress-bar
+                :value="progressCount"
+                :label="`${((progressCount / 100) * 100).toFixed(2)}%`"
+              ></b-progress-bar>
             </b-progress>
           </div>
         </b-col>
@@ -46,24 +93,59 @@
         <b-col cols="12" md="5">
           <div class="d-flex align-items-center justify-content-end">
             <div class="position-relative mr-1 filter-date">
+              <flat-pickr
+                v-model="startDate"
+                class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.start_date')"
+              />
 
-              <flat-pickr v-model="startDate" class="form-control invoice-edit-input invoice-input-top"
-                :placeholder="$t('company_invoices.start_date')" />
-
-              <feather-icon v-if="startDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
-              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="startDate = ''" />
+              <feather-icon
+                v-if="startDate === ''"
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+              />
+              <feather-icon
+                v-else
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="startDate = ''"
+              />
             </div>
             <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top"
-                :placeholder="$t('company_invoices.end_date')" />
+              <flat-pickr
+                v-model="endDate"
+                class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.end_date')"
+              />
 
-              <feather-icon v-if="endDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
-              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="endDate = ''" />
+              <feather-icon
+                v-if="endDate === ''"
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+              />
+              <feather-icon
+                v-else
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="endDate = ''"
+              />
             </div>
             <div class="position-relative flex-1">
-              <b-form-input v-model="searchQuery" class="d-inline-block mr-1"
-                :placeholder="$t('company_invoices.search')" />
-              <feather-icon size="16" icon="XIcon" class="cursor-pointer clear-all" @click="searchQuery = ''" />
+              <b-form-input
+                v-model="searchQuery"
+                class="d-inline-block mr-1"
+                :placeholder="$t('company_invoices.search')"
+              />
+              <feather-icon
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="searchQuery = ''"
+              />
             </div>
           </div>
         </b-col>
@@ -82,9 +164,19 @@
     </b-row>
 
     <!--  Table Starts  -->
-    <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns"
-      responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found"
-      :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList" id="company-invoices-not-verified">
+    <b-table
+      ref="refInvoiceListTable"
+      :items="isCheck === false ? fetchInvoices : invoices"
+      :fields="tableColumns"
+      responsive
+      primary-key="id"
+      :sort-by.sync="sortBy"
+      show-empty
+      empty-text="No matching records found"
+      :sort-desc.sync="isSortDirDesc"
+      class="position-relative invoiceList"
+      id="company-invoices-not-verified"
+    >
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
@@ -99,12 +191,15 @@
       </template>
 
       <!-- Column: invoiceNumber -->
-      <template #head(description)>
-        Description
-      </template>
+      <template #head(description)> Description </template>
       <template #cell(description)="data">
-        <b-link :to="{ name: 'bank-statement-edit', params: { id: data.item.id, companyId: companyId } }"
-          class="font-weight-bold">
+        <b-link
+          :to="{
+            name: 'bank-statement-edit',
+            params: { id: data.item.id, companyId: companyId },
+          }"
+          class="font-weight-bold"
+        >
           <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
@@ -113,42 +208,52 @@
       </template>
 
       <template #cell(exported)="data">
-        <span class="text-nowrap" v-if="data.item.exported" style="position: relative; left: 27%">
-          <img src="@/assets/images/svg/check.svg" alt="" height="20px" width="20px" />
+        <span
+          class="text-nowrap"
+          v-if="data.item.exported"
+          style="position: relative; left: 27%"
+        >
+          <img
+            src="@/assets/images/svg/check.svg"
+            alt=""
+            height="20px"
+            width="20px"
+          />
         </span>
       </template>
-      <template #head(fromDate)>
-        From Date
-      </template>
+      <template #head(fromDate)> From Date </template>
 
       <template #cell(fromDate)="data">
-        <b-link :to="{ name: 'bank-statement-edit', params: { id: data.item.id, companyId: companyId } }"
-          class="font-weight-bold">
+        <b-link
+          :to="{
+            name: 'bank-statement-edit',
+            params: { id: data.item.id, companyId: companyId },
+          }"
+          class="font-weight-bold"
+        >
           <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
-      <template #head(toDate)>
-        To Date
-      </template>
+      <template #head(toDate)> To Date </template>
 
       <template #cell(toDate)="data">
-        <b-link :to="{ name: 'bank-statement-edit', params: { id: data.item.id, companyId: companyId } }"
-          class="font-weight-bold">
+        <b-link
+          :to="{
+            name: 'bank-statement-edit',
+            params: { id: data.item.id, companyId: companyId },
+          }"
+          class="font-weight-bold"
+        >
           <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
       <!-- Column: Transaction type -->
 
-
       <!-- Column: recipientCompany -->
 
       <!-- Column: supplierCompany -->
 
-
       <!-- Column: amount non vat -->
-
-
-
 
       <!-- Column: currency -->
       <!-- <template #cell(currency)="data">
@@ -162,39 +267,61 @@
         <span style="display: flex; justify-content: center">
           {{ $t("companies.actions") }}
         </span>
-
       </template>
       <template #cell(actions)="data">
         <div class="text-nowrap" style="display: flex; justify-content: center">
-          <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16"
-            class="mx-1 cursor-pointer" @click="
+          <feather-icon
+            :id="`invoice-row-${data.item.id}-preview-icon`"
+            icon="EyeIcon"
+            size="16"
+            class="mx-1 cursor-pointer"
+            @click="
               $router.push({
                 name: 'bank-statement-edit',
                 params: { id: data.item.id, companyId: companyId },
               })
-              " />
-          <b-tooltip :title="$t('company_info.previewInvoice')" class="cursor-pointer"
-            :target="`invoice-row-${data.item.id}-preview-icon`" />
+            "
+          />
+          <b-tooltip
+            :title="$t('company_info.previewInvoice')"
+            class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-preview-icon`"
+          />
 
           <!-- Dropdown -->
-          <b-dropdown variant="link" toggle-class="p-0" dropleft no-caret :right="$store.state.appConfig.isRTL">
+          <b-dropdown
+            variant="link"
+            toggle-class="p-0"
+            dropleft
+            no-caret
+            :right="$store.state.appConfig.isRTL"
+          >
             <template #button-content>
-              <feather-icon icon="MoreVerticalIcon" size="16" class="align-middle text-body" />
+              <feather-icon
+                icon="MoreVerticalIcon"
+                size="16"
+                class="align-middle text-body"
+              />
             </template>
 
-            <b-dropdown-item :to="{
-              name: 'bank-statement-edit',
-              params: { id: data.item.id, companyId: companyId },
-            }">
+            <b-dropdown-item
+              :to="{
+                name: 'bank-statement-edit',
+                params: { id: data.item.id, companyId: companyId },
+              }"
+            >
               <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">{{ $t("company_info.edit") }}</span>
+              <span class="align-middle ml-50">{{
+                $t("company_info.edit")
+              }}</span>
             </b-dropdown-item>
             <b-dropdown-item @click="showMsgBoxTwo(data.item.id, refetchData)">
               <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">{{ $t("company_info.delete") }}</span>
+              <span class="align-middle ml-50">{{
+                $t("company_info.delete")
+              }}</span>
             </b-dropdown-item>
           </b-dropdown>
-
         </div>
       </template>
     </b-table>
@@ -340,7 +467,7 @@ export default {
       multiplefile: null,
       multiplefileLoading: false,
       path1: mdiCloudUploadOutline,
-      companyPlatform: ''
+      companyPlatform: "",
     };
   },
 
@@ -353,7 +480,7 @@ export default {
     },
     searchQuery: function () {
       this.handleSearchSelect(10);
-    }
+    },
   },
 
   directives: {
@@ -364,9 +491,9 @@ export default {
       this.isCheck = true;
     }, 1500);
     this.observeScroll();
-    this.refreshList()
-    this.getMyCurrentPlan()
-    this.getCompany()
+    this.refreshList();
+    this.getMyCurrentPlan();
+    this.getCompany();
   },
 
   methods: {
@@ -377,23 +504,20 @@ export default {
         .then((response) => {
           this.currentPlan = response.data;
 
-          this.isActive = this.currentPlan.active
-
-
+          this.isActive = this.currentPlan.active;
         })
         .catch(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `Error fetching current plan`,
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
-          })
+          });
         });
     },
     async refreshList() {
-
       var tableAreaBusy = document.getElementById(
         "company-invoices-not-verified"
       );
@@ -413,7 +537,7 @@ export default {
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: 'id',
+          sortField: "id",
           verified: "false",
           searchTerm: this.searchQuery,
         },
@@ -421,7 +545,7 @@ export default {
       let config1 = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: 'id',
+          sortField: "id",
           verified: "false",
         },
       };
@@ -485,37 +609,41 @@ export default {
 
     // Hadling DateSelects and Search field
     async handleSearchSelect() {
-      var tableAreaBusy = document.getElementById("company-invoices-not-verified")
-      tableAreaBusy.style.opacity = "0.5"
-      this.isCheck = true
-      this.pageNum = 1
-      this.perPageRecords = 10
+      var tableAreaBusy = document.getElementById(
+        "company-invoices-not-verified"
+      );
+      tableAreaBusy.style.opacity = "0.5";
+      this.isCheck = true;
+      this.pageNum = 1;
+      this.perPageRecords = 10;
       let data1 = {
         dateFrom: this.startDate,
         dateTo: this.endDate,
         documentType: null,
         transactionType: null,
-        lastDays: null
-
-      }
+        lastDays: null,
+      };
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
           sortField: "id",
           verified: "false",
           queryString: this.searchQuery,
-
         },
-      }
-      this.companyId = router.currentRoute.params.id
+      };
+      this.companyId = router.currentRoute.params.id;
       const data = await axios
-        .post(`/account/api/bank-statement/search/${this.companyId}/1/${this.perPageRecords}`, data1, config)
+        .post(
+          `/account/api/bank-statement/search/${this.companyId}/1/${this.perPageRecords}`,
+          data1,
+          config
+        )
         .then((res) => {
-          console.log("response ========>", res)
-          this.invoices = res.data.elements
-          tableAreaBusy.style.opacity = "1"
-          this.loadMore = false
-        })
+          console.log("response ========>", res);
+          this.invoices = res.data.elements;
+          tableAreaBusy.style.opacity = "1";
+          this.loadMore = false;
+        });
 
       // this.invoices = data.data.elements;
       // tableAreaBusy.style.opacity = "1";
@@ -552,7 +680,6 @@ export default {
     },
 
     async searchInvoices() {
-
       this.pageNum += 1;
       let data1 = {
         dateFrom: this.startDate,
@@ -561,7 +688,7 @@ export default {
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: 'id',
+          sortField: "id",
           verified: "false",
           searchTerm: this.searchQuery,
         },
@@ -639,14 +766,16 @@ export default {
       // Using HTML string
       // More complex structure
       const messageVNode = h("div", { class: ["bvModalFont"] }, [
-        h("p", { class: ["text-center card-text"] }, ["Are you sure you want to delete this Bank Statement?"]),
-      ])
+        h("p", { class: ["text-center card-text"] }, [
+          "Are you sure you want to delete this Bank Statement?",
+        ]),
+      ]);
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: 'Delete Bank Statement',
+          title: "Delete Bank Statement",
           okVariant: "primary",
-          okTitle: this.$t('companies.confirm'),
-          cancelTitle: this.$t('company_invoices.cancel'),
+          okTitle: this.$t("companies.confirm"),
+          cancelTitle: this.$t("company_invoices.cancel"),
           hideHeaderClose: false,
           centered: true,
         })
@@ -658,7 +787,6 @@ export default {
     },
 
     // duplicating an invoice
-
 
     invoiceDelete(id, refetchData) {
       const token = useJwt.getToken();
@@ -688,7 +816,6 @@ export default {
     },
 
     addMultiplefile(event) {
-
       const self = this;
 
       this.multiplefile = event.target.files;
@@ -706,14 +833,11 @@ export default {
         axios
           .get("/account/api/progress/" + `${companyID}`)
           .then((response) => {
-
             const progressVal = response.data;
             if (progressVal?.length !== 0 && progressVal !== undefined) {
-
               self.progressCount = progressVal.progress;
               self.progressStatus = progressVal.progressStatus;
-              console.log(self.progressCount, self.progressStatus)
-
+              console.log(self.progressCount, self.progressStatus);
             }
             if (progressVal.progress == "100") {
               clearInterval(myInterval);
@@ -722,11 +846,16 @@ export default {
       }, 5000);
 
       useJwt
-        .addMultipleBankStatemtents(token, companyID, this.companyPlatform, formData)
+        .addMultipleBankStatemtents(
+          token,
+          companyID,
+          this.companyPlatform,
+          formData
+        )
         .then((response) => {
           this.multiplefileLoading = false;
           self.refetchData();
-          this.refreshList()
+          this.refreshList();
           event.target.value = "";
           this.$toast({
             component: ToastificationContent,
@@ -750,7 +879,6 @@ export default {
         });
     },
     getCompany() {
-      console.log(router.currentRoute)
       axios
         .get(`/account/api/company/${router.currentRoute.params.id}`, {
           headers: {
@@ -760,12 +888,12 @@ export default {
           },
         })
         .then((response) => {
-          this.companyPlatform = response.data.exportProperties.platform
+          this.companyPlatform = response.data.exportProperties.platform;
         })
         .catch((error) => {
           // console.log(error);
-        })
-    }
+        });
+    },
   },
 
   created() {
@@ -827,7 +955,6 @@ export default {
           if (progressVal?.length !== 0 && progressVal !== undefined) {
             progressCount.value = progressVal.progress;
             progressStatus.value = progressVal.progressStatus;
-
           }
           if (progressVal.progress == "100" || progressCount.value == 0) {
             clearInterval(myInterval);
@@ -908,7 +1035,9 @@ export default {
   font-size: 12px;
 }
 
-.invoice-preview-list .invoice-date-wrapper.invoice-middle-content p.invoice-date-title {
+.invoice-preview-list
+  .invoice-date-wrapper.invoice-middle-content
+  p.invoice-date-title {
   width: auto !important;
   min-width: max-content;
 }

@@ -275,6 +275,7 @@
     "owner_name": "Agent Name ",
     "owner_egn": "Owner EGN",
     "company_id": "Company ID",
+    "enable_autosync": "Enable AutoSync",
     "vat_number": "Vat Number",
     "bank_account": "Bank Account",
     "contact": "Contact",

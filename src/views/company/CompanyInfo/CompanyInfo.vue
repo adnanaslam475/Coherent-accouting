@@ -234,29 +234,15 @@
                       <!-- Company ID -->
                       <tr>
                         <th class="pb-50">
-                          <!-- <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="14px"
-                            height="14px"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="mr-75 feather feather-star"
-                          >
-                            <polygon
-                              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-                            />
-                          </svg> -->
                           <feather-icon icon="StarIcon" class="mr-75" />
 
                           <span class="font-weight-bold text-capitalize">{{
                             $t("company_info.company_id")
                           }}</span>
                         </th>
-                        <td class="pb-50 text-capitalize">
+                        <td
+                          class="pb-50 text-capitalize d-flex align-items-center justify-content-between"
+                        >
                           <CopyToClipboard
                             :text="compID"
                             @copy="copyTextNoInput(3)"
@@ -272,6 +258,24 @@
                               {{ companyDetails.companyIdentificationNumber }}
                             </p>
                           </CopyToClipboard>
+                          <div
+                            class="d-flex align-items-center justify-content-center"
+                          >
+                            <span class="font-weight-bold text-capitalize"
+                              >{{ $t("company_info.enable_autosync") }}
+                            </span>
+
+                            <b-form-checkbox
+                              v-model="companyDetails.autoSyncEnabled"
+                              class="custom-control-primary custom-switch-btn-1"
+                              name="check-button"
+                              @change="(v) => toggleHandler(companyDetails, v)"
+                              switch
+                            >
+                              <span class="switch-icon-left"> ON </span>
+                              <span class="switch-icon-right"> OFF </span>
+                            </b-form-checkbox>
+                          </div>
                         </td>
                         <b-tooltip target="comp-id-copy">{{
                           copyToClipboard
@@ -743,6 +747,7 @@ import {
   VBToggle,
   BModal,
   BCardText,
+  BFormCheckbox,
 } from "bootstrap-vue";
 import InvoiceDownload from "../../invoice/invoice-download/InvoiceDownload.vue";
 import CopyToClipboard from "vue-copy-to-clipboard";
@@ -790,6 +795,7 @@ export default {
     BModal,
     BCardText,
     CopyToClipboard,
+    BFormCheckbox,
   },
   directives: {
     Ripple,
@@ -909,17 +915,41 @@ export default {
       });
     },
 
-    //
-    onProgress(event) {
-      console.log(`Processed: ${event} / 100`);
-    },
-    //
     generatePDF(itemID) {
       this.$refs[`invoicePdf${itemID}`].generatePdf();
     },
-    //
-
-    //
+    async toggleHandler(c, value) {
+      try {
+        const { data } = await axios.put(
+          "https://coherent-accounting.com/account/api/company/update/" +
+            this.companyID,
+          { ...c, autoSyncEnabled: value },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: "Company updated successfully",
+            icon: "UpdateIcon",
+            variant: "success",
+          },
+        });
+      } catch (error) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: error.response.data.errorMessage,
+            icon: "AlertTriangleIcon",
+            variant: "danger",
+          },
+        });
+      } finally {
+      }
+    },
     refreshMonthReportGraph() {
       this.monthlyReportGraph = [];
       this.getMonthReportGraph();
@@ -979,6 +1009,7 @@ export default {
       this.companyName = this.companyDetails?.companyName;
       this.companyAddress = this.companyDetails?.companyAddress;
       this.compID = this.companyDetails?.companyIdentificationNumber;
+      this.autoSyncEnabled = this.companyDetails?.autoSyncEnabled;
       this.compVAT = this.companyDetails?.companyVatNumber;
       this.compBANKACCOUNT = this.companyDetails?.companyBankAccount;
       this.compCONTACT = this.companyDetails?.companyPhone;
