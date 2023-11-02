@@ -60,7 +60,7 @@
                 </div>
 
                 <b-form-checkbox id="vat-checkbox" v-model="isGeneric" name="vat-checkbox">
-                  Generic
+                  Standart
                 </b-form-checkbox>
               </div>
               <div v-else>
