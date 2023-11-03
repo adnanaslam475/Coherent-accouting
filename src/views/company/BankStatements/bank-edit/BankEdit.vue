@@ -7,53 +7,101 @@
       <b-form>
         <!-- {{ invoiceData }}
         <b-button @click="modelShow = !modelShow">Toggle Sidebar</b-button> -->
-        <b-modal body-class="m-0 " content-class="m-0 " dialog-class="my-1 " v-model="modelShow" :hide-backdrop="false"
-          :hide-footer="true" :scrollable="false" :no-close-on-backdrop="true" size="xl" no-close-on-esc>
+        <b-modal
+          body-class="m-0 "
+          content-class="m-0 "
+          dialog-class="my-1 "
+          v-model="modelShow"
+          :hide-backdrop="false"
+          :hide-footer="true"
+          :scrollable="false"
+          :no-close-on-backdrop="true"
+          size="xl"
+          no-close-on-esc
+        >
           <template #modal-header="slotProps">
-
-            <feather-icon size="16" icon="XIcon" class="cursor-pointer ml-auto" @click="closeModel" />
+            <feather-icon
+              size="16"
+              icon="XIcon"
+              class="cursor-pointer ml-auto"
+              @click="closeModel"
+            />
           </template>
           <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0">
-
-
             <b-row class="w-100 mx-0">
               <b-col cols="12" xl="5" md="5" class="p-2" style="">
                 <div>
                   <div
-                    style="border: 1px solid lightgrey; box-shadow: 0 4px 24px 0 rgba(34, 41, 60, 0.1); cursor: pointer">
-                    <image-zoom ref="imageZoom" :click-zoom="false" :regular="invoiceImage" :zoom-amount="3"
-                      :regular-webp="invoiceImage" :zoom="invoiceImage" :zoom-webp="invoiceImage" img-class="img-fluid">
+                    style="
+                      border: 1px solid lightgrey;
+                      box-shadow: 0 4px 24px 0 rgba(34, 41, 60, 0.1);
+                      cursor: pointer;
+                    "
+                  >
+                    <image-zoom
+                      ref="imageZoom"
+                      :click-zoom="false"
+                      :regular="invoiceImage"
+                      :zoom-amount="3"
+                      :regular-webp="invoiceImage"
+                      :zoom="invoiceImage"
+                      :zoom-webp="invoiceImage"
+                      img-class="img-fluid"
+                    >
                     </image-zoom>
                   </div>
                 </div>
               </b-col>
 
-              <b-col cols="12" xl="7" md="7" style="border-left: 1px dashed lightgrey">
+              <b-col
+                cols="12"
+                xl="7"
+                md="7"
+                style="border-left: 1px dashed lightgrey"
+              >
                 <b-tabs v-model="companyTab">
-
                   <b-tab>
                     <template #title>
-
                       <feather-icon icon="FileTextIcon" />
-                      <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("Data") }}</span>
+                      <span style="font-size: 0.8vw" class="text-capitalize">{{
+                        $t("Data")
+                      }}</span>
                     </template>
 
-
-
-                    <b-row class="mt-2 mx-0 pb-2" style="border-bottom: 1px solid lightgrey">
+                    <b-row
+                      class="mt-2 mx-0 pb-2"
+                      style="border-bottom: 1px solid lightgrey"
+                    >
                       <b-col cols="12" md="4" class="pl-0">
                         <div class="d-flex pl-0" style="flex-direction: column">
-                          <span class="grey-text-color"> {{ $t("from_period") }} </span>
+                          <span class="grey-text-color">
+                            {{ $t("from_period") }}
+                          </span>
                           <span>
-                            <validation-provider #default="{ errors }" name="fromDate" rules="required">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="fromDate"
+                              rules="required"
+                            >
                               <div class="position-relative d-inline-flex">
-                                <flat-pickr v-model="invoiceData.fromDate"
+                                <flat-pickr
+                                  v-model="invoiceData.fromDate"
                                   class="form-control invoice-edit-input invoice-input-top"
-                                  placeholder="From St. Period" />
-                                <feather-icon v-if="invoiceData.fromDate === ''" size="16" icon="CalendarIcon"
-                                  class="cursor-pointer clear-all" />
-                                <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                                  @click="invoiceData.fromDate = ''" />
+                                  placeholder="From St. Period"
+                                />
+                                <feather-icon
+                                  v-if="invoiceData.fromDate === ''"
+                                  size="16"
+                                  icon="CalendarIcon"
+                                  class="cursor-pointer clear-all"
+                                />
+                                <feather-icon
+                                  v-else
+                                  size="16"
+                                  icon="XIcon"
+                                  class="cursor-pointer clear-all"
+                                  @click="invoiceData.fromDate = ''"
+                                />
                               </div>
                             </validation-provider>
                           </span>
@@ -62,16 +110,34 @@
 
                       <b-col cols="12" md="4" class="pl-0">
                         <div class="d-flex pl-0" style="flex-direction: column">
-                          <span class="grey-text-color"> {{ $t("to_period") }} </span>
+                          <span class="grey-text-color">
+                            {{ $t("to_period") }}
+                          </span>
                           <span>
-                            <validation-provider #default="{ errors }" name="toDate" rules="required">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="toDate"
+                              rules="required"
+                            >
                               <div class="position-relative d-inline-flex">
-                                <flat-pickr v-model="invoiceData.toDate"
-                                  class="form-control invoice-edit-input invoice-input-top" placeholder="To St. Period" />
-                                <feather-icon v-if="invoiceData.toDate === ''" size="16" icon="CalendarIcon"
-                                  class="cursor-pointer clear-all" />
-                                <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all"
-                                  @click="invoiceData.toDate = ''" />
+                                <flat-pickr
+                                  v-model="invoiceData.toDate"
+                                  class="form-control invoice-edit-input invoice-input-top"
+                                  placeholder="To St. Period"
+                                />
+                                <feather-icon
+                                  v-if="invoiceData.toDate === ''"
+                                  size="16"
+                                  icon="CalendarIcon"
+                                  class="cursor-pointer clear-all"
+                                />
+                                <feather-icon
+                                  v-else
+                                  size="16"
+                                  icon="XIcon"
+                                  class="cursor-pointer clear-all"
+                                  @click="invoiceData.toDate = ''"
+                                />
                               </div>
                             </validation-provider>
                           </span>
@@ -80,44 +146,72 @@
 
                       <b-col cols="12" md="4" class="pl-0">
                         <div class="d-flex pl-0" style="flex-direction: column">
-                          <span class="grey-text-color"> {{ $t("update_tickets.description") }} </span>
+                          <span class="grey-text-color">
+                            {{ $t("update_tickets.description") }}
+                          </span>
                           <span>
-                            <validation-provider #default="{ errors }" name="description">
-                              <b-form-input v-model="invoiceData.description" class="mb-0" />
+                            <validation-provider
+                              #default="{ errors }"
+                              name="description"
+                            >
+                              <b-form-input
+                                v-model="invoiceData.description"
+                                class="mb-0"
+                              />
                             </validation-provider>
                           </span>
                         </div>
                       </b-col>
-
                     </b-row>
 
                     <b-row class="mt-2 mx-0 pb-1">
                       <b-col class="pl-0">
                         <div class="d-flex" style="flex-direction: column">
-                          <div class="text-uppercase grey-text-color">{{ $t("add_invoice.currency") }}</div>
+                          <div class="text-uppercase grey-text-color">
+                            {{ $t("add_invoice.currency") }}
+                          </div>
                           <div class="pt-1">
-
-                            <b-form-select v-model="invoiceData.currency" :options="currencyOptions"
-                              style="width: 100px" />
+                            <b-form-select
+                              v-model="invoiceData.currency"
+                              :options="currencyOptions"
+                              style="width: 100px"
+                            />
                           </div>
                         </div>
                       </b-col>
                       <b-col class="px-0">
-
-                        <div class="d-flex" style="flex-direction: column; float: right">
-                          <div class="text-uppercase grey-text-color">{{ $t("total_debit") }}</div>
+                        <div
+                          class="d-flex"
+                          style="flex-direction: column; float: right"
+                        >
+                          <div class="text-uppercase grey-text-color">
+                            {{ $t("total_debit") }}
+                          </div>
                           <!-- <h4 style="color: #625f6e">{{ invoiceData.totalAmount }}</h4> -->
                           <h4 style="color: #625f6e" class="pt-1">
-
-                            <b-form-input v-model="totalDebit" type="number" class="mb-0" style="width: 130px" />
+                            <b-form-input
+                              v-model="totalDebit"
+                              type="number"
+                              class="mb-0"
+                              style="width: 130px"
+                            />
                           </h4>
                         </div>
-                        <div class="d-flex mr-2" style="flex-direction: column; float: right">
-                          <div class="text-uppercase grey-text-color">{{ $t("total_credit") }}</div>
+                        <div
+                          class="d-flex mr-2"
+                          style="flex-direction: column; float: right"
+                        >
+                          <div class="text-uppercase grey-text-color">
+                            {{ $t("total_credit") }}
+                          </div>
                           <!-- <h4 style="color: #625f6e">{{ invoiceData.vatAmount }}</h4> -->
                           <h4 style="color: #625f6e" class="pt-1">
-
-                            <b-form-input v-model="totalCredit" type="number" class="mb-0" style="width: 130px" />
+                            <b-form-input
+                              v-model="totalCredit"
+                              type="number"
+                              class="mb-0"
+                              style="width: 130px"
+                            />
                           </h4>
                         </div>
                       </b-col>
@@ -125,8 +219,11 @@
 
                     <b-row>
                       <b-col>
-
-                        <b-form-checkbox v-model="isAccount" name="is-account" @change="checkAccount">
+                        <b-form-checkbox
+                          v-model="isAccount"
+                          name="is-account"
+                          @change="checkAccount"
+                        >
                           {{ $t("show_accounts") }}
                         </b-form-checkbox>
                       </b-col>
@@ -134,47 +231,89 @@
                     <div no-body class="invoice-add-card mb-1">
                       <!-- Items Section -->
                       <div class="invoice-padding p-0">
-                        <div ref="form" class="repeater-form h-auto" :style="{ height: trHeight }">
+                        <div
+                          ref="form"
+                          class="repeater-form h-auto"
+                          :style="{ height: trHeight }"
+                        >
                           <b-row ref="row" class="pb-0 m-0">
                             <!-- Item Form -->
                             <!-- ? This will be in loop => So consider below markup for single item -->
                             <b-col cols="12" class="p-0">
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div class="d-none d-lg-flex p-custom">
-                                <b-row class="flex-grow-1 invoice-add-transections pb-1"
-                                  style="border-bottom: 1px solid lightgrey">
+                                <b-row
+                                  class="flex-grow-1 invoice-add-transections pb-1"
+                                  style="border-bottom: 1px solid lightgrey"
+                                >
                                   <!-- Single Item Form Headers -->
 
-                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px"
-                                    v-if="isQuickBook && isAccount">
+                                  <b-col
+                                    cols="12"
+                                    lg="2"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                    v-if="isQuickBook && isAccount"
+                                  >
                                     {{ $t("Account") }}
                                   </b-col>
-                                  <b-col v-if="isXero && isAccount" cols="12" lg="2"
-                                    class="text-uppercase grey-text-color" style="font-size: 14px">
+                                  <b-col
+                                    v-if="isXero && isAccount"
+                                    cols="12"
+                                    lg="2"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
                                     {{ $t("add_invoice.caetgory") }}
                                   </b-col>
-                                  <b-col v-if="isXero && isAccount" cols="12" lg="2"
-                                    class="text-uppercase grey-text-color" style="font-size: 14px">
+                                  <b-col
+                                    v-if="isXero && isAccount"
+                                    cols="12"
+                                    lg="2"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
                                     {{ $t("add_invoice.job_cost_code") }}
                                   </b-col>
 
-                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
+                                  <b-col
+                                    cols="12"
+                                    lg="2"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
                                     {{ $t("update_tickets.description") }}
                                   </b-col>
-                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
-                                    style="font-size: 14px">
+                                  <b-col
+                                    cols="12"
+                                    :lg="isAccount ? '1' : '2'"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
                                     Ref
                                   </b-col>
-                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="text-uppercase grey-text-color"
-                                    style="font-size: 14px">
+                                  <b-col
+                                    cols="12"
+                                    :lg="isAccount ? '1' : '2'"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
                                     {{ $t("add_invoice.date") }}
                                   </b-col>
-                                  <b-col cols="12" :lg="isXero ? '1' : '2'" class="text-uppercase grey-text-color"
-                                    style="font-size: 14px">
+                                  <b-col
+                                    cols="12"
+                                    :lg="isXero ? '1' : '2'"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
                                     {{ $t("Debit") }}
                                   </b-col>
-                                  <b-col cols="12" :lg="isXero ? '1' : '2'" class="text-uppercase grey-text-color"
-                                    style="font-size: 14px">
+                                  <b-col
+                                    cols="12"
+                                    :lg="isXero ? '1' : '2'"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
                                     {{ $t("Credit") }}
                                   </b-col>
                                   <!-- <b-col
@@ -185,155 +324,370 @@
                                   >
                                     Tax
                                   </b-col> -->
-                                  <b-col cols="12" lg="2" class="text-uppercase grey-text-color" style="font-size: 14px">
+                                  <b-col
+                                    cols="12"
+                                    lg="2"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
                                     {{ $t("Balance") }}
                                   </b-col>
-
-
                                 </b-row>
                                 <!-- <div class="form-item-action-col" /> -->
                               </div>
 
                               <!-- Form Input Fields OR content inside bordered area  -->
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
-                              <div v-for="(item, index) in invoiceData.bankStatementTransactions" :key="index"
-                                class="d-flex pl-2">
-                                <b-row class="flex-grow-1 py-1 invoice-add-transections"
-                                  style="border-bottom: 1px solid lightgrey">
+                              <div
+                                v-for="(
+                                  item, index
+                                ) in invoiceData.bankStatementTransactions"
+                                :key="index"
+                                class="d-flex pl-2"
+                              >
+                                <b-row
+                                  class="flex-grow-1 py-1 invoice-add-transections"
+                                  style="border-bottom: 1px solid lightgrey"
+                                >
                                   <!-- Single Item Form Headers -->
 
-                                  <b-col cols="12" lg="2" v-if="isQuickBook && isAccount">
-                                    <label class="d-inline d-lg-none">Account</label>
+                                  <b-col
+                                    cols="12"
+                                    lg="2"
+                                    v-if="isQuickBook && isAccount"
+                                  >
+                                    <label class="d-inline d-lg-none"
+                                      >Account</label
+                                    >
 
-
-                                    <validation-provider #default="{ errors, invalid }" name="Account" ref="account">
-                                      <b-form-select id="account" v-model="item.account" :options="accounts"
-                                        v-b-tooltip.hover :title="item.account" rules="required" immediate>
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      name="Account"
+                                      ref="account"
+                                    >
+                                      <b-form-select
+                                        id="account"
+                                        v-model="item.account"
+                                        :options="accounts"
+                                        v-b-tooltip.hover
+                                        :title="item.account"
+                                        rules="required"
+                                        immediate
+                                      >
                                       </b-form-select>
 
-                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
+                                      <small
+                                        class="text-danger"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
                                       <!-- <small class="text-danger">{{ errors[0] }}</small> -->
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="isXero && isAccount">
-                                    <label class="d-inline d-lg-none">Category</label>
+                                  <b-col
+                                    cols="12"
+                                    lg="2"
+                                    v-if="isXero && isAccount"
+                                  >
+                                    <label class="d-inline d-lg-none"
+                                      >Category</label
+                                    >
 
-                                    <validation-provider #default="{ errors, invalid }" name="Category"
-                                      :rules="isAccount ? 'required' : ''" ref="selectCategory">
-                                      <b-form-select id="selectCategory" :options="categoryItems" v-model="item.account"
-                                        v-b-tooltip.hover :title="item.account" />
-                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      name="Category"
+                                      :rules="isAccount ? 'required' : ''"
+                                      ref="selectCategory"
+                                    >
+                                      <b-form-select
+                                        id="selectCategory"
+                                        :options="categoryItems"
+                                        v-model="item.account"
+                                        v-b-tooltip.hover
+                                        :title="item.account"
+                                      />
+                                      <small
+                                        class="text-danger"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="2" v-if="isXero && isAccount">
+                                  <b-col
+                                    cols="12"
+                                    lg="2"
+                                    v-if="isXero && isAccount"
+                                  >
+                                    <label class="d-inline d-lg-none"
+                                      >Tax Type</label
+                                    >
 
-                                    <label class="d-inline d-lg-none">Tax Type</label>
-
-                                    <validation-provider #default="{ errors, invalid }" name="taxType"
-                                      :rules="isAccount ? 'required' : ''" ref="postCode">
-                                      <b-form-select id="postCode" :options="jobPostItems" v-model="item.taxType"
-                                        v-b-tooltip.hover :title="item.taxType">
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      name="taxType"
+                                      :rules="isAccount ? 'required' : ''"
+                                      ref="postCode"
+                                    >
+                                      <b-form-select
+                                        id="postCode"
+                                        :options="jobPostItems"
+                                        v-model="item.taxType"
+                                        v-b-tooltip.hover
+                                        :title="item.taxType"
+                                      >
                                       </b-form-select>
-                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
+                                      <small
+                                        class="text-danger"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" lg="2">
-                                    <label class="d-inline d-lg-none">Description</label>
-                                    <validation-provider #default="{ errors, invalid }"
-                                      ref="transectionServiceOrItemDescription" name="Description" rules="required">
-                                      <b-form-input id="transectionServiceOrItemDescription" v-model="item.description"
-                                        :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" type="text" class="mb-0"
-                                        v-b-tooltip.hover :title="item.description" />
-                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
+                                    <label class="d-inline d-lg-none"
+                                      >Description</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      ref="transectionServiceOrItemDescription"
+                                      name="Description"
+                                      rules="required"
+                                    >
+                                      <b-form-input
+                                        id="transectionServiceOrItemDescription"
+                                        v-model="item.description"
+                                        :dir="
+                                          $store.state.appConfig.isRTL
+                                            ? 'rtl'
+                                            : 'ltr'
+                                        "
+                                        type="text"
+                                        class="mb-0"
+                                        v-b-tooltip.hover
+                                        :title="item.description"
+                                      />
+                                      <small
+                                        class="text-danger"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
                                     </validation-provider>
                                   </b-col>
 
                                   <b-col cols="12" :lg="isAccount ? '1' : '2'">
-                                    <label class="d-inline d-lg-none">Ref</label>
-                                    <validation-provider #default="{ errors, invalid }" name="reference" rules="required"
-                                      ref="transectionQuantity">
-                                      <b-form-input id="transectionQuantity" v-model="item.reference"
-                                        class="mb-0 p-0 text-center" v-b-tooltip.hover :title="item.reference" />
-                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
+                                    <label class="d-inline d-lg-none"
+                                      >Ref</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      name="reference"
+                                      rules="required"
+                                      ref="transectionQuantity"
+                                    >
+                                      <b-form-input
+                                        id="transectionQuantity"
+                                        v-model="item.reference"
+                                        class="mb-0 p-0 text-center"
+                                        v-b-tooltip.hover
+                                        :title="item.reference"
+                                      />
+                                      <small
+                                        class="text-danger"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" :lg="isAccount ? '1' : '2'" class="pl-0">
-                                    <label class="d-inline d-lg-none">Date</label>
-                                    <validation-provider #default="{ errors, invalid }" name="fromDate" rules="required">
+                                  <b-col
+                                    cols="12"
+                                    :lg="isAccount ? '1' : '2'"
+                                    class="pl-0"
+                                  >
+                                    <label class="d-inline d-lg-none"
+                                      >Date</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      name="fromDate"
+                                      rules="required"
+                                    >
                                       <div class="position-relative">
-                                        <flat-pickr v-model="item.date" class="form-control invoice-edit-input "
-                                          placeholder="Date" v-b-tooltip.hover :title="item.date" />
-                                        <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
+                                        <flat-pickr
+                                          v-model="item.date"
+                                          class="form-control invoice-edit-input"
+                                          placeholder="Date"
+                                          v-b-tooltip.hover
+                                          :title="item.date"
+                                        />
+                                        <small
+                                          class="text-danger"
+                                          v-if="invalid"
+                                          >{{ "This field is required" }}</small
+                                        >
                                       </div>
-
                                     </validation-provider>
-
                                   </b-col>
 
                                   <b-col cols="12" :lg="isXero ? '1' : '2'">
-                                    <label class="d-inline d-lg-none">Debit</label>
-                                    <validation-provider #default="{ errors, invalid }" name="Debit" rules="required"
-                                      ref="debit">
-
-
-                                      <b-form-input id="debit" v-model="item.debit" type="number" class="mb-0" step="any"
-                                        placeholder="0.00" v-b-tooltip.hover :title="item.debit"
-                                        prepend-html='<i class="fa fa-pencil">asdf</i>'>
-
+                                    <label class="d-inline d-lg-none"
+                                      >Debit</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      name="Debit"
+                                      rules="required"
+                                      ref="debit"
+                                    >
+                                      <b-form-input
+                                        id="debit"
+                                        v-model="item.debit"
+                                        type="number"
+                                        class="mb-0"
+                                        step="any"
+                                        placeholder="0.00"
+                                        v-b-tooltip.hover
+                                        :title="item.debit"
+                                        prepend-html='<i class="fa fa-pencil">asdf</i>'
+                                      >
                                       </b-form-input>
 
-                                      <feather-icon v-if="item.debit != 0" size="20" icon="XIcon" style="position: relative; 
-   bottom: 29px;
-    left: 88px;" @click='item.debit = 0' />
+                                      <feather-icon
+                                        v-if="item.debit != 0"
+                                        size="20"
+                                        icon="XIcon"
+                                        style="
+                                          position: relative;
+                                          bottom: 29px;
+                                          left: 88px;
+                                        "
+                                        @click="item.debit = 0"
+                                      />
 
-                                      <small class="text-danger">{{ errors[0] }}</small>
-                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
+                                      <small class="text-danger">{{
+                                        errors[0]
+                                      }}</small>
+                                      <small
+                                        class="text-danger"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
                                     </validation-provider>
                                   </b-col>
                                   <b-col cols="12" :lg="isXero ? '1' : '2'">
-                                    <label class="d-inline d-lg-none">Credit</label>
-                                    <validation-provider #default="{ errors, invalid }" name="Credit" rules="required"
-                                      ref="credit">
+                                    <label class="d-inline d-lg-none"
+                                      >Credit</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      name="Credit"
+                                      rules="required"
+                                      ref="credit"
+                                    >
+                                      <b-form-input
+                                        id="credit"
+                                        v-model="item.credit"
+                                        type="number"
+                                        class="mb-0"
+                                        step="any"
+                                        placeholder="0.00"
+                                        v-b-tooltip.hover
+                                        :title="item.credit"
+                                      ></b-form-input>
+                                      <feather-icon
+                                        v-if="item.credit != 0"
+                                        size="20"
+                                        icon="XIcon"
+                                        style="
+                                          position: relative;
+                                          bottom: 29px;
+                                          left: 88px;
+                                        "
+                                        @click="item.credit = 0"
+                                      />
 
-
-                                      <b-form-input id="credit" v-model="item.credit" type="number" class="mb-0"
-                                        step="any" placeholder="0.00" v-b-tooltip.hover
-                                        :title="item.credit"></b-form-input>
-                                      <feather-icon v-if="item.credit != 0" size="20" icon="XIcon" style="position: relative; 
-   bottom: 29px;
-    left: 88px;" @click='item.credit = 0' />
-
-                                      <small class="text-danger">{{ errors[0] }}</small>
-                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
+                                      <small class="text-danger">{{
+                                        errors[0]
+                                      }}</small>
+                                      <small
+                                        class="text-danger"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
                                     </validation-provider>
                                   </b-col>
 
-
                                   <b-col cols="12" md="2">
-                                    <label class="d-inline d-lg-none">Balance</label>
-                                    <validation-provider #default="{ errors, invalid }" name="Balance" rules="required"
-                                      ref="balance">
+                                    <label class="d-inline d-lg-none"
+                                      >Balance</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      name="Balance"
+                                      rules="required"
+                                      ref="balance"
+                                    >
+                                      <b-form-input
+                                        id="balance"
+                                        v-model="item.balance"
+                                        type="number"
+                                        class="mb-0"
+                                        step="any"
+                                        placeholder="0.00"
+                                        v-b-tooltip.hover
+                                        :title="item.balance"
+                                      />
+                                      <feather-icon
+                                        v-if="item.balance != 0"
+                                        size="20"
+                                        icon="XIcon"
+                                        style="
+                                          position: relative;
+                                          bottom: 29px;
+                                          left: 88px;
+                                        "
+                                        @click="item.balance = 0"
+                                      />
 
-
-                                      <b-form-input id="balance" v-model="item.balance" type="number" class="mb-0"
-                                        step="any" placeholder="0.00" v-b-tooltip.hover :title="item.balance" />
-                                      <feather-icon v-if="item.balance != 0" size="20" icon="XIcon" style="position: relative; 
-    bottom: 29px;
-    left: 88px;" @click='item.balance = 0' />
-
-                                      <small class="text-danger">{{ errors[0] }}</small>
-                                      <small class="text-danger" v-if="invalid">{{ "This field is required" }}</small>
+                                      <small class="text-danger">{{
+                                        errors[0]
+                                      }}</small>
+                                      <small
+                                        class="text-danger"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
                                     </validation-provider>
                                   </b-col>
                                 </b-row>
-                                <div class="d-flex justify-content-end position-relative top-custom m-0" :style="isQuickBook
-                                  ? 'padding-top: 2px; left: 3px; z-index:5 !important'
-                                  : 'padding-top: 2px; left: 26px; z-index:5 !important'
-                                  ">
-                                  <feather-icon v-if="invoiceData.bankStatementTransactions.length !== 1" size="14"
-                                    icon="Trash2Icon" color="red" class="cursor-pointer m-0" @click="removeItem(index)" />
-                                  <feather-icon v-if="invoiceData.bankStatementTransactions.length == 1" size="14"
-                                    icon="Trash2Icon" color="red" class="cursor-pointer invisible m-0" />
+                                <div
+                                  class="d-flex justify-content-end position-relative top-custom m-0"
+                                  :style="
+                                    isQuickBook
+                                      ? 'padding-top: 2px; left: 3px; z-index:5 !important'
+                                      : 'padding-top: 2px; left: 26px; z-index:5 !important'
+                                  "
+                                >
+                                  <feather-icon
+                                    v-if="
+                                      invoiceData.bankStatementTransactions
+                                        .length !== 1
+                                    "
+                                    size="14"
+                                    icon="Trash2Icon"
+                                    color="red"
+                                    class="cursor-pointer m-0"
+                                    @click="removeItem(index)"
+                                  />
+                                  <feather-icon
+                                    v-if="
+                                      invoiceData.bankStatementTransactions
+                                        .length == 1
+                                    "
+                                    size="14"
+                                    icon="Trash2Icon"
+                                    color="red"
+                                    class="cursor-pointer invisible m-0"
+                                  />
                                 </div>
                               </div>
                             </b-col>
@@ -341,67 +695,101 @@
                         </div>
                       </div>
                     </div>
-                    <div size="sm" @click="addNewItemInItemForm" class="mb-2 grey-text-color curspor-pointer"
-                      style="background-color: transparent !important; border: 0px; width: 100px; color: #007aff !important; cursor: pointer">
+                    <div
+                      size="sm"
+                      @click="addNewItemInItemForm"
+                      class="mb-2 grey-text-color curspor-pointer"
+                      style="
+                        background-color: transparent !important;
+                        border: 0px;
+                        width: 100px;
+                        color: #007aff !important;
+                        cursor: pointer;
+                      "
+                    >
                       + {{ $t("add_invoice.add_item") }}
                     </div>
-
-
-
-
                   </b-tab>
-
-
                 </b-tabs>
 
-                <b-card variant="light" class="d-flex" style="text-align: end; box-shadow: none">
-
-
-                  <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" class="mr-2"
-                    :disabled="loading" @click="invoiceEdit(invoiceData, 'save', AccountTypeOption)">
+                <b-card
+                  variant="light"
+                  class="d-flex"
+                  style="text-align: end; box-shadow: none"
+                >
+                  <b-button
+                    v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                    variant="outline-primary"
+                    class="mr-2"
+                    :disabled="loading"
+                    @click="invoiceEdit(invoiceData, 'save', AccountTypeOption)"
+                  >
                     <b-spinner v-if="loading" small variant="light" />
                     {{ $t("add_invoice.save") }}
                   </b-button>
-                  <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" type="button"
-                    class="mr-2" @click="clearForm">
+                  <b-button
+                    v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                    variant="outline-primary"
+                    type="button"
+                    class="mr-2"
+                    @click="clearForm"
+                  >
                     {{ $t("add_invoice.clear") }}
                   </b-button>
 
-                  <b-button v-if="!invoiceData.verified" v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                    variant="outline-primary" type="button" class="mr-2" :disabled="loading"
-                    @click="invoiceEdit(invoiceData, 'verify', AccountTypeOption)">
+                  <b-button
+                    v-if="!invoiceData.verified"
+                    v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                    variant="outline-primary"
+                    type="button"
+                    class="mr-2"
+                    :disabled="loading"
+                    @click="
+                      invoiceEdit(invoiceData, 'verify', AccountTypeOption)
+                    "
+                  >
                     <b-spinner v-if="loading" small variant="light" />
                     {{ $t("add_invoice.verify") }}
                   </b-button>
-                  <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="primary" type="button" class="mr-2"
-                    @click="closeModel">
+                  <b-button
+                    v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                    variant="primary"
+                    type="button"
+                    class="mr-2"
+                    @click="closeModel"
+                  >
                     {{ $t("company_invoices.close") }}
                   </b-button>
                 </b-card>
               </b-col>
             </b-row>
-
-
           </b-row>
         </b-modal>
         <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0"></b-row>
-
       </b-form>
     </validation-observer>
     <invoice-sidebar-add-new-customer />
   </section>
 </template>
 
-
 <script>
-import { ValidationProvider, ValidationObserver } from "vee-validate"
-import { required, email, confirmed, password, regex, vatPercentValid, singlePriceValid, qtyValid } from "@validations"
-import Logo from "@core/layouts/components/Logo.vue"
-import { ref, onUnmounted, onMounted, computed } from "@vue/composition-api"
-import { heightTransition } from "@core/mixins/ui/transition"
-import Ripple from "vue-ripple-directive"
-import store from "@/store"
-import TabList from "../../TabList.vue"
+import { ValidationProvider, ValidationObserver } from "vee-validate";
+import {
+  required,
+  email,
+  confirmed,
+  password,
+  regex,
+  vatPercentValid,
+  singlePriceValid,
+  qtyValid,
+} from "@validations";
+import Logo from "@core/layouts/components/Logo.vue";
+import { ref, onUnmounted, onMounted, computed } from "@vue/composition-api";
+import { heightTransition } from "@core/mixins/ui/transition";
+import Ripple from "vue-ripple-directive";
+import store from "@/store";
+import TabList from "../../TabList.vue";
 import {
   BRow,
   BCol,
@@ -434,25 +822,25 @@ import {
   BFormRadioGroup,
   BButtonGroup,
   BModal,
-  VBTooltip
-} from "bootstrap-vue"
-import vSelect from "vue-select"
-import flatPickr from "vue-flatpickr-component"
-import invoiceStoreModule from "../invoiceStoreModule"
-import InvoiceSidebarAddNewCustomer from "../InvoiceSidebarAddNewCustomer.vue"
-import useJwt from "@/auth/jwt/useJwt"
-import ToastificationContent from "@core/components/toastification/ToastificationContent.vue"
+  VBTooltip,
+} from "bootstrap-vue";
+import vSelect from "vue-select";
+import flatPickr from "vue-flatpickr-component";
+import invoiceStoreModule from "../invoiceStoreModule";
+import InvoiceSidebarAddNewCustomer from "../InvoiceSidebarAddNewCustomer.vue";
+import useJwt from "@/auth/jwt/useJwt";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 // import imageZoom from "vue-image-zoomer"
-import router from "@/router"
-import { setTimeout } from "timers"
-import axios from "@/libs/axios"
-import { i18n } from "@/main.js"
+import router from "@/router";
+import { setTimeout } from "timers";
+import axios from "@/libs/axios";
+import { i18n } from "@/main.js";
 // import Viewer from "viewerjs"
 // import "viewerjs/dist/viewer.css"
-import VueEasyLightbox, { useEasyLightbox } from "vue-easy-lightbox"
+import VueEasyLightbox, { useEasyLightbox } from "vue-easy-lightbox";
 // const modelShow = ref(false)
-const zoomAmount = ref(1)
-import imageZoom from "vue-image-zoomer"
+const zoomAmount = ref(1);
+import imageZoom from "vue-image-zoomer";
 
 // import "vue-image-zoomer/dist/style.css"
 // import { VueImageZoomer } from "vue-image-zoomer"
@@ -500,7 +888,6 @@ export default {
     BFormRadioGroup,
     BButtonGroup,
     BModal,
-
   },
 
   data() {
@@ -527,8 +914,7 @@ export default {
       singlePriceValid,
       qtyValid,
       isWeekSelected: false,
-
-    }
+    };
   },
   directives: {
     Ripple,
@@ -538,8 +924,7 @@ export default {
   mixins: [heightTransition],
   mounted() {
     // this.initTrHeight();
-    this.getAccounts()
-
+    this.getAccounts();
   },
   created() {
     // window.addEventListener("resize", this.initTrHeight);
@@ -549,8 +934,8 @@ export default {
   },
   computed: {
     formIsValid() {
-      let i = 0
-      let requiredField = []
+      let i = 0;
+      let requiredField = [];
       while (i < this.invoiceData.bankStatementTransactions.length) {
         // console.log(this.$refs.transectionServiceOrItemDescription[i].flags)
         // console.log(i)
@@ -559,29 +944,25 @@ export default {
           this.$refs.transectionQuantity[i].flags.valid,
           this.$refs.debit[i].flags.valid,
           this.$refs.credit[i].flags.valid,
-
-        ]
+        ];
 
         if (this.isXero && this.isAccount) {
-          temp.push(this.$refs.selectCategory[i].flags.valid)
-          temp.push(this.$refs.postCode[i].flags.valid)
+          temp.push(this.$refs.selectCategory[i].flags.valid);
+          temp.push(this.$refs.postCode[i].flags.valid);
         }
 
         if (this.isQuickBook && this.isAccount) {
-          console.log(this.$refs.account[i].flags.valid)
-          requiredField.push(this.$refs.account[i].flags.valid)
+          console.log(this.$refs.account[i].flags.valid);
+          requiredField.push(this.$refs.account[i].flags.valid);
         }
 
-        requiredField.push(...temp)
+        requiredField.push(...temp);
 
-        i++
+        i++;
       }
-      console.log(requiredField)
-      return requiredField.every((item) => (item === true ? true : false))
+      console.log(requiredField);
+      return requiredField.every((item) => (item === true ? true : false));
     },
-
-
-
 
     totalCredit() {
       let total = 0;
@@ -601,9 +982,6 @@ export default {
     },
   },
   methods: {
-
-
-
     zoomIn() {
       // this.viewer.zoom(0.1) // Zoom in by 10%
     },
@@ -627,77 +1005,75 @@ export default {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "http://localhost:8080",
         },
-      }
+      };
       axios(config)
         .then((response) => {
-          console.log(response.data)
-          this.accounts = response.data
-
+          console.log(response.data);
+          this.accounts = response.data;
         })
-        .catch(function (error) { })
+        .catch(function (error) {});
     },
     reverse() {
-      let temp = this.invoiceData.supplierCompany
-      this.invoiceData.supplierCompany = this.invoiceData.recipientCompany
-      this.invoiceData.recipientCompany = temp
+      let temp = this.invoiceData.supplierCompany;
+      this.invoiceData.supplierCompany = this.invoiceData.recipientCompany;
+      this.invoiceData.recipientCompany = temp;
     },
-
-
 
     addNewItemInItemForm() {
       // this.$refs.form.style.overflow = "hidden"
-      this.invoiceData.bankStatementTransactions.push(JSON.parse(JSON.stringify(this.itemFormBlankItem)))
+      this.invoiceData.bankStatementTransactions.push(
+        JSON.parse(JSON.stringify(this.itemFormBlankItem))
+      );
     },
     removeItem(index) {
-      this.invoiceData.bankStatementTransactions.splice(index, 1)
+      this.invoiceData.bankStatementTransactions.splice(index, 1);
       // this.populateValues()
     },
     initTrHeight() {
-      this.trSetHeight(null)
+      this.trSetHeight(null);
       this.$nextTick(() => {
-        this.trSetHeight(this.$refs.form.scrollHeight)
-      })
+        this.trSetHeight(this.$refs.form.scrollHeight);
+      });
     },
 
-
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
-      console.log(this.formIsValid)
+      console.log(this.formIsValid);
       if (this.invoiceData?.binaryId && this.invoiceData.binaryId !== null) {
-
-        if ((redirectPage === "save" || redirectPage === "verify") && !this.formIsValid) return
+        if (
+          (redirectPage === "save" || redirectPage === "verify") &&
+          !this.formIsValid
+        )
+          return;
       }
 
-
-
-      let self = this
+      let self = this;
       // console.log(this.$refs.invoiceEditForm.validate())
       this.$refs.invoiceEditForm.validate().then((success) => {
-
         // if (this.companyIDisInvalid === false && this.isWeekSelected === false) {
-        this.loading = true
-        console.log("control ->")
+        this.loading = true;
+        console.log("control ->");
 
         // if (!invoiceData.sechduled) {
         //   invoiceData.cronScheduleApi = null
 
         // }
         if (redirectPage == "verify") {
-          invoiceData.verified = true
+          invoiceData.verified = true;
         }
         if (!self.isAccount) {
-          invoiceData.bankStatementTransactions.forEach(item => {
+          invoiceData.bankStatementTransactions.forEach((item) => {
             item.taxType = null;
             item.account = null;
           });
         }
 
-        invoiceData.companyId = router.currentRoute.params.companyId
-        invoiceData.currency = invoiceData.currency
-        let token = useJwt.getToken()
+        invoiceData.companyId = router.currentRoute.params.companyId;
+        invoiceData.currency = invoiceData.currency;
+        let token = useJwt.getToken();
         useJwt
           .EditBankStatement(token, router.currentRoute.params.id, invoiceData)
           .then((response) => {
-            this.loading = false
+            this.loading = false;
             // invoice.cronScheduleApi = {
 
             //   scheduleType: "",
@@ -712,7 +1088,7 @@ export default {
                 icon: "EditIcon",
                 variant: "success",
               },
-            })
+            });
 
             if (redirectPage == "invoices") {
               return this.$router.push({
@@ -721,7 +1097,7 @@ export default {
                   id: router.currentRoute.params.companyId,
                   InvoiceId: 1,
                 },
-              })
+              });
             } else if (redirectPage == "verify") {
               return this.$router.push({
                 name: "CompanyView",
@@ -729,14 +1105,14 @@ export default {
                   id: router.currentRoute.params.companyId,
                   InvoiceId: 2,
                 },
-              })
+              });
             } else {
-              console.log("save")
-              return true
+              console.log("save");
+              return true;
             }
           })
           .catch((error) => {
-            this.loading = false
+            this.loading = false;
             this.$toast({
               component: ToastificationContent,
               props: {
@@ -744,18 +1120,20 @@ export default {
                 icon: "AlertTriangleIcon",
                 variant: "danger",
               },
-            })
-          })
+            });
+          });
         // }
-      })
+      });
     },
     showMsgBoxTwo(id, invoiceData) {
-      const h = this.$createElement
+      const h = this.$createElement;
       // Using HTML string
       // More complex structure
       const messageVNode = h("div", { class: ["bvModalFont"] }, [
-        h("p", { class: ["text-center card-text"] }, [`${this.$t("protocol.description")}`]),
-      ])
+        h("p", { class: ["text-center card-text"] }, [
+          `${this.$t("protocol.description")}`,
+        ]),
+      ]);
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
           title: `${this.$t("protocol.title")}`,
@@ -767,14 +1145,18 @@ export default {
         })
         .then((value) => {
           if (value) {
-            this.loading = true
-            invoiceData.invoiceNumber = "1" + invoiceData.invoiceNumber
-            invoiceData.documentType = "PROTOCOL"
-            let token = useJwt.getToken()
+            this.loading = true;
+            invoiceData.invoiceNumber = "1" + invoiceData.invoiceNumber;
+            invoiceData.documentType = "PROTOCOL";
+            let token = useJwt.getToken();
             useJwt
-              .addCompanyInvoice(token, router.currentRoute.params.companyId, invoiceData)
+              .addCompanyInvoice(
+                token,
+                router.currentRoute.params.companyId,
+                invoiceData
+              )
               .then((response) => {
-                this.loading = false
+                this.loading = false;
 
                 this.$toast({
                   component: ToastificationContent,
@@ -783,17 +1165,17 @@ export default {
                     icon: "EditIcon",
                     variant: "success",
                   },
-                })
+                });
                 this.$router.push({
                   name: "company-invoice-edit",
                   params: {
                     id: id,
                     companyId: router.currentRoute.params.companyId,
                   },
-                })
+                });
               })
               .catch((error) => {
-                this.loading = false
+                this.loading = false;
                 this.$toast({
                   component: ToastificationContent,
                   props: {
@@ -801,8 +1183,8 @@ export default {
                     icon: "EditIcon",
                     variant: "error",
                   },
-                })
-              })
+                });
+              });
           } else {
             this.$router.push({
               name: "company-invoice-edit",
@@ -810,53 +1192,52 @@ export default {
                 id: id,
                 companyId: router.currentRoute.params.companyId,
               },
-            })
+            });
           }
-        })
+        });
     },
   },
   setup() {
-    var loading = ref(false)
-    var trHeight = ref(0)
+    var loading = ref(false);
+    var trHeight = ref(0);
     // var totalTax = ref(0)
-    var isAccount = ref(false)
-    var showInvoiceInput = ref(false)
-    var showTaxInput = ref(false)
-    var showTotalInput = ref(false)
-    var showinvoiceCurrency = ref(false)
-    var modelShow = ref(false)
-    const categoryItems = ref()
-    const jobPostItems = ref()
-    const jobPostSelected = ref()
-    const selectedCategory = ref()
-    var bankProcess = ref("")
-    const INVOICE_APP_STORE_MODULE_NAME = "app-invoice"
+    var isAccount = ref(false);
+    var showInvoiceInput = ref(false);
+    var showTaxInput = ref(false);
+    var showTotalInput = ref(false);
+    var showinvoiceCurrency = ref(false);
+    var modelShow = ref(false);
+    const categoryItems = ref();
+    const jobPostItems = ref();
+    const jobPostSelected = ref();
+    const selectedCategory = ref();
+    var bankProcess = ref("");
+    const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
 
     function closeModel() {
-      this.modelShow = false
+      this.modelShow = false;
       this.$router.push({
         name: "CompanyView",
         params: {
           id: router.currentRoute.params.companyId,
           InvoiceId: 4,
         },
-      })
+      });
     }
 
     // Register module
     if (!store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
-      store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule)
+      store.registerModule(INVOICE_APP_STORE_MODULE_NAME, invoiceStoreModule);
 
     // UnRegister on leave
     onUnmounted(() => {
-      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME)) store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME)
-    })
+      if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
+        store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
+    });
     // onMounted(() => {
     //   getCompanyInfo()
     // })
-    var AccountTypeOption = ref("company")
-
-
+    var AccountTypeOption = ref("company");
 
     const itemFormBlankItem = {
       description: "",
@@ -864,42 +1245,40 @@ export default {
       credit: 0.0,
       payee: "",
       balance: 0,
-      date: '',
+      date: "",
       taxType: "",
       account: "",
-    }
+    };
 
-    const invoiceData = ref(null)
+    const invoiceData = ref(null);
 
-    const visible = ref(false)
+    const visible = ref(false);
 
+    var supplierID = ref(null);
+    var companyName = ref("");
+    const isUploading = ref("");
 
+    const showLogo = ref(null);
 
-    var supplierID = ref(null)
-    var companyName = ref("")
-    const isUploading = ref("")
+    const logoToUpload = ref("");
+    const invoiceImage = ref("");
 
-    const showLogo = ref(null)
-
-    const logoToUpload = ref("")
-    const invoiceImage = ref("")
-
-    const isBlue = ref(false)
-    const isPurple = ref(false)
-    const isGreen = ref(false)
-    const isOrange = ref(false)
-    const isGray = ref(false)
-    const companyInfo = ref(null)
+    const isBlue = ref(false);
+    const isPurple = ref(false);
+    const isGreen = ref(false);
+    const isOrange = ref(false);
+    const isGray = ref(false);
+    const companyInfo = ref(null);
     const currencyOptions = [
       { value: "лв.", text: "лв." },
       { value: "$", text: "$" },
       { value: "€", text: "€" },
       { value: "£", text: "£" },
-    ]
-    var isBank = ref(false)
-    var companyInBG = ref(false)
-    var isQuickBook = ref(false)
-    var isXero = ref(false)
+    ];
+    var isBank = ref(false);
+    var companyInBG = ref(false);
+    var isQuickBook = ref(false);
+    var isXero = ref(false);
     let uploadValue = {
       companyOwnerName: "",
 
@@ -910,8 +1289,7 @@ export default {
       recipientName: "", // Add this
       creatorSignature: "", // Add this if you have a signature
       recipientSignature: "", // Add this if you have a signature
-    }
-
+    };
 
     store
       .dispatch("app-invoice/fetchInvoice", {
@@ -922,50 +1300,58 @@ export default {
           response?.data?.currency?.toLowerCase().trim() == "lv"
             ? "лв."
             : response?.data?.currency?.toLowerCase().trim() == "bgn"
-              ? "лв."
-              : response.data.currency
+            ? "лв."
+            : response.data.currency;
 
-        invoiceData.value = response.data
+        invoiceData.value = response.data;
 
-        console.log(invoiceData.value)
-        if (invoiceData.value.platform == 'XERO') {
+        console.log(invoiceData.value);
+        if (invoiceData.value.platform == "XERO") {
           axios
             .get(
               `${axios.defaults.baseURL}/account/api/export/get-accounts-codes-xero/${router.currentRoute.params.companyId}`,
               {
                 headers: {
-                  Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "accessToken"
+                  )}`,
                 },
               }
             )
             .then((response) => {
-              categoryItems.value = Object.entries(response.data).map(([key, value]) => ({
-                value: key,
-                text: `${key}-${value}`,
-              }))
-            })
+              categoryItems.value = Object.entries(response.data).map(
+                ([key, value]) => ({
+                  value: key,
+                  text: `${key}-${value}`,
+                })
+              );
+            });
         }
 
-        if (invoiceData.value.platform == 'XERO') {
+        if (invoiceData.value.platform == "XERO") {
           axios
-            .get(`${axios.defaults.baseURL}/account/api/export/get-tax-types-xero`, {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-              },
-            })
+            .get(
+              `${axios.defaults.baseURL}/account/api/export/get-tax-types-xero`,
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+              }
+            )
             .then((response) => {
-              jobPostItems.value = response.data
-            })
+              jobPostItems.value = response.data;
+            });
         }
 
         if (invoiceData.value.binaryId) {
-          modelShow.value = true
+          modelShow.value = true;
         } else {
-          modelShow.value = false
+          modelShow.value = false;
         }
 
         if (invoiceData.value.binaryId) {
-
           axios
             .get(
               `${axios.defaults.baseURL}/binaries/api/get-binary/${invoiceData.value.binaryId}/${router.currentRoute.params.companyId}`,
@@ -973,38 +1359,43 @@ export default {
             )
             .then((response) => {
               if (response.status === 200) {
-                const reader = new FileReader()
-                reader.readAsDataURL(response.data)
+                const reader = new FileReader();
+                reader.readAsDataURL(response.data);
 
                 reader.onload = function () {
-                  const filePath = reader.result
-                  invoiceImage.value = filePath
-                }
+                  const filePath = reader.result;
+                  invoiceImage.value = filePath;
+                };
               }
             })
-            .catch()
+            .catch();
         }
 
-        if (invoiceData.value.bankStatementTransactions[0].account || invoiceData.value.bankStatementTransactions[0].taxType) {
-          isAccount.value = true
+        if (
+          invoiceData.value.bankStatementTransactions[0].account ||
+          invoiceData.value.bankStatementTransactions[0].taxType
+        ) {
+          isAccount.value = true;
         } else {
-          isAccount.value = false
+          isAccount.value = false;
         }
         invoiceData.value.bankStatementTransactions =
           invoiceData?.value?.bankStatementTransactions?.length > 0
             ? invoiceData.value.bankStatementTransactions
-            : [JSON.parse(JSON.stringify(itemFormBlankItem))]
+            : [JSON.parse(JSON.stringify(itemFormBlankItem))];
         // invoiceData.value.vatPercent = invoiceData?.value?.vatPercent ? invoiceData.value.vatPercent : 20
 
-        invoiceData.value.transactions = response?.data?.transactions?.map((item) => {
-          return item
-        })
+        invoiceData.value.transactions = response?.data?.transactions?.map(
+          (item) => {
+            return item;
+          }
+        );
       })
       .catch((error) => {
         // if (error.response.status === 404) {
         //   invoiceData.value = undefined
         // }
-      })
+      });
 
     // const handleChange = (item) => {
     //   console.log(item, 'here is handle change');
@@ -1013,8 +1404,8 @@ export default {
     //   console.log(supplierID.value)
 
     // };
-    var companyData = ref(null)
-    var companyName = ref("")
+    var companyData = ref(null);
+    var companyName = ref("");
 
     axios
       .get(`/account/api/company/${router.currentRoute.params.companyId}`, {
@@ -1025,147 +1416,146 @@ export default {
         },
       })
       .then((response) => {
-        companyData.value = response.data
-        console.log(response, "asdfasdf")
+        companyData.value = response.data;
         if (response.data.companyCountry == "Bulgaria") {
-          companyInBG.value = true
+          companyInBG.value = true;
         }
-        let statements = invoiceData.value.bankStatementTransactions
+        let statements = invoiceData.value.bankStatementTransactions;
         for (let statement of statements) {
           if (response.data.exportProperties.platform == "QUICK_BOOKS") {
             if (statement.account == null) {
-              console.log('quickeeee')
-              isQuickBook.value = false
-              isAccount.value = false
+              isQuickBook.value = false;
+              isAccount.value = false;
             } else {
-              console.log('elsesss')
-              isAccount.value = true
-              isQuickBook.value = true
+              isAccount.value = true;
+              isQuickBook.value = true;
             }
-
           }
           if (response.data.exportProperties.platform == "XERO") {
             if (statement.account == null) {
-              console.log('quickeeee')
-              isXero.value = false
-              isAccount.value = false
+              isXero.value = false;
+              isAccount.value = false;
             } else {
-              console.log('elsesss')
-              isAccount.value = true
-              isXero.value = true
+              isAccount.value = true;
+              isXero.value = true;
             }
-
           }
-          console.log(statement, 'this is statement quick books')
-
-
         }
 
+        companyName.value = response.data.companyName;
 
-        companyName.value = response.data.companyName
-
-        console.log(companyName.value, "this is company name ")
-        supplierID.value = response.data.companyIdentificationNumber
+        supplierID.value = response.data.companyIdentificationNumber;
         // if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
         //   invoiceData.value.vatPercent = 0
         // }
       })
       .catch((error) => {
         // console.log(error);
-      })
+      });
 
     const checkAccount = () => {
-
-      console.log(companyData.value.exportProperties.platform, '----------')
+      console.log(companyData.value.exportProperties.platform, "----------");
       if (companyData.value.exportProperties.platform == "XERO") {
-
-        isXero.value = !isXero.value
-
-
+        isXero.value = !isXero.value;
       }
       if (companyData.value.exportProperties.platform == "QUICK_BOOKS") {
-
-        isQuickBook.value = true
-
-
+        isQuickBook.value = true;
       }
-    }
-
+    };
 
     const amountNonVat = (item) => {
       let totalAmountNonVat = item.reduce((acc, ele) => {
-        return acc + parseFloat(ele.quantity) * parseFloat(ele.singleAmountTransaction)
-      }, 0)
-      invoiceData.value.amountNonVat = parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2)
-      return parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2)
-    }
+        return (
+          acc +
+          parseFloat(ele.quantity) * parseFloat(ele.singleAmountTransaction)
+        );
+      }, 0);
+      invoiceData.value.amountNonVat = parseFloat(
+        totalAmountNonVat ? totalAmountNonVat : 0
+      ).toFixed(2);
+      return parseFloat(totalAmountNonVat ? totalAmountNonVat : 0).toFixed(2);
+    };
     const vatAmount = (item, vatPercent) => {
       let amountNonVat = item.reduce((acc, ele) => {
-        return acc + parseFloat(ele.quantity * ele.singleAmountTransaction)
-      }, 0)
-      let totalVatAmount = parseFloat(amountNonVat) * (parseFloat(vatPercent) / 100)
-      invoiceData.value.vatAmount = parseFloat(totalVatAmount).toFixed(2)
-      return parseFloat(totalVatAmount).toFixed(2)
-    }
+        return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
+      }, 0);
+      let totalVatAmount =
+        parseFloat(amountNonVat) * (parseFloat(vatPercent) / 100);
+      invoiceData.value.vatAmount = parseFloat(totalVatAmount).toFixed(2);
+      return parseFloat(totalVatAmount).toFixed(2);
+    };
     const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent) => {
-      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
-      vatPercent = vatPercent ? vatPercent : 0
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0;
+      vatPercent = vatPercent ? vatPercent : 0;
       let amountNonVat = item.reduce((acc, ele) => {
-        return acc + parseFloat(ele.quantity * ele.singleAmountTransaction)
-      }, 0)
+        return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
+      }, 0);
       let totaltradeDiscountAmount =
         (parseFloat(tradeDiscountPercent) / 100) *
-        (parseFloat(amountNonVat) + (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat))
-      invoiceData.value.tradeDiscountAmount = parseFloat(totaltradeDiscountAmount).toFixed(2)
-      return parseFloat(totaltradeDiscountAmount).toFixed(2)
-    }
+        (parseFloat(amountNonVat) +
+          (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat));
+      invoiceData.value.tradeDiscountAmount = parseFloat(
+        totaltradeDiscountAmount
+      ).toFixed(2);
+      return parseFloat(totaltradeDiscountAmount).toFixed(2);
+    };
     const totalPrice = (item, vatPercent, tradeDiscountPercent) => {
-      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0
-      vatPercent = vatPercent ? vatPercent : 0
+      tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0;
+      vatPercent = vatPercent ? vatPercent : 0;
       let amountNonVat = item.reduce((acc, ele) => {
-        return acc + parseFloat(ele.quantity * ele.singleAmountTransaction)
-      }, 0)
+        return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
+      }, 0);
       let tradeDiscountAmount =
         (parseFloat(tradeDiscountPercent) / 100) *
-        (parseFloat(amountNonVat) + (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat))
+        (parseFloat(amountNonVat) +
+          (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat));
 
       let totalPrice =
-        parseFloat(amountNonVat) + (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat) - tradeDiscountAmount
-      invoiceData.value.totalAmount = parseFloat(totalPrice).toFixed(2)
-      return parseFloat(totalPrice).toFixed(2)
-    }
+        parseFloat(amountNonVat) +
+        (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat) -
+        tradeDiscountAmount;
+      invoiceData.value.totalAmount = parseFloat(totalPrice).toFixed(2);
+      return parseFloat(totalPrice).toFixed(2);
+    };
 
     var populateValues = () => {
-
-
-      amountNonVat = amountNonVat ? amountNonVat : 0
-      var vatPercent = invoiceData.value.vatPercent ? invoiceData.value.vatPercent : 0
-      var tradeDiscountPercent = invoiceData.value.tradeDiscountPercent ? invoiceData.value.tradeDiscountPercent : 0
+      amountNonVat = amountNonVat ? amountNonVat : 0;
+      var vatPercent = invoiceData.value.vatPercent
+        ? invoiceData.value.vatPercent
+        : 0;
+      var tradeDiscountPercent = invoiceData.value.tradeDiscountPercent
+        ? invoiceData.value.tradeDiscountPercent
+        : 0;
 
       invoiceData.value.transactions.forEach((item, index) => {
         invoiceData.value.transactions[index].vatAmountTransaction =
           (parseFloat(
             invoiceData.value.transactions[index].quantity *
-            invoiceData.value.transactions[index].singleAmountTransaction
+              invoiceData.value.transactions[index].singleAmountTransaction
           ) *
             parseFloat(vatPercent)) /
-          100
-      })
+          100;
+      });
 
-      invoiceData.value.amountNonVat = parseFloat(amountNonVat).toFixed(2)
+      invoiceData.value.amountNonVat = parseFloat(amountNonVat).toFixed(2);
 
-      var totalVatAmount = parseFloat(amountNonVat) * (parseFloat(vatPercent) / 100)
-      invoiceData.value.vatAmount = parseFloat(totalVatAmount).toFixed(2)
+      var totalVatAmount =
+        parseFloat(amountNonVat) * (parseFloat(vatPercent) / 100);
+      invoiceData.value.vatAmount = parseFloat(totalVatAmount).toFixed(2);
 
       var tradeDiscountAmount =
         (parseFloat(tradeDiscountPercent) / 100) *
-        (parseFloat(amountNonVat) + (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat))
-      invoiceData.value.tradeDiscountAmount = parseFloat(tradeDiscountAmount).toFixed(2)
+        (parseFloat(amountNonVat) +
+          (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat));
+      invoiceData.value.tradeDiscountAmount =
+        parseFloat(tradeDiscountAmount).toFixed(2);
 
       var totalPrice =
-        parseFloat(amountNonVat) + (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat) - tradeDiscountAmount
-      invoiceData.value.totalAmount = parseFloat(totalPrice).toFixed(2)
-    }
+        parseFloat(amountNonVat) +
+        (parseFloat(vatPercent) / 100) * parseFloat(amountNonVat) -
+        tradeDiscountAmount;
+      invoiceData.value.totalAmount = parseFloat(totalPrice).toFixed(2);
+    };
 
     const clearForm = () => {
       invoiceData.value = {
@@ -1176,14 +1566,12 @@ export default {
 
           companyEic: "",
           companyVatEic: "",
-
         },
         recipientCompany: {
           companyOwnerName: "",
 
           companyEic: "",
           companyVatEic: "",
-
         },
         currency: invoiceData.value.currency,
         amountNonVat: invoiceData.value.amountNonVat,
@@ -1207,27 +1595,26 @@ export default {
           scheduleType: "",
         },
         dueDate: "",
-      }
-    }
-    var isScheduled = ref(false)
-    var isNotScheduled = ref(false)
-    var checkSchedule = ref(false)
-    var scheduledTypeOffCase = ref("")
-    var isScheduledTypeOffCaseMonthly = ref(false)
-    var isScheduledTypeOffCaseWeekly = ref(false)
-    var offCaseScheduleType = ref("")
-    var offCaseScheduleDayOfMonth = ref("")
-    var offCaseScheduleDayOfWeek = ref("")
+      };
+    };
+    var isScheduled = ref(false);
+    var isNotScheduled = ref(false);
+    var checkSchedule = ref(false);
+    var scheduledTypeOffCase = ref("");
+    var isScheduledTypeOffCaseMonthly = ref(false);
+    var isScheduledTypeOffCaseWeekly = ref(false);
+    var offCaseScheduleType = ref("");
+    var offCaseScheduleDayOfMonth = ref("");
+    var offCaseScheduleDayOfWeek = ref("");
 
+    var datalistEicRecipient = ref([]);
+    var showSuggestionsEicRecipient = ref(false);
 
-    var datalistEicRecipient = ref([])
-    var showSuggestionsEicRecipient = ref(false)
+    var datalistPerson = ref([]);
+    var showSuggestionsPerson = ref(false);
 
-    var datalistPerson = ref([])
-    var showSuggestionsPerson = ref(false)
-
-    var datalistPersonIdNumber = ref([])
-    var showSuggestionsPersonIdNumber = ref(false)
+    var datalistPersonIdNumber = ref([]);
+    var showSuggestionsPersonIdNumber = ref(false);
     const clearAll = (type) => {
       if (type == "supplier") {
         invoiceData.value.supplierCompany = {
@@ -1235,18 +1622,16 @@ export default {
 
           companyEic: "",
           companyVatEic: "",
-
-        }
+        };
       } else if (type == "recipient") {
         invoiceData.value.recipientCompany = {
           companyOwnerName: "",
 
           companyEic: "",
           companyVatEic: "",
-
-        }
+        };
       }
-    }
+    };
 
     return {
       showTaxInput,
@@ -1312,23 +1697,21 @@ export default {
       offCaseScheduleDayOfMonth,
       offCaseScheduleDayOfWeek,
       visible,
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
 :v-deep .modal-xl {
   width: 104% !important;
   margin: 0 !important;
-
 }
 
 .reverse-button {
   position: relative;
   top: 50%;
 }
-
 
 .myModelClass {
   min-width: 100vw !important;
@@ -1360,8 +1743,6 @@ export default {
 @import "~@core/scss/base/pages/app-invoice.scss";
 @import "~@core/scss/base/components/variables-dark";
 
-
-
 .flatpickr-input {
   background-color: white !important;
 }
@@ -1380,7 +1761,6 @@ export default {
 }
 
 .v-select {
-
   &.item-selector-title,
   &.payment-selector {
     background-color: #fff;
@@ -1419,7 +1799,6 @@ export default {
 }
 
 @media (min-width: 1200px) {
-
   /* modify this based on when the issue occurs */
   .cursor-pointer {
     /* Example: increase the size of the buttons at larger viewport sizes */
@@ -2582,11 +2961,11 @@ ul {
   overflow-x: auto;
 }
 
-.tm_table_responsive>table {
+.tm_table_responsive > table {
   min-width: 600px;
 }
 
-.tm_50_col>* {
+.tm_50_col > * {
   width: 50%;
   -webkit-box-flex: 0;
   -ms-flex: none;
@@ -2701,7 +3080,7 @@ hr {
   grid-gap: 1px;
 }
 
-.tm_invoice.tm_style1 .tm_invoice_table>* {
+.tm_invoice.tm_style1 .tm_invoice_table > * {
   border: 1px solid #dbdfea;
   margin: -1px;
   padding: 8px 15px 10px;
@@ -2759,7 +3138,7 @@ hr {
   display: flex;
 }
 
-.tm_invoice.tm_style1 .tm_invoice_info_list>*:not(:last-child) {
+.tm_invoice.tm_style1 .tm_invoice_info_list > *:not(:last-child) {
   margin-right: 20px;
 }
 
@@ -2785,7 +3164,7 @@ hr {
   display: flex;
 }
 
-.tm_invoice.tm_style1 .tm_box_3>* {
+.tm_invoice.tm_style1 .tm_box_3 > * {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -3276,7 +3655,7 @@ hr {
   border-style: solid;
 }
 
-.tm_section_heading>span {
+.tm_section_heading > span {
   display: inline-block;
   padding: 8px 15px;
   border-radius: 7px 7px 0 0;
@@ -3323,7 +3702,7 @@ hr {
   margin-right: 22px;
 }
 
-.tm_curve_35>* {
+.tm_curve_35 > * {
   -webkit-transform: skewX(35deg);
   transform: skewX(35deg);
 }
@@ -3362,7 +3741,7 @@ hr {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-.tm_dark_invoice+.tm_invoice_btns {
+.tm_dark_invoice + .tm_invoice_btns {
   background: #252526;
   border-color: #252526;
 }
@@ -3651,7 +4030,7 @@ hr {
     flex-direction: column;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_head>* {
+  .tm_invoice.tm_style2 .tm_invoice_head > * {
     width: 100%;
   }
 
@@ -3670,7 +4049,7 @@ hr {
     flex-direction: column;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_info>* {
+  .tm_invoice.tm_style2 .tm_invoice_info > * {
     width: 100%;
   }
 
@@ -3755,7 +4134,7 @@ hr {
     margin-right: 0;
   }
 
-  .tm_curve_35>* {
+  .tm_curve_35 > * {
     -webkit-transform: inherit;
     transform: inherit;
   }
@@ -3824,7 +4203,7 @@ hr {
     flex-direction: column;
   }
 
-  .tm_list.tm_style2 li>* {
+  .tm_list.tm_style2 li > * {
     padding: 5px 20px;
   }
 
@@ -3883,7 +4262,7 @@ hr {
     flex-wrap: wrap;
   }
 
-  .tm_invoice.tm_style1 .tm_invoice_seperator+.tm_invoice_info_list {
+  .tm_invoice.tm_style1 .tm_invoice_seperator + .tm_invoice_info_list {
     margin-bottom: 5px;
   }
 
@@ -3902,7 +4281,7 @@ hr {
     display: none;
   }
 
-  .tm_invoice.tm_style1 .tm_box_3>*:not(:last-child) {
+  .tm_invoice.tm_style1 .tm_box_3 > *:not(:last-child) {
     margin-bottom: 15px;
   }
 
@@ -4187,11 +4566,11 @@ hr {
     flex-direction: initial;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_head>.tm_invoice_left {
+  .tm_invoice.tm_style2 .tm_invoice_head > .tm_invoice_left {
     width: 30%;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_head>.tm_invoice_right {
+  .tm_invoice.tm_style2 .tm_invoice_head > .tm_invoice_right {
     width: 70%;
   }
 
@@ -4210,11 +4589,11 @@ hr {
     flex-direction: initial;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_info>.tm_invoice_info_left {
+  .tm_invoice.tm_style2 .tm_invoice_info > .tm_invoice_info_left {
     width: 30%;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_info>.tm_invoice_info_right {
+  .tm_invoice.tm_style2 .tm_invoice_info > .tm_invoice_info_right {
     width: 70%;
   }
 
@@ -4288,7 +4667,7 @@ hr {
     margin-right: 22px;
   }
 
-  .tm_curve_35>* {
+  .tm_curve_35 > * {
     -webkit-transform: skewX(35deg);
     transform: skewX(35deg);
   }

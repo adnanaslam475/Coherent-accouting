@@ -175,13 +175,9 @@
 
         <!-- <div>{{data.item.companyIdentificationNumber}}</div> -->
       </template>
-
-
-
     </b-table>
 
     <b-card-body class="d-flex justify-content-end flex-wrap pt-0">
-
       <!-- pagination -->
       <div>
         <b-pagination
@@ -291,10 +287,9 @@ export default {
           key: "companyIdentificationNumber",
           label: "Company ID",
           sortable: false,
-        }
+        },
 
         // A virtual column made up from two fields
-
       ],
       /* eslint-disable global-require */
       items: [],
@@ -335,16 +330,16 @@ export default {
       .then((res) => {
         this.items = res.data;
       })
-      .catch((error)=>{
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Error fetching vat reports`,
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
-            },
-          })
+      .catch((error) => {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `Error fetching vat reports`,
+            icon: "AlertTriangleIcon",
+            variant: "danger",
+          },
         });
+      });
   },
 };
 </script>

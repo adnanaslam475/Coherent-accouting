@@ -344,7 +344,7 @@ export default {
   },
 }
 </script>
-`
+`;
 export const codeIconInfo = `
 <template>
   <form-wizard
@@ -681,7 +681,7 @@ export default {
   },
 }
 </script>
-`
+`;
 
 export const codeValidation = `
 <template>
@@ -975,4 +975,4 @@ export default {
   },
 }
 </script>
-`
+`;

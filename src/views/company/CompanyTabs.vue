@@ -1,33 +1,45 @@
 <template>
   <b-col>
     <b-tabs v-model="companyTab">
-      <!-- Company-Info tab -->
-
       <b-tab>
         <template #title>
           <feather-icon icon="BriefcaseIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("lbl.company_info") }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">{{
+            $t("lbl.company_info")
+          }}</span>
         </template>
-        <CompanyInfo v-if="companyTab == 0 || infoActive" :company-tab="companyTab" @state="update($event)"
-          :companyDetails="companyDetails" />
+        <CompanyInfo
+          v-if="companyTab == 0 || infoActive"
+          :company-tab="companyTab"
+          @state="update($event)"
+          :companyDetails="companyDetails"
+        />
       </b-tab>
 
       <!-- invoices tab -->
       <b-tab>
         <template #title>
           <feather-icon icon="FileTextIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("invoices") }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">{{
+            $t("invoices")
+          }}</span>
         </template>
 
-        <Invoice v-if="companyTab == 1 || invoicesActive" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)"
-          :companyDetails="companyDetails" />
+        <Invoice
+          v-if="companyTab == 1 || invoicesActive"
+          :invoice-tab="invoiceTab"
+          @state="updateInvoiceTab($event)"
+          :companyDetails="companyDetails"
+        />
       </b-tab>
 
       <!-- Multiple Uploads tab -->
       <b-tab @click="notVerifiedInvoces">
         <template #title>
           <feather-icon icon="FileIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("company_tabs.multiple_upload") }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">{{
+            $t("company_tabs.multiple_upload")
+          }}</span>
         </template>
         <NotVerifiedInvoice ref="notVerifiedInvoces" />
       </b-tab>
@@ -35,16 +47,24 @@
       <b-tab @click="refreshBanks">
         <template #title>
           <feather-icon icon="FileIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">Approved Bank St.</span>
+          <span style="font-size: 0.8vw" class="text-capitalize"
+            >Approved Bank St.</span
+          >
         </template>
-        <Banks ref="bankStatements" :invoice-tab="invoiceTab" @state="updateInvoiceTab($event)"
-          :companyDetails="companyDetails" />
+        <Banks
+          ref="bankStatements"
+          :invoice-tab="invoiceTab"
+          @state="updateInvoiceTab($event)"
+          :companyDetails="companyDetails"
+        />
       </b-tab>
       <!-- bulk bank statements  -->
       <b-tab @click="notVerifiedBanks">
         <template #title>
           <feather-icon icon="FileIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">OCR Bank St.</span>
+          <span style="font-size: 0.8vw" class="text-capitalize"
+            >OCR Bank St.</span
+          >
         </template>
         <NotVarifiedBanks ref="banks" />
       </b-tab>
@@ -52,47 +72,36 @@
       <b-tab v-if="companyDetails.companyCountry == 'Bulgaria'">
         <template #title>
           <feather-icon icon="FlagIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("company_tabs.vat_reports") }} </span>
+          <span style="font-size: 0.8vw" class="text-capitalize"
+            >{{ $t("company_tabs.vat_reports") }}
+          </span>
         </template>
-        <VatReports v-if="companyTab == 5 || vatReportsActive" :vat-reports-tab="vatReportsTab"
-          @state="updateVatReportsTab($event)" />
+        <VatReports
+          v-if="companyTab == 5 || vatReportsActive"
+          :vat-reports-tab="vatReportsTab"
+          @state="updateVatReportsTab($event)"
+        />
       </b-tab>
-
 
       <b-tab v-else>
         <template #title>
           <feather-icon icon="Share2Icon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">Connections </span>
+          <span style="font-size: 0.8vw" class="text-capitalize"
+            >Connections
+          </span>
         </template>
-        <Connections v-if="companyTab == 5 || vatReportsActive" :vat-reports-tab="vatReportsTab" />
+        <Connections
+          v-if="companyTab == 5 || vatReportsActive"
+          :vat-reports-tab="vatReportsTab"
+        />
       </b-tab>
 
-      <!-- credit notifications 
-      <b-tab>
-        <template #title>
-          <feather-icon icon="CreditCardIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{
-            $t('company_tabs.CreditNotifications') }}</span>
-        </template>
-        <YearlyReport v-if="companyTab == 4 || creditNotifications" />
-      </b-tab>
-
-
-      <b-tab>
-        <template #title>
-          <feather-icon icon="CreditCardIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{
-            $t('company_tabs.DebitNotifications') }}</span>
-        </template>
-        <YearlyReport v-if="companyTab == 5 || debitNotifications" />
-      </b-tab>
-      Tab -->
-
-      <!-- Documents tab -->
       <b-tab>
         <template #title>
           <feather-icon icon="FolderIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("company_tabs.company_documents") }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">{{
+            $t("company_tabs.company_documents")
+          }}</span>
         </template>
         <Document v-if="companyTab == 6 || companyDocumentsActive" />
       </b-tab>
@@ -101,10 +110,15 @@
       <b-tab>
         <template #title>
           <feather-icon icon="UserIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{ $t("company_tabs.clients_or_recipients") }}</span>
+          <span style="font-size: 0.8vw" class="text-capitalize">{{
+            $t("company_tabs.clients_or_recipients")
+          }}</span>
         </template>
-        <PrivatePersons v-if="companyTab == 7 || privatePersonActive" :add-record="addRecord"
-          @state="updateAddRecord($event)" />
+        <PrivatePersons
+          v-if="companyTab == 7 || privatePersonActive"
+          :add-record="addRecord"
+          @state="updateAddRecord($event)"
+        />
       </b-tab>
 
       <!-- Name of company -->
@@ -126,23 +140,23 @@
 </template>
 
 <script>
-import ToastificationContent from "@core/components/toastification/ToastificationContent.vue"
-import { BTabs, BTab, BCardText, BCol, BCard } from "bootstrap-vue"
-import CompanyInfo from "./CompanyInfo/CompanyInfo.vue"
-import Invoice from "./Invoice/invoice-list/InvoiceList.vue"
-import VatReports from "./VatReports/vat-reports-list/VatReportsList.vue"
-import Connections from "../connections/Connections.vue"
-import VATMonthReport from "./VATMonthReports/VATMonthReport.vue"
-import YearlyReport from "./YearlyReports/YearlyReport.vue"
-import NotVerifiedInvoice from "./Invoice/invoice-list-notVerified/InvoiceList.vue"
-import Document from "./Documents/Document.vue"
-import PrivatePersons from "./user/users-list/UsersList.vue"
-import { codeIcon } from "./code"
-import axios from "@/libs/axios"
-import store from "@/store"
-import { mapGetters } from "vuex"
-import Banks from './BankStatements/bank-list/BanksList.vue'
-import NotVarifiedBanks from './BankStatements/bank-list-notVerified/InvoiceList.vue'
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import { BTabs, BTab, BCardText, BCol, BCard } from "bootstrap-vue";
+import CompanyInfo from "./CompanyInfo/CompanyInfo.vue";
+import Invoice from "./Invoice/invoice-list/InvoiceList.vue";
+import VatReports from "./VatReports/vat-reports-list/VatReportsList.vue";
+import Connections from "../connections/Connections.vue";
+import VATMonthReport from "./VATMonthReports/VATMonthReport.vue";
+import YearlyReport from "./YearlyReports/YearlyReport.vue";
+import NotVerifiedInvoice from "./Invoice/invoice-list-notVerified/InvoiceList.vue";
+import Document from "./Documents/Document.vue";
+import PrivatePersons from "./user/users-list/UsersList.vue";
+import { codeIcon } from "./code";
+import axios from "@/libs/axios";
+import store from "@/store";
+import { mapGetters } from "vuex";
+import Banks from "./BankStatements/bank-list/BanksList.vue";
+import NotVarifiedBanks from "./BankStatements/bank-list-notVerified/InvoiceList.vue";
 
 export default {
   components: {
@@ -161,7 +175,7 @@ export default {
     BCard,
     Banks,
     NotVarifiedBanks,
-    Connections
+    Connections,
   },
   data() {
     return {
@@ -170,16 +184,20 @@ export default {
       companyName: "",
       companyID: "",
       codeIcon,
-      companyTab: this.$route.params.InvoiceId ? parseInt(this.$route.params.InvoiceId) : 0,
+      companyTab: this.$route.params.InvoiceId
+        ? parseInt(this.$route.params.InvoiceId)
+        : 0,
       invoiceTab: 0,
       addRecord: false,
       vatReportsTab: 0,
-      infoActive: this.$route.params.InvoiceId && this.$route.params.InvoiceId !== 0 ? false : true,
+      infoActive:
+        this.$route.params.InvoiceId && this.$route.params.InvoiceId !== 0
+          ? false
+          : true,
       invoicesActive: this.$route.params.InvoiceId == 1 ? true : false,
       multipleUploadActive: this.$route.params.InvoiceId == 2 ? true : false,
       bankStatementsActive: this.$route.params.InvoiceId == 3 ? true : false,
       blukStatementsActive: this.$route.params.InvoiceId == 4 ? true : false,
-
 
       vatReportsActive: this.$route.params.InvoiceId == 5 ? true : false,
       // creditNotifications: this.$route.params.InvoiceId == 6 ? true : false,
@@ -187,43 +205,42 @@ export default {
 
       companyDocumentsActive: this.$route.params.InvoiceId == 6 ? true : false,
       privatePersonActive: this.$route.params.InvoiceId == 7 ? true : false,
-    }
+    };
   },
   computed: {
     ...mapGetters("app", ["getCurrentTab"]),
   },
   mounted() {
-    this.companyID = this.$route.params.id
+    this.companyID = this.$route.params.id;
 
-    this.getCompanyInfo()
+    this.getCompanyInfo();
   },
   created() {
     if (this.getCurrentTab == 3) {
-      this.companyTab = 2
-      store.commit("app/MULTIPLE_UPLOADS", 0)
+      this.companyTab = 2;
+      store.commit("app/MULTIPLE_UPLOADS", 0);
     }
   },
   watch: {
     companyTab: function (newValue, oldValue) {
       switch (newValue) {
         case 0:
-          this.infoActive = true
-          break
+          this.infoActive = true;
+          break;
         case 1:
-          this.invoicesActive = true
-          break
+          this.invoicesActive = true;
+          break;
         case 2:
-          this.multipleUploadActive = true
-          break
+          this.multipleUploadActive = true;
+          break;
         case 3:
-          this.bankStatementsActive = true
+          this.bankStatementsActive = true;
 
         case 4:
-          this.blukStatementsActive = true
-          console.log(this.$refs.banks, 'sdsdasadfddd===')
+          this.blukStatementsActive = true;
         case 5:
-          this.vatReportsActive = true
-          break
+          this.vatReportsActive = true;
+          break;
         // case 4:
         //   this.creditNotifications = true
         //   break
@@ -231,12 +248,12 @@ export default {
         //   this.debitNotifications = true
         //   break
         case 6:
-          this.companyDocumentsActive = true
-          break
+          this.companyDocumentsActive = true;
+          break;
         case 7:
-          this.privatePersonActive = true
+          this.privatePersonActive = true;
 
-          break
+          break;
         default:
       }
     },
@@ -252,12 +269,11 @@ export default {
           },
         })
         .then((response) => {
-          let companyRecord = response.data
+          let companyRecord = response.data;
 
-          this.companyDetails = companyRecord
-          console.log(this.companyDetails.companyCountry, 'this is details')
-          this.companyName = companyRecord.companyName
-          this.companyNameLength = this.companyName.length
+          this.companyDetails = companyRecord;
+          this.companyName = companyRecord.companyName;
+          this.companyNameLength = this.companyName.length;
         })
         .catch((error) => {
           // console.log(error);
@@ -268,38 +284,37 @@ export default {
               icon: "AlertTriangleIcon",
               variant: "danger",
             },
-          })
-        })
+          });
+        });
     },
     update(value) {
       if (value.state) {
-        this.companyTab = value.state
+        this.companyTab = value.state;
       }
       if (value.addRecord) {
-        this.addRecord = value.addRecord
+        this.addRecord = value.addRecord;
       }
     },
     updateAddRecord(value) {
-      this.addRecord = value
+      this.addRecord = value;
     },
     updateInvoiceTab(value) {
-      this.invoiceTab = value
+      this.invoiceTab = value;
     },
     updateVatReportsTab(value) {
-      this.vatReportsTab = value
+      this.vatReportsTab = value;
     },
     notVerifiedBanks() {
-      console.log(this.$refs, 'ddddd')
-      this.$refs.banks.refreshList()
+      this.$refs.banks.refreshList();
     },
     notVerifiedInvoces() {
-      this.$refs.notVerifiedInvoces.refreshList()
+      this.$refs.notVerifiedInvoces.refreshList();
     },
     refreshBanks() {
-      this.$refs.bankStatements.refreshList()
-    }
+      this.$refs.bankStatements.refreshList();
+    },
   },
-}
+};
 </script>
 
 <style lang="scss">

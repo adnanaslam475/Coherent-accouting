@@ -18,7 +18,7 @@
             md="6"
             class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
           >
-            <label>{{ $t('clients_or_recipients.show') }}</label>
+            <label>{{ $t("clients_or_recipients.show") }}</label>
             <v-select
               v-model="perPage"
               :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
@@ -26,15 +26,17 @@
               :clearable="false"
               class="per-page-selector d-inline-block mx-50"
             />
-            <label>{{ $t('clients_or_recipients.entries') }}</label>
+            <label>{{ $t("clients_or_recipients.entries") }}</label>
 
             <b-button
-                class="ml-1"
-                variant="primary"
-                @click="isAddNewUserSidebarActive = true"
-              >
-                <span class="text-nowrap">{{  $t('clients_or_recipients.add_user') }}</span>
-              </b-button>
+              class="ml-1"
+              variant="primary"
+              @click="isAddNewUserSidebarActive = true"
+            >
+              <span class="text-nowrap">{{
+                $t("clients_or_recipients.add_user")
+              }}</span>
+            </b-button>
           </b-col>
 
           <!-- Search -->
@@ -45,7 +47,6 @@
                 class="d-inline-block mr-1"
                 :placeholder="$t('company_invoices.search')"
               />
-              
             </div>
           </b-col>
         </b-row>
@@ -81,7 +82,7 @@
 
         <!-- Column: User -->
         <template #head(firstMiddleAndLastName)>
-          {{  $t('clients_or_recipients.user') }}
+          {{ $t("clients_or_recipients.user") }}
         </template>
         <template #cell(firstMiddleAndLastName)="data">
           <b-media vertical-align="center">
@@ -93,78 +94,118 @@
                 :text="avatarText(data.item.firstMiddleAndLastName)"
               />
             </template>
-            <b-link 
+            <b-link
               :to="{
-                  name: 'apps-users-edit',
-                  params: { id: data.item.id },
-                }"
+                name: 'apps-users-edit',
+                params: { id: data.item.id },
+              }"
               class="font-weight-bold d-block text-nowrap"
             >
               {{ data.item.firstMiddleAndLastName }}
             </b-link>
-            <CopyToClipboard :text="data.item.firstMiddleAndLastName"  @copy="textCopyToClipboard('Username')">
-              <b-badge :id="`username-${data.item.id}`" pill :variant="`light-success`" class="text-capitalize">
+            <CopyToClipboard
+              :text="data.item.firstMiddleAndLastName"
+              @copy="textCopyToClipboard('Username')"
+            >
+              <b-badge
+                :id="`username-${data.item.id}`"
+                pill
+                :variant="`light-success`"
+                class="text-capitalize"
+              >
                 <small>{{ data.item.firstMiddleAndLastName }}</small>
               </b-badge>
-              <b-tooltip :target="`username-${data.item.id}`">Copy to clipboard</b-tooltip>
+              <b-tooltip :target="`username-${data.item.id}`"
+                >Copy to clipboard</b-tooltip
+              >
             </CopyToClipboard>
           </b-media>
         </template>
 
-         <!-- Identification Number -->
-         <template #head(identificationNumber)>
-          {{  $t('clients_or_recipients.identification_no') }}
+        <!-- Identification Number -->
+        <template #head(identificationNumber)>
+          {{ $t("clients_or_recipients.identification_no") }}
         </template>
         <template #cell(identificationNumber)="data">
-          <CopyToClipboard :text="data.value"  @copy="textCopyToClipboard('User ID')">
-            <b-badge variant="primary" class="text-capitalize" id="user-idd" style="cursor: pointer">
+          <CopyToClipboard
+            :text="data.value"
+            @copy="textCopyToClipboard('User ID')"
+          >
+            <b-badge
+              variant="primary"
+              class="text-capitalize"
+              id="user-idd"
+              style="cursor: pointer"
+            >
               <span class="text-nowrap text-capitalize">{{ data.value }}</span>
             </b-badge>
-            </CopyToClipboard
-          >
+          </CopyToClipboard>
           <b-tooltip target="user-idd">Copy to clipboard</b-tooltip>
         </template>
 
         <!-- Vat Identification number -->
         <template #head(vatIdentificationNumber)>
-          {{  $t('clients_or_recipients.vat_id') }}
+          {{ $t("clients_or_recipients.vat_id") }}
         </template>
         <template #cell(vatIdentificationNumber)="data">
-          <CopyToClipboard :text="data.value" @copy="textCopyToClipboard('VAT ID')">
-            <span class="text-nowrap text-capitalize" id="vat-idd" style="cursor: pointer">{{ data.value }}</span>
+          <CopyToClipboard
+            :text="data.value"
+            @copy="textCopyToClipboard('VAT ID')"
+          >
+            <span
+              class="text-nowrap text-capitalize"
+              id="vat-idd"
+              style="cursor: pointer"
+              >{{ data.value }}</span
+            >
           </CopyToClipboard>
           <b-tooltip target="vat-idd">Copy to clipboard</b-tooltip>
         </template>
 
         <!-- Address -->
         <template #head(address)>
-          {{  $t('company_info.address') }}
+          {{ $t("company_info.address") }}
         </template>
         <template #cell(address)="data">
-          <CopyToClipboard :text="data.value" @copy="textCopyToClipboard('Address')">
-            <span class="text-nowrap text-capitalize" id="user-address" style="cursor: pointer">{{ data.value }}</span>
+          <CopyToClipboard
+            :text="data.value"
+            @copy="textCopyToClipboard('Address')"
+          >
+            <span
+              class="text-nowrap text-capitalize"
+              id="user-address"
+              style="cursor: pointer"
+              >{{ data.value }}</span
+            >
           </CopyToClipboard>
           <b-tooltip target="user-address">Copy to clipboard</b-tooltip>
         </template>
 
         <!-- ID Card -->
         <template #head(idcardNumber)>
-          {{  $t('clients_or_recipients.id_card') }}
+          {{ $t("clients_or_recipients.id_card") }}
         </template>
         <template #cell(idcardNumber)="data">
-          <CopyToClipboard :text="data.value" @copy="textCopyToClipboard('ID Card No.')">
-            <span class="text-nowrap text-capitalize" id="user-id-cardd" style="cursor: pointer">{{ data.value }}</span>
+          <CopyToClipboard
+            :text="data.value"
+            @copy="textCopyToClipboard('ID Card No.')"
+          >
+            <span
+              class="text-nowrap text-capitalize"
+              id="user-id-cardd"
+              style="cursor: pointer"
+              >{{ data.value }}</span
+            >
           </CopyToClipboard>
           <b-tooltip target="user-id-cardd">Copy to clipboard</b-tooltip>
         </template>
 
         <!-- Column: Actions -->
         <template #head(actions)>
-          {{  $t('companies.actions') }}
+          {{ $t("companies.actions") }}
         </template>
         <template #cell(actions)="data">
           <div class="d-flex">
-
             <feather-icon
               :id="`edit-${data.item.id}-preview-icon`"
               icon="EditIcon"
@@ -203,11 +244,7 @@
           <b-col
             cols="12"
             sm="6"
-            class="
-              d-flex
-              align-items-center
-              justify-content-center justify-content-sm-start
-            "
+            class="d-flex align-items-center justify-content-center justify-content-sm-start"
           >
             <span class="text-muted"
               >Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
@@ -218,11 +255,7 @@
           <b-col
             cols="12"
             sm="6"
-            class="
-              d-flex
-              align-items-center
-              justify-content-center justify-content-sm-end
-            "
+            class="d-flex align-items-center justify-content-center justify-content-sm-end"
           >
             <b-pagination
               v-model="currentPage"
@@ -276,7 +309,7 @@ import useUsersList from "./useUsersList";
 import userStoreModule from "../userStoreModule";
 import UserListAddNew from "./UserListAddNew.vue";
 import CopyToClipboard from "vue-copy-to-clipboard";
-import  {i18n} from '@/main.js'
+import { i18n } from "@/main.js";
 
 export default {
   components: {
@@ -300,7 +333,7 @@ export default {
     CopyToClipboard,
   },
   methods: {
-    // 
+    //
     textCopyToClipboard(val) {
       this.$root.$emit("bv::hide::tooltip");
       this.$toast({
@@ -311,32 +344,31 @@ export default {
           variant: "success",
         },
       });
-
     },
     //
-    showMsgBoxTwo(id,refetchData) {
-      const h = this.$createElement
-        // Using HTML string
-        // More complex structure
-      const messageVNode = h('div', { class: ['bvModalFont'] }, [
-        h('p', { class: ['text-center card-text'] }, [
-        i18n.tc('clients_or_recipients.delete_client_confirm'),
-        ]) 
-      ])
+    showMsgBoxTwo(id, refetchData) {
+      const h = this.$createElement;
+      // Using HTML string
+      // More complex structure
+      const messageVNode = h("div", { class: ["bvModalFont"] }, [
+        h("p", { class: ["text-center card-text"] }, [
+          i18n.tc("clients_or_recipients.delete_client_confirm"),
+        ]),
+      ]);
       this.$bvModal
         .msgBoxConfirm([messageVNode], {
-          title: i18n.tc('clients_or_recipients.delete_client'),
-          okVariant: 'primary',
-          okTitle: i18n.tc('companies.confirm'),
-          cancelTitle: i18n.tc('clients_or_recipients.cancel'),
+          title: i18n.tc("clients_or_recipients.delete_client"),
+          okVariant: "primary",
+          okTitle: i18n.tc("companies.confirm"),
+          cancelTitle: i18n.tc("clients_or_recipients.cancel"),
           hideHeaderClose: false,
           centered: true,
         })
-        .then(value => {
-          if(value){
-            this.UserDelete(id, refetchData)
+        .then((value) => {
+          if (value) {
+            this.UserDelete(id, refetchData);
           }
-        })
+        });
     },
     UserDelete(id, refetchData) {
       const token = useJwt.getToken();

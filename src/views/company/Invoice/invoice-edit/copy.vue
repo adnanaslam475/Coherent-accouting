@@ -5454,10 +5454,8 @@ export default {
   methods: {
     checkProcessType(type) {
       let self = this
-      console.log(type, 'this sssss===>')
       if (type == 'BANK_TRANSFER') {
         this.isBank = true
-        console.log(this.invoiceData, 'adfdfdddddd')
         this.invoiceData.bankApi.name = self.companyData?.companyBankName
         this.invoiceData.bankApi.bic = self.companyData?.companyBankBic
         this.invoiceData.bankApi.iban = self.companyData?.companyBankAccount
@@ -6227,7 +6225,6 @@ export default {
       },
     })
       .then((response) => {
-        console.log(response, 'asdfasdf')
         if (response.data.companyCountry == 'Bulgaria') {
           companyInBG.value = true
 
@@ -6237,7 +6234,6 @@ export default {
         }
         companyName.value = response.data.companyName
         companyData.value = response.data
-        console.log(companyName.value, 'this is company name ')
         supplierID.value = response.data.companyIdentificationNumber
         // if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
         //   invoiceData.value.vatPercent = 0

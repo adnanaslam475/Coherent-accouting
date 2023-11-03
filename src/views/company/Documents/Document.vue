@@ -14,7 +14,7 @@
             block
             @click="showForm = true"
           >
-            {{  $t('company_documents.add_asset') }}
+            {{ $t("company_documents.add_asset") }}
           </b-button>
         </b-col>
       </b-col>
@@ -81,101 +81,108 @@
 
       <!--Assets Table  -->
       <b-table
-            :fields="fields"
-            :items="items"
-            responsive
-            class="mb-0"
-            show-empty
-            empty-text="No matching records found"
-            @sort-changed="checkStatus"
-          >
-          <template #empty="scope">
-              <div class="d-flex align-items-center justify-content-center">
-                <div class="mb-1 start-chat-icon">
-                  <feather-icon icon="FolderIcon" size="20" />
-                </div>
-                <h5 class="sidebar-toggle start-chat-text">No records found</h5>
-              </div>
-            </template>
+        :fields="fields"
+        :items="items"
+        responsive
+        class="mb-0"
+        show-empty
+        empty-text="No matching records found"
+        @sort-changed="checkStatus"
+      >
+        <template #empty="scope">
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="mb-1 start-chat-icon">
+              <feather-icon icon="FolderIcon" size="20" />
+            </div>
+            <h5 class="sidebar-toggle start-chat-text">No records found</h5>
+          </div>
+        </template>
 
-            <!-- Media -->
-            <template #head(binaryId)>
-              {{  $t('company_documents.media') }}
-            </template>
-            <template #cell(binaryId)="data">
-              <div>
-                <!-- :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type])"-->
-                <!-- :src="!!images[data.item.id] ? images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type]) : ''"-->
-                <!-- :src="images[data.item.id].type === 'image/bmp' || images[data.item.id].type === 'image/jpeg' || images[data.item.id].type === 'image/png' ? images[data.item.id].image : filesImages[images[data.item.id].type]" -->
-                <!-- :src='(images[data.item.id].type === "jpg" || images[data.item.id].type === "jpeg" || images[data.item.id].type === "png") ? "@/assets/images/icons/jpg.png" : (images[data.item.id].type === "rar" ||  images[data.item.id].type === "zip") ? "@/assets/images/icons/zip.png" : (images[data.item.id].type === "xls" || images[data.item.id].type === "xlsx") ? "@/assets/images/icons/xls.png" : (images[data.item.id].type === "doc" || images[data.item.id].type === "docx") ? "@/assets/images/icons/doc.png" : (images[data.item.id].type === "pdf") ? "@/assets/images/icons/pdf.png" : (images[data.item.id].type === "txt") ? "@/assets/images/icons/txt.png" : ""' -->
+        <!-- Media -->
+        <template #head(binaryId)>
+          {{ $t("company_documents.media") }}
+        </template>
+        <template #cell(binaryId)="data">
+          <div>
+            <!-- :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type])"-->
+            <!-- :src="!!images[data.item.id] ? images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type]) : ''"-->
+            <!-- :src="images[data.item.id].type === 'image/bmp' || images[data.item.id].type === 'image/jpeg' || images[data.item.id].type === 'image/png' ? images[data.item.id].image : filesImages[images[data.item.id].type]" -->
+            <!-- :src='(images[data.item.id].type === "jpg" || images[data.item.id].type === "jpeg" || images[data.item.id].type === "png") ? "@/assets/images/icons/jpg.png" : (images[data.item.id].type === "rar" ||  images[data.item.id].type === "zip") ? "@/assets/images/icons/zip.png" : (images[data.item.id].type === "xls" || images[data.item.id].type === "xlsx") ? "@/assets/images/icons/xls.png" : (images[data.item.id].type === "doc" || images[data.item.id].type === "docx") ? "@/assets/images/icons/doc.png" : (images[data.item.id].type === "pdf") ? "@/assets/images/icons/pdf.png" : (images[data.item.id].type === "txt") ? "@/assets/images/icons/txt.png" : ""' -->
 
-                <b-img
-                  :key="images.length + '-' + !!images[data.item.id]"
-                  class="hover-img"
-                  blank-color="#ccc"
-                  :src="getMediaType(images1[data.item.id].type)"
-                  rounded
-                  style="width: 60px; height: 70px"
-                  @click="showImageDetail(data.item.binaryId, data.item.id, images1[data.item.id].type)
-                  "
-                />
-              </div>
-            </template>
+            <b-img
+              :key="images.length + '-' + !!images[data.item.id]"
+              class="hover-img"
+              blank-color="#ccc"
+              :src="getMediaType(images1[data.item.id].type)"
+              rounded
+              style="width: 60px; height: 70px"
+              @click="
+                showImageDetail(
+                  data.item.binaryId,
+                  data.item.id,
+                  images1[data.item.id].type
+                )
+              "
+            />
+          </div>
+        </template>
 
-            <!-- Notes -->
-            <template #head(notes)>
-              {{  $t('company_documents.notes') }}
-            </template>
-            <template #cell(notes)="data">
-              <b-row v-if="asset.id === data.item.id" class="w-100">
-                <b-col cols="10">
-                  <b-form-input
-                    :id="'notes-' + data.item.id"
-                    v-model="data.item.notes"
-                    type="text"
-                    name="notes"
-                  />
-                </b-col>
-                <b-col cols="2">
-                  <b-button
-                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                    variant="success"
-                    @click="updateBinary"
-                  >
-                    <feather-icon icon="CheckCircleIcon" />
-                  </b-button>
-                </b-col>
-              </b-row>
-              <p v-else>
-                {{ data.item.notes }}
-              </p> 
+        <!-- Notes -->
+        <template #head(notes)>
+          {{ $t("company_documents.notes") }}
+        </template>
+        <template #cell(notes)="data">
+          <b-row v-if="asset.id === data.item.id" class="w-100">
+            <b-col cols="10">
+              <b-form-input
+                :id="'notes-' + data.item.id"
+                v-model="data.item.notes"
+                type="text"
+                name="notes"
+              />
+            </b-col>
+            <b-col cols="2">
+              <b-button
+                v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                variant="success"
+                @click="updateBinary"
+              >
+                <feather-icon icon="CheckCircleIcon" />
+              </b-button>
+            </b-col>
+          </b-row>
+          <p v-else>
+            {{ data.item.notes }}
+          </p>
         </template>
 
         <!-- Action Buttons -->
         <template #head(actions)>
-          {{  $t('companies.actions') }}
+          {{ $t("companies.actions") }}
         </template>
-        <template
-              #cell(actions)="data"
-              style="text-align: center !important"
-            >
-            <div class="d-flex">
-             
-                <feather-icon 
-                  icon="EyeIcon" 
-                  size="16"
-                  class="mr-1"
-                  :id="`preview-${data.item.id}-icon`"
-                  style="cursor: pointer"
-                  @click="showImageDetail(data.item.binaryId,data.item.id, images1[data.item.id].type)" 
-                />
-                <b-tooltip
-                  :title="$t('company_documents.preview')"
-                  :target="`preview-${data.item.id}-icon`"
-                />
-             
-                <!-- Dropdown -->
-                <!-- <b-dropdown
+        <template #cell(actions)="data" style="text-align: center !important">
+          <div class="d-flex">
+            <feather-icon
+              icon="EyeIcon"
+              size="16"
+              class="mr-1"
+              :id="`preview-${data.item.id}-icon`"
+              style="cursor: pointer"
+              @click="
+                showImageDetail(
+                  data.item.binaryId,
+                  data.item.id,
+                  images1[data.item.id].type
+                )
+              "
+            />
+            <b-tooltip
+              :title="$t('company_documents.preview')"
+              :target="`preview-${data.item.id}-icon`"
+            />
+
+            <!-- Dropdown -->
+            <!-- <b-dropdown
                   variant="link"
                   toggle-class="p-0"
                   no-caret
@@ -205,60 +212,56 @@
                     <span class="align-middle ml-50">Download</span>
                   </b-dropdown-item>
                 </b-dropdown> -->
-              
-                <feather-icon
-                  @click="editRecord(data)"
-                  size="16"
-                  class="mr-1"
-                  :id="`edit-${data.item.id}-icon`"
-                  icon="EditIcon"
-                  style="cursor: pointer" 
-                />
-                <b-tooltip
-                  :title="$t('company_documents.edit')"
-                  :target="`edit-${data.item.id}-icon`"
-                />
-              
-                <feather-icon
-                  @click="showMsgBoxTwo(data.item.binaryId)"
-                  size="16"
-                  class="mr-1"
-                  :id="`delete-${data.item.id}-icon`"
-                  icon="TrashIcon"
-                  style="cursor: pointer" 
-                />
-                <b-tooltip
-                  :title="$t('company_documents.delete')"
-                  :target="`delete-${data.item.id}-icon`"
-                />
-                <feather-icon
-                  v-if="images1[data.item.id]"
-                  @click="getImage(data.item.binaryId, data.item.id,1)"
-                  size="16"
-                  :href="images1[data.item.id].image"
-                  :id="`download-${data.item.id}-icon`"
-                  icon="DownloadIcon"
-                  style="cursor: pointer" 
-                />
-                <b-tooltip
-                  v-if="images1[data.item.id]"
-                  :title="$t('company_documents.download')"
-                  :target="`download-${data.item.id}-icon`"
-                />
-              </div>
-            </template>
-        </b-table>
 
-<!-- Pagination -->
+            <feather-icon
+              @click="editRecord(data)"
+              size="16"
+              class="mr-1"
+              :id="`edit-${data.item.id}-icon`"
+              icon="EditIcon"
+              style="cursor: pointer"
+            />
+            <b-tooltip
+              :title="$t('company_documents.edit')"
+              :target="`edit-${data.item.id}-icon`"
+            />
+
+            <feather-icon
+              @click="showMsgBoxTwo(data.item.binaryId)"
+              size="16"
+              class="mr-1"
+              :id="`delete-${data.item.id}-icon`"
+              icon="TrashIcon"
+              style="cursor: pointer"
+            />
+            <b-tooltip
+              :title="$t('company_documents.delete')"
+              :target="`delete-${data.item.id}-icon`"
+            />
+            <feather-icon
+              v-if="images1[data.item.id]"
+              @click="getImage(data.item.binaryId, data.item.id, 1)"
+              size="16"
+              :href="images1[data.item.id].image"
+              :id="`download-${data.item.id}-icon`"
+              icon="DownloadIcon"
+              style="cursor: pointer"
+            />
+            <b-tooltip
+              v-if="images1[data.item.id]"
+              :title="$t('company_documents.download')"
+              :target="`download-${data.item.id}-icon`"
+            />
+          </div>
+        </template>
+      </b-table>
+
+      <!-- Pagination -->
       <b-row>
         <b-col
           cols="12"
           sm="6"
-          class="
-            d-flex
-            align-items-center
-            justify-content-center justify-content-sm-end
-          "
+          class="d-flex align-items-center justify-content-center justify-content-sm-end"
         >
           <b-pagination
             v-if="items.length > 0"
@@ -304,18 +307,18 @@
       </b-link>
     </b-modal>
 
-     <!-- delete Confirmation Modal -->
-     <b-modal
-          v-model="deleteModalShow"
-          :title="$t('company_documents.delete_doc')"
-          :ok-title="$t('companies.confirm')"
-          :cancel-title="$t('clients_or_recipients.cancel')"
-          @ok="deleteAsset(documentToDelete)"
-        >
-          <b-card-text class="text-center" style="font-size: 15px">
-           {{ $t('company_documents.delete_confirmation') }} 
-          </b-card-text>
-        </b-modal>
+    <!-- delete Confirmation Modal -->
+    <b-modal
+      v-model="deleteModalShow"
+      :title="$t('company_documents.delete_doc')"
+      :ok-title="$t('companies.confirm')"
+      :cancel-title="$t('clients_or_recipients.cancel')"
+      @ok="deleteAsset(documentToDelete)"
+    >
+      <b-card-text class="text-center" style="font-size: 15px">
+        {{ $t("company_documents.delete_confirmation") }}
+      </b-card-text>
+    </b-modal>
   </div>
 </template>
 
@@ -388,9 +391,9 @@ export default {
   data() {
     const self = this;
     return {
-      documentToDelete : '',
-      deleteModalShow : false,
-      clickedImageType:'png',
+      documentToDelete: "",
+      deleteModalShow: false,
+      clickedImageType: "png",
       filesImages: {
         // eslint-disable-next-line global-require
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document": require("@/assets/images/icons/doc.png"),
@@ -469,8 +472,8 @@ export default {
       },
       fields: [
         {
-          key: 'binaryId',
-          label: 'Media',
+          key: "binaryId",
+          label: "Media",
         },
         // "Media",
         // {
@@ -499,31 +502,31 @@ export default {
   methods: {
     //getting media icons
     getMediaType(val) {
-      console.log("src "+val)
-      if(val.length > 0){
-      var source;
-      if(val == "png"){
-        source = "jpg";
+      console.log("src " + val);
+      if (val.length > 0) {
+        var source;
+        if (val == "png") {
+          source = "jpg";
+        }
+        if (val === "jpg" || val === "jpeg") {
+          source = "jpg";
+        } else if (val === "rar" || val === "zip") {
+          source = "zip";
+        } else if (val === "xls" || val === "xlsx" || val === "sheet") {
+          source = "xls";
+        } else if (val === "doc" || val === "docx") {
+          source = "doc";
+        } else if (val === "pdf") {
+          source = "pdf";
+        } else if (val === "txt") {
+          source = "txt";
+        } else {
+          source = "";
+        }
+        if (source != "") {
+          return require("@/assets/images/icons/" + source + ".png");
+        }
       }
-      if (val === "jpg" || val === "jpeg") {
-        source = "jpg";
-      } else if (val === "rar" || val === "zip") {
-        source = "zip";
-      } else if (val === "xls" || val === "xlsx" || val === "sheet") {
-        source = "xls";
-      } else if (val === "doc" || val === "docx") {
-        source = "doc";
-      } else if (val === "pdf") {
-        source = "pdf";
-      } else if (val === "txt") {
-        source = "txt";
-      } else {
-        source = ''
-      }
-      if(source != ''){
-      return require("@/assets/images/icons/"+ source + ".png");
-      }
-    }
     },
     checkStatus(ctx) {
       if (ctx.sortDesc === false) {
@@ -537,49 +540,48 @@ export default {
     //getting the list of assets
     async getAssets() {
       const self = this;
-      self.images1 = []
-      console.log(self.images1)
-      axios.get(
-        `/account/api/asset/list/${router.currentRoute.params.id}/${this.currentPage}/${this.perPage}?sortField=id&direction=desc&type=ASSET`
-      )
-      .then((response) => {
+      self.images1 = [];
+      console.log(self.images1);
+      axios
+        .get(
+          `/account/api/asset/list/${router.currentRoute.params.id}/${this.currentPage}/${this.perPage}?sortField=id&direction=desc&type=ASSET`
+        )
+        .then((response) => {
+          this.items = response.data.elements;
 
-         this.items = response.data.elements;
+          // for(let i=0; i < response.data.elements.length; i++){
+          //   const data = JSON.parse(response.data.elements[i].binaryId);
+          //   var dotIndex = data.binaryId?.lastIndexOf(".");
 
-        // for(let i=0; i < response.data.elements.length; i++){
-        //   const data = JSON.parse(response.data.elements[i].binaryId);
-        //   var dotIndex = data.binaryId?.lastIndexOf(".");
+          //   var ext = data.binaryId?.substring(dotIndex);
 
-        //   var ext = data.binaryId?.substring(dotIndex);
+          //   self.images1[response.data.elements[i].id] = {
+          //   image: "",
+          //   type: ext.substr(1),
+          //   id: response.data.elements[i].id,
+          // };
 
-        //   self.images1[response.data.elements[i].id] = {
-        //   image: "",
-        //   type: ext.substr(1),
-        //   id: response.data.elements[i].id,
-        // };
+          // }
 
-
-        // }
-        
           // eslint-disable-next-line no-restricted-syntax
-      for (const item of response.data.elements) {
-        const data = JSON.parse(item.binaryId);
+          for (const item of response.data.elements) {
+            const data = JSON.parse(item.binaryId);
 
-        //extracting the extension
-        var dotIndex = data.binaryId?.lastIndexOf(".");
-        var ext = data.binaryId?.substring(dotIndex);
-       
-        self.images1[item.id] = {
-          image: "",
-          type: ext.substr(1),
-          id: item.id,
-        };
-        // eslint-disable-next-line no-await-in-loop
-        // await this.getImage(JSON.parse(item.binaryId), item.id)
-      }
-  
-      this.totalRecords = response.data.totalElements;
-      this.totalPages = Math.ceil(this.totalRecords / this.perPage);
+            //extracting the extension
+            var dotIndex = data.binaryId?.lastIndexOf(".");
+            var ext = data.binaryId?.substring(dotIndex);
+
+            self.images1[item.id] = {
+              image: "",
+              type: ext.substr(1),
+              id: item.id,
+            };
+            // eslint-disable-next-line no-await-in-loop
+            // await this.getImage(JSON.parse(item.binaryId), item.id)
+          }
+
+          this.totalRecords = response.data.totalElements;
+          this.totalPages = Math.ceil(this.totalRecords / this.perPage);
         })
         .catch((error) => {
           console.log(error);
@@ -587,13 +589,11 @@ export default {
             component: ToastificationContent,
             props: {
               title: "Error fetching documents",
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
           });
         });
-
-      
     },
     onResponse(r) {
       this.binary = JSON.parse(r);
@@ -653,60 +653,55 @@ export default {
           { responseType: "blob" }
         )
         .then((response) => {
-         
           if (response.status === 200) {
             const reader = new FileReader();
             reader.readAsDataURL(response.data);
-            if(temp === 1){
-            reader.onload = function () {
-              const filePath = reader.result;
-              const a = document.createElement("a");
-              a.href = filePath;
-              a.download = `${val.binaryId}`;
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
+            if (temp === 1) {
+              reader.onload = function () {
+                const filePath = reader.result;
+                const a = document.createElement("a");
+                a.href = filePath;
+                a.download = `${val.binaryId}`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
 
-              self.images[id] = {
-                image: reader.result,
-                name: id,
-                type: response.data.type,
+                self.images[id] = {
+                  image: reader.result,
+                  name: id,
+                  type: response.data.type,
+                };
               };
-            };
-            self.images.push({
-              image: reader.result,
-              type: response.data.type,
-            });
-
-            this.$toast({
-              component: ToastificationContent,
-              props: {
-                title: "Asset downloaded successfully",
-                icon: "DeleteIcon",
-                variant: "success",
-              },
-            });
-          }
-          else{
-            reader.onload = function () {
-            self.images[id] = {
+              self.images.push({
                 image: reader.result,
-                name: id,
                 type: response.data.type,
-              }
-              self.imageD = self.images[id];
-              self.$bvModal.show("modal-center-media");
+              });
 
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: "Asset downloaded successfully",
+                  icon: "DeleteIcon",
+                  variant: "success",
+                },
+              });
+            } else {
+              reader.onload = function () {
+                self.images[id] = {
+                  image: reader.result,
+                  name: id,
+                  type: response.data.type,
+                };
+                self.imageD = self.images[id];
+                self.$bvModal.show("modal-center-media");
+              };
             }
-          }
-
           } else {
             self.images[id] = {
               image: "",
               type: "",
               name: id,
             };
-          
           }
         })
         .catch((error) => {
@@ -730,8 +725,7 @@ export default {
     showImageDetail(data, index, clickedImage) {
       this.clickedImageType = clickedImage;
       if (this.images[index] === null || this.images[index] === undefined) {
-        this.getImage(data, index,2);
-        
+        this.getImage(data, index, 2);
       } else {
         this.imageD = this.images[index];
         this.$bvModal.show("modal-center-media");
@@ -741,7 +735,6 @@ export default {
     showMsgBoxTwo(data) {
       this.deleteModalShow = !this.deleteModalShow;
       this.documentToDelete = data;
-    
 
       // const h = this.$createElement
       //   // Using HTML string
@@ -749,7 +742,7 @@ export default {
       // const messageVNode = h('div', { class: ['bvModalFont'] }, [
       //   h('p', { class: ['text-center card-text'] }, [
       //     'Are you sure you want to delete this Document?',
-      //   ]) 
+      //   ])
       // ])
       // this.$bvModal
       //   .msgBoxConfirm([messageVNode], {
@@ -804,14 +797,13 @@ export default {
       this.asset = data.item;
     },
   },
-};  
+};
 </script>
 
 <style lang="scss">
 @media (min-width: 576px) {
   .modal-dialog {
     margin: 12rem auto auto auto;
-  
-}
+  }
 }
 </style>

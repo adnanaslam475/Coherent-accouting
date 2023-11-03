@@ -97,15 +97,15 @@ body {
 .company-info-btn button#dropdown-4__BV_toggle_::after {
   background-image: none;
   content: "+";
-  height:25px;
-  width:20px;
-  font-size:20px;
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  font-family:courier;
+  height: 25px;
+  width: 20px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-family: courier;
   position: absolute;
   left: 5px;
 }
@@ -116,10 +116,12 @@ body {
   width: 150px;
 }
 .hover-img {
-  transition: transform .4s; /* Animation */
+  transition: transform 0.4s; /* Animation */
 }
 .hover-img:hover {
-  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  transform: scale(
+    1.5
+  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 .download-icon {
   position: absolute;
@@ -130,10 +132,10 @@ body {
   min-width: 10rem;
   max-width: 10rem;
 }
-.flex-1{
+.flex-1 {
   flex: 1;
 }
-.card-header.invoice-header{
+.card-header.invoice-header {
   padding: 0.72rem !important;
   border: 0;
   border-radius: 0;
@@ -143,11 +145,11 @@ body {
   margin-right: 0;
   margin-left: auto;
 }
-.invoice-preview.date-issued .card-header{
+.invoice-preview.date-issued .card-header {
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
 }
-.clear-all-add{
+.clear-all-add {
   top: -0.7rem;
   position: relative;
   right: -1rem;
@@ -160,16 +162,18 @@ body {
   width: 14px;
   height: 14px;
 }
-.table thead th, .table tfoot th {
+.table thead th,
+.table tfoot th {
   font-size: 0.8vw !important;
 }
 .table tbody td {
   font-size: 0.8vw !important;
 }
-h2.brand-text{
+h2.brand-text {
   white-space: break-spaces;
 }
-.table tr td span[id^="recipientCompany-row-"] span.badge,.table tr td span[id^="supplierCompany-row-"] span.badge{
+.table tr td span[id^="recipientCompany-row-"] span.badge,
+.table tr td span[id^="supplierCompany-row-"] span.badge {
   overflow: hidden;
   max-width: 20ch;
   text-overflow: ellipsis;
@@ -177,13 +181,13 @@ h2.brand-text{
 }
 
 /* custom-switch-btn */
-.custom-switch-btn{
+.custom-switch-btn {
   height: 2.5rem !important;
 }
 .custom-switch-btn.custom-switch .custom-control-label {
   padding-left: 8.5rem !important;
 }
-.custom-switch-btn.custom-switch .custom-control-label::before{
+.custom-switch-btn.custom-switch .custom-control-label::before {
   width: 9.6rem !important;
   height: 2.5rem !important;
   border-radius: 2.5rem !important;
@@ -194,29 +198,49 @@ h2.brand-text{
   width: 1.5rem !important;
   height: 1.5rem !important;
 }
-.custom-switch-btn.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+.custom-switch-btn.custom-switch
+  .custom-control-input:checked
+  ~ .custom-control-label::after {
   transform: translateX(7.2rem) !important;
- 
 }
-.custom-switch-btn.custom-switch .custom-control-label .switch-icon-left{
+.custom-switch-btn.custom-switch .custom-control-label .switch-icon-left {
   left: 10px !important;
-  
 }
-.custom-switch-btn.custom-switch .custom-control-label .switch-icon-left, .custom-switch-btn.custom-switch .custom-control-label .switch-icon-right{
+.custom-switch-btn.custom-switch .custom-control-label .switch-icon-left,
+.custom-switch-btn.custom-switch .custom-control-label .switch-icon-right {
   top: 4px;
   font-size: 1rem;
 }
 /* custom-switch-1 */
-.custom-switch-btn-1{
+.custom-switch-btn-1 {
   height: 2.5rem !important;
 }
 .custom-switch-btn-1.custom-switch .custom-control-label {
   padding-left: 5.5rem !important;
 }
-.custom-switch-btn-1.custom-switch .custom-control-label::before{
-  width: 5.5rem !important;
-  height: 2.5rem !important;
+
+.custom-switch-btn-1.custom-switch .custom-control-label::before {
+  width: 5.5rem;
+  height: 2.5rem;
   border-radius: 2.5rem !important;
+}
+.chkbx .custom-control-label::before {
+  width: 5rem !important;
+  font-size: 7px !important;
+  align-items: center;
+  display: flex;
+  height: 2rem !important;
+  
+  padding-bottom: 2px !important;
+}
+.chkbx .custom-control-input:checked ~ .custom-control-label::after {
+  /* transform: translate(1rem, 10px); */
+  font-size: 7px !important;
+}
+
+.custom-switch-btn-1.custom-switch .custom-control-label:after {
+  width: 1rem;
+  height: 1.2rem;
 }
 .custom-switch-btn-1.custom-switch .custom-control-label:after {
   top: 6px !important;
@@ -224,24 +248,27 @@ h2.brand-text{
   width: 1.5rem !important;
   height: 1.5rem !important;
 }
-.custom-switch-btn-1.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+.custom-switch-btn-1.custom-switch
+  .custom-control-input:checked
+  ~ .custom-control-label::after {
   transform: translateX(3rem) !important;
 }
-.custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-left{
+.custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-left {
   left: 10px !important;
 }
-.custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-left, .custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-right{
+.custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-left,
+.custom-switch-btn-1.custom-switch .custom-control-label .switch-icon-right {
   top: 4px;
   font-size: 1rem;
 }
 /* custom-switch-2 */
-.custom-switch-btn-2{
+.custom-switch-btn-2 {
   height: 2.5rem !important;
 }
 .custom-switch-btn-2.custom-switch .custom-control-label {
   padding-left: 9.5rem !important;
 }
-.custom-switch-btn-2.custom-switch .custom-control-label::before{
+.custom-switch-btn-2.custom-switch .custom-control-label::before {
   width: 9.5rem !important;
   height: 2.5rem !important;
   border-radius: 2.5rem !important;
@@ -252,48 +279,52 @@ h2.brand-text{
   width: 1.5rem !important;
   height: 1.5rem !important;
 }
-.custom-switch-btn-2.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+.custom-switch-btn-2.custom-switch
+  .custom-control-input:checked
+  ~ .custom-control-label::after {
   transform: translateX(7rem) !important;
 }
-.custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-left{
+.custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-left {
   left: 10px !important;
 }
-.custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-left, .custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-right{
+.custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-left,
+.custom-switch-btn-2.custom-switch .custom-control-label .switch-icon-right {
   top: 4px;
   font-size: 1rem;
 }
-input.form-control:disabled{
+input.form-control:disabled {
   text-align: right;
 }
 @media print {
-  .tabs-hide-print,.print-none{
+  .tabs-hide-print,
+  .print-none {
     display: none;
   }
 }
 /* Add/edit transaction UI */
-.transaction-container{
+.transaction-container {
   border-radius: 15px !important;
   overflow: hidden;
 }
-.p-custom{
+.p-custom {
   padding: 0.5rem 1rem;
 }
-.px-custom{
+.px-custom {
   padding: 0 1rem;
 }
-.py-custom{
+.py-custom {
   padding: 0.8rem;
 }
-.custom-font{
+.custom-font {
   font-size: 1.3rem !important;
 }
-.opacity-1{
+.opacity-1 {
   opacity: 1 !important;
 }
 .invoice-add .invoice-total-wrapper {
   max-width: 100% !important;
 }
-.invoiceTypeHeading{
+.invoiceTypeHeading {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -303,22 +334,22 @@ input.form-control:disabled{
   transform: rotate(330deg) scale(1.2);
   font-weight: 400;
 }
-.invoice-add-transections{
-font-size: 0.8vw;
+.invoice-add-transections {
+  font-size: 0.8vw;
 }
-.invoice-add-transections .col-12{
+.invoice-add-transections .col-12 {
   padding-left: 0.5rem !important;
   padding-right: 0.5rem !important;
 }
 /* Preview transaction UI */
-.invoiceStat .invoice-total-item .invoice-total-title.font-weight-bolder{
+.invoiceStat .invoice-total-item .invoice-total-title.font-weight-bolder {
   font-weight: 600 !important;
 }
- 
+
 /* custom-preview-table */
-.top-custom{
+.top-custom {
   top: 18px;
 }
-.bvModalFont p{
+.bvModalFont p {
   font-size: 15px;
 }

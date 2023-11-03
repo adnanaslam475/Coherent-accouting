@@ -1,8 +1,6 @@
 <template>
   <div>
-    <b-card-code
-      title="Alignment"
-    >
+    <b-card-code title="Alignment">
       <b-card-text>
         <span>Use class </span>
         <code>.justify-content-{direction}</code>
@@ -29,9 +27,9 @@
 </template>
 
 <script>
-import { BBreadcrumb, BCardText } from 'bootstrap-vue'
-import BCardCode from '@core/components/b-card-code'
-import { codeAlignment } from './code'
+import { BBreadcrumb, BCardText } from "bootstrap-vue";
+import BCardCode from "@core/components/b-card-code";
+import { codeAlignment } from "./code";
 
 export default {
   components: {
@@ -44,17 +42,17 @@ export default {
       codeAlignment,
       items: [
         {
-          text: 'Dashboard',
+          text: "Dashboard",
         },
         {
-          text: 'Library',
+          text: "Library",
         },
         {
-          text: 'Data',
+          text: "Data",
           active: true,
         },
       ],
-    }
+    };
   },
-}
+};
 </script>

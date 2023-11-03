@@ -65,6 +65,7 @@
     "features": "Функционалности",
     "companies": "Фирми",
     "company_info": "Информация",
+
     "company_invoices": "Фирмени Фактури",
     "add_multiple_invoices": "Качване на много фактури",
     "list_invoices": "Списък Фактури"
@@ -275,6 +276,7 @@
     "owner_name": "МОЛ",
     "owner_egn": "МОЛ ЕГН",
     "company_id": "ЕИК",
+    "enable_autosync": "активиране на автоматична синхронизация",
     "vat_number": "ДДС Номер",
     "bank_account": "Банкова сметка",
     "contact": "Контакти",
@@ -309,6 +311,7 @@
     "add_invoice": "Добави",
     "add_from_file": "OCR от Файл",
     "Export_invoice": "Експорт",
+    "Exported_invoice": "Изнесени",
     "Export_invoicess": "Експортиране",
     "cancel": " Отказ",
     "cancel-title": "следващия",
@@ -361,6 +364,7 @@
     "delete_invoice": "Изтриване на фактура"
   },
   "invoice_details": {
+    "published": "Публикувано успешно в Quickbooks",
     "invoiceNumber": "Номер на фактура",
     "recipientCompanyName": "Име на компанията получател: {name}",
     "supplierCompanyName": "Име на фирмата доставчик: {name}",
@@ -519,6 +523,8 @@
     "save": "Запази",
     "preview": "Прегед",
     "clear": "Изчисти",
+    "sync_with_quickbook": "Публикувайте в QuickBooks",
+    "sync_with_xero": "Публикувайте в Xero",
     "name": "Име",
     "id_no": "ЕИК",
     "owner": "МОЛ",

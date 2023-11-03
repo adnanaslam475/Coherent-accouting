@@ -1,7 +1,6 @@
 <template>
   <section id="card-actions">
     <b-row>
-
       <!-- card actions -->
       <b-col cols="12">
         <b-card-actions
@@ -11,15 +10,8 @@
         >
           <b-row>
             <b-col cols="12">
-              <b-table
-                responsive
-                :items="items"
-                bordered
-              >
-                <template
-                  #cell(ICON)="data"
-                  class="text-center"
-                >
+              <b-table responsive :items="items" bordered>
+                <template #cell(ICON)="data" class="text-center">
                   <div class="text-center">
                     <feather-icon :icon="data.value" />
                   </div>
@@ -32,10 +24,7 @@
 
       <!-- card collapsible  -->
       <b-col md="6">
-        <b-card-actions
-          title="Collapsible"
-          action-collapse
-        >
+        <b-card-actions title="Collapsible" action-collapse>
           <b-card-text>
             <span>You can create a collapsible content by adding </span>
             <code>actionCollapse</code>
@@ -59,7 +48,8 @@
           @refresh="refreshStop('refreshCard')"
         >
           <b-card-text>
-            To create a card with refresh action use <code>actionRefresh</code> prop along with
+            To create a card with refresh action use
+            <code>actionRefresh</code> prop along with
             <code>&lt;b-card-actions&gt;</code>
           </b-card-text>
           <b-card-text>
@@ -72,12 +62,10 @@
 
       <!-- card remove -->
       <b-col md="6">
-        <b-card-actions
-          title="Remove Card"
-          action-close
-        >
+        <b-card-actions title="Remove Card" action-close>
           <b-card-text>
-            You can create a closeable card by using <code>actionClose</code> prop along with
+            You can create a closeable card by using
+            <code>actionClose</code> prop along with
             <code>&lt;b-card-actions&gt;</code>
           </b-card-text>
           <b-card-text>
@@ -92,10 +80,8 @@
 </template>
 
 <script>
-import BCardActions from '@core/components/b-card-actions/BCardActions.vue'
-import {
-  BRow, BCol, BTable, BCardText,
-} from 'bootstrap-vue'
+import BCardActions from "@core/components/b-card-actions/BCardActions.vue";
+import { BRow, BCol, BTable, BCardText } from "bootstrap-vue";
 
 export default {
   components: {
@@ -107,26 +93,33 @@ export default {
   },
   data() {
     return {
-      fields: [
-        'ACTION',
-        { key: 'ICON', label: 'ICON' },
-        'DETAILS',
-      ],
+      fields: ["ACTION", { key: "ICON", label: "ICON" }, "DETAILS"],
       items: [
-        { ACTION: 'Collapse', ICON: 'ChevronDownIcon', DETAILS: 'Collapse card content using collapse action.' },
-        { ACTION: 'Refresh Content', ICON: 'RotateCwIcon', DETAILS: 'Refresh your card content using refresh action.' },
-        { ACTION: 'Remove Card', ICON: 'XIcon', DETAILS: 'Remove card from page using remove card action' },
+        {
+          ACTION: "Collapse",
+          ICON: "ChevronDownIcon",
+          DETAILS: "Collapse card content using collapse action.",
+        },
+        {
+          ACTION: "Refresh Content",
+          ICON: "RotateCwIcon",
+          DETAILS: "Refresh your card content using refresh action.",
+        },
+        {
+          ACTION: "Remove Card",
+          ICON: "XIcon",
+          DETAILS: "Remove card from page using remove card action",
+        },
       ],
-    }
+    };
   },
   methods: {
-
     // stop refreshing card in 3 sec
     refreshStop(cardName) {
       setTimeout(() => {
-        this.$refs[cardName].showLoading = false
-      }, 3000)
+        this.$refs[cardName].showLoading = false;
+      }, 3000);
     },
   },
-}
+};
 </script>

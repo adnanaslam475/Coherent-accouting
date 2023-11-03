@@ -108,7 +108,7 @@ export default {
   },
 }
 </script>
-`
+`;
 
 export const codePosition = `
 <template>
@@ -218,7 +218,7 @@ export default {
   },
 }
 </script>
-`
+`;
 
 export const codeAnimation = `
 <template>
@@ -349,7 +349,7 @@ export default {
   },
 }
 </script>
-`
+`;
 
 export const codeTypes = `
 <template>
@@ -454,7 +454,7 @@ export default {
   },
 }
 </script>
-`
+`;
 
 export const codeOptions = `
 <template>
@@ -594,7 +594,7 @@ export default {
   },
 }
 </script>
-`
+`;
 
 export const codeConfirm = `
 <template>
@@ -700,4 +700,4 @@ export default {
   },
 }
 </script>
-`
+`;

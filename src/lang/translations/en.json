@@ -275,6 +275,7 @@
     "owner_name": "Agent Name ",
     "owner_egn": "Owner EGN",
     "company_id": "Company ID",
+    "enable_autosync": "Enable AutoSync",
     "vat_number": "Vat Number",
     "bank_account": "Bank Account",
     "contact": "Contact",
@@ -315,6 +316,7 @@
     "add_from_file": "Add From File",
     "update_invoice": "Update",
     "Export_invoice": "Export",
+    "Exported_invoice": "Exported",
     "Export_invoicess": "Export",
     "cancel": " Cancel ",
     "start_date": "Start Date",
@@ -366,6 +368,7 @@
     "dateIssued": "Date Issued"
   },
   "invoice_details": {
+    "published": "Successfully published to Quickbooks",
     "invoiceNumber": "Invoice Number",
     "recipientCompanyName": "Recipient Company Name: {name}",
     "supplierCompanyName": "Supplier Company Name: {name}",
@@ -537,6 +540,8 @@
     "save": "Save",
     "preview": "Preview",
     "clear": "Clear",
+    "sync_with_quickbook": "Publish to QuickBooks",
+    "sync_with_xero": "Publish to Xero",
     "name": "Name",
     "id_no": "ID Number",
     "owner": "Owner",
