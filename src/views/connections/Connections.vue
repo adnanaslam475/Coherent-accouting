@@ -33,13 +33,16 @@
                         <div style="margin-top: 4px; margin-bottom: 4px;">
                             Coherent Accounting for <br> QuickBooks Online
                         </div>
-                        <b-button variant="outline-success" class="mt-1" @click="quickBookShow = true">Connect</b-button>
+                        <b-button variant="outline-success" class="mt-1" @click="showConnectionModal('qbo')"
+                            v-if="!companyInfo.connectedToQBO">Connect</b-button>
+                        <b-button variant="outline-primary" class="mt-1" v-else
+                            @click="disconnectSoftware('qbo')">Disconnect</b-button>
                     </div>
                 </b-card>
             </b-col>
 
             <b-col cols="12" md="3">
-                <b-card style="max-width: 20rem;" class="mb-2">
+                <b-card style="max-width: 20rem; height: 233px;" class="mb-2">
                     <div class="custome-card">
 
 
@@ -55,17 +58,21 @@
                         <div style="margin-top: 4px; margin-bottom: 4px;">
                             Coherent Accounting for Xero
                         </div>
-                        <b-button variant="outline-success" class="mt-1">Connect</b-button>
+                        <b-button variant="outline-success" class="mt-1" @click="showConnectionModal('xero')"
+                            v-if="!companyInfo.connectedToXero">Connect</b-button>
+                        <b-button variant="outline-primary" class="mt-1" v-else
+                            @click="disconnectSoftware('xero')">Disconnect</b-button>
                     </div>
                 </b-card>
             </b-col>
         </b-row>
 
-        <b-modal v-model="quickBookShow" :hide-backdrop="false" :hide-footer="true" :scrollable="false"
+        <b-modal v-model="isConnection" :hide-backdrop="false" :hide-footer="true" :scrollable="false"
             :no-close-on-backdrop="true">
             <div>
                 <div style="color: orangered;">
-                    Connect your Dext Prepare account with your CoherentAccounting for QuickBooks Online account.
+                    Connect your Dext Prepare account with your CoherentAccounting for {{ type == 'qbo' ? 'QuickBook' :
+                        'Xero' }} Online account.
                 </div>
                 <div style="height: 150px;">
                     <!-- <img src="" alt=""> -->
@@ -82,7 +89,7 @@
                         <ol>
                             <li class="my-1">
                                 Click the <b>connect software</b> button - you'll be redirected to CoherentAccounting for
-                                QuickBooks Online and promoted to log in.
+                                {{ type == 'qbo' ? 'QuickBook' : 'Xero' }} Online and promoted to log in.
                             </li>
                             <li class="my-1">
                                 Select client account (if applicable)
@@ -99,7 +106,7 @@
                         <ol>
                             <li>
                                 Click the <b>connect software</b> button - you'll be redirected to CoherentAccounting for
-                                QuickBooks Online and promoted to log in.
+                                {{ type == 'qbo' ? 'QuickBook' : 'Xero' }} Online and promoted to log in.
                             </li>
                             <li>
                                 Select client account (if applicable)
@@ -116,11 +123,12 @@
                 </b-tabs>
             </div>
             <div class="mt-1" style="float: right">
-                <b-button @click="quickBookShow = false" variant="outline">Cancel</b-button>
-                <b-button @click="connectToQuickBooks" variant="success">Connect software</b-button>
+                <b-button @click="isConnection = false" variant="outline">Cancel</b-button>
+                <b-button @click="connectToQuickBooks(type)" variant="success">Connect software</b-button>
             </div>
 
         </b-modal>
+
     </div>
 </template>
 
@@ -142,22 +150,29 @@ export default {
     },
     data() {
         return {
-            quickBookShow: false,
-            companyID: ''
+            isConnection: false,
+            companyID: '',
+            type: '',
+            companyInfo: {}
+
         }
     },
     created() {
         this.companyID = this.$route.params.id
     },
     mounted() {
-
+        this.getCompany()
 
     },
     methods: {
         // this function will coneect to quickbok 
-        async connectToQuickBooks() {
+        showConnectionModal(type) {
+            this.type = type
+            this.isConnection = true
+        },
+        async connectToQuickBooks(type) {
             axios
-                .get(`/account/api/qbo/connectToQuickbooks/${this.companyID}`, {
+                .get(`/account/api/${type == 'qbo' ? 'qbo/connectToQuickbooks' : 'xero/connectToXero'}/${this.companyID}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                         "Access-Control-Allow-Credentials": true,
@@ -175,7 +190,25 @@ export default {
                 })
         },
 
+        disconnectSoftware(type) {
+            axios
+                .get(`/account/api/${type == 'qbo' ? 'callback/disconnect' : 'callback/disconnect/xero'}/${this.companyID}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                        "Access-Control-Allow-Credentials": true,
+                        "Access-Control-Allow-Origin": "http://localhost:8080",
+                    },
+                })
+                .then((response) => {
+                    console.log(response, 'asdfasdfasdfddddddd')
+                    type == 'qbo' ? this.companyInfo.connectedToQBO = false : this.companyInfo.connectedToXero = false
+                    // window.open(response.data.redirectUrl);
+                })
+                .catch((error) => {
+                    console.log(error);
 
+                })
+        },
 
         async getCompany() {
             axios
@@ -188,7 +221,8 @@ export default {
                 })
                 .then((response) => {
                     console.log(response, 'comapany info')
-
+                    this.companyInfo = response.data
+                    console.log(this.companyInfo)
                 })
                 .catch((error) => {
                     console.log(error);
