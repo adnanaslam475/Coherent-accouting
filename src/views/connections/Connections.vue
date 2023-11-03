@@ -232,36 +232,22 @@ export default {
           }
         )
         .then((response) => {
-        //   window.opener.location.reload();
-
           const a = window.open(
             response.data.redirectUrl,
             "_blank",
             "width=600,height=400"
           );
-          var pollTimer = window.setInterval(function () {
-            try {
-              if (win.document.URL.indexOf(response.data.redirectUrl) != -1) {
-                window.clearInterval(pollTimer);
+          // var pollTimer = window.setInterval(function () {
+          //   try {
+          //     if (win.document.URL.indexOf(response.data.redirectUrl) != -1) {
+          //       window.clearInterval(pollTimer);
 
-                $state.go("etsy.connected");
-              }
-            } catch (e) {
-              // Error Handling
-            }
-          }, 500);
-          //   setInterval(() => {
-          //     var _query = document.querySelector("pre")?.innerHTML;
-
-          //     console.log("setInterval", _query);
-          //     if (
-          //       _query?.includes("https://www.coherent-accounting.com/company")
-          //       //   "https://coherent-accounting.com/account/api/callback/oauth2redirect?code=AB11699032995MtQVikAly85dEKLvlFs5RPjuVn9Vbm1qb3x7J&state=37bc38b5-d2fd-44d6-9eb2-e651e6590351&realmId=4620816365341301640"
-          //     ) {
-          //       console.log("setInterval1");
-          //       a.close();
+          //       $state.go("etsy.connected");
           //     }
-          //   }, 1000);
+          //   } catch (e) {
+          //     // Error Handling
+          //   }
+          // }, 500);
         })
         .catch((error) => {
           console.log(error);
@@ -283,7 +269,6 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response, "asdfasdfasdfddddddd");
           type == "qbo"
             ? (this.companyInfo.connectedToQBO = false)
             : (this.companyInfo.connectedToXero = false);
