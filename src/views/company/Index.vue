@@ -79,9 +79,9 @@
             <div>
               <img
                 :src="
-                  '@/assets/flags/' +
-                  data.item.companyIsoAlpha2Country.toLowerCase() +
-                  '.png'
+                  require('@/assets/flags/' +
+                    data.item.companyIsoAlpha2Country.toLowerCase() +
+                    '.png')
                 "
                 style="width: 30px; height: 20px; margin-left: 10px"
               />
@@ -351,9 +351,6 @@
               </div>
             </div>
           </div>
-          <!-- <b-button to="/company/create" variant="primary" class="float-right mb-1 col-2 ml-auto text-capitalize"
-            style="margin-right: 15px">{{ $t("companies.add_company") }}
-          </b-button> -->
         </div>
         <b-table
           :fields="fields"
@@ -572,10 +569,6 @@
               sm="6"
               class="d-flex align-items-center justify-content-center justify-content-sm-start"
             >
-              <!-- <span class="text-muted"
-                >Showing {{ currentPage + 9 - 9 }} to {{ currentPage + 9 }} of
-                {{ this.totalRecords }} entries</span
-              > -->
             </b-col>
             <!-- Pagination -->
             <b-col
@@ -781,26 +774,37 @@ export default {
 
     // getting the list of all companies
     async searchCompanies() {
-      const data = await axios.get(
-        `/account/api/company/search/${this.currentPage}/${this.perPage}?direction=${this.direction}&queryString=${this.searchQuery}&sortField=${this.sortField}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            "Access-Control-Allow-Credentials": true,
-            "Access-Control-Allow-Origin": "http://localhost:8080",
-          },
-        }
-      );
+      try {
+        const data = await axios.get(
+          `/account/api/company/search/${this.currentPage}/${this.perPage}?direction=${this.direction}&queryString=${this.searchQuery}&sortField=${this.sortField}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              "Access-Control-Allow-Credentials": true,
+              "Access-Control-Allow-Origin": "http://localhost:8080",
+            },
+          }
+        );
 
-      if (data.data.elements != "") {
-        this.items = data.data.elements;
-        this.totalRecords = data.data.totalElements;
-        this.totalPages = Math.ceil(this.totalRecords / this.perPage);
-        // console.log(this.totalPages);
-      } else {
-        this.items = [];
-        this.totalRecords = "";
-        this.totalPages = "";
+        if (data.data.elements != "") {
+          this.items = data.data.elements;
+          this.totalRecords = data.data.totalElements;
+          this.totalPages = Math.ceil(this.totalRecords / this.perPage);
+          console.log("this.totalPages", data.data);
+        } else {
+          this.items = [];
+          this.totalRecords = "";
+          this.totalPages = "";
+        }
+      } catch (error) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: "Company Fetched Error",
+            icon: "DeleteIcon",
+            variant: "danger",
+          },
+        });
       }
     },
 
@@ -847,6 +851,7 @@ export default {
         )
         .then((response) => {
           this.items = response.data.elements;
+          console.log("response.data", response.data.elements);
           this.totalRecords = response.data.totalElements;
           this.totalPages = Math.ceil(this.totalRecords / this.perPage);
         })

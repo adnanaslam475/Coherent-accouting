@@ -13,8 +13,15 @@
         <h6 class="mr-1 mb-0">
           {{ $t("pricing.monthly") }}
         </h6>
-        <b-form-checkbox id="priceSwitch" v-model="status" name="price-switch" value="annually" unchecked-value="monthly"
-          switch @input="tooglePlan" />
+        <b-form-checkbox
+          id="priceSwitch"
+          v-model="status"
+          name="price-switch"
+          value="annually"
+          unchecked-value="monthly"
+          switch
+          @input="tooglePlan"
+        />
         <h6 class="ml-50 mb-0">
           {{ $t("pricing.annually") }}
         </h6>
@@ -24,15 +31,28 @@
 
     <!-- pricing plan cards -->
     <b-row class="pricing-card">
-      <b-col offset-sm-2 sm="10" md="12" offset-lg="2" lg="10"
-        class="mx-auto d-flex align-items-center justify-content-center">
+      <b-col
+        offset-sm-2
+        sm="10"
+        md="12"
+        offset-lg="2"
+        lg="10"
+        class="mx-auto d-flex align-items-center justify-content-center"
+      >
         <b-col cols="10">
-          <b-row class="mx-auto d-flex align-items-center justify-content-center">
+          <b-row
+            class="mx-auto d-flex align-items-center justify-content-center"
+          >
             <!-- Basic Plan -->
             <b-col md="4">
               <b-card align="center" class="pb-1">
                 <!-- img -->
-                <b-img v-if="hotAirBallon" :src="hotAirBallon" class="mb-2 mt-1 w-25" alt="basic svg img" />
+                <b-img
+                  v-if="hotAirBallon"
+                  :src="hotAirBallon"
+                  class="mb-2 mt-1 w-25"
+                  alt="basic svg img"
+                />
                 <!--/ img -->
                 <h3>{{ pricing.basicPlan.title }}</h3>
                 <b-card-text>
@@ -42,23 +62,35 @@
                 <!-- Plan fee -->
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
-                    <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
-                    <span class="pricing-basic-value font-weight-bolder text-primary">
+                    <sup class="font-medium-1 font-weight-bold text-primary"
+                      >€</sup
+                    >
+                    <span
+                      class="pricing-basic-value font-weight-bolder text-primary"
+                    >
                       <!-- {{
                       monthlyPlanShow ? pricing.basicPlan.monthlyPrice : pricing.basicPlan.yearlyPlan.perMonth
                     }} -->
                       {{ monthlyPlanShow ? monthlyBasic : annualBasicMonth }}
                     </span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{ $t("pricing.month")
-                    }}</sub>
+                    <sub
+                      class="pricing-duration text-body font-medium-1 font-weight-bold"
+                      >/{{ $t("pricing.month") }}</sub
+                    >
                   </div>
-                  <small v-show="!monthlyPlanShow" class="annual-pricing text-muted">€ {{ annualBasic }} / {{
-                    $t("pricing.year") }}</small>
+                  <small
+                    v-show="!monthlyPlanShow"
+                    class="annual-pricing text-muted"
+                    >€ {{ annualBasic }} / {{ $t("pricing.year") }}</small
+                  >
                 </div>
 
                 <!-- plan benefit -->
                 <b-list-group class="list-group-circle text-left">
-                  <b-list-group-item v-for="(data, index) in pricing.basicPlan.planBenefits" :key="index">
+                  <b-list-group-item
+                    v-for="(data, index) in pricing.basicPlan.planBenefits"
+                    :key="index"
+                  >
                     <div v-if="data === 'companiess'">
                       {{ pricing.basicPlan.companyLimit }}
                       {{ $t("companiess") }}
@@ -76,8 +108,13 @@
                 <!--/ plan benefit -->
 
                 <!-- buttons -->
-                <b-button v-ripple.400="'rgba(40, 199, 111, 0.15)'" block class="mt-2" variant="outline-success"
-                  @click="upgradeBasicPlan">
+                <b-button
+                  v-ripple.400="'rgba(40, 199, 111, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="outline-success"
+                  @click="upgradeBasicPlan"
+                >
                   {{ $t("pricing.plan") }}
                 </b-button>
               </b-card>
@@ -86,13 +123,21 @@
             <!-- Beginner Plan -->
             <b-col md="4">
               <b-card class="pb-1 popular" align="center">
-                <div v-show="pricing.beginnerPlan.popular" class="pricing-badge text-right">
+                <div
+                  v-show="pricing.beginnerPlan.popular"
+                  class="pricing-badge text-right"
+                >
                   <b-badge variant="light-primary" pill>
                     {{ $t("pricing.popular") }}
                   </b-badge>
                 </div>
                 <!-- img -->
-                <b-img v-if="helicolptorImage" :src="helicolptorImage" class="mb-1 w-25" alt="svg img" />
+                <b-img
+                  v-if="helicolptorImage"
+                  :src="helicolptorImage"
+                  class="mb-1 w-25"
+                  alt="svg img"
+                />
                 <!--/ img -->
                 <h3>{{ pricing.beginnerPlan.title }}</h3>
                 <b-card-text>{{
@@ -102,8 +147,12 @@
                 <!-- plan price -->
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
-                    <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
-                    <span class="pricing-basic-value font-weight-bolder text-primary">
+                    <sup class="font-medium-1 font-weight-bold text-primary"
+                      >€</sup
+                    >
+                    <span
+                      class="pricing-basic-value font-weight-bolder text-primary"
+                    >
                       <!-- {{
                       monthlyPlanShow ? pricing.beginnerPlan.monthlyPrice : pricing.beginnerPlan.yearlyPlan.perMonth
                     }} -->
@@ -111,16 +160,24 @@
                         monthlyPlanShow ? monthlyBeginner : annualBeginnerMonth
                       }}
                     </span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/ {{ $t("pricing.month")
-                    }}</sub>
+                    <sub
+                      class="pricing-duration text-body font-medium-1 font-weight-bold"
+                      >/ {{ $t("pricing.month") }}</sub
+                    >
                   </div>
-                  <small v-show="!monthlyPlanShow" class="annual-pricing text-muted">€ {{ annualBeginner }} / {{
-                    $t("pricing.year") }}</small>
+                  <small
+                    v-show="!monthlyPlanShow"
+                    class="annual-pricing text-muted"
+                    >€ {{ annualBeginner }} / {{ $t("pricing.year") }}</small
+                  >
                 </div>
 
                 <!-- plan benefit -->
                 <b-list-group class="list-group-circle text-left">
-                  <b-list-group-item v-for="(data, index) in pricing.beginnerPlan.planBenefits" :key="index">
+                  <b-list-group-item
+                    v-for="(data, index) in pricing.beginnerPlan.planBenefits"
+                    :key="index"
+                  >
                     <div v-if="data === 'companiess'">
                       {{ pricing.beginnerPlan.companyLimit }}
                       {{ $t("companiess") }}
@@ -135,8 +192,13 @@
                 <!--/ plan benefit -->
 
                 <!-- buttons -->
-                <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" block class="mt-2" variant="primary"
-                  @click="upgradeBiginerrPlan">
+                <b-button
+                  v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="primary"
+                  @click="upgradeBiginerrPlan"
+                >
                   {{ $t("pricing.upgrade") }}
                 </b-button>
               </b-card>
@@ -147,7 +209,12 @@
             <b-col md="4">
               <b-card align="center" class="pb-1">
                 <!-- img -->
-                <b-img v-if="aeroplanImage" :src="aeroplanImage" class="mb-2 w-25" alt="starter svg img" />
+                <b-img
+                  v-if="aeroplanImage"
+                  :src="aeroplanImage"
+                  class="mb-2 w-25"
+                  alt="starter svg img"
+                />
                 <!--/ img -->
                 <h3>{{ pricing.starterPlan.title }}</h3>
                 <b-card-text>{{ $t("pricing.big_organisations") }}</b-card-text>
@@ -155,23 +222,35 @@
                 <!-- annual plan -->
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
-                    <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
-                    <span class="pricing-basic-value font-weight-bolder text-primary">
+                    <sup class="font-medium-1 font-weight-bold text-primary"
+                      >€</sup
+                    >
+                    <span
+                      class="pricing-basic-value font-weight-bolder text-primary"
+                    >
                       {{
                         monthlyPlanShow ? monthlyStarter : annualStarterMonth
                       }}
                     </span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{ $t("pricing.month")
-                    }}</sub>
+                    <sub
+                      class="pricing-duration text-body font-medium-1 font-weight-bold"
+                      >/{{ $t("pricing.month") }}</sub
+                    >
                   </div>
-                  <small v-show="!monthlyPlanShow" class="annual-pricing text-muted">€ {{ annualStarter }} / {{
-                    $t("pricing.year") }}</small>
+                  <small
+                    v-show="!monthlyPlanShow"
+                    class="annual-pricing text-muted"
+                    >€ {{ annualStarter }} / {{ $t("pricing.year") }}</small
+                  >
                 </div>
                 <!--/ annual plan -->
 
                 <!-- plan benefit -->
-                <b-list-group v-for="(data, index) in pricing.starterPlan.planBenefits" :key="index"
-                  class="list-group-circle text-left">
+                <b-list-group
+                  v-for="(data, index) in pricing.starterPlan.planBenefits"
+                  :key="index"
+                  class="list-group-circle text-left"
+                >
                   <b-list-group-item>
                     <div v-if="data === 'companiess'">
                       {{ pricing.starterPlan.companyLimit }}
@@ -187,8 +266,13 @@
                 <!--/ plan benefit -->
 
                 <!-- buttons -->
-                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" block class="mt-2" variant="outline-primary"
-                  @click="upgradeStarterPlan">
+                <b-button
+                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="outline-primary"
+                  @click="upgradeStarterPlan"
+                >
                   {{ $t("pricing.upgrade") }}
                 </b-button>
               </b-card>
@@ -198,7 +282,12 @@
             <b-col md="4">
               <b-card align="center" class="pb-1">
                 <!-- img -->
-                <b-img v-if="aeroplanJetImage" :src="aeroplanJetImage" class="mb-2 w-25" alt="enterprise svg img" />
+                <b-img
+                  v-if="aeroplanJetImage"
+                  :src="aeroplanJetImage"
+                  class="mb-2 w-25"
+                  alt="enterprise svg img"
+                />
                 <!--/ img -->
                 <h3>{{ pricing.primaryPlan.title }}</h3>
                 <b-card-text>{{ $t("pricing.big_organisations") }}</b-card-text>
@@ -206,28 +295,40 @@
                 <!-- annual plan -->
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
-                    <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
-                    <span class="pricing-basic-value font-weight-bolder text-primary">
+                    <sup class="font-medium-1 font-weight-bold text-primary"
+                      >€</sup
+                    >
+                    <span
+                      class="pricing-basic-value font-weight-bolder text-primary"
+                    >
                       <!-- {{
                       monthlyPlanShow ? pricing.primaryPlan.monthlyPrice : pricing.primaryPlan.yearlyPlan.perMonth
                     }} -->
                       {{
                         monthlyPlanShow
-                        ? monthlyEnterprise
-                        : annualEnterpriseMonth
+                          ? monthlyEnterprise
+                          : annualEnterpriseMonth
                       }}
                     </span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{ $t("pricing.month")
-                    }}</sub>
+                    <sub
+                      class="pricing-duration text-body font-medium-1 font-weight-bold"
+                      >/{{ $t("pricing.month") }}</sub
+                    >
                   </div>
-                  <small v-show="!monthlyPlanShow" class="annual-pricing text-muted">€ {{ annualEnterprise }} / {{
-                    $t("pricing.year") }}</small>
+                  <small
+                    v-show="!monthlyPlanShow"
+                    class="annual-pricing text-muted"
+                    >€ {{ annualEnterprise }} / {{ $t("pricing.year") }}</small
+                  >
                 </div>
                 <!--/ annual plan -->
 
                 <!-- plan benefit -->
-                <b-list-group v-for="(data, index) in pricing.primaryPlan.planBenefits" :key="index"
-                  class="list-group-circle text-left">
+                <b-list-group
+                  v-for="(data, index) in pricing.primaryPlan.planBenefits"
+                  :key="index"
+                  class="list-group-circle text-left"
+                >
                   <b-list-group-item>
                     <div v-if="data === 'companiess'">
                       {{ pricing.primaryPlan.companyLimit }}
@@ -243,8 +344,13 @@
                 <!--/ plan benefit -->
 
                 <!-- buttons -->
-                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" block class="mt-2" variant="outline-primary"
-                  @click="upgradeEnterprisePlan">
+                <b-button
+                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="outline-primary"
+                  @click="upgradeEnterprisePlan"
+                >
                   {{ $t("pricing.upgrade") }}
                 </b-button>
               </b-card>
@@ -254,7 +360,12 @@
             <b-col md="4">
               <b-card align="center" class="pb-1">
                 <!-- img -->
-                <b-img v-if="roketImage" :src="roketImage" class="mb-2 w-25" alt="enterprise svg img" />
+                <b-img
+                  v-if="roketImage"
+                  :src="roketImage"
+                  class="mb-2 w-25"
+                  alt="enterprise svg img"
+                />
                 <!--/ img -->
                 <h3>{{ pricing.platinumPlan.title }}</h3>
                 <b-card-text>{{ $t("pricing.big_organisations") }}</b-card-text>
@@ -262,8 +373,12 @@
                 <!-- annual plan -->
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
-                    <sup class="font-medium-1 font-weight-bold text-primary">€</sup>
-                    <span class="pricing-basic-value font-weight-bolder text-primary">
+                    <sup class="font-medium-1 font-weight-bold text-primary"
+                      >€</sup
+                    >
+                    <span
+                      class="pricing-basic-value font-weight-bolder text-primary"
+                    >
                       <!-- {{
                       monthlyPlanShow ? pricing.platinumPlan.monthlyPrice : pricing.platinumPlan.yearlyPlan.perMonth
                     }} -->
@@ -271,17 +386,25 @@
                         monthlyPlanShow ? monthlyPlatinum : annualPlatinumMonth
                       }}
                     </span>
-                    <sub class="pricing-duration text-body font-medium-1 font-weight-bold">/{{ $t("pricing.month")
-                    }}</sub>
+                    <sub
+                      class="pricing-duration text-body font-medium-1 font-weight-bold"
+                      >/{{ $t("pricing.month") }}</sub
+                    >
                   </div>
-                  <small v-show="!monthlyPlanShow" class="annual-pricing text-muted">€ {{ annualPlatinum }} / {{
-                    $t("pricing.year") }}</small>
+                  <small
+                    v-show="!monthlyPlanShow"
+                    class="annual-pricing text-muted"
+                    >€ {{ annualPlatinum }} / {{ $t("pricing.year") }}</small
+                  >
                 </div>
                 <!--/ annual plan -->
 
                 <!-- plan benefit -->
-                <b-list-group v-for="(data, index) in pricing.platinumPlan.planBenefits" :key="index"
-                  class="list-group-circle text-left">
+                <b-list-group
+                  v-for="(data, index) in pricing.platinumPlan.planBenefits"
+                  :key="index"
+                  class="list-group-circle text-left"
+                >
                   <b-list-group-item>
                     <div v-if="data === 'companiess'">
                       {{ pricing.platinumPlan.companyLimit }}
@@ -298,8 +421,13 @@
                 <!--/ plan benefit -->
 
                 <!-- buttons -->
-                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" block class="mt-2" variant="outline-primary"
-                  @click="upgradePlatiniumPlan">
+                <b-button
+                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                  block
+                  class="mt-2"
+                  variant="outline-primary"
+                  @click="upgradePlatiniumPlan"
+                >
                   {{ $t("pricing.upgrade") }}
                 </b-button>
               </b-card>
@@ -503,34 +631,34 @@ export default {
     this.helicolptorImage = require("@/assets/images/illustration/helicoptor.svg");
     this.monthlyPlanShow = this.status === "monthly";
     this.getPlansValues();
-
   },
   mounted() {
     if (this.$route.query.planId && this.$route.query.session_id) {
       let paymentData = {
-        "planId": this.$route.query.planId,
-        "sessionId": this.$route.query.session_id
-      }
-      axios.post("account/api/payment/complete-payment", paymentData, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-          'Content-Type': 'application/json'
-        },
-
-      }).then((res) => {
-        console.log(res.data)
-        if (res.data.SUCCESS == 'OK') {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Payment has been paid successfully`,
-              icon: 'EditIcon',
-              variant: 'success',
-            },
-          })
-          this.$router.push({ name: 'my-plans' })
-        }
-      })
+        planId: this.$route.query.planId,
+        sessionId: this.$route.query.session_id,
+      };
+      axios
+        .post("account/api/payment/complete-payment", paymentData, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"), // assuming accessToken is correct
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.SUCCESS == "OK") {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `Payment has been paid successfully`,
+                icon: "EditIcon",
+                variant: "success",
+              },
+            });
+            this.$router.push({ name: "my-plans" });
+          }
+        });
     }
   },
   methods: {
@@ -628,143 +756,138 @@ export default {
         });
     },
     upgradeBasicPlan() {
-
-      console.log(this.monthlyPlanShow)
-      let currentPlan = {}
+      console.log(this.monthlyPlanShow);
+      let currentPlan = {};
       if (this.monthlyPlanShow) {
-        currentPlan = this.plansPrice.find(obj => obj.id === 101);
-
+        currentPlan = this.plansPrice.find((obj) => obj.id === 101);
       } else {
-        currentPlan = this.plansPrice.find(obj => obj.id === 102);
+        currentPlan = this.plansPrice.find((obj) => obj.id === 102);
       }
 
-      console.log(currentPlan)
-      currentPlan.isSubscription = true
-      axios.post("account/api/payment/create-payment", currentPlan, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-          'Content-Type': 'application/json'
-        },
-
-      }).then((res) => {
-        console.log(res.data)
-        const successURL = res.data.redirectUrl
-        window.open(successURL, '_blank')
-        console.log(this.$route.query != {}, 'quesry params')
-
-
-      })
+      console.log(currentPlan);
+      currentPlan.isSubscription = true;
+      axios
+        .post("account/api/payment/create-payment", currentPlan, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"), // assuming accessToken is correct
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          const successURL = res.data.redirectUrl;
+          window.open(successURL, "_blank");
+          console.log(this.$route.query != {}, "quesry params");
+        });
     },
     upgradeBiginerrPlan() {
-      console.log(this.monthlyPlanShow)
-      let currentPlan = {}
+      console.log(this.monthlyPlanShow);
+      let currentPlan = {};
       if (this.monthlyPlanShow) {
-        currentPlan = this.plansPrice.find(obj => obj.id === 103);
-
+        currentPlan = this.plansPrice.find((obj) => obj.id === 103);
       } else {
-        currentPlan = this.plansPrice.find(obj => obj.id === 106);
+        currentPlan = this.plansPrice.find((obj) => obj.id === 106);
       }
 
-      console.log(currentPlan)
-      currentPlan.isSubscription = true
-      axios.post("account/api/payment/create-payment", currentPlan, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-          'Content-Type': 'application/json'
-        },
-
-      }).then((res) => {
-        console.log(res.data)
-        const successURL = res.data.redirectUrl
-        window.open(successURL, '_blank')
-      })
+      console.log(currentPlan);
+      currentPlan.isSubscription = true;
+      axios
+        .post("account/api/payment/create-payment", currentPlan, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"), // assuming accessToken is correct
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          const successURL = res.data.redirectUrl;
+          window.open(successURL, "_blank");
+        });
     },
     upgradeStarterPlan() {
-      console.log(this.monthlyPlanShow)
-      let currentPlan = {}
+      console.log(this.monthlyPlanShow);
+      let currentPlan = {};
       if (this.monthlyPlanShow) {
-        currentPlan = this.plansPrice.find(obj => obj.id === 107);
-
+        currentPlan = this.plansPrice.find((obj) => obj.id === 107);
       } else {
-        currentPlan = this.plansPrice.find(obj => obj.id === 108);
+        currentPlan = this.plansPrice.find((obj) => obj.id === 108);
       }
 
-      console.log(currentPlan)
-      currentPlan.isSubscription = true
-      axios.post("account/api/payment/create-payment", currentPlan, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-          'Content-Type': 'application/json'
-        },
-
-      }).then((res) => {
-        console.log(res.data)
-        const successURL = res.data.redirectUrl
-        window.open(successURL, '_blank')
-      })
+      console.log(currentPlan);
+      currentPlan.isSubscription = true;
+      axios
+        .post("account/api/payment/create-payment", currentPlan, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"), // assuming accessToken is correct
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          const successURL = res.data.redirectUrl;
+          window.open(successURL, "_blank");
+        });
     },
 
     upgradeEnterprisePlan() {
-      console.log(this.monthlyPlanShow)
-      let currentPlan = {}
+      console.log(this.monthlyPlanShow);
+      let currentPlan = {};
       if (this.monthlyPlanShow) {
-        currentPlan = this.plansPrice.find(obj => obj.id === 109);
-
+        currentPlan = this.plansPrice.find((obj) => obj.id === 109);
       } else {
-        currentPlan = this.plansPrice.find(obj => obj.id === 110);
+        currentPlan = this.plansPrice.find((obj) => obj.id === 110);
       }
 
-      console.log(currentPlan)
-      currentPlan.isSubscription = true
-      axios.post("account/api/payment/create-payment", currentPlan, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-          'Content-Type': 'application/json'
-        },
-
-      }).then((res) => {
-        console.log(res.data)
-        const successURL = res.data.redirectUrl
-        window.open(successURL, '_blank')
-      })
+      console.log(currentPlan);
+      currentPlan.isSubscription = true;
+      axios
+        .post("account/api/payment/create-payment", currentPlan, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"), // assuming accessToken is correct
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          const successURL = res.data.redirectUrl;
+          window.open(successURL, "_blank");
+        });
     },
     upgradePlatiniumPlan() {
-      console.log(this.monthlyPlanShow)
-      let currentPlan = {}
+      console.log(this.monthlyPlanShow);
+      let currentPlan = {};
       if (this.monthlyPlanShow) {
-        currentPlan = this.plansPrice.find(obj => obj.id === 111);
-
+        currentPlan = this.plansPrice.find((obj) => obj.id === 111);
       } else {
-        currentPlan = this.plansPrice.find(obj => obj.id === 112);
+        currentPlan = this.plansPrice.find((obj) => obj.id === 112);
       }
 
-      console.log(currentPlan)
-      currentPlan.isSubscription = true
-      axios.post("account/api/payment/create-payment", currentPlan, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-          'Content-Type': 'application/json'
-        },
-
-      }).then((res) => {
-        console.log(res.data)
-        const successURL = res.data.redirectUrl
-        if (successURL == null) {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: res.data.sessionId,
-              icon: 'EditIcon',
-              variant: 'error',
-            },
-          })
-
-        } else {
-          window.open(successURL, '_blank')
-        }
-
-      })
-    }
+      console.log(currentPlan);
+      currentPlan.isSubscription = true;
+      axios
+        .post("account/api/payment/create-payment", currentPlan, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"), // assuming accessToken is correct
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          const successURL = res.data.redirectUrl;
+          if (successURL == null) {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: res.data.sessionId,
+                icon: "EditIcon",
+                variant: "error",
+              },
+            });
+          } else {
+            window.open(successURL, "_blank");
+          }
+        });
+    },
   },
 };
 /* eslint-disable global-require */

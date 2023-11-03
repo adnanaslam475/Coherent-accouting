@@ -241,12 +241,7 @@ export default {
         case 5:
           this.vatReportsActive = true;
           break;
-        // case 4:
-        //   this.creditNotifications = true
-        //   break
-        // case 5:
-        //   this.debitNotifications = true
-        //   break
+
         case 6:
           this.companyDocumentsActive = true;
           break;
@@ -275,8 +270,7 @@ export default {
           this.companyName = companyRecord.companyName;
           this.companyNameLength = this.companyName.length;
         })
-        .catch((error) => {
-          // console.log(error);
+        .catch(() => {
           this.$toast({
             component: ToastificationContent,
             props: {

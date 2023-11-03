@@ -32,28 +32,37 @@
       <!-- Slot: Table Column -->
       <template slot="table-column" slot-scope="props">
         <span v-if="props.column.label === 'Country'" class="text-nowrap">
-            {{ $t("companies.country") }}
+          {{ $t("companies.country") }}
         </span>
-        <span v-else-if="props.column.label === 'Company Name'" class="text-nowrap">
-            {{ $t("companies.company_name") }}
+        <span
+          v-else-if="props.column.label === 'Company Name'"
+          class="text-nowrap"
+        >
+          {{ $t("companies.company_name") }}
         </span>
         <span v-else-if="props.column.label === 'Email'" class="text-nowrap">
-            {{ $t("companies.email") }}
+          {{ $t("companies.email") }}
         </span>
         <span v-else-if="props.column.label === 'Status'" class="text-nowrap">
-            {{ $t("companies.status") }}
+          {{ $t("companies.status") }}
         </span>
-        <span v-else-if="props.column.label === 'Owner Name'" class="text-nowrap">
-            {{ $t("companies.owner_first_name") }}
+        <span
+          v-else-if="props.column.label === 'Owner Name'"
+          class="text-nowrap"
+        >
+          {{ $t("companies.owner_first_name") }}
         </span>
-        <span v-else-if="props.column.label === 'Company ID'" class="text-nowrap">
-            {{ $t("companies.company_id") }}
+        <span
+          v-else-if="props.column.label === 'Company ID'"
+          class="text-nowrap"
+        >
+          {{ $t("companies.company_id") }}
         </span>
         <span v-else-if="props.column.label === 'Period'" class="text-nowrap">
-            {{ $t("companies.period") }}
+          {{ $t("companies.period") }}
         </span>
         <span v-else-if="props.column.label === 'Action'" class="text-nowrap">
-            {{ $t("companies.actions") }}
+          {{ $t("companies.actions") }}
         </span>
         <span v-else>
           {{ props.column.label }}
@@ -64,74 +73,84 @@
       <template slot="table-row" slot-scope="props">
         <!-- Column: Country -->
         <span v-if="props.column.field === 'country'" class="text-nowrap">
-            <img
-                :src='"@/assets/flags/" + props.row.companyApi.companyIsoAlpha2Country.toLowerCase() + ".png"'
-                style="width: 30px; height: 20px; margin-left: 10px"
-            />
+          <img
+            :src="
+              '@/assets/flags/' +
+              props.row.companyApi.companyIsoAlpha2Country.toLowerCase() +
+              '.png'
+            "
+            style="width: 30px; height: 20px; margin-left: 10px"
+          />
         </span>
 
         <!-- Column: Name -->
-        <span v-else-if="props.column.field === 'companyName'" class="text-nowrap">
-            <div class="d-flex align-items-center">
-                <div
-                    v-if="props.row.companyApi.companyName.indexOf(' ') > 0"
-                    style="
-                    margin-right: 8px;
-                    border-radius: 50%;
-                    color: white;
-                    min-width: 32px;
-                    min-height: 28px;
-                    display: inline-flex;
-                    justify-content: center;
-                    align-items: center;
-                    "
-                    class="btn-primary"
-                >
-                    <span
-                    >{{ props.row.companyApi.companyName.substr(0, 1)
-                    }}{{
-                        props.row.companyApi.companyName
-                        .substr(props.row.companyApi.companyName.indexOf(" ") + 1, 1)
-                        .toUpperCase()
-                    }}</span
-                    >
-                </div>
-                <div
-                    v-else
-                    style="
-                    margin-right: 8px;
-                    border-radius: 50%;
-                    background-color: #7367f0;
-                    color: white;
-                    min-width: 32px;
-                    min-height: 28px;
-                    display: inline-flex;
-                    justify-content: center;
-                    align-items: center;
-                    "
-                >
-                    <span
-                    >{{ props.row.companyApi.companyName.substr(0, 1)
-                    }}{{
-                        props.row.companyApi.companyName.substr(1, 1).toUpperCase()
-                    }}</span
-                    >
-                </div>
-                <b-link
-                    style="min-width: max-content"
-                    class="font-weight-bold"
-                    :to="{
-                    name: 'CompanyView',
-                    params: { id: props.row.companyApi.id },
-                    }"
-                    >{{ props.row.companyApi.companyName }}
-                </b-link>
+        <span
+          v-else-if="props.column.field === 'companyName'"
+          class="text-nowrap"
+        >
+          <div class="d-flex align-items-center">
+            <div
+              v-if="props.row.companyApi.companyName.indexOf(' ') > 0"
+              style="
+                margin-right: 8px;
+                border-radius: 50%;
+                color: white;
+                min-width: 32px;
+                min-height: 28px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+              "
+              class="btn-primary"
+            >
+              <span
+                >{{ props.row.companyApi.companyName.substr(0, 1)
+                }}{{
+                  props.row.companyApi.companyName
+                    .substr(
+                      props.row.companyApi.companyName.indexOf(" ") + 1,
+                      1
+                    )
+                    .toUpperCase()
+                }}</span
+              >
             </div>
+            <div
+              v-else
+              style="
+                margin-right: 8px;
+                border-radius: 50%;
+                background-color: #7367f0;
+                color: white;
+                min-width: 32px;
+                min-height: 28px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <span
+                >{{ props.row.companyApi.companyName.substr(0, 1)
+                }}{{
+                  props.row.companyApi.companyName.substr(1, 1).toUpperCase()
+                }}</span
+              >
+            </div>
+            <b-link
+              style="min-width: max-content"
+              class="font-weight-bold"
+              :to="{
+                name: 'CompanyView',
+                params: { id: props.row.companyApi.id },
+              }"
+              >{{ props.row.companyApi.companyName }}
+            </b-link>
+          </div>
         </span>
 
         <!-- Column: Status -->
         <span v-else-if="props.column.field === 'companyMail'">
-            {{ props.row.companyApi.companyMail }}
+          {{ props.row.companyApi.companyMail }}
         </span>
 
         <span v-else-if="props.column.field === 'status'">
@@ -141,56 +160,56 @@
         </span>
 
         <span v-else-if="props.column.field === 'companyOwnerFirstName'">
-            {{ props.row.companyApi.companyOwnerApi.companyOwnerName }}
+          {{ props.row.companyApi.companyOwnerApi.companyOwnerName }}
         </span>
 
         <span v-else-if="props.column.field === 'companyIdentificationNumber'">
-            {{ props.row.companyApi.companyIdentificationNumber }}
+          {{ props.row.companyApi.companyIdentificationNumber }}
         </span>
 
         <span v-else-if="props.column.field === 'period'">
-            {{ props.row.period }}
+          {{ props.row.period }}
         </span>
 
         <!-- Column: Action -->
         <span v-else-if="props.column.field === 'action'">
-            <div class="d-flex">
+          <div class="d-flex">
             <feather-icon
-                :id="`invoice-row-${props.row.companyApi.id}-preview-icon`"
-                icon="EyeIcon"
-                size="16"
-                class="mr-1 cursor-pointer"
-                @click="
+              :id="`invoice-row-${props.row.companyApi.id}-preview-icon`"
+              icon="EyeIcon"
+              size="16"
+              class="mr-1 cursor-pointer"
+              @click="
                 $router.push({
-                    name: 'CompanyView',
-                    params: { id: props.row.companyApi.id },
+                  name: 'CompanyView',
+                  params: { id: props.row.companyApi.id },
                 })
-                "
+              "
             />
             <b-tooltip
-                title="View Company"
-                class="cursor-pointer"
-                :target="`invoice-row-${props.row.companyApi.id}-preview-icon`"
+              title="View Company"
+              class="cursor-pointer"
+              :target="`invoice-row-${props.row.companyApi.id}-preview-icon`"
             />
 
             <feather-icon
-                :id="`edit-${props.row.companyApi.id}-preview-icon`"
-                icon="EditIcon"
-                size="16"
-                class="mx-0"
-                style="cursor: pointer"
-                @click="
+              :id="`edit-${props.row.companyApi.id}-preview-icon`"
+              icon="EditIcon"
+              size="16"
+              class="mx-0"
+              style="cursor: pointer"
+              @click="
                 $router.push({
-                    name: 'EditCompany',
-                    params: { id: props.row.companyApi.id },
+                  name: 'EditCompany',
+                  params: { id: props.row.companyApi.id },
                 })
-                "
+              "
             />
             <b-tooltip
-                title="Edit Company"
-                :target="`edit-${props.row.id}-preview-icon`"
+              title="Edit Company"
+              :target="`edit-${props.row.id}-preview-icon`"
             />
-            </div>
+          </div>
         </span>
 
         <!-- Column: Common -->
@@ -257,7 +276,7 @@ import {
   BAlert,
   BDropdown,
   BDropdownItem,
-  BLink
+  BLink,
 } from "bootstrap-vue";
 import { VueGoodTable } from "vue-good-table";
 import store from "@/store/index";
@@ -274,7 +293,7 @@ export default {
     BAlert,
     BDropdown,
     BDropdownItem,
-    BLink
+    BLink,
   },
   data() {
     return {
@@ -332,7 +351,7 @@ export default {
         Rejected: "light-danger",
         Resigned: "light-warning",
         Applied: "light-info",
-        ACTIVE: "light-primary"
+        ACTIVE: "light-primary",
         /* eslint-enable key-spacing */
       };
 
@@ -358,6 +377,6 @@ export default {
   },
 };
 </script>
-<style lang="scss" >
-@import '@core/scss/vue/libs/vue-good-table.scss';
+<style lang="scss">
+@import "@core/scss/vue/libs/vue-good-table.scss";
 </style>
