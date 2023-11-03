@@ -80,9 +80,8 @@
                 </div>
                 <div>
                     <b>
-                        On average it takes 1 minute to connect.
+                        On average it takes 10 seconds to connect.
                     </b>
-                    Then you can start cutting back on manual tasks by publishing straight to your accounting software.
                 </div>
                 <b-tabs content-class="mt-1" class="modal-tabs" align="center">
                     <b-tab title="How to connect" active>
@@ -92,7 +91,7 @@
                                 {{ type == 'qbo' ? 'QuickBook' : 'Xero' }} Online and promoted to log in.
                             </li>
                             <li class="my-1">
-                                Select client account (if applicable)
+                                Select company account (if applicable)
                             </li>
                             <li class="my-1">
                                 Select Dimension 1 and Dimension 2 (if applicable)
@@ -106,7 +105,7 @@
                         <ol>
                             <li>
                                 Click the <b>connect software</b> button - you'll be redirected to CoherentAccounting for
-                                {{ type == 'qbo' ? 'QuickBook' : 'Xero' }} Online and promoted to log in.
+                                QuickBooks Online and promoted to log in.
                             </li>
                             <li>
                                 Select client account (if applicable)
@@ -119,7 +118,6 @@
                             </li>
                         </ol>
                     </b-tab>
-
                 </b-tabs>
             </div>
             <div class="mt-1" style="float: right">
