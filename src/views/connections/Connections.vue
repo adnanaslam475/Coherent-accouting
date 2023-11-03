@@ -114,8 +114,8 @@
     >
       <div>
         <div style="color: orangered">
-          Connect your Dext Prepare account with your CoherentAccounting for
-          {{ type == "qbo" ? "QuickBook" : "Xero" }} Online account.
+            Connect your Coherent Accounting OCR Solution with {{ type == 'qbo' ? 'QuickBook' :
+                        'Xero' }} Online account.
         </div>
         <div style="height: 150px">
           <!-- <img src="" alt=""> -->
@@ -128,28 +128,13 @@
           <b-tab title="How to connect" active>
             <ol>
               <li class="my-1">
-                Click the <b>connect software</b> button - you'll be redirected
-                to CoherentAccounting for
-                {{ type == "qbo" ? "QuickBook" : "Xero" }} Online and promoted
-                to log in.
+                Click the <b>Connect software</b> button - you'll be redirected from Coherent Accounting to
+                  {{ type == 'qbo' ? 'QuickBook' : 'Xero' }} Online and promoted to log in.
               </li>
-              <li class="my-1">Select company account (if applicable)</li>
               <li class="my-1">
-                Select Dimension 1 and Dimension 2 (if applicable)
+                Select matching company in Coherent Accounting and correponding in {{ type == 'qbo' ? 'QuickBook' : 'Xero' }}
               </li>
               <li class="my-1">Click on the 'Authorize' button</li>
-            </ol>
-          </b-tab>
-          <b-tab title="How your data is used">
-            <ol>
-              <li>
-                Click the <b>connect software</b> button - you'll be redirected
-                to CoherentAccounting for QuickBooks Online and promoted to log
-                in.
-              </li>
-              <li>Select client account (if applicable)</li>
-              <li>Select Dimension 1 and Dimension 2 (if applicable)</li>
-              <li>Click on the 'Authorize' button</li>
             </ol>
           </b-tab>
         </b-tabs>
