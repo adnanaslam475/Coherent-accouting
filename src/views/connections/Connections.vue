@@ -65,7 +65,7 @@
             :no-close-on-backdrop="true">
             <div>
                 <div style="color: orangered;">
-                    Connect your Dext Prepare account with your CoherentAccounting for QuickBooks Online account.
+                    Connect your Coherent Accounting for QuickBooks Online account.
                 </div>
                 <div style="height: 150px;">
                     <!-- <img src="" alt=""> -->
@@ -73,9 +73,8 @@
                 </div>
                 <div>
                     <b>
-                        On average it takes 1 minute to connect.
+                        On average it takes 10 seconds to connect.
                     </b>
-                    Then you can start cutting back on manual tasks by publishing straight to your accounting software.
                 </div>
                 <b-tabs content-class="mt-1" class="modal-tabs" align="center">
                     <b-tab title="How to connect" active>
@@ -85,34 +84,13 @@
                                 QuickBooks Online and promoted to log in.
                             </li>
                             <li class="my-1">
-                                Select client account (if applicable)
+                                Select company account (if applicable)
                             </li>
                             <li class="my-1">
-                                Select Dimension 1 and Dimension 2 (if applicable)
-                            </li>
-                            <li class="my-1">
-                                Click on the 'Authorize' button
+                                Click on the 'Authorize' button and you will be redirected to Coherent Accounting and you are "Ready to start"
                             </li>
                         </ol>
                     </b-tab>
-                    <b-tab title="How your data is used">
-                        <ol>
-                            <li>
-                                Click the <b>connect software</b> button - you'll be redirected to CoherentAccounting for
-                                QuickBooks Online and promoted to log in.
-                            </li>
-                            <li>
-                                Select client account (if applicable)
-                            </li>
-                            <li>
-                                Select Dimension 1 and Dimension 2 (if applicable)
-                            </li>
-                            <li>
-                                Click on the 'Authorize' button
-                            </li>
-                        </ol>
-                    </b-tab>
-
                 </b-tabs>
             </div>
             <div class="mt-1" style="float: right">
