@@ -69,7 +69,7 @@
         <NotVarifiedBanks ref="banks" />
       </b-tab>
       <!-- Vat Reports tab -->
-      <b-tab>
+      <b-tab v-if="companyDetails.companyCountry == 'Bulgaria'">
         <template #title>
           <feather-icon icon="FlagIcon" />
           <span style="font-size: 0.8vw" class="text-capitalize"
@@ -83,28 +83,19 @@
         />
       </b-tab>
 
-      <!-- credit notifications 
-      <b-tab>
+      <b-tab v-else>
         <template #title>
-          <feather-icon icon="CreditCardIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{
-            $t('company_tabs.CreditNotifications') }}</span>
+          <feather-icon icon="Share2Icon" />
+          <span style="font-size: 0.8vw" class="text-capitalize"
+            >Connections
+          </span>
         </template>
-        <YearlyReport v-if="companyTab == 4 || creditNotifications" />
+        <Connections
+          v-if="companyTab == 5 || vatReportsActive"
+          :vat-reports-tab="vatReportsTab"
+        />
       </b-tab>
 
-
-      <b-tab>
-        <template #title>
-          <feather-icon icon="CreditCardIcon" />
-          <span style="font-size: 0.8vw" class="text-capitalize">{{
-            $t('company_tabs.DebitNotifications') }}</span>
-        </template>
-        <YearlyReport v-if="companyTab == 5 || debitNotifications" />
-      </b-tab>
-      Tab -->
-
-      <!-- Documents tab -->
       <b-tab>
         <template #title>
           <feather-icon icon="FolderIcon" />
@@ -154,6 +145,7 @@ import { BTabs, BTab, BCardText, BCol, BCard } from "bootstrap-vue";
 import CompanyInfo from "./CompanyInfo/CompanyInfo.vue";
 import Invoice from "./Invoice/invoice-list/InvoiceList.vue";
 import VatReports from "./VatReports/vat-reports-list/VatReportsList.vue";
+import Connections from "../connections/Connections.vue";
 import VATMonthReport from "./VATMonthReports/VATMonthReport.vue";
 import YearlyReport from "./YearlyReports/YearlyReport.vue";
 import NotVerifiedInvoice from "./Invoice/invoice-list-notVerified/InvoiceList.vue";
@@ -183,6 +175,7 @@ export default {
     BCard,
     Banks,
     NotVarifiedBanks,
+    Connections,
   },
   data() {
     return {
@@ -277,6 +270,7 @@ export default {
         })
         .then((response) => {
           let companyRecord = response.data;
+
           this.companyDetails = companyRecord;
           this.companyName = companyRecord.companyName;
           this.companyNameLength = this.companyName.length;
