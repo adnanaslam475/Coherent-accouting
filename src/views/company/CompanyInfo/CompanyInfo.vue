@@ -261,14 +261,14 @@
                           <div
                             class="d-flex align-items-center justify-content-center"
                           >
-                            <span class="font-weight-bold text-capitalize"
+                            <span class="font-weight-bold text-capitalize mr-1"
                               >{{ $t("company_info.enable_autosync") }}
                             </span>
 
                             <b-form-checkbox
                               v-model="companyDetails.autoSyncEnabled"
-                              class="custom-control-primary custom-switch-btn-1"
-                              name="check-button"
+                              class="custom-control-primary custom-switch-btn-1 h-1 chkbx"
+                              name="check-button "
                               @change="(v) => toggleHandler(companyDetails, v)"
                               switch
                             >
@@ -468,7 +468,7 @@
                                 cursor: pointer;
                               "
                             >
-                              {{ companyAddress.substr(0, 34) }}
+                              {{ (companyAddress || "").substr(0, 34) }}
                             </p>
                           </CopyToClipboard>
                         </td>
@@ -918,9 +918,10 @@ export default {
     generatePDF(itemID) {
       this.$refs[`invoicePdf${itemID}`].generatePdf();
     },
+
     async toggleHandler(c, value) {
       try {
-        const { data } = await axios.put(
+        const {} = await axios.put(
           "https://coherent-accounting.com/account/api/company/update/" +
             this.companyID,
           { ...c, autoSyncEnabled: value },
@@ -1050,5 +1051,10 @@ export default {
 
 #inner-card-body .card-body {
   padding: 20px 15px 15px 15px;
+}
+
+.chkbx .custom-switch .custom-control-label::before {
+  width: 2.5rem !important;
+  height: 1.5rem !important;
 }
 </style>

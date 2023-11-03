@@ -273,7 +273,19 @@ export default class JwtService {
 
   syncWithQuickBook(t, invoiceId, companyId, body) {
     return this.axiosIns.post(
-      `${this.jwtConfig.syncwithQuickBookPostEndPoint}/${invoiceId}/${companyId}`,
+      `${this.jwtConfig.syncWithQuickBookPostEndPoint}/${invoiceId}/${companyId}`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+  }
+
+  syncWithXero(t, invoiceId, companyId, body) {
+    return this.axiosIns.post(
+      `${this.jwtConfig.syncWithXeroPostEndPoint}/${invoiceId}/${companyId}`,
       body,
       {
         headers: {
@@ -284,11 +296,14 @@ export default class JwtService {
   }
 
   getSupportedPlatforms(t) {
-    return this.axiosIns.get(`${this.jwtConfig.getSupportedPlatformsEndPoint} `, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    });
+    return this.axiosIns.get(
+      `${this.jwtConfig.getSupportedPlatformsEndPoint} `,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
   }
   DeleteCompanyInvoice(token, id) {
     return this.axiosIns.delete(

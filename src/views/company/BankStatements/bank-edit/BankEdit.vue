@@ -1424,27 +1424,22 @@ export default {
         for (let statement of statements) {
           if (response.data.exportProperties.platform == "QUICK_BOOKS") {
             if (statement.account == null) {
-              console.log("quickeeee");
               isQuickBook.value = false;
               isAccount.value = false;
             } else {
-              console.log("elsesss");
               isAccount.value = true;
               isQuickBook.value = true;
             }
           }
           if (response.data.exportProperties.platform == "XERO") {
             if (statement.account == null) {
-              console.log("quickeeee");
               isXero.value = false;
               isAccount.value = false;
             } else {
-              console.log("elsesss");
               isAccount.value = true;
               isXero.value = true;
             }
           }
-          console.log(statement, "this is statement quick books");
         }
 
         companyName.value = response.data.companyName;
