@@ -121,9 +121,6 @@
           <!-- <img src="" alt=""> -->
           Here will be Image
         </div>
-        <div>
-          <b> On average it takes 10 seconds to connect. </b>
-        </div>
         <b-tabs content-class="mt-1" class="modal-tabs" align="center">
           <b-tab title="How to connect" active>
             <ol>
