@@ -10643,6 +10643,7 @@ export default {
       this.visible = false;
     },
     connectDis(isSyncing, platform, cToQb, cToX) {
+      // console.log('allllllll=>',isSyncing, platform, cToQb, cToX)
       return isSyncing || platform == "QUICK_BOOKS"
         ? platform == "QUICK_BOOKS" && !cToQb
         : platform == "XERO" && !cToX;
@@ -12148,6 +12149,7 @@ export default {
       companyName,
       companyInfo,
       platform,
+      cToQb, cToX,
       populateValues,
       logoToUpload,
       invoiceImage,
