@@ -113,13 +113,16 @@
       :no-close-on-backdrop="true"
     >
       <div>
-        <div style="color: orangered">
-            Connect your Coherent Accounting OCR Solution with {{ type == 'qbo' ? 'QuickBook' :
-                        'Xero' }} Online account.
+        <div style="color: blue">
+          Connect your Coherent Accounting OCR Solution with
+          {{ type == "qbo" ? "QuickBook" : "Xero" }} Online account.
         </div>
-        <div style="height: 150px">
-          <!-- <img src="" alt=""> -->
+        <div
+          style="height: 150px"
+          class="d-flex flex-column align-items-center"
+        >
           Here will be Image
+          <img :src="getPath(type)" alt="Toast image" />
         </div>
         <div>
           <b> On average it takes 10 seconds to connect. </b>
@@ -128,11 +131,14 @@
           <b-tab title="How to connect" active>
             <ol>
               <li class="my-1">
-                Click the <b>Connect software</b> button - you'll be redirected from Coherent Accounting to
-                  {{ type == 'qbo' ? 'QuickBook' : 'Xero' }} Online and promoted to log in.
+                Click the <b>Connect software</b> button - you'll be redirected
+                from Coherent Accounting to
+                {{ type == "qbo" ? "QuickBook" : "Xero" }} Online and promoted
+                to log in.
               </li>
               <li class="my-1">
-                Select matching company in Coherent Accounting and correponding in {{ type == 'qbo' ? 'QuickBook' : 'Xero' }}
+                Select matching company in Coherent Accounting and correponding
+                in {{ type == "qbo" ? "QuickBook" : "Xero" }}
               </li>
               <li class="my-1">Click on the 'Authorize' button</li>
             </ol>
@@ -201,6 +207,11 @@ export default {
     showConnectionModal(type) {
       this.type = type;
       this.isConnection = true;
+    },
+    getPath(type) {
+      return type == "qbo"
+        ? require("@/assets/images/logo/connecttoqb.jpeg")
+        : require("@/assets/images/logo/connecttoxero.jpeg");
     },
     async connectToQuickBooks(type) {
       axios
@@ -307,7 +318,7 @@ li {
 
 li:before {
   content: counter(item);
-  background: orangered;
+  background: blue;
   border-radius: 100%;
   color: white;
   width: 1.5em;
