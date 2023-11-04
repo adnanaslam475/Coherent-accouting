@@ -11697,8 +11697,8 @@ export default {
           props: {
             title: this.$t(
               platform.value == "XERO"
-                ? "invoice_details.x"
-                : "invoice_details.p"
+                ? "invoice_details.publishedx"
+                : "invoice_details.publishedq"
             ),
             icon: "EditIcon",
             variant: "success",
