@@ -1274,26 +1274,6 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-
-                      <!-- <div class="d-flex align-items-center mb-1">
-                    <span class="title mr-1" style='width:200px'>
-                      {{ $t("Paid/Not Paid") }}:
-                    </span>
-                    <validation-provider #default="{ errors }" name="transectionType" rules="required">
-                      <b-form-select style='width: 307px' v-model="invoiceData.transactionType" @change="() => {
-                        companyIDisInvalid = false;
-                      }
-                        ">
-                        <b-form-select-option value="PAID">{{
-                          $t("PAID")
-                        }}</b-form-select-option>
-                        <b-form-select-option value="NOT_PAID">{{
-                          $t("NOT PAID")
-                        }}</b-form-select-option>
-                      </b-form-select>
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </div> -->
                     </div>
                   </b-tab>
                 </b-tabs>
@@ -1331,7 +1311,7 @@
                     variant="outline-primary"
                     type="button"
                     class="mr-2"
-                    :disabled="isSyncing"
+                    :disabled="connectDis(isSyncing, platform, cToQb, cToX)"
                     @click="syncWithQuickBookHandler"
                   >
                     {{
@@ -10662,7 +10642,11 @@ export default {
     closeLightbox() {
       this.visible = false;
     },
-
+    connectDis(isSyncing, platform, cToQb, cToX) {
+      return isSyncing || platform == "QUICK_BOOKS"
+        ? platform == "QUICK_BOOKS" && !cToQb
+        : platform == "XERO" && !cToX;
+    },
     checkProcessType(type) {
       let self = this;
       if (type == "BANK_TRANSFER") {
@@ -11167,6 +11151,9 @@ export default {
     var supplierID = ref(null);
     var companyName = ref("");
     var platform = ref(null);
+    var cToQb = ref(null);
+    var cToX = ref(null);
+    var platform = ref(null);
     const isUploading = ref("");
 
     const showLogo = ref(null);
@@ -11527,6 +11514,8 @@ export default {
           isQuickBook.value = true;
         }
         platform.value = response.data.exportProperties.platform;
+        cToQb.value = response.data.connectedToQBO;
+        cToX.value = response.data.connectedToXero;
         companyName.value = response.data.companyName;
         companyData.value = response.data;
         supplierID.value = response.data.companyIdentificationNumber;
@@ -11674,7 +11663,8 @@ export default {
       };
     };
 
-    function syncWithQuickBookHandler() {
+    function syncWithQuickBookHandler(a) {
+      console.log("aaaaaaaa", a, companyData, companyInBG);
       this.isSyncing = true;
       let token = useJwt.getToken();
 
@@ -11695,6 +11685,7 @@ export default {
                 variant: "success",
               },
             });
+            this.isSyncing = false;
           })
           .catch((error) => {
             this.$toast({
@@ -11705,6 +11696,7 @@ export default {
                 variant: "danger",
               },
             });
+            this.isSyncing = false;
           });
       } else {
         useJwt
@@ -11723,6 +11715,7 @@ export default {
                 variant: "success",
               },
             });
+            this.isSyncing = false;
           })
           .catch((error) => {
             this.$toast({
@@ -11733,6 +11726,7 @@ export default {
                 variant: "danger",
               },
             });
+            this.isSyncing = false;
           });
       }
     }
