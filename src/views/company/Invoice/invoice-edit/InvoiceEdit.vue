@@ -11674,47 +11674,66 @@ export default {
       };
     };
 
-    async function syncWithQuickBookHandler() {
+    function syncWithQuickBookHandler() {
       this.isSyncing = true;
-      try {
-        let token = useJwt.getToken();
-        const {} =
-          (await platform.value) == "XERO"
-            ? useJwt.syncWithXero(
-                token,
-                router.currentRoute.params.id,
-                router.currentRoute.params.companyId,
-                invoiceData.value
-              )
-            : useJwt.syncWithQuickBook(
-                token,
-                router.currentRoute.params.id,
-                router.currentRoute.params.companyId,
-                invoiceData.value
-              );
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: this.$t(
-              platform.value == "XERO"
-                ? "invoice_details.publishedx"
-                : "invoice_details.publishedq"
-            ),
-            icon: "EditIcon",
-            variant: "success",
-          },
-        });
-      } catch (error) {
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: `${error.response?.data?.errorMessage}`,
-            icon: "AlertTriangleIcon",
-            variant: "danger",
-          },
-        });
-      } finally {
-        this.isSyncing = false;
+      let token = useJwt.getToken();
+
+      if (platform.value == "XERO") {
+        useJwt
+          .syncWithXero(
+            token,
+            router.currentRoute.params.id,
+            router.currentRoute.params.companyId,
+            invoiceData.value
+          )
+          .then(() => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: this.$t("invoice_details.publishedx"),
+                icon: "EditIcon",
+                variant: "success",
+              },
+            });
+          })
+          .catch((error) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `${error.response?.data?.errorMessage}`,
+                icon: "AlertTriangleIcon",
+                variant: "danger",
+              },
+            });
+          });
+      } else {
+        useJwt
+          .syncWithQuickBook(
+            token,
+            router.currentRoute.params.id,
+            router.currentRoute.params.companyId,
+            invoiceData.value
+          )
+          .then((r) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: this.$t("invoice_details.publishedq"),
+                icon: "EditIcon",
+                variant: "success",
+              },
+            });
+          })
+          .catch((error) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `${error.response?.data?.errorMessage}`,
+                icon: "AlertTriangleIcon",
+                variant: "danger",
+              },
+            });
+          });
       }
     }
 
