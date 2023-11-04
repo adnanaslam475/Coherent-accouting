@@ -364,7 +364,8 @@
     "delete_invoice": "Изтриване на фактура"
   },
   "invoice_details": {
-    "published": "Публикувано успешно в Quickbooks",
+    "publishedq": "Публикувано успешно в Quickbooks",
+    "publishedx": "Публикувано успешно в Xero",
     "invoiceNumber": "Номер на фактура",
     "recipientCompanyName": "Име на компанията получател: {name}",
     "supplierCompanyName": "Име на фирмата доставчик: {name}",

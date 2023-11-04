@@ -11526,8 +11526,7 @@ export default {
         if (response.data.exportProperties.platform == "QUICK_BOOKS") {
           isQuickBook.value = true;
         }
-        platform.value =
-          response.data.exportProperties.platform  ;
+        platform.value = response.data.exportProperties.platform;
         companyName.value = response.data.companyName;
         companyData.value = response.data;
         supplierID.value = response.data.companyIdentificationNumber;
@@ -11696,7 +11695,11 @@ export default {
         this.$toast({
           component: ToastificationContent,
           props: {
-            title: this.$t("invoice_details.published"),
+            title: this.$t(
+              platform.value == "XERO"
+                ? "invoice_details.x"
+                : "invoice_details.p"
+            ),
             icon: "EditIcon",
             variant: "success",
           },

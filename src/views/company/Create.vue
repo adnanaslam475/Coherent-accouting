@@ -157,9 +157,9 @@
                       >
                         <img
                           :src="
-                            '@/assets/flags/' +
-                            getCompanyISO.toLowerCase() +
-                            '.png'
+                            require('@/assets/flags/' +
+                              getCompanyISO.toLowerCase() +
+                              '.png')
                           "
                           style="width: 30px; height: 20px"
                         />
@@ -178,9 +178,9 @@
                       >
                         <img
                           :src="
-                            '@/assets/flags/' +
-                            option.isoAlpha2Country.toLowerCase() +
-                            '.png'
+                            require('@/assets/flags/' +
+                              option.isoAlpha2Country.toLowerCase() +
+                              '.png')
                           "
                           style="width: 30px; height: 20px"
                         />
@@ -200,9 +200,9 @@
                       >
                         <img
                           :src="
-                            '@/assets/flags/' +
-                            option.isoAlpha2Country.toLowerCase() +
-                            '.png'
+                            require('@/assets/flags/' +
+                              option.isoAlpha2Country.toLowerCase() +
+                              '.png')
                           "
                           style="width: 30px; height: 20px"
                         />
