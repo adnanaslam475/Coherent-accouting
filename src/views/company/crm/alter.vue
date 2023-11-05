@@ -75,9 +75,9 @@
         <span v-if="props.column.field === 'country'" class="text-nowrap">
           <img
             :src="
-              '@/assets/flags/' +
-              props.row.companyApi.companyIsoAlpha2Country.toLowerCase() +
-              '.png'
+              require('@/assets/flags/' +
+                props.row.companyApi.companyIsoAlpha2Country.toLowerCase() +
+                '.png')
             "
             style="width: 30px; height: 20px; margin-left: 10px"
           />

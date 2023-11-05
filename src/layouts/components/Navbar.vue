@@ -19,7 +19,7 @@
       <div class="mr-2">
 
         <feather-icon icon="ClockIcon" size="16" stroke="red" />
-        <span style="color: red;">Your trial ends in <b>{{ currentPlan.daysLeft }}</b> days</span>
+        <span style="color: red;">Your plan ends in <b>{{ currentPlan.daysLeft }}</b> days</span>
       </div>
       <dark-Toggler class="d-none d-lg-block" />
       <!-- For Multilingual -->

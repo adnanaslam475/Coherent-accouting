@@ -1274,26 +1274,6 @@
                           </validation-provider>
                         </b-input-group>
                       </div>
-
-                      <!-- <div class="d-flex align-items-center mb-1">
-                    <span class="title mr-1" style='width:200px'>
-                      {{ $t("Paid/Not Paid") }}:
-                    </span>
-                    <validation-provider #default="{ errors }" name="transectionType" rules="required">
-                      <b-form-select style='width: 307px' v-model="invoiceData.transactionType" @change="() => {
-                        companyIDisInvalid = false;
-                      }
-                        ">
-                        <b-form-select-option value="PAID">{{
-                          $t("PAID")
-                        }}</b-form-select-option>
-                        <b-form-select-option value="NOT_PAID">{{
-                          $t("NOT PAID")
-                        }}</b-form-select-option>
-                      </b-form-select>
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </div> -->
                     </div>
                   </b-tab>
                 </b-tabs>
@@ -1331,7 +1311,7 @@
                     variant="outline-primary"
                     type="button"
                     class="mr-2"
-                    :disabled="isSyncing"
+                    :disabled="connectDis(isSyncing, platform, cToQb, cToX)"
                     @click="syncWithQuickBookHandler"
                   >
                     {{
@@ -10662,7 +10642,12 @@ export default {
     closeLightbox() {
       this.visible = false;
     },
-
+    connectDis(isSyncing, platform, cToQb, cToX) {
+      // console.log('allllllll=>',isSyncing, platform, cToQb, cToX)
+      return isSyncing || platform == "QUICK_BOOKS"
+        ? platform == "QUICK_BOOKS" && !cToQb
+        : platform == "XERO" && !cToX;
+    },
     checkProcessType(type) {
       let self = this;
       if (type == "BANK_TRANSFER") {
@@ -11167,6 +11152,9 @@ export default {
     var supplierID = ref(null);
     var companyName = ref("");
     var platform = ref(null);
+    var cToQb = ref(null);
+    var cToX = ref(null);
+    var platform = ref(null);
     const isUploading = ref("");
 
     const showLogo = ref(null);
@@ -11526,8 +11514,9 @@ export default {
         if (response.data.exportProperties.platform == "QUICK_BOOKS") {
           isQuickBook.value = true;
         }
-        platform.value =
-          response.data.exportProperties.platform  ;
+        platform.value = response.data.exportProperties.platform;
+        cToQb.value = response.data.connectedToQBO;
+        cToX.value = response.data.connectedToXero;
         companyName.value = response.data.companyName;
         companyData.value = response.data;
         supplierID.value = response.data.companyIdentificationNumber;
@@ -11675,43 +11664,71 @@ export default {
       };
     };
 
-    async function syncWithQuickBookHandler() {
+    function syncWithQuickBookHandler(a) {
+      console.log("aaaaaaaa", a, companyData, companyInBG);
       this.isSyncing = true;
-      try {
-        let token = useJwt.getToken();
-        const {} =
-          (await platform.value) == "XERO"
-            ? useJwt.syncWithXero(
-                token,
-                router.currentRoute.params.id,
-                router.currentRoute.params.companyId,
-                invoiceData.value
-              )
-            : useJwt.syncWithQuickBook(
-                token,
-                router.currentRoute.params.id,
-                router.currentRoute.params.companyId,
-                invoiceData.value
-              );
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: this.$t("invoice_details.published"),
-            icon: "EditIcon",
-            variant: "success",
-          },
-        });
-      } catch (error) {
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: `${error.response?.data?.errorMessage}`,
-            icon: "AlertTriangleIcon",
-            variant: "danger",
-          },
-        });
-      } finally {
-        this.isSyncing = false;
+      let token = useJwt.getToken();
+
+      if (platform.value == "XERO") {
+        useJwt
+          .syncWithXero(
+            token,
+            router.currentRoute.params.id,
+            router.currentRoute.params.companyId,
+            invoiceData.value
+          )
+          .then(() => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: this.$t("invoice_details.publishedx"),
+                icon: "EditIcon",
+                variant: "success",
+              },
+            });
+            this.isSyncing = false;
+          })
+          .catch((error) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `${error.response?.data?.errorMessage}`,
+                icon: "AlertTriangleIcon",
+                variant: "danger",
+              },
+            });
+            this.isSyncing = false;
+          });
+      } else {
+        useJwt
+          .syncWithQuickBook(
+            token,
+            router.currentRoute.params.id,
+            router.currentRoute.params.companyId,
+            invoiceData.value
+          )
+          .then((r) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: this.$t("invoice_details.publishedq"),
+                icon: "EditIcon",
+                variant: "success",
+              },
+            });
+            this.isSyncing = false;
+          })
+          .catch((error) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `${error.response?.data?.errorMessage}`,
+                icon: "AlertTriangleIcon",
+                variant: "danger",
+              },
+            });
+            this.isSyncing = false;
+          });
       }
     }
 
@@ -12132,6 +12149,7 @@ export default {
       companyName,
       companyInfo,
       platform,
+      cToQb, cToX,
       populateValues,
       logoToUpload,
       invoiceImage,

@@ -27,9 +27,9 @@
         <div>
           <img
             :src="
-              '@/assets/flags/' +
-              data.item.companyApi.companyIsoAlpha2Country.toLowerCase() +
-              '.png'
+              require('@/assets/flags/' +
+                data.item.companyApi.companyIsoAlpha2Country.toLowerCase() +
+                '.png')
             "
             style="width: 30px; height: 20px; margin-left: 10px"
           />

@@ -113,26 +113,25 @@
       :no-close-on-backdrop="true"
     >
       <div>
-        <div style="color: orangered">
-            Connect your Coherent Accounting OCR Solution with {{ type == 'qbo' ? 'QuickBook' :
-                        'Xero' }} Online account.
+        <div style="color: blue" class="text-center">
+          Connect your Coherent Accounting OCR Solution with
+          {{ type == "qbo" ? "QuickBook" : "Xero" }} Online account.
         </div>
-        <div style="height: 150px">
-          <!-- <img src="" alt=""> -->
-          Here will be Image
-        </div>
-        <div>
-          <b> On average it takes 10 seconds to connect. </b>
+        <div class="d-flex flex-column align-items-center mt-2 mb-2">
+          <img :src="getPath(type)" alt="Toast image" />
         </div>
         <b-tabs content-class="mt-1" class="modal-tabs" align="center">
           <b-tab title="How to connect" active>
             <ol>
               <li class="my-1">
-                Click the <b>Connect software</b> button - you'll be redirected from Coherent Accounting to
-                  {{ type == 'qbo' ? 'QuickBook' : 'Xero' }} Online and promoted to log in.
+                Click the <b>Connect software</b> button - you'll be redirected
+                from Coherent Accounting to
+                {{ type == "qbo" ? "QuickBook" : "Xero" }} Online and promoted
+                to log in.
               </li>
               <li class="my-1">
-                Select matching company in Coherent Accounting and correponding in {{ type == 'qbo' ? 'QuickBook' : 'Xero' }}
+                Select matching company in Coherent Accounting and correponding
+                in {{ type == "qbo" ? "QuickBook" : "Xero" }}
               </li>
               <li class="my-1">Click on the 'Authorize' button</li>
             </ol>
@@ -188,19 +187,17 @@ export default {
   mounted() {
     this.getCompany();
   },
-  updated() {
-    // Wincheck = window.open(
-    //   "https://coherent-accounting.com/account/api/callback/oauth2redirect?code=AB11699029227lYztWdR68ds01Hzf2sbFEM3YNuBOePqjbvlPu&state=68083c15-8311-49b1-91dd-d13b06766552&realmId=4620816365341301640"
-    // );
-    // if (Wincheck.closed) {
-    //   alert("It's closed!");
-    // } else alert("It's still open!");
-  },
+
   methods: {
     // this function will coneect to quickbok
     showConnectionModal(type) {
       this.type = type;
       this.isConnection = true;
+    },
+    getPath(type) {
+      return type == "qbo"
+        ? require("@/assets/images/logo/connecttoqb.jpeg")
+        : require("@/assets/images/logo/connecttoxero.jpeg");
     },
     async connectToQuickBooks(type) {
       axios
@@ -307,7 +304,7 @@ li {
 
 li:before {
   content: counter(item);
-  background: orangered;
+  background: blue;
   border-radius: 100%;
   color: white;
   width: 1.5em;
