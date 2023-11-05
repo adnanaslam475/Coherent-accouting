@@ -162,6 +162,8 @@ import {
   BModal,
 } from "bootstrap-vue";
 import axios from "@/libs/axios";
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+
 export default {
   components: {
     BCol,
@@ -219,6 +221,16 @@ export default {
             "_blank",
             "width=600,height=400"
           );
+          window.addEventListener(
+            "message",
+            (event) => {
+              console.log("eeeeeeee", event);
+              if (event.origin !== "http://example.org:8080") return;
+
+              // …
+            },
+            false
+          );
           // var pollTimer = window.setInterval(function () {
           //   try {
           //     if (win.document.URL.indexOf(response.data.redirectUrl) != -1) {
@@ -237,6 +249,7 @@ export default {
     },
 
     disconnectSoftware(type) {
+      console.log("type", type);
       axios
         .get(
           `/account/api/${
@@ -256,7 +269,14 @@ export default {
             : (this.companyInfo.connectedToXero = false);
         })
         .catch((error) => {
-          console.log(error);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: error.response?.errorMessage || "Error in disconnect",
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          });
         });
     },
 

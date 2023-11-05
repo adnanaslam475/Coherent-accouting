@@ -10443,7 +10443,6 @@ export default {
     checkProcessType(type) {
       let self = this;
       this.notBank = false;
-      console.log(type, "this sssss===>");
       if (type == "BANK_TRANSFER") {
         this.isBank = true;
         this.invoiceData.bankApi.name = self.companyData?.companyBankName;
