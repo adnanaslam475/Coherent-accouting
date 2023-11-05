@@ -11683,7 +11683,7 @@ export default {
                   ? res.data.errorMessage
                   : this.$t("invoice_details.publishedx"),
                 icon: "EditIcon",
-                variant: "success",
+                variant: !res.data.success?'danger':"success",
               },
             });
             this.isSyncing = false;
@@ -11715,7 +11715,7 @@ export default {
                   ? res.data.errorMessage
                   : this.$t("invoice_details.publishedq"),
                 icon: "EditIcon",
-                variant: "success",
+                variant: !res.data.success?'danger':"success",
               },
             });
             this.isSyncing = false;

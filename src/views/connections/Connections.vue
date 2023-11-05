@@ -162,7 +162,7 @@ import {
   BModal,
 } from "bootstrap-vue";
 import axios from "@/libs/axios";
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 export default {
   components: {
@@ -267,6 +267,16 @@ export default {
           type == "qbo"
             ? (this.companyInfo.connectedToQBO = false)
             : (this.companyInfo.connectedToXero = false);
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${
+                type == "qbo" ? "Quickbook" : "Xero"
+              } Disconnect successfully`,
+              icon: "AlertTriangleIcon",
+              variant: "success",
+            },
+          });
         })
         .catch((error) => {
           this.$toast({
