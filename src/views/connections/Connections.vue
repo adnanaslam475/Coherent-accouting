@@ -272,7 +272,7 @@ export default {
             props: {
               title: `${
                 type == "qbo" ? "Quickbook" : "Xero"
-              } Disconnect successfully`,
+              } disconnect successfully`,
               icon: "AlertTriangleIcon",
               variant: "success",
             },
