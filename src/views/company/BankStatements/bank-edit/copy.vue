@@ -9537,7 +9537,6 @@ export default {
         return item;
       });
 
-      console.log(self.isBank, "banksssss");
       invoiceData.paymentProcess = self.bankProcess;
       if (self.isBank == false) {
         invoiceData.bankApi = null;

@@ -10643,7 +10643,6 @@ export default {
       this.visible = false;
     },
     connectDis(isSyncing, platform, cToQb, cToX) {
-      // console.log('allllllll=>',isSyncing, platform, cToQb, cToX)
       return isSyncing || platform == "QUICK_BOOKS"
         ? platform == "QUICK_BOOKS" && !cToQb
         : platform == "XERO" && !cToX;
@@ -11665,7 +11664,6 @@ export default {
     };
 
     function syncWithQuickBookHandler(a) {
-      console.log("aaaaaaaa", a, companyData, companyInBG);
       this.isSyncing = true;
       let token = useJwt.getToken();
 
@@ -11677,13 +11675,15 @@ export default {
             router.currentRoute.params.companyId,
             invoiceData.value
           )
-          .then(() => {
+          .then((res) => {
             this.$toast({
               component: ToastificationContent,
               props: {
-                title: this.$t("invoice_details.publishedx"),
+                title: !res.data.success
+                  ? res.data.errorMessage
+                  : this.$t("invoice_details.publishedx"),
                 icon: "EditIcon",
-                variant: "success",
+                variant: !res.data.success?'danger':"success",
               },
             });
             this.isSyncing = false;
@@ -11707,13 +11707,15 @@ export default {
             router.currentRoute.params.companyId,
             invoiceData.value
           )
-          .then((r) => {
+          .then((res) => {
             this.$toast({
               component: ToastificationContent,
               props: {
-                title: this.$t("invoice_details.publishedq"),
+                title: !res.data.success
+                  ? res.data.errorMessage
+                  : this.$t("invoice_details.publishedq"),
                 icon: "EditIcon",
-                variant: "success",
+                variant: !res.data.success?'danger':"success",
               },
             });
             this.isSyncing = false;
@@ -12149,7 +12151,8 @@ export default {
       companyName,
       companyInfo,
       platform,
-      cToQb, cToX,
+      cToQb,
+      cToX,
       populateValues,
       logoToUpload,
       invoiceImage,

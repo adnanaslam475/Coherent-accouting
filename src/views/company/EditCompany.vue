@@ -10,24 +10,11 @@
       :back-button-text="$t('create_company.previous')"
       class="mb-3"
     >
-      <!-- First Tab: Company Details -->
-      <!-- First Tab: Company Details -->
-      <!-- First Tab: Company Details -->
       <tab-content
         :title="$t('create_company.company_details')"
         :before-change="validationForm"
       >
         <validation-observer ref="companyRules" tag="form">
-          <!-- <b-row>
-            <b-col cols="12" class="mb-2">
-              <h5 class="mb-0">
-                {{ $t('create_company.company_details') }}
-              </h5>
-              <small class="text-muted">
-                {{ $t('create_company.update_details') }}
-              </small>
-            </b-col>
-          </b-row> -->
           <b-form-row>
             <!-- Company Name -->
             <b-col>
@@ -366,17 +353,6 @@
         :before-change="validationFormTab2"
       >
         <validation-observer ref="accountRules" tag="form">
-          <!-- <b-row>sd
-            <b-col cols="12" class="mb-2">
-              <h5 class="mb-0">
-                {{ $t('create_company.account_details') }}
-              </h5>
-              <small class="text-muted">
-                {{ $t('create_company.update_acc_details') }}
-              </small>
-
-            </b-col>
-          </b-row> -->
           <b-form-row>
             <b-col>
               <b-form-group
@@ -553,15 +529,6 @@
                   v-bind:name="$t('company_fin_year')"
                   rules="required"
                 >
-                  <!-- <flat-pickr
-                        id="company_fin_year"
-                        class="form-control"
-                        v-model="getCompFinYear"
-                        :state="errors.length > 0 ? false : null"
-                        placeholder="Select date"
-                        style="background-color: white !important;"
-                      /> -->
-
                   <div class="position-relative mr-1">
                     <flat-pickr
                       id="company_fin_year"
@@ -949,32 +916,6 @@ export default {
         text: property,
       }));
     },
-    // modifiedArray() {
-    //   const arr = [...this.platformPropertiesOptions]; // Create a copy of the input array
-
-    //   const microInvestIndex = arr.findIndex(
-    //     (item) => item.value === "MICRO_INVEST"
-    //   );
-    //   const ajureIndex = arr.findIndex((item) => item.value === "AJURE");
-
-    //   // Check if the element is found before performing modifications
-    //   if (microInvestIndex !== -1 && ajureIndex !== -1) {
-    //     const removedMicroInvest = arr.splice(microInvestIndex, 1)[0];
-    //     const removedAjure = arr.splice(
-    //       ajureIndex - (ajureIndex > microInvestIndex ? 1 : 0),
-    //       1
-    //     )[0];
-
-    //     arr.unshift({ ...removedAjure, disabled: false });
-    //     arr.unshift({ ...removedMicroInvest, disabled: false });
-    //   }
-    //   arr.forEach((item) => {
-    //     if (item.value !== "MICRO_INVEST" && item.value !== "AJURE" && item.value !== "XERO" && item.value !== "FRESH_BOOKS") {
-    //       item.disabled = true;
-    //     }
-    //   });
-    //   return arr;
-    // },
   },
 
   methods: {
@@ -992,9 +933,7 @@ export default {
       };
       axios(config)
         .then((response) => {
-          console.log(response.data);
           this.banks = response.data;
-          console.log(this.banks, "there are banks");
         })
         .catch(function (error) {});
     },
@@ -1012,7 +951,6 @@ export default {
     //update companyInfo
     async updateCompanyInfo() {
       let self = this;
-
       if (this.isVatCheck === false) {
         this.getVatNumber = "";
       }
@@ -1031,6 +969,7 @@ export default {
         this.getCompanyStatus = this.getCompanyStatus.status;
       }
 
+      console.log("thisssssssss", this.form);
       var data = JSON.stringify({
         companyBankName: this.companyBankName,
         companyBankBic: this.companyBankBic,
@@ -1054,6 +993,9 @@ export default {
         companyPhone: this.getCompanyPhone,
         companyVatAccepted: this.isVatCheck,
         companyVatNumber: this.getVatNumber,
+        connectedToQBO: this.form.connectedToQBO,
+        connectedToXero: this.form.connectedToXero,
+        autoSyncEnabled: this.form.connectedToXero,
         id: this.companyID,
         status: this.getCompanyStatus,
         exportProperties: {
@@ -1091,7 +1033,6 @@ export default {
           return self.$router.go(-1);
         })
         .catch(function (error) {
-          console.log(error);
           self.$toast({
             component: ToastificationContent,
             props: {
@@ -1160,34 +1101,6 @@ export default {
             },
           });
         });
-
-      // if (data.data != "") {
-      //   this.companyRecord = data.data;
-      //   this.form = data.data;
-      //   this.getCompanyName = this.companyRecord.companyName;
-      //   this.getCompanyID = this.companyRecord.companyIdentificationNumber;
-      //   this.getCompanyAddress = this.companyRecord.companyAddress;
-      //   this.getCompanyCountry = this.companyRecord.companyCountry;
-      //   this.getCompOwnerName =
-      //     this.companyRecord.companyOwnerApi.companyOwnerName;
-      //     this.getCompOwnerEgn =
-      //     this.companyRecord.companyOwnerApi.ownerEGN;
-      //     this.isVatCheck = this.companyRecord.companyVatAccepted;
-      //     this.getVatNumber = this.companyRecord.companyVatNumber;
-      //     this.getBankAccount = this.companyRecord.companyBankAccount;
-      //     this.getCompanyCurrency = this.companyRecord.companyCurrency;
-      //     this.getCompanyPhone = this.companyRecord.companyPhone;
-      //     this.getCompFinYear = this.companyRecord.companyFinancialStartOfYear;
-      //   this.getCompanyEmail = this.companyRecord.companyMail;
-      //   this.getCompanyISO = this.companyRecord.companyIsoAlpha2Country;
-      //   this.getCompanyStatus = this.companyRecord.status;
-      //   if(this.getCompanyStatus === null){
-      //     this.isStatusSelected = false;
-      //   }
-      //   else{
-      //     this.isStatusSelected = true;
-      //   }
-      // }
     },
 
     //

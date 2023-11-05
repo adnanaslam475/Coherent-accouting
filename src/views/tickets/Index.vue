@@ -40,18 +40,18 @@
         {{ $t("companies.actions") }}
       </template>
 
-    
       <template style="text-align: center !important" #cell(status)="data">
-        <span
-          :id="`recipientCompany-row-${data.item.id}`"
-          class="text-nowrap"
-        >
+        <span :id="`recipientCompany-row-${data.item.id}`" class="text-nowrap">
           <b-badge
             pill
-            :variant="`${data.value.toLowerCase() == 'resolved' ? 'light-success' : 'light-warning' }`"
+            :variant="`${
+              data.value.toLowerCase() == 'resolved'
+                ? 'light-success'
+                : 'light-warning'
+            }`"
             class="text-uppercase"
           >
-            {{ $t('tickets_page.'+data.value) }}
+            {{ $t("tickets_page." + data.value) }}
           </b-badge>
         </span>
       </template>
@@ -78,7 +78,7 @@
 
         <div class="cursor-pointer" @click="editTicket(data.item)">
           <feather-icon icon="EditIcon" />
-          <span class="align-middle ml-50">{{ $t('company_info.edit') }}</span>
+          <span class="align-middle ml-50">{{ $t("company_info.edit") }}</span>
         </div>
         <!-- </b-button> -->
       </template>
@@ -88,22 +88,14 @@
         <b-col
           cols="12"
           sm="6"
-          class="
-            d-flex
-            align-items-center
-            justify-content-center justify-content-sm-start
-          "
+          class="d-flex align-items-center justify-content-center justify-content-sm-start"
         >
         </b-col>
         <!-- Pagination -->
         <b-col
           cols="12"
           sm="6"
-          class="
-            d-flex
-            align-items-center
-            justify-content-center justify-content-sm-end
-          "
+          class="d-flex align-items-center justify-content-center justify-content-sm-end"
         >
           <b-pagination
             v-model="currentPage"
@@ -143,7 +135,10 @@
           <b-form @submit.prevent="validationCreateTicket()">
             <b-row>
               <b-col sm="12">
-                <b-form-group :label="$t('update_tickets.title')" label-for="title">
+                <b-form-group
+                  :label="$t('update_tickets.title')"
+                  label-for="title"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Title"
@@ -161,7 +156,10 @@
                 </b-form-group>
               </b-col>
               <b-col sm="12">
-                <b-form-group :label="$t('update_tickets.description')" label-for="last-name">
+                <b-form-group
+                  :label="$t('update_tickets.description')"
+                  label-for="last-name"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Description"
@@ -197,7 +195,10 @@
           <b-form @submit.prevent="validationUpdateTicket()">
             <b-row>
               <b-col sm="12">
-                <b-form-group :label="$t('update_tickets.title')" label-for="title">
+                <b-form-group
+                  :label="$t('update_tickets.title')"
+                  label-for="title"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Title"
@@ -214,7 +215,10 @@
                 </b-form-group>
               </b-col>
               <b-col sm="12">
-                <b-form-group :label="$t('update_tickets.description')" label-for="last-name">
+                <b-form-group
+                  :label="$t('update_tickets.description')"
+                  label-for="last-name"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Description"
@@ -342,13 +346,14 @@ export default {
   methods: {
     // getting the list of all companies
     async getAllTickets() {
-      axios.get(
-        `/account/api/ticket/list/${this.currentPage}/${this.perPage}?direction=desc&sortField=id`
-      )
-      .then((response) => {
-        this.items = response.data.elements;
-        this.totalRecords = response.data.totalElements;
-        this.totalPages = Math.ceil(this.totalRecords / this.perPage);
+      axios
+        .get(
+          `/account/api/ticket/list/${this.currentPage}/${this.perPage}?direction=desc&sortField=id`
+        )
+        .then((response) => {
+          this.items = response.data.elements;
+          this.totalRecords = response.data.totalElements;
+          this.totalPages = Math.ceil(this.totalRecords / this.perPage);
         })
         .catch((error) => {
           console.log(error);
@@ -356,12 +361,11 @@ export default {
             component: ToastificationContent,
             props: {
               title: "Error fetching tickets",
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
           });
         });
-      
     },
     async createTicket() {
       const data = await axios.post(
