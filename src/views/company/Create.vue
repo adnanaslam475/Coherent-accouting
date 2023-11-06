@@ -469,7 +469,6 @@
                 <validation-provider
                   #default="{ errors }"
                   v-bind:name="$t('company_phone')"
-                  rules="required"
                 >
                   <b-form-input
                     id="company_phone"
@@ -505,8 +504,8 @@
             </b-col>
           </b-form-row>
           <b-form-row>
-            <b-col
-              ><b-form-group
+            <b-col>
+              <b-form-group
                 id="input-group-1"
                 :label="$t('create_company.company_fin_year')"
                 label-for="company_fin_year"
@@ -516,14 +515,6 @@
                   v-bind:name="$t('company_fin_year')"
                   rules="required"
                 >
-                  <!-- <flat-pickr
-                    id="company_fin_year"
-                    class="form-control"
-                    v-model="form.fin_year"
-                    :state="errors.length > 0 ? false : null"
-                    placeholder="Select date"
-                    style="background-color: white !important;"
-                  /> -->
                   <div class="position-relative mr-1">
                     <flat-pickr
                       id="company_fin_year"
@@ -690,7 +681,7 @@ export default {
         company_currency: "GBP",
         phone_no: null,
         vat_no: null,
-        fin_year: null,
+        fin_year: new Date(),
         companyBankBic: null,
         companyBankName: null,
       },

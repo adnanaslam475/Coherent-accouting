@@ -50,9 +50,8 @@
                 ></path>
               </svg>
             </div>
-            <div style="margin-top: 4px; margin-bottom: 4px">
-              Coherent Accounting for <br />
-              QuickBooks Online
+            <div style="margin-top: 4px; margin-bottom: 4px; white-space: nowrap;">
+              Coherent Accounting for QuickBooks
             </div>
             <b-button
               variant="outline-success"
@@ -73,7 +72,7 @@
       </b-col>
 
       <b-col cols="12" md="3">
-        <b-card style="max-width: 20rem; height: 233px" class="mb-2">
+        <b-card style="max-width: 20rem;" class="mb-2">
           <div class="custome-card">
             <div style="color: green">
               <feather-icon icon="CheckCircleIcon" stroke="green" />
@@ -264,7 +263,7 @@ export default {
           }
         )
         .then((response) => {
-          console.log('first',response.data)
+          console.log("first", response.data);
           type == "qbo"
             ? (this.companyInfo.connectedToQBO = false)
             : (this.companyInfo.connectedToXero = false);

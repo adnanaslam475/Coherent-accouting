@@ -232,10 +232,9 @@
                   <b-col cols="12" style="padding-left: 0.7rem">
                     <table class="mt-2 mt-xl-0 w-100 company-info-table">
                       <!-- Company ID -->
-                      <tr>
+                      <tr v-if="companyDetails.companyIdentificationNumber">
                         <th class="pb-50">
                           <feather-icon icon="StarIcon" class="mr-75" />
-
                           <span class="font-weight-bold text-capitalize">{{
                             $t("company_info.company_id")
                           }}</span>
@@ -283,7 +282,7 @@
                         <!--  -->
                       </tr>
                       <!-- Company Vat Number -->
-                      <tr>
+                      <tr v-if="companyDetails.companyVatNumber">
                         <th class="pb-50">
                           <feather-icon icon="FlagIcon" class="mr-75" />
                           <span class="font-weight-bold">{{
@@ -316,7 +315,7 @@
                         <td v-else class="pb-50 text-capitalize"></td>
                       </tr>
                       <!-- Company Bank Account -->
-                      <tr>
+                      <tr v-if="companyDetails.companyBankAccount">
                         <th class="pb-50">
                           <feather-icon icon="CreditCardIcon" class="mr-75" />
                           <span class="font-weight-bold text-capitalize">{{
@@ -350,7 +349,7 @@
                         <td v-else class="pb-50"></td>
                       </tr>
                       <!-- Bank name  -->
-                      <tr>
+                      <tr v-if="companyDetails.companyBankName">
                         <th class="pb-50">
                           <feather-icon icon="HomeIcon" class="mr-75" />
                           <span class="font-weight-bold text-capitalize">{{
@@ -384,7 +383,7 @@
                         <td v-else class="pb-50"></td>
                       </tr>
                       <!-- BIC  -->
-                      <tr>
+                      <tr v-if="companyDetails.companyBankBic">
                         <th class="pb-50">
                           <feather-icon icon="CreditCardIcon" class="mr-75" />
                           <span class="font-weight-bold text-capitalize">{{
@@ -419,7 +418,7 @@
                       </tr>
                       <!-- Company Phone -->
                       <tr>
-                        <th class="pb-50">
+                        <th class="pb-50" v-if="companyDetails.companyPhone">
                           <feather-icon icon="PhoneIcon" class="mr-75" />
                           <span class="font-weight-bold text-capitalize">{{
                             $t("company_info.contact")
@@ -447,7 +446,7 @@
                         }}</b-tooltip>
                       </tr>
 
-                      <tr>
+                      <tr v-if="companyAddress">
                         <th class="pb-50">
                           <feather-icon icon="MapPinIcon" class="mr-75" />
 

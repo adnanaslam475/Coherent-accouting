@@ -756,6 +756,7 @@ export default {
           },
         }
       );
+      this.refreshList();
       const dateString = new Date();
       const date = new Date(dateString);
       const blob = new Blob([data], { type: "text/csv" });
@@ -773,7 +774,6 @@ export default {
           },
         });
       } catch (error) {
-        console.log("eeeeeeeee", error);
         this.$toast({
           component: ToastificationContent,
           props: {
@@ -1262,9 +1262,6 @@ export default {
         .addFileInvoice(token, companyId, formData)
         .then((response) => {
           this.fileLoading = false;
-
-          // const t = Object.entries(response)
-          // console.log(t)
 
           return this.$router.push({
             name: "company-invoice-add",

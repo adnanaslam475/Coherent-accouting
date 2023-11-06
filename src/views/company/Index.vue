@@ -143,8 +143,10 @@
                 :to="{ name: 'CompanyView', params: { id: data.item.id } }"
                 >{{ data.item.companyName }}
               </b-link>
+              <span class="ml-1">
+                {{ data.item.platform ? ` (${data.item.platform})` : "  " }}
+              </span>
             </div>
-            <!-- <div>{{data.item.companyName}}</div> -->
           </template>
 
           <!-- Company Email Column -->
