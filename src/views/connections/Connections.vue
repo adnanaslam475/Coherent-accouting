@@ -50,15 +50,24 @@
                 ></path>
               </svg>
             </div>
-            <div style="margin-top: 4px; margin-bottom: 4px">
-              Coherent Accounting for <br />
-              QuickBooks Online
+            <div
+              style="margin-top: 4px; margin-bottom: 4px; white-space: nowrap"
+              class=""
+            >
+              Coherent Accounting for QuickBooks
             </div>
             <b-button
-              variant="outline-success"
+              :variant="
+                companyInfo.exportProperties.platform == 'QUICK_BOOKS'
+                  ? 'outline-success'
+                  : 'outline-secondary'
+              "
               class="mt-1"
               @click="showConnectionModal('qbo')"
               v-if="!companyInfo.connectedToQBO"
+              :disabled="
+                companyInfo.exportProperties.platform !== 'QUICK_BOOKS'
+              "
               >Connect</b-button
             >
             <b-button
@@ -73,7 +82,7 @@
       </b-col>
 
       <b-col cols="12" md="3">
-        <b-card style="max-width: 20rem; height: 233px" class="mb-2">
+        <b-card style="max-width: 20rem" class="mb-2">
           <div class="custome-card">
             <div style="color: green">
               <feather-icon icon="CheckCircleIcon" stroke="green" />
@@ -87,12 +96,17 @@
               Coherent Accounting for Xero
             </div>
             <b-button
-              variant="outline-success"
+              :variant="
+                companyInfo.exportProperties.platform == 'XERO'
+                  ? 'outline-success'
+                  : 'outline-secondary'
+              "
               class="mt-1"
               @click="showConnectionModal('xero')"
               v-if="!companyInfo.connectedToXero"
-              >Connect</b-button
-            >
+              :disabled="companyInfo.exportProperties.platform !== 'XERO'"
+              >Connect
+            </b-button>
             <b-button
               variant="outline-primary"
               class="mt-1"
@@ -142,7 +156,10 @@
         <b-button @click="isConnection = false" variant="outline"
           >Cancel</b-button
         >
-        <b-button @click="connectToQuickBooks(type)" variant="success"
+        <b-button
+          @click="connectToQuickBooks(type)"
+          :disabled="isConnecting"
+          variant="success"
           >Connect software</b-button
         >
       </div>
@@ -178,6 +195,7 @@ export default {
   data() {
     return {
       isConnection: false,
+      isConnecting: false,
       companyID: "",
       type: "",
       companyInfo: {},
@@ -202,6 +220,7 @@ export default {
         : require("@/assets/images/logo/connecttoxero.jpeg");
     },
     async connectToQuickBooks(type) {
+      this.isConnecting = true;
       axios
         .get(
           `/account/api/${
@@ -216,35 +235,20 @@ export default {
           }
         )
         .then((response) => {
-          const a = window.open(
+          window.open(
             response.data.redirectUrl,
             "_blank",
             "width=600,height=400"
           );
-          window.addEventListener(
-            "message",
-            (event) => {
-              console.log("eeeeeeee", event);
-              if (event.origin !== "http://example.org:8080") return;
-
-              // …
-            },
-            false
-          );
-          // var pollTimer = window.setInterval(function () {
-          //   try {
-          //     if (win.document.URL.indexOf(response.data.redirectUrl) != -1) {
-          //       window.clearInterval(pollTimer);
-
-          //       $state.go("etsy.connected");
-          //     }
-          //   } catch (e) {
-          //     // Error Handling
-          //   }
-          // }, 500);
+          if (response.status == 200) {
+            this.isConnection = false;
+          }
         })
         .catch((error) => {
           console.log(error);
+        })
+        .finally(() => {
+          this.isConnecting = false;
         });
     },
 
@@ -264,6 +268,7 @@ export default {
           }
         )
         .then((response) => {
+          console.log("first", response.data);
           type == "qbo"
             ? (this.companyInfo.connectedToQBO = false)
             : (this.companyInfo.connectedToXero = false);

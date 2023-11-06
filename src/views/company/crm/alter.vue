@@ -371,8 +371,8 @@ export default {
   created() {
     this.$http
       .get("/account/api/dashboard/companies-with-unfinished-month-vat-reports")
-      .then((res) => {
-        this.rows = res.data;
+      .then((resp) => {
+        this.rows = resp.data;
       });
   },
 };

@@ -756,13 +756,14 @@ export default {
           },
         }
       );
+      this.refreshList();
       const dateString = new Date();
       const date = new Date(dateString);
       const blob = new Blob([data], { type: "text/csv" });
       const options = { day: "2-digit", month: "2-digit", year: "numeric" };
       const formattedDate = date.toLocaleDateString("en-US", options);
       // Save the Blob as a file using FileSaver.js
-      saveAs(blob, `EIC_${this.EIC}_DATE_${formattedDate}`);
+      saveAs(blob, `EIC_${this.EIC}_BANK_STATEMENT_DATE_${formattedDate}`);
       try {
         this.$toast({
           component: ToastificationContent,
@@ -773,7 +774,6 @@ export default {
           },
         });
       } catch (error) {
-        console.log("eeeeeeeee", error);
         this.$toast({
           component: ToastificationContent,
           props: {
@@ -1262,9 +1262,6 @@ export default {
         .addFileInvoice(token, companyId, formData)
         .then((response) => {
           this.fileLoading = false;
-
-          // const t = Object.entries(response)
-          // console.log(t)
 
           return this.$router.push({
             name: "company-invoice-add",

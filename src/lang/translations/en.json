@@ -71,7 +71,7 @@
     "list_invoices": "List Invoices"
   },
   "features": {
-    "title": "Our FREE Features",
+    "title": "Our Features",
     "description": "All plans include 40+ advanced tools and features to boost your product. Choose the best plan to fit your needs."
   },
   "partners": {
@@ -167,14 +167,14 @@
     "click_monthly_vat_report": "1 click Monthly Vat Reports (incl. txt and excel)",
     "yearly_reports": "Yearly Reports (excel)",
     "still_not_convinced": "Still not convinced? ",
-    "trial": "Start with a 14-day FREE trial!",
-    "full_access": "You will get full access to with all the features for 14 days.",
-    "free_trial": "Start 14-day FREE trial"
+    "trial": "Start with a 30-day FREE trial!",
+    "full_access": "You will get full access to with all the features for 30 days.",
+    "free_trial": "Start 30-day FREE trial"
   },
   "about": {
     "title": "About us",
     "label_abt_1": "What is Coherent Accounting?",
-    "desc_abt_1": "Coherent Accounting is FREE revolutional platform for accountants and bookkeepers. It reduces the manual work for inputting invoices data into Accouning platform such as XERO, Quick Books, FreshBooks, WAVE, Zoho and etc.It reduces the manual work up to 80%. Specially for people who want to be more productive and to safe boring manual tasks. With OCR and Artiffiicaial Intelligence the system extract all data from the invocies.",
+    "desc_abt_1": "Coherent Accounting is cheapest revolutional platform for accountants and bookkeepers. It reduces the manual work for inputting invoices data into Accouning platform such as XERO, Quick Books, FreshBooks, WAVE, Zoho and etc.It reduces the manual work up to 80%. Specially for people who want to be more productive and to safe boring manual tasks. With OCR and Artiffiicaial Intelligence the system extract all data from the invocies.",
     "label_abt_2": "OCR of Invoices annd Digitalization",
     "desc_abt_2": "You can reduce the paper waste and help the nature while go paperless. You only digital invoices and together we will safe the planet",
     "label_abt_3": "FREE Invoices module",
@@ -222,7 +222,7 @@
   },
   "why_choose_use": {
     "title": "Why choose our platform",
-    "title_1": "Our platform is completely FREE for all system functionalities. You can extarct data from any type of invoices and to import in Xero, Freshbooks QucickBooks, Wave, Sage, Zoho etc.",
+    "title_1": "Our platform is the cheapest solution for all system functionalities. You can extarct data from any type of invoices and to import in Xero, Freshbooks QucickBooks, Wave, Sage, Zoho etc.",
     "title_2": "Super fast data extarction of invoices. You can relax with coffee and leave the heavy lifting to us.",
     "title_3": "OCR processing and digitization of invoices and data extraction in seconds, with no limits on the number or size",
     "title_4": "GO-GREEN! GO PAPERLESS! We care about nature and its preservation. By using digital invoices instead of paper ones, we save trees every day. This is our mission and goal. Join us.",
@@ -497,6 +497,7 @@
     "bank-4": "bank-04",
     "bank-5": "bank-05",
     "invoice": "Invoice",
+    "receipt": "Receipt",
     "company_address": "Company Address",
     "company_id_no": "Company ID Number",
     "company_owner": "Company Owner",
@@ -693,18 +694,24 @@
   "unlimited_digital_invoices": "Unlimited Digital Invoices",
   "click_monthly_vat_report": "1 click Monthly Tax Reports (incl. txt and excel)",
   "yearly_reports": "Yearly Reports (excel)",
-  "featureLable1": "FREE data extraction from invoices",
-  "featureLable2": "FREE OCR of invoices",
-  "featureLable3": "Export and Import of extracted data from the invoices to XERO Online",
-  "featureLable4": "Export and Import of extracted data from the invoices to Quick Books",
-  "featureLable5": "Export and Import of extracted data from the invoices to Fresh Books",
-  "featureLable6": "Free designer digital invoices with logo",
-  "featureLable7": "Wall reminder for the unverified invoices",
-  "featureLable8": "Reminders for scheduled invoices",
-  "featureLable9": "Upload of company documents for managing a company",
-  "featureLable10": "Online Acces from internet from every point of the world",
-  "featureLable11": "Autocomplete of the company data during creation of a company dossier",
-  "featureLable12": "Super easy to use and export",
-  "featureLable13": "Beautiful design",
-  "featureLable14": "Enjoy the FREE platform"
+  "featureLable1": "OCR Data extraction from invoices",
+  "featureLable2": "OCR data extraction from bills and receipts",
+  "featureLable3": "OCR data extraction from Bank statements",
+  "featureLable4": "One click publishing to XERO",
+  "featureLable5": "One click publishing to QuickBooks Online",
+  "featureLable6": "Auto Sync to Xero and Quickbooks every 5 mins if every reviewed file",
+  "featureLable7": "Export and Import with file of extracted data from the invoices,receipts and Bank statements to XERO Online",
+  "featureLable8": "Export and Import with file of extracted data from the invoices,receipts and Bank statements to Quick Books",
+  "featureLable9": "Export and Import with file of extracted data from the invoices,receipts and Bank statements to Fresh Books",
+  "featureLable10": "Duplicate scanner for duplicate documents",
+  "featureLable11": "Free designer digital invoices with logo",
+  "featureLable12": "Wall reminder for the unverified invoices",
+  "featureLable13": "Reminders for scheduled invoices",
+  "featureLable14": "Upload of company documents for managing a company",
+  "featureLable15": "Online Acces from internet from every point of the world",
+  "featureLable16": "Autocomplete of the company data during creation of a company dossier",
+  "featureLable17": "Super easy to use and export",
+  "featureLable18": "Beautiful design",
+  "featureLable19": "Enjoy the cheapest platform",
+  "featureLable20": "Enjoy the cheapest platform with more data exarcted invoice fields"
 }

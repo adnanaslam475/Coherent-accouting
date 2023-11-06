@@ -662,20 +662,6 @@
                                     </validation-provider>
                                   </b-col>
 
-                                  <!-- <b-col cols="12" lg="1">
-                                <label class="d-inline d-lg-none">No.</label>
-
-                                <b-form-input :value="index + 1" type="text" class="mb-0 text-left" disabled />
-                              </b-col> -->
-
-                                  <!-- <b-col cols="12" lg="1">
-                                <label class="d-inline d-lg-none">Measure</label>
-                                <validation-provider #default="{ errors }" name="transectionMeasurement" rules="required">
-                                  <b-form-select v-model="item.measurement" type="text" class="mb-0"
-                                    :options="measureOptions" />
-                                  <small class="text-danger">{{ errors[0] }}</small>
-                                </validation-provider>
-                              </b-col> -->
                                   <b-col cols="12" lg="2">
                                     <label class="d-inline d-lg-none"
                                       >Single Price</label
@@ -845,7 +831,6 @@
                         <div>
                           <b-form-row>
                             <!-- Bank name -->
-
                             <b-col>
                               <span>{{ $t("add_invoice.bank") }}: </span>
                               <validation-provider
@@ -10855,9 +10840,10 @@ export default {
     },
 
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
+      // console.log('ssinvoiceEditsss',invoiceData, redirectPage, AccountTypeOption)
       if (this.invoiceData?.binaryId && this.invoiceData?.binaryId !== null) {
         if (
-          (redirectPage === "save" || redirectPage === "verify") &&
+          (['save','verify'].includes(redirectPage)) &&
           !this.formIsValid
         )
           return;
@@ -11683,7 +11669,7 @@ export default {
                   ? res.data.errorMessage
                   : this.$t("invoice_details.publishedx"),
                 icon: "EditIcon",
-                variant: !res.data.success?'danger':"success",
+                variant: !res.data.success ? "danger" : "success",
               },
             });
             this.isSyncing = false;
@@ -11715,7 +11701,7 @@ export default {
                   ? res.data.errorMessage
                   : this.$t("invoice_details.publishedq"),
                 icon: "EditIcon",
-                variant: !res.data.success?'danger':"success",
+                variant: !res.data.success ? "danger" : "success",
               },
             });
             this.isSyncing = false;

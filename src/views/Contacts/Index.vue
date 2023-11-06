@@ -63,12 +63,15 @@
 </template>
 <script>
 import gmail from "@/assets/images/icons/brands/gmail.png";
+
+import tiktok from "@/assets/images/icons/brands/tiktok.png";
+
 import chat from "@/assets/images/icons/brands/chat.png";
 import youtube from "@/assets/images/icons/brands/youtube.png";
 import facebook from "@/assets/images/icons/brands/facebook.png";
-import google from "@/assets/images/icons/brands/google.png";
-import intagram from "@/assets/images/icons/brands/instagram.png";
-import twitter from "@/assets/images/icons/brands/twitter.png";
+// import google from "@/assets/images/icons/brands/google.png";
+import instagram from "@/assets/images/icons/brands/instagram.png";
+// import twitter from "@/assets/images/icons/brands/twitter.png";
 import BCardCode from "@core/components/b-card-code";
 import {
   BRow,
@@ -154,6 +157,24 @@ export default {
           links: {
             username: "admin@coherent-accounting.com",
             link: "#",
+          },
+          connected: true,
+        },
+        {
+          logo: tiktok,
+          name: "Tiktok",
+          links: {
+            username: "@coherent_accounting",
+            link: "https://www.tiktok.com/@coherent.accounting",
+          },
+          connected: true,
+        },
+        {
+          logo: instagram,
+          name: "Instagram",
+          links: {
+            username: "@coherent_accounting",
+            link: "https://www.instagram.com/coherent_accounting/",
           },
           connected: true,
         },
