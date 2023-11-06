@@ -103,15 +103,10 @@
           {{ $t("company_documents.media") }}
         </template>
         <template #cell(binaryId)="data">
-          <div>
-            <!-- :src="images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type])"-->
-            <!-- :src="!!images[data.item.id] ? images[data.item.id].type === 'image/jpeg' ? images[data.item.id].image : require(filesImages[images[data.item.id].type]) : ''"-->
-            <!-- :src="images[data.item.id].type === 'image/bmp' || images[data.item.id].type === 'image/jpeg' || images[data.item.id].type === 'image/png' ? images[data.item.id].image : filesImages[images[data.item.id].type]" -->
-            <!-- :src='(images[data.item.id].type === "jpg" || images[data.item.id].type === "jpeg" || images[data.item.id].type === "png") ? "@/assets/images/icons/jpg.png" : (images[data.item.id].type === "rar" ||  images[data.item.id].type === "zip") ? "@/assets/images/icons/zip.png" : (images[data.item.id].type === "xls" || images[data.item.id].type === "xlsx") ? "@/assets/images/icons/xls.png" : (images[data.item.id].type === "doc" || images[data.item.id].type === "docx") ? "@/assets/images/icons/doc.png" : (images[data.item.id].type === "pdf") ? "@/assets/images/icons/pdf.png" : (images[data.item.id].type === "txt") ? "@/assets/images/icons/txt.png" : ""' -->
-
+          <div style="border: 1px solid red">
             <b-img
               :key="images.length + '-' + !!images[data.item.id]"
-              class="hover-img"
+              class="hover-img border-2"
               blank-color="#ccc"
               :src="getMediaType(images1[data.item.id].type)"
               rounded
@@ -541,7 +536,6 @@ export default {
     async getAssets() {
       const self = this;
       self.images1 = [];
-      console.log(self.images1);
       axios
         .get(
           `/account/api/asset/list/${router.currentRoute.params.id}/${this.currentPage}/${this.perPage}?sortField=id&direction=desc&type=ASSET`

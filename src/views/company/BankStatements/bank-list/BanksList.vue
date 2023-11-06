@@ -763,7 +763,7 @@ export default {
       const options = { day: "2-digit", month: "2-digit", year: "numeric" };
       const formattedDate = date.toLocaleDateString("en-US", options);
       // Save the Blob as a file using FileSaver.js
-      saveAs(blob, `EIC_${this.EIC}_DATE_${formattedDate}`);
+      saveAs(blob, `EIC_${this.EIC}_BANK_STATEMENT_DATE_${formattedDate}`);
       try {
         this.$toast({
           component: ToastificationContent,

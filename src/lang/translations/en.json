@@ -497,6 +497,7 @@
     "bank-4": "bank-04",
     "bank-5": "bank-05",
     "invoice": "Invoice",
+    "receipt": "Receipt",
     "company_address": "Company Address",
     "company_id_no": "Company ID Number",
     "company_owner": "Company Owner",

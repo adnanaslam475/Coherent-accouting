@@ -7,9 +7,8 @@
           <span style="font-size: 13px">{{ $t("companiess") }}</span>
         </template>
         <div class="row">
-          <!-- <input data-v-9a6e255c="" type="text" placeholder="Search..." class="d-inline-block mr-1 form-control col-4" style="margin-left: 15px" /> -->
           <div class="input-group col-4 abc">
-            <!----><input
+            <input
               v-model="searchQuery"
               type="text"
               :placeholder="$t('companies.search_company')"
@@ -143,10 +142,19 @@
                 :to="{ name: 'CompanyView', params: { id: data.item.id } }"
                 >{{ data.item.companyName }}
               </b-link>
-              <span class="ml-1">
+              <!-- <span class="ml-1">
                 {{ data.item.platform ? ` (${data.item.platform})` : "  " }}
-              </span>
+              </span> -->
             </div>
+          </template>
+
+          <!-- Company Email Column -->
+          <template #head(platform)>
+            {{ $t("companies.platform") }}
+          </template>
+
+          <template #cell(platform)="data">
+            <div>{{ data.item.platform }} </div>
           </template>
 
           <!-- Company Email Column -->
@@ -693,6 +701,11 @@ export default {
           sortable: true,
         },
         {
+          key: "platform",
+          label: "Platform",
+          sortable: true,
+        },
+        {
           key: "companyMail",
           label: "Email",
           sortable: true,
@@ -853,11 +866,10 @@ export default {
         )
         .then((response) => {
           this.items = response.data.elements;
-          console.log("response.data", response.data.elements);
           this.totalRecords = response.data.totalElements;
           this.totalPages = Math.ceil(this.totalRecords / this.perPage);
         })
-        .catch((error) => {
+        .catch(() => {
           this.$toast({
             component: ToastificationContent,
             props: {

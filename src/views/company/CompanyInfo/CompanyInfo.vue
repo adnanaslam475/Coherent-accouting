@@ -84,6 +84,7 @@
                       <div
                         class="d-flex align-items-center"
                         style="width: 148px"
+                        v-if="!!companyOwnerName"
                       >
                         <feather-icon
                           icon="UserIcon"
@@ -110,7 +111,10 @@
                           }}</b-tooltip>
                         </div>
                       </div>
-                      <div class="d-flex align-items-center">
+                      <div
+                        v-if="!!companyOwnerEGN"
+                        class="d-flex align-items-center"
+                      >
                         <feather-icon
                           icon="InfoIcon"
                           width="18px"
