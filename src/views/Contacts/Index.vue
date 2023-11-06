@@ -165,7 +165,7 @@ export default {
           name: "Tiktok",
           links: {
             username: "@coherent_accounting",
-            link: "#",
+            link: "https://www.tiktok.com/@coherent.accounting",
           },
           connected: true,
         },
@@ -174,7 +174,7 @@ export default {
           name: "Instagram",
           links: {
             username: "@coherent_accounting",
-            link: "#",
+            link: "https://www.instagram.com/coherent_accounting/",
           },
           connected: true,
         },
