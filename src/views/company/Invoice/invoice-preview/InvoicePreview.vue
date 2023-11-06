@@ -924,7 +924,7 @@
                       ? 'color: black !important'
                       : 'color: white !important'
                       ">
-                      {{ $t("add_invoice.receipt") }}
+                      {{ $t("add_invoice.invoice") }}
                     </div>
                   </div>
                   <div class="tm_shape_bg tm_mobile_hide" :class="isBlue === true

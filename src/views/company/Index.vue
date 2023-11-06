@@ -154,7 +154,7 @@
           </template>
 
           <template #cell(platform)="data">
-            <div>{{ data.item.platform }} </div>
+            <div>{{ data.item.platform }}</div>
           </template>
 
           <!-- Company Email Column -->
