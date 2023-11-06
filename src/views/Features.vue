@@ -218,6 +218,30 @@ export default {
           [i18n.tc("lbl.features")]: i18n.tc("featureLable14"),
           [i18n.tc("companies.status")]: "✅",
         },
+        {
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable15"),
+          [i18n.tc("companies.status")]: "✅",
+        },
+        {
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable16"),
+          [i18n.tc("companies.status")]: "✅",
+        },
+        {
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable17"),
+          [i18n.tc("companies.status")]: "✅",
+        },
+        {
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable18"),
+          [i18n.tc("companies.status")]: "✅",
+        },
+        {
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable19"),
+          [i18n.tc("companies.status")]: "✅",
+        },
+        {
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable20"),
+          [i18n.tc("companies.status")]: "✅",
+        },
       ],
     };
   },
