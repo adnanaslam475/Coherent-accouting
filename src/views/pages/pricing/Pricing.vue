@@ -226,15 +226,15 @@
           <div class="pricing-trial-content d-flex justify-content-between">
             <div class="text-center text-md-left mt-3">
               <h3 class="text-primary">
-                Still not convinced? Start with a 14-day FREE trial!
+                Still not convinced? Start with a 30-day FREE trial!
               </h3>
-              <h5>You will get full access to with all the features for 14 days.</h5>
+              <h5>You will get full access to with all the features for 30 days. No credit card required.</h5>
               <b-button
                 v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                 variant="primary"
                 class="mt-2 mt-lg-3"
               >
-                Start 14-day FREE trial
+                Start 30-day FREE trial
               </b-button>
             </div>
 
