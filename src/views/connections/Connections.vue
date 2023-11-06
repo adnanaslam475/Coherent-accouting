@@ -264,6 +264,7 @@ export default {
           }
         )
         .then((response) => {
+          console.log('first',response.data)
           type == "qbo"
             ? (this.companyInfo.connectedToQBO = false)
             : (this.companyInfo.connectedToXero = false);
