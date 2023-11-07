@@ -1,258 +1,260 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import { isUserLoggedIn, getUserData, getHomeRouteForLoggedInUser } from '@/auth/utils'
-import useJwt from '@/auth/jwt/useJwt'
-import { i18n } from '../main'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import {
+  isUserLoggedIn,
+} from "@/auth/utils";
+// import useJwt from "@/auth/jwt/useJwt";
+import { i18n } from "../main";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   scrollBehavior() {
     return {
       x: 0,
       y: 0,
-    }
+    };
   },
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: () => import('@/views/Home.vue'),
+      path: "/",
+      name: "home",
+      component: () => import("@/views/Home.vue"),
       meta: {
-        pageTitle: 'Home',
+        pageTitle: "Home",
         breadcrumb: [
           {
-            text: 'Home',
+            text: "Home",
             active: true,
           },
         ],
       },
     },
     {
-      path: '/second-page',
-      name: 'second-page',
-      component: () => import('@/views/SecondPage.vue'),
+      path: "/second-page",
+      name: "second-page",
+      component: () => import("@/views/SecondPage.vue"),
       meta: {
-        pageTitle: 'Second Page',
+        pageTitle: "Second Page",
         breadcrumb: [
           {
-            text: 'Second Page',
+            text: "Second Page",
             active: true,
           },
         ],
       },
     },
     {
-      path: '/login/advertisements',
-      name: 'login-advertisements',
-      component: () => import('@/views/Login.vue'),
+      path: "/login/advertisements",
+      name: "login-advertisements",
+      component: () => import("@/views/Login.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('@/views/Login-ads.vue'),
+      path: "/login",
+      name: "login",
+      component: () => import("@/views/Login-ads.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/register/advertisements',
-      name: 'register-advertisement',
-      component: () => import('@/views/Register.vue'),
+      path: "/register/advertisements",
+      name: "register-advertisement",
+      component: () => import("@/views/Register.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/register',
-      name: 'register',
-      component: () => import('@/views/Register-ads.vue'),
+      path: "/register",
+      name: "register",
+      component: () => import("@/views/Register-ads.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('@/views/About.vue'),
+      path: "/about",
+      name: "about",
+      component: () => import("@/views/About.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/account/forgot-password',
-      name: 'auth-forgot-password',
-      component: () => import('@/views/ForgotPassword.vue'),
+      path: "/account/forgot-password",
+      name: "auth-forgot-password",
+      component: () => import("@/views/ForgotPassword.vue"),
       meta: {
-        layout: 'full',
-        resource: 'Auth',
+        layout: "full",
+        resource: "Auth",
         redirectIfLoggedIn: true,
       },
     },
     {
-      path: '/account/reset-password',
-      name: 'auth-reset-password-v1',
-      component: () => import('@/views/ResetPassword-v1.vue'),
+      path: "/account/reset-password",
+      name: "auth-reset-password-v1",
+      component: () => import("@/views/ResetPassword-v1.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/account/reset-password-email',
-      name: 'reset-password-email-v1',
-      component: () => import('@/views/ResetPasswordEmail-v1.vue'),
+      path: "/account/reset-password-email",
+      name: "reset-password-email-v1",
+      component: () => import("@/views/ResetPasswordEmail-v1.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/verify-email',
-      name: 'verify-email',
-      component: () => import('@/views/VerifyEmail.vue'),
+      path: "/verify-email",
+      name: "verify-email",
+      component: () => import("@/views/VerifyEmail.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/pricing',
-      name: 'pricing',
-      component: () => import('@/views/Pricing.vue'),
+      path: "/pricing",
+      name: "pricing",
+      component: () => import("@/views/Pricing.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/questions',
-      name: 'questions',
-      component: () => import('@/views/Questions.vue'),
+      path: "/questions",
+      name: "questions",
+      component: () => import("@/views/Questions.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/videos/advertisement',
-      name: 'videos-advertisement',
-      component: () => import('@/views/Videos.vue'),
+      path: "/videos/advertisement",
+      name: "videos-advertisement",
+      component: () => import("@/views/Videos.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/free-digital-invoices',
-      name: 'free-digital-invoices',
-      component: () => import('@/views/FreeDigitalInvoices.vue'),
+      path: "/free-digital-invoices",
+      name: "free-digital-invoices",
+      component: () => import("@/views/FreeDigitalInvoices.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/free-digital-invoices/preview',
-      name: 'free-digital-invoices-preview',
-      component: () => import('@/views/FreeDigitalInvoicesPreview.vue'),
+      path: "/free-digital-invoices/preview",
+      name: "free-digital-invoices-preview",
+      component: () => import("@/views/FreeDigitalInvoicesPreview.vue"),
       meta: {
-        layout: 'full',
-      }
-    },
-    {
-      path: '/why-choose-us',
-      name: 'why-choose-us',
-      component: () => import('@/views/WhyChooseUs.vue'),
-      meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '/features',
-      name: 'features',
-      component: () => import('@/views/Features.vue'),
+      path: "/why-choose-us",
+      name: "why-choose-us",
+      component: () => import("@/views/WhyChooseUs.vue"),
       meta: {
-        layout: 'full',
-      }
+        layout: "full",
+      },
+    },
+    {
+      path: "/features",
+      name: "features",
+      component: () => import("@/views/Features.vue"),
+      meta: {
+        layout: "full",
+      },
     },
 
     {
-      path: '/error-404',
-      name: 'error-404',
-      component: () => import('@/views/error/Error404.vue'),
+      path: "/error-404",
+      name: "error-404",
+      component: () => import("@/views/error/Error404.vue"),
       meta: {
-        layout: 'full',
+        layout: "full",
       },
     },
     {
-      path: '*',
-      redirect: 'error-404',
+      path: "*",
+      redirect: "error-404",
     },
     // Companies routes starting from here
     {
-      path: '/companies',
-      name: 'companies',
-      component: () => import('@/views/company/Index.vue'),
+      path: "/companies",
+      name: "companies",
+      component: () => import("@/views/company/Index.vue"),
       meta: {
-        pageTitle: 'Companies',
+        pageTitle: "Companies",
         breadcrumb: [
           {
-            text: 'Companies',
+            text: "Companies",
             active: true,
           },
         ],
       },
     },
     {
-      path: '/company/create',
-      name: 'CreateCompany',
-      component: () => import('@/views/company/Create.vue'),
+      path: "/company/create",
+      name: "CreateCompany",
+      component: () => import("@/views/company/Create.vue"),
       meta: {
-        pageTitle: 'Companies',
+        pageTitle: "Companies",
         breadcrumb: [
           {
-            text: 'Companies',
-            to: '/companies',
+            text: "Companies",
+            to: "/companies",
           },
           {
-            text: 'Create Company',
+            text: "Create Company",
             active: true,
           },
         ],
       },
     },
     {
-      path: '/company/:id',
-      name: 'CompanyView',
-      component: () => import('@/views/company/Show.vue'),
+      path: "/company/:id",
+      name: "CompanyView",
+      component: () => import("@/views/company/Show.vue"),
       meta: {
-        pageTitle: 'Companies',
+        pageTitle: "Companies",
         breadcrumb: [
           {
-            text: 'Companies',
-            to: '/companies',
+            text: "Companies",
+            to: "/companies",
           },
           {
-            text: 'View Company',
+            text: "View Company",
             active: true,
           },
         ],
       },
     },
     {
-      path: '/company/edit/:id',
-      name: 'EditCompany',
-      component: () => import('@/views/company/EditCompany.vue'),
+      path: "/company/edit/:id",
+      name: "EditCompany",
+      component: () => import("@/views/company/EditCompany.vue"),
       meta: {
-        pageTitle: 'Companies',
+        pageTitle: "Companies",
         breadcrumb: [
           {
-            text: 'Companies',
-            to: '/companies',
+            text: "Companies",
+            to: "/companies",
           },
           {
-            text: 'Edit Company',
+            text: "Edit Company",
             active: true,
           },
         ],
@@ -267,98 +269,108 @@ const router = new VueRouter({
 
     // Company invoices add/edit/preview
     {
-      path: '/company/:companyId/invoice/preview/:id',
-      name: 'company-invoice-preview',
-      component: () => import('@/views/company/Invoice/invoice-preview/InvoicePreview.vue'),
+      path: "/company/:companyId/invoice/preview/:id",
+      name: "company-invoice-preview",
+      component: () =>
+        import("@/views/company/Invoice/invoice-preview/InvoicePreview.vue"),
     },
     {
-      path: '/company/:companyId/invoice/add',
-      name: 'company-invoice-add',
-      component: () => import('@/views/company/Invoice/invoice-add/InvoiceAdd.vue'),
+      path: "/company/:companyId/invoice/add",
+      name: "company-invoice-add",
+      component: () =>
+        import("@/views/company/Invoice/invoice-add/InvoiceAdd.vue"),
     },
     {
-      path: '/company/:companyId/invoice/edit/:id',
-      name: 'company-invoice-edit',
-      component: () => import('@/views/company/Invoice/invoice-edit/InvoiceEdit.vue'),
+      path: "/company/:companyId/invoice/edit/:id",
+      name: "company-invoice-edit",
+      component: () =>
+        import("@/views/company/Invoice/invoice-edit/InvoiceEdit.vue"),
     },
 
-    // bank statements 
+    // bank statements
     {
-      path: '/company/:companyId/bank-statement/edit/:id',
-      name: 'bank-statement-edit',
-      component: () => import('@/views/company/BankStatements/bank-edit/BankEdit.vue'),
+      path: "/company/:companyId/bank-statement/edit/:id",
+      name: "bank-statement-edit",
+      component: () =>
+        import("@/views/company/BankStatements/bank-edit/BankEdit.vue"),
     },
 
     // Company Vat Reports
     {
-      path: '/company/:companyId/vat-report/preview/:id',
-      name: 'company-vat-report-preview',
-      component: () => import('@/views/company/VatReports/vat-report-preview/VatReportPreview.vue'),
+      path: "/company/:companyId/vat-report/preview/:id",
+      name: "company-vat-report-preview",
+      component: () =>
+        import(
+          "@/views/company/VatReports/vat-report-preview/VatReportPreview.vue"
+        ),
     },
     {
-      path: '/company/:companyId/vat-report/add',
-      name: 'company-vat-report-add',
-      component: () => import('@/views/company/VatReports/vat-reports-add/VatReportAdd.vue'),
+      path: "/company/:companyId/vat-report/add",
+      name: "company-vat-report-add",
+      component: () =>
+        import("@/views/company/VatReports/vat-reports-add/VatReportAdd.vue"),
     },
 
     {
-      path: '/company/:companyId/vat-report/edit/:id',
-      name: 'company-vat-report-edit',
-      component: () => import('@/views/company/VatReports/vat-report-edit/vatReportEdit.vue'),
+      path: "/company/:companyId/vat-report/edit/:id",
+      name: "company-vat-report-edit",
+      component: () =>
+        import("@/views/company/VatReports/vat-report-edit/vatReportEdit.vue"),
     },
 
     // company private person edit/preview
     {
-      path: '/company/:companyId/users/view/:id',
-      name: 'comopany-users-view',
-      component: () => import('@/views/company/user/users-view/UsersView.vue'),
+      path: "/company/:companyId/users/view/:id",
+      name: "comopany-users-view",
+      component: () => import("@/views/company/user/users-view/UsersView.vue"),
     },
     {
-      path: '/company/:companyId/users/edit/:id',
-      name: 'company-users-edit',
-      component: () => import('@/views/company/user/users-edit/UsersEdit.vue'),
+      path: "/company/:companyId/users/edit/:id",
+      name: "company-users-edit",
+      component: () => import("@/views/company/user/users-edit/UsersEdit.vue"),
     },
     // Invoice routes starting from here
     {
-      path: '/invoices',
-      name: 'invoices',
-      component: () => import('@/views/invoice/Index.vue'),
+      path: "/invoices",
+      name: "invoices",
+      component: () => import("@/views/invoice/Index.vue"),
     },
     {
-      path: '/invoice/preview/:id',
-      name: 'apps-invoice-preview',
-      component: () => import('@/views/invoice/invoice-preview/InvoicePreview.vue'),
+      path: "/invoice/preview/:id",
+      name: "apps-invoice-preview",
+      component: () =>
+        import("@/views/invoice/invoice-preview/InvoicePreview.vue"),
     },
     {
-      path: '/invoice/add',
-      name: 'apps-invoice-add',
-      component: () => import('@/views/invoice/invoice-add/InvoiceAdd.vue'),
+      path: "/invoice/add",
+      name: "apps-invoice-add",
+      component: () => import("@/views/invoice/invoice-add/InvoiceAdd.vue"),
     },
     {
-      path: '/invoice/edit/:id',
-      name: 'apps-invoice-edit',
-      component: () => import('@/views/invoice/invoice-edit/InvoiceEdit.vue'),
+      path: "/invoice/edit/:id",
+      name: "apps-invoice-edit",
+      component: () => import("@/views/invoice/invoice-edit/InvoiceEdit.vue"),
     },
     {
-      path: '/users/view/:id',
-      name: 'apps-users-view',
-      component: () => import('@/views/user/users-view/UsersView.vue'),
+      path: "/users/view/:id",
+      name: "apps-users-view",
+      component: () => import("@/views/user/users-view/UsersView.vue"),
     },
     {
-      path: '/users/edit/:id',
-      name: 'apps-users-edit',
-      component: () => import('@/views/user/users-edit/UsersEdit.vue'),
+      path: "/users/edit/:id",
+      name: "apps-users-edit",
+      component: () => import("@/views/user/users-edit/UsersEdit.vue"),
     },
     // Videos routes starting from here
     {
-      path: '/videos',
-      name: 'videos',
-      component: () => import('@/views/videos/Index.vue'),
+      path: "/videos",
+      name: "videos",
+      component: () => import("@/views/videos/Index.vue"),
       meta: {
-        pageTitle: 'Videos',
+        pageTitle: "Videos",
         breadcrumb: [
           {
-            text: 'Videos',
+            text: "Videos",
             active: true,
           },
         ],
@@ -366,14 +378,14 @@ const router = new VueRouter({
     },
     // Tickets routes starting from here
     {
-      path: '/tickets',
-      name: 'tickets',
-      component: () => import('@/views/tickets/Index.vue'),
+      path: "/tickets",
+      name: "tickets",
+      component: () => import("@/views/tickets/Index.vue"),
       meta: {
-        pageTitle: 'Tickets',
+        pageTitle: "Tickets",
         breadcrumb: [
           {
-            text: 'Tickets',
+            text: "Tickets",
             active: true,
           },
         ],
@@ -381,30 +393,31 @@ const router = new VueRouter({
     },
     // My Plans routes starting from here
     {
-      path: '/my-plans',
-      name: 'my-plans',
-      component: () => import('@/views/Plans/Index.vue'),
+      path: "/my-plans",
+      name: "my-plans",
+      component: () => import("@/views/Plans/Index.vue"),
       meta: {
-        pageTitle: 'Plans',
+        pageTitle: "Plans",
         breadcrumb: [
           {
-            text: 'Plans',
+            text: "Plans",
             active: true,
-            resource: 'Auth',
+            resource: "Auth",
           },
         ],
       },
     },
     // Settings routes starting from here
     {
-      path: '/settings',
-      name: 'settings',
-      component: () => import('@/views/pages/account-setting/AccountSetting.vue'),
+      path: "/settings",
+      name: "settings",
+      component: () =>
+        import("@/views/pages/account-setting/AccountSetting.vue"),
       meta: {
-        pageTitle: 'Settings',
+        pageTitle: "Settings",
         breadcrumb: [
           {
-            text: 'Settings',
+            text: "Settings",
             active: true,
           },
         ],
@@ -412,45 +425,45 @@ const router = new VueRouter({
     },
     // Contacts routes starting from here
     {
-      path: '/contacts',
-      name: 'contacts',
-      component: () => import('@/views/Contacts/Index.vue'),
+      path: "/contacts",
+      name: "contacts",
+      component: () => import("@/views/Contacts/Index.vue"),
       meta: {
-        pageTitle: 'Contacts',
+        pageTitle: "Contacts",
         breadcrumb: [
           {
-            text: 'Contacts',
+            text: "Contacts",
             active: true,
           },
         ],
       },
     },
   ],
-})
+});
 
 router.beforeEach((to, from, next) => {
-  i18n.locale = localStorage.getItem('language') || 'en'
-  return next()
-})
+  i18n.locale = localStorage.getItem("language") || "en";
+  return next();
+});
 
 router.beforeEach((to, _, next) => {
-  const isLoggedIn = isUserLoggedIn()
+  const isLoggedIn = isUserLoggedIn();
   if (
-    to.name === '/'
-    || to.name === 'home'
-    || to.name === 'invoices'
-    || to.name === 'apps-invoice-preview'
-    || to.name === 'apps-invoice-edit'
-    || to.name === 'apps-users-view'
-    || to.name === 'apps-users-edit'
-    || to.name === 'my-plans'
-    || to.name === 'company-invoice-previews'
-    || to.name === 'company-invoice-add'
-    || to.name === 'company-invoice-edit'
+    to.name === "/" ||
+    to.name === "home" ||
+    to.name === "invoices" ||
+    to.name === "apps-invoice-preview" ||
+    to.name === "apps-invoice-edit" ||
+    to.name === "apps-users-view" ||
+    to.name === "apps-users-edit" ||
+    to.name === "my-plans" ||
+    to.name === "company-invoice-previews" ||
+    to.name === "company-invoice-add" ||
+    to.name === "company-invoice-edit"
   ) {
-    if (!isLoggedIn) return next({ name: 'login' })
+    if (!isLoggedIn) return next({ name: "login" });
 
-    return next()
+    return next();
   }
   // else if( to.name == "auth-reset-password-v1"){
   // router.beforeEach((to, _, next) => {
@@ -490,17 +503,17 @@ router.beforeEach((to, _, next) => {
 
   // }
 
-  return next()
-})
+  return next();
+});
 
 // ? For splash screen
 // Remove afterEach hook if you are not using splash screen
 router.afterEach(() => {
   // Remove initial loading
-  const appLoading = document.getElementById('loading-bg')
+  const appLoading = document.getElementById("loading-bg");
   if (appLoading) {
-    appLoading.style.display = 'none'
+    appLoading.style.display = "none";
   }
-})
+});
 
-export default router
+export default router;

@@ -11254,7 +11254,7 @@ export default {
         if (invoiceData.value.xero) {
           axios
             .get(
-              `${axios.defaults.baseURL}/account/api/export/get-tax-types-xero`,
+              `${axios.defaults.baseURL}/account/api/export/get-tax-types-xero/${router.currentRoute.params.companyId}`,
               {
                 headers: {
                   Authorization: `Bearer ${localStorage.getItem(
