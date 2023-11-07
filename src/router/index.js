@@ -1,8 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import {
-  isUserLoggedIn,
-} from "@/auth/utils";
+import { isUserLoggedIn } from "@/auth/utils";
 // import useJwt from "@/auth/jwt/useJwt";
 import { i18n } from "../main";
 

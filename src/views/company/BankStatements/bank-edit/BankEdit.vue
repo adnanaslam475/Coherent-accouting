@@ -5,8 +5,6 @@
 
     <validation-observer ref="invoiceEditForm" #default="{ invalid }">
       <b-form>
-        <!-- {{ invoiceData }}
-        <b-button @click="modelShow = !modelShow">Toggle Sidebar</b-button> -->
         <b-modal
           body-class="m-0 "
           content-class="m-0 "

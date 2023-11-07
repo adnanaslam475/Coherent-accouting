@@ -28,14 +28,6 @@
 
                       <div class="d-flex flex-column ml-1">
                         <div class="mb-1">
-                          <!-- <CopyToClipboard v-if="companyNameLength >= 34"
-                            :text="compNAME"
-                            @copy="copyTextNoInput(8)"
-                          >
-                          <h4  class="mb-0" style="cursor: pointer"  id="comp-name-copy">
-                            {{ companyName.substr(0, 36) }}
-                          </h4></CopyToClipboard> -->
-
                           <CopyToClipboard
                             :text="compNAME"
                             @copy="copyTextNoInput(8)"

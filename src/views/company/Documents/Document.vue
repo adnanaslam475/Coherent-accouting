@@ -103,7 +103,7 @@
           {{ $t("company_documents.media") }}
         </template>
         <template #cell(binaryId)="data">
-          <div style="border: 1px solid red">
+          <div>
             <b-img
               :key="images.length + '-' + !!images[data.item.id]"
               class="hover-img border-2"
@@ -493,7 +493,7 @@ export default {
   mounted() {
     this.getAssets();
   },
-  created() {},
+
   methods: {
     //getting media icons
     getMediaType(val) {

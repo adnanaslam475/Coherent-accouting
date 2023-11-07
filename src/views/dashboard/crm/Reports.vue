@@ -2,58 +2,83 @@
   <b-card-code no-body>
     <b-card-header>
       <div>
-        <b-card-title>{{ $t('dashboard_lbl.reports') }} </b-card-title>
+        <b-card-title>{{ $t("dashboard_lbl.reports") }} </b-card-title>
       </div>
     </b-card-header>
     <b-card-body>
       <b-tabs class="report-tabs" v-model="reportTab">
         <!-- Vat Reports Tab-->
 
-
-
         <b-tab
-          :style="`display: block !important; position: ${reportTab != 0 ? 'absolute' : 'relative'}; visibility: ${reportTab != 0 ? 'hidden' : 'visible'}; `">
+          :style="`display: block !important; position: ${
+            reportTab != 0 ? 'absolute' : 'relative'
+          }; visibility: ${reportTab != 0 ? 'hidden' : 'visible'}; `"
+        >
           <template #title>
             <b-media no-body>
-              <b-avatar size="38" class="text-danger bg-transparent position-relative">
-                <svg-icon class="mx-auto" type="mdi" :path="bankIcon"> </svg-icon>
+              <b-avatar
+                size="38"
+                class="text-danger bg-transparent position-relative"
+              >
+                <svg-icon class="mx-auto" type="mdi" :path="bankIcon">
+                </svg-icon>
                 <span class="v-avatar__underlay"></span>
               </b-avatar>
             </b-media>
             <span class="text-center">Bank Statements</span>
           </template>
-          <vue-apex-charts type="bar" height="400" :options="columnChart2.chartOptions" :series="columnChart2.series" />
+          <vue-apex-charts
+            type="bar"
+            height="400"
+            :options="columnChart2.chartOptions"
+            :series="columnChart2.series"
+          />
         </b-tab>
         <!-- Invoices Tab -->
         <b-tab>
           <template #title>
             <b-media no-body>
-              <b-avatar size="38" class="text-primary bg-transparent position-relative">
+              <b-avatar
+                size="38"
+                class="text-primary bg-transparent position-relative"
+              >
                 <svg-icon class="mx-auto" type="mdi" :path="path"> </svg-icon>
                 <span class="v-avatar__underlay"></span>
               </b-avatar>
             </b-media>
             <span class="text-center">{{ $t("invoices") }}</span>
           </template>
-          <vue-apex-charts type="bar" height="400" :options="columnChart.chartOptions" :series="columnChart.series" />
+          <vue-apex-charts
+            type="bar"
+            height="400"
+            :options="columnChart.chartOptions"
+            :series="columnChart.series"
+          />
         </b-tab>
-
 
         <b-tab>
           <template #title>
             <b-media no-body>
-              <b-avatar size="38" class="text-success bg-transparent position-relative">
+              <b-avatar
+                size="38"
+                class="text-success bg-transparent position-relative"
+              >
                 <svg-icon class="mx-auto" type="mdi" :path="path1"> </svg-icon>
                 <span class="v-avatar__underlay"></span>
               </b-avatar>
             </b-media>
-            <span class="text-center">{{ $t('company_tabs.vat_reports') }}</span>
+            <span class="text-center">{{
+              $t("company_tabs.vat_reports")
+            }}</span>
           </template>
 
-          <vue-apex-charts type="bar" height="400" :options="columnChart1.chartOptions" :series="columnChart1.series" />
+          <vue-apex-charts
+            type="bar"
+            height="400"
+            :options="columnChart1.chartOptions"
+            :series="columnChart1.series"
+          />
         </b-tab>
-
-
       </b-tabs>
     </b-card-body>
   </b-card-code>
@@ -155,7 +180,6 @@ export default {
       } else {
         return [month, day].join("/");
       }
-
     }
 
     let invoices = [];
@@ -173,7 +197,7 @@ export default {
             {
               name: "Invoices",
               data: invoices,
-            }
+            },
           ],
           chartOptions: {
             chart: {
@@ -298,7 +322,6 @@ export default {
         columnChart1.value = chartData;
       });
 
-
     let bankStatements = [];
     let xaxisCategories2 = [];
     axios
@@ -371,7 +394,7 @@ export default {
     return {
       columnChart,
       columnChart1,
-      columnChart2
+      columnChart2,
     };
   },
   data() {
@@ -379,7 +402,7 @@ export default {
       path: mdiReceiptTextOutline,
       bankIcon: mdiBank,
       path1: mdiBallot,
-      reportTab: 0
+      reportTab: 0,
     };
   },
 };
@@ -421,6 +444,6 @@ export default {
 }
 
 .report-tabs .nav-tabs .nav-link {
-  width: fit-content
+  width: fit-content;
 }
 </style>

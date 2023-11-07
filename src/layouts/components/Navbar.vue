@@ -1,6 +1,5 @@
 <template>
   <div class="navbar-container d-flex content align-items-center">
-
     <!-- Nav Menu Toggler -->
     <ul class="nav navbar-nav d-xl-none">
       <li class="nav-item">
@@ -11,33 +10,64 @@
     </ul>
 
     <!-- Left Col -->
-    <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
+    <div
+      class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex"
+    >
       <!--      <dark-Toggler class="d-none d-lg-block"/>-->
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
       <div class="mr-2">
-
         <feather-icon icon="ClockIcon" size="16" stroke="red" />
-        <span style="color: red;">Your plan ends in <b>{{ currentPlan.daysLeft }}</b> days</span>
+        <span style="color: red"
+          >Your plan ends in <b>{{ currentPlan.daysLeft }}</b> days</span
+        >
       </div>
       <dark-Toggler class="d-none d-lg-block" />
       <!-- For Multilingual -->
-      <b-nav-item-dropdown id="dropdown-grouped" variant="link" class="dropdown-language" right>
+      <b-nav-item-dropdown
+        id="dropdown-grouped"
+        variant="link"
+        class="dropdown-language"
+        right
+      >
         <template #button-content>
-          <b-img :src="currentLocale.img" height="14px" width="22px" :alt="currentLocale.locale" />
+          <b-img
+            :src="currentLocale.img"
+            height="14px"
+            width="22px"
+            :alt="currentLocale.locale"
+          />
           <span class="ml-50 text-body">{{ currentLocale.name }}</span>
         </template>
-        <b-dropdown-item v-for="localeObj in locales" :key="localeObj.locale" @click="changeLanguage(localeObj)">
-          <b-img :src="localeObj.img" height="14px" width="22px" :alt="localeObj.locale" />
+        <b-dropdown-item
+          v-for="localeObj in locales"
+          :key="localeObj.locale"
+          @click="changeLanguage(localeObj)"
+        >
+          <b-img
+            :src="localeObj.img"
+            height="14px"
+            width="22px"
+            :alt="localeObj.locale"
+          />
           <span class="ml-50">{{ localeObj.name }}</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
       <!-- For Multilingual -->
-      <b-nav-item-dropdown class="dropdown-notification mr-25" menu-class="dropdown-menu-media" right>
+      <b-nav-item-dropdown
+        class="dropdown-notification mr-25"
+        menu-class="dropdown-menu-media"
+        right
+      >
         <template #button-content>
-          <feather-icon :badge="notificationCount" badge-classes="bg-danger" class="text-body" icon="BellIcon"
-            size="21" />
+          <feather-icon
+            :badge="notificationCount"
+            badge-classes="bg-danger"
+            class="text-body"
+            icon="BellIcon"
+            size="21"
+          />
         </template>
 
         <!-- Header -->
@@ -53,18 +83,38 @@
         </li>
 
         <!-- Notifications -->
-        <vue-perfect-scrollbar :settings="perfectScrollbarSettings"
-          class="scrollable-container media-list scroll-area notification-scroll" tagname="li"
-          @ps-scroll-y="handleScroll">
-          <b-link v-for="(notification, index) in notifications" :key="index"
-            @click="markNotificationAsRead(notification.id)">
+        <vue-perfect-scrollbar
+          :settings="perfectScrollbarSettings"
+          class="scrollable-container media-list scroll-area notification-scroll"
+          tagname="li"
+          @ps-scroll-y="handleScroll"
+        >
+          <b-link
+            v-for="(notification, index) in notifications"
+            :key="index"
+            @click="markNotificationAsRead(notification.id)"
+          >
             <b-media :class="notification.read ? '' : 'unread'">
               <template #aside>
-                <b-avatar size="32" :variant="notification.notificationSeverityType === 'INFO' ? 'light-success' :
-                  notification.notificationSeverityType === 'WARNING' ? 'light-info' : 'light-danger'">
+                <b-avatar
+                  size="32"
+                  :variant="
+                    notification.notificationSeverityType === 'INFO'
+                      ? 'light-success'
+                      : notification.notificationSeverityType === 'WARNING'
+                      ? 'light-info'
+                      : 'light-danger'
+                  "
+                >
                   <feather-icon
-                    :icon="notification.notificationSeverityType === 'INFO' ? 'CheckIcon' :
-                      notification.notificationSeverityType === 'WARNING' ? 'AlertTriangleIcon' : 'AlertTriangleIcon'" />
+                    :icon="
+                      notification.notificationSeverityType === 'INFO'
+                        ? 'CheckIcon'
+                        : notification.notificationSeverityType === 'WARNING'
+                        ? 'AlertTriangleIcon'
+                        : 'AlertTriangleIcon'
+                    "
+                  />
                 </b-avatar>
               </template>
               <b-row class="justify-content-between m-0">
@@ -74,13 +124,23 @@
                   </span>
                 </p>
                 <b-link class="icon-trash-notifications">
-                  <feather-icon :badge="notificationCount" badge-classes="bg-danger" class="text-body" icon="Trash2Icon"
-                    size="21" @click="deleteNotification(notification.id)" />
+                  <feather-icon
+                    :badge="notificationCount"
+                    badge-classes="bg-danger"
+                    class="text-body"
+                    icon="Trash2Icon"
+                    size="21"
+                    @click="deleteNotification(notification.id)"
+                  />
                 </b-link>
               </b-row>
               <small class="notification-text">
-                {{ $t("notifications.click") }} <a href="javascript:void(0)" @click="downloadFile(notification)">{{
-                  $t("notifications.here") }}</a>
+                {{ $t("notifications.click") }}
+                <a
+                  href="javascript:void(0)"
+                  @click="downloadFile(notification)"
+                  >{{ $t("notifications.here") }}</a
+                >
                 <!--                <a-->
                 <!--                  v-if="fullIndex !== notification.id"-->
                 <!--                  href="javascript:void(0)"-->
@@ -95,23 +155,39 @@
 
         <!-- Cart Footer -->
         <li class="dropdown-menu-footer">
-          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" :disabled="notificationCount === 0" variant="primary" block
-            @click="markNotificationReadAll()">{{ $t("notifications.readAll") }}
+          <b-button
+            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+            :disabled="notificationCount === 0"
+            variant="primary"
+            block
+            @click="markNotificationReadAll()"
+            >{{ $t("notifications.readAll") }}
           </b-button>
         </li>
       </b-nav-item-dropdown>
 
-      <b-nav-item-dropdown v-if="Object.keys(userDetail).length > 0" right
-        toggle-class="d-flex align-items-center dropdown-user-link" class="dropdown-user">
+      <b-nav-item-dropdown
+        v-if="Object.keys(userDetail).length > 0"
+        right
+        toggle-class="d-flex align-items-center dropdown-user-link"
+        class="dropdown-user"
+      >
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
             <p class="user-name font-weight-bolder mb-0">
               {{ userDetail.firstName }} {{ userDetail.lastName }}
             </p>
-            <span class="user-status">Admin | {{ $t('home') }}</span>
+            <span class="user-status">Admin | {{ $t("home") }}</span>
           </div>
-          <b-avatar size="40" variant="light-primary" badge :src="userDetail.firstName[0] + userDetail.lastName[0]"
-            :text="userDetail.firstName[0] + userDetail.lastName[0]" class="badge-minimal" badge-variant="success" />
+          <b-avatar
+            size="40"
+            variant="light-primary"
+            badge
+            :src="userDetail.firstName[0] + userDetail.lastName[0]"
+            :text="userDetail.firstName[0] + userDetail.lastName[0]"
+            class="badge-minimal"
+            badge-variant="success"
+          />
         </template>
 
         <!-- <b-dropdown-item link-class="d-flex align-items-center">
@@ -123,14 +199,20 @@
           <span>Profile</span>
         </b-dropdown-item> -->
 
-        <b-dropdown-item :to="{ name: 'settings' }" link-class="d-flex align-items-center">
+        <b-dropdown-item
+          :to="{ name: 'settings' }"
+          link-class="d-flex align-items-center"
+        >
           <feather-icon size="16" icon="UserIcon" class="mr-50" />
-          <span>{{ $t('my_profile') }}</span>
+          <span>{{ $t("my_profile") }}</span>
         </b-dropdown-item>
         <b-dropdown-divider />
-        <b-dropdown-item :to="{ name: 'tickets' }" link-class="d-flex align-items-center">
+        <b-dropdown-item
+          :to="{ name: 'tickets' }"
+          link-class="d-flex align-items-center"
+        >
           <feather-icon size="16" icon="TagIcon" class="mr-50" />
-          <span>{{ $t('tickets') }}</span>
+          <span>{{ $t("tickets") }}</span>
         </b-dropdown-item>
 
         <!--        <b-dropdown-item link-class="d-flex align-items-center">-->
@@ -161,7 +243,10 @@
         <!--        </b-dropdown-item>-->
         <b-dropdown-divider />
 
-        <b-dropdown-item :to="{ name: 'my-plans' }" link-class="d-flex align-items-center">
+        <b-dropdown-item
+          :to="{ name: 'my-plans' }"
+          link-class="d-flex align-items-center"
+        >
           <feather-icon size="16" icon="CreditCardIcon" class="mr-50" />
           <span>Pricing</span>
         </b-dropdown-item>
@@ -175,7 +260,7 @@
                </b-dropdown-item> -->
         <b-dropdown-item link-class="d-flex align-items-center" @click="logout">
           <feather-icon size="16" icon="LogOutIcon" class="mr-50" />
-          <span>{{ $t('logout') }}</span>
+          <span>{{ $t("logout") }}</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
@@ -196,15 +281,16 @@ import {
   BNavbarNav,
   BNavItemDropdown,
   BRow,
-} from 'bootstrap-vue'
-import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
-import VuePerfectScrollbar from 'vue-perfect-scrollbar'
-import Ripple from 'vue-ripple-directive'
-import { ref } from '@vue/composition-api'
-import axios from '@/libs/axios'
-import useJwt from '@/auth/jwt/useJwt'
-import router from '@/router'
-import { EventBus } from '@/GlobalEventBus'
+} from "bootstrap-vue";
+import DarkToggler from "@core/layouts/components/app-navbar/components/DarkToggler.vue";
+import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import Ripple from "vue-ripple-directive";
+import { ref } from "@vue/composition-api";
+import axios from "@/libs/axios";
+import useJwt from "@/auth/jwt/useJwt";
+import router from "@/router";
+import { EventBus } from "@/GlobalEventBus";
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -233,39 +319,38 @@ export default {
   props: {
     toggleVerticalMenuActive: {
       type: Function,
-      default: () => {
-      },
+      default: () => {},
     },
   },
   data() {
     return {
-      currentPlan: {}
-    }
+      currentPlan: {},
+    };
   },
   computed: {
     currentLocale() {
-      return this.locales.find(l => l.locale === this.$i18n.locale)
+      return this.locales.find((l) => l.locale === this.$i18n.locale);
     },
   },
   created() {
-    this.getUserDetail()
-    this.getNotificationCount()
-    this.getNotifications()
-    this.getUserIpAddress()
-    window.addEventListener('scroll', this.handleScroll)
+    this.getUserDetail();
+    this.getNotificationCount();
+    this.getNotifications();
+    this.getUserIpAddress();
+    window.addEventListener("scroll", this.handleScroll);
   },
   mounted() {
-    this.getMyCurrentPlan()
-    const self = this
-    EventBus.$on('zip-downloaded', () => {
-      self.getNotificationCount()
-      self.getNotifications()
-    })
+    this.getMyCurrentPlan();
+    const self = this;
+    EventBus.$on("zip-downloaded", () => {
+      self.getNotificationCount();
+      self.getNotifications();
+    });
   },
   methods: {
     parseMessage(value) {
-      const data = JSON.parse(value.message)
-      return `You can download file by clicking <a href="javascript:void(0)" v-on:click="downloadFile(${data})">here</a>`
+      const data = JSON.parse(value.message);
+      return `You can download file by clicking <a href="javascript:void(0)" v-on:click="downloadFile(${data})">here</a>`;
     },
     getMyCurrentPlan() {
       let token = useJwt.getToken();
@@ -273,148 +358,171 @@ export default {
         .getUserCurrentPlan(token)
         .then((response) => {
           this.currentPlan = response.data;
-
-
-
-
         })
         .catch(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `Error fetching current plan`,
-              icon: 'AlertTriangleIcon',
-              variant: 'danger',
+              icon: "AlertTriangleIcon",
+              variant: "danger",
             },
-          })
+          });
         });
     },
     async downloadFile(message) {
-      const data = JSON.parse(message.message)
-      await axios.get(`${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${data.companyId}`, { responseType: 'blob' })
-        .then(response => {
-          console.log(response)
+      const data = JSON.parse(message.message);
+      await axios
+        .get(
+          `${axios.defaults.baseURL}/binaries/api/get-binary/${data.binaryId}/${data.companyId}`,
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          console.log(response);
           if (response.status === 200) {
-            const reader = new FileReader()
-            reader.readAsDataURL(response.data)
+            const reader = new FileReader();
+            reader.readAsDataURL(response.data);
             reader.onload = function () {
-              const filePath = reader.result
-              const a = document.createElement('a')
-              a.href = filePath
-              a.download = `${data.companyId}.zip`
-              document.body.appendChild(a)
-              a.click()
-              document.body.removeChild(a)
-            }
+              const filePath = reader.result;
+              const a = document.createElement("a");
+              a.href = filePath;
+              a.download = `${data.companyId}.zip`;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            };
           }
         })
-        .catch(error => {
-          console.log(error)
-          this.makeToast('danger', error.response.errorCode, error.response.errorMessage)
-        })
+        .catch((error) => {
+          console.log(error);
+          this.makeToast(
+            "danger",
+            error.response.errorCode,
+            error.response.errorMessage
+          );
+        });
     },
     async getUserIpAddress() {
-      const response = await fetch('https://api.ipify.org/?format=json')
-      const myJson = await response.json()
-      localStorage.setItem('ip', myJson.ip)
-      await this.getUserLocationViaIp(myJson.ip)
+      const response = await fetch("https://api.ipify.org/?format=json");
+      const myJson = await response.json();
+      localStorage.setItem("ip", myJson.ip);
+      await this.getUserLocationViaIp(myJson.ip);
     },
     async getUserLocationViaIp(ip) {
-      const response = await fetch(`https://ipapi.co/${ip}/json/`)
-      const myJson = await response.json()
-      localStorage.setItem('location', JSON.stringify(myJson))
-      if (myJson.country.toLowerCase() === 'bg') {
-        myJson.locale = myJson.country.toLowerCase()
-        this.changeLanguage(myJson)
-        localStorage.setItem('language', 'bg')
+      const response = await fetch(`https://ipapi.co/${ip}/json/`);
+      const myJson = await response.json();
+      localStorage.setItem("location", JSON.stringify(myJson));
+      if (myJson.country.toLowerCase() === "bg") {
+        myJson.locale = myJson.country.toLowerCase();
+        this.changeLanguage(myJson);
+        localStorage.setItem("language", "bg");
       } else {
-        myJson.locale = 'en'
-        this.changeLanguage(myJson)
-        localStorage.setItem('language', 'en')
+        myJson.locale = "en";
+        this.changeLanguage(myJson);
+        localStorage.setItem("language", "en");
       }
     },
     toggleReadMore(id) {
-      this.notifications.map(notification => {
+      this.notifications.map((notification) => {
         if (notification.id === id) {
           // eslint-disable-next-line no-param-reassign
-          notification.message = notification.message.substring(0, 10)
-          return notification
+          notification.message = notification.message.substring(0, 10);
+          return notification;
         }
-        return notification
-      })
+        return notification;
+      });
     },
     handleScroll() {
-      const container = this.$el.querySelector('.notification-scroll')
-      if (container.scrollTop > 0 && container.clientHeight > 0 && container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
-        this.page += 1
-        this.getNotifications()
+      const container = this.$el.querySelector(".notification-scroll");
+      if (
+        container.scrollTop > 0 &&
+        container.clientHeight > 0 &&
+        container.scrollTop + container.clientHeight >=
+          container.scrollHeight - 5
+      ) {
+        this.page += 1;
+        this.getNotifications();
       }
     },
     changeLanguage(obj) {
-      localStorage.setItem('language', obj.locale)
-      this.$i18n.locale = obj.locale
+      localStorage.setItem("language", obj.locale);
+      this.$i18n.locale = obj.locale;
     },
     async getNotifications() {
-      const data = await axios.get(`account/api/notification/list/${this.page}/10?sortField=sentDate&direction=desc`)
+      const data = await axios.get(
+        `account/api/notification/list/${this.page}/10?sortField=sentDate&direction=desc`
+      );
       if (this.page > 1) {
-        this.notifications.push(...data.data.elements)
+        this.notifications.push(...data.data.elements);
       } else {
-        this.notifications = data.data.elements
+        this.notifications = data.data.elements;
       }
     },
     async getNotificationCount() {
-      const dataCount = await axios.get('account/api/notification/get-message-count-not-read')
-      this.notificationCount = dataCount.data.unreadCount
+      const dataCount = await axios.get(
+        "account/api/notification/get-message-count-not-read"
+      );
+      this.notificationCount = dataCount.data.unreadCount;
     },
     async markNotificationAsRead(id) {
-      const messageIds = [id]
-      const index = this.notifications.findIndex(notification => notification.id === id)
+      const messageIds = [id];
+      const index = this.notifications.findIndex(
+        (notification) => notification.id === id
+      );
       if (this.notifications[index].read === false) {
-        const data = await axios.put('account/api/notification/mark-as-read', messageIds)
+        const data = await axios.put(
+          "account/api/notification/mark-as-read",
+          messageIds
+        );
         if (data.status === 200) {
-          this.notifications[index].read = true
+          this.notifications[index].read = true;
           // eslint-disable-next-line no-plusplus
-          this.notificationCount--
+          this.notificationCount--;
         }
       }
     },
     async markNotificationReadAll() {
-      const data = await axios.put('account/api/notification/mark-all-as-read')
+      const data = await axios.put("account/api/notification/mark-all-as-read");
       if (data.status === 200) {
-        await this.getNotifications()
-        await this.getNotificationCount()
+        await this.getNotifications();
+        await this.getNotificationCount();
       }
     },
     async getUserDetail() {
       try {
-        const data = await axios.get('account/api/user/who-am-i')
-        this.userDetail = data.data
-        localStorage.setItem('userData', JSON.stringify(data.data))
+        const data = await axios.get("account/api/user/who-am-i");
+        this.userDetail = data.data;
+        localStorage.setItem("userData", JSON.stringify(data.data));
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
     },
     logout() {
       // Remove userData from localStorage
       // ? You just removed token from localStorage. If you like, you can also make API call to backend to blacklist used token
-      localStorage.removeItem(useJwt.jwtConfig.storageTokenKeyName)
-      localStorage.removeItem(useJwt.jwtConfig.storageRefreshTokenKeyName)
+      localStorage.removeItem(useJwt.jwtConfig.storageTokenKeyName);
+      localStorage.removeItem(useJwt.jwtConfig.storageRefreshTokenKeyName);
 
       // Remove userData from localStorage
-      localStorage.removeItem('userData')
+      localStorage.removeItem("userData");
 
       // Redirect to login page
-      this.$router.push({ name: 'login' })
+      this.$router.push({ name: "login" });
     },
     async deleteNotification(notificationId) {
-      const noti = {}
-      console.log(notificationId)
-      noti.notificationId = notificationId
-      const data = await axios.delete(`account/api/notification/${notificationId}`)
-      console.log(data)
+      const noti = {};
+      console.log(notificationId);
+      noti.notificationId = notificationId;
+      const data = await axios.delete(
+        `account/api/notification/${notificationId}`
+      );
+      console.log(data);
       if (data.status === 204) {
         // eslint-disable-next-line radix
-        this.notifications = this.notifications.filter(notification => parseInt(notification.id) !== parseInt(notificationId))
+        this.notifications = this.notifications.filter(
+          (notification) =>
+            parseInt(notification.id) !== parseInt(notificationId)
+        );
       }
     },
     makeToast(variant = null, title = null, message = null) {
@@ -422,34 +530,34 @@ export default {
         title,
         variant,
         solid: false,
-      })
+      });
     },
   },
   setup() {
     /* eslint-disable global-require */
     const locales = [
       {
-        locale: 'en',
-        img: require('@/assets/images/flags/en.png'),
-        name: 'English',
+        locale: "en",
+        img: require("@/assets/images/flags/en.png"),
+        name: "English",
       },
       {
-        locale: 'bg',
-        img: require('@/assets/images/flags/bg.png'),
-        name: 'Bulgaria',
+        locale: "bg",
+        img: require("@/assets/images/flags/bg.png"),
+        name: "Bulgaria",
       },
-    ]
+    ];
 
-    const notificationCount = 0
-    const fullIndex = 0
-    const page = 1
-    const notifications = ref([])
-    const userDetail = ref({})
+    const notificationCount = 0;
+    const fullIndex = 0;
+    const page = 1;
+    const notifications = ref([]);
+    const userDetail = ref({});
 
     const perfectScrollbarSettings = {
       maxScrollbarLength: 40,
       wheelPropagation: false,
-    }
+    };
 
     return {
       userDetail,
@@ -459,9 +567,9 @@ export default {
       fullIndex,
       notifications,
       perfectScrollbarSettings,
-    }
+    };
   },
-}
+};
 </script>
 
 <style scoped>

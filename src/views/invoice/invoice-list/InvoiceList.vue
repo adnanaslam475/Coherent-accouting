@@ -942,7 +942,6 @@ export default {
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
         config,
       )
-      console.log(data.data.elements.length, "asdsadsa")
       if (data.data.elements.length > 0) {
         this.loadMore = true
         //this.invoices.push(...data.data.elements)

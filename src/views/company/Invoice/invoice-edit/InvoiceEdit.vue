@@ -1,5 +1,5 @@
 <template>
-  <section class="invoice-add-wrapper">
+  <section   class="invoice-add-wrapper">
     <TabList />
     <!--  -->
 
@@ -73,7 +73,6 @@
 
                   <b-tab>
                     <template #title>
-                      <!-- <feather-icon icon="BriefcaseIcon" /> -->
                       <feather-icon icon="FileTextIcon" />
                       <span style="font-size: 0.8vw" class="text-capitalize"
                         >Data</span
@@ -1289,7 +1288,6 @@
                     v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                     variant="primary"
                     type="button"
-                    style="border: 1px solid red"
                     class="mr-2"
                     @click="closeModel"
                   >
@@ -9825,39 +9823,6 @@
                                       {{ option.label }}
                                     </span>
                                   </template>
-                                  <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
-
-                            <div style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: left;
-                                grid-gap: 8px;
-                              ">
-                              {{ clauseToSend }}
-                            </div>
-                          </template>
-                          <template #selected-option="option" v-else>
-
-                            <div style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: left;
-                                grid-gap: 8px;
-                              ">
-                              {{ option }}
-                            </div>
-                          </template>
-
-                          <template v-slot:option="option">
-                            <span style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: left;
-                                grid-gap: 8px;
-                              ">
-                              {{ option }}
-                            </span>
-                          </template> -->
                                 </v-select>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -10285,7 +10250,7 @@ import {
   qtyValid,
 } from "@validations";
 import Logo from "@core/layouts/components/Logo.vue";
-import { ref, onUnmounted, onMounted, computed } from "@vue/composition-api";
+import { ref, onUnmounted, computed } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
 import Ripple from "vue-ripple-directive";
 import store from "@/store";
@@ -10806,7 +10771,6 @@ export default {
     },
 
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
-      // console.log('ssinvoiceEditsss',invoiceData, redirectPage, AccountTypeOption)
       if (this.invoiceData?.binaryId && this.invoiceData?.binaryId !== null) {
         if (["save", "verify"].includes(redirectPage) && !this.formIsValid)
           return;
@@ -10857,7 +10821,6 @@ export default {
         invoiceData.bankApi = null;
       }
       this.$refs.invoiceEditForm.validate().then((success) => {
-        // if (this.companyIDisInvalid === false && this.isWeekSelected === false) {
         if (
           this.isTemplateOne === false &&
           this.isTemplateTwo === false &&
@@ -10894,13 +10857,7 @@ export default {
             )
             .then((response) => {
               this.loading = false;
-              // invoice.cronScheduleApi = {
 
-              //   scheduleType: "",
-              //   dayOfWeek: null,
-              //   dayOfMonth: null,
-
-              // };
               this.$toast({
                 component: ToastificationContent,
                 props: {
@@ -11030,7 +10987,6 @@ export default {
   setup() {
     var loading = ref(false);
     var trHeight = ref(0);
-    // var totalTax = ref(0)
 
     var showInvoiceInput = ref(false);
     var showTaxInput = ref(false);

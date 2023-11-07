@@ -639,14 +639,10 @@ export default {
           config
         )
         .then((res) => {
-          console.log("response ========>", res);
           this.invoices = res.data.elements;
           tableAreaBusy.style.opacity = "1";
           this.loadMore = false;
         });
-
-      // this.invoices = data.data.elements;
-      // tableAreaBusy.style.opacity = "1";
     },
 
     async listInvoices() {
@@ -664,7 +660,6 @@ export default {
         `/account/api/bank-statement/list/${this.companyId}/${this.pageNum}/10`,
         config
       );
-      console.log(data.data.elements.length, this.totalInvoices);
       if (data.data.elements.length > 1) {
         this.loadMore = true;
         if (this.pageNum > 1) {

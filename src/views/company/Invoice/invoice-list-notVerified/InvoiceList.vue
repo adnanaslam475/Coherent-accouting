@@ -638,7 +638,6 @@ export default {
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
         config
       );
-      console.log(data.data.elements.length, this.totalInvoices);
       if (data.data.elements.length > 1) {
         this.loadMore = true;
         if (this.pageNum > 1) {
