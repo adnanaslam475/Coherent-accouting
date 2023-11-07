@@ -58,6 +58,7 @@
             </div>
             <b-button
               :variant="
+                companyInfo.exportProperties &&
                 companyInfo.exportProperties.platform == 'QUICK_BOOKS'
                   ? 'outline-success'
                   : 'outline-secondary'
@@ -66,6 +67,7 @@
               @click="showConnectionModal('qbo')"
               v-if="!companyInfo.connectedToQBO"
               :disabled="
+                companyInfo.exportProperties &&
                 companyInfo.exportProperties.platform !== 'QUICK_BOOKS'
               "
               >Connect</b-button
@@ -97,6 +99,7 @@
             </div>
             <b-button
               :variant="
+                companyInfo.exportProperties &&
                 companyInfo.exportProperties.platform == 'XERO'
                   ? 'outline-success'
                   : 'outline-secondary'
@@ -104,7 +107,10 @@
               class="mt-1"
               @click="showConnectionModal('xero')"
               v-if="!companyInfo.connectedToXero"
-              :disabled="companyInfo.exportProperties.platform !== 'XERO'"
+              :disabled="
+                companyInfo.exportProperties &&
+                companyInfo.exportProperties.platform !== 'XERO'
+              "
               >Connect
             </b-button>
             <b-button

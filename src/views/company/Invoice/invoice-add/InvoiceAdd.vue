@@ -11020,13 +11020,7 @@ export default {
 
     function closeModel() {
       this.modelShow = false;
-      // this.$router.push({
-      //   name: "CompanyView",
-      //   params: {
-      //     id: this.$route.params.companyId,
-      //     InvoiceId: 2,
-      //   },
-      // })
+       
       this.$router.push({
         name: "CompanyView",
         params: {

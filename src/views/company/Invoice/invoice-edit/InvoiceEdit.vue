@@ -1,5 +1,5 @@
 <template>
-  <section   class="invoice-add-wrapper">
+  <section class="invoice-add-wrapper">
     <TabList />
     <!--  -->
 
@@ -10301,6 +10301,7 @@ import axios from "@/libs/axios";
 import { i18n } from "@/main.js";
 import VueEasyLightbox from "vue-easy-lightbox";
 import imageZoom from "vue-image-zoomer";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -10466,6 +10467,7 @@ export default {
   created() {},
   destroyed() {},
   computed: {
+    
     formIsValid() {
       let i = 0;
       let requiredField = [];
@@ -10546,6 +10548,7 @@ export default {
         { text: i18n.tc("company_info.SUN"), value: "SUN" },
       ];
     },
+    ...mapGetters("verticalMenu", ["getActiveTab"]),
   },
   methods: {
     showSingle() {
@@ -11007,7 +11010,7 @@ export default {
         name: "CompanyView",
         params: {
           id: router.currentRoute.params.companyId,
-          InvoiceId: 1,
+          InvoiceId: this.getActiveTab,
         },
       });
     }

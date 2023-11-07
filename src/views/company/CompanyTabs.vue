@@ -209,10 +209,10 @@ export default {
   },
   computed: {
     ...mapGetters("app", ["getCurrentTab"]),
+    ...mapGetters("verticalMenu", ["getActiveTab"]),
   },
   mounted() {
     this.companyID = this.$route.params.id;
-
     this.getCompanyInfo();
   },
   created() {
@@ -223,6 +223,7 @@ export default {
   },
   watch: {
     companyTab: function (newValue, oldValue) {
+      store.commit("verticalMenu/SET_ACTIVE_TABS", newValue);
       switch (newValue) {
         case 0:
           this.infoActive = true;
