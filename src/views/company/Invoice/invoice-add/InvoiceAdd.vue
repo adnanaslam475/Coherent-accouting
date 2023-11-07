@@ -10144,6 +10144,8 @@ import { setTimeout } from "timers";
 import axios from "@/libs/axios";
 import { i18n } from "@/main.js";
 import imageZoom from "vue-image-zoomer";
+import { mapGetters } from "vuex";
+
 
 export default {
   components: {
@@ -10409,6 +10411,7 @@ export default {
         { text: i18n.tc("units.pcs"), value: "pcs" },
       ];
     },
+    ...mapGetters("verticalMenu", ["getActiveTab"]),
   },
   methods: {
     getAccounts() {
@@ -10453,27 +10456,7 @@ export default {
       }
     },
 
-    // getPaymentProcess() {
-    //   var config = {
-    //     method: "get",
-    //     url: "/account/api/invoice/get-payment-processes",
-    //     headers: {
-    //       Authorization: "Bearer " + localStorage.getItem("accessToken"),
-    //       "Access-Control-Allow-Credentials": true,
-    //       "Content-Type": "application/json",
-    //       "Access-Control-Allow-Origin": "http://localhost:8080",
-    //     },
-
-    //   };
-    //   axios(config)
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       this.banks = response.data
-    //       console.log(this.banks, 'there are banks')
-
-    //     })
-    //     .catch(function (error) { });
-    // },
+     
     reverse() {
       let temp = this.invoiceData.supplierCompany;
       this.invoiceData.supplierCompany = this.invoiceData.recipientCompany;
@@ -11020,12 +11003,11 @@ export default {
 
     function closeModel() {
       this.modelShow = false;
-       
       this.$router.push({
         name: "CompanyView",
         params: {
           id: router.currentRoute.params.companyId,
-          InvoiceId: 2,
+          InvoiceId:  this.getActiveTab,
         },
       });
     }
