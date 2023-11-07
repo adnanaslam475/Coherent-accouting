@@ -610,7 +610,7 @@ import {
 } from "bootstrap-vue";
 import useJwt from "@/auth/jwt/useJwt";
 import axios from "@/libs/axios";
-import Swal from "sweetalert2";
+import moment from "moment";
 import vSelect from "vue-select";
 import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
@@ -1177,7 +1177,7 @@ export default {
         companyCurrency: currency,
         companyVatNumber: this.form.vat_no,
         digitalSignature: "",
-        companyFinancialStartOfYear: this.form.fin_year,
+        companyFinancialStartOfYear: moment(this.form.fin_year).format("YYYY-MM-DD"),
         vat: this.isVatCheck,
         exportProperties: {
           id: this.exportProperties.id,

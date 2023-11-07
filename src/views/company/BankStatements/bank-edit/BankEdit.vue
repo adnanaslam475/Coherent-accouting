@@ -839,11 +839,7 @@ import VueEasyLightbox, { useEasyLightbox } from "vue-easy-lightbox";
 // const modelShow = ref(false)
 const zoomAmount = ref(1);
 import imageZoom from "vue-image-zoomer";
-
-// import "vue-image-zoomer/dist/style.css"
-// import { VueImageZoomer } from "vue-image-zoomer"
-// import "vue-image-zoomer/dist/style.css"
-// import imageZoom from "vue-image-zoomer"
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -935,8 +931,6 @@ export default {
       let i = 0;
       let requiredField = [];
       while (i < this.invoiceData.bankStatementTransactions.length) {
-        // console.log(this.$refs.transectionServiceOrItemDescription[i].flags)
-        // console.log(i)
         const temp = [
           this.$refs.transectionServiceOrItemDescription[i].flags.valid,
           this.$refs.transectionQuantity[i].flags.valid,
@@ -950,7 +944,6 @@ export default {
         }
 
         if (this.isQuickBook && this.isAccount) {
-          console.log(this.$refs.account[i].flags.valid);
           requiredField.push(this.$refs.account[i].flags.valid);
         }
 
@@ -958,7 +951,6 @@ export default {
 
         i++;
       }
-      console.log(requiredField);
       return requiredField.every((item) => (item === true ? true : false));
     },
 
@@ -978,6 +970,8 @@ export default {
 
       return total;
     },
+
+    ...mapGetters("verticalMenu", ["getActiveTab"]),
   },
   methods: {
     zoomIn() {
@@ -1006,7 +1000,6 @@ export default {
       };
       axios(config)
         .then((response) => {
-          console.log(response.data);
           this.accounts = response.data;
         })
         .catch(function (error) {});
@@ -1045,7 +1038,6 @@ export default {
       }
 
       let self = this;
-      // console.log(this.$refs.invoiceEditForm.validate())
       this.$refs.invoiceEditForm.validate().then((success) => {
         // if (this.companyIDisInvalid === false && this.isWeekSelected === false) {
         this.loading = true;
@@ -1213,12 +1205,13 @@ export default {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
 
     function closeModel() {
+      console.log("bankedit_close");
       this.modelShow = false;
       this.$router.push({
         name: "CompanyView",
         params: {
           id: router.currentRoute.params.companyId,
-          InvoiceId: 4,
+          InvoiceId: this.getActiveTab,
         },
       });
     }

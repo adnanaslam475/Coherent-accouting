@@ -122,7 +122,7 @@ export default [
     },
   },
   {
-    path: '/pages/miscellaneous/under-maintenance',
+    path: '/under-maintenance',
     name: 'misc-under-maintenance',
     component: () => import('@/views/pages/miscellaneous/UnderMaintenance.vue'),
     meta: {
