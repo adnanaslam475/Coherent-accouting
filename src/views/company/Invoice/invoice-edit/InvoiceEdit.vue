@@ -1031,41 +1031,6 @@
                       >
                     </template>
                     <div>
-                      <!-- <div class="d-flex align-items-center mb-1">
-                    <p class=" mr-1 mb-0" style='width:200px'>
-                      Invoice Number
-                    </p>
-                    <validation-provider #default="{ errors }" name="invoiceNumber" vid="Invoice" rules="required">
-                      <b-input-group class="input-group-merge invoice-edit-input-group invoice-input-top"
-                        style='width: 307px'>
-                        <b-input-group-prepend is-text>
-                          <feather-icon icon="HashIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input id="invoice-data-id" v-model="invoiceData.invoiceNumber" />
-                      </b-input-group>
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </div> -->
-                      <!-- <div class="d-flex align-items-center mb-1">
-                    <span class="title mr-1" style='width:200px'>
-                      {{ $t("Type") }}:
-                    </span>
-                    <validation-provider #default="{ errors }" name="transectionType" rules="required">
-                      <b-form-select style='width: 307px' v-model="invoiceData.transactionType" @change="() => {
-                        companyIDisInvalid = false;
-                      }
-                        ">
-                        <b-form-select-option value="EXPENSE">{{
-                          $t("company_invoices.EXPENSE")
-                        }}</b-form-select-option>
-                        <b-form-select-option value="INCOME">{{
-                          $t("company_invoices.INCOME")
-                        }}</b-form-select-option>
-                      </b-form-select>
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </div> -->
-
                       <div class="mb-1">
                         <h6 style="color: #625f6e" class="mb-1">
                           {{ $t("Supplier") }}
@@ -1324,6 +1289,7 @@
                     v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                     variant="primary"
                     type="button"
+                    style="border: 1px solid red"
                     class="mr-2"
                     @click="closeModel"
                   >
@@ -10842,10 +10808,7 @@ export default {
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
       // console.log('ssinvoiceEditsss',invoiceData, redirectPage, AccountTypeOption)
       if (this.invoiceData?.binaryId && this.invoiceData?.binaryId !== null) {
-        if (
-          (['save','verify'].includes(redirectPage)) &&
-          !this.formIsValid
-        )
+        if (["save", "verify"].includes(redirectPage) && !this.formIsValid)
           return;
       }
       if (invoiceData.scheduled == true) {
@@ -11088,7 +11051,7 @@ export default {
         name: "CompanyView",
         params: {
           id: router.currentRoute.params.companyId,
-          InvoiceId: 2,
+          InvoiceId: 1,
         },
       });
     }
