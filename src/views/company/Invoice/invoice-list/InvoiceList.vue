@@ -239,8 +239,9 @@
     <!--  Table Starts  -->
 
     <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns"
-      responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found"
-      :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100" id="company-invoices">
+      responsive primary-key="id" :sort-by.sync="sortBy" empty-text="No matching records found"
+      :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList h-100" id="company-invoices"
+      :select-mode="selectMode" v-model="selectedItems">
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
@@ -249,6 +250,20 @@
           <h5 class="sidebar-toggle start-chat-text">No records found</h5>
         </div>
       </template>
+      <template #head(select)>
+        asdf
+        <b-form-checkbox v-model="selectAll"></b-form-checkbox>
+      </template>
+      <!-- <template slot="head()">
+        <b-table-sticky-head>
+          <b-tr>
+            <b-th>
+              <b-form-checkbox v-model="selectAll" @change="selectAllRows"></b-form-checkbox>
+            </b-th>
+
+          </b-tr>
+        </b-table-sticky-head>
+      </template> -->
 
       <template #head(invoiceStatus)>
         <feather-icon icon="TrendingUpIcon" class="mx-auto" />
@@ -630,6 +645,7 @@ export default {
 
   data() {
     return {
+      selectedItems: [],
       EIC: "",
       exportFiles: null,
       fileLoadingExport: false,

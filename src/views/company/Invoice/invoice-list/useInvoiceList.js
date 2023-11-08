@@ -13,6 +13,7 @@ export default function useInvoicesList() {
 
   // Table Handlers
   const tableColumns = [
+    { key: 'select', sortable: false },
     { key: 'invoiceNumber', sortable: true },
     { key: 'scheduled', sortable: true },
     { key: 'exported', sortable: true },
