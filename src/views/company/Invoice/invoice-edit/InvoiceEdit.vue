@@ -11,11 +11,12 @@
           dialog-class="my-1"
           v-model="modelShow"
           size="xl"
-		  no-close-on-esc
           :hide-backdrop="false"
           :hide-footer="true"
           :scrollable="false"
           :no-close-on-backdrop="true"
+          no-close-on-esc
+
         >
           <template #modal-header="slotProps">
             <feather-icon
@@ -74,6 +75,7 @@
 
                   <b-tab>
                     <template #title>
+                      <!-- <feather-icon icon="BriefcaseIcon" /> -->
                       <feather-icon icon="FileTextIcon" />
                       <span style="font-size: 0.8vw" class="text-capitalize"
                         >Data</span
@@ -1031,6 +1033,41 @@
                       >
                     </template>
                     <div>
+                      <!-- <div class="d-flex align-items-center mb-1">
+                    <p class=" mr-1 mb-0" style='width:200px'>
+                      Invoice Number
+                    </p>
+                    <validation-provider #default="{ errors }" name="invoiceNumber" vid="Invoice" rules="required">
+                      <b-input-group class="input-group-merge invoice-edit-input-group invoice-input-top"
+                        style='width: 307px'>
+                        <b-input-group-prepend is-text>
+                          <feather-icon icon="HashIcon" />
+                        </b-input-group-prepend>
+                        <b-form-input id="invoice-data-id" v-model="invoiceData.invoiceNumber" />
+                      </b-input-group>
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
+                  </div> -->
+                      <!-- <div class="d-flex align-items-center mb-1">
+                    <span class="title mr-1" style='width:200px'>
+                      {{ $t("Type") }}:
+                    </span>
+                    <validation-provider #default="{ errors }" name="transectionType" rules="required">
+                      <b-form-select style='width: 307px' v-model="invoiceData.transactionType" @change="() => {
+                        companyIDisInvalid = false;
+                      }
+                        ">
+                        <b-form-select-option value="EXPENSE">{{
+                          $t("company_invoices.EXPENSE")
+                        }}</b-form-select-option>
+                        <b-form-select-option value="INCOME">{{
+                          $t("company_invoices.INCOME")
+                        }}</b-form-select-option>
+                      </b-form-select>
+                      <small class="text-danger">{{ errors[0] }}</small>
+                    </validation-provider>
+                  </div> -->
+
                       <div class="mb-1">
                         <h6 style="color: #625f6e" class="mb-1">
                           {{ $t("Supplier") }}
@@ -9824,6 +9861,39 @@
                                       {{ option.label }}
                                     </span>
                                   </template>
+                                  <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
+
+                            <div style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: left;
+                                grid-gap: 8px;
+                              ">
+                              {{ clauseToSend }}
+                            </div>
+                          </template>
+                          <template #selected-option="option" v-else>
+
+                            <div style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: left;
+                                grid-gap: 8px;
+                              ">
+                              {{ option }}
+                            </div>
+                          </template>
+
+                          <template v-slot:option="option">
+                            <span style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: left;
+                                grid-gap: 8px;
+                              ">
+                              {{ option }}
+                            </span>
+                          </template> -->
                                 </v-select>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -10251,7 +10321,7 @@ import {
   qtyValid,
 } from "@validations";
 import Logo from "@core/layouts/components/Logo.vue";
-import { ref, onUnmounted, computed } from "@vue/composition-api";
+import { ref, onUnmounted, onMounted, computed } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
 import Ripple from "vue-ripple-directive";
 import store from "@/store";
@@ -10302,7 +10372,6 @@ import axios from "@/libs/axios";
 import { i18n } from "@/main.js";
 import VueEasyLightbox from "vue-easy-lightbox";
 import imageZoom from "vue-image-zoomer";
-import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -10468,7 +10537,6 @@ export default {
   created() {},
   destroyed() {},
   computed: {
-    
     formIsValid() {
       let i = 0;
       let requiredField = [];
@@ -10549,7 +10617,6 @@ export default {
         { text: i18n.tc("company_info.SUN"), value: "SUN" },
       ];
     },
-    ...mapGetters("verticalMenu", ["getActiveTab"]),
   },
   methods: {
     showSingle() {
@@ -10775,8 +10842,12 @@ export default {
     },
 
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
+      // console.log('ssinvoiceEditsss',invoiceData, redirectPage, AccountTypeOption)
       if (this.invoiceData?.binaryId && this.invoiceData?.binaryId !== null) {
-        if (["save", "verify"].includes(redirectPage) && !this.formIsValid)
+        if (
+          (['save','verify'].includes(redirectPage)) &&
+          !this.formIsValid
+        )
           return;
       }
       if (invoiceData.scheduled == true) {
@@ -10825,6 +10896,7 @@ export default {
         invoiceData.bankApi = null;
       }
       this.$refs.invoiceEditForm.validate().then((success) => {
+        // if (this.companyIDisInvalid === false && this.isWeekSelected === false) {
         if (
           this.isTemplateOne === false &&
           this.isTemplateTwo === false &&
@@ -10861,7 +10933,13 @@ export default {
             )
             .then((response) => {
               this.loading = false;
+              // invoice.cronScheduleApi = {
 
+              //   scheduleType: "",
+              //   dayOfWeek: null,
+              //   dayOfMonth: null,
+
+              // };
               this.$toast({
                 component: ToastificationContent,
                 props: {
@@ -10991,6 +11069,7 @@ export default {
   setup() {
     var loading = ref(false);
     var trHeight = ref(0);
+    // var totalTax = ref(0)
 
     var showInvoiceInput = ref(false);
     var showTaxInput = ref(false);
@@ -11011,7 +11090,7 @@ export default {
         name: "CompanyView",
         params: {
           id: router.currentRoute.params.companyId,
-          InvoiceId: this.getActiveTab,
+          InvoiceId: 2,
         },
       });
     }
@@ -11177,7 +11256,7 @@ export default {
         if (invoiceData.value.xero) {
           axios
             .get(
-              `${axios.defaults.baseURL}/account/api/export/get-tax-types-xero/${router.currentRoute.params.companyId}`,
+              `${axios.defaults.baseURL}/account/api/export/get-tax-types-xero`,
               {
                 headers: {
                   Authorization: `Bearer ${localStorage.getItem(
