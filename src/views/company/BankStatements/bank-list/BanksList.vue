@@ -738,7 +738,7 @@ export default {
             {
               companyId: router.currentRoute.params.id,
               ids: this.selectAll,
-              platformName: this.platform,
+              platform: this.platform,
             },
             {
               headers: {
