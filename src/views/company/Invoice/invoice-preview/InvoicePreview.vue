@@ -29,33 +29,48 @@
           </b-card-header>
         </b-card>
 
-        <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2">
+        <div
+          class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2"
+        >
           <!-- Header: Left Content -->
           <div class="mt-md-0 mt-2 flex-1">
-            <b-card no-body class="invoice-preview invoice-card" :style="isBlue === true
-              ? 'border: 1px solid #007aff !important'
-              : isGreen === true
-                ? 'border: 1px solid #8fce00 !important'
-                : isPurple === true
+            <b-card
+              no-body
+              class="invoice-preview invoice-card"
+              :style="
+                isBlue === true
+                  ? 'border: 1px solid #007aff !important'
+                  : isGreen === true
+                  ? 'border: 1px solid #8fce00 !important'
+                  : isPurple === true
                   ? 'border: 1px solid #ad3978 !important'
                   : isOrange === true
-                    ? 'border: 1px solid #FFA500 !important'
-                    : 'border:1px solid #f6d1ff !important'
-              ">
-              <b-card-header class="justify-content-center invoice-header" :class="isBlue === true
-                ? 'tm_accent_bg'
-                : isGreen === true
-                  ? 'green_bg'
-                  : isPurple === true
+                  ? 'border: 1px solid #FFA500 !important'
+                  : 'border:1px solid #f6d1ff !important'
+              "
+            >
+              <b-card-header
+                class="justify-content-center invoice-header"
+                :class="
+                  isBlue === true
+                    ? 'tm_accent_bg'
+                    : isGreen === true
+                    ? 'green_bg'
+                    : isPurple === true
                     ? 'purple_bg'
                     : isOrange === true
-                      ? 'orange_bg'
-                      : 'gray_bg'
-                ">
-                <h5 class="m-0" :style="isGray === true
-                  ? 'color: black !important'
-                  : 'color: white !important'
-                  ">
+                    ? 'orange_bg'
+                    : 'gray_bg'
+                "
+              >
+                <h5
+                  class="m-0"
+                  :style="
+                    isGray === true
+                      ? 'color: black !important'
+                      : 'color: white !important'
+                  "
+                >
                   {{ $t("add_invoice.supplier") }}
                 </h5>
               </b-card-header>
@@ -92,7 +107,12 @@
                     {{ invoiceData.supplierCompany.companyOwnerName }}
                   </p>
                 </div>
-                <div v-if="invoiceData.supplierCompany.companyVatEic && companyInBG" class="invoice-date-wrapper">
+                <div
+                  v-if="
+                    invoiceData.supplierCompany.companyVatEic && companyInBG
+                  "
+                  class="invoice-date-wrapper"
+                >
                   <p class="invoice-date-title">
                     {{ $t("add_invoice.vat_no") }}:
                   </p>
@@ -105,30 +125,43 @@
           </div>
 
           <div class="mt-md-0 mt-2 flex-1">
-            <b-card no-body class="invoice-preview invoice-card" :style="isBlue === true
-              ? 'border: 1px solid #007aff !important'
-              : isGreen === true
-                ? 'border: 1px solid #8fce00 !important'
-                : isPurple === true
+            <b-card
+              no-body
+              class="invoice-preview invoice-card"
+              :style="
+                isBlue === true
+                  ? 'border: 1px solid #007aff !important'
+                  : isGreen === true
+                  ? 'border: 1px solid #8fce00 !important'
+                  : isPurple === true
                   ? 'border: 1px solid #ad3978 !important'
                   : isOrange === true
-                    ? 'border: 1px solid #FFA500 !important'
-                    : 'border:1px solid #f6d1ff !important'
-              ">
-              <b-card-header class="justify-content-center invoice-header" :class="isBlue === true
-                ? 'tm_accent_bg'
-                : isGreen === true
-                  ? 'green_bg'
-                  : isPurple === true
+                  ? 'border: 1px solid #FFA500 !important'
+                  : 'border:1px solid #f6d1ff !important'
+              "
+            >
+              <b-card-header
+                class="justify-content-center invoice-header"
+                :class="
+                  isBlue === true
+                    ? 'tm_accent_bg'
+                    : isGreen === true
+                    ? 'green_bg'
+                    : isPurple === true
                     ? 'purple_bg'
                     : isOrange === true
-                      ? 'orange_bg'
-                      : 'gray_bg'
-                ">
-                <h5 class="m-0" :style="isGray === true
-                  ? 'color: black !important'
-                  : 'color: white !important'
-                  ">
+                    ? 'orange_bg'
+                    : 'gray_bg'
+                "
+              >
+                <h5
+                  class="m-0"
+                  :style="
+                    isGray === true
+                      ? 'color: black !important'
+                      : 'color: white !important'
+                  "
+                >
                   {{ $t("add_invoice.recipient") }}
                 </h5>
               </b-card-header>
@@ -165,7 +198,12 @@
                     {{ invoiceData.recipientCompany.companyOwnerName }}
                   </p>
                 </div>
-                <div v-if="invoiceData.recipientCompany.companyVatEic && companyInBG" class="invoice-date-wrapper">
+                <div
+                  v-if="
+                    invoiceData.recipientCompany.companyVatEic && companyInBG
+                  "
+                  class="invoice-date-wrapper"
+                >
                   <p class="invoice-date-title">
                     {{ $t("add_invoice.vat_no") }}:
                   </p>
@@ -204,7 +242,11 @@
             </b-card-header>
           </b-card>
           <!-- due date -->
-          <b-card no-body class="invoice-preview date-issued" v-if="invoiceData.dueDate != null">
+          <b-card
+            no-body
+            class="invoice-preview date-issued"
+            v-if="invoiceData.dueDate != null"
+          >
             <b-card-header class="justify-content-end">
               <div class="invoice-date-wrapper invoice-middle-content">
                 <p class="invoice-date-title">
@@ -225,24 +267,30 @@
                 </p>
                 <p class="invoice-date">
                   {{
-                    invoiceData.paymentStatus == 'PAYED' ?
-                    $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
+                    invoiceData.paymentStatus == "PAYED"
+                      ? $t("paymentStatus.payed")
+                      : $t("paymentStatus.not_payed")
                   }}
                 </p>
               </div>
             </b-card-header>
           </b-card>
         </div>
-        <b-card no-body class="invoice-preview-card transaction-container" :style="isBlue === true
+        <b-card
+          no-body
+          class="invoice-preview-card transaction-container"
+          :style="
+            isBlue === true
               ? 'border: 1px solid #007aff'
               : isGreen === true
-                ? 'border: 1px solid #8fce00'
-                : isPurple === true
-                  ? 'border: 1px solid #ad3978'
-                  : isOrange === true
-                    ? 'border: 1px solid #FFA500'
-                    : 'border:1px solid #f6d1ff'
-            ">
+              ? 'border: 1px solid #8fce00'
+              : isPurple === true
+              ? 'border: 1px solid #ad3978'
+              : isOrange === true
+              ? 'border: 1px solid #FFA500'
+              : 'border:1px solid #f6d1ff'
+          "
+        >
           <!-- Invoice Description: Table -->
           <!-- <b-table-lite
             responsive
@@ -337,19 +385,24 @@
               <div class="tm_table_responsive">
                 <table>
                   <thead>
-                    <tr :class="isBlue === true
-                      ? 'tm_accent_bg'
-                      : isGreen === true
-                        ? 'green_bg'
-                        : isPurple === true
+                    <tr
+                      :class="
+                        isBlue === true
+                          ? 'tm_accent_bg'
+                          : isGreen === true
+                          ? 'green_bg'
+                          : isPurple === true
                           ? 'purple_bg'
                           : isOrange === true
-                            ? 'orange_bg'
-                            : 'gray_bg'
-                      " :style="isGray === true
-    ? 'color: black !important'
-    : 'color: white !important'
-    ">
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
+                      :style="
+                        isGray === true
+                          ? 'color: black !important'
+                          : 'color: white !important'
+                      "
+                    >
                       <th class="tm_width_1 tm_semi_bold">
                         {{ $t("add_invoice.s_no") }}
                       </th>
@@ -372,7 +425,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(item, index) in invoiceData.transactions" :key="index">
+                    <tr
+                      v-for="(item, index) in invoiceData.transactions"
+                      :key="index"
+                    >
                       <td class="tm_width_1">{{ index + 1 }}</td>
                       <td class="tm_width_3">
                         {{ item.serviceOrItemDescription }}
@@ -402,40 +458,63 @@
           <!-- Invoice Description: Total -->
         </b-card>
 
-        <b-card no-body class="invoice-preview-card transaction-container" :style="isBlue === true
-          ? 'border: 1px solid #007aff'
-          : isGreen === true
-            ? 'border: 1px solid #8fce00'
-            : isPurple === true
+        <b-card
+          no-body
+          class="invoice-preview-card transaction-container"
+          :style="
+            isBlue === true
+              ? 'border: 1px solid #007aff'
+              : isGreen === true
+              ? 'border: 1px solid #8fce00'
+              : isPurple === true
               ? 'border: 1px solid #ad3978'
               : isOrange === true
-                ? 'border: 1px solid #FFA500'
-                : 'border:1px solid #f6d1ff'
-          ">
+              ? 'border: 1px solid #FFA500'
+              : 'border:1px solid #f6d1ff'
+          "
+        >
           <b-card-body class="invoice-padding">
             <b-row class="invoiceStat">
               <!-- Col: Sales Persion -->
-              <b-col cols="12" md="7" class="mt-md-6 d-flex" order="2" order-md="1">
+              <b-col
+                cols="12"
+                md="7"
+                class="mt-md-6 d-flex"
+                order="2"
+                order-md="1"
+              >
                 <h1 class="invoiceTypeHeading text-uppercase">
                   {{ $t("add_invoice." + invoiceData.invoiceType) }}
                 </h1>
               </b-col>
 
               <!-- Col: Total -->
-              <b-col cols="12" md="5" class="mt-md-6 d-flex justify-content-end" order="1" order-md="2">
+              <b-col
+                cols="12"
+                md="5"
+                class="mt-md-6 d-flex justify-content-end"
+                order="1"
+                order-md="2"
+              >
                 <div class="invoice-total-wrapper">
                   <div class="invoice-total-item">
                     <p class="invoice-total-title">
                       {{ $t("add_invoice.total_price_non_vat") }}:
                     </p>
                     <p class="invoice-total-amount">
-                      <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' ||
-                        invoiceData.currency.toLowerCase().trim() == 'bgn' ||
-                        invoiceData.currency == 'лв' ||
-                        invoiceData.currency == 'лв.'
-                        ">лв. {{ invoiceData.amountNonVat }}</span>
-                      <span v-else>{{ invoiceData.currency }}
-                        {{ invoiceData.amountNonVat }}</span>
+                      <span
+                        v-if="
+                          invoiceData.currency.toLowerCase().trim() == 'lv' ||
+                          invoiceData.currency.toLowerCase().trim() == 'bgn' ||
+                          invoiceData.currency == 'лв' ||
+                          invoiceData.currency == 'лв.'
+                        "
+                        >лв. {{ invoiceData.amountNonVat }}</span
+                      >
+                      <span v-else
+                        >{{ invoiceData.currency }}
+                        {{ invoiceData.amountNonVat }}</span
+                      >
                     </p>
                   </div>
                   <div class="invoice-total-item">
@@ -451,13 +530,19 @@
                       {{ $t("company_invoices.vat_amount") }}:
                     </p>
                     <p class="invoice-total-amount">
-                      <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' ||
-                        invoiceData.currency.toLowerCase().trim() == 'bgn' ||
-                        invoiceData.currency == 'лв' ||
-                        invoiceData.currency == 'лв.'
-                        ">лв. {{ invoiceData.vatAmount }}</span>
-                      <span v-else>{{ invoiceData.currency }}
-                        {{ invoiceData.vatAmount }}</span>
+                      <span
+                        v-if="
+                          invoiceData.currency.toLowerCase().trim() == 'lv' ||
+                          invoiceData.currency.toLowerCase().trim() == 'bgn' ||
+                          invoiceData.currency == 'лв' ||
+                          invoiceData.currency == 'лв.'
+                        "
+                        >лв. {{ invoiceData.vatAmount }}</span
+                      >
+                      <span v-else
+                        >{{ invoiceData.currency }}
+                        {{ invoiceData.vatAmount }}</span
+                      >
                     </p>
                   </div>
                   <div class="invoice-total-item">
@@ -473,28 +558,44 @@
                       {{ $t("add_invoice.discount_sum") }}:
                     </p>
                     <p class="invoice-total-amount">
-                      <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' ||
-                        invoiceData.currency.toLowerCase().trim() == 'bgn' ||
-                        invoiceData.currency == 'лв' ||
-                        invoiceData.currency == 'лв.'
-                        ">лв. {{ invoiceData.tradeDiscountAmount }}</span>
-                      <span v-else>{{ invoiceData.currency }}
-                        {{ invoiceData.tradeDiscountAmount }}</span>
+                      <span
+                        v-if="
+                          invoiceData.currency.toLowerCase().trim() == 'lv' ||
+                          invoiceData.currency.toLowerCase().trim() == 'bgn' ||
+                          invoiceData.currency == 'лв' ||
+                          invoiceData.currency == 'лв.'
+                        "
+                        >лв. {{ invoiceData.tradeDiscountAmount }}</span
+                      >
+                      <span v-else
+                        >{{ invoiceData.currency }}
+                        {{ invoiceData.tradeDiscountAmount }}</span
+                      >
                     </p>
                   </div>
 
                   <div class="invoice-total-item">
-                    <p class="invoice-total-title font-weight-bolder custom-font mb-0">
+                    <p
+                      class="invoice-total-title font-weight-bolder custom-font mb-0"
+                    >
                       {{ $t("add_invoice.total_price") }}:
                     </p>
-                    <p class="invoice-total-amount font-weight-bolder custom-font mb-0">
-                      <span v-if="invoiceData.currency.toLowerCase().trim() == 'lv' ||
-                        invoiceData.currency.toLowerCase().trim() == 'bgn' ||
-                        invoiceData.currency == 'лв' ||
-                        invoiceData.currency == 'лв.'
-                        ">лв. {{ invoiceData.totalAmount }}</span>
-                      <span v-else>{{ invoiceData.currency }}
-                        {{ invoiceData.totalAmount }}</span>
+                    <p
+                      class="invoice-total-amount font-weight-bolder custom-font mb-0"
+                    >
+                      <span
+                        v-if="
+                          invoiceData.currency.toLowerCase().trim() == 'lv' ||
+                          invoiceData.currency.toLowerCase().trim() == 'bgn' ||
+                          invoiceData.currency == 'лв' ||
+                          invoiceData.currency == 'лв.'
+                        "
+                        >лв. {{ invoiceData.totalAmount }}</span
+                      >
+                      <span v-else
+                        >{{ invoiceData.currency }}
+                        {{ invoiceData.totalAmount }}</span
+                      >
                     </p>
                   </div>
                 </div>
@@ -503,17 +604,39 @@
           </b-card-body>
         </b-card>
         <template>
-          <b-modal ref="my-modal" hide-footer :title="$t('company_info.componentMethod')">
+          <b-modal
+            ref="my-modal"
+            hide-footer
+            :title="$t('company_info.componentMethod')"
+          >
             <div class="d-block text-center">
               <form @submit.prevent="onSubmit" class="add-form">
-                <label>{{ $t('tickets_page.title') }}</label>
-                <input type="text" v-model="name" name="name" value="Title" :placeholder="$t('company_info.yourTitle')">
-                <label>{{ $t('login.lbl_email') }}</label>
-                <input type="email" v-model="email" name="email" required :placeholder="$t('company_info.yourEmail')">
-                <label>{{ $t('company_info.Message') }}</label>
-                <textarea name="message" v-model="message" cols="30" rows="5" :placeholder="$t('company_info.Message')">
-                    </textarea>
-                <input type="submit" value="Send">
+                <label>{{ $t("tickets_page.title") }}</label>
+                <input
+                  type="text"
+                  v-model="name"
+                  name="name"
+                  value="Title"
+                  :placeholder="$t('company_info.yourTitle')"
+                />
+                <label>{{ $t("login.lbl_email") }}</label>
+                <input
+                  type="email"
+                  v-model="email"
+                  name="email"
+                  required
+                  :placeholder="$t('company_info.yourEmail')"
+                />
+                <label>{{ $t("company_info.Message") }}</label>
+                <textarea
+                  name="message"
+                  v-model="message"
+                  cols="30"
+                  rows="5"
+                  :placeholder="$t('company_info.Message')"
+                >
+                </textarea>
+                <input type="submit" value="Send" />
               </form>
             </div>
           </b-modal>
@@ -527,7 +650,10 @@
               <b-row class="mt-1">
                 <b-col>
                   <div class="invoice-date-wrapper" style="border-bottom: none">
-                    <p class="invoice-date-title" style="width: 2rem !important">
+                    <p
+                      class="invoice-date-title"
+                      style="width: 2rem !important"
+                    >
                       {{ $t("add_invoice.name") }}:
                     </p>
                     <p class="invoice-date">
@@ -537,7 +663,10 @@
                 </b-col>
                 <b-col>
                   <div class="invoice-date-wrapper" style="border-bottom: none">
-                    <p class="invoice-date-title" style="width: 2rem !important">
+                    <p
+                      class="invoice-date-title"
+                      style="width: 2rem !important"
+                    >
                       BIC:
                     </p>
                     <p class="invoice-date">
@@ -547,7 +676,10 @@
                 </b-col>
                 <b-col>
                   <div class="invoice-date-wrapper" style="border-bottom: none">
-                    <p class="invoice-date-title" style="width: 2rem !important">
+                    <p
+                      class="invoice-date-title"
+                      style="width: 2rem !important"
+                    >
                       IBAN:
                     </p>
                     <p class="invoice-date">
@@ -561,8 +693,13 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
-          <b-card no-body class="invoice-preview date-issued ml-0"
-            v-if="invoiceData.vatPercent === '0' || invoiceData.vatPercent === 0">
+          <b-card
+            no-body
+            class="invoice-preview date-issued ml-0"
+            v-if="
+              invoiceData.vatPercent === '0' || invoiceData.vatPercent === 0
+            "
+          >
             <b-card-header class="justify-content-end">
               <div class="invoice-date-wrapper invoice-middle-content">
                 <p class="invoice-date-title">
@@ -577,9 +714,7 @@
           <b-card no-body class="invoice-preview date-issued ml-0">
             <b-card-header class="justify-content-end">
               <div class="invoice-date-wrapper invoice-middle-content">
-                <p class="invoice-date-title">
-                  {{ $t("paymentProcess") }}:
-                </p>
+                <p class="invoice-date-title">{{ $t("paymentProcess") }}:</p>
                 <p class="invoice-date">
                   {{ $t(`paymentMethods.${invoiceData.paymentProcess}`) }}
                 </p>
@@ -599,7 +734,13 @@
                   <div class="tm_invoice_left">
                     <div class="tm_logo">
                       <!-- <img src="./assets/img/logo.svg" alt="Logo" /> -->
-                      <b-img :src="logoToUpload" fluid class="mr-1" v-if="showLogo" style="width: 110px; height: 110px" />
+                      <b-img
+                        :src="logoToUpload"
+                        fluid
+                        class="mr-1"
+                        v-if="showLogo"
+                        style="width: 110px; height: 110px"
+                      />
                     </div>
                   </div>
                   <div class="tm_invoice_right tm_text_right">
@@ -613,7 +754,9 @@
                   <div class="tm_invoice_info_list">
                     <p class="tm_invoice_number tm_m0">
                       {{ $t("company_invoices.invoice_no") }}:
-                      <b class="tm_primary_color">#{{ invoiceData.invoiceNumber }}</b>
+                      <b class="tm_primary_color"
+                        >#{{ invoiceData.invoiceNumber }}</b
+                      >
                     </p>
 
                     <p class="tm_invoice_date tm_m0">
@@ -632,9 +775,11 @@
                       {{ $t("paymentStatus.paymentStatus") }}:
                       <b class="tm_primary_color">
                         {{
-                          invoiceData.paymentStatus == 'PAYED' ?
-                          $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
-                        }}</b>
+                          invoiceData.paymentStatus == "PAYED"
+                            ? $t("paymentStatus.payed")
+                            : $t("paymentStatus.not_payed")
+                        }}</b
+                      >
                     </p>
                   </div>
                 </div>
@@ -642,14 +787,17 @@
                   <div class="tm_invoice_left pr-5" style="width: 50%">
                     <h5 class="tm_mb2">
                       <b class="tm_primary_color">
-                        {{ $t("add_invoice.supplier") }}:</b>
+                        {{ $t("add_invoice.supplier") }}:</b
+                      >
                     </h5>
 
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("add_invoice.name") }}: </b>{{ invoiceData.supplierCompany.companName }}
+                      <b> {{ $t("add_invoice.name") }}: </b
+                      >{{ invoiceData.supplierCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.supplierCompany.companyAddress }}
+                      <b> {{ $t("company_info.address") }}: </b
+                      >{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
@@ -659,22 +807,32 @@
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic && companyInBG">
+                    <p
+                      style="margin-bottom: 5px"
+                      v-if="
+                        invoiceData.supplierCompany.companyVatEic && companyInBG
+                      "
+                    >
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
                   </div>
                   <div class="tm_invoice_right pr-3" style="width: 50%">
                     <h5 class="tm_mb2">
-                      <b class="tm_primary_color">{{ $t("add_invoice.recipient") }}:</b>
+                      <b class="tm_primary_color"
+                        >{{ $t("add_invoice.recipient") }}:</b
+                      >
                     </h5>
 
                     <p style="margin-bottom: 5px">
-                      <span style="width: 100px"><b> {{ $t("add_invoice.name") }}: </b></span>
+                      <span style="width: 100px"
+                        ><b> {{ $t("add_invoice.name") }}: </b></span
+                      >
                       {{ invoiceData.recipientCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.recipientCompany.companyAddress }}
+                      <b> {{ $t("company_info.address") }}: </b
+                      >{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
@@ -684,7 +842,13 @@
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic && companyInBG">
+                    <p
+                      style="margin-bottom: 5px"
+                      v-if="
+                        invoiceData.recipientCompany.companyVatEic &&
+                        companyInBG
+                      "
+                    >
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
@@ -696,28 +860,43 @@
                       <table>
                         <thead>
                           <tr>
-                            <th class="tm_width_3 tm_semi_bold tm_primary_color tm_gray_bg">
+                            <th
+                              class="tm_width_3 tm_semi_bold tm_primary_color tm_gray_bg"
+                            >
                               {{ $t("add_invoice.s_no") }}
                             </th>
-                            <th class="tm_width_4 tm_semi_bold tm_primary_color tm_gray_bg">
+                            <th
+                              class="tm_width_4 tm_semi_bold tm_primary_color tm_gray_bg"
+                            >
                               {{ $t("add_invoice.service_item_description") }}
                             </th>
-                            <th class="tm_width_1 tm_semi_bold tm_primary_color tm_gray_bg">
+                            <th
+                              class="tm_width_1 tm_semi_bold tm_primary_color tm_gray_bg"
+                            >
                               {{ $t("add_invoice.measurement") }}
                             </th>
-                            <th class="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg">
+                            <th
+                              class="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg"
+                            >
                               {{ $t("add_invoice.single_amount_transaction") }}
                             </th>
-                            <th class="tm_width_1 tm_semi_bold tm_primary_color tm_gray_bg">
+                            <th
+                              class="tm_width_1 tm_semi_bold tm_primary_color tm_gray_bg"
+                            >
                               {{ $t("add_invoice.qty") }}
                             </th>
-                            <th class="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg tm_text_right">
+                            <th
+                              class="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg tm_text_right"
+                            >
                               {{ $t("add_invoice.transaction_total_nonVat") }}
                             </th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in invoiceData.transactions" :key="index">
+                          <tr
+                            v-for="(item, index) in invoiceData.transactions"
+                            :key="index"
+                          >
                             <td class="tm_width_1">{{ index + 1 }}</td>
                             <td class="tm_width_3">
                               {{ item.serviceOrItemDescription }}
@@ -744,10 +923,15 @@
                     <div class="tm_left_footer">
                       <div v-if="invoiceData.bankApi !== null && companyInBG">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
+                          <b class="tm_primary_color"
+                            >{{ $t("add_invoice.payment_info") }}:</b
+                          >
                         </p>
                         <p class="tm_m0">
-                          <b>{{ $t('paymentProcess') }}: </b> {{ $t(`paymentMethods.${invoiceData.paymentProcess}`) }}
+                          <b>{{ $t("paymentProcess") }}: </b>
+                          {{
+                            $t(`paymentMethods.${invoiceData.paymentProcess}`)
+                          }}
                         </p>
                         <p class="tm_m0" v-if="hasBankDetails">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -756,18 +940,27 @@
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
                         <p class="tm_m0" v-if="hasBankDetails">
-                          <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
+                          <b>{{ $t("add_invoice.bank_name") }}: </b
+                          >{{ invoiceData.bankApi.name }}
                         </p>
-                        <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
-                          invoiceData.vatPercent === 0
-                          ">
+                        <p
+                          class="tm_m0"
+                          v-if="
+                            invoiceData.vatPercent === '0' ||
+                            invoiceData.vatPercent === 0
+                          "
+                        >
                           <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                           {{ invoiceData.vatCondition }}
                         </p>
                       </div>
-                      <p class="tm_m0" v-if="invoiceData.vatPercent == 0 ||
-                        invoiceData.vatPercent === '0'
-                        ">
+                      <p
+                        class="tm_m0"
+                        v-if="
+                          invoiceData.vatPercent == 0 ||
+                          invoiceData.vatPercent === '0'
+                        "
+                      >
                         <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                         {{ invoiceData.vatCondition }}
                       </p>
@@ -776,125 +969,180 @@
                           {{ $t("add_invoice." + invoiceData.invoiceType) }}
                         </h2>
                       </div>
-
-
                     </div>
 
                     <div class="tm_right_footer">
-
                       <table>
                         <tbody>
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
+                            >
                               {{ $t("add_invoice.total_price_non_vat") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.amountNonVat }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.amountNonVat }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.amountNonVat }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.amountNonVat }}</span
+                              >
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
+                            >
                               {{ $t("add_invoice.vat") }} % :
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
                               {{ invoiceData.vatPercent }} %
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
+                            >
                               {{ $t("company_invoices.vat_amount") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.vatAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.vatAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.vatAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.vatAmount }}</span
+                              >
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
+                            >
                               {{ $t("add_invoice.discount_percent") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
                               {{ invoiceData.tradeDiscountPercent }} %
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
+                            >
                               {{ $t("add_invoice.discount_sum") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.tradeDiscountAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.tradeDiscountAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.tradeDiscountAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.tradeDiscountAmount }}</span
+                              >
                             </td>
                           </tr>
 
                           <tr class="tm_border_top tm_border_bottom">
-                            <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color">
+                            <td
+                              class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color"
+                            >
                               {{ $t("add_invoice.total_price") }}:
                             </td>
-                            <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.totalAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.totalAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.totalAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.totalAmount }}</span
+                              >
                             </td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
-
                   </div>
-                  <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+                  <table
+                    style="
+                      width: 80%;
+                      margin: auto;
+                      padding-top: 5rem;
+                      border-collapse: collapse;
+                    "
+                  >
                     <tr>
-                      <td style="text-align: center; padding: 30px;">
-                        <div style=" margin-bottom: 20px;">
+                      <td style="text-align: center; padding: 30px">
+                        <div style="margin-bottom: 20px">
                           {{ invoiceData.supplierCompany.companyOwnerName }}
                         </div>
-                        <div style="height: 50px; border-bottom: 1px dashed black;">
+                        <div
+                          style="height: 50px; border-bottom: 1px dashed black"
+                        >
                           <!-- Space for supplier's signature -->
                         </div>
-                        <div style="margin-top: 10px;">
+                        <div style="margin-top: 10px">
                           {{ new Date().toLocaleDateString() }}
                         </div>
                       </td>
-                      <td style="text-align: center; padding: 30px;">
-                        <div style=" margin-bottom: 20px;">
+                      <td style="text-align: center; padding: 30px">
+                        <div style="margin-bottom: 20px">
                           {{ invoiceData.recipientCompany.companyOwnerName }}
                         </div>
-                        <div style="height: 50px; border-bottom: 1px dashed black;">
+                        <div
+                          style="height: 50px; border-bottom: 1px dashed black"
+                        >
                           <!-- Space for recipient's signature -->
                         </div>
-                        <div style="margin-top: 10px;">
+                        <div style="margin-top: 10px">
                           {{ new Date().toLocaleDateString() }}
                         </div>
                       </td>
@@ -913,37 +1161,58 @@
           <div class="tm_invoice_wrap">
             <div class="tm_invoice tm_style1 tm_type1" id="tm_download_section">
               <div class="tm_invoice_in">
-                <div class="tm_invoice_head tm_top_head tm_mb15 tm_align_center">
+                <div
+                  class="tm_invoice_head tm_top_head tm_mb15 tm_align_center"
+                >
                   <div class="tm_invoice_left">
                     <div class="tm_logo">
-                      <b-img :src="logoToUpload" fluid class="mr-1" v-if="showLogo" style="width: 110px; height: 110px" />
+                      <b-img
+                        :src="logoToUpload"
+                        fluid
+                        class="mr-1"
+                        v-if="showLogo"
+                        style="width: 110px; height: 110px"
+                      />
                     </div>
                   </div>
                   <div class="tm_invoice_right tm_text_right tm_mobile_hide">
-                    <div class="tm_f50 tm_text_uppercase" :style="isGray === true
-                      ? 'color: black !important'
-                      : 'color: white !important'
-                      ">
+                    <div
+                      class="tm_f50 tm_text_uppercase"
+                      :style="
+                        isGray === true
+                          ? 'color: black !important'
+                          : 'color: white !important'
+                      "
+                    >
                       {{ $t("add_invoice.invoice") }}
                     </div>
                   </div>
-                  <div class="tm_shape_bg tm_mobile_hide" :class="isBlue === true
-                    ? 'tm_accent_bg'
-                    : isGreen === true
-                      ? 'green_bg'
-                      : isPurple === true
+                  <div
+                    class="tm_shape_bg tm_mobile_hide"
+                    :class="
+                      isBlue === true
+                        ? 'tm_accent_bg'
+                        : isGreen === true
+                        ? 'green_bg'
+                        : isPurple === true
                         ? 'purple_bg'
                         : isOrange === true
-                          ? 'orange_bg'
-                          : 'gray_bg'
-                    "></div>
+                        ? 'orange_bg'
+                        : 'gray_bg'
+                    "
+                  ></div>
                 </div>
                 <div class="tm_invoice_info tm_mb25">
                   <div class="tm_card_note tm_mobile_hide"></div>
-                  <div class="tm_invoice_info_list" style="margin-top: 5px; margin-bottom: 10px" :style="isGray === true
-                    ? 'color: black !important'
-                    : 'color: white !important'
-                    ">
+                  <div
+                    class="tm_invoice_info_list"
+                    style="margin-top: 5px; margin-bottom: 10px"
+                    :style="
+                      isGray === true
+                        ? 'color: black !important'
+                        : 'color: white !important'
+                    "
+                  >
                     <p class="tm_invoice_number tm_m0">
                       {{ $t("company_invoices.invoice_no") }}:
                       <b>#{{ invoiceData.invoiceNumber }}</b>
@@ -958,31 +1227,37 @@
                         $t("company_invoices." + invoiceData.transactionType)
                       }}</b>
                     </p>
-
                   </div>
-                  <div class="tm_invoice_seperator tm_accent_bg" :class="isBlue === true
+                  <div
+                    class="tm_invoice_seperator tm_accent_bg"
+                    :class="
+                      isBlue === true
                         ? 'tm_accent_bg'
                         : isGreen === true
-                          ? 'green_bg'
-                          : isPurple === true
-                            ? 'purple_bg'
-                            : isOrange === true
-                              ? 'orange_bg'
-                              : 'gray_bg'
-                      "></div>
+                        ? 'green_bg'
+                        : isPurple === true
+                        ? 'purple_bg'
+                        : isOrange === true
+                        ? 'orange_bg'
+                        : 'gray_bg'
+                    "
+                  ></div>
                 </div>
                 <div class="tm_invoice_head tm_mb10" style="height: auto">
                   <div class="tm_invoice_left pr-5" style="width: 50%">
                     <h5 class="tm_mb2">
                       <b class="tm_primary_color">
-                        {{ $t("add_invoice.supplier") }}:</b>
+                        {{ $t("add_invoice.supplier") }}:</b
+                      >
                     </h5>
 
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("add_invoice.name") }}: </b>{{ invoiceData.supplierCompany.companName }}
+                      <b> {{ $t("add_invoice.name") }}: </b
+                      >{{ invoiceData.supplierCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.supplierCompany.companyAddress }}
+                      <b> {{ $t("company_info.address") }}: </b
+                      >{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
@@ -992,22 +1267,32 @@
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic && companyInBG">
+                    <p
+                      style="margin-bottom: 5px"
+                      v-if="
+                        invoiceData.supplierCompany.companyVatEic && companyInBG
+                      "
+                    >
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
                   </div>
                   <div class="tm_invoice_right pr-3" style="width: 50%">
                     <h5 class="tm_mb2">
-                      <b class="tm_primary_color">{{ $t("add_invoice.recipient") }}:</b>
+                      <b class="tm_primary_color"
+                        >{{ $t("add_invoice.recipient") }}:</b
+                      >
                     </h5>
 
                     <p style="margin-bottom: 5px">
-                      <span style="width: 100px"><b> {{ $t("add_invoice.name") }}: </b></span>
+                      <span style="width: 100px"
+                        ><b> {{ $t("add_invoice.name") }}: </b></span
+                      >
                       {{ invoiceData.recipientCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.recipientCompany.companyAddress }}
+                      <b> {{ $t("company_info.address") }}: </b
+                      >{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
@@ -1017,7 +1302,13 @@
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic && companyInBG">
+                    <p
+                      style="margin-bottom: 5px"
+                      v-if="
+                        invoiceData.recipientCompany.companyVatEic &&
+                        companyInBG
+                      "
+                    >
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
@@ -1028,19 +1319,24 @@
                     <div class="tm_table_responsive">
                       <table>
                         <thead>
-                          <tr :class="isBlue === true
-                            ? 'tm_accent_bg'
-                            : isGreen === true
-                              ? 'green_bg'
-                              : isPurple === true
+                          <tr
+                            :class="
+                              isBlue === true
+                                ? 'tm_accent_bg'
+                                : isGreen === true
+                                ? 'green_bg'
+                                : isPurple === true
                                 ? 'purple_bg'
                                 : isOrange === true
-                                  ? 'orange_bg'
-                                  : 'gray_bg'
-                            " :style="isGray === true
-    ? 'color: black !important'
-    : 'color: white !important'
-    ">
+                                ? 'orange_bg'
+                                : 'gray_bg'
+                            "
+                            :style="
+                              isGray === true
+                                ? 'color: black !important'
+                                : 'color: white !important'
+                            "
+                          >
                             <th class="tm_width_1 tm_semi_bold">
                               {{ $t("add_invoice.s_no") }}
                             </th>
@@ -1063,7 +1359,10 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in invoiceData.transactions" :key="index">
+                          <tr
+                            v-for="(item, index) in invoiceData.transactions"
+                            :key="index"
+                          >
                             <td class="tm_width_1">{{ index + 1 }}</td>
                             <td class="tm_width_3">
                               {{ item.serviceOrItemDescription }}
@@ -1090,13 +1389,17 @@
                   </div>
                   <div class="tm_invoice_footer tm_border_top tm_mb15 tm_m0_md">
                     <div class="tm_left_footer">
-
                       <div v-if="invoiceData.bankApi !== null && companyInBG">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
+                          <b class="tm_primary_color"
+                            >{{ $t("add_invoice.payment_info") }}:</b
+                          >
                         </p>
                         <p class="tm_m0">
-                          <b>{{ $t('paymentProcess') }} </b> {{ $t(`paymentMethods.${invoiceData.paymentProcess}`) }}
+                          <b>{{ $t("paymentProcess") }} </b>
+                          {{
+                            $t(`paymentMethods.${invoiceData.paymentProcess}`)
+                          }}
                         </p>
                         <p class="tm_m0" v-if="hasBankDetails">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -1105,21 +1408,25 @@
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
                         <p class="tm_m0" v-if="hasBankDetails">
-                          <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
+                          <b>{{ $t("add_invoice.bank_name") }}: </b
+                          >{{ invoiceData.bankApi.name }}
                         </p>
                         <p class="tm_m0">
-                          <b>{{ $t("paymentStatus.paymentStatus") }}:
-                          </b>
+                          <b>{{ $t("paymentStatus.paymentStatus") }}: </b>
                           {{
-                            invoiceData.paymentStatus == 'PAYED' ?
-                            $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
+                            invoiceData.paymentStatus == "PAYED"
+                              ? $t("paymentStatus.payed")
+                              : $t("paymentStatus.not_payed")
                           }}
                         </p>
-
                       </div>
-                      <p class="tm_m0" v-if="invoiceData.vatPercent == 0 ||
+                      <p
+                        class="tm_m0"
+                        v-if="
+                          invoiceData.vatPercent == 0 ||
                           invoiceData.vatPercent === '0'
-                          ">
+                        "
+                      >
                         <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                         {{ invoiceData.vatCondition }}
                       </p>
@@ -1136,16 +1443,24 @@
                             <td class="tm_width_3 tm_primary_color">
                               {{ $t("add_invoice.total_price_non_vat") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.amountNonVat }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.amountNonVat }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.amountNonVat }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.amountNonVat }}</span
+                              >
                             </td>
                           </tr>
 
@@ -1153,7 +1468,9 @@
                             <td class="tm_width_3 tm_primary_color">
                               {{ $t("add_invoice.vat") }} % :
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right"
+                            >
                               {{ invoiceData.vatPercent }} %
                             </td>
                           </tr>
@@ -1162,16 +1479,24 @@
                             <td class="tm_width_3 tm_primary_color">
                               {{ $t("company_invoices.vat_amount") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.vatAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.vatAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.vatAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.vatAmount }}</span
+                              >
                             </td>
                           </tr>
 
@@ -1179,7 +1504,9 @@
                             <td class="tm_width_3 tm_primary_color">
                               {{ $t("add_invoice.discount_percent") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right"
+                            >
                               {{ invoiceData.tradeDiscountPercent }} %
                             </td>
                           </tr>
@@ -1188,72 +1515,106 @@
                             <td class="tm_width_3 tm_primary_color">
                               {{ $t("add_invoice.discount_sum") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.tradeDiscountAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.tradeDiscountAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.tradeDiscountAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.tradeDiscountAmount }}</span
+                              >
                             </td>
                           </tr>
 
-                          <tr :class="isBlue === true
-                            ? 'tm_accent_bg'
-                            : isGreen === true
-                              ? 'green_bg'
-                              : isPurple === true
+                          <tr
+                            :class="
+                              isBlue === true
+                                ? 'tm_accent_bg'
+                                : isGreen === true
+                                ? 'green_bg'
+                                : isPurple === true
                                 ? 'purple_bg'
                                 : isOrange === true
-                                  ? 'orange_bg'
-                                  : 'gray_bg'
-                            " :style="isGray === true
-    ? 'color: black !important'
-    : 'color: white !important'
-    ">
-                            <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16">
+                                ? 'orange_bg'
+                                : 'gray_bg'
+                            "
+                            :style="
+                              isGray === true
+                                ? 'color: black !important'
+                                : 'color: white !important'
+                            "
+                          >
+                            <td
+                              class="tm_width_3 tm_border_top_0 tm_bold tm_f16"
+                            >
                               {{ $t("add_invoice.total_price") }}:
                             </td>
-                            <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_text_right">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.totalAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.totalAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_text_right"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.totalAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.totalAmount }}</span
+                              >
                             </td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
                   </div>
-                  <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+                  <table
+                    style="
+                      width: 80%;
+                      margin: auto;
+                      padding-top: 5rem;
+                      border-collapse: collapse;
+                    "
+                  >
                     <tr>
-                      <td style="text-align: center; padding: 30px;">
-                        <div style=" margin-bottom: 20px;">
+                      <td style="text-align: center; padding: 30px">
+                        <div style="margin-bottom: 20px">
                           {{ invoiceData.supplierCompany.companyOwnerName }}
                         </div>
-                        <div style="height: 50px; border-bottom: 1px dashed black;">
+                        <div
+                          style="height: 50px; border-bottom: 1px dashed black"
+                        >
                           <!-- Space for supplier's signature -->
                         </div>
-                        <div style="margin-top: 10px;">
+                        <div style="margin-top: 10px">
                           {{ new Date().toLocaleDateString() }}
                         </div>
                       </td>
-                      <td style="text-align: center; padding: 30px;">
-                        <div style=" margin-bottom: 20px;">
+                      <td style="text-align: center; padding: 30px">
+                        <div style="margin-bottom: 20px">
                           {{ invoiceData.recipientCompany.companyOwnerName }}
                         </div>
-                        <div style="height: 50px; border-bottom: 1px dashed black;">
+                        <div
+                          style="height: 50px; border-bottom: 1px dashed black"
+                        >
                           <!-- Space for recipient's signature -->
                         </div>
-                        <div style="margin-top: 10px;">
+                        <div style="margin-top: 10px">
                           {{ new Date().toLocaleDateString() }}
                         </div>
                       </td>
@@ -1267,128 +1628,174 @@
       </b-col>
 
       <!-- template 03 -->
-      <b-col cols="12" xl="10" md="10" class="w-100-print" v-if="isTemplateThree">
+      <b-col
+        cols="12"
+        xl="10"
+        md="10"
+        class="w-100-print"
+        v-if="isTemplateThree"
+      >
         <div class="tm_container">
           <div class="tm_invoice_wrap">
             <div class="tm_invoice tm_style1 tm_type2" id="tm_download_section">
               <div class="tm_bars">
-                <span :class="isBlue === true
-                  ? 'tm_accent_bg'
-                  : isGreen === true
-                    ? 'green_bg'
-                    : isPurple === true
+                <span
+                  :class="
+                    isBlue === true
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                      ? 'green_bg'
+                      : isPurple === true
                       ? 'purple_bg'
                       : isOrange === true
-                        ? 'orange_bg'
-                        : 'gray_bg'
-                  "></span>
-                <span :class="isBlue === true
-                  ? 'tm_accent_bg'
-                  : isGreen === true
-                    ? 'green_bg'
-                    : isPurple === true
+                      ? 'orange_bg'
+                      : 'gray_bg'
+                  "
+                ></span>
+                <span
+                  :class="
+                    isBlue === true
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                      ? 'green_bg'
+                      : isPurple === true
                       ? 'purple_bg'
                       : isOrange === true
-                        ? 'orange_bg'
-                        : 'gray_bg'
-                  "></span>
-                <span :class="isBlue === true
-                  ? 'tm_accent_bg'
-                  : isGreen === true
-                    ? 'green_bg'
-                    : isPurple === true
+                      ? 'orange_bg'
+                      : 'gray_bg'
+                  "
+                ></span>
+                <span
+                  :class="
+                    isBlue === true
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                      ? 'green_bg'
+                      : isPurple === true
                       ? 'purple_bg'
                       : isOrange === true
-                        ? 'orange_bg'
-                        : 'gray_bg'
-                  "></span>
+                      ? 'orange_bg'
+                      : 'gray_bg'
+                  "
+                ></span>
               </div>
               <div class="tm_bars tm_type1">
-                <span :class="isBlue === true
-                  ? 'tm_accent_bg'
-                  : isGreen === true
-                    ? 'green_bg'
-                    : isPurple === true
+                <span
+                  :class="
+                    isBlue === true
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                      ? 'green_bg'
+                      : isPurple === true
                       ? 'purple_bg'
                       : isOrange === true
-                        ? 'orange_bg'
-                        : 'gray_bg'
-                  "></span>
-                <span :class="isBlue === true
-                  ? 'tm_accent_bg'
-                  : isGreen === true
-                    ? 'green_bg'
-                    : isPurple === true
+                      ? 'orange_bg'
+                      : 'gray_bg'
+                  "
+                ></span>
+                <span
+                  :class="
+                    isBlue === true
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                      ? 'green_bg'
+                      : isPurple === true
                       ? 'purple_bg'
                       : isOrange === true
-                        ? 'orange_bg'
-                        : 'gray_bg'
-                  "></span>
-                <span :class="isBlue === true
-                  ? 'tm_accent_bg'
-                  : isGreen === true
-                    ? 'green_bg'
-                    : isPurple === true
+                      ? 'orange_bg'
+                      : 'gray_bg'
+                  "
+                ></span>
+                <span
+                  :class="
+                    isBlue === true
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                      ? 'green_bg'
+                      : isPurple === true
                       ? 'purple_bg'
                       : isOrange === true
-                        ? 'orange_bg'
-                        : 'gray_bg'
-                  "></span>
+                      ? 'orange_bg'
+                      : 'gray_bg'
+                  "
+                ></span>
               </div>
               <div class="tm_shape">
-                <div class="tm_shape_in" :class="isBlue === true
-                  ? 'tm_accent_bg'
-                  : isGreen === true
-                    ? 'green_bg'
-                    : isPurple === true
+                <div
+                  class="tm_shape_in"
+                  :class="
+                    isBlue === true
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                      ? 'green_bg'
+                      : isPurple === true
                       ? 'purple_bg'
                       : isOrange === true
-                        ? 'orange_bg'
-                        : 'gray_bg'
-                  "></div>
+                      ? 'orange_bg'
+                      : 'gray_bg'
+                  "
+                ></div>
               </div>
               <div class="tm_shape_2 tm_primary_color">
-                <div class="tm_shape_2_in" :style="isBlue === true
-                  ? 'color: #007aff;'
-                  : isGreen === true
-                    ? 'color: #8fce00'
-                    : isPurple === true
+                <div
+                  class="tm_shape_2_in"
+                  :style="
+                    isBlue === true
+                      ? 'color: #007aff;'
+                      : isGreen === true
+                      ? 'color: #8fce00'
+                      : isPurple === true
                       ? 'color: #ad3978'
                       : isOrange === true
-                        ? 'color: #FFA500'
-                        : 'color: #f6d1ff'
-                  "></div>
+                      ? 'color: #FFA500'
+                      : 'color: #f6d1ff'
+                  "
+                ></div>
               </div>
               <div class="tm_shape_2 tm_type1 tm_primary_color">
-                <div class="tm_shape_2_in" :style="isBlue === true
-                  ? 'color: #007aff;'
-                  : isGreen === true
-                    ? 'color: #8fce00'
-                    : isPurple === true
+                <div
+                  class="tm_shape_2_in"
+                  :style="
+                    isBlue === true
+                      ? 'color: #007aff;'
+                      : isGreen === true
+                      ? 'color: #8fce00'
+                      : isPurple === true
                       ? 'color: #ad3978'
                       : isOrange === true
-                        ? 'color: #FFA500'
-                        : 'color: #f6d1ff'
-                  "></div>
+                      ? 'color: #FFA500'
+                      : 'color: #f6d1ff'
+                  "
+                ></div>
               </div>
               <!-- <div class="tm_shape_4 tm_primary_bg"></div> -->
               <div class="tm_shape tm_type1">
-                <div class="tm_shape_in" :class="isBlue === true
-                  ? 'tm_accent_bg'
-                  : isGreen === true
-                    ? 'green_bg'
-                    : isPurple === true
+                <div
+                  class="tm_shape_in"
+                  :class="
+                    isBlue === true
+                      ? 'tm_accent_bg'
+                      : isGreen === true
+                      ? 'green_bg'
+                      : isPurple === true
                       ? 'purple_bg'
                       : isOrange === true
-                        ? 'orange_bg'
-                        : 'gray_bg'
-                  "></div>
+                      ? 'orange_bg'
+                      : 'gray_bg'
+                  "
+                ></div>
               </div>
               <div class="tm_invoice_in">
                 <div class="tm_invoice_head tm_align_center tm_mb30">
                   <div class="tm_invoice_left">
                     <div class="tm_logo">
-                      <b-img :src="logoToUpload" fluid class="mr-1" v-if="showLogo" style="width: 110px; height: 110px" />
+                      <b-img
+                        :src="logoToUpload"
+                        fluid
+                        class="mr-1"
+                        v-if="showLogo"
+                        style="width: 110px; height: 110px"
+                      />
                     </div>
                   </div>
                   <div class="tm_invoice_right tm_text_right"></div>
@@ -1403,7 +1810,9 @@
                     </p>
                     <p class="tm_invoice_number tm_m0">
                       {{ $t("company_invoices.invoice_no") }}:
-                      <b class="tm_primary_color">#{{ invoiceData.invoiceNumber }}</b>
+                      <b class="tm_primary_color"
+                        >#{{ invoiceData.invoiceNumber }}</b
+                      >
                     </p>
                     <p class="tm_invoice_date tm_m0">
                       {{ $t("company_invoices.transaction_type") }}:
@@ -1414,8 +1823,9 @@
                     <p class="tm_invoice_date tm_m0">
                       {{ $t("paymentStatus.paymentStatus") }}:
                       <b class="tm_primary_color">{{
-                        invoiceData.paymentStatus == 'PAYED' ?
-                        $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
+                        invoiceData.paymentStatus == "PAYED"
+                          ? $t("paymentStatus.payed")
+                          : $t("paymentStatus.not_payed")
                       }}</b>
                     </p>
                   </div>
@@ -1424,14 +1834,17 @@
                   <div class="tm_invoice_left pr-5" style="width: 50%">
                     <h5 class="tm_mb2">
                       <b class="tm_primary_color">
-                        {{ $t("add_invoice.supplier") }}:</b>
+                        {{ $t("add_invoice.supplier") }}:</b
+                      >
                     </h5>
 
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("add_invoice.name") }}: </b>{{ invoiceData.supplierCompany.companName }}
+                      <b> {{ $t("add_invoice.name") }}: </b
+                      >{{ invoiceData.supplierCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.supplierCompany.companyAddress }}
+                      <b> {{ $t("company_info.address") }}: </b
+                      >{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
@@ -1441,22 +1854,32 @@
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic && companyInBG">
+                    <p
+                      style="margin-bottom: 5px"
+                      v-if="
+                        invoiceData.supplierCompany.companyVatEic && companyInBG
+                      "
+                    >
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
                   </div>
                   <div class="tm_invoice_right pr-3" style="width: 50%">
                     <h5 class="tm_mb2">
-                      <b class="tm_primary_color">{{ $t("add_invoice.recipient") }}:</b>
+                      <b class="tm_primary_color"
+                        >{{ $t("add_invoice.recipient") }}:</b
+                      >
                     </h5>
 
                     <p style="margin-bottom: 5px">
-                      <span style="width: 100px"><b> {{ $t("add_invoice.name") }}: </b></span>
+                      <span style="width: 100px"
+                        ><b> {{ $t("add_invoice.name") }}: </b></span
+                      >
                       {{ invoiceData.recipientCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.recipientCompany.companyAddress }}
+                      <b> {{ $t("company_info.address") }}: </b
+                      >{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
@@ -1466,7 +1889,13 @@
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic && companyInBG">
+                    <p
+                      style="margin-bottom: 5px"
+                      v-if="
+                        invoiceData.recipientCompany.companyVatEic &&
+                        companyInBG
+                      "
+                    >
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
@@ -1477,19 +1906,24 @@
                     <div class="tm_table_responsive">
                       <table>
                         <thead>
-                          <tr :class="isBlue === true
-                            ? 'tm_accent_bg'
-                            : isGreen === true
-                              ? 'green_bg'
-                              : isPurple === true
+                          <tr
+                            :class="
+                              isBlue === true
+                                ? 'tm_accent_bg'
+                                : isGreen === true
+                                ? 'green_bg'
+                                : isPurple === true
                                 ? 'purple_bg'
                                 : isOrange === true
-                                  ? 'orange_bg'
-                                  : 'gray_bg'
-                            " :style="isGray === true
-    ? 'color: black !important'
-    : 'color: white !important'
-    ">
+                                ? 'orange_bg'
+                                : 'gray_bg'
+                            "
+                            :style="
+                              isGray === true
+                                ? 'color: black !important'
+                                : 'color: white !important'
+                            "
+                          >
                             <th class="tm_width_1 tm_semi_bold">
                               {{ $t("add_invoice.s_no") }}
                             </th>
@@ -1512,7 +1946,10 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in invoiceData.transactions" :key="index">
+                          <tr
+                            v-for="(item, index) in invoiceData.transactions"
+                            :key="index"
+                          >
                             <td class="tm_width_1">{{ index + 1 }}</td>
                             <td class="tm_width_3">
                               {{ item.serviceOrItemDescription }}
@@ -1541,10 +1978,15 @@
                     <div class="tm_left_footer">
                       <div v-if="invoiceData.bankApi !== null && companyInBG">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
+                          <b class="tm_primary_color"
+                            >{{ $t("add_invoice.payment_info") }}:</b
+                          >
                         </p>
                         <p class="tm_m0">
-                          <b>{{ $t('paymentProcess') }}: </b> {{ $t(`paymentMethods.${invoiceData.paymentProcess}`) }}
+                          <b>{{ $t("paymentProcess") }}: </b>
+                          {{
+                            $t(`paymentMethods.${invoiceData.paymentProcess}`)
+                          }}
                         </p>
                         <p class="tm_m0" v-if="hasBankDetails">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -1553,13 +1995,17 @@
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
                         <p class="tm_m0" v-if="hasBankDetails">
-                          <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
+                          <b>{{ $t("add_invoice.bank_name") }}: </b
+                          >{{ invoiceData.bankApi.name }}
                         </p>
-
                       </div>
-                      <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
-                        invoiceData.vatPercent === 0
-                        ">
+                      <p
+                        class="tm_m0"
+                        v-if="
+                          invoiceData.vatPercent === '0' ||
+                          invoiceData.vatPercent === 0
+                        "
+                      >
                         <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                         {{ invoiceData.vatCondition }}
                       </p>
@@ -1573,88 +2019,136 @@
                       <table>
                         <tbody>
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2"
+                            >
                               {{ $t("add_invoice.total_price_non_vat") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.amountNonVat }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.amountNonVat }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.amountNonVat }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.amountNonVat }}</span
+                              >
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2"
+                            >
                               {{ $t("add_invoice.vat") }} % :
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
                               {{ invoiceData.vatPercent }} %
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2"
+                            >
                               {{ $t("company_invoices.vat_amount") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.vatAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.vatAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.vatAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.vatAmount }}</span
+                              >
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2"
+                            >
                               {{ $t("add_invoice.discount_percent") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
                               {{ invoiceData.tradeDiscountPercent }} %
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0 pl-2"
+                            >
                               {{ $t("add_invoice.discount_sum") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.tradeDiscountAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.tradeDiscountAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.tradeDiscountAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.tradeDiscountAmount }}</span
+                              >
                             </td>
                           </tr>
 
                           <tr class="tm_border_top">
-                            <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color pl-2">
+                            <td
+                              class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color pl-2"
+                            >
                               {{ $t("add_invoice.total_price") }}:
                             </td>
-                            <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.totalAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.totalAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.totalAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.totalAmount }}</span
+                              >
                             </td>
                           </tr>
                         </tbody>
@@ -1665,27 +2159,38 @@
                   </div>
                 </div>
 
-                <table style="width: 80%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+                <table
+                  style="
+                    width: 80%;
+                    margin: auto;
+                    padding-top: 5rem;
+                    border-collapse: collapse;
+                  "
+                >
                   <tr>
-                    <td style="text-align: center; padding: 30px;">
-                      <div style=" margin-bottom: 20px;">
+                    <td style="text-align: center; padding: 30px">
+                      <div style="margin-bottom: 20px">
                         {{ invoiceData.supplierCompany.companyOwnerName }}
                       </div>
-                      <div style="height: 50px; border-bottom: 1px dashed black;">
+                      <div
+                        style="height: 50px; border-bottom: 1px dashed black"
+                      >
                         <!-- Space for supplier's signature -->
                       </div>
-                      <div style="margin-top: 10px;">
+                      <div style="margin-top: 10px">
                         {{ new Date().toLocaleDateString() }}
                       </div>
                     </td>
-                    <td style="text-align: center; padding: 30px;">
-                      <div style=" margin-bottom: 20px;">
+                    <td style="text-align: center; padding: 30px">
+                      <div style="margin-bottom: 20px">
                         {{ invoiceData.recipientCompany.companyOwnerName }}
                       </div>
-                      <div style="height: 50px; border-bottom: 1px dashed black;">
+                      <div
+                        style="height: 50px; border-bottom: 1px dashed black"
+                      >
                         <!-- Space for recipient's signature -->
                       </div>
-                      <div style="margin-top: 10px;">
+                      <div style="margin-top: 10px">
                         {{ new Date().toLocaleDateString() }}
                       </div>
                     </td>
@@ -1695,53 +2200,76 @@
             </div>
           </div>
         </div>
-
-
-
       </b-col>
 
       <!-- template 04 -->
-      <b-col cols="12" xl="10" md="10" class="w-100-print" v-if="isTemplateFour">
+      <b-col
+        cols="12"
+        xl="10"
+        md="10"
+        class="w-100-print"
+        v-if="isTemplateFour"
+      >
         <div class="tm_container">
           <div class="tm_invoice_wrap">
             <div class="tm_invoice tm_style1 tm_type3" id="tm_download_section">
               <div class="tm_shape_1" style="width: 100%">
-                <svg viewBox="0 0 850 151" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  viewBox="0 0 850 151"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
                     d="M850 0.889398H0V150.889H184.505C216.239 150.889 246.673 141.531 269.113 124.872L359.112 58.0565C381.553 41.3977 411.987 32.0391 443.721 32.0391H850V0.889398Z"
-                    :fill="isBlue === true
-                      ? '#007aff'
-                      : isGreen === true
+                    :fill="
+                      isBlue === true
+                        ? '#007aff'
+                        : isGreen === true
                         ? '#8fce00'
                         : isPurple === true
-                          ? '#ad3978'
-                          : isOrange === true
-                            ? '#FFA500'
-                            : '#f6d1ff'
-                      " fill-opacity="1" />
+                        ? '#ad3978'
+                        : isOrange === true
+                        ? '#FFA500'
+                        : '#f6d1ff'
+                    "
+                    fill-opacity="1"
+                  />
                 </svg>
               </div>
               <div class="tm_shape_2" style="width: 100%">
-                <svg viewBox="0 0 850 151" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  viewBox="0 0 850 151"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
                     d="M0 150.889H850V0.889408H665.496C633.762 0.889408 603.327 10.2481 580.887 26.9081L490.888 93.7224C468.447 110.381 438.014 119.74 406.279 119.74H0V150.889Z"
-                    :fill="isBlue === true
-                      ? '#007aff'
-                      : isGreen === true
+                    :fill="
+                      isBlue === true
+                        ? '#007aff'
+                        : isGreen === true
                         ? '#8fce00'
                         : isPurple === true
-                          ? '#ad3978'
-                          : isOrange === true
-                            ? '#FFA500'
-                            : '#f6d1ff'
-                      " fill-opacity="1" />
+                        ? '#ad3978'
+                        : isOrange === true
+                        ? '#FFA500'
+                        : '#f6d1ff'
+                    "
+                    fill-opacity="1"
+                  />
                 </svg>
               </div>
               <div class="tm_invoice_in">
                 <div class="tm_invoice_head tm_align_center tm_mb20">
                   <div class="tm_invoice_left">
                     <div class="tm_logo">
-                      <b-img :src="logoToUpload" fluid class="mr-1" v-if="showLogo" style="width: 110px; height: 110px" />
+                      <b-img
+                        :src="logoToUpload"
+                        fluid
+                        class="mr-1"
+                        v-if="showLogo"
+                        style="width: 110px; height: 110px"
+                      />
                     </div>
                   </div>
                   <div class="tm_invoice_right tm_text_right">
@@ -1755,62 +2283,99 @@
                     <img src="assets/img/arrow_bg.svg" alt="" />
                   </div>
                   <div class="tm_invoice_info_list">
-                    <p class="tm_invoice_number tm_m0" style="z-index: 9" :style="isGray === true
-                      ? 'color: black !important'
-                      : 'color: white !important'
-                      ">
+                    <p
+                      class="tm_invoice_number tm_m0"
+                      style="z-index: 9"
+                      :style="
+                        isGray === true
+                          ? 'color: black !important'
+                          : 'color: white !important'
+                      "
+                    >
                       {{ $t("company_invoices.invoice_no") }}:
-                      <b class="tm_primary_color" :style="isGray === true
-                        ? 'color: black !important'
-                        : 'color: white !important'
-                        ">#{{ invoiceData.invoiceNumber }}</b>
+                      <b
+                        class="tm_primary_color"
+                        :style="
+                          isGray === true
+                            ? 'color: black !important'
+                            : 'color: white !important'
+                        "
+                        >#{{ invoiceData.invoiceNumber }}</b
+                      >
                     </p>
-                    <p class="tm_invoice_date tm_m0" style="z-index: 9" :style="isGray === true
-                      ? 'color: black !important'
-                      : 'color: white !important'
-                      ">
+                    <p
+                      class="tm_invoice_date tm_m0"
+                      style="z-index: 9"
+                      :style="
+                        isGray === true
+                          ? 'color: black !important'
+                          : 'color: white !important'
+                      "
+                    >
                       {{ $t("add_invoice.date") }}:
-                      <b class="tm_primary_color" :style="isGray === true
-                        ? 'color: black !important'
-                        : 'color: white !important'
-                        ">{{ invoiceData.dateIssued }}</b>
+                      <b
+                        class="tm_primary_color"
+                        :style="
+                          isGray === true
+                            ? 'color: black !important'
+                            : 'color: white !important'
+                        "
+                        >{{ invoiceData.dateIssued }}</b
+                      >
                     </p>
-                    <p class="tm_invoice_date tm_m0" style="z-index: 9" :style="invoiceData.invoiceColor === 'GRAY'
-                      ? 'color: black !important'
-                      : 'color: white !important'
-                      ">
+                    <p
+                      class="tm_invoice_date tm_m0"
+                      style="z-index: 9"
+                      :style="
+                        invoiceData.invoiceColor === 'GRAY'
+                          ? 'color: black !important'
+                          : 'color: white !important'
+                      "
+                    >
                       {{ $t("company_invoices.transaction_type") }}:
-                      <b class="tm_primary_color" :style="invoiceData.invoiceColor === 'GRAY'
-                        ? 'color: black !important'
-                        : 'color: white !important'
-                        ">{{
-    $t("company_invoices." + invoiceData.transactionType)
-  }}</b>
+                      <b
+                        class="tm_primary_color"
+                        :style="
+                          invoiceData.invoiceColor === 'GRAY'
+                            ? 'color: black !important'
+                            : 'color: white !important'
+                        "
+                        >{{
+                          $t("company_invoices." + invoiceData.transactionType)
+                        }}</b
+                      >
                     </p>
-                    <div class="tm_invoice_info_list_bg" :class="isBlue === true
+                    <div
+                      class="tm_invoice_info_list_bg"
+                      :class="
+                        isBlue === true
                           ? 'tm_accent_bg'
                           : isGreen === true
-                            ? 'green_bg'
-                            : isPurple === true
-                              ? 'purple_bg'
-                              : isOrange === true
-                                ? 'orange_bg'
-                                : 'gray_bg'
-                        "></div>
+                          ? 'green_bg'
+                          : isPurple === true
+                          ? 'purple_bg'
+                          : isOrange === true
+                          ? 'orange_bg'
+                          : 'gray_bg'
+                      "
+                    ></div>
                   </div>
                 </div>
                 <div class="tm_invoice_head tm_mb10">
                   <div class="tm_invoice_left pr-5" style="width: 50%">
                     <h5 class="tm_mb2">
                       <b class="tm_primary_color">
-                        {{ $t("add_invoice.supplier") }}:</b>
+                        {{ $t("add_invoice.supplier") }}:</b
+                      >
                     </h5>
 
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("add_invoice.name") }}: </b>{{ invoiceData.supplierCompany.companName }}
+                      <b> {{ $t("add_invoice.name") }}: </b
+                      >{{ invoiceData.supplierCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.supplierCompany.companyAddress }}
+                      <b> {{ $t("company_info.address") }}: </b
+                      >{{ invoiceData.supplierCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
@@ -1820,22 +2385,32 @@
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.supplierCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.supplierCompany.companyVatEic && companyInBG">
+                    <p
+                      style="margin-bottom: 5px"
+                      v-if="
+                        invoiceData.supplierCompany.companyVatEic && companyInBG
+                      "
+                    >
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.supplierCompany.companyVatEic }}
                     </p>
                   </div>
                   <div class="tm_invoice_right pr-3" style="width: 50%">
                     <h5 class="tm_mb2">
-                      <b class="tm_primary_color">{{ $t("add_invoice.recipient") }}:</b>
+                      <b class="tm_primary_color"
+                        >{{ $t("add_invoice.recipient") }}:</b
+                      >
                     </h5>
 
                     <p style="margin-bottom: 5px">
-                      <span style="width: 100px"><b> {{ $t("add_invoice.name") }}: </b></span>
+                      <span style="width: 100px"
+                        ><b> {{ $t("add_invoice.name") }}: </b></span
+                      >
                       {{ invoiceData.recipientCompany.companName }}
                     </p>
                     <p style="margin-bottom: 5px">
-                      <b> {{ $t("company_info.address") }}: </b>{{ invoiceData.recipientCompany.companyAddress }}
+                      <b> {{ $t("company_info.address") }}: </b
+                      >{{ invoiceData.recipientCompany.companyAddress }}
                     </p>
                     <p style="margin-bottom: 5px" v-if="companyInBG">
                       <b> {{ $t("add_invoice.id_no") }}: </b>
@@ -1845,7 +2420,13 @@
                       <b> {{ $t("add_invoice.owner") }}: </b>
                       {{ invoiceData.recipientCompany.companyOwnerName }}
                     </p>
-                    <p style="margin-bottom: 5px" v-if="invoiceData.recipientCompany.companyVatEic && companyInBG">
+                    <p
+                      style="margin-bottom: 5px"
+                      v-if="
+                        invoiceData.recipientCompany.companyVatEic &&
+                        companyInBG
+                      "
+                    >
                       <b> {{ $t("add_invoice.vat_no") }}: </b>
                       {{ invoiceData.recipientCompany.companyVatEic }}
                     </p>
@@ -1855,19 +2436,24 @@
                   <div class="tm_table_responsive">
                     <table>
                       <thead>
-                        <tr :class="isBlue === true
-                          ? 'tm_accent_bg'
-                          : isGreen === true
-                            ? 'green_bg'
-                            : isPurple === true
+                        <tr
+                          :class="
+                            isBlue === true
+                              ? 'tm_accent_bg'
+                              : isGreen === true
+                              ? 'green_bg'
+                              : isPurple === true
                               ? 'purple_bg'
                               : isOrange === true
-                                ? 'orange_bg'
-                                : 'gray_bg'
-                          " :style="isGray === true
-    ? 'color: black !important'
-    : 'color: white !important'
-    ">
+                              ? 'orange_bg'
+                              : 'gray_bg'
+                          "
+                          :style="
+                            isGray === true
+                              ? 'color: black !important'
+                              : 'color: white !important'
+                          "
+                        >
                           <th class="tm_width_1 tm_semi_bold">
                             {{ $t("add_invoice.s_no") }}
                           </th>
@@ -1890,7 +2476,10 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(item, index) in invoiceData.transactions" :key="index">
+                        <tr
+                          v-for="(item, index) in invoiceData.transactions"
+                          :key="index"
+                        >
                           <td class="tm_width_1">{{ index + 1 }}</td>
                           <td class="tm_width_3">
                             {{ item.serviceOrItemDescription }}
@@ -1914,14 +2503,22 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="tm_invoice_footer mb-5" style="padding-bottom: 200px">
+                  <div
+                    class="tm_invoice_footer mb-5"
+                    style="padding-bottom: 200px"
+                  >
                     <div class="tm_left_footer">
                       <div v-if="invoiceData.bankApi !== null && companyInBG">
                         <p class="tm_mb2">
-                          <b class="tm_primary_color">{{ $t("add_invoice.payment_info") }}:</b>
+                          <b class="tm_primary_color"
+                            >{{ $t("add_invoice.payment_info") }}:</b
+                          >
                         </p>
                         <p class="tm_m0">
-                          <b>{{ $t('paymentProcess') }} </b> {{ $t(`paymentMethods.${invoiceData.paymentProcess}`) }}
+                          <b>{{ $t("paymentProcess") }} </b>
+                          {{
+                            $t(`paymentMethods.${invoiceData.paymentProcess}`)
+                          }}
                         </p>
                         <p class="tm_m0" v-if="hasBankDetails">
                           <b>BIC: </b> {{ invoiceData.bankApi.bic }}
@@ -1930,19 +2527,25 @@
                           <b>IBAN: </b> {{ invoiceData.bankApi.iban }}
                         </p>
                         <p class="tm_m0" v-if="hasBankDetails">
-                          <b>{{ $t("add_invoice.bank_name") }}: </b>{{ invoiceData.bankApi.name }}
+                          <b>{{ $t("add_invoice.bank_name") }}: </b
+                          >{{ invoiceData.bankApi.name }}
                         </p>
                         <p class="tm_m0">
                           <b>{{ $t("paymentStatus.paymentStatus") }}: </b>
                           {{
-                            invoiceData.paymentStatus == 'PAYED' ?
-                            $t("paymentStatus.payed") : $t("paymentStatus.not_payed")
+                            invoiceData.paymentStatus == "PAYED"
+                              ? $t("paymentStatus.payed")
+                              : $t("paymentStatus.not_payed")
                           }}
                         </p>
                       </div>
-                      <p class="tm_m0" v-if="invoiceData.vatPercent === '0' ||
+                      <p
+                        class="tm_m0"
+                        v-if="
+                          invoiceData.vatPercent === '0' ||
                           invoiceData.vatPercent === 0
-                          ">
+                        "
+                      >
                         <b>{{ $t("add_invoice.non_vat_clause") }}: </b>
                         {{ invoiceData.vatCondition }}
                       </p>
@@ -1957,119 +2560,181 @@
                       <table>
                         <tbody>
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none"
+                            >
                               {{ $t("add_invoice.total_price_non_vat") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.amountNonVat }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.amountNonVat }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.amountNonVat }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.amountNonVat }}</span
+                              >
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
+                            >
                               {{ $t("add_invoice.vat") }} % :
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
                               {{ invoiceData.vatPercent }} %
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
+                            >
                               {{ $t("company_invoices.vat_amount") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.vatAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.vatAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.vatAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.vatAmount }}</span
+                              >
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
+                            >
                               {{ $t("add_invoice.discount_percent") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
                               {{ invoiceData.tradeDiscountPercent }} %
                             </td>
                           </tr>
 
                           <tr>
-                            <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">
+                            <td
+                              class="tm_width_3 tm_primary_color tm_border_none tm_pt0"
+                            >
                               {{ $t("add_invoice.discount_sum") }}:
                             </td>
-                            <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.tradeDiscountAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.tradeDiscountAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.tradeDiscountAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.tradeDiscountAmount }}</span
+                              >
                             </td>
                           </tr>
 
                           <tr class="tm_border_top tm_border_bottom">
-                            <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color">
+                            <td
+                              class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color"
+                            >
                               {{ $t("add_invoice.total_price") }}:
                             </td>
-                            <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right">
-                              <span v-if="invoiceData.currency.toLowerCase().trim() ==
-                                'lv' ||
-                                invoiceData.currency.toLowerCase().trim() ==
-                                'bgn' ||
-                                invoiceData.currency == 'лв' ||
-                                invoiceData.currency == 'лв.'
-                                ">лв. {{ invoiceData.totalAmount }}</span>
-                              <span v-else>{{ invoiceData.currency }}
-                                {{ invoiceData.totalAmount }}</span>
+                            <td
+                              class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right"
+                            >
+                              <span
+                                v-if="
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'lv' ||
+                                  invoiceData.currency.toLowerCase().trim() ==
+                                    'bgn' ||
+                                  invoiceData.currency == 'лв' ||
+                                  invoiceData.currency == 'лв.'
+                                "
+                                >лв. {{ invoiceData.totalAmount }}</span
+                              >
+                              <span v-else
+                                >{{ invoiceData.currency }}
+                                {{ invoiceData.totalAmount }}</span
+                              >
                             </td>
                           </tr>
                         </tbody>
                       </table>
-
-
                     </div>
-
                   </div>
-                  <div style="width: 50%; float: left;">
-                    <table style="width: 100%; margin: auto; padding-top: 5rem; border-collapse: collapse;">
+                  <div style="width: 50%; float: left">
+                    <table
+                      style="
+                        width: 100%;
+                        margin: auto;
+                        padding-top: 5rem;
+                        border-collapse: collapse;
+                      "
+                    >
                       <tr>
-                        <td style="text-align: center; padding: 30px;">
-                          <div style=" margin-bottom: 20px;">
+                        <td style="text-align: center; padding: 30px">
+                          <div style="margin-bottom: 20px">
                             {{ invoiceData.supplierCompany.companyOwnerName }}
                           </div>
-                          <div style="height: 50px; border-bottom: 1px dashed black;">
+                          <div
+                            style="
+                              height: 50px;
+                              border-bottom: 1px dashed black;
+                            "
+                          >
                             <!-- Space for supplier's signature -->
                           </div>
-                          <div style="margin-top: 10px;">
+                          <div style="margin-top: 10px">
                             {{ new Date().toLocaleDateString() }}
                           </div>
                         </td>
-                        <td style="text-align: center; padding: 30px;">
-                          <div style=" margin-bottom: 20px;">
+                        <td style="text-align: center; padding: 30px">
+                          <div style="margin-bottom: 20px">
                             {{ invoiceData.recipientCompany.companyOwnerName }}
                           </div>
-                          <div style="height: 50px; border-bottom: 1px dashed black;">
+                          <div
+                            style="
+                              height: 50px;
+                              border-bottom: 1px dashed black;
+                            "
+                          >
                             <!-- Space for recipient's signature -->
                           </div>
-                          <div style="margin-top: 10px;">
+                          <div style="margin-top: 10px">
                             {{ new Date().toLocaleDateString() }}
                           </div>
                         </td>
@@ -2087,26 +2752,53 @@
       <b-col cols="12" md="2" xl="2" class="invoice-actions hide-from-print">
         <b-card>
           <!-- Button: DOwnload -->
-          <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block
-            @click="generatePDF()">
+          <b-button
+            v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+            variant="outline-secondary"
+            class="mb-75"
+            block
+            @click="generatePDF()"
+          >
             {{ $t("download") }}
           </b-button>
 
-          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="false"
+          <vue-html2pdf
+            :show-layout="false"
+            :float-layout="true"
+            :enable-download="true"
+            :preview-modal="false"
             :paginate-elements-by-height="1100"
-            :filename='"invoice_" + invoiceData.invoiceNumber + "_" + invoiceData.supplierCompany.companyEic'
-            :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10" pdf-content-width="1125px"
-            @progress="onProgress($event)" @hasDownloaded="hasDownloaded($event)" ref="html2Pdf" id="invoice-pdf">
+            :filename="
+              'invoice_' +
+              invoiceData.invoiceNumber +
+              '_' +
+              invoiceData.supplierCompany.companyEic
+            "
+            :pdf-quality="2"
+            :manual-pagination="false"
+            pdf-format="a3"
+            :pdf-margin="10"
+            pdf-content-width="1125px"
+            @progress="onProgress($event)"
+            @hasDownloaded="hasDownloaded($event)"
+            ref="html2Pdf"
+            id="invoice-pdf"
+          >
             <section class="invoice-pdf" slot="pdf-content">
               <div v-if="invoiceData">
-
-                <invoice-download :invoice-data="invoiceData" :logo-to-upload="logoToUpload" />
+                <invoice-download
+                  :invoice-data="invoiceData"
+                  :logo-to-upload="logoToUpload"
+                />
               </div>
               <b-alert variant="danger" :show="invoiceData === undefined">
                 <h4 class="alert-heading">Error fetching invoice data</h4>
                 <div class="alert-body">
                   No invoice found with this invoice id. Check
-                  <b-link class="alert-link" :to="{ name: 'apps-invoice-list' }">
+                  <b-link
+                    class="alert-link"
+                    :to="{ name: 'apps-invoice-list' }"
+                  >
                     Invoice List
                   </b-link>
                   for other invoices.
@@ -2137,45 +2829,90 @@
           </vue-html2pdf> -->
 
           <!-- Button: Print -->
-          <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block
-            @click="printInvoice">
+          <b-button
+            v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+            variant="outline-secondary"
+            class="mb-75"
+            block
+            @click="printInvoice"
+          >
             {{ $t("print") }}
           </b-button>
           <!-- Button verify  -->
-          <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block
-            @click="invoiceEdit(invoiceData)" v-if="!invoiceData.verified">
+          <b-button
+            v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+            variant="outline-secondary"
+            class="mb-75"
+            block
+            @click="invoiceEdit(invoiceData)"
+            v-if="!invoiceData.verified"
+          >
             {{ $t("add_invoice.verify") }}
           </b-button>
           <!-- Button: Edit -->
-          <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block :to="{
-            name: 'company-invoice-edit',
-            params: {
-              id: $route.params.id,
-              companyId: $route.params.companyId,
-            },
-          }">
+          <b-button
+            v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+            variant="outline-secondary"
+            class="mb-75"
+            block
+            :to="{
+              name: 'company-invoice-edit',
+              params: {
+                id: $route.params.id,
+                companyId: $route.params.companyId,
+              },
+            }"
+          >
             {{ $t("company_info.edit") }}
           </b-button>
 
           <!-- Button: Edit -->
-          <b-button v-b-modal.modal-1 v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75"
-            block @click="selectSendEmail()">
+          <b-button
+            v-b-modal.modal-1
+            v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+            variant="outline-secondary"
+            class="mb-75"
+            block
+            @click="selectSendEmail()"
+          >
             {{ $t("add_invoice.send_email") }}
           </b-button>
         </b-card>
       </b-col>
     </b-row>
-    <b-modal ref="my-modal" hide-footer :title="$t('add_invoice.Using_Component_Methods')">
+    <b-modal
+      ref="my-modal"
+      hide-footer
+      :title="$t('add_invoice.Using_Component_Methods')"
+    >
       <div class="d-block text-center">
         <form @submit.prevent="onSubmit" class="add-form">
-          <label>{{ $t('add_invoice.title') }}</label>
-          <input type="text" v-model="name" name="name" value="Title" :placeholder="$t('add_invoice.your_title')">
-          <label> {{ $t('add_invoice.email') }}</label>
-          <input type="email" v-model="email" required name="email" :placeholder="$t('add_invoice.your_email')">
-          <label>{{ $t('add_invoice.message') }}</label>
-          <textarea name="message" v-model="message" cols="30" rows="5" :placeholder="$t('add_invoice.Message')">
-                    </textarea>
-          <input type="submit" value="Send">
+          <label>{{ $t("add_invoice.title") }}</label>
+          <input
+            type="text"
+            v-model="name"
+            name="name"
+            value="Title"
+            :placeholder="$t('add_invoice.your_title')"
+          />
+          <label> {{ $t("add_invoice.email") }}</label>
+          <input
+            type="email"
+            v-model="email"
+            required
+            name="email"
+            :placeholder="$t('add_invoice.your_email')"
+          />
+          <label>{{ $t("add_invoice.message") }}</label>
+          <textarea
+            name="message"
+            v-model="message"
+            cols="30"
+            rows="5"
+            :placeholder="$t('add_invoice.Message')"
+          >
+          </textarea>
+          <input type="submit" value="Send" />
         </form>
       </div>
     </b-modal>
@@ -2209,7 +2946,7 @@ import InvoiceDownload from "../invoice-download/InvoiceDownload.vue";
 import VueHtml2pdf from "vue-html2pdf";
 import TabList from "../../TabList.vue";
 import axios from "@/libs/axios";
-import Vue from 'vue';
+import Vue from "vue";
 
 export default {
   directives: {
@@ -2309,7 +3046,7 @@ export default {
         else isGray.value = true;
 
         //
-        if (invoiceData.value.paymentProcess == 'BANK_TRANSFER') {
+        if (invoiceData.value.paymentProcess == "BANK_TRANSFER") {
           if (
             invoiceData.value.bankApi.name !== "" ||
             invoiceData.value.bankApi.bic !== "" ||
@@ -2352,22 +3089,18 @@ export default {
         }
       });
 
-
-
-    axios.get(`/account/api/company/${router.currentRoute.params.companyId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        "Access-Control-Allow-Credentials": true,
-        "Access-Control-Allow-Origin": "http://localhost:8080",
-      },
-    })
+    axios
+      .get(`/account/api/company/${router.currentRoute.params.companyId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+      })
       .then((response) => {
-        if (response.data.companyCountry == 'Bulgaria') {
-          companyInBG.value = true
-
+        if (response.data.companyCountry == "Bulgaria") {
+          companyInBG.value = true;
         }
-
-
       })
       .catch((error) => {
         // console.log(error);
@@ -2394,11 +3127,11 @@ export default {
       isOrange,
       isBlue,
       sendEmail: false,
-      name: '',
-      email: '',
-      message: '',
-      file: '',
-      newpdfblob: ''
+      name: "",
+      email: "",
+      message: "",
+      file: "",
+      newpdfblob: "",
     };
   },
   methods: {
@@ -2407,18 +3140,18 @@ export default {
     },
     async hasDownloaded(event) {
       console.log(" Lineeeee...... ", event);
-      this.attachPDFToFile(event)
+      this.attachPDFToFile(event);
     },
     showModal() {
-      this.$refs['my-modal'].show()
+      this.$refs["my-modal"].show();
     },
     hideModal() {
-      this.$refs['my-modal'].hide()
+      this.$refs["my-modal"].hide();
     },
     toggleModal() {
       // We pass the ID of the button that we want to return focus to
       // when the modal has hidden
-      this.$refs['my-modal'].toggle('#toggle-btn')
+      this.$refs["my-modal"].toggle("#toggle-btn");
     },
     uploadFile() {
       this.file = this.$refs.file.files[0];
@@ -2428,7 +3161,6 @@ export default {
       });
     },
     generatePDF() {
-
       this.$refs.html2Pdf.generatePdf();
     },
     // async beforeDownload({ html2pdf, options, pdfContent }) {
@@ -2439,7 +3171,7 @@ export default {
     // },
     async selectSendEmail() {
       this.sendEmail = false;
-      this.$refs['my-modal'].show();
+      this.$refs["my-modal"].show();
       this.message = `Здравейте!
 Моля да намерите прикачена Фактура № ${this.invoiceData.invoiceNumber} от дата: ${this.invoiceData.dateIssued} г. 
                     
@@ -2450,31 +3182,33 @@ export default {
 Copyright © 2023 Coherent Accounting, All rights reserved.`;
       this.name = `Фактура с Номер: ${this.invoiceData.invoiceNumber} от : ${this.invoiceData.supplierCompany.companName}`;
       const newpdfContent123 = this.$refs.html2Pdf.$el.innerHTML;
-      console.log(" New DONDNDNNDDN ", newpdfContent123, this.$el, this.$refs.html2Pdf);
-      this.$refs.html2Pdf.generatePdf()
+      console.log(
+        " New DONDNDNNDDN ",
+        newpdfContent123,
+        this.$el,
+        this.$refs.html2Pdf
+      );
+      this.$refs.html2Pdf.generatePdf();
       // these are important data
       let data = Object.assign({}, this.$refs.html2Pdf.$el.innerHTML);
       console.log(" new pdf data is ", data);
-      const newblob123 = new Blob([data], { type: 'application/pdf' });
+      const newblob123 = new Blob([data], { type: "application/pdf" });
       this.fileToByteArray(newblob123, function (byteArrayData) {
         console.log(" New BYYYY TTT ARRAAAYYYY ", byteArrayData);
       });
     },
     attachPDFToFile(pdfBlob) {
-
-      this.file = new File([pdfBlob], 'document.pdf');
+      this.file = new File([pdfBlob], "document.pdf");
       // Perform operations with the file as needed
       // For demonstration purposes, we'll just log a message
-      console.log('PDF attached to file:', this.file);
+      console.log("PDF attached to file:", this.file);
       this.fileToByteArray(this.file, function (byteArrayData) {
         console.log(" hrhthththththhtthth ", byteArrayData);
-      })
+      });
     },
     invoiceEdit(invoiceData) {
-
-
-      invoiceData.verified = true
-      console.log(invoiceData)
+      invoiceData.verified = true;
+      console.log(invoiceData);
       let token = useJwt.getToken();
       useJwt
         .EditCompanyInvoice(
@@ -2500,8 +3234,6 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
               variant: "success",
             },
           });
-
-
         })
         .catch((error) => {
           this.loading = false;
@@ -2525,7 +3257,7 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       reader.onload = (e) => {
         this.userObject.imgPersonal = e.target.result;
       };
-      reader.readAsBinaryString(fileObject)
+      reader.readAsBinaryString(fileObject);
       console.log("file object", fileObject);
     },
     async fileToByteArray(file, callback) {
@@ -2541,26 +3273,34 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       reader.readAsArrayBuffer(file);
     },
     onSubmit(e) {
-      e.preventDefault()
-      console.log("fdfgdfgdfgfdg", this.name)
+      e.preventDefault();
+      console.log("fdfgdfgdfgfdg", this.name);
       //const content = this.getHTMLContent(); // Replace with your HTML content
       //this.$refs.html2Pdf.generatePdf().then((pdfBlob) => {
       // Perform actions with the generated PDF blob (e.g., send via email)
       //this.sendEmailWithAttachment(pdfBlob);
       //});
       this.email = e.target.email.value;
-      console.log("Target Values", e.target.email.value, this.invoiceData.invoiceNumber);
+      console.log(
+        "Target Values",
+        e.target.email.value,
+        this.invoiceData.invoiceNumber
+      );
       // this.$refs.html2Pdf.generatePdf('<h1>Your PDF Content</h1>', this.savePDF);
-      this.sendEmailFromAPI(e.target.email.value, e.target.message.value, e.target.name.value, this.invoiceData.invoiceNumber);
-      this.$refs['my-modal'].hide();
+      this.sendEmailFromAPI(
+        e.target.email.value,
+        e.target.message.value,
+        e.target.name.value,
+        this.invoiceData.invoiceNumber
+      );
+      this.$refs["my-modal"].hide();
     },
     savePDF(pdfData) {
-
-      const file = new File([pdfData], { type: 'application/pdf' });
+      const file = new File([pdfData], { type: "application/pdf" });
       const url = URL.createObjectURL(file);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.download = '122.pdf';
+      link.download = "122.pdf";
       link.click();
       console.log(" URL FILE ", url);
       URL.revokeObjectURL(url);
@@ -2594,29 +3334,40 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       const formData = new FormData();
       console.log(" New file generating data... ", this.file);
       //const fileDataArray =  this.fileToByteArray(this.file, function (byteArrayData) {
-      const fileDataArray = this.fileToByteArray(this.file, function (byteArrayData) {
-        console.log("byteArrayData  jdajdas ... ", byteArrayData);
-        // Use the byte array as needed
-        byteArray.push(byteArrayData);
-        //return byteArrayData;
-        console.log("under function data ", byteArray, emailData, messageData, nameData);
-        const response = axios.post("account/api/invoice/send-to-email", {
-          "file": byteArrayData,
-          "invoiceNumber": invoiceNumber,
-          "toEmail": emailData,
-          "message": messageData,
-          "title": nameData
-        }, {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem("accessToken"), // assuming accessToken is correct
-            'Content-Type': 'application/json'
-          },
-          responseType: 'blob',
-        });
-      });
-      setInterval(
-        console.log(" Byte Code Generate ", byteArray)
-        , 3000);
+      const fileDataArray = this.fileToByteArray(
+        this.file,
+        function (byteArrayData) {
+          console.log("byteArrayData  jdajdas ... ", byteArrayData);
+          // Use the byte array as needed
+          byteArray.push(byteArrayData);
+          //return byteArrayData;
+          console.log(
+            "under function data ",
+            byteArray,
+            emailData,
+            messageData,
+            nameData
+          );
+          const response = axios.post(
+            "account/api/invoice/send-to-email",
+            {
+              file: byteArrayData,
+              invoiceNumber: invoiceNumber,
+              toEmail: emailData,
+              message: messageData,
+              title: nameData,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("accessToken"), // assuming accessToken is correct
+                "Content-Type": "application/json",
+              },
+              responseType: "blob",
+            }
+          );
+        }
+      );
+      setInterval(console.log(" Byte Code Generate ", byteArray), 3000);
       //console.log(" Byte Code Generate ", fileDataArray, byteArray);
       //console.log(" New Messages Data is here... ", this.message);
       const token = localStorage.getItem("accessToken");
@@ -2646,7 +3397,7 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       });
     },
     sendEmailData(e) {
-      e.preventDefault() // Prevent page from reloading.
+      e.preventDefault(); // Prevent page from reloading.
       // console.log(" New data here ");
     },
   },
@@ -2659,7 +3410,6 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
 
 <style lang="scss">
 @media print {
-
   html,
   body {
     height: initial !important;
@@ -2713,7 +3463,7 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
       .invoice-preview-card {
         .card-body:nth-of-type(2) {
           .row {
-            >.col-12 {
+            > .col-12 {
               max-width: 50% !important;
             }
 
@@ -2767,7 +3517,9 @@ Copyright © 2023 Coherent Accounting, All rights reserved.`;
   font-size: 12px;
 }
 
-.invoice-preview-list .invoice-date-wrapper.invoice-middle-content p.invoice-date-title {
+.invoice-preview-list
+  .invoice-date-wrapper.invoice-middle-content
+  p.invoice-date-title {
   width: auto !important;
   min-width: max-content;
 }
@@ -3934,11 +4686,11 @@ ul {
   overflow-x: auto;
 }
 
-.tm_table_responsive>table {
+.tm_table_responsive > table {
   min-width: 600px;
 }
 
-.tm_50_col>* {
+.tm_50_col > * {
   width: 50%;
   -webkit-box-flex: 0;
   -ms-flex: none;
@@ -4053,7 +4805,7 @@ hr {
   grid-gap: 1px;
 }
 
-.tm_invoice.tm_style1 .tm_invoice_table>* {
+.tm_invoice.tm_style1 .tm_invoice_table > * {
   border: 1px solid #dbdfea;
   margin: -1px;
   padding: 8px 15px 10px;
@@ -4111,7 +4863,7 @@ hr {
   display: flex;
 }
 
-.tm_invoice.tm_style1 .tm_invoice_info_list>*:not(:last-child) {
+.tm_invoice.tm_style1 .tm_invoice_info_list > *:not(:last-child) {
   margin-right: 20px;
 }
 
@@ -4137,7 +4889,7 @@ hr {
   display: flex;
 }
 
-.tm_invoice.tm_style1 .tm_box_3>* {
+.tm_invoice.tm_style1 .tm_box_3 > * {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -4628,7 +5380,7 @@ hr {
   border-style: solid;
 }
 
-.tm_section_heading>span {
+.tm_section_heading > span {
   display: inline-block;
   padding: 8px 15px;
   border-radius: 7px 7px 0 0;
@@ -4675,7 +5427,7 @@ hr {
   margin-right: 22px;
 }
 
-.tm_curve_35>* {
+.tm_curve_35 > * {
   -webkit-transform: skewX(35deg);
   transform: skewX(35deg);
 }
@@ -4714,7 +5466,7 @@ hr {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-.tm_dark_invoice+.tm_invoice_btns {
+.tm_dark_invoice + .tm_invoice_btns {
   background: #252526;
   border-color: #252526;
 }
@@ -5003,7 +5755,7 @@ hr {
     flex-direction: column;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_head>* {
+  .tm_invoice.tm_style2 .tm_invoice_head > * {
     width: 100%;
   }
 
@@ -5022,7 +5774,7 @@ hr {
     flex-direction: column;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_info>* {
+  .tm_invoice.tm_style2 .tm_invoice_info > * {
     width: 100%;
   }
 
@@ -5107,7 +5859,7 @@ hr {
     margin-right: 0;
   }
 
-  .tm_curve_35>* {
+  .tm_curve_35 > * {
     -webkit-transform: inherit;
     transform: inherit;
   }
@@ -5176,7 +5928,7 @@ hr {
     flex-direction: column;
   }
 
-  .tm_list.tm_style2 li>* {
+  .tm_list.tm_style2 li > * {
     padding: 5px 20px;
   }
 
@@ -5235,7 +5987,7 @@ hr {
     flex-wrap: wrap;
   }
 
-  .tm_invoice.tm_style1 .tm_invoice_seperator+.tm_invoice_info_list {
+  .tm_invoice.tm_style1 .tm_invoice_seperator + .tm_invoice_info_list {
     margin-bottom: 5px;
   }
 
@@ -5254,7 +6006,7 @@ hr {
     display: none;
   }
 
-  .tm_invoice.tm_style1 .tm_box_3>*:not(:last-child) {
+  .tm_invoice.tm_style1 .tm_box_3 > *:not(:last-child) {
     margin-bottom: 15px;
   }
 
@@ -5539,11 +6291,11 @@ hr {
     flex-direction: initial;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_head>.tm_invoice_left {
+  .tm_invoice.tm_style2 .tm_invoice_head > .tm_invoice_left {
     width: 30%;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_head>.tm_invoice_right {
+  .tm_invoice.tm_style2 .tm_invoice_head > .tm_invoice_right {
     width: 70%;
   }
 
@@ -5562,11 +6314,11 @@ hr {
     flex-direction: initial;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_info>.tm_invoice_info_left {
+  .tm_invoice.tm_style2 .tm_invoice_info > .tm_invoice_info_left {
     width: 30%;
   }
 
-  .tm_invoice.tm_style2 .tm_invoice_info>.tm_invoice_info_right {
+  .tm_invoice.tm_style2 .tm_invoice_info > .tm_invoice_info_right {
     width: 70%;
   }
 
@@ -5641,7 +6393,7 @@ hr {
     margin-right: 22px;
   }
 
-  .tm_curve_35>* {
+  .tm_curve_35 > * {
     -webkit-transform: skewX(35deg);
     transform: skewX(35deg);
   }
@@ -5734,8 +6486,8 @@ label {
   float: left;
 }
 
-input[type=text],
-[type=email],
+input[type="text"],
+[type="email"],
 textarea {
   width: 100%;
   padding: 12px;
@@ -5747,8 +6499,8 @@ textarea {
   resize: vertical;
 }
 
-input[type=submit] {
-  background-color: #4CAF50;
+input[type="submit"] {
+  background-color: #4caf50;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -5756,7 +6508,7 @@ input[type=submit] {
   cursor: pointer;
 }
 
-input[type=submit]:hover {
+input[type="submit"]:hover {
   background-color: #45a049;
 }
 </style>

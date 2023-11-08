@@ -2,22 +2,13 @@
   <div>
     <!-- Miscellaneous Charts -->
     <b-row class="match-height">
-      <b-col
-        lg="2"
-        cols="6"
-      >
+      <b-col lg="2" cols="6">
         <card-statistic-order-chart />
       </b-col>
-      <b-col
-        lg="2"
-        cols="6"
-      >
+      <b-col lg="2" cols="6">
         <card-statistic-profit-chart />
       </b-col>
-      <b-col
-        lg="8"
-        cols="12"
-      >
+      <b-col lg="8" cols="12">
         <card-statistics-group />
       </b-col>
     </b-row>
@@ -25,11 +16,7 @@
 
     <!-- Stats Card Vertical -->
     <b-row class="match-height">
-      <b-col
-        xl="2"
-        md="4"
-        sm="6"
-      >
+      <b-col xl="2" md="4" sm="6">
         <statistic-card-vertical
           icon="EyeIcon"
           statistic="36.9k"
@@ -37,11 +24,7 @@
           color="info"
         />
       </b-col>
-      <b-col
-        xl="2"
-        md="4"
-        sm="6"
-      >
+      <b-col xl="2" md="4" sm="6">
         <statistic-card-vertical
           color="warning"
           icon="MessageSquareIcon"
@@ -49,11 +32,7 @@
           statistic-title="Comments"
         />
       </b-col>
-      <b-col
-        xl="2"
-        md="4"
-        sm="6"
-      >
+      <b-col xl="2" md="4" sm="6">
         <statistic-card-vertical
           color="danger"
           icon="ShoppingBagIcon"
@@ -61,11 +40,7 @@
           statistic-title="Orders"
         />
       </b-col>
-      <b-col
-        xl="2"
-        md="4"
-        sm="6"
-      >
+      <b-col xl="2" md="4" sm="6">
         <statistic-card-vertical
           color="primary"
           icon="HeartIcon"
@@ -73,11 +48,7 @@
           statistic-title="Favorited"
         />
       </b-col>
-      <b-col
-        xl="2"
-        md="4"
-        sm="6"
-      >
+      <b-col xl="2" md="4" sm="6">
         <statistic-card-vertical
           color="success"
           icon="AwardIcon"
@@ -85,11 +56,7 @@
           statistic-title="Reviews"
         />
       </b-col>
-      <b-col
-        xl="2"
-        md="4"
-        sm="6"
-      >
+      <b-col xl="2" md="4" sm="6">
         <statistic-card-vertical
           hide-chart
           color="danger"
@@ -102,20 +69,14 @@
 
     <!-- Stats Card Horizontal -->
     <b-row>
-      <b-col
-        lg="3"
-        sm="6"
-      >
+      <b-col lg="3" sm="6">
         <statistic-card-horizontal
           icon="CpuIcon"
           statistic="86%"
           statistic-title="CPU Usage"
         />
       </b-col>
-      <b-col
-        lg="3"
-        sm="6"
-      >
+      <b-col lg="3" sm="6">
         <statistic-card-horizontal
           icon="ServerIcon"
           color="success"
@@ -123,10 +84,7 @@
           statistic-title="Memory Usage"
         />
       </b-col>
-      <b-col
-        lg="3"
-        sm="6"
-      >
+      <b-col lg="3" sm="6">
         <statistic-card-horizontal
           icon="ActivityIcon"
           color="danger"
@@ -134,14 +92,10 @@
           statistic-title="Downtime Ratio"
         />
       </b-col>
-      <b-col
-        lg="3"
-        sm="6"
-      >
+      <b-col lg="3" sm="6">
         <statistic-card-horizontal
           icon="AlertOctagonIcon"
           color="warning"
-
           statistic="13"
           statistic-title="Issues Found"
         />
@@ -150,10 +104,7 @@
 
     <!-- Stats Card w/ Area Chart -->
     <b-row>
-      <b-col
-        lg="3"
-        sm="6"
-      >
+      <b-col lg="3" sm="6">
         <statistic-card-with-area-chart
           v-if="subscribersGained.analyticsData"
           icon="UsersIcon"
@@ -162,10 +113,7 @@
           :chart-data="subscribersGained.series"
         />
       </b-col>
-      <b-col
-        lg="3"
-        sm="6"
-      >
+      <b-col lg="3" sm="6">
         <statistic-card-with-area-chart
           v-if="revenueGenerated.analyticsData"
           icon="CreditCardIcon"
@@ -175,10 +123,7 @@
           :chart-data="revenueGenerated.series"
         />
       </b-col>
-      <b-col
-        lg="3"
-        sm="6"
-      >
+      <b-col lg="3" sm="6">
         <statistic-card-with-area-chart
           v-if="quarterlySales.analyticsData"
           icon="ShoppingCartIcon"
@@ -188,10 +133,7 @@
           :chart-data="quarterlySales.series"
         />
       </b-col>
-      <b-col
-        lg="3"
-        sm="6"
-      >
+      <b-col lg="3" sm="6">
         <statistic-card-with-area-chart
           v-if="ordersRecevied.analyticsData"
           icon="PackageIcon"
@@ -205,10 +147,7 @@
 
     <!-- Stats Card w/ line chart -->
     <b-row>
-      <b-col
-        md="4"
-        sm="6"
-      >
+      <b-col md="4" sm="6">
         <statistic-card-with-line-chart
           icon="MonitorIcon"
           statistic="78.9k"
@@ -216,10 +155,7 @@
           :chart-data="siteTraffic.series"
         />
       </b-col>
-      <b-col
-        md="4"
-        sm="6"
-      >
+      <b-col md="4" sm="6">
         <statistic-card-with-line-chart
           icon="UserCheckIcon"
           color="success"
@@ -228,10 +164,7 @@
           :chart-data="activeUsers.series"
         />
       </b-col>
-      <b-col
-        md="4"
-        sm="6"
-      >
+      <b-col md="4" sm="6">
         <statistic-card-with-line-chart
           icon="MailIcon"
           color="warning"
@@ -245,15 +178,15 @@
 </template>
 
 <script>
-import { BRow, BCol } from 'bootstrap-vue'
-import StatisticCardVertical from '@core/components/statistics-cards/StatisticCardVertical.vue'
-import StatisticCardHorizontal from '@core/components/statistics-cards/StatisticCardHorizontal.vue'
-import StatisticCardWithAreaChart from '@core/components/statistics-cards/StatisticCardWithAreaChart.vue'
-import StatisticCardWithLineChart from '@core/components/statistics-cards/StatisticCardWithLineChart.vue'
-import { kFormatter } from '@core/utils/filter'
-import CardStatisticOrderChart from './CardStatisticOrderChart.vue'
-import CardStatisticProfitChart from './CardStatisticProfitChart.vue'
-import CardStatisticsGroup from './CardStatisticsGroup.vue'
+import { BRow, BCol } from "bootstrap-vue";
+import StatisticCardVertical from "@core/components/statistics-cards/StatisticCardVertical.vue";
+import StatisticCardHorizontal from "@core/components/statistics-cards/StatisticCardHorizontal.vue";
+import StatisticCardWithAreaChart from "@core/components/statistics-cards/StatisticCardWithAreaChart.vue";
+import StatisticCardWithLineChart from "@core/components/statistics-cards/StatisticCardWithLineChart.vue";
+import { kFormatter } from "@core/utils/filter";
+import CardStatisticOrderChart from "./CardStatisticOrderChart.vue";
+import CardStatisticProfitChart from "./CardStatisticProfitChart.vue";
+import CardStatisticsGroup from "./CardStatisticsGroup.vue";
 
 export default {
   components: {
@@ -279,39 +212,46 @@ export default {
       siteTraffic: {},
       activeUsers: {},
       newsletter: {},
-    }
+    };
   },
   created() {
     // Subscribers gained
-    this.$http.get('/card/card-statistics/subscribers')
-      .then(response => { this.subscribersGained = response.data })
+    this.$http.get("/card/card-statistics/subscribers").then((response) => {
+      this.subscribersGained = response.data;
+    });
 
     // Revenue Generated
-    this.$http.get('/card/card-statistics/revenue')
-      .then(response => { this.revenueGenerated = response.data })
+    this.$http.get("/card/card-statistics/revenue").then((response) => {
+      this.revenueGenerated = response.data;
+    });
 
     // Sales
-    this.$http.get('/card/card-statistics/sales')
-      .then(response => { this.quarterlySales = response.data })
+    this.$http.get("/card/card-statistics/sales").then((response) => {
+      this.quarterlySales = response.data;
+    });
 
     // Orders
-    this.$http.get('/card/card-statistics/orders')
-      .then(response => { this.ordersRecevied = response.data })
+    this.$http.get("/card/card-statistics/orders").then((response) => {
+      this.ordersRecevied = response.data;
+    });
 
     // Site Traffic gained
-    this.$http.get('/card/card-statistics/site-traffic')
-      .then(response => { this.siteTraffic = response.data })
+    this.$http.get("/card/card-statistics/site-traffic").then((response) => {
+      this.siteTraffic = response.data;
+    });
 
     // Active Users
-    this.$http.get('/card/card-statistics/active-users')
-      .then(response => { this.activeUsers = response.data })
+    this.$http.get("/card/card-statistics/active-users").then((response) => {
+      this.activeUsers = response.data;
+    });
 
     // Newsletter
-    this.$http.get('/card/card-statistics/newsletter')
-      .then(response => { this.newsletter = response.data })
+    this.$http.get("/card/card-statistics/newsletter").then((response) => {
+      this.newsletter = response.data;
+    });
   },
   methods: {
     kFormatter,
   },
-}
+};
 </script>

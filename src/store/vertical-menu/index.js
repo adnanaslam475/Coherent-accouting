@@ -4,7 +4,7 @@ export default {
   namespaced: true,
   state: {
     isVerticalMenuCollapsed: $themeConfig.layout.menu.isCollapsed,
-    activeTab: 0,
+    activeTab: 1,
   },
   getters: {
     getActiveTab(state) {

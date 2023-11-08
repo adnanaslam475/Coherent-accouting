@@ -38,6 +38,7 @@ export default {
     return {
       currentPlan: null,
       isUnderMaintenance: false,
+      is500: false,
     };
   },
   // ! We can move this computed: layout & contentLayoutType once we get to use Vue 3
@@ -51,26 +52,28 @@ export default {
       return this.$store.state.appConfig.layout.type;
     },
   },
-  // mounted() {},
   mounted() {
     axios
       .get("https://coherent-accounting.com/account/api/maintenance/health")
       .then((res) => {
-        console.log("hlth1-------->", res);
-        this.isUnderMaintenance = "adnaaaaaaa";
+        this.isUnderMaintenance =
+          res.status == 500 || res.data.isUnderMaintenance;
       })
-      .catch((e) => {
-        console.log("error_htlh1", e);
+      .catch(() => {
+        this.isUnderMaintenance = true;
       });
     axios
       .get("https://coherent-accounting.com/index/api/maintenance/health")
       .then((res) => {
-        if (this.isUnderMaintenance && res.data.isUnderMaintenance) {
+        if (
+          this.isUnderMaintenance &&
+          (res.data.isUnderMaintenance || res.status == 500)
+        ) {
           // router.push("/under-maintenance");
         }
       })
-      .catch((e) => {
-        console.log("error_htlh2", e);
+      .catch(() => {
+        if (this.isUnderMaintenance) router.push("/under-maintenance");
       });
   },
 

@@ -743,7 +743,6 @@ export default {
     };
   },
   created() {
-    console.log();
     this.getAllCompanies();
     this.getUnverifiedCompanies();
   },

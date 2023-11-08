@@ -63,6 +63,15 @@ const router = new VueRouter({
       },
     },
     {
+      path: "/under-maintenance",
+      name: "misc-under-maintenance",
+      component: () =>
+        import("@/views/pages/miscellaneous/UnderMaintenance.vue"),
+      meta: {
+        layout: "full",
+      },
+    },
+    {
       path: "/register/advertisements",
       name: "register-advertisement",
       component: () => import("@/views/Register.vue"),

@@ -1,5 +1,4 @@
 <template>
-  <!--  Table Container Card Starts  -->
   <b-card no-body>
     <div class="m-2">
       <!--  Table Top Starts  -->
@@ -10,15 +9,6 @@
           md="4"
           class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
         >
-          <!-- <label>Entries</label>
-            <v-select
-              v-model="perPage" 
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-              :options="perPageOptions"
-              :clearable="false"
-              class="per-page-selector d-inline-block ml-50 mr-1"
-            /> -->
-
           <b-dropdown
             text="Add Document"
             variant="primary"
@@ -42,50 +32,12 @@
             <b-dropdown-item @click="UploadFile()">
               <feather-icon icon="UploadCloudIcon" class="mr-1" />
               {{ $t("company_invoices.upload") }}
-
-              <!-- <label class="">
-        {{ $t("company_invoices.upload") }}
-          <input type="file" style="display: none" @click.prevent @input="addfile(companyId)"/>
-        </label> -->
-
-              <!-- <feather-icon icon="UploadCloudIcon" class="mr-1"/>
-           <b-spinner v-if="fileLoading" small variant="light" /> 
-           <feather-icon icon="UploadCloudIcon" class="mr-1" v-else/>  -->
-              <!-- <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" /> -->
             </b-dropdown-item>
           </b-dropdown>
           <b-tooltip target="invoice-add" placement="bottom"
             >Add Receipts, Invoices and Bills</b-tooltip
           >
 
-          <!-- <b-button variant="primary" class="mr-1" :to="{
-            name: 'company-invoice-add',
-            params: {
-              companyId: $route.params.companyId
-                ? $route.params.companyId
-                : $route.params.id,
-            },
-          }" @click="actionTab">
-            {{ $t("company_invoices.add_invoice") }}
-          </b-button> -->
-
-          <!-- <b-button variant="primary" class="mr-1 position-relative p-set" v-if="isActive">
-            <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" />
-
-            <b-spinner v-if="fileLoading" small variant="light" />
-            {{ $t("company_invoices.add_from_file") }}
-         
-            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
-          </b-button> -->
-          <!-- <b-button variant="primary" class="mr-1 position-relative p-set" :disabled="!isActive" v-else>
-
-            {{ $t("company_invoices.add_from_file") }}
-           
-            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
-          </b-button> -->
-
-          <!--Add the third button name export-->
-          <!-- Export Invoice Button -->
           <b-button
             variant="primary"
             class="mr-1 cursor-button"
@@ -108,11 +60,21 @@
             variant="primary"
             style="cursor: pointer"
             class="mr-1"
-            @click="showDatePickerModal"
+            @click="
+              selectAll && selectAll.length
+                ? exportByIds()
+                : showDatePickerModal()
+            "
             :disabled="!isActive"
             v-else
           >
-            {{ $t("company_invoices.Export_invoice") }}
+            {{
+              $t(
+                selectAll && selectAll.length
+                  ? "company_invoices.Export_invoice"
+                  : "company_invoices.Export_invoice_month"
+              )
+            }}
             <!-- Export Invoice -->
           </b-button>
 
@@ -295,12 +257,6 @@
                 @click="documentType = null"
               />
             </div>
-            <!-- <b-form-select class="mr-1" v-model="transactionType" :options="['INCOME', 'EXPENSE']" /> -->
-            <!-- <b-form-select v-model="documentType" :options="documentTypeItems">
-              <b-form-select-option :value="item" v-for="(item, index) in documentTypeItems" :key="index">{{
-                item
-              }}</b-form-select-option>
-            </b-form-select> -->
 
             <div class="position-relative pr-1" style="min-width: 9vw">
               <b-form-select
@@ -340,8 +296,6 @@
               />
             </div>
 
-            <!-- <b-form-select class="mr-1" v-model="lastDays" :options="lastDaysItems" /> -->
-
             <div class="position-relative mr-1" style="min-width: 8vw">
               <flat-pickr
                 v-model="startDate"
@@ -361,12 +315,6 @@
                 class="cursor-pointer clear-all"
                 @click="startDate = ''"
               />
-              <!-- <feather-icon
-                  size="16"
-                  icon="CalendarIcon"
-                  class="cursor-pointer clear-all"
-                  @click="dateFrom = ''"
-                /> -->
             </div>
 
             <div class="position-relative mr-1" style="min-width: 8vw">
@@ -388,12 +336,6 @@
                 class="cursor-pointer clear-all"
                 @click="endDate = ''"
               />
-              <!-- <feather-icon
-                  size="16"
-                  icon="CalendarIcon"
-                  class="cursor-pointer clear-all"
-                  @click="dateTo = ''"
-                /> -->
             </div>
             <div class="position-relative mr-1" style="min-width: 5vw">
               <b-form-input
@@ -454,7 +396,27 @@
 
       <template #head(invoiceStatus)>
         <feather-icon icon="TrendingUpIcon" class="mx-auto" />
-        <!-- {{ $t('company_invoices.invoice_number') }} -->
+      </template>
+
+      <!-- Column: CHECKBOXES -->
+      <template #head(id)>
+        <b-form-checkbox
+          :checked="
+            ((isCheck === false ? fetchInvoices : invoices) || []).length ==
+            (selectAll || []).length
+          "
+          @change="
+            () => selectAllRows(isCheck === false ? fetchInvoices : invoices)
+          "
+        ></b-form-checkbox>
+      </template>
+
+      <!-- Add a slot for custom column -->
+      <template #cell(id)="data">
+        <b-form-checkbox
+          @change="() => selectSingle(data.item.id)"
+          :checked="!!selectAll.includes(data.item.id)"
+        ></b-form-checkbox>
       </template>
 
       <!-- Column: invoiceNumber -->
@@ -568,15 +530,6 @@
           <p class="mb-0">
             {{ data.item.recipientCompany.companyOwnerName }}
           </p>
-          <!-- <p class="mb-0">
-            Company Vat Eic: {{ data.item.recipientCompany.companyVatEic }}
-          </p>
-          <p class="mb-0">
-            Company Address: {{ data.item.recipientCompany.companyAddress }}
-          </p>
-          <p class="mb-0">
-            Owner EGN: {{ data.item.recipientCompany.ownerEGN }}
-          </p> -->
         </b-tooltip>
       </template>
 
@@ -602,33 +555,28 @@
           <p class="mb-0">
             {{ data.item.supplierCompany.companyOwnerName }}
           </p>
-          <!-- <p class="mb-0">
-            Company Vat Eic: {{ data.item.supplierCompany.companyVatEic }}
-          </p>
-          <p class="mb-0">
-            Company Address: {{ data.item.supplierCompany.companyAddress }}
-          </p>
-          <p class="mb-0">
-            Owner EGN: {{ data.item.supplierCompany.ownerEGN }}
-          </p> -->
         </b-tooltip>
       </template>
 
       <!-- Column: amount non vat -->
       <template #head(amountNonVat)>
-        {{ $t("company_invoices.amount_non_vat") }}
+        {{ $t("company_invoices.file") }}
       </template>
       <template #cell(amountNonVat)="data">
         <span class="text-nowrap">
-          <span
-            v-if="
-              data.item.currency === 'lv' ||
-              data.item.currency === 'лв' ||
-              data.item.currency === 'лв.'
-            "
-            >лв. {{ data.value }}</span
-          >
-          <span v-else>{{ data.item.currency }} {{ data.value }}</span>
+          <span v-if="false"> {{ data.value }}</span>
+          <span v-else
+            ><img
+              :src="require('@/assets/images/dummyInvoice.jpeg')"
+              alt="cursor-pointer"
+              @mouseover="
+                isFetching
+                  ? null
+                  : getImage(data.item.binaryId, data.item.id, 2)
+              "
+              class="cursor-pointer"
+              style="height: 30px; width: 30px"
+          /></span>
         </span>
       </template>
 
@@ -667,13 +615,6 @@
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
-
-      <!-- Column: currency -->
-      <!-- <template #cell(currency)="data">
-        <span class="text-nowrap">
-          {{ data.value }}
-        </span>
-      </template> -->
 
       <!-- Column: Actions -->
       <template #head(actions)>
@@ -788,56 +729,26 @@
       </b-col>
     </b-row>
     <!--  Loading Spinner Ends  -->
-
-    <!--   <div class="mx-2 mb-2">
-      <b-row>
-        <b-col
-          cols="12"
-          sm="6"
-          class="
-            d-flex
-            align-items-center
-            justify-content-center justify-content-sm-start
-          "
-        >
-          <span class="text-muted"
-            >Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
-            {{ dataMeta.of }} entries</span
-          >
-        </b-col> -->
-    <!-- Pagination -->
-    <!-- <b-col
-          cols="12"
-          sm="6"
-          class="
-            d-flex
-            align-items-center
-            justify-content-center justify-content-sm-end
-          "
-        >
-          <b-pagination
-            v-if="totalInvoices > 0"
-            v-model="currentPage"
-            :total-rows="totalInvoices"
-            :per-page="perPage"
-            first-number
-            last-number
-            class="mb-0 mt-1 mt-sm-0"
-            prev-class="prev-item"
-            next-class="next-item"
-          >
-            <template #prev-text>
-              <feather-icon icon="ChevronLeftIcon" size="18" />
-            </template>
-            <template #next-text>
-              <feather-icon icon="ChevronRightIcon" size="18" />
-            </template>
-          </b-pagination>
-        </b-col>
-       </b-row>
-     </div> -->
+    <b-modal id="modal-center-media" title="Download Image" hide-footer>
+      <b-img
+        class="w-100"
+        :src="
+          imageD.type === 'image/bmp' ||
+          imageD.type === 'image/jpeg' ||
+          imageD.type === 'image/png'
+            ? imageD.image
+            : getMediaType(clickedImageType)
+        "
+      />
+      <b-link
+        class="btn btn-primary download-icon"
+        :download="imageD.name"
+        :href="imageD.image"
+      >
+        <feather-icon icon="DownloadIcon" size="30" class="text-danger" />
+      </b-link>
+    </b-modal>
   </b-card>
-  <!--  Table Container Card Ends  -->
 </template>
 
 <script>
@@ -858,6 +769,7 @@ import {
   BDropdownItem,
   BPagination,
   BTooltip,
+  BModal,
   BTableLite,
   BCardText,
   BAlert,
@@ -865,6 +777,8 @@ import {
   BCardHeader,
   BFormFile,
   BSpinner,
+  BImg,
+  BFormCheckbox,
 } from "bootstrap-vue";
 import { avatarText } from "@core/utils/filter";
 import vSelect from "vue-select";
@@ -882,7 +796,6 @@ import InvoiceDownload from "../invoice-download/InvoiceDownload.vue";
 import invoiceStoreModule from "../invoiceStoreModule";
 import useInvoicesList from "./useInvoiceList";
 import { i18n } from "@/main.js";
-import { watch, ref } from "vue";
 import axios from "@/libs/axios";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import VueMonthlyPicker from "vue-monthly-picker";
@@ -915,15 +828,18 @@ export default {
     BCardText,
     BAlert,
     VBToggle,
+    BImg,
+    BFormCheckbox,
     VueHtml2pdf,
     BCardHeader,
     InvoiceDownload,
     BFormFile,
     BSpinner,
+    BModal,
     SvgIcon,
     flatPickr,
-    ValidationProvider: ValidationProvider,
-    ValidationObserver: ValidationObserver,
+    ValidationProvider,
+    ValidationObserver,
     VueMonthlyPicker,
   },
 
@@ -931,6 +847,8 @@ export default {
 
   data() {
     return {
+      selectAll: [],
+      selected: {},
       EIC: "",
       exportFiles: null,
       fileLoadingExport: false,
@@ -940,20 +858,25 @@ export default {
       isExportModalVisible: false,
       documentType: null,
       transactionType: null,
+      imgLoaded: false,
       lastDays: null,
       startDate: "",
       endDate: "",
       perPageRecords: 10,
       pageNum: 1,
       isCheck: false,
+      imageD: "",
       exportModalFlag: false,
       file: null,
+      isFetching: false,
+      comp: {},
       fileLoading: false,
       path: mdiTrayArrowUp,
+      clickedImageType: "png",
       observer: null,
       loadModal: "Next",
       modalDisabledMonth: false,
-      searchQuery: "", // assuming it's a string
+      searchQuery: "", // assuming it's a string+
       isLoading: false, // assuming it's a boolean indicating a loading state
       // other data properties...
       companyinfo: null,
@@ -964,6 +887,8 @@ export default {
         date: "",
         platformName: "",
       },
+      images: [{ image: "", type: "", id: "" }],
+      images1: [],
       invoicesForReport: [],
       selectedMonthData: {
         companyId: "85",
@@ -1018,20 +943,14 @@ export default {
     },
 
     companyID(newVal) {
-      console.log("companyID watcher triggered", newVal);
       this.exportDto.companyId = newVal;
     },
 
     "selectedMonthData.date"(newVal) {
-      console.log("selectedMonthData.date watcher triggered", newVal);
       this.exportDto.date = newVal;
     },
 
     "companyinfo.exportProperties.platform"(newVal) {
-      console.log(
-        "companyinfo.exportProperties.platform watcher triggered",
-        newVal
-      );
       this.exportDto.platformName = newVal || null;
     },
   },
@@ -1040,13 +959,12 @@ export default {
     setTimeout(() => {
       this.isCheck = true;
     }, 1500);
-    // this.fetchInvoices();
     this.observeScroll();
 
     this.getCompany();
     this.getMyCurrentPlan();
   },
-
+  updated() {},
   computed: {
     monthLabels() {
       let arr = [
@@ -1076,7 +994,86 @@ export default {
     UploadFile() {
       this.$refs.add_invoice_modal.show();
     },
+    selectAllRows(all) {
+      if (this.selectAll.length && this.selectAll.length < all.length) {
+        this.selectAll = (all || []).map((v) => v.id);
+      } else if (this.selectAll.length) {
+        this.selectAll = [];
+      } else {
+        this.selectAll = (all || []).map((v) => v.id);
+      }
+    },
+    selectSingle(id) {
+      this.selectAll = this.selectAll.includes(id)
+        ? this.selectAll.filter((v) => v !== id)
+        : [...this.selectAll, id];
+    },
+    getMediaType(val) {
+      const mediaTypes = {
+        png: "jpg",
+        jpeg: "jpg",
+        jpg: "jpg",
+        rar: "zip",
+        zip: "zip",
+        xls: "xls",
+        xlsx: "xls",
+        sheet: "xls",
+        doc: "doc",
+        docx: "doc",
+        pdf: "pdf",
+        txt: "txt",
+      };
 
+      const source = mediaTypes[val?.toLowerCase() || ""] || "";
+
+      if (source !== "") {
+        return require(`@/assets/images/icons/${source}.png`);
+      }
+    },
+    async getImage(binaryId, id, temp) {
+      const self = this;
+      this.isFetching = true;
+      await axios
+        .get(
+          `${axios.defaults.baseURL}/binaries/api/get-binary/${binaryId}/${router.currentRoute.params.id}`,
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            const reader = new FileReader();
+            reader.readAsDataURL(response.data);
+
+            reader.onload = function () {
+              self.images[id] = {
+                image: reader.result,
+                name: id,
+                type: response.data.type,
+              };
+              self.imageD = self.images[id];
+              self.$bvModal.show("modal-center-media");
+            };
+          } else {
+            self.images[id] = {
+              image: "",
+              type: "",
+              name: id,
+            };
+          }
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "DeleteIcon",
+              variant: "error",
+            },
+          });
+        })
+        .finally(() => {
+          this.isFetching = false;
+        });
+    },
     getMyCurrentPlan() {
       let token = useJwt.getToken();
       useJwt
@@ -1098,44 +1095,10 @@ export default {
         });
     },
 
-    /*
-    async fetchInvoices() {
-      // try {
-      //   const response = await axios.get("/api/export", {
-      //     headers: {
-      //       'Authorization': 'Bearer ' + localStorage.getItem("accessToken"),
-      //       'Content-Type': 'application/json'
-      //  },
-      //});
-      // this.selectedMonthData.invoicesForReport = response.data;
-      //} catch (error) {
-      //   console.error(error);
-      // }
-      let token = useJwt.getToken();
-      let exportDto = {
-        companyId: '',
-        date: '',
-        platformName: '',
-      };
-      useJwt
-        .export(token, exportDto)
-        .then(async (response) => {
-        }
-        )
-        .catch()
-    },
-    */
-
     async exportModal() {
       // Fetch the invoices first
       await this.fetchInvoices();
-      // Populate the exportDto object
-      console.log(
-        "exportModal method called",
-        this.companyID,
-        this.selectedMonthData.date,
-        this.companyinfo
-      );
+
       this.exportDto.companyId = this.companyID;
       this.exportDto.date = this.selectedMonthData.date;
       this.exportDto.platformName =
@@ -1150,7 +1113,6 @@ export default {
         !this.exportDto.date ||
         !this.exportDto.platformName
       ) {
-        console.error("exportDto data is not complete!");
         return;
       }
       // Show the modal
@@ -1168,6 +1130,68 @@ export default {
     showDatePickerModal() {
       this.$refs.export_model.show();
     },
+    async exportByIds() {
+      let companyName = this.comp;
+      try {
+        await axios
+          .post(
+            "https://coherent-accounting.com/account/api/export-by-ids",
+            {
+              companyId: router.currentRoute.params.id,
+              ids: this.selectAll,
+              platformName: this.platform,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("accessToken"),
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+              },
+              responseType: "blob",
+            }
+          )
+          .then(function (response) {
+            const dateString = new Date();
+            const date = new Date(dateString);
+            const options = {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            };
+            const formattedDate = date.toLocaleDateString("en-US", options);
+            const blobData = response.data;
+            const exportDataBlob = new Blob([blobData], {
+              type: blobData.type,
+            });
+            const url = window.URL.createObjectURL(exportDataBlob);
+            const link = document.createElement("a");
+            // saveAs(
+            //   blob,
+            //   `EIC_${companyName.companyIdentificationNumber}_DATE_${formattedDate}`
+            // );
+            let fileName = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`;
+            link.href = url;
+            if (blobData.type == "application/zip") {
+              link.setAttribute("download", fileName + ".zip"); // download as .zip
+            } else {
+              link.setAttribute("download", fileName + ".txt"); // download as .txt
+            }
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+          });
+      } catch (error) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `${error.response.data.errorMessage}`,
+            icon: "DeleteIcon",
+            variant: "danger",
+          },
+        });
+      } finally {
+      }
+    },
     async getCompany() {
       let companyID = this.$route.params.id;
       try {
@@ -1177,6 +1201,7 @@ export default {
             "Access-Control-Allow-Credentials": true,
           },
         });
+        this.comp = response.data;
         this.platform = response.data.exportProperties.platform;
         this.EIC = response.data.companyIdentificationNumber;
       } catch (error) {
@@ -1192,8 +1217,6 @@ export default {
     },
 
     async getExportFile() {
-      console.log(this.companyDetails, "companyDetails");
-
       this.$nextTick(() => {
         this.$bvModal.show("modal-spinner");
       });
@@ -1202,14 +1225,12 @@ export default {
       this.exportDto.date = this.selectedMonthData.date; // Set date to current date
       this.exportDto.platformName = this.exportDto.platformName; // Set platformName to "AJURE"
       let companyName = this.companyDetails;
-      console.log(companyName);
       const dateString = new Date();
       const date = new Date(dateString);
 
       const options = { day: "2-digit", month: "2-digit", year: "numeric" };
       const formattedDate = date.toLocaleDateString("en-US", options);
       let fileName = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`;
-      console.log(fileName, "here is file Name");
       try {
         await axios
           .post(
@@ -1226,8 +1247,6 @@ export default {
           )
           .then(function (response) {
             const headers = response.headers;
-            const contentDisposition = headers["Content-Disposition"];
-            console.log(contentDisposition, "alsdkj");
             const blobData = response.data;
             const exportDataBlob = new Blob([blobData], {
               type: blobData.type,
@@ -1236,7 +1255,6 @@ export default {
             const link = document.createElement("a");
             link.href = url;
             if (blobData.type == "application/zip") {
-              console.log("this.companyDetails.companyName", companyName);
               link.setAttribute("download", fileName + ".zip"); // download as .zip
             } else {
               link.setAttribute("download", fileName + ".txt"); // download as .txt
@@ -1315,10 +1333,6 @@ export default {
           this.companyinfo = response.data;
           this.$refs.export_model.hide();
           this.$refs.modal_exportValue.show();
-          console.log(
-            "this.selectedMonthData.date",
-            this.selectedMonthData.date
-          );
         } catch (error) {
           console.log(error);
         }
@@ -1552,10 +1566,6 @@ export default {
       this.$emit("state", this.state());
     },
 
-    onProgress(event) {
-      console.log(`Processed: ${event} / 100`);
-    },
-
     generatePDF(itemID) {
       this.$refs[`invoicePdf${itemID}`].generatePdf();
     },
@@ -1632,7 +1642,9 @@ export default {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `${error.response.data.errorMessage}`,
+              title: `${
+                error.response.data.errorMessage || "Error fetching full image"
+              } `,
               icon: "AlertTriangleIcon",
               variant: "danger",
             },
@@ -1651,9 +1663,6 @@ export default {
         .addFileInvoice(token, companyId, formData)
         .then((response) => {
           this.fileLoading = false;
-
-          // const t = Object.entries(response)
-          // console.log(t)
 
           return this.$router.push({
             name: "company-invoice-add",
@@ -1676,7 +1685,6 @@ export default {
         });
     },
     addExportFile(event) {
-      console.log(event, "sdasdf");
       this.exportFiles = event.target.files;
 
       this.fileLoadingExport = true;
@@ -1695,7 +1703,6 @@ export default {
         .addMultipleExportFiles(token, companyID, formData)
         .then((response) => {
           this.fileLoadingExport = false;
-          console.log(response.data);
           const blob = new Blob([response.data], { type: "text/csv" });
 
           // Save the Blob as a file using FileSaver.js

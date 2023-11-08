@@ -210,9 +210,7 @@ export default {
       },
     };
   },
-  mounted() {
-    console.log("onmounteddddddddddddddd");
-  },
+
   computed: {
     InvoicesTableColumns() {
       return [

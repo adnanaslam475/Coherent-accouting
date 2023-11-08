@@ -1,171 +1,175 @@
 export default [
   {
-    path: '/error-404',
-    name: 'error-404',
-    component: () => import('@/views/error/Error404.vue'),
+    path: "/error-404",
+    name: "error-404",
+    component: () => import("@/views/error/Error404.vue"),
     meta: {
-      layout: 'full',
-      resource: 'Auth',
-      action: 'read',
+      layout: "full",
+      resource: "Auth",
+      action: "read",
     },
   },
   {
-    path: '/login',
-    name: 'auth-login',
-    component: () => import('@/views/pages/authentication/Login.vue'),
+    path: "/login",
+    name: "auth-login",
+    component: () => import("@/views/pages/authentication/Login.vue"),
     meta: {
-      layout: 'full',
-      resource: 'Auth',
+      layout: "full",
+      resource: "Auth",
       redirectIfLoggedIn: true,
     },
   },
   {
-    path: '/pages/authentication/login-v1',
-    name: 'auth-login-v1',
-    component: () => import('@/views/pages/authentication/Login-v1.vue'),
+    path: "/pages/authentication/login-v1",
+    name: "auth-login-v1",
+    component: () => import("@/views/pages/authentication/Login-v1.vue"),
     meta: {
-      layout: 'full',
+      layout: "full",
     },
   },
   {
-    path: '/pages/authentication/login-v2',
-    name: 'auth-login-v2',
-    component: () => import('@/views/pages/authentication/Login-v2.vue'),
+    path: "/pages/authentication/login-v2",
+    name: "auth-login-v2",
+    component: () => import("@/views/pages/authentication/Login-v2.vue"),
     meta: {
-      layout: 'full',
+      layout: "full",
     },
   },
   {
-    path: '/register',
-    name: 'auth-register',
-    component: () => import('@/views/pages/authentication/Register.vue'),
+    path: "/register",
+    name: "auth-register",
+    component: () => import("@/views/pages/authentication/Register.vue"),
     meta: {
-      layout: 'full',
-      resource: 'Auth',
+      layout: "full",
+      resource: "Auth",
       redirectIfLoggedIn: true,
     },
   },
   {
-    path: '/pages/authentication/register-v1',
-    name: 'auth-register-v1',
-    component: () => import('@/views/pages/authentication/Register-v1.vue'),
+    path: "/pages/authentication/register-v1",
+    name: "auth-register-v1",
+    component: () => import("@/views/pages/authentication/Register-v1.vue"),
     meta: {
-      layout: 'full',
+      layout: "full",
     },
   },
   {
-    path: '/pages/authentication/register-v2',
-    name: 'auth-register-v2',
-    component: () => import('@/views/pages/authentication/Register-v2.vue'),
+    path: "/pages/authentication/register-v2",
+    name: "auth-register-v2",
+    component: () => import("@/views/pages/authentication/Register-v2.vue"),
     meta: {
-      layout: 'full',
+      layout: "full",
     },
   },
   {
-    path: '/forgot-password',
-    name: 'auth-forgot-password',
-    component: () => import('@/views/pages/authentication/ForgotPassword.vue'),
+    path: "/forgot-password",
+    name: "auth-forgot-password",
+    component: () => import("@/views/pages/authentication/ForgotPassword.vue"),
     meta: {
-      layout: 'full',
-      resource: 'Auth',
+      layout: "full",
+      resource: "Auth",
       redirectIfLoggedIn: true,
     },
   },
   {
-    path: '/pages/authentication/forgot-password-v1',
-    name: 'auth-forgot-password-v1',
-    component: () => import('@/views/pages/authentication/ForgotPassword-v1.vue'),
+    path: "/pages/authentication/forgot-password-v1",
+    name: "auth-forgot-password-v1",
+    component: () =>
+      import("@/views/pages/authentication/ForgotPassword-v1.vue"),
     meta: {
-      layout: 'full',
+      layout: "full",
     },
   },
   {
-    path: '/pages/authentication/forgot-password-v2',
-    name: 'auth-forgot-password-v2',
-    component: () => import('@/views/pages/authentication/ForgotPassword-v2.vue'),
+    path: "/pages/authentication/forgot-password-v2",
+    name: "auth-forgot-password-v2",
+    component: () =>
+      import("@/views/pages/authentication/ForgotPassword-v2.vue"),
     meta: {
-      layout: 'full',
-      resource: 'Auth',
+      layout: "full",
+      resource: "Auth",
     },
   },
   {
-    path: '/pages/authentication/reset-password-v1',
-    name: 'auth-reset-password-v1',
-    component: () => import('@/views/pages/authentication/ResetPassword-v1.vue'),
+    path: "/pages/authentication/reset-password-v1",
+    name: "auth-reset-password-v1",
+    component: () =>
+      import("@/views/pages/authentication/ResetPassword-v1.vue"),
     meta: {
-      layout: 'full',
+      layout: "full",
     },
   },
   {
-    path: '/pages/authentication/reset-password-v2',
-    name: 'auth-reset-password-v2',
-    component: () => import('@/views/pages/authentication/ResetPassword-v2.vue'),
+    path: "/pages/authentication/reset-password-v2",
+    name: "auth-reset-password-v2",
+    component: () =>
+      import("@/views/pages/authentication/ResetPassword-v2.vue"),
     meta: {
-      layout: 'full',
+      layout: "full",
     },
   },
   {
-    path: '/pages/miscellaneous/coming-soon',
-    name: 'misc-coming-soon',
-    component: () => import('@/views/pages/miscellaneous/ComingSoon.vue'),
+    path: "/pages/miscellaneous/coming-soon",
+    name: "misc-coming-soon",
+    component: () => import("@/views/pages/miscellaneous/ComingSoon.vue"),
     meta: {
-      layout: 'full',
+      layout: "full",
     },
   },
   {
-    path: '/pages/miscellaneous/not-authorized',
-    name: 'misc-not-authorized',
-    component: () => import('@/views/pages/miscellaneous/NotAuthorized.vue'),
+    path: "/pages/miscellaneous/not-authorized",
+    name: "misc-not-authorized",
+    component: () => import("@/views/pages/miscellaneous/NotAuthorized.vue"),
     meta: {
-      layout: 'full',
-      resource: 'Auth',
+      layout: "full",
+      resource: "Auth",
     },
   },
   {
-    path: '/under-maintenance',
-    name: 'misc-under-maintenance',
-    component: () => import('@/views/pages/miscellaneous/UnderMaintenance.vue'),
+    path: "/under-maintenance",
+    name: "misc-under-maintenance",
+    component: () => import("@/views/pages/miscellaneous/UnderMaintenance.vue"),
     meta: {
-      layout: 'full',
+      layout: "full",
     },
   },
   {
-    path: '/pages/miscellaneous/error',
-    name: 'misc-error',
-    component: () => import('@/views/pages/miscellaneous/Error.vue'),
+    path: "/pages/miscellaneous/error",
+    name: "misc-error",
+    component: () => import("@/views/pages/miscellaneous/Error.vue"),
     meta: {
-      layout: 'full',
+      layout: "full",
     },
   },
   {
-    path: '/pages/account-setting',
-    name: 'pages-account-setting',
-    component: () => import('@/views/pages/account-setting/AccountSetting.vue'),
+    path: "/pages/account-setting",
+    name: "pages-account-setting",
+    component: () => import("@/views/pages/account-setting/AccountSetting.vue"),
     meta: {
-      pageTitle: 'Account Settings',
+      pageTitle: "Account Settings",
       breadcrumb: [
         {
-          text: 'Pages',
+          text: "Pages",
         },
         {
-          text: 'Account Settings',
+          text: "Account Settings",
           active: true,
         },
       ],
     },
   },
   {
-    path: '/pages/profile',
-    name: 'pages-profile',
-    component: () => import('@/views/pages/profile/Profile.vue'),
+    path: "/pages/profile",
+    name: "pages-profile",
+    component: () => import("@/views/pages/profile/Profile.vue"),
     meta: {
-      pageTitle: 'Profile',
+      pageTitle: "Profile",
       breadcrumb: [
         {
-          text: 'Pages',
+          text: "Pages",
         },
         {
-          text: 'Profile',
+          text: "Profile",
           active: true,
         },
       ],
@@ -173,150 +177,152 @@ export default [
   },
 
   {
-    path: '/pages/faq',
-    name: 'pages-faq',
-    component: () => import('@/views/pages/faq/Faq.vue'),
+    path: "/pages/faq",
+    name: "pages-faq",
+    component: () => import("@/views/pages/faq/Faq.vue"),
     meta: {
-      pageTitle: 'FAQ',
+      pageTitle: "FAQ",
       breadcrumb: [
         {
-          text: 'Pages',
+          text: "Pages",
         },
         {
-          text: 'FAQ',
+          text: "FAQ",
           active: true,
         },
       ],
     },
   },
   {
-    path: '/pages/knowledge-base',
-    name: 'pages-knowledge-base',
-    component: () => import('@/views/pages/Knowledge-base/KnowledgeBase.vue'),
+    path: "/pages/knowledge-base",
+    name: "pages-knowledge-base",
+    component: () => import("@/views/pages/Knowledge-base/KnowledgeBase.vue"),
     meta: {
-      pageTitle: 'Knowledge Base',
+      pageTitle: "Knowledge Base",
       breadcrumb: [
         {
-          text: 'Pages',
+          text: "Pages",
         },
         {
-          text: 'Knowledge Base',
+          text: "Knowledge Base",
           active: true,
         },
       ],
     },
   },
   {
-    path: '/pages/knowledge-base/:category',
-    name: 'pages-knowledge-base-category',
-    component: () => import('@/views/pages/Knowledge-base/KnowledgeBaseCategory.vue'),
+    path: "/pages/knowledge-base/:category",
+    name: "pages-knowledge-base-category",
+    component: () =>
+      import("@/views/pages/Knowledge-base/KnowledgeBaseCategory.vue"),
     meta: {
-      pageTitle: 'Category',
+      pageTitle: "Category",
       breadcrumb: [
         {
-          text: 'Pages',
+          text: "Pages",
         },
         {
-          text: 'Knowledge Base',
-          to: '/pages/Knowledge-base',
+          text: "Knowledge Base",
+          to: "/pages/Knowledge-base",
         },
         {
-          text: 'Category',
+          text: "Category",
           active: true,
         },
       ],
-      navActiveLink: 'pages-knowledge-base',
+      navActiveLink: "pages-knowledge-base",
     },
   },
   {
-    path: '/pages/knowledge-base/:category/:slug',
-    name: 'pages-knowledge-base-question',
-    component: () => import('@/views/pages/Knowledge-base/KnowledgeBaseCategoryQuestion.vue'),
+    path: "/pages/knowledge-base/:category/:slug",
+    name: "pages-knowledge-base-question",
+    component: () =>
+      import("@/views/pages/Knowledge-base/KnowledgeBaseCategoryQuestion.vue"),
     meta: {
-      pageTitle: 'Question',
+      pageTitle: "Question",
       breadcrumb: [
         {
-          text: 'Pages',
+          text: "Pages",
         },
         {
-          text: 'Knowledge Base',
-          to: '/pages/Knowledge-base',
+          text: "Knowledge Base",
+          to: "/pages/Knowledge-base",
         },
         {
-          text: 'Category',
-          to: '/pages/Knowledge-base/category',
+          text: "Category",
+          to: "/pages/Knowledge-base/category",
         },
         {
-          text: 'Question',
+          text: "Question",
           active: true,
         },
       ],
-      navActiveLink: 'pages-knowledge-base',
+      navActiveLink: "pages-knowledge-base",
     },
   },
   {
-    path: '/pages/pricing',
-    name: 'pages-pricing',
-    component: () => import('@/views/pages/pricing/Pricing.vue'),
+    path: "/pages/pricing",
+    name: "pages-pricing",
+    component: () => import("@/views/pages/pricing/Pricing.vue"),
   },
   {
-    path: '/pages/blog/list',
-    name: 'pages-blog-list',
-    component: () => import('@/views/pages/blog/BlogList.vue'),
+    path: "/pages/blog/list",
+    name: "pages-blog-list",
+    component: () => import("@/views/pages/blog/BlogList.vue"),
     meta: {
-      pageTitle: 'Blog List',
+      pageTitle: "Blog List",
       breadcrumb: [
         {
-          text: 'Pages',
+          text: "Pages",
         },
         {
-          text: 'Blog',
+          text: "Blog",
         },
         {
-          text: 'List',
-          active: true,
-        },
-      ],
-    },
-  },
-  {
-    path: '/pages/blog/:id',
-    name: 'pages-blog-detail',
-    component: () => import('@/views/pages/blog/BlogDetail.vue'),
-    meta: {
-      pageTitle: 'Blog Detail',
-      breadcrumb: [
-        {
-          text: 'Pages',
-        },
-        {
-          text: 'Blog',
-        },
-        {
-          text: 'Detail',
+          text: "List",
           active: true,
         },
       ],
     },
   },
   {
-    path: '/pages/blog/edit/:id',
-    name: 'pages-blog-edit',
-    component: () => import('@/views/pages/blog/BlogEdit.vue'),
+    path: "/pages/blog/:id",
+    name: "pages-blog-detail",
+    component: () => import("@/views/pages/blog/BlogDetail.vue"),
     meta: {
-      pageTitle: 'Blog Edit',
+      pageTitle: "Blog Detail",
       breadcrumb: [
         {
-          text: 'Pages',
+          text: "Pages",
         },
         {
-          text: 'Blog',
+          text: "Blog",
         },
         {
-          text: 'Edit',
+          text: "Detail",
           active: true,
         },
       ],
     },
   },
-]
+  {
+    path: "/pages/blog/edit/:id",
+    name: "pages-blog-edit",
+    component: () => import("@/views/pages/blog/BlogEdit.vue"),
+    meta: {
+      pageTitle: "Blog Edit",
+      breadcrumb: [
+        {
+          text: "Pages",
+        },
+        {
+          text: "Blog",
+        },
+        {
+          text: "Edit",
+          active: true,
+        },
+      ],
+    },
+  },
+];

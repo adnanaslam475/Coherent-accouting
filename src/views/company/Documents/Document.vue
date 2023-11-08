@@ -176,38 +176,6 @@
               :target="`preview-${data.item.id}-icon`"
             />
 
-            <!-- Dropdown -->
-            <!-- <b-dropdown
-                  variant="link"
-                  toggle-class="p-0"
-                  no-caret
-                  :right="$store.state.appConfig.isRTL"
-                >
-                  <template #button-content>
-                    <feather-icon
-                      icon="MoreVerticalIcon"
-                      size="16"
-                      class="align-middle text-body ml-1"
-                    />
-                  </template>
-                  <b-dropdown-item @click="editRecord(data)">
-                    <feather-icon icon="EditIcon" />
-                    <span class="align-middle ml-50">Edit</span>
-                  </b-dropdown-item>
-                  <b-dropdown-item @click="deleteAsset(data.item.binaryId)">
-                    <feather-icon icon="TrashIcon" />
-                    <span class="align-middle ml-50">Delete</span>
-                  </b-dropdown-item>
-                  <b-dropdown-item
-                    v-if="images1[data.item.id]"
-                    @click="getImage(data.item.binaryId, data.item.id,1)"
-                    :href="images1[data.item.id].image"
-                  >
-                    <feather-icon icon="DownloadIcon" />
-                    <span class="align-middle ml-50">Download</span>
-                  </b-dropdown-item>
-                </b-dropdown> -->
-
             <feather-icon
               @click="editRecord(data)"
               size="16"
@@ -285,6 +253,7 @@
     <b-modal id="modal-center-media" title="Download Image" hide-footer>
       <b-img
         class="w-100"
+        style="border: 1px solid red"
         :src="
           imageD.type === 'image/bmp' ||
           imageD.type === 'image/jpeg' ||
@@ -422,17 +391,7 @@ export default {
       progress: 0,
       imageD: "",
       server: {
-        process: (
-          fieldName,
-          file,
-          metadata,
-          load,
-          error,
-          progress,
-          abort,
-          transfer,
-          options
-        ) => {
+        process: (file, load, error, progress, abort) => {
           const formData = new FormData();
           formData.append("file", file);
           formData.append("companyId", router.currentRoute.params.id);
@@ -470,13 +429,7 @@ export default {
           key: "binaryId",
           label: "Media",
         },
-        // "Media",
-        // {
-        //   key: 'binaryId',
-        //   label: 'Binary Id',
-        //   sortable: true,
-        // },
-        // 'Notes',
+
         {
           key: "notes",
           label: "Notes",
@@ -543,20 +496,6 @@ export default {
         .then((response) => {
           this.items = response.data.elements;
 
-          // for(let i=0; i < response.data.elements.length; i++){
-          //   const data = JSON.parse(response.data.elements[i].binaryId);
-          //   var dotIndex = data.binaryId?.lastIndexOf(".");
-
-          //   var ext = data.binaryId?.substring(dotIndex);
-
-          //   self.images1[response.data.elements[i].id] = {
-          //   image: "",
-          //   type: ext.substr(1),
-          //   id: response.data.elements[i].id,
-          // };
-
-          // }
-
           // eslint-disable-next-line no-restricted-syntax
           for (const item of response.data.elements) {
             const data = JSON.parse(item.binaryId);
@@ -570,8 +509,6 @@ export default {
               type: ext.substr(1),
               id: item.id,
             };
-            // eslint-disable-next-line no-await-in-loop
-            // await this.getImage(JSON.parse(item.binaryId), item.id)
           }
 
           this.totalRecords = response.data.totalElements;
@@ -600,7 +537,7 @@ export default {
       await axios
         .post("/account/api/asset/create", postData)
         .then(async (response) => {
-          if (response.status === 201 || response.status === 200) {
+          if ([200, 201].includes(response.status)) {
             this.notes = "";
             this.showForm = false;
             await this.getAssets();
@@ -632,13 +569,10 @@ export default {
         this.makeToast("success", "Updated", "Asset Updated Successfully");
         await this.getAssets();
       }
-      // .catch(error => {
-      //   console.log(error.response)
-      //   this.makeToast('danger', error.response.data.errorCode, error.response.data.errorMessage)
-      // })
     },
     // eslint-disable-next-line consistent-return
     async getImage(data, id, temp) {
+      console.log("tep", temp);
       let val = JSON.parse(data);
       const self = this;
       await axios
@@ -707,12 +641,6 @@ export default {
               variant: "error",
             },
           });
-
-          // this.makeToast(
-          //   "danger",
-          //   error.response.data.errorCode,
-          //   error.response.data.errorMessage
-          // );
         });
     },
     //Image Details for Modal

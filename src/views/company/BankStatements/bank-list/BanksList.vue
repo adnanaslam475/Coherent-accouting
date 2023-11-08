@@ -32,11 +32,21 @@
             variant="primary"
             style="cursor: pointer"
             class="mr-1"
-            @click="showDatePickerModal"
+            @click="
+              selectAll && selectAll.length
+                ? exportByIds()
+                : showDatePickerModal()
+            "
             :disabled="!isActive"
             v-else
           >
-            {{ $t("company_invoices.Export_invoice") }}
+            {{
+              $t(
+                selectAll && selectAll.length
+                  ? "company_invoices.Export_invoice"
+                  : "company_invoices.Export_invoice_month"
+              )
+            }}
             <!-- Export Invoice -->
           </b-button>
 
@@ -344,8 +354,27 @@
           <span class="mr-25 align-middle">Export</span>
         </b-button>
       </template>
+      <!-- Column: CHECKBOXES -->
+      <template #head(id)>
+        <b-form-checkbox
+          :checked="
+            (isCheck === false ? fetchInvoices : invoices).length ==
+            selectAll.length
+          "
+          @change="
+            () => selectAllRows(isCheck === false ? fetchInvoices : invoices)
+          "
+        ></b-form-checkbox>
+      </template>
+      <template #cell(id)="data">
+        <b-form-checkbox
+          @change="() => selectSingle(data.item.id)"
+          :checked="!!selectAll.includes(data.item.id)"
+        ></b-form-checkbox>
+      </template>
+
       <!-- Column: Issued Date -->
-      <template #head(fromDate)> From Date </template>
+      <template #head(fromDate)> Fxrom Date </template>
 
       <template #cell(fromDate)="data">
         <b-link
@@ -545,6 +574,7 @@ export default {
   data() {
     return {
       options: [],
+      selectAll: [],
       selectedCompany: "",
       exportData: {},
       exporting: false,
@@ -684,7 +714,84 @@ export default {
     UploadFile() {
       this.$refs.add_invoice_modal.show();
     },
+    selectAllRows(all) {
+      if (this.selectAll.length && this.selectAll.length < all.length) {
+        this.selectAll = (all || []).map((v) => v.id);
+      } else if (this.selectAll.length) {
+        this.selectAll = [];
+      } else {
+        this.selectAll = (all || []).map((v) => v.id);
+      }
+    },
+    selectSingle(id) {
+      this.selectAll = this.selectAll.includes(id)
+        ? this.selectAll.filter((v) => v !== id)
+        : [...this.selectAll, id];
+    },
+    async exportByIds() {
+      let companyName = this.comp;
 
+      try {
+        await axios
+          .post(
+            "https://coherent-accounting.com/account/api/export-multiple-bank-statement",
+            {
+              companyId: router.currentRoute.params.id,
+              ids: this.selectAll,
+              platformName: this.platform,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("accessToken"),
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+              },
+              responseType: "blob",
+            }
+          )
+          .then(function (response) {
+            const dateString = new Date();
+            const date = new Date(dateString);
+            const options = {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            };
+            const formattedDate = date.toLocaleDateString("en-US", options);
+            const blobData = response.data;
+            const exportDataBlob = new Blob([blobData], {
+              type: blobData.type,
+            });
+            const url = window.URL.createObjectURL(exportDataBlob);
+            const link = document.createElement("a");
+            // saveAs(
+            //   blob,
+            //   `EIC_${companyName.companyIdentificationNumber}_DATE_${formattedDate}`
+            // );
+            let fileName = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`;
+            link.href = url;
+            if (blobData.type == "application/zip") {
+              link.setAttribute("download", fileName + ".zip"); // download as .zip
+            } else {
+              link.setAttribute("download", fileName + ".txt"); // download as .txt
+            }
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+          });
+      } catch (error) {
+        console.log("thissss", error.errorMessage);
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `${error.errorMessage}`,
+            icon: "DeleteIcon",
+            variant: "danger",
+          },
+        });
+      } finally {
+      }
+    },
     getMyCurrentPlan() {
       let token = useJwt.getToken();
       useJwt
