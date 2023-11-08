@@ -569,7 +569,7 @@
             ><img
               :src="require('@/assets/images/dummyInvoice.jpeg')"
               alt="cursor-pointer"
-              @mouseover="
+              @click="
                 isFetching
                   ? null
                   : getImage(data.item.binaryId, data.item.id, 2)
