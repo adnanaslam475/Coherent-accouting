@@ -89,7 +89,7 @@
             @show="resetModal"
             @ok="handleOk"
           >
-            <b-row class="text-center my-3">
+            <b-row class="text-center my-3" style="border: 2px solid rgb(64, 255, 0)">
               <b-col md="12">
                 <b-button
                   variant="primary"
@@ -174,6 +174,7 @@
 
           <b-modal
             id="modal-invoices-export"
+            style="border: 2px solid red"
             ref="modal_exportValue"
             :title="
               companyinfo &&
@@ -746,6 +747,7 @@
     <b-modal id="modal-center-media" title="Download Image" hide-footer>
       <b-img
         class="w-100"
+        style="border: 2px solid red"
         :src="
           imageD.type === 'image/bmp' ||
           imageD.type === 'image/jpeg' ||

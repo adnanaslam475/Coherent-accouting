@@ -373,7 +373,7 @@
       </template>
 
       <!-- Column: Issued Date -->
-      <template #head(fromDate)> Fxrom Date </template>
+      <template #head(fromDate)> From Date </template>
 
       <template #cell(fromDate)="data">
         <b-link
@@ -578,6 +578,7 @@ export default {
       exportData: {},
       exporting: false,
       EIC: "",
+      comp: {},
       isGeneric: false,
       exportFiles: null,
       fileLoadingExport: false,
@@ -729,7 +730,6 @@ export default {
     },
     async exportByIds() {
       let companyName = this.comp;
-
       try {
         await axios
           .post(
@@ -779,7 +779,6 @@ export default {
             link.remove();
           });
       } catch (error) {
-        console.log("thissss", error.errorMessage);
         this.$toast({
           component: ToastificationContent,
           props: {

@@ -476,7 +476,7 @@
         <div ref="loadMoreObserver"></div>
       </b-col>
     </b-row>
-    <b-modal id="modal-center-media" title="Download Image" hide-footer>
+    <b-modal id="modal-center-medias" title="Download Image" hide-footer>
       <b-img
         class="w-100"
         :src="
@@ -694,7 +694,7 @@ export default {
                 type: response.data.type,
               };
               self.imageD = self.images[id];
-              self.$bvModal.show("modal-center-media");
+              self.$bvModal.show("modal-center-medias");
             };
           } else {
             self.images[id] = {
