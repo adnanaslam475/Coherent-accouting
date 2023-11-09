@@ -597,17 +597,13 @@
                         name="transectionType"
                         rules="required"
                       >
-                        <b-form-select
-                          v-model="invoiceData.transactionType"
-                         
-                        >
-                        <b-form-select-option value="EXPENSE">{{
-                                    $t("company_invoices.EXPENSE")
-                                  }}</b-form-select-option>
-                                  <b-form-select-option value="INCOME">{{
-                                    $t("company_invoices.INCOME")
-                                  }}</b-form-select-option>
-                                
+                        <b-form-select v-model="invoiceData.transactionType">
+                          <b-form-select-option value="EXPENSE">{{
+                            $t("company_invoices.EXPENSE")
+                          }}</b-form-select-option>
+                          <b-form-select-option value="INCOME">{{
+                            $t("company_invoices.INCOME")
+                          }}</b-form-select-option>
                         </b-form-select>
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
@@ -664,7 +660,7 @@
                           <flat-pickr
                             v-model="invoiceData.dateIssued"
                             class="form-control invoice-edit-input invoice-input-top"
-                            placeholder="Select date: " 
+                            placeholder="Select date: "
                           />
 
                           <feather-icon
@@ -1168,7 +1164,9 @@
                   switch
                   :checked="hasBankDetails"
                 >
-                  <span class="switch-icon-left text-uppercase"> {{ $t("add_invoice.bank") }}</span>
+                  <span class="switch-icon-left text-uppercase">
+                    {{ $t("add_invoice.bank") }}</span
+                  >
                   <span class="switch-icon-right text-uppercase">
                     {{ $t("add_invoice.no_bank") }}
                   </span>
@@ -1572,7 +1570,9 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <h6 class="tm_mb2">
-                          <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
+                          <b class="tm_primary_color"
+                            >{{ $t("add_invoice.supplier") }}:</b
+                          >
                         </h6>
 
                         <validation-provider
@@ -1709,8 +1709,12 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
-                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}</span
+                          >
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -1947,8 +1951,12 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
-                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}</span
+                          >
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -2516,7 +2524,9 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
+                              ><b
+                                >{{ $t("add_invoice.non_vat_clause") }}:
+                              </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider
@@ -3023,7 +3033,9 @@
                     <div class="tm_invoice_head tm_mb10">
                       <div class="tm_invoice_left" style="width: 47%">
                         <h6 class="tm_mb2">
-                          <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
+                          <b class="tm_primary_color"
+                            >{{ $t("add_invoice.supplier") }}:</b
+                          >
                         </h6>
                         <validation-provider
                           #default="{ errors }"
@@ -3158,8 +3170,12 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }} </span>
-                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}
+                          </span>
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -3395,8 +3411,12 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }} </span>
-                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}
+                          </span>
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -3961,7 +3981,9 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
+                              ><b
+                                >{{ $t("add_invoice.non_vat_clause") }}:
+                              </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider
@@ -4469,7 +4491,9 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <h6 class="tm_mb2">
-                          <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
+                          <b class="tm_primary_color"
+                            >{{ $t("add_invoice.supplier") }}:</b
+                          >
                         </h6>
                         <validation-provider
                           #default="{ errors }"
@@ -4605,8 +4629,12 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
-                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}</span
+                          >
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
                       </div>
                       <div style="width: 6%"></div>
@@ -4843,8 +4871,12 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
-                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}</span
+                          >
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -5407,7 +5439,9 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
+                              ><b
+                                >{{ $t("add_invoice.non_vat_clause") }}:
+                              </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider
@@ -5934,7 +5968,9 @@
                       <!-- Supplier -->
                       <div class="tm_invoice_left" style="width: 47%">
                         <h6 class="tm_mb2">
-                          <b class="tm_primary_color">{{ $t("add_invoice.supplier") }}:</b>
+                          <b class="tm_primary_color"
+                            >{{ $t("add_invoice.supplier") }}:</b
+                          >
                         </h6>
                         <validation-provider
                           #default="{ errors }"
@@ -6071,8 +6107,12 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }}</span>
-                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}</span
+                          >
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
 
                         <!-- Recipient -->
@@ -6084,7 +6124,9 @@
                         style="width: 47%"
                       >
                         <h6 class="tm_mb2">
-                          <b class="tm_primary_color">{{ $t("add_invoice.recipient") }}:</b>
+                          <b class="tm_primary_color"
+                            >{{ $t("add_invoice.recipient") }}:</b
+                          >
                         </h6>
 
                         <!-- Company/Person Identification-->
@@ -6309,8 +6351,12 @@
                           name="check-button"
                           switch
                         >
-                          <span class="switch-icon-left text-uppercase">  {{ $t("add_invoice.vat") }} </span>
-                          <span class="switch-icon-right text-uppercase">  {{ $t("add_invoice.no_vat") }} </span>
+                          <span class="switch-icon-left text-uppercase">
+                            {{ $t("add_invoice.vat") }}
+                          </span>
+                          <span class="switch-icon-right text-uppercase">
+                            {{ $t("add_invoice.no_vat") }}
+                          </span>
                         </b-form-checkbox>
                       </div>
                     </div>
@@ -6875,7 +6921,9 @@
                             style="margin-top: 10px"
                           >
                             <span style="width: 60px"
-                              ><b>{{ $t("add_invoice.non_vat_clause") }}: </b></span
+                              ><b
+                                >{{ $t("add_invoice.non_vat_clause") }}:
+                              </b></span
                             >
                             <span style="width: 200px">
                               <validation-provider
@@ -7394,7 +7442,6 @@ import ToastificationContent from "@core/components/toastification/Toastificatio
 import TabList from "../TabList.vue";
 import axios from "@/libs/axios";
 
-
 export default {
   components: {
     BImg,
@@ -7407,7 +7454,7 @@ export default {
     BCardText,
     BForm,
     BFormSelect,
-    BFormSelectOption, 
+    BFormSelectOption,
     BFormGroup,
     BFormInput,
     BInputGroup,
@@ -7460,7 +7507,7 @@ export default {
       ],
       isBank: false,
       noVatClause: [
-      { clause: "чл.113 ал.9 от ЗДДС" },
+        { clause: "чл.113 ал.9 от ЗДДС" },
         { clause: "чл.140 ал.1 от ЗДДС" },
         { clause: "чл.86 ал.1 от ППЗДДС" },
         { clause: "чл.21 ал.2 от ЗДДС" },
@@ -7481,7 +7528,10 @@ export default {
         { clause: "фирмата не е регистрирана по ЗДДС" },
         { clause: "чл.29 ал.1 и ал.2 от ЗДДС" },
         { clause: "Облагане на марж - туристически услуги" },
-        { clause: "Облагане на марж - туристически у-ги и чл.29  ал.1 и 2 от ЗДДС" },
+        {
+          clause:
+            "Облагане на марж - туристически у-ги и чл.29  ал.1 и 2 от ЗДДС",
+        },
         { clause: "чл.47, т.2 от ЗДДС" },
         { clause: "чл.113, ал.3 от ЗДДС" },
         { clause: "чл.113, ал.3 от ЗДДС във връзка с чл. 10, ал.5 от ЗКПО" },
@@ -7523,7 +7573,6 @@ export default {
     window.removeEventListener("resize", this.initTrHeight);
   },
   methods: {
-  
     switchTemplates(val) {
       if (val === 1) {
         this.isTemplateOne = true;
@@ -7561,7 +7610,6 @@ export default {
         this.isTemplateFive = true;
         this.invoiceData.templateId = 5;
       }
-      
     },
     selectVatClause() {
       if (this.invoiceData.vatCondition === null) {
@@ -7735,7 +7783,7 @@ export default {
       { value: "лв.", text: "лв." },
       { value: "$", text: "$" },
       { value: "€", text: "€" },
-      { value: '£', text: '£' },
+      { value: "£", text: "£" },
     ];
     const transectionOptions = [
       { value: "INCOME", text: "INCOME" },
@@ -7780,8 +7828,6 @@ export default {
           console.log("original");
           isTemplateFive.value = true;
         }
-
-        
 
         invoiceData.value.supplierCompany = invoiceData?.value?.supplierCompany
           ? invoiceData.value.supplierCompany
@@ -8513,7 +8559,6 @@ export default {
   margin-top: 3px !important;
 }
 </style>
-
 
 <style lang="scss" scoped>
 /*--------------------------------------------------------------

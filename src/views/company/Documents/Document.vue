@@ -54,31 +54,6 @@
         </b-row>
       </b-form>
 
-      <!-- <b-form v-if="showEditForm" @submit.prevent="updateBinary">
-        <b-row>
-          <b-col class="pb-2" cols="12">
-            <b-input-group class="input-group-merge">
-              <b-form-textarea
-                v-model="asset.notes"
-                required
-                placeholder="Add notes about binary file"
-                rows="5"
-              />
-            </b-input-group>
-          </b-col>
-          <b-col
-            cols="12"
-            class="d-flex justify-content-end align-items-center mb-1"
-          >
-            <b-col cols="2">
-              <b-button small type="submit" variant="primary" block>
-                Update
-              </b-button>
-            </b-col>
-          </b-col>
-        </b-row>
-      </b-form> -->
-
       <!--Assets Table  -->
       <b-table
         :fields="fields"
@@ -389,9 +364,10 @@ export default {
       progress: 0,
       imageD: "",
       server: {
-        process: (file, load, error, progress, abort) => {
+        process: (file, load, error, progress, abort, ...o) => {
           const formData = new FormData();
-          formData.append("file", file);
+
+          formData.append("file", load);
           formData.append("companyId", router.currentRoute.params.id);
 
           const request = new XMLHttpRequest();

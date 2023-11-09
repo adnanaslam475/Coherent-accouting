@@ -21,7 +21,7 @@ export default function useInvoicesList() {
       label: "Description",
       sortable: true,
     },
-
+    { key: "image", label: "", sortable: false },
     { key: "exported", label: "Exported", sortable: true },
     { key: "export", label: "Export" },
 

@@ -17,6 +17,7 @@ export default function useInvoicesList() {
     { key: "toDate", label: "To Date", sortable: true },
     { key: "description", label: "Description", sortable: true },
 
+    { key: "img", sortable: false },
     { key: "exported", sortable: true },
 
     { key: "actions" },

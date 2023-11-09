@@ -186,7 +186,7 @@ export default {
       codeIcon,
       companyTab: this.$route.params.InvoiceId
         ? parseInt(this.$route.params.InvoiceId)
-        : 1,
+        : 0,
       invoiceTab: 0,
       addRecord: false,
       vatReportsTab: 0,
@@ -200,8 +200,6 @@ export default {
       blukStatementsActive: this.$route.params.InvoiceId == 4 ? true : false,
 
       vatReportsActive: this.$route.params.InvoiceId == 5 ? true : false,
-      // creditNotifications: this.$route.params.InvoiceId == 6 ? true : false,
-      // debitNotifications: this.$route.params.InvoiceId == 7 ? true : false,
 
       companyDocumentsActive: this.$route.params.InvoiceId == 6 ? true : false,
       privatePersonActive: this.$route.params.InvoiceId == 7 ? true : false,

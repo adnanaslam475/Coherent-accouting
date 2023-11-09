@@ -16,7 +16,6 @@
           :scrollable="false"
           :no-close-on-backdrop="true"
           no-close-on-esc
-
         >
           <template #modal-header="slotProps">
             <feather-icon
@@ -10810,21 +10809,24 @@ export default {
         } else {
           this.loading = true;
 
-          // if (!invoiceData.sechduled) {
-          //   invoiceData.cronScheduleApi = null
-
-          // }
           if (redirectPage == "verify") {
             invoiceData.verified = true;
           }
 
           let token = useJwt.getToken();
+          let temp = { ...invoiceData };
+          temp.transactions = temp.transactions.map((v) =>
+            v.transactionTotalAmount
+              ? { ...v, transactionTotalAmount: v.transactionTotalAmountNonVat }
+              : v
+          );
+          // console.log("invoiceData", temp);
           useJwt
             .EditCompanyInvoice(
               token,
               router.currentRoute.params.id,
               router.currentRoute.params.companyId,
-              invoiceData
+              temp
             )
             .then((response) => {
               this.loading = false;
@@ -10973,7 +10975,7 @@ export default {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
 
     function closeModel() {
-     store.commit("verticalMenu/SET_PREVENT_REFRESH", false);
+      store.commit("verticalMenu/SET_PREVENT_REFRESH", false);
       this.modelShow = false;
       this.$router.push({
         name: "CompanyView",

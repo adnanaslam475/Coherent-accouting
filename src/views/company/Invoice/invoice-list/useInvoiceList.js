@@ -63,7 +63,6 @@ export default function useInvoicesList() {
   );
 
   const fetchInvoices = (ctx, callback) => {
-    console.log("fetchInvoicess");
     store
 
       .dispatch("app-invoice/fetchInvoices", {

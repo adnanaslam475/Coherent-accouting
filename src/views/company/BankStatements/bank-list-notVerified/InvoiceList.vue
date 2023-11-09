@@ -203,6 +203,28 @@
           <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
+
+      <!-- Column: SEE IMAGE -->
+      <template #head(img)>
+        {{ $t("company_invoices.file") }}
+      </template>
+      <template #cell(img)="data">
+        <span class="text-nowrap">
+          <span v-if="false"> {{ data.value }}</span>
+          <span v-else
+            ><img
+              :src="require('@/assets/images/dummyInvoice.jpeg')"
+              alt="cursor-pointer"
+              @click="
+                isFetching
+                  ? null
+                  : getImage(data.item.binaryId, data.item.id, 2)
+              "
+              class="cursor-pointer"
+              style="height: 30px; width: 30px"
+          /></span>
+        </span>
+      </template>
       <template #head(exported)>
         {{ $t("company_invoices.Export_invoice") }}
       </template>
@@ -247,20 +269,6 @@
           <span class="text-nowrap">{{ data.value }}</span>
         </b-link>
       </template>
-      <!-- Column: Transaction type -->
-
-      <!-- Column: recipientCompany -->
-
-      <!-- Column: supplierCompany -->
-
-      <!-- Column: amount non vat -->
-
-      <!-- Column: currency -->
-      <!-- <template #cell(currency)="data">
-        <span class="text-nowrap">
-          {{ data.value }}
-        </span>
-      </template> -->
 
       <!-- Column: Actions -->
       <template #head(actions)>
@@ -336,34 +344,25 @@
       </b-col>
     </b-row>
     <!--  Loading Spinner Ends  -->
-
-    <!-- <div class="mx-2 mb-2">
-      <b-row>
-        <b-col cols="12" sm="6" class="
-            d-flex
-            align-items-center
-            justify-content-center justify-content-sm-start
-          ">
-          <span class="text-muted">Showing {{ dataMeta.from }} to {{ dataMeta.to }} of
-            {{ dataMeta.of }} entries</span>
-        </b-col> -->
-    <!-- Pagination -->
-    <!-- <b-col cols="12" sm="6" class="
-            d-flex
-            align-items-center
-            justify-content-center justify-content-sm-end
-          ">
-          <b-pagination v-if="totalInvoices > 0" v-model="currentPage" :total-rows="totalInvoices" :per-page="perPage" first-number last-number class="mb-0 mt-1 mt-sm-0" prev-class="prev-item" next-class="next-item">
-            <template #prev-text>
-              <feather-icon icon="ChevronLeftIcon" size="18" />
-            </template>
-            <template #next-text>
-              <feather-icon icon="ChevronRightIcon" size="18" />
-            </template>
-          </b-pagination>
-        </b-col>
-      </b-row>
-    </div> -->
+    <b-modal id="modal-center-media-ocr" title="Download Image" hide-footer>
+      <b-img
+        class="w-100"
+        :src="
+          imageD.type === 'image/bmp' ||
+          imageD.type === 'image/jpeg' ||
+          imageD.type === 'image/png'
+            ? imageD.image
+            : getMediaType(clickedImageType)
+        "
+      />
+      <b-link
+        class="btn btn-primary download-icon"
+        :download="imageD.name"
+        :href="imageD.image"
+      >
+        <feather-icon icon="DownloadIcon" size="30" class="text-danger" />
+      </b-link>
+    </b-modal>
   </b-card>
   <!--  Table Container Card Ends  -->
 </template>
@@ -391,6 +390,8 @@ import {
   BCardText,
   BAlert,
   VBToggle,
+  BImg,
+  BModal,
   BCardHeader,
   BFormFile,
   BSpinner,
@@ -441,6 +442,8 @@ export default {
     BCardHeader,
     InvoiceDownload,
     BFormFile,
+    BImg,
+    BModal,
     SvgIcon,
     BSpinner,
     BProgress,
@@ -457,12 +460,18 @@ export default {
       loadMore: false,
       startDate: "",
       endDate: "",
+      isFetching: false,
+      clickedImageType: "png",
       perPageRecords: 10,
       pageNum: 1,
       isCheck: false,
+      comp: {},
+      imageD: "",
       file: null,
       fileLoading: false,
       path: mdiTrayArrowUp,
+      images: [{ image: "", type: "", id: "" }],
+      images1: [],
       observer: null,
       multiplefile: null,
       multiplefileLoading: false,
@@ -497,6 +506,73 @@ export default {
   },
 
   methods: {
+    getMediaType(val) {
+      const mediaTypes = {
+        png: "jpg",
+        jpeg: "jpg",
+        jpg: "jpg",
+        rar: "zip",
+        zip: "zip",
+        xls: "xls",
+        xlsx: "xls",
+        sheet: "xls",
+        doc: "doc",
+        docx: "doc",
+        pdf: "pdf",
+        txt: "txt",
+      };
+
+      const source = mediaTypes[val?.toLowerCase() || ""] || "";
+
+      if (source !== "") {
+        return require(`@/assets/images/icons/${source}.png`);
+      }
+    },
+
+    async getImage(binaryId, id, temp) {
+      const self = this;
+      this.isFetching = true;
+      await axios
+        .get(
+          `${axios.defaults.baseURL}/binaries/api/get-binary/${binaryId}/${router.currentRoute.params.id}`,
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            const reader = new FileReader();
+            reader.readAsDataURL(response.data);
+
+            reader.onload = function () {
+              self.images[id] = {
+                image: reader.result,
+                name: id,
+                type: response.data.type,
+              };
+              self.imageD = self.images[id];
+              self.$bvModal.show("modal-center-media-ocr");
+            };
+          } else {
+            self.images[id] = {
+              image: "",
+              type: "",
+              name: id,
+            };
+          }
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "DeleteIcon",
+              variant: "error",
+            },
+          });
+        })
+        .finally(() => {
+          this.isFetching = false;
+        });
+    },
     getMyCurrentPlan() {
       let token = useJwt.getToken();
       useJwt

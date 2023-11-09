@@ -321,6 +321,28 @@
         </b-link>
       </template>
 
+      <!-- Column: amount non vat -->
+      <template #head(image)>
+        {{ $t("company_invoices.file") }}
+      </template>
+      <template #cell(image)="data">
+        <span class="text-nowrap">
+          <span v-if="false"> {{ data.value }}</span>
+          <span v-else
+            ><img
+              :src="require('@/assets/images/dummyInvoice.jpeg')"
+              alt="cursor-pointer"
+              @click="
+                isFetching
+                  ? null
+                  : getImage(data.item.binaryId, data.item.id, 2)
+              "
+              class="cursor-pointer"
+              style="height: 30px; width: 30px"
+          /></span>
+        </span>
+      </template>
+
       <!-- Column: exported  -->
       <template #head(exported)>
         {{ $t("company_invoices.Exported_invoice") }}
@@ -475,6 +497,25 @@
         <div ref="loadMoreObserver"></div>
       </b-col>
     </b-row>
+    <b-modal id="modal-center-media-state" title="Download Image" hide-footer>
+      <b-img
+        class="w-100"
+        :src="
+          imageD.type === 'image/bmp' ||
+          imageD.type === 'image/jpeg' ||
+          imageD.type === 'image/png'
+            ? imageD.image
+            : getMediaType(clickedImageType)
+        "
+      />
+      <b-link
+        class="btn btn-primary download-icon"
+        :download="imageD.name"
+        :href="imageD.image"
+      >
+        <feather-icon icon="DownloadIcon" size="30" class="text-danger" />
+      </b-link>
+    </b-modal>
   </b-card>
   <!--  Table Container Card Ends  -->
 </template>
@@ -505,6 +546,8 @@ import {
   BFormFile,
   BSpinner,
   BFormCheckbox,
+  BModal,
+  BImg,
 } from "bootstrap-vue";
 
 import { avatarText } from "@core/utils/filter";
@@ -555,6 +598,8 @@ export default {
     BTableLite,
     BCardText,
     BAlert,
+    BModal,
+    BImg,
     VBToggle,
     VueHtml2pdf,
     BCardHeader,
@@ -577,8 +622,10 @@ export default {
       selectedCompany: "",
       exportData: {},
       exporting: false,
+      isFetching: false,
       EIC: "",
       comp: {},
+      imageD: "",
       isGeneric: false,
       exportFiles: null,
       fileLoadingExport: false,
@@ -599,6 +646,7 @@ export default {
       fileLoading: false,
       path: mdiTrayArrowUp,
       observer: null,
+      clickedImageType: "png",
       loadModal: "Next",
       modalDisabledMonth: false,
       searchQuery: "", // assuming it's a string
@@ -612,6 +660,8 @@ export default {
         date: "",
         platformName: "",
       },
+      images: [{ image: "", type: "", id: "" }],
+      images1: [],
       invoicesForReport: [],
       selectedMonthData: {
         companyId: "85",
@@ -642,7 +692,6 @@ export default {
       ],
     };
   },
-  updated() {},
   watch: {
     startDate: function () {
       this.handleSearchSelect();
@@ -710,7 +759,72 @@ export default {
     selectCompanyHandler(v) {
       this.selectedCompany = v;
     },
+    getMediaType(val) {
+      const mediaTypes = {
+        png: "jpg",
+        jpeg: "jpg",
+        jpg: "jpg",
+        rar: "zip",
+        zip: "zip",
+        xls: "xls",
+        xlsx: "xls",
+        sheet: "xls",
+        doc: "doc",
+        docx: "doc",
+        pdf: "pdf",
+        txt: "txt",
+      };
 
+      const source = mediaTypes[val?.toLowerCase() || ""] || "";
+
+      if (source !== "") {
+        return require(`@/assets/images/icons/${source}.png`);
+      }
+    },
+    async getImage(binaryId, id, temp) {
+      const self = this;
+      this.isFetching = true;
+      await axios
+        .get(
+          `${axios.defaults.baseURL}/binaries/api/get-binary/${binaryId}/${router.currentRoute.params.id}`,
+          { responseType: "blob" }
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            const reader = new FileReader();
+            reader.readAsDataURL(response.data);
+
+            reader.onload = function () {
+              self.images[id] = {
+                image: reader.result,
+                name: id,
+                type: response.data.type,
+              };
+              self.imageD = self.images[id];
+              self.$bvModal.show("modal-center-media-state");
+            };
+          } else {
+            self.images[id] = {
+              image: "",
+              type: "",
+              name: id,
+            };
+          }
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error.response.data.errorMessage}`,
+              icon: "DeleteIcon",
+              variant: "error",
+            },
+          });
+        })
+        .finally(() => {
+          this.isFetching = false;
+        });
+    },
     UploadFile() {
       this.$refs.add_invoice_modal.show();
     },
@@ -757,28 +871,34 @@ export default {
               year: "numeric",
             };
             const formattedDate = date.toLocaleDateString("en-US", options);
-            const blobData = response.data;
-            const exportDataBlob = new Blob([blobData], {
-              type: blobData.type,
-            });
-            const url = window.URL.createObjectURL(exportDataBlob);
-            const link = document.createElement("a");
+            const blob = new Blob([response.data], { type: "text/csv" });
+
+            saveAs(blob, `EIC__BANK_STEMENT_DATE_${formattedDate}`);
+            // const blobData = response.data;
+            // const exportDataBlob = new Blob([blobData], {
+            //   type: blobData.type,
+            // });
+            // const url = window.URL.createObjectURL(exportDataBlob);
+            // const link = document.createElement("a");
+
             // saveAs(
             //   blob,
             //   `EIC_${companyName.companyIdentificationNumber}_DATE_${formattedDate}`
             // );
-            let fileName = `EIC_${companyName.companyIdentificationNumber}_date_${formattedDate}`;
-            link.href = url;
-            if (blobData.type == "application/zip") {
-              link.setAttribute("download", fileName + ".zip"); // download as .zip
-            } else {
-              link.setAttribute("download", fileName + ".txt"); // download as .txt
-            }
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+            // ${companyName.companyIdentificationNumber}
+            // let fileName = `EIC_Bank_statement_date_${formattedDate}`;
+            // link.href = url;
+            // if (blobData.type == "application/zip") {
+            //   link.setAttribute("download", fileName + ".zip"); // download as .zip
+            // } else {
+            //   link.setAttribute("download", fileName + ".txt"); // download as .txt
+            // }
+            // document.body.appendChild(link);
+            // link.click();
+            // link.remove();
           });
       } catch (error) {
+        console.log("erere", error);
         this.$toast({
           component: ToastificationContent,
           props: {

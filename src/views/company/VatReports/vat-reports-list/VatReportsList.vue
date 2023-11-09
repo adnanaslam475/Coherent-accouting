@@ -222,7 +222,10 @@
           <div class="mb-1 start-chat-icon">
             <feather-icon icon="FolderIcon" size="40" />
           </div>
-          <h5 class="sidebar-toggle start-chat-text">No records found</h5>
+          <h5 class="sidebar-toggle start-chat-text">
+            No records found
+            <!-- dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
+          </h5>
         </div>
       </template>
 
