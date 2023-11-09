@@ -51,35 +51,31 @@ export default {
     },
   },
   mounted() {
-    console.log("axios.defaults.baseURL", axios.defaults.baseURL);
     axios
       .get(`${axios.defaults.baseURL}/account/api/maintenance/health`)
       .then((res) => {
-        console.log("ss2", res.data);
         this.isUnderMaintenance =
           res.status == 500 || res.data.isUnderMaintenance;
         if (res.status == 500 || res.data.isUnderMaintenance) {
-          // router.push("/under-maintenance");
+          router.push("/under-maintenance");
         }
       })
       .catch(() => {
         this.isUnderMaintenance = true;
-        // router.push("/under-maintenance");
+        router.push("/under-maintenance");
       });
     axios
       .get(`${axios.defaults.baseURL}/index/api/maintenance/health`)
       .then((res) => {
-        console.log("ss2s", res.data);
         if (
           this.isUnderMaintenance &&
           (res.data.isUnderMaintenance || res.status == 500)
         ) {
-          // router.push("/under-maintenance");
+          router.push("/under-maintenance");
         }
       })
       .catch(() => {
-        // if (this.isUnderMaintenance)
-        // router.push("/under-maintenance");
+        router.push("/under-maintenance");
       });
   },
 

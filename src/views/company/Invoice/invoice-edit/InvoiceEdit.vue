@@ -11580,12 +11580,24 @@ export default {
             this.isSyncing = false;
           });
       } else {
+        let temp = { ...invoiceData.value };
+        temp.transactions = temp.transactions.map((v) =>
+          v.transactionTotalAmount
+            ? {
+                ...v,
+                transactionTotalAmount: +v.singleAmountTransaction * v.quantity,
+                transactionTotalAmountNonVat:+v.singleAmountTransaction * v.quantity
+              }
+            : v
+        );
+        // console.log("syncWithQuickBook", temp);
         useJwt
           .syncWithQuickBook(
             token,
             router.currentRoute.params.id,
             router.currentRoute.params.companyId,
-            invoiceData.value
+            // invoiceData.value
+            temp
           )
           .then((res) => {
             this.$toast({

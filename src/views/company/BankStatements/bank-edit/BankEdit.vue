@@ -747,6 +747,8 @@
                     "
                   >
                     <b-spinner v-if="loading" small variant="light" />
+
+                    <!-- // Approve btn -->
                     {{ $t("add_invoice.verify") }}
                   </b-button>
                   <b-button
@@ -1061,13 +1063,7 @@ export default {
           .EditBankStatement(token, router.currentRoute.params.id, invoiceData)
           .then((response) => {
             this.loading = false;
-            // invoice.cronScheduleApi = {
 
-            //   scheduleType: "",
-            //   dayOfWeek: null,
-            //   dayOfMonth: null,
-
-            // };
             this.$toast({
               component: ToastificationContent,
               props: {
@@ -1078,19 +1074,22 @@ export default {
             });
 
             if (redirectPage == "invoices") {
+              console.log("one1------", router.currentRoute.params);
               return this.$router.push({
                 name: "CompanyView",
                 params: {
                   id: router.currentRoute.params.companyId,
-                  InvoiceId: 1,
+                  InvoiceId: 4,
+                  // InvoiceId: 5,
                 },
               });
             } else if (redirectPage == "verify") {
+              console.log("one2------", router.currentRoute.params);
               return this.$router.push({
                 name: "CompanyView",
                 params: {
                   id: router.currentRoute.params.companyId,
-                  InvoiceId: 2,
+                  InvoiceId: 4,
                 },
               });
             } else {
@@ -1291,7 +1290,6 @@ export default {
 
         invoiceData.value = response.data;
 
-        console.log(invoiceData.value);
         if (invoiceData.value.platform == "XERO") {
           axios
             .get(
