@@ -10815,12 +10815,13 @@ export default {
 
           let token = useJwt.getToken();
           let temp = { ...invoiceData };
-          temp.transactions = temp.transactions.map((v) =>
-            v.transactionTotalAmount
-              ? { ...v, transactionTotalAmount: v.transactionTotalAmountNonVat }
-              : v
-          );
-          // console.log("invoiceData", temp);
+          temp.transactions = temp.transactions.map((v) => ({
+            ...v,
+            transactionTotalAmount:
+              +v.singleAmountTransaction * v.quantity + v.vatAmountTransaction,
+            transactionTotalAmountNonVat:
+              +v.singleAmountTransaction * v.quantity,
+          }));
           useJwt
             .EditCompanyInvoice(
               token,
@@ -11581,16 +11582,12 @@ export default {
           });
       } else {
         let temp = { ...invoiceData.value };
-        temp.transactions = temp.transactions.map((v) =>
-          v.transactionTotalAmount
-            ? {
-                ...v,
-                transactionTotalAmount: +v.singleAmountTransaction * v.quantity,
-                transactionTotalAmountNonVat:+v.singleAmountTransaction * v.quantity
-              }
-            : v
-        );
-        // console.log("syncWithQuickBook", temp);
+        temp.transactions.map((v) => ({
+          ...v,
+          transactionTotalAmount:
+            +v.singleAmountTransaction * v.quantity + v.vatAmountTransaction,
+          transactionTotalAmountNonVat: +v.singleAmountTransaction * v.quantity,
+        }));
         useJwt
           .syncWithQuickBook(
             token,
