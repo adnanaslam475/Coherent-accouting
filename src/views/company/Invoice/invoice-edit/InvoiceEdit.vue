@@ -15,6 +15,8 @@
           :hide-footer="true"
           :scrollable="false"
           :no-close-on-backdrop="true"
+          no-close-on-esc
+
         >
           <template #modal-header="slotProps">
             <feather-icon

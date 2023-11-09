@@ -1,19 +1,9 @@
 <template>
   <div>
     <b-card>
-      <b-col
-        v-if="!showForm"
-        cols="12"
-        class="d-flex justify-content-end align-items-center mb-1"
-      >
+      <b-col v-if="!showForm" cols="12" class="d-flex justify-content-end align-items-center mb-1">
         <b-col cols="2">
-          <b-button
-            small
-            type="button"
-            variant="primary"
-            block
-            @click="showForm = true"
-          >
+          <b-button small type="button" variant="primary" block @click="showForm = true">
             {{ $t("company_documents.add_asset") }}
           </b-button>
         </b-col>
@@ -23,28 +13,14 @@
         <b-row>
           <b-col class="pb-2" cols="12">
             <b-input-group class="input-group-merge">
-              <b-form-textarea
-                v-model="notes"
-                placeholder="Add notes about binary file"
-                rows="5"
-              />
+              <b-form-textarea v-model="notes" placeholder="Add notes about binary file" rows="5" />
             </b-input-group>
           </b-col>
           <b-col cols="12">
-            <file-pond
-              ref="pond"
-              required
-              name="file"
-              label-idle="Drop files here..."
-              :allow-multiple="false"
-              :files="myFiles"
-              :server="server"
-            />
+            <file-pond ref="pond" required name="file" label-idle="Drop files here..." :allow-multiple="false"
+              :files="myFiles" :server="server" />
           </b-col>
-          <b-col
-            cols="12"
-            class="d-flex justify-content-end align-items-center mb-1"
-          >
+          <b-col cols="12" class="d-flex justify-content-end align-items-center mb-1">
             <b-col cols="2">
               <b-button small type="submit" variant="primary" block>
                 {{ $t("company_documents.create") }}
@@ -80,15 +56,8 @@
       </b-form> -->
 
       <!--Assets Table  -->
-      <b-table
-        :fields="fields"
-        :items="items"
-        responsive
-        class="mb-0"
-        show-empty
-        empty-text="No matching records found"
-        @sort-changed="checkStatus"
-      >
+      <b-table :fields="fields" :items="items" responsive class="mb-0" show-empty empty-text="No matching records found"
+        @sort-changed="checkStatus">
         <template #empty="scope">
           <div class="d-flex align-items-center justify-content-center">
             <div class="mb-1 start-chat-icon">
@@ -103,22 +72,16 @@
           {{ $t("company_documents.media") }}
         </template>
         <template #cell(binaryId)="data">
-          <div>
-            <b-img
-              :key="images.length + '-' + !!images[data.item.id]"
-              class="hover-img border-2"
-              blank-color="#ccc"
-              :src="getMediaType(images1[data.item.id].type)"
-              rounded
-              style="width: 60px; height: 70px"
-              @click="
+
+          <div  >
+            <b-img class="hover-img border-2" blank-color="#ccc" :src="'data:image/png;base64,' + data.item.body" rounded
+              style="width: 60px; height: 70px" @click="
                 showImageDetail(
                   data.item.binaryId,
                   data.item.id,
                   images1[data.item.id].type
                 )
-              "
-            />
+                " />
           </div>
         </template>
 
@@ -129,19 +92,10 @@
         <template #cell(notes)="data">
           <b-row v-if="asset.id === data.item.id" class="w-100">
             <b-col cols="10">
-              <b-form-input
-                :id="'notes-' + data.item.id"
-                v-model="data.item.notes"
-                type="text"
-                name="notes"
-              />
+              <b-form-input :id="'notes-' + data.item.id" v-model="data.item.notes" type="text" name="notes" />
             </b-col>
             <b-col cols="2">
-              <b-button
-                v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                variant="success"
-                @click="updateBinary"
-              >
+              <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="success" @click="updateBinary">
                 <feather-icon icon="CheckCircleIcon" />
               </b-button>
             </b-col>
@@ -157,88 +111,40 @@
         </template>
         <template #cell(actions)="data" style="text-align: center !important">
           <div class="d-flex">
-            <feather-icon
-              icon="EyeIcon"
-              size="16"
-              class="mr-1"
-              :id="`preview-${data.item.id}-icon`"
-              style="cursor: pointer"
-              @click="
+            <feather-icon icon="EyeIcon" size="16" class="mr-1" :id="`preview-${data.item.id}-icon`"
+              style="cursor: pointer" @click="
                 showImageDetail(
                   data.item.binaryId,
                   data.item.id,
                   images1[data.item.id].type
                 )
-              "
-            />
-            <b-tooltip
-              :title="$t('company_documents.preview')"
-              :target="`preview-${data.item.id}-icon`"
-            />
+                " />
+            <b-tooltip :title="$t('company_documents.preview')" :target="`preview-${data.item.id}-icon`" />
 
-            <feather-icon
-              @click="editRecord(data)"
-              size="16"
-              class="mr-1"
-              :id="`edit-${data.item.id}-icon`"
-              icon="EditIcon"
-              style="cursor: pointer"
-            />
-            <b-tooltip
-              :title="$t('company_documents.edit')"
-              :target="`edit-${data.item.id}-icon`"
-            />
+             
 
-            <feather-icon
-              @click="showMsgBoxTwo(data.item.binaryId)"
-              size="16"
-              class="mr-1"
-              :id="`delete-${data.item.id}-icon`"
-              icon="TrashIcon"
-              style="cursor: pointer"
-            />
-            <b-tooltip
-              :title="$t('company_documents.delete')"
-              :target="`delete-${data.item.id}-icon`"
-            />
-            <feather-icon
-              v-if="images1[data.item.id]"
-              @click="getImage(data.item.binaryId, data.item.id, 1)"
-              size="16"
-              :href="images1[data.item.id].image"
-              :id="`download-${data.item.id}-icon`"
-              icon="DownloadIcon"
-              style="cursor: pointer"
-            />
-            <b-tooltip
-              v-if="images1[data.item.id]"
-              :title="$t('company_documents.download')"
-              :target="`download-${data.item.id}-icon`"
-            />
+            <feather-icon @click="editRecord(data)" size="16" class="mr-1" :id="`edit-${data.item.id}-icon`"
+              icon="EditIcon" style="cursor: pointer" />
+            <b-tooltip :title="$t('company_documents.edit')" :target="`edit-${data.item.id}-icon`" />
+
+            <feather-icon @click="showMsgBoxTwo(data.item.binaryId)" size="16" class="mr-1"
+              :id="`delete-${data.item.id}-icon`" icon="TrashIcon" style="cursor: pointer" />
+            <b-tooltip :title="$t('company_documents.delete')" :target="`delete-${data.item.id}-icon`" />
+            <feather-icon v-if="images1[data.item.id]" @click="getImage(data.item.binaryId, data.item.id, 1)" size="16"
+              :href="images1[data.item.id].image" :id="`download-${data.item.id}-icon`" icon="DownloadIcon"
+              style="cursor: pointer" />
+            <b-tooltip v-if="images1[data.item.id]" :title="$t('company_documents.download')"
+              :target="`download-${data.item.id}-icon`" />
           </div>
         </template>
       </b-table>
 
       <!-- Pagination -->
       <b-row>
-        <b-col
-          cols="12"
-          sm="6"
-          class="d-flex align-items-center justify-content-center justify-content-sm-end"
-        >
-          <b-pagination
-            v-if="items.length > 0"
-            v-model="currentPage"
-            :total-rows="totalRecords"
-            :per-page="perPage"
-            first-number
-            last-number
-            class="mb-0 mt-1 mt-sm-0"
-            prev-class="prev-item"
-            next-class="next-item"
-            prev-text
-            @input="getAssets"
-          >
+        <b-col cols="12" sm="6" class="d-flex align-items-center justify-content-center justify-content-sm-end">
+          <b-pagination v-if="items.length > 0" v-model="currentPage" :total-rows="totalRecords" :per-page="perPage"
+            first-number last-number class="mb-0 mt-1 mt-sm-0" prev-class="prev-item" next-class="next-item" prev-text
+            @input="getAssets">
             <template #prev-text>
               <feather-icon icon="ChevronLeftIcon" size="18" />
             </template>
@@ -251,34 +157,20 @@
     </b-card>
 
     <b-modal id="modal-center-media" title="Download Image" hide-footer>
-      <b-img
-        class="w-100"
-        style="border: 1px solid red"
-        :src="
-          imageD.type === 'image/bmp' ||
-          imageD.type === 'image/jpeg' ||
-          imageD.type === 'image/png'
-            ? imageD.image
-            : getMediaType(clickedImageType)
-        "
-      />
-      <b-link
-        class="btn btn-primary download-icon"
-        :download="imageD.name"
-        :href="imageD.image"
-      >
+      <b-img class="w-100" :src="imageD.type === 'image/bmp' ||
+        imageD.type === 'image/jpeg' ||
+        imageD.type === 'image/png'
+        ? imageD.image
+        : getMediaType(clickedImageType)
+        " />
+      <b-link class="btn btn-primary download-icon" :download="imageD.name" :href="imageD.image">
         <feather-icon icon="DownloadIcon" size="30" class="text-danger" />
       </b-link>
     </b-modal>
 
     <!-- delete Confirmation Modal -->
-    <b-modal
-      v-model="deleteModalShow"
-      :title="$t('company_documents.delete_doc')"
-      :ok-title="$t('companies.confirm')"
-      :cancel-title="$t('clients_or_recipients.cancel')"
-      @ok="deleteAsset(documentToDelete)"
-    >
+    <b-modal v-model="deleteModalShow" :title="$t('company_documents.delete_doc')" :ok-title="$t('companies.confirm')"
+      :cancel-title="$t('clients_or_recipients.cancel')" @ok="deleteAsset(documentToDelete)">
       <b-card-text class="text-center" style="font-size: 15px">
         {{ $t("company_documents.delete_confirmation") }}
       </b-card-text>
@@ -446,7 +338,6 @@ export default {
   mounted() {
     this.getAssets();
   },
-
   methods: {
     //getting media icons
     getMediaType(val) {

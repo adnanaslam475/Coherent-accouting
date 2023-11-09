@@ -379,11 +379,12 @@
       responsive
       primary-key="id"
       :sort-by.sync="sortBy"
-      show-empty
       empty-text="No matching records found"
       :sort-desc.sync="isSortDirDesc"
       class="position-relative invoiceList h-100"
       id="company-invoices"
+      :select-mode="selectMode"
+      v-model="selectedItems"
     >
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
@@ -393,6 +394,19 @@
           <h5 class="sidebar-toggle start-chat-text">No records found</h5>
         </div>
       </template>
+      <template #head(select)>
+        <b-form-checkbox v-model="selectAll"></b-form-checkbox>
+      </template>
+      <!-- <template slot="head()">
+        <b-table-sticky-head>
+          <b-tr>
+            <b-th>
+              <b-form-checkbox v-model="selectAll" @change="selectAllRows"></b-form-checkbox>
+            </b-th>
+
+          </b-tr>
+        </b-table-sticky-head>
+      </template> -->
 
       <template #head(invoiceStatus)>
         <feather-icon icon="TrendingUpIcon" class="mx-auto" />
@@ -850,6 +864,7 @@ export default {
     return {
       selectAll: [],
       selected: {},
+      selectedItems: [],
       EIC: "",
       exportFiles: null,
       fileLoadingExport: false,
@@ -1786,7 +1801,8 @@ export default {
       ? router.currentRoute.params.companyId
       : router.currentRoute.params.id;
     return {
-      ...("" ? fetchInvoices : fetchInvoices),
+      // ...("" ? fetchInvoices : fetchInvoices),
+      fetchInvoices,
       tableColumns,
       perPage,
       currentPage,
