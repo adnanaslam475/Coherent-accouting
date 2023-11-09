@@ -1,6 +1,6 @@
 <template>
   <div class="tabs tabs-hide-print">
-    <b-nav tabs align="left" style="font-size: 0.8vw !important">
+    <b-nav tabs style="font-size: 0.8vw !important">
       <b-nav-item
         :to="{
           name: 'CompanyView',
@@ -96,7 +96,6 @@ export default {
     };
   },
   created() {
-    console.log("tablist.vue render");
     this.companyID = this.$route.params.companyId;
     this.getCompanyInfo();
   },

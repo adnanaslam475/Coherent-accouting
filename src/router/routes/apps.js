@@ -245,3 +245,10 @@ export default [
       import("@/views/apps/invoice/invoice-edit/InvoiceEdit.vue"),
   },
 ];
+// quicbok
+// ivan.ivanov.ivanov.vt@gmail.com
+// pass 123Sladoled!
+
+// xero creds
+// barbara@abv.bg
+// Coh@1234

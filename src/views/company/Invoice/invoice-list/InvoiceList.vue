@@ -780,6 +780,7 @@ import {
   BImg,
   BFormCheckbox,
 } from "bootstrap-vue";
+import { mapGetters } from "vuex";
 import { avatarText } from "@core/utils/filter";
 import vSelect from "vue-select";
 import { onUnmounted } from "@vue/composition-api";
@@ -961,11 +962,13 @@ export default {
     }, 1500);
     this.observeScroll();
 
-    this.getCompany();
     this.getMyCurrentPlan();
+
+    this.getCompany();
   },
-  updated() {},
+
   computed: {
+    ...mapGetters("verticalMenu", ["getRefresh"]),
     monthLabels() {
       let arr = [
         this.$t("months.Jan"),
@@ -1135,7 +1138,7 @@ export default {
       try {
         await axios
           .post(
-            "https://coherent-accounting.com/account/api/export-by-ids",
+            `${axios.defaults.baseURL}/account/api/export-by-ids`,
             {
               companyId: router.currentRoute.params.id,
               ids: this.selectAll,
@@ -1234,7 +1237,7 @@ export default {
       try {
         await axios
           .post(
-            "https://coherent-accounting.com/account/api/export",
+            `${axios.defaults.baseURL}/account/api/export`,
             this.exportDto,
             {
               headers: {
@@ -1412,6 +1415,11 @@ export default {
             this.endDate === "" &&
             this.searchQuery === ""
           ) {
+            // console.log("awaithandleasearch");
+            // if (!this.getRefresh) {
+            //   store.commit("verticalMenu/SET_PREVENT_REFRESH", true);
+            //   // return;
+            // }
             await this.handleSearchSelect();
           } else {
             await this.searchInvoices();
@@ -1453,7 +1461,7 @@ export default {
         },
       };
       this.companyId = router.currentRoute.params.id;
-      const data = await axios
+      await axios
         .post(
           `/account/api/invoice/search/${this.companyId}/1/${this.perPageRecords}`,
           data1,
@@ -1461,6 +1469,7 @@ export default {
         )
         .then((res) => {
           this.invoices = res.data.elements;
+          store.commit("verticalMenu/SET_INVOICES", res.data.elements);
           tableAreaBusy.style.opacity = "1";
           this.loadMore = false;
         });
@@ -1620,7 +1629,7 @@ export default {
         });
     },
 
-    invoiceDelete(id, refetchData) {
+    invoiceDelete(id) {
       const token = useJwt.getToken();
       useJwt
         .DeleteCompanyInvoice(token, id)
@@ -1777,7 +1786,7 @@ export default {
       ? router.currentRoute.params.companyId
       : router.currentRoute.params.id;
     return {
-      fetchInvoices,
+      ...("" ? fetchInvoices : fetchInvoices),
       tableColumns,
       perPage,
       currentPage,

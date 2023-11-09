@@ -270,7 +270,6 @@
       </b-col>
     </b-row>
     <!--  Error Message Starts  -->
-
     <!--  Table Starts  -->
 
     <b-table
@@ -734,7 +733,7 @@ export default {
       try {
         await axios
           .post(
-            "https://coherent-accounting.com/account/api/export-multiple-bank-statement",
+            `${axios.defaults.baseURL}/account/api/export-multiple-bank-statement`,
             {
               companyId: router.currentRoute.params.id,
               ids: this.selectAll,
@@ -850,7 +849,7 @@ export default {
     async exportRequestApiHandler() {
       this.exporting = true;
       const { data } = await axios.post(
-        "https://coherent-accounting.com/account/api/export-single-bank-statement",
+        `${axios.defaults.baseURL}/account/api/export-single-bank-statement`,
         {
           companyId: this.exportData.companyId,
           id: this.exportData.id,
@@ -967,7 +966,7 @@ export default {
       try {
         await axios
           .post(
-            "https://coherent-accounting.com/account/api/export-bank-statements",
+            `${axios.defaults.baseURL}/account/api/export-bank-statements`,
             payload,
             {
               headers: {

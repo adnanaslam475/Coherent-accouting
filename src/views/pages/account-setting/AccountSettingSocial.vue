@@ -4,22 +4,14 @@
       <b-row>
         <b-col cols="12">
           <div class="d-flex align-items-center mb-2">
-            <feather-icon
-              icon="LinkIcon"
-              size="18"
-            />
-            <h4 class="mb-0 ml-75">
-              Social Links
-            </h4>
+            <feather-icon icon="LinkIcon" size="18" />
+            <h4 class="mb-0 ml-75">Social Links</h4>
           </div>
         </b-col>
 
         <!-- twitter -->
         <b-col md="6">
-          <b-form-group
-            label-for="account-twitter"
-            label="Twitter"
-          >
+          <b-form-group label-for="account-twitter" label="Twitter">
             <b-form-input
               id="account-twitter"
               v-model="localOptions.socialLinks.twitter"
@@ -31,10 +23,7 @@
 
         <!-- facebook -->
         <b-col md="6">
-          <b-form-group
-            label-for="account-facebook"
-            label="Facebook"
-          >
+          <b-form-group label-for="account-facebook" label="Facebook">
             <b-form-input
               id="account-facebook"
               v-model="localOptions.socialLinks.facebook"
@@ -46,10 +35,7 @@
 
         <!-- google+ -->
         <b-col md="6">
-          <b-form-group
-            label-for="account-google"
-            label="Google+"
-          >
+          <b-form-group label-for="account-google" label="Google+">
             <b-form-input
               id="account-google"
               v-model="localOptions.socialLinks.google"
@@ -61,10 +47,7 @@
 
         <!-- linkedin -->
         <b-col md="6">
-          <b-form-group
-            label-for="account-linkedin"
-            label="LinkedIn"
-          >
+          <b-form-group label-for="account-linkedin" label="LinkedIn">
             <b-form-input
               id="account-linkedin"
               v-model="localOptions.socialLinks.linkedIn"
@@ -76,10 +59,7 @@
 
         <!-- instagram -->
         <b-col md="6">
-          <b-form-group
-            label="Instagram"
-            label-for="account-instagram"
-          >
+          <b-form-group label="Instagram" label-for="account-instagram">
             <b-form-input
               id="account-instagram"
               v-model="localOptions.socialLinks.instagram"
@@ -91,10 +71,7 @@
 
         <!-- quora -->
         <b-col md="6">
-          <b-form-group
-            label-for="account-quora"
-            label="Quora"
-          >
+          <b-form-group label-for="account-quora" label="Quora">
             <b-form-input
               id="account-quora"
               v-model="localOptions.socialLinks.quora"
@@ -105,33 +82,19 @@
         <!--/ quora -->
 
         <b-col cols="12">
-          <hr class="my-2">
+          <hr class="my-2" />
         </b-col>
 
         <!-- Profile Connections -->
-        <b-col
-          cols="12"
-          class="mt-1"
-        >
+        <b-col cols="12" class="mt-1">
           <div class="d-flex align-items-center mb-3">
-            <feather-icon
-              icon="UserIcon"
-              size="18"
-            />
-            <h4 class="mb-0 ml-75">
-              Profile Connections
-            </h4>
+            <feather-icon icon="UserIcon" size="18" />
+            <h4 class="mb-0 ml-75">Profile Connections</h4>
           </div>
           <b-row class="text-center">
             <!-- twitter profile -->
-            <b-col
-              md="3"
-              cols="6"
-              class="mb-1"
-            >
-              <b-card-text class="font-weight-bold">
-                Your Twitter
-              </b-card-text>
+            <b-col md="3" cols="6" class="mb-1">
+              <b-card-text class="font-weight-bold"> Your Twitter </b-card-text>
               <div class="mb-1">
                 <b-avatar
                   size="40"
@@ -141,18 +104,12 @@
               <b-card-text class="mb-0">
                 @{{ localOptions.connections.twitter.id }}
               </b-card-text>
-              <b-link>
-                Disconnect
-              </b-link>
+              <b-link> Disconnect </b-link>
             </b-col>
             <!--/ twitter profile -->
 
             <!-- facebook connect button -->
-            <b-col
-              md="3"
-              cols="6"
-              class="mb-1"
-            >
+            <b-col md="3" cols="6" class="mb-1">
               <b-card-text class="font-weight-bold mb-2">
                 Your Facebook
               </b-card-text>
@@ -166,14 +123,8 @@
             <!--/ facebook connect button -->
 
             <!-- google profile -->
-            <b-col
-              md="3"
-              cols="6"
-              class="mb-1"
-            >
-              <b-card-text class="font-weight-bold">
-                Your Google
-              </b-card-text>
+            <b-col md="3" cols="6" class="mb-1">
+              <b-card-text class="font-weight-bold"> Your Google </b-card-text>
               <div class="mb-1">
                 <b-avatar
                   size="40"
@@ -183,18 +134,12 @@
               <b-card-text class="mb-0">
                 @{{ localOptions.connections.google.id }}
               </b-card-text>
-              <b-link>
-                Disconnect
-              </b-link>
+              <b-link> Disconnect </b-link>
             </b-col>
             <!--/ google profile -->
 
             <!-- github connect -->
-            <b-col
-              md="3"
-              cols="6"
-              class="mb-1"
-            >
+            <b-col md="3" cols="6" class="mb-1">
               <b-card-text class="font-weight-bold mb-2">
                 Your GitHub
               </b-card-text>
@@ -236,9 +181,18 @@
 
 <script>
 import {
-  BButton, BForm, BFormGroup, BFormInput, BRow, BCol, BCard, BCardText, BLink, BAvatar,
-} from 'bootstrap-vue'
-import Ripple from 'vue-ripple-directive'
+  BButton,
+  BForm,
+  BFormGroup,
+  BFormInput,
+  BRow,
+  BCol,
+  BCard,
+  BCardText,
+  BLink,
+  BAvatar,
+} from "bootstrap-vue";
+import Ripple from "vue-ripple-directive";
 
 export default {
   components: {
@@ -265,12 +219,12 @@ export default {
   data() {
     return {
       localOptions: JSON.parse(JSON.stringify(this.socialData)),
-    }
+    };
   },
   methods: {
     resetForm() {
-      this.localOptions = JSON.parse(JSON.stringify(this.socialData))
+      this.localOptions = JSON.parse(JSON.stringify(this.socialData));
     },
   },
-}
+};
 </script>

@@ -5,7 +5,11 @@
       <!-- Table Top -->
       <b-row>
         <!-- Per Page -->
-        <b-col cols="12" md="6" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
+        <b-col
+          cols="12"
+          md="6"
+          class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
+        >
           <!-- <label>Entries</label>
           <v-select
             v-model="perPage"
@@ -14,26 +18,45 @@
             :clearable="false"
             class="per-page-selector d-inline-block ml-50 mr-1"
           /> -->
-          <b-button variant="primary" class="mr-1" :to="{
-            name: 'company-invoice-add',
-            params: {
-              companyId: $route.params.companyId
-                ? $route.params.companyId
-                : $route.params.id,
-            },
-          }" @click="actionTab">
+          <b-button
+            variant="primary"
+            class="mr-1"
+            :to="{
+              name: 'company-invoice-add',
+              params: {
+                companyId: $route.params.companyId
+                  ? $route.params.companyId
+                  : $route.params.id,
+              },
+            }"
+            @click="actionTab"
+          >
             {{ $t("company_invoices.add_invoice") }}
             <!-- Add Invoice -->
           </b-button>
           <b-button variant="primary" class="mr-1 position-relative p-set">
-            <b-form-file v-model="file" class="file-input" @input="addfile(companyId)" />
+            <b-form-file
+              v-model="file"
+              class="file-input"
+              @input="addfile(companyId)"
+            />
 
             <b-spinner v-if="fileLoading" small variant="light" />
             {{ $t("company_invoices.add_from_file") }}
             <!-- Add From File -->
-            <svg-icon width="20" height="20" class="file-upload" type="mdi" :path="path" />
+            <svg-icon
+              width="20"
+              height="20"
+              class="file-upload"
+              type="mdi"
+              :path="path"
+            />
           </b-button>
-          <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" @click="refreshList()">
+          <b-button
+            v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+            variant="outline-primary"
+            @click="refreshList()"
+          >
             <feather-icon icon="RefreshCcwIcon" />
           </b-button>
         </b-col>
@@ -42,9 +65,24 @@
         <b-col cols="12" md="6">
           <div class="d-flex align-items-center justify-content-end">
             <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="startDate" class="form-control invoice-edit-input invoice-input-top" :placeholder="$t('company_invoices.start_date')" />
-              <feather-icon v-if="startDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
-              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="startDate = ''" />
+              <flat-pickr
+                v-model="startDate"
+                class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.start_date')"
+              />
+              <feather-icon
+                v-if="startDate === ''"
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+              />
+              <feather-icon
+                v-else
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="startDate = ''"
+              />
 
               <!-- <feather-icon
                 size="16"
@@ -54,10 +92,25 @@
               /> -->
             </div>
             <div class="position-relative mr-1 filter-date">
-              <flat-pickr v-model="endDate" class="form-control invoice-edit-input invoice-input-top" :placeholder="$t('company_invoices.end_date')" />
+              <flat-pickr
+                v-model="endDate"
+                class="form-control invoice-edit-input invoice-input-top"
+                :placeholder="$t('company_invoices.end_date')"
+              />
 
-              <feather-icon v-if="endDate === ''" size="16" icon="CalendarIcon" class="cursor-pointer clear-all" />
-              <feather-icon v-else size="16" icon="XIcon" class="cursor-pointer clear-all" @click="endDate = ''" />
+              <feather-icon
+                v-if="endDate === ''"
+                size="16"
+                icon="CalendarIcon"
+                class="cursor-pointer clear-all"
+              />
+              <feather-icon
+                v-else
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="endDate = ''"
+              />
 
               <!-- <feather-icon
                 size="16"
@@ -67,8 +120,18 @@
               /> -->
             </div>
             <div class="position-relative flex-1">
-              <b-form-input v-model="searchQuery" class="d-inline-block mr-1" :placeholder="$t('company_invoices.search')" @input="handleSearchSelect()" />
-              <feather-icon size="16" icon="XIcon" class="cursor-pointer clear-all" @click="searchQuery = ''" />
+              <b-form-input
+                v-model="searchQuery"
+                class="d-inline-block mr-1"
+                :placeholder="$t('company_invoices.search')"
+                @input="handleSearchSelect()"
+              />
+              <feather-icon
+                size="16"
+                icon="XIcon"
+                class="cursor-pointer clear-all"
+                @click="searchQuery = ''"
+              />
             </div>
           </div>
         </b-col>
@@ -77,12 +140,27 @@
 
     <b-row class="text-center text-danger">
       <b-col>
-        <p style="font-size:1.05rem">{{ $t('add_invoice.not_recognised_01') }} <b>{{ $t('add_invoice.not_recognised_02')
-        }}</b> {{ $t('add_invoice.not_recognised_03') }}</p>
+        <p style="font-size: 1.05rem">
+          {{ $t("add_invoice.not_recognised_01") }}
+          <b>{{ $t("add_invoice.not_recognised_02") }}</b>
+          {{ $t("add_invoice.not_recognised_03") }}
+        </p>
       </b-col>
     </b-row>
 
-    <b-table ref="refInvoiceListTable" :items="isCheck === false ? fetchInvoices : invoices" :fields="tableColumns" responsive primary-key="id" :sort-by.sync="sortBy" show-empty empty-text="No matching records found" :sort-desc.sync="isSortDirDesc" class="position-relative invoiceList" id="company-invoices">
+    <b-table
+      ref="refInvoiceListTable"
+      :items="isCheck === false ? fetchInvoices : invoices"
+      :fields="tableColumns"
+      responsive
+      primary-key="id"
+      :sort-by.sync="sortBy"
+      show-empty
+      empty-text="No matching records found"
+      :sort-desc.sync="isSortDirDesc"
+      class="position-relative invoiceList"
+      id="company-invoices"
+    >
       <template #empty="scope">
         <div class="d-flex align-items-center justify-content-center">
           <div class="mb-1 start-chat-icon">
@@ -103,10 +181,13 @@
       </template>
 
       <template #cell(invoiceNumber)="data">
-        <b-link :to="{
-          name: 'company-invoice-preview',
-          params: { id: data.item.id, companyId: companyId },
-        }" class="font-weight-bold">
+        <b-link
+          :to="{
+            name: 'company-invoice-preview',
+            params: { id: data.item.id, companyId: companyId },
+          }"
+          class="font-weight-bold"
+        >
           <span class="text-nowrap">
             {{ data.value }}
           </span>
@@ -130,13 +211,21 @@
       </template>
 
       <template #cell(transactionType)="data">
-        <b-link :to="{
-          name: 'company-invoice-preview',
-          params: { id: data.item.id, companyId: companyId },
-        }" class="font-weight-bold">
+        <b-link
+          :to="{
+            name: 'company-invoice-preview',
+            params: { id: data.item.id, companyId: companyId },
+          }"
+          class="font-weight-bold"
+        >
           <span :id="`transactionType-row-${data.item.id}`" class="text-nowrap">
-            <b-badge pill :variant="`${data.value === 'EXPENSE' ? 'light-danger' : 'light-success'
-              }`" class="text-capitalize">
+            <b-badge
+              pill
+              :variant="`${
+                data.value === 'EXPENSE' ? 'light-danger' : 'light-success'
+              }`"
+              class="text-capitalize"
+            >
               {{ $t("company_invoices." + data.value) }}
             </b-badge>
           </span>
@@ -154,7 +243,10 @@
             {{ data.item.recipientCompany.companName }}
           </b-badge>
         </span>
-        <b-tooltip :target="`recipientCompany-row-${data.item.id}`" placement="top">
+        <b-tooltip
+          :target="`recipientCompany-row-${data.item.id}`"
+          placement="top"
+        >
           <p class="mb-0">
             {{ data.item.recipientCompany.companName }}
           </p>
@@ -186,7 +278,10 @@
             {{ data.item.supplierCompany.companName }}
           </b-badge>
         </span>
-        <b-tooltip :target="`supplierCompany-row-${data.item.id}`" placement="top">
+        <b-tooltip
+          :target="`supplierCompany-row-${data.item.id}`"
+          placement="top"
+        >
           <p class="mb-0">
             {{ data.item.supplierCompany.companName }}
           </p>
@@ -213,10 +308,14 @@
       </template>
       <template #cell(amountNonVat)="data">
         <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' ||
-            data.item.currency === 'лв' ||
-            data.item.currency === 'лв.'
-            ">лв. {{ data.value }}</span>
+          <span
+            v-if="
+              data.item.currency === 'lv' ||
+              data.item.currency === 'лв' ||
+              data.item.currency === 'лв.'
+            "
+            >лв. {{ data.value }}</span
+          >
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -227,10 +326,14 @@
       </template>
       <template #cell(totalAmount)="data">
         <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' ||
-            data.item.currency === 'лв' ||
-            data.item.currency === 'лв.'
-            ">лв. {{ data.value }}</span>
+          <span
+            v-if="
+              data.item.currency === 'lv' ||
+              data.item.currency === 'лв' ||
+              data.item.currency === 'лв.'
+            "
+            >лв. {{ data.value }}</span
+          >
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -241,10 +344,14 @@
       </template>
       <template #cell(vatAmount)="data">
         <span class="text-nowrap">
-          <span v-if="data.item.currency === 'lv' ||
-            data.item.currency === 'лв' ||
-            data.item.currency === 'лв.'
-            ">лв. {{ data.value }}</span>
+          <span
+            v-if="
+              data.item.currency === 'lv' ||
+              data.item.currency === 'лв' ||
+              data.item.currency === 'лв.'
+            "
+            >лв. {{ data.value }}</span
+          >
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -263,27 +370,49 @@
 
       <template #cell(actions)="data">
         <div class="text-nowrap">
-          <feather-icon :id="`invoice-row-${data.item.id}-preview-icon`" icon="EyeIcon" size="16" class="mr-1 cursor-pointer" @click="
-            $router.push({
-              name: 'company-invoice-preview',
-              params: { id: data.item.id, companyId: companyId },
-            })
-            " />
-          <b-tooltip title="Preview Invoice" class="cursor-pointer" :target="`invoice-row-${data.item.id}-preview-icon`" />
+          <feather-icon
+            :id="`invoice-row-${data.item.id}-preview-icon`"
+            icon="EyeIcon"
+            size="16"
+            class="mr-1 cursor-pointer"
+            @click="
+              $router.push({
+                name: 'company-invoice-preview',
+                params: { id: data.item.id, companyId: companyId },
+              })
+            "
+          />
+          <b-tooltip
+            title="Preview Invoice"
+            class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-preview-icon`"
+          />
 
           <!-- Dropdown -->
-          <b-dropdown variant="link" toggle-class="p-0" no-caret dropleft :right="$store.state.appConfig.isRTL">
+          <b-dropdown
+            variant="link"
+            toggle-class="p-0"
+            no-caret
+            dropleft
+            :right="$store.state.appConfig.isRTL"
+          >
             <template #button-content>
-              <feather-icon icon="MoreVerticalIcon" size="16" class="align-middle text-body" />
+              <feather-icon
+                icon="MoreVerticalIcon"
+                size="16"
+                class="align-middle text-body"
+              />
             </template>
             <b-dropdown-item @click="generatePDF(data.item.id)">
               <feather-icon icon="DownloadIcon" />
               <span class="align-middle ml-50">Download</span>
             </b-dropdown-item>
-            <b-dropdown-item :to="{
-              name: 'company-invoice-edit',
-              params: { id: data.item.id, companyId: companyId },
-            }">
+            <b-dropdown-item
+              :to="{
+                name: 'company-invoice-edit',
+                params: { id: data.item.id, companyId: companyId },
+              }"
+            >
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
@@ -294,10 +423,38 @@
           </b-dropdown>
 
           <!-- Duplicate -->
-          <feather-icon :id="`invoice-row-${data.item.id}-duplicate-icon`" icon="LayersIcon" size="16" class="mx-1 cursor-pointer" @click="duplicateInvoice(data.item)" />
-          <b-tooltip title="Duplicate Invoice" class="cursor-pointer" :target="`invoice-row-${data.item.id}-duplicate-icon`" />
-          <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :ref="`invoicePdf${data.item.id}`" :preview-modal="false" :paginate-elements-by-height="1100" filename="invoice" :pdf-quality="2" :manual-pagination="false" pdf-format="a3" :pdf-margin="10" pdf-orientation="portrait" pdf-content-width="1125px" @progress="onProgress($event)">
-            <section slot="pdf-content" class="invoice-pdf invoice-preview-list">
+          <feather-icon
+            :id="`invoice-row-${data.item.id}-duplicate-icon`"
+            icon="LayersIcon"
+            size="16"
+            class="mx-1 cursor-pointer"
+            @click="duplicateInvoice(data.item)"
+          />
+          <b-tooltip
+            title="Duplicate Invoice"
+            class="cursor-pointer"
+            :target="`invoice-row-${data.item.id}-duplicate-icon`"
+          />
+          <vue-html2pdf
+            :show-layout="false"
+            :float-layout="true"
+            :enable-download="true"
+            :ref="`invoicePdf${data.item.id}`"
+            :preview-modal="false"
+            :paginate-elements-by-height="1100"
+            filename="invoice"
+            :pdf-quality="2"
+            :manual-pagination="false"
+            pdf-format="a3"
+            :pdf-margin="10"
+            pdf-orientation="portrait"
+            pdf-content-width="1125px"
+            @progress="onProgress($event)"
+          >
+            <section
+              slot="pdf-content"
+              class="invoice-pdf invoice-preview-list"
+            >
               <invoice-download :invoice-data="data.item" />
             </section>
           </vue-html2pdf>
@@ -408,7 +565,6 @@ import { i18n } from "@/main.js";
 import { watch, ref } from "vue";
 import axios from "@/libs/axios";
 
-
 export default {
   directives: {
     Ripple,
@@ -446,8 +602,8 @@ export default {
   data() {
     return {
       loadMore: false,
-      startDate: '',
-      endDate: '',
+      startDate: "",
+      endDate: "",
       perPageRecords: 10,
       pageNum: 1,
       isCheck: false,
@@ -463,7 +619,7 @@ export default {
     },
     endDate: function () {
       this.handleSearchSelect();
-    }
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -477,8 +633,8 @@ export default {
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
       let totalRecordss = this.invoices.length;
-      let Records = ((totalRecordss / 10) * 10);
-      this.pageNum = (Records / 10);
+      let Records = (totalRecordss / 10) * 10;
+      this.pageNum = Records / 10;
       if (totalRecordss < 10) {
         Records = 10;
         this.pageNum = 1;
@@ -489,7 +645,7 @@ export default {
       };
       let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           sortField: this.sortBy,
           verified: "false",
           searchTerm: this.searchQuery,
@@ -497,21 +653,24 @@ export default {
       };
       let config1 = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           // sortField: this.sortBy,
-          sortField: 'id',
-          verified: "false"
+          sortField: "id",
+          verified: "false",
         },
       };
 
-      if ((this.startDate === '') && (this.startDate === '') && (this.searchQuery) === '') {
+      if (
+        this.startDate === "" &&
+        this.startDate === "" &&
+        this.searchQuery === ""
+      ) {
         const data = await axios.get(
           `/account/api/invoice/list/${this.companyId}/1/${Records}`,
           config1
         );
         this.invoices = data.data.elements;
-      }
-      else {
+      } else {
         const data1 = await axios.post(
           `/account/api/invoice/search/${this.companyId}/1/${Records}`,
           payLoadDates,
@@ -521,7 +680,6 @@ export default {
       }
       // var tableAreaBusy = document.getElementById("company-invoices");
       tableAreaBusy.style.opacity = "1";
-
     },
     observeScroll() {
       const options = {
@@ -532,7 +690,11 @@ export default {
 
       const observer = new IntersectionObserver(async (entries) => {
         if (entries[0].isIntersecting) {
-          if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
+          if (
+            this.startDate === "" &&
+            this.endDate === "" &&
+            this.searchQuery === ""
+          ) {
             await this.listInvoices();
           } else {
             await this.searchInvoices();
@@ -558,7 +720,7 @@ export default {
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
       this.pageNum = 1;
-      this.perPageRecords = 10
+      this.perPageRecords = 10;
 
       let data1 = {
         dateFrom: this.startDate,
@@ -566,7 +728,7 @@ export default {
       };
       let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           sortField: this.sortBy,
           verified: "false",
           searchTerm: this.searchQuery,
@@ -587,9 +749,9 @@ export default {
       this.pageNum += 1;
       let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           // sortField: this.sortBy,
-          sortField: 'id',
+          sortField: "id",
           verified: "false",
         },
       };
@@ -619,9 +781,9 @@ export default {
       };
       let config = {
         params: {
-          direction: this.isSortDirDesc ? 'desc' : 'asc',
+          direction: this.isSortDirDesc ? "desc" : "asc",
           // sortField: this.sortBy,
-          sortField: 'id',
+          sortField: "id",
           verified: "false",
           searchTerm: this.searchQuery,
         },
@@ -657,7 +819,11 @@ export default {
       if (scrollHeight - (scrollTop + clientHeight) <= 1) {
         this.loadMore = true;
         setTimeout(async () => {
-          if (this.startDate === "" && this.endDate === "" && this.searchQuery === "") {
+          if (
+            this.startDate === "" &&
+            this.endDate === "" &&
+            this.searchQuery === ""
+          ) {
             await this.listInvoices();
           } else {
             await this.searchInvoices();
@@ -674,7 +840,6 @@ export default {
         }, 300);
       }
     },
-
 
     state() {
       return 1;
@@ -730,13 +895,11 @@ export default {
               icon: "EditIcon",
               variant: "success",
             },
-
           });
           // refetchData();
           var tableAreaBusy = document.getElementById("company-invoices");
           tableAreaBusy.style.opacity = "0.5";
           this.refreshList();
-
         });
     },
     invoiceDelete(id, refetchData) {
@@ -925,7 +1088,9 @@ export default {
   font-size: 12px;
 }
 
-.invoice-preview-list .invoice-date-wrapper.invoice-middle-content p.invoice-date-title {
+.invoice-preview-list
+  .invoice-date-wrapper.invoice-middle-content
+  p.invoice-date-title {
   width: auto !important;
   min-width: max-content;
 }

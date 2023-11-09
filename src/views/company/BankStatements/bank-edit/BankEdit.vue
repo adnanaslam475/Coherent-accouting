@@ -783,7 +783,7 @@ import {
   qtyValid,
 } from "@validations";
 import Logo from "@core/layouts/components/Logo.vue";
-import { ref, onUnmounted, onMounted, computed } from "@vue/composition-api";
+import { ref, onUnmounted } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
 import Ripple from "vue-ripple-directive";
 import store from "@/store";
@@ -830,11 +830,8 @@ import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 // import imageZoom from "vue-image-zoomer"
 import router from "@/router";
-import { setTimeout } from "timers";
 import axios from "@/libs/axios";
 import { i18n } from "@/main.js";
-// import Viewer from "viewerjs"
-// import "viewerjs/dist/viewer.css"
 import VueEasyLightbox, { useEasyLightbox } from "vue-easy-lightbox";
 // const modelShow = ref(false)
 const zoomAmount = ref(1);

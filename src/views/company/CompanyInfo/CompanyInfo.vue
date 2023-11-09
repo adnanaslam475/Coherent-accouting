@@ -917,7 +917,7 @@ export default {
     async toggleHandler(c, value) {
       try {
         const {} = await axios.put(
-          "https://coherent-accounting.com/account/api/company/update/" +
+          `${axios.defaults.baseURL}/account/api/company/update/` +
             this.companyID,
           { ...c, autoSyncEnabled: value },
           {

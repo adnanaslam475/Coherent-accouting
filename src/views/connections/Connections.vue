@@ -210,8 +210,11 @@ export default {
   created() {
     this.companyID = this.$route.params.id;
   },
+
   mounted() {
     this.getCompany();
+    const bc = new BroadcastChannel("test_channel");
+    bc.postMessage("This is a test message.");
   },
 
   methods: {

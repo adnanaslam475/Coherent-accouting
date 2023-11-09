@@ -13,8 +13,6 @@ import { provideToast } from "vue-toastification/composition";
 import { watch } from "@vue/composition-api";
 import useAppConfig from "@core/app-config/useAppConfig";
 import axios from "@/libs/axios";
-//consul start
-//consul end
 
 import { useWindowSize, useCssVar } from "@vueuse/core";
 import router from "@/router";
@@ -53,8 +51,9 @@ export default {
     },
   },
   mounted() {
+    console.log("axios.defaults.baseURL", axios.defaults.baseURL);
     axios
-      .get("https://coherent-accounting.com/account/api/maintenance/health")
+      .get(`${axios.defaults.baseURL}/account/api/maintenance/health`)
       .then((res) => {
         this.isUnderMaintenance =
           res.status == 500 || res.data.isUnderMaintenance;
@@ -63,13 +62,13 @@ export default {
         this.isUnderMaintenance = true;
       });
     axios
-      .get("https://coherent-accounting.com/index/api/maintenance/health")
+      .get(`${axios.defaults.baseURL}/index/api/maintenance/health`)
       .then((res) => {
         if (
           this.isUnderMaintenance &&
           (res.data.isUnderMaintenance || res.status == 500)
         ) {
-          // router.push("/under-maintenance");
+          router.push("/under-maintenance");
         }
       })
       .catch(() => {

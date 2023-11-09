@@ -2,7 +2,6 @@
   <section class="invoice-add-wrapper">
     <!-- Alert: No item found -->
     <TabList />
-
     <b-alert variant="danger" :show="invoiceData === undefined">
       <h4 class="alert-heading">Error fetching invoice data</h4>
       <div class="alert-body">

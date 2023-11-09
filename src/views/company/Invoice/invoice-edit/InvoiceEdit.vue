@@ -24,7 +24,10 @@
               @click="closeModel"
             />
           </template>
-          <b-row v-if="invoiceData.binaryId || null" class="invoice-add mx-0">
+          <b-row
+            v-if="invoiceData.binaryId ? invoiceData.binaryId : null"
+            class="invoice-add mx-0"
+          >
             <b-row
               class="my-2 w-100 mx-0"
               style="border-bottom: 1px solid lightgrey"
@@ -974,39 +977,6 @@
                                       {{ option.label }}
                                     </span>
                                   </template>
-                                  <!-- <template #selected-option="option" v-if="clauseToSend !== ''">
-
-                            <div style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: left;
-                                grid-gap: 8px;
-                              ">
-                              {{ clauseToSend }}
-                            </div>
-                          </template>
-                          <template #selected-option="option" v-else>
-
-                            <div style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: left;
-                                grid-gap: 8px;
-                              ">
-                              {{ option }}
-                            </div>
-                          </template>
-
-                          <template v-slot:option="option">
-                            <span style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: left;
-                                grid-gap: 8px;
-                              ">
-                              {{ option }}
-                            </span>
-                          </template> -->
                                 </v-select>
                                 <small class="text-danger">{{
                                   errors[0]
@@ -1299,13 +1269,10 @@
           </b-row>
         </b-modal>
         <b-row
-          v-if="invoiceData.binaryId || null"
+          v-if="invoiceData.binaryId ? invoiceData.binaryId : null"
           class="invoice-add mx-0"
         ></b-row>
         <b-row class="invoice-add" v-else>
-          <!-- Col: Left (Invoice Container) -->
-          <!-- template 05 -->
-
           <b-col
             cols="12"
             xl="10"
@@ -10467,7 +10434,6 @@ export default {
   created() {},
   destroyed() {},
   computed: {
-    
     formIsValid() {
       let i = 0;
       let requiredField = [];
@@ -11005,12 +10971,14 @@ export default {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
 
     function closeModel() {
+     store.commit("verticalMenu/SET_PREVENT_REFRESH", false);
       this.modelShow = false;
       this.$router.push({
         name: "CompanyView",
         params: {
           id: router.currentRoute.params.companyId,
           InvoiceId: this.getActiveTab,
+          getRefresh: "no",
         },
       });
     }

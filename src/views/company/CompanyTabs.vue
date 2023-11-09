@@ -186,7 +186,7 @@ export default {
       codeIcon,
       companyTab: this.$route.params.InvoiceId
         ? parseInt(this.$route.params.InvoiceId)
-        : 0,
+        : 1,
       invoiceTab: 0,
       addRecord: false,
       vatReportsTab: 0,
@@ -209,7 +209,6 @@ export default {
   },
   computed: {
     ...mapGetters("app", ["getCurrentTab"]),
-    ...mapGetters("verticalMenu", ["getActiveTab"]),
   },
   mounted() {
     this.companyID = this.$route.params.id;
