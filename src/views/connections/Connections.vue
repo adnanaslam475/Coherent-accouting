@@ -97,6 +97,9 @@
             <div class="m-0" style="margin-top: 4px; margin-bottom: 4px">
               Coherent Accounting for Xero
             </div>
+            <p style="margin-top: 5px !important" class="text-center m-0">
+              Connected to {{ companyInfo.tenantName }}
+            </p>
             <div
               :variant="
                 companyInfo.exportProperties &&
@@ -104,7 +107,7 @@
                   ? 'outline-success'
                   : 'outline-secondary'
               "
-              class="mt-1 cursor-pointer d-flex flex-column align-items-center"
+              class="cursor-pointer d-flex flex-column align-items-center"
               @click="showConnectionModal('xero')"
               v-if="!companyInfo.connectedToXero"
               :disabled="
@@ -112,12 +115,9 @@
                 companyInfo.exportProperties.platform !== 'XERO'
               "
             >
-              <p class="text-center m-0">
-                Connected to {{ companyInfo.tenantName }}
-              </p>
               <b-img
                 :src="xeroConnectImg"
-                style="width: 90%; height: 70px"
+                style="width: 80%; height: 50px"
                 alt="logo"
               />
               <!-- Connect -->
@@ -156,7 +156,7 @@
           <img :src="getPath(type)" alt="Toast image" />
         </div>
 
-        <b-tabs pills card vertical class="connect-xero-tabs">
+        <!-- <b-tabs pills card vertical class="connect-xero-tabs">
           <b-tab title="1" active
             ><b-card-text>
               Click the <b>Connect software</b> button - you'll be redirected
@@ -174,8 +174,8 @@
           <b-tab title="3"
             ><b-card-text>Click on the 'Authorize' button</b-card-text></b-tab
           >
-        </b-tabs>
-        <!-- <b-tabs content-class="mt-1" class="modal-tabs" align="center">
+        </b-tabs> -->
+        <b-tabs content-class="mt-1" class="modal-tabs" align="center">
           <b-tab title="How to connect" active>
             <ol>
               <li class="my-1">
@@ -191,7 +191,7 @@
               <li class="my-1">Click on the 'Authorize' button</li>
             </ol>
           </b-tab>
-        </b-tabs> -->
+        </b-tabs>
       </div>
       <div class="mt-1" style="float: right">
         <b-button @click="isConnection = false" variant="outline"
