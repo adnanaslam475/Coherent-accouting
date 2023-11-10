@@ -290,7 +290,7 @@ import axios from "@/libs/axios";
 import useJwt from "@/auth/jwt/useJwt";
 import router from "@/router";
 import { EventBus } from "@/GlobalEventBus";
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 export default {
   components: {

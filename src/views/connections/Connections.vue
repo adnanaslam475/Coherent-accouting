@@ -248,8 +248,8 @@ export default {
     };
   },
   created() {
-    this.xeroConnectImg = require("@/assets/images/connectXero.jpeg");
-    this.xeroDisconnectImg = require("@/assets/images/disConnectXero.jpeg");
+    this.xeroConnectImg = require("@/assets/images/illustration/connectXero.svg");
+    this.xeroDisconnectImg = require("@/assets/images/illustration/disconnectXero.svg");
     this.companyID = this.$route.params.id;
   },
 
