@@ -94,32 +94,47 @@
             <div>
               <img src="@/assets/images/icons/xero-icon.png" alt="" />
             </div>
-            <div style="margin-top: 4px; margin-bottom: 4px">
+            <div class="m-0" style="margin-top: 4px; margin-bottom: 4px">
               Coherent Accounting for Xero
             </div>
-            <b-button
+            <div
               :variant="
                 companyInfo.exportProperties &&
                 companyInfo.exportProperties.platform == 'XERO'
                   ? 'outline-success'
                   : 'outline-secondary'
               "
-              class="mt-1"
+              class="mt-1 cursor-pointer d-flex flex-column align-items-center"
               @click="showConnectionModal('xero')"
               v-if="!companyInfo.connectedToXero"
               :disabled="
                 companyInfo.exportProperties &&
                 companyInfo.exportProperties.platform !== 'XERO'
               "
-              >Connect
-            </b-button>
-            <b-button
+            >
+              <p class="text-center m-0">
+                Connected to {{ companyInfo.tenantName }}
+              </p>
+              <b-img
+                :src="xeroConnectImg"
+                style="width: 90%; height: 70px"
+                alt="logo"
+              />
+              <!-- Connect -->
+            </div>
+            <div
               variant="outline-primary"
-              class="mt-1"
+              class="mt-1 cursor-pointer"
               v-else
               @click="disconnectSoftware('xero')"
-              >Disconnect</b-button
             >
+              <b-img
+                :src="xeroDisconnectImg"
+                style="width: 90%; height: 70px"
+                alt="logo"
+              />
+              <!-- Disconnect -->
+            </div>
           </div>
         </b-card>
       </b-col>
@@ -140,7 +155,27 @@
         <div class="d-flex flex-column align-items-center mt-2 mb-2">
           <img :src="getPath(type)" alt="Toast image" />
         </div>
-        <b-tabs content-class="mt-1" class="modal-tabs" align="center">
+
+        <b-tabs pills card vertical class="connect-xero-tabs">
+          <b-tab title="1" active
+            ><b-card-text>
+              Click the <b>Connect software</b> button - you'll be redirected
+              from Coherent Accounting to
+              {{ type == "qbo" ? "QuickBook" : "Xero" }} Online and promoted to
+              log in.
+            </b-card-text></b-tab
+          >
+          <b-tab title="2"
+            ><b-card-text>
+              Select matching company in Coherent Accounting and correponding in
+              {{ type == "qbo" ? "QuickBook" : "Xero" }}
+            </b-card-text></b-tab
+          >
+          <b-tab title="3"
+            ><b-card-text>Click on the 'Authorize' button</b-card-text></b-tab
+          >
+        </b-tabs>
+        <!-- <b-tabs content-class="mt-1" class="modal-tabs" align="center">
           <b-tab title="How to connect" active>
             <ol>
               <li class="my-1">
@@ -156,7 +191,7 @@
               <li class="my-1">Click on the 'Authorize' button</li>
             </ol>
           </b-tab>
-        </b-tabs>
+        </b-tabs> -->
       </div>
       <div class="mt-1" style="float: right">
         <b-button @click="isConnection = false" variant="outline"
@@ -183,6 +218,7 @@ import {
   BButton,
   BRow,
   BModal,
+  BImg,
 } from "bootstrap-vue";
 import axios from "@/libs/axios";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
@@ -196,18 +232,24 @@ export default {
     BButton,
     BCardText,
     BCard,
+    BImg,
     BModal,
   },
   data() {
     return {
       isConnection: false,
       isConnecting: false,
+      v: "",
       companyID: "",
+      xeroConnectImg: "",
+      xeroDisconnectImg: "",
       type: "",
       companyInfo: {},
     };
   },
   created() {
+    this.xeroConnectImg = require("@/assets/images/connectXero.jpeg");
+    this.xeroDisconnectImg = require("@/assets/images/disConnectXero.jpeg");
     this.companyID = this.$route.params.id;
   },
 
@@ -354,5 +396,9 @@ li:before {
   width: 1.5em;
   text-align: center;
   display: inline-block;
+}
+.connect-xero-tabs a {
+  border-radius: 10px !important;
+  border: 1px solid red;
 }
 </style>

@@ -186,7 +186,7 @@ export default {
       codeIcon,
       companyTab: this.$route.params.InvoiceId
         ? parseInt(this.$route.params.InvoiceId)
-        : 0,
+        : 5,
       invoiceTab: 0,
       addRecord: false,
       vatReportsTab: 0,
