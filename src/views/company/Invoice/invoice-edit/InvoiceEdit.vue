@@ -341,7 +341,7 @@
                               type="number"
                               @keypress="preventNum"
                               class="mb-0"
-                              style="width: 130px; "
+                              style="width: 130px"
                             />
                           </h4>
                         </div>
@@ -453,6 +453,7 @@
                                     class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
+                                    <!-- this is for new -->
                                     {{ $t("add_invoice.single_price") }}
                                   </b-col>
 
@@ -643,6 +644,7 @@
                                         v-model="item.singleAmountTransaction"
                                         type="number"
                                         class="mb-0"
+                                        @keypress="preventNum"
                                         step="any"
                                         placeholder="0.00"
                                         @input="populateValues()"
@@ -10183,6 +10185,7 @@ import {
 } from "@validations";
 import Logo from "@core/layouts/components/Logo.vue";
 import { ref, onUnmounted, computed } from "@vue/composition-api";
+import { preventNum } from "@core/comp-functions/forms/prevent-num";
 import { heightTransition } from "@core/mixins/ui/transition";
 import Ripple from "vue-ripple-directive";
 import store from "@/store";
@@ -10485,14 +10488,7 @@ export default {
     showSingle() {
       this.openLightbox();
     },
-    preventNum(e) {
-      if (e.target.value.includes(".")) {
-        e.target.value =
-          e.target.value.split(".")[0] +
-          "." +
-          e.target.value.split(".")[1].slice(0, 1);
-      }
-    },
+    
     openLightbox() {
       this.visible = true;
     },
@@ -11064,7 +11060,6 @@ export default {
       },
       set(newVal) {
         invoiceData.value.vatAmount = +newVal || null;
-       
       },
     });
     // const formIsValid = computed(() => {
@@ -12016,6 +12011,7 @@ export default {
       cToX,
       populateValues,
       logoToUpload,
+      preventNum,
       invoiceImage,
       showLogo,
       isUploading,

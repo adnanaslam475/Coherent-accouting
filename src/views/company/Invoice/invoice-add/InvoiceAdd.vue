@@ -361,18 +361,6 @@
                           </div>
                         </b-col>
                         <b-col class="px-0">
-                          <!-- <div class="d-flex" style="flex-direction: column; float: right">
-                          <div class="text-uppercase grey-text-color">SHIPPING</div>
-                          <div class="pt-1">00</div>
-                        </div> -->
-                          <!-- <div class="d-flex mr-4" style="flex-direction: column; float: right">
-                          <div class="text-uppercase grey-text-color">TIP</div>
-                          <div class="pt-1">00</div>
-                        </div>
-                        <div class="d-flex mr-4" style="flex-direction: column; float: right">
-                          <div class="text-uppercase grey-text-color">TAX</div>
-                          <div class="pt-1">00</div>
-                        </div> -->
                           <div
                             class="d-flex"
                             style="flex-direction: column; float: right"
@@ -384,7 +372,7 @@
                             <h4 style="color: #625f6e" class="pt-1">
                               <b-form-input
                                 v-model="totalAmountInDecimal"
-                                @keypress="abcd"
+                                @keypress="preventNum"
                                 type="number"
                                 class="mb-0"
                                 style="width: 140px"
@@ -402,7 +390,7 @@
                             <h4 style="color: #625f6e" class="pt-1">
                               <b-form-input
                                 v-model="totalTaxInDecimal"
-                                @keypress="abcd"
+                                @keypress="preventNum"
                                 type="number"
                                 class="mb-0"
                                 style="width: 140px"
@@ -744,16 +732,12 @@
                                         ref="transectionSingleAmountTransaction"
                                         immediate
                                       >
-                                        <!-- <b-input-group class="input-group-merge invoice-edit-input-group"> -->
-                                        <!-- <b-input-group-prepend is-text class="mb-0">
-                                      <span>{{ invoiceData.currency }}</span>
-                                    </b-input-group-prepend> -->
-
                                         <b-form-input
                                           id="transectionSingleAmountTransaction"
                                           v-model="item.singleAmountTransaction"
                                           type="number"
                                           class="mb-0"
+                                          @keypress="preventNum"
                                           step="any"
                                           placeholder="0.00"
                                           @input="populateValues()"
@@ -764,25 +748,6 @@
                                         }}</small>
                                       </validation-provider>
                                     </b-col>
-                                    <!-- <b-col cols="12" lg="1"></b-col> -->
-                                    <!-- <b-col cols="12" lg="1">
-                                <label class="d-inline d-lg-none">Currency</label>
-                                <validation-provider #default="{ errors }" name="transectionCurrency" rules="required">
-                                  <b-form-select v-model="invoiceData.currency" :options="currencyOptions">
-                                  </b-form-select>
-                                  <small class="text-danger">{{ errors[0] }}</small>
-                                </validation-provider>
-                                
-                              </b-col> -->
-
-                                    <!-- <b-col cols="12" lg="1" class="pl-2" style="padding-top: 10px">
-                                      <label class="d-inline d-lg-none">Tax</label>
-                                      <span>{{
-                                        parseFloat(item.vatAmountTransaction)
-                                          ? parseFloat(item.vatAmountTransaction).toFixed(2)
-                                          : 0
-                                      }}</span>
-                                    </b-col> -->
 
                                     <b-col
                                       cols="12"
@@ -10148,6 +10113,7 @@ import axios from "@/libs/axios";
 import { i18n } from "@/main.js";
 import imageZoom from "vue-image-zoomer";
 import { mapGetters } from "vuex";
+import { preventNum } from "@core/comp-functions/forms/prevent-num";
 
 export default {
   components: {
@@ -10416,14 +10382,6 @@ export default {
     ...mapGetters("verticalMenu", ["getActiveTab"]),
   },
   methods: {
-    abcd(e) {
-      if (e.target.value.includes(".")) {
-        e.target.value =
-          e.target.value.split(".")[0] +
-          "." +
-          e.target.value.split(".")[1].slice(0, 1);
-      }
-    },
     getAccounts() {
       var config = {
         method: "get",
@@ -11860,6 +11818,7 @@ export default {
       autoCompletefn,
       hideSuggestion,
       ShowSuggestion,
+      preventNum,
       datalistEic,
       showSuggestionsEic,
       SearchCompanyEic,

@@ -185,11 +185,11 @@
                           <div class="text-uppercase grey-text-color">
                             {{ $t("total_debit") }}
                           </div>
-                          <!-- <h4 style="color: #625f6e">{{ invoiceData.totalAmount }}</h4> -->
                           <h4 style="color: #625f6e" class="pt-1">
                             <b-form-input
                               v-model="totalDebit"
                               type="number"
+                              @keypress="preventNum"
                               class="mb-0"
                               style="width: 130px"
                             />
@@ -208,6 +208,7 @@
                               v-model="totalCredit"
                               type="number"
                               class="mb-0"
+                              @keypress="preventNum"
                               style="width: 130px"
                             />
                           </h4>
@@ -314,14 +315,7 @@
                                   >
                                     {{ $t("Credit") }}
                                   </b-col>
-                                  <!-- <b-col
-                                    cols="12"
-                                    lg="1"
-                                    class="text-uppercase grey-text-color"
-                                    style="font-size: 14px"
-                                  >
-                                    Tax
-                                  </b-col> -->
+
                                   <b-col
                                     cols="12"
                                     lg="2"
@@ -540,6 +534,7 @@
                                         id="debit"
                                         v-model="item.debit"
                                         type="number"
+                                        @keypress="preventNum"
                                         class="mb-0"
                                         step="any"
                                         placeholder="0.00"
@@ -588,6 +583,7 @@
                                         class="mb-0"
                                         step="any"
                                         placeholder="0.00"
+                                        @keypress="preventNum"
                                         v-b-tooltip.hover
                                         :title="item.credit"
                                       ></b-form-input>
@@ -630,6 +626,7 @@
                                         type="number"
                                         class="mb-0"
                                         step="any"
+                                        @keypress="preventNum"
                                         placeholder="0.00"
                                         v-b-tooltip.hover
                                         :title="item.balance"
@@ -834,11 +831,12 @@ import ToastificationContent from "@core/components/toastification/Toastificatio
 import router from "@/router";
 import axios from "@/libs/axios";
 import { i18n } from "@/main.js";
-import VueEasyLightbox, { useEasyLightbox } from "vue-easy-lightbox";
+import VueEasyLightbox from "vue-easy-lightbox";
 // const modelShow = ref(false)
 const zoomAmount = ref(1);
 import imageZoom from "vue-image-zoomer";
 import { mapGetters } from "vuex";
+import { preventNum } from "@core/comp-functions/forms/prevent-num";
 
 export default {
   components: {
@@ -973,19 +971,6 @@ export default {
     ...mapGetters("verticalMenu", ["getActiveTab"]),
   },
   methods: {
-    zoomIn() {
-      // this.viewer.zoom(0.1) // Zoom in by 10%
-    },
-    zoomOut() {
-      // this.viewer.zoom(-0.1) // Zoom out by 10%
-    },
-    rotateLeft() {
-      // this.viewer.rotate(-90) // Rotate left by 90 degrees
-    },
-    rotateRight() {
-      // this.viewer.rotate(90) // Rotate right by 90 degrees
-    },
-
     getAccounts() {
       var config = {
         method: "get",
@@ -1651,7 +1636,7 @@ export default {
       AccountTypeOption,
       invoiceData,
       currencyOptions,
-
+      preventNum,
       itemFormBlankItem,
       vatAmount,
       totalPrice,
