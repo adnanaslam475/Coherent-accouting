@@ -364,7 +364,7 @@ export default {
       progress: 0,
       imageD: "",
       server: {
-        process: (file, load, error, progress, abort, ...o) => {
+        process: (file, load, error, progress, abort) => {
           const formData = new FormData();
 
           formData.append("file", load);
@@ -423,31 +423,30 @@ export default {
   methods: {
     //getting media icons
     getMediaType(val) {
-      console.log("src " + val);
-      if (val.length > 0) {
-        var source;
-        if (val == "png") {
-          source = "jpg";
-        }
-        if (val === "jpg" || val === "jpeg") {
-          source = "jpg";
-        } else if (val === "rar" || val === "zip") {
-          source = "zip";
-        } else if (val === "xls" || val === "xlsx" || val === "sheet") {
-          source = "xls";
-        } else if (val === "doc" || val === "docx") {
-          source = "doc";
-        } else if (val === "pdf") {
-          source = "pdf";
-        } else if (val === "txt") {
-          source = "txt";
-        } else {
-          source = "";
-        }
-        if (source != "") {
-          return require("@/assets/images/icons/" + source + ".png");
-        }
+      const mediaTypeMap = {
+        png: "jpg",
+        jpeg: "jpg",
+        jpg: "jpg",
+        rar: "zip",
+        zip: "zip",
+        xls: "xls",
+        xlsx: "xls",
+        sheet: "xls",
+        doc: "doc",
+        docx: "doc",
+        pdf: "pdf",
+        txt: "txt",
+      };
+
+      const lowercaseVal = val?.toLowerCase();
+      const source = mediaTypeMap[lowercaseVal] || "";
+
+      if (source !== "") {
+        console.log("src " + val); // Moved this log here to avoid logging for empty sources
+        return require(`@/assets/images/icons/${source}.png`);
       }
+
+      return null; // Return null if source is empty
     },
     checkStatus(ctx) {
       if (ctx.sortDesc === false) {

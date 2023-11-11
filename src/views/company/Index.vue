@@ -328,8 +328,6 @@
           <span style="font-size: 13px">Unverified Documents</span>
         </template>
         <div class="row">
-          <!-- <input data-v-9a6e255c="" type="text" placeholder="Search..." class="d-inline-block mr-1 form-control col-4"
-            style="margin-left: 15px" /> -->
           <div class="input-group col-4 abc">
             <input
               v-model="searchQuery"
@@ -468,6 +466,13 @@
             <!-- <div>{{data.item.companyName}}</div> -->
           </template>
 
+          <template #head(platform)>
+            {{ $t("companies.platform") }}
+          </template>
+
+          <template #cell(platform)="data">
+            <div>{{ data.item.companyApi.platform }}</div>
+          </template>
           <!-- Company Email Column -->
           <template #head(companyMail)>
             {{ $t("companies.email") }}
@@ -628,7 +633,6 @@
 </template>
 <script>
 import BCardCode from "@core/components/b-card-code/BCardCode.vue";
-import Swal from "sweetalert2";
 import CrmActiveProject from "./crm/unfinishedVatReports.vue";
 import {
   BCard,
@@ -804,7 +808,6 @@ export default {
           this.items = data.data.elements;
           this.totalRecords = data.data.totalElements;
           this.totalPages = Math.ceil(this.totalRecords / this.perPage);
-          console.log("this.totalPages", data.data);
         } else {
           this.items = [];
           this.totalRecords = "";

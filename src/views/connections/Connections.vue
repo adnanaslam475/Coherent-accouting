@@ -2,7 +2,7 @@
   <div>
     <b-row>
       <b-col cols="12" md="3">
-        <b-card style="max-width: 20rem" class="mb-2">
+        <b-card style="max-width: 20rem; min-height: 230px" class="mb-2">
           <div class="custome-card">
             <div style="color: green">
               <feather-icon icon="CheckCircleIcon" stroke="green" />
@@ -54,24 +54,42 @@
               style="margin-top: 4px; margin-bottom: 4px; white-space: nowrap"
               class=""
             >
-              Coherent Accounting for QuickBooks
+              <!-- Coherent Accounting for QuickBooks -->
+              <p
+                style="margin-top: 0px !important"
+                class="text-center m-0 font-weight-bold"
+              >
+                <!-- companyInfo.connectedToQBO -->
+                {{
+                  companyInfo.connectedToQBO
+                    ? $t("companies.con_to") + companyInfo.tenantName
+                    : $t("companies.pleasepress")
+                }}
+              </p>
             </div>
-            <b-button
-              :variant="
+            <!-- :variant="
                 companyInfo.exportProperties &&
                 companyInfo.exportProperties.platform == 'QUICK_BOOKS'
                   ? 'outline-success'
                   : 'outline-secondary'
-              "
-              class="mt-1"
+              " -->
+            <div
+              :class="{
+                'mt-1 d-flex align-items-center justify-content-center cursor-pointer': true,
+                'status-check':
+                  companyInfo.exportProperties &&
+                  companyInfo.exportProperties.platform !== 'QUICK_BOOKS',
+              }"
               @click="showConnectionModal('qbo')"
               v-if="!companyInfo.connectedToQBO"
-              :disabled="
-                companyInfo.exportProperties &&
-                companyInfo.exportProperties.platform !== 'QUICK_BOOKS'
-              "
-              >Connect</b-button
             >
+              <b-img
+                :src="quickBookConnectImg"
+                style="width: 80%; height: 50px"
+                alt="logo"
+              />
+              <!-- Connect -->
+            </div>
             <b-button
               variant="outline-primary"
               class="mt-1"
@@ -84,7 +102,11 @@
       </b-col>
 
       <b-col cols="12" md="3">
-        <b-card style="max-width: 20rem" class="mb-2">
+        <b-card
+          style="max-width: 20rem; min-height: 230px"
+          @mouseenter="isFetching ? null : getCompany()"
+          :class="{ 'mb-2': true }"
+        >
           <div class="custome-card">
             <div style="color: green">
               <feather-icon icon="CheckCircleIcon" stroke="green" />
@@ -94,45 +116,47 @@
             <div>
               <img src="@/assets/images/icons/xero-icon.png" alt="" />
             </div>
-            <div class="m-0" style="margin-top: 4px; margin-bottom: 4px">
+            <!-- <div class="m-0" style="margin-top: 4px; margin-bottom: 4px">
               Coherent Accounting for Xero
-            </div>
-            <p style="margin-top: 5px !important" class="text-center m-0">
-              Connected to {{ companyInfo.tenantName }}
+            </div> -->
+            <p
+              style="margin-top: 5px !important"
+              class="text-center m-0 font-weight-bold"
+            >
+              <!-- Connected to {{ companyInfo.tenantName }} -->
+              {{
+                companyInfo.connectedToXero
+                  ? $t("companies.con_to") + companyInfo.tenantName
+                  : $t("companies.pleasepress")
+              }}
             </p>
+            <!-- variant="
+              companyInfo.exportProperties &&
+              companyInfo.exportProperties.platform == 'XERO'
+                ? 'outline-success'
+                : 'outline-secondary'
+            " -->
+            <!-- for below -->
             <div
-              :variant="
-                companyInfo.exportProperties &&
-                companyInfo.exportProperties.platform == 'XERO'
-                  ? 'outline-success'
-                  : 'outline-secondary'
-              "
-              class="cursor-pointer d-flex flex-column align-items-center"
+              :class="{
+                'mt-1 cursor-pointer d-flex flex-column align-items-center': true,
+                'status-check':
+                  companyInfo.exportProperties &&
+                  companyInfo.exportProperties.platform !== 'XERO',
+              }"
               @click="showConnectionModal('xero')"
               v-if="!companyInfo.connectedToXero"
-              :disabled="
-                companyInfo.exportProperties &&
-                companyInfo.exportProperties.platform !== 'XERO'
-              "
             >
-              <b-img
-                :src="xeroConnectImg"
-                style="width: 80%; height: 50px"
-                alt="logo"
-              />
+              <b-img :src="xeroConnectImg" style="width: 80%" alt="logo" />
               <!-- Connect -->
             </div>
             <div
               variant="outline-primary"
-              class="mt-1 cursor-pointer"
+              class="mt-1 cursor-pointer d-flex align-items-center justify-content-center"
               v-else
               @click="disconnectSoftware('xero')"
             >
-              <b-img
-                :src="xeroDisconnectImg"
-                style="width: 90%; height: 70px"
-                alt="logo"
-              />
+              <b-img :src="xeroDisconnectImg" style="width: 90%" alt="logo" />
               <!-- Disconnect -->
             </div>
           </div>
@@ -177,6 +201,21 @@
         </b-tabs> -->
         <b-tabs content-class="mt-1" class="modal-tabs" align="center">
           <b-tab title="How to connect" active>
+            <ol>
+              <li class="my-1">
+                Click the <b>Connect software</b> button - you'll be redirected
+                from Coherent Accounting to
+                {{ type == "qbo" ? "QuickBook" : "Xero" }} Online and promoted
+                to log in.
+              </li>
+              <li class="my-1">
+                Select matching company in Coherent Accounting and correponding
+                in {{ type == "qbo" ? "QuickBook" : "Xero" }}
+              </li>
+              <li class="my-1">Click on the 'Authorize' button</li>
+            </ol>
+          </b-tab>
+          <b-tab title="Data" active>
             <ol>
               <li class="my-1">
                 Click the <b>Connect software</b> button - you'll be redirected
@@ -243,13 +282,17 @@ export default {
       companyID: "",
       xeroConnectImg: "",
       xeroDisconnectImg: "",
+      quickBookConnectImg: "",
       type: "",
       companyInfo: {},
+      isFetching: false,
     };
   },
   created() {
     this.xeroConnectImg = require("@/assets/images/illustration/connectXero.svg");
     this.xeroDisconnectImg = require("@/assets/images/illustration/disconnectXero.svg");
+    this.quickBookConnectImg = require("@/assets/images/illustration/quickBookConnectImg.svg");
+    this.quickBookDisconnectImg = require("@/assets/images/illustration/quickBookConnectImg.svg");
     this.companyID = this.$route.params.id;
   },
 
@@ -270,6 +313,7 @@ export default {
         ? require("@/assets/images/logo/connecttoqb.jpeg")
         : require("@/assets/images/logo/connecttoxero.jpeg");
     },
+
     async connectToQuickBooks(type) {
       this.isConnecting = true;
       axios
@@ -304,7 +348,6 @@ export default {
     },
 
     disconnectSoftware(type) {
-      console.log("type", type);
       axios
         .get(
           `/account/api/${
@@ -347,6 +390,7 @@ export default {
     },
 
     async getCompany() {
+      this.isFetching = true;
       axios
         .get(`/account/api/company/${this.companyID}`, {
           headers: {
@@ -360,6 +404,9 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+        })
+        .finally(() => {
+          this.isFetching = false;
         });
     },
   },
@@ -397,8 +444,8 @@ li:before {
   text-align: center;
   display: inline-block;
 }
-.connect-xero-tabs a {
-  border-radius: 10px !important;
-  border: 1px solid red;
+.status-check {
+  cursor: unset;
+  opacity: 0.5;
 }
 </style>
