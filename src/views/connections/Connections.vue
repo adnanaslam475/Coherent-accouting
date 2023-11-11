@@ -216,13 +216,13 @@
               <li class="my-1">Click on the 'Authorize' button</li>
             </ol>
           </b-tab>
-          <b-tab title="Data" active>
+          <b-tab title="How data is used" active>
             <ol>
               <li class="my-1">
                 We access only data which you gave us with permissions.
               </li>
               <li class="my-1">
-                We keep your data as it is and we never change it.
+                We keep your data as it is and never change it.
               </li>
               <li class="my-1">You can disconnect any time.</li>
             </ol>
