@@ -195,13 +195,6 @@
                       </b-col>
                     </b-row>
 
-                    <!-- <b-row class="mt-2">
-                                <b-form-group v-slot="{ ariaDescribedby }">
-                                    <b-form-radio-group id="btn-radios-2" v-model="selected" :options="options"
-                                        :aria-describedby="ariaDescribedby" button-variant="outline-primary" size="sm"
-                                        name="radio-btn-outline" buttons></b-form-radio-group>
-                                </b-form-group>
-                            </b-row> -->
                     <!-- <hr> -->
                     <b-row
                       class="mt-2 mx-0 pb-2"
@@ -331,6 +324,7 @@
                             <b-form-input
                               v-model="totalAmountInDecimal"
                               type="number"
+                              @keypress="preventNum"
                               class="mb-0"
                               style="width: 130px"
                             />
@@ -342,12 +336,12 @@
                         >
                           <div class="text-uppercase grey-text-color">TAX</div>
                           <h4 style="color: #625f6e" class="pt-1">
-                            <!-- totalTaxInDecimal.toFixed(2) -->
                             <b-form-input
                               v-model="totalTaxInDecimal"
                               type="number"
+                              @keypress="preventNum"
                               class="mb-0"
-                              style="width: 130px"
+                              style="width: 130px; "
                             />
                           </h4>
                         </div>
@@ -972,7 +966,7 @@
                     <div>
                       <div class="mb-1">
                         <h6 style="color: #625f6e" class="mb-1">
-                          {{ $t("Supplier") }}
+                          {{ $t("add_invoice.supplier") }}
                         </h6>
 
                         <span
@@ -1029,7 +1023,8 @@
                           class="title mr-1 grey-text-color"
                           style="width: 307px"
                         >
-                          {{ $t("Supplier Address") }}:
+                          Supplier Address:
+                          <!-- {{ $t("Supplier Address") }}: -->
                         </span>
 
                         <b-input-group
@@ -10490,7 +10485,14 @@ export default {
     showSingle() {
       this.openLightbox();
     },
-
+    preventNum(e) {
+      if (e.target.value.includes(".")) {
+        e.target.value =
+          e.target.value.split(".")[0] +
+          "." +
+          e.target.value.split(".")[1].slice(0, 1);
+      }
+    },
     openLightbox() {
       this.visible = true;
     },
@@ -11062,20 +11064,7 @@ export default {
       },
       set(newVal) {
         invoiceData.value.vatAmount = +newVal || null;
-        console.log("en", newVal, "------>", invoiceData.value.vatAmount);
-        // try {
-        //   if (invoiceData.value.vatAmount?.toString().includes(".")) {
-        //     let a = invoiceData.value.vatAmount?.toString().split(".");
-        //     console.log(
-        //       "neeeeea",
-        //       a[1] && a[1].length > 2 ? null : parseFloat(newVal)
-        //     );
-        //     invoiceData.value.vatAmount =
-        //       a[1] && a[1].length > 2 ? null : parseFloat(newVal);
-        //   }
-        // } catch (e) {
-        //   console.log("eeeee", e, invoiceData.value.vatAmount);
-        // }
+       
       },
     });
     // const formIsValid = computed(() => {

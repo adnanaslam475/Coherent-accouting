@@ -384,6 +384,7 @@
                             <h4 style="color: #625f6e" class="pt-1">
                               <b-form-input
                                 v-model="totalAmountInDecimal"
+                                @keypress="abcd"
                                 type="number"
                                 class="mb-0"
                                 style="width: 140px"
@@ -401,6 +402,7 @@
                             <h4 style="color: #625f6e" class="pt-1">
                               <b-form-input
                                 v-model="totalTaxInDecimal"
+                                @keypress="abcd"
                                 type="number"
                                 class="mb-0"
                                 style="width: 140px"
@@ -1224,7 +1226,8 @@
                             class="title mr-1 grey-text-color"
                             style="width: 307px"
                           >
-                            {{ $t("Supplier Address") }}:
+                            Supplier Address:
+                            <!-- {{ $t("Supplier Address") }}: -->
                           </span>
 
                           <b-input-group
@@ -10146,7 +10149,6 @@ import { i18n } from "@/main.js";
 import imageZoom from "vue-image-zoomer";
 import { mapGetters } from "vuex";
 
-
 export default {
   components: {
     BTabs,
@@ -10414,6 +10416,14 @@ export default {
     ...mapGetters("verticalMenu", ["getActiveTab"]),
   },
   methods: {
+    abcd(e) {
+      if (e.target.value.includes(".")) {
+        e.target.value =
+          e.target.value.split(".")[0] +
+          "." +
+          e.target.value.split(".")[1].slice(0, 1);
+      }
+    },
     getAccounts() {
       var config = {
         method: "get",
@@ -10456,7 +10466,6 @@ export default {
       }
     },
 
-     
     reverse() {
       let temp = this.invoiceData.supplierCompany;
       this.invoiceData.supplierCompany = this.invoiceData.recipientCompany;
@@ -11007,7 +11016,7 @@ export default {
         name: "CompanyView",
         params: {
           id: router.currentRoute.params.companyId,
-          InvoiceId:  this.getActiveTab,
+          InvoiceId: this.getActiveTab,
         },
       });
     }
