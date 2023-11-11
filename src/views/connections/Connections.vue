@@ -219,16 +219,12 @@
           <b-tab title="Data" active>
             <ol>
               <li class="my-1">
-                Click the <b>Connect software</b> button - you'll be redirected
-                from Coherent Accounting to
-                {{ type == "qbo" ? "QuickBook" : "Xero" }} Online and promoted
-                to log in.
+                We access only data which you gave us with permissions.
               </li>
               <li class="my-1">
-                Select matching company in Coherent Accounting and correponding
-                in {{ type == "qbo" ? "QuickBook" : "Xero" }}
+                We keep your data as it is and we never change it.
               </li>
-              <li class="my-1">Click on the 'Authorize' button</li>
+              <li class="my-1">You can disconnect any time.</li>
             </ol>
           </b-tab>
         </b-tabs>
