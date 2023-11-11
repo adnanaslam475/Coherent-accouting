@@ -1487,7 +1487,6 @@ export default {
         )
         .then((res) => {
           this.invoices = res.data.elements;
-          store.commit("verticalMenu/SET_INVOICES", res.data.elements);
           tableAreaBusy.style.opacity = "1";
           this.loadMore = false;
         });

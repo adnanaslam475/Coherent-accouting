@@ -62,34 +62,32 @@
                 <!-- companyInfo.connectedToQBO -->
                 {{
                   companyInfo.connectedToQBO
-                    ? $t("companies.con_to") + companyInfo.tenantName
+                    ? $t("companies.con_to") +
+                      (companyInfo.tenantName ? companyInfo.tenantName : "")
                     : $t("companies.pleasepress")
                 }}
               </p>
             </div>
-            <!-- :variant="
+
+            <b-button
+              :class="{
+                'mt-1': true,
+              }"
+              :variant="
                 companyInfo.exportProperties &&
                 companyInfo.exportProperties.platform == 'QUICK_BOOKS'
                   ? 'outline-success'
                   : 'outline-secondary'
-              " -->
-            <div
-              :class="{
-                'mt-1 d-flex align-items-center justify-content-center cursor-pointer': true,
-                'status-check':
-                  companyInfo.exportProperties &&
-                  companyInfo.exportProperties.platform !== 'QUICK_BOOKS',
-              }"
+              "
+              :disabled="
+                companyInfo.exportProperties &&
+                companyInfo.exportProperties.platform !== 'QUICK_BOOKS'
+              "
               @click="showConnectionModal('qbo')"
               v-if="!companyInfo.connectedToQBO"
             >
-              <b-img
-                :src="quickBookConnectImg"
-                style="width: 80%; height: 50px"
-                alt="logo"
-              />
-              <!-- Connect -->
-            </div>
+              Connect
+            </b-button>
             <b-button
               variant="outline-primary"
               class="mt-1"
@@ -126,39 +124,42 @@
               <!-- Connected to {{ companyInfo.tenantName }} -->
               {{
                 companyInfo.connectedToXero
-                  ? $t("companies.con_to") + companyInfo.tenantName
+                  ? $t("companies.con_to") +
+                    (companyInfo.tenantName ? companyInfo.tenantName : "")
                   : $t("companies.pleasepress")
               }}
             </p>
-            <!-- variant="
-              companyInfo.exportProperties &&
-              companyInfo.exportProperties.platform == 'XERO'
-                ? 'outline-success'
-                : 'outline-secondary'
-            " -->
+
             <!-- for below -->
-            <div
+            <b-button
+              :variant="
+                companyInfo.exportProperties &&
+                companyInfo.exportProperties.platform == 'XERO'
+                  ? 'outline-success'
+                  : 'outline-secondary'
+              "
               :class="{
-                'mt-1 cursor-pointer d-flex flex-column align-items-center': true,
-                'status-check':
-                  companyInfo.exportProperties &&
-                  companyInfo.exportProperties.platform !== 'XERO',
+                'mt-1': true,
               }"
+              :disabled="
+                companyInfo.exportProperties &&
+                companyInfo.exportProperties.platform !== 'XERO'
+              "
               @click="showConnectionModal('xero')"
               v-if="!companyInfo.connectedToXero"
             >
-              <b-img :src="xeroConnectImg" style="width: 80%" alt="logo" />
-              <!-- Connect -->
-            </div>
-            <div
+              <!-- <b-img :src="xeroConnectImg" style="width: 80%" alt="logo" /> -->
+              Connect
+            </b-button>
+            <b-button
               variant="outline-primary"
-              class="mt-1 cursor-pointer d-flex align-items-center justify-content-center"
+              class="mt-1"
               v-else
               @click="disconnectSoftware('xero')"
             >
-              <b-img :src="xeroDisconnectImg" style="width: 90%" alt="logo" />
-              <!-- Disconnect -->
-            </div>
+              <!-- <b-img :src="xeroDisconnectImg" style="width: 90%" alt="logo" /> -->
+              Disconnect
+            </b-button>
           </div>
         </b-card>
       </b-col>
@@ -285,6 +286,8 @@ export default {
       quickBookConnectImg: "",
       type: "",
       companyInfo: {},
+      forXero: false,
+      forQB: false,
       isFetching: false,
     };
   },
@@ -346,7 +349,6 @@ export default {
           this.isConnecting = false;
         });
     },
-
     disconnectSoftware(type) {
       axios
         .get(
@@ -362,7 +364,6 @@ export default {
           }
         )
         .then((response) => {
-          console.log("first", response.data);
           type == "qbo"
             ? (this.companyInfo.connectedToQBO = false)
             : (this.companyInfo.connectedToXero = false);
@@ -399,8 +400,14 @@ export default {
             "Access-Control-Allow-Origin": "http://localhost:8080",
           },
         })
-        .then((response) => {
-          this.companyInfo = response.data;
+        .then(({ data }) => {
+          console.log("dddddd", data);
+          this.companyInfo = data;
+          this.forXero =
+            data.exportProperties && data.exportProperties.platform !== "XERO";
+          this.forQB =
+            data.exportProperties &&
+            data.exportProperties.platform !== "QUICK_BOOKS";
         })
         .catch((error) => {
           console.log(error);

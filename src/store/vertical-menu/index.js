@@ -15,9 +15,6 @@ export default {
     getRefresh(state) {
       return state.refresh;
     },
-    getSavedInvoices(state) {
-      return state.savedInvoices;
-    },
   },
   mutations: {
     UPDATE_VERTICAL_MENU_COLLAPSED(state, val) {
@@ -27,12 +24,7 @@ export default {
       state.activeTab = tab;
     },
     SET_PREVENT_REFRESH(state, refresh) {
-      console.log("SET_PREVENT_REFRESH");
       state.refresh = refresh;
-    },
-    SET_INVOICES(state, savedInvoices) {
-      console.log("SET_INVOICES");
-      state.savedInvoices = savedInvoices;
     },
   },
   actions: {},

@@ -341,8 +341,8 @@
                           style="flex-direction: column; float: right"
                         >
                           <div class="text-uppercase grey-text-color">TAX</div>
-                          <!-- <h4 style="color: #625f6e">{{ invoiceData.vatAmount }}</h4> -->
                           <h4 style="color: #625f6e" class="pt-1">
+                            <!-- totalTaxInDecimal.toFixed(2) -->
                             <b-form-input
                               v-model="totalTaxInDecimal"
                               type="number"
@@ -356,7 +356,6 @@
                     <b-row
                       class="pb-3 d-flex justify-content-end align-items-center"
                     >
-                      <!-- <b-col cols="9"> </b-col> -->
                       <p class="invoice-total-title">
                         {{ $t("add_invoice.tax") }}:
                       </p>
@@ -462,14 +461,7 @@
                                   >
                                     {{ $t("add_invoice.single_price") }}
                                   </b-col>
-                                  <!-- <b-col
-                                    cols="12"
-                                    lg="1"
-                                    class="text-uppercase grey-text-color"
-                                    style="font-size: 14px"
-                                  >
-                                    Tax
-                                  </b-col> -->
+
                                   <b-col
                                     cols="12"
                                     lg="1"
@@ -478,29 +470,6 @@
                                   >
                                     {{ $t("add_invoice.total_price") }}
                                   </b-col>
-
-                                  <!-- <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.s_no") }}
-                              </b-col>
-                              <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'">
-                                {{ $t("add_invoice.item_service") }}
-                              </b-col>
-                              <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.qty") }}
-                              </b-col>
-                              <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.measure") }}
-                              </b-col>
-                              <b-col cols="12" lg="2">
-                                {{ $t("add_invoice.single_price") }}
-                              </b-col>
-                              <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.currency") }}
-                              </b-col>
-                             
-                              <b-col cols="12" lg="2">
-                                {{ $t("add_invoice.total_price") }}
-                              </b-col> -->
                                 </b-row>
                                 <!-- <div class="form-item-action-col" /> -->
                               </div>
@@ -11093,6 +11062,20 @@ export default {
       },
       set(newVal) {
         invoiceData.value.vatAmount = +newVal || null;
+        console.log("en", newVal, "------>", invoiceData.value.vatAmount);
+        // try {
+        //   if (invoiceData.value.vatAmount?.toString().includes(".")) {
+        //     let a = invoiceData.value.vatAmount?.toString().split(".");
+        //     console.log(
+        //       "neeeeea",
+        //       a[1] && a[1].length > 2 ? null : parseFloat(newVal)
+        //     );
+        //     invoiceData.value.vatAmount =
+        //       a[1] && a[1].length > 2 ? null : parseFloat(newVal);
+        //   }
+        // } catch (e) {
+        //   console.log("eeeee", e, invoiceData.value.vatAmount);
+        // }
       },
     });
     // const formIsValid = computed(() => {
