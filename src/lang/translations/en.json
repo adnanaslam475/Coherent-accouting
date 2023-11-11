@@ -240,7 +240,7 @@
     "company_name": "Company Name",
     "email": "Email",
     "status": "Status",
-    "owner_first_name": "Agent First Name",
+    "owner_first_name": "Agent",
     "company_id": "Company ID",
     "actions": "Actions",
     "search_company": "Search Company...",
