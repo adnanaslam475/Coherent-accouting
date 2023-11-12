@@ -467,6 +467,7 @@
     "RESOLVED": "ОТГОВОРЕН"
   },
   "add_invoice": {
+    "recp_add": "Адрес на получателя",
     "account": "акаунт",
     "PleaseEnterTheCompanyID": "Моля, въведете идентификационния номер на фирмата ",
     "SupplierCompanyOwnerName": "Име на собственика на компанията доставчик...",

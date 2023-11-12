@@ -1221,14 +1221,14 @@
                           class="mb-1"
                           v-if="invoiceData.documentType == 'INVOICE'"
                         >
-                          {{ $t("Recipient") }}
+                          {{ $t("add_invoice.recipient") }}
                         </h6>
                         <div
                           class="mb-1"
                           v-if="invoiceData.documentType == 'INVOICE'"
                         >
                           <span class="title mr-1" style="width: 307px"
-                            >{{ $t("Recipient") }}:</span
+                            >{{ $t("add_invoice.recipient") }}:</span
                           >
 
                           <b-input-group
@@ -1302,9 +1302,7 @@
                           v-if="invoiceData.documentType == 'INVOICE'"
                         >
                           <span class="title mr-1" style="width: 307px"
-                            >{{ $t("Recipient Address") }}:</span
-                          >
-
+                            >{{ $t("add_invoice.recp_add") }}:</span    >
                           <b-input-group
                             class="input-group invoice-edit-input-group"
                           >

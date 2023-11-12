@@ -485,6 +485,7 @@
     "caetgory": "ACCOUNT CODE",
     "job_cost_code": "Tax Type",
     "account": "Account",
+    "recp_add": "Recipient Address",
     "PleaseEnterTheCompanyID": "Please enter the company id of ",
     "SupplierCompanyOwnerName": "Supplier Company Agent Name ...",
     "SupplierCompanyName": "Supplier Company Name...",

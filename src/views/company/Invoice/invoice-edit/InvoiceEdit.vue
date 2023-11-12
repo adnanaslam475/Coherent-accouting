@@ -410,7 +410,7 @@
                                     style="font-size: 14px"
                                     v-if="invoiceData.hasDropDown"
                                   >
-                                    {{ $t("Account") }}
+                                    {{ $t("add_invoice.account") }}
                                   </b-col>
                                   <b-col
                                     v-if="invoiceData.xero"
@@ -1055,14 +1055,14 @@
                         class="mb-1"
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
-                        {{ $t("Recipient") }}
+                        {{ $t("add_invoice.recipient") }}
                       </h6>
                       <div
                         class="mb-1"
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
                         <span class="title mr-1" style="width: 307px"
-                          >{{ $t("Recipient") }}:</span
+                          >{{ $t("add_invoice.recipient") }}:</span
                         >
 
                         <b-input-group
@@ -1134,7 +1134,7 @@
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
                         <span class="title mr-1" style="width: 307px"
-                          >{{ $t("Recipient Address") }}:</span
+                          >{{ $t("add_invoice.recp_add") }}:</span
                         >
 
                         <b-input-group
@@ -2278,7 +2278,7 @@
                             lg="2"
                             v-if="invoiceData.hasDropDown"
                           >
-                            {{ $t("Account") }}
+                            {{ $t("add_invoice.account") }}
                           </b-col>
                           <b-col cols="12" lg="2">
                             {{ $t("add_invoice.total_price") }}
@@ -3911,7 +3911,7 @@
                                     lg="2"
                                     v-if="invoiceData.hasDropDown"
                                   >
-                                    {{ $t("Account") }}
+                                    {{ $t("add_invoice.account") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
@@ -5682,7 +5682,7 @@
                                     lg="2"
                                     v-if="invoiceData.hasDropDown"
                                   >
-                                    {{ $t("Account") }}
+                                    {{ $t("add_invoice.account") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="tm_semi_bold">
                                     {{ $t("add_invoice.total_price") }}
@@ -7508,7 +7508,7 @@
                                     lg="2"
                                     v-if="invoiceData.hasDropDown"
                                   >
-                                    {{ $t("Account") }}
+                                    {{ $t("add_invoice.account") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="tm_semi_bold">
                                     {{ $t("add_invoice.total_price") }}
@@ -9299,7 +9299,7 @@
                                     lg="2"
                                     v-if="invoiceData.hasDropDown"
                                   >
-                                    {{ $t("Account") }}
+                                    {{ $t("add_invoice.account") }}
                                   </b-col>
                                   <b-col cols="12" lg="2" class="tm_semi_bold">
                                     {{ $t("add_invoice.total_price") }}
@@ -10488,7 +10488,7 @@ export default {
     showSingle() {
       this.openLightbox();
     },
-    
+
     openLightbox() {
       this.visible = true;
     },
@@ -11549,18 +11549,21 @@ export default {
           });
       } else {
         let temp = { ...invoiceData.value };
-        temp.transactions.map((v) => ({
+        temp.transactions = temp.transactions.map((v) => ({
           ...v,
           transactionTotalAmount:
             +v.singleAmountTransaction * v.quantity + v.vatAmountTransaction,
-          transactionTotalAmountNonVat: +v.singleAmountTransaction * v.quantity,
+        }));
+        temp.transactions = temp.transactions.map((v) => ({
+          ...v,
+          transactionTotalAmountNonVat:
+            +v.singleAmountTransaction * +v.quantity,
         }));
         useJwt
           .syncWithQuickBook(
             token,
             router.currentRoute.params.id,
             router.currentRoute.params.companyId,
-            // invoiceData.value
             temp
           )
           .then((res) => {
