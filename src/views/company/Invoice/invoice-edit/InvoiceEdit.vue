@@ -26,7 +26,9 @@
             />
           </template>
           <b-row
-            v-if="invoiceData.binaryId ? invoiceData.binaryId : null"
+            v-if="
+              invoiceData && invoiceData.binaryId ? invoiceData.binaryId : null
+            "
             class="invoice-add mx-0"
           >
             <b-row
@@ -321,13 +323,28 @@
                             TOTAL
                           </div>
                           <h4 style="color: #625f6e" class="pt-1">
-                            <b-form-input
-                              v-model="totalAmountInDecimal"
-                              type="number"
-                              @keyup="preventNum"
-                              class="mb-0"
-                              style="width: 130px"
-                            />
+                            <validation-provider
+                              #default="{ errors }"
+                              name="total"
+                              rules="required"
+                              ref="total"
+                            >
+                              <b-form-input
+                                v-model="totalAmountInDecimal"
+                                type="number"
+                                name="total"
+                                @keyup="preventNum"
+                                @change="removeTotalMsg"
+                                class="mb-0"
+                                style="width: 130px"
+                              />
+                              <small
+                                class="text-danger"
+                                style="font-size: 10px"
+                                v-if="inValidTotal"
+                                >{{ "This field is required" }}</small
+                              >
+                            </validation-provider>
                           </h4>
                         </div>
                         <div
@@ -336,13 +353,30 @@
                         >
                           <div class="text-uppercase grey-text-color">TAX</div>
                           <h4 style="color: #625f6e" class="pt-1">
-                            <b-form-input
-                              v-model="totalTaxInDecimal"
-                              type="number"
-                              @keyup="preventNum"
-                              class="mb-0"
-                              style="width: 130px"
-                            />
+                            <!-- name="Single Price sssssssssssssssssssssssssssssssss" -->
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tax"
+                              rules="required"
+                              ref="tax"
+                            >
+                              <b-form-input
+                                id="tax"
+                                name="tax"
+                                v-model="totalTaxInDecimal"
+                                type="number"
+                                @keyup="preventNum"
+                                @change="removeTaxMsg"
+                                class="mb-0"
+                                style="width: 130px"
+                              />
+                              <small
+                                class="text-danger"
+                                style="font-size: 10px"
+                                v-if="inValidTax"
+                                >{{ "This field is required" }}</small
+                              >
+                            </validation-provider>
                           </h4>
                         </div>
                       </b-col>
@@ -596,6 +630,7 @@
                                       />
                                       <small
                                         class="text-danger"
+                                        style="font-size: 10px"
                                         v-if="invalid"
                                         >{{ "This field is required" }}</small
                                       >
@@ -657,27 +692,6 @@
                                       }}</small>
                                     </validation-provider>
                                   </b-col>
-                                  <!-- <b-col cols="12" lg="1"></b-col> -->
-                                  <!-- <b-col cols="12" lg="1">
-                                <label class="d-inline d-lg-none">Currency</label>
-                                <validation-provider #default="{ errors }" name="transectionCurrency" rules="required">
-                                  <b-form-select v-model="invoiceData.currency" :options="currencyOptions">
-                                  </b-form-select>
-                                  <small class="text-danger">{{ errors[0] }}</small>
-                                </validation-provider>
-                                
-                              </b-col> -->
-
-                                  <!-- <b-col cols="12" class="pl-2" lg="1" style="padding-top: 10px">
-                                    <label class="d-inline d-lg-none">Tax</label>
-                                
-                                    <span>{{
-                                      parseFloat(item.vatAmountTransaction)
-                                        ? parseFloat(item.vatAmountTransaction).toFixed(2)
-                                        : 0
-                                    }}</span>
-                                   
-                                  </b-col> -->
 
                                   <b-col
                                     cols="12"
@@ -1179,7 +1193,7 @@
                       invoiceEdit(invoiceData, 'preview', AccountTypeOption)
                     "
                   >
-                    {{ $t("add_invoice.preview") }}
+                    sdsds{{ $t("add_invoice.preview") }}
                   </b-button>
 
                   <b-button
@@ -1192,13 +1206,21 @@
                     <b-spinner v-if="loading" small variant="light" />
                     {{ $t("add_invoice.save") }}
                   </b-button>
+                  
                   <b-button
                     v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                     variant="outline-primary"
                     type="button"
                     class="mr-2"
                     :disabled="connectDis(isSyncing, platform, cToQb, cToX)"
-                    @click="syncWithQuickBookHandler"
+                    @click="
+                      () => {
+                        if (removeTaxMsg() && removeTotalMsg()) {
+                          syncWithQuickBookHandler();
+                          return;
+                        }
+                      }
+                    "
                   >
                     {{
                       platform == "XERO"
@@ -1208,7 +1230,7 @@
                   </b-button>
 
                   <b-button
-                    v-if="!invoiceData.verified"
+                    v-if="invoiceData && !invoiceData.verified"
                     v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                     variant="outline-primary"
                     type="button"
@@ -1236,7 +1258,9 @@
           </b-row>
         </b-modal>
         <b-row
-          v-if="invoiceData.binaryId ? invoiceData.binaryId : null"
+          v-if="
+            invoiceData && invoiceData.binaryId ? invoiceData.binaryId : null
+          "
           class="invoice-add mx-0"
         ></b-row>
         <b-row class="invoice-add" v-else>
@@ -1244,7 +1268,10 @@
             cols="12"
             xl="10"
             md="10"
-            v-if="invoiceData.templateId == '5' || invoiceData.templateId == ''"
+            v-if="
+              invoiceData &&
+              (invoiceData.templateId == '5' || invoiceData.templateId == '')
+            "
           >
             <b-card no-body class="invoice-add">
               <b-card-header class="justify-content-center">
@@ -2942,7 +2969,12 @@
           </b-col>
 
           <!-- template 01 -->
-          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '1'">
+          <b-col
+            cols="12"
+            xl="10"
+            md="10"
+            v-if="invoiceData && invoiceData.templateId == '1'"
+          >
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div class="tm_invoice tm_style1" id="tm_download_section">
@@ -4617,7 +4649,12 @@
           </b-col>
 
           <!-- template 02 -->
-          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '2'">
+          <b-col
+            cols="12"
+            xl="10"
+            md="10"
+            v-if="invoiceData && invoiceData.templateId == '2'"
+          >
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div
@@ -6384,7 +6421,12 @@
           </b-col>
 
           <!-- template 03 -->
-          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '3'">
+          <b-col
+            cols="12"
+            xl="10"
+            md="10"
+            v-if="invoiceData && invoiceData.templateId == '3'"
+          >
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div
@@ -8238,7 +8280,12 @@
           </b-col>
 
           <!-- template 04 -->
-          <b-col cols="12" xl="10" md="10" v-if="invoiceData.templateId == '4'">
+          <b-col
+            cols="12"
+            xl="10"
+            md="10"
+            v-if="invoiceData && invoiceData.templateId == '4'"
+          >
             <div class="tm_container">
               <div class="tm_invoice_wrap">
                 <div
@@ -10005,13 +10052,20 @@
                 <b-spinner v-if="loading" small variant="light" />
                 {{ $t("add_invoice.save") }}
               </b-button>
+              
               <b-button
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 variant="outline-primary"
                 block
                 type="button"
                 :disabled="isSyncing"
-                @click="syncWithQuickBookHandler"
+                @click="
+                  () => {
+                    if (removeTaxMsg() && removeTotalMsg()) {
+                      syncWithQuickBookHandler();
+                    }
+                  }
+                "
               >
                 {{
                   platform == "XERO"
@@ -10020,7 +10074,7 @@
                 }}
               </b-button>
               <b-button
-                v-if="!invoiceData.verified"
+                v-if="invoiceData && !invoiceData.verified"
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 variant="outline-primary"
                 type="button"
@@ -10167,10 +10221,6 @@
   </section>
 </template>
 
-<!-- <script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jspdf.min.js"></script>
-<script src="assets/js/html2canvas.min.js"></script>
-<script src="assets/js/main.js"></script> -->
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import {
@@ -10290,6 +10340,8 @@ export default {
       isTemplateTwo: false,
       isTemplateThree: false,
       isTemplateFour: false,
+      inValidTax: false,
+      inValidTotal: false,
       companyIDisInvalid: false,
       scheduleOptionToggleValue: false,
       scheduleTypes: ["WEEKLY", "MONTHLY"],
@@ -10327,7 +10379,6 @@ export default {
         { value: 30, text: "30" },
         { value: 31, text: "31" },
       ],
-      // days: [{ text: i18n.tc("company_info.MON"), value: "MON" }, { text: "TUE", value: "TUE" }, { text: "WED", value: "WED" }, { text: "THU", value: "THU" }, { text: "FRI", value: "FRI" }, { text: "SAT", value: "SAT" }, { text: "SUN", value: "SUN" }],
       daySelected: false,
       clauseToSend: "",
       bankNameToSend: "",
@@ -10377,7 +10428,6 @@ export default {
         "чл.42 от ЗДДС",
         "чл.46, ал.1, т.1 от ЗДДС",
       ],
-      // loading: false,
       required,
       email,
       confirmed,
@@ -10398,9 +10448,10 @@ export default {
   mounted() {
     this.getAccounts();
   },
-
-  created() {},
-  destroyed() {},
+  updated() {
+    // this.inValidTax = this.$refs.tax.flags.valid === false;
+    // this.inValidTotal = this.$refs.tax.flags.valid === false;
+  },
   computed: {
     formIsValid() {
       let i = 0;
@@ -10420,12 +10471,17 @@ export default {
         if (this.invoiceData.hasDropDown) {
           requiredField.push(this.$refs.account[i].flags.valid);
         }
-
         requiredField.push(...temp);
 
         i++;
       }
-      return requiredField.every((item) => (item === true ? true : false));
+      this.inValidTax = this.$refs.tax.flags.valid === false;
+      this.inValidTotal = this.$refs.total.flags.valid === false;
+      return (
+        requiredField.every((item) => (item === true ? true : false)) ||
+        this.$refs.tax.flags.valid ||
+        this.$refs.total.flags.valid
+      );
     },
     bankList() {
       return [
@@ -10487,6 +10543,16 @@ export default {
   methods: {
     showSingle() {
       this.openLightbox();
+    },
+    removeTaxMsg(e) {
+      console.log("sssssss");
+      this.inValidTax = this.$refs.tax.flags.valid == false;
+      return this.$refs.tax.flags.valid;
+    },
+    removeTotalMsg(e) {
+      console.log("sssssss2");
+      this.inValidTotal = this.$refs.total.flags.valid == false;
+      return this.$refs.total.flags.valid;
     },
 
     openLightbox() {
@@ -10711,6 +10777,10 @@ export default {
       if (this.invoiceData?.binaryId && this.invoiceData?.binaryId !== null) {
         if (["save", "verify"].includes(redirectPage) && !this.formIsValid)
           return;
+      }
+      if (!this.$refs.tax.flags.valid || !this.$refs.total.flags.valid) {
+        console.log("againnnnnnnnnnn2");
+        return;
       }
       if (invoiceData.scheduled == true) {
         if (invoiceData.cronScheduleApi !== null) {
@@ -11044,9 +11114,9 @@ export default {
     });
     const totalAmountInDecimal = computed({
       get() {
-        if (invoiceData.value.totalAmount.toString().includes("."))
+        if (invoiceData.value.totalAmount?.toString().includes("."))
           return invoiceData.value.totalAmount;
-        return invoiceData.value.totalAmount.toFixed(0);
+        return invoiceData.value.totalAmount?.toFixed(0);
       },
       set(newVal) {
         invoiceData.value.totalAmount = +newVal || null;
@@ -11054,17 +11124,14 @@ export default {
     });
     const totalTaxInDecimal = computed({
       get() {
-        if (invoiceData.value.vatAmount.toString().includes("."))
+        if (invoiceData.value.vatAmount?.toString().includes("."))
           return invoiceData.value.vatAmount;
-        return invoiceData.value.vatAmount.toFixed(0);
+        return invoiceData.value.vatAmount?.toFixed(0);
       },
       set(newVal) {
         invoiceData.value.vatAmount = +newVal || null;
       },
     });
-    // const formIsValid = computed(() => {
-
-    // })
 
     let uploadValue = {
       companyOwnerName: "",
@@ -11425,9 +11492,10 @@ export default {
       return parseFloat(totalPrice).toFixed(2);
     };
 
-    var populateValues = () => {
+    const populateValues = () => {
       var amountNonVat = invoiceData.value.transactions.reduce((acc, ele) => {
         return acc + parseFloat(ele.quantity * ele.singleAmountTransaction);
+        // (ele.quantity||0)
       }, 0);
 
       amountNonVat = amountNonVat ? amountNonVat : 0;
@@ -11511,7 +11579,7 @@ export default {
       };
     };
 
-    function syncWithQuickBookHandler(a) {
+    function syncWithQuickBookHandler() {
       this.isSyncing = true;
       let token = useJwt.getToken();
 
@@ -11529,7 +11597,7 @@ export default {
               props: {
                 title: !res.data.success
                   ? res.data.errorMessage
-                  : this.$t("invoice_details.publishedx"),
+                  : this.$t("invoice_details.publishedxero"),
                 icon: "EditIcon",
                 variant: !res.data.success ? "danger" : "success",
               },

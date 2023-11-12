@@ -148,6 +148,7 @@ export default {
   },
   created() {
     if (!localStorage.getItem("user_token")) {
+      console.log('emailapi clledddddd')
       useJwt
         .login({
           grant_type: "password",
