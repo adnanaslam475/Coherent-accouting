@@ -3,6 +3,6 @@ export function preventNum(e) {
     e.target.value =
       e.target.value.split(".")[0] +
       "." +
-      e.target.value.split(".")[1].slice(0, 1);
+      e.target.value.split(".")[1].slice(0, 2);
   }
 }

@@ -324,7 +324,7 @@
                             <b-form-input
                               v-model="totalAmountInDecimal"
                               type="number"
-                              @keypress="preventNum"
+                              @keyup="preventNum"
                               class="mb-0"
                               style="width: 130px"
                             />
@@ -339,7 +339,7 @@
                             <b-form-input
                               v-model="totalTaxInDecimal"
                               type="number"
-                              @keypress="preventNum"
+                              @keyup="preventNum"
                               class="mb-0"
                               style="width: 130px"
                             />
@@ -644,7 +644,7 @@
                                         v-model="item.singleAmountTransaction"
                                         type="number"
                                         class="mb-0"
-                                        @keypress="preventNum"
+                                        @keyup="preventNum"
                                         step="any"
                                         placeholder="0.00"
                                         @input="populateValues()"

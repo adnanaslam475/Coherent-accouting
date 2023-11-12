@@ -189,7 +189,7 @@
                             <b-form-input
                               v-model="totalDebit"
                               type="number"
-                              @keypress="preventNum"
+                              @keyup="preventNum"
                               class="mb-0"
                               style="width: 130px"
                             />
@@ -208,7 +208,7 @@
                               v-model="totalCredit"
                               type="number"
                               class="mb-0"
-                              @keypress="preventNum"
+                              @keyup="preventNum"
                               style="width: 130px"
                             />
                           </h4>
@@ -254,7 +254,7 @@
                                     style="font-size: 14px"
                                     v-if="isQuickBook && isAccount"
                                   >
-                                    {{ $t("Account") }}
+                                    {{ $t("add_invoice.account") }}
                                   </b-col>
                                   <b-col
                                     v-if="isXero && isAccount"
@@ -534,7 +534,7 @@
                                         id="debit"
                                         v-model="item.debit"
                                         type="number"
-                                        @keypress="preventNum"
+                                        @keyup="preventNum"
                                         class="mb-0"
                                         step="any"
                                         placeholder="0.00"
@@ -583,7 +583,7 @@
                                         class="mb-0"
                                         step="any"
                                         placeholder="0.00"
-                                        @keypress="preventNum"
+                                        @keyup="preventNum"
                                         v-b-tooltip.hover
                                         :title="item.credit"
                                       ></b-form-input>
@@ -626,7 +626,7 @@
                                         type="number"
                                         class="mb-0"
                                         step="any"
-                                        @keypress="preventNum"
+                                        @keyup="preventNum"
                                         placeholder="0.00"
                                         v-b-tooltip.hover
                                         :title="item.balance"

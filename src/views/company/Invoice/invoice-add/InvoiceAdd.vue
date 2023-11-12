@@ -372,7 +372,7 @@
                             <h4 style="color: #625f6e" class="pt-1">
                               <b-form-input
                                 v-model="totalAmountInDecimal"
-                                @keypress="preventNum"
+                                @keyup="preventNum"
                                 type="number"
                                 class="mb-0"
                                 style="width: 140px"
@@ -390,7 +390,7 @@
                             <h4 style="color: #625f6e" class="pt-1">
                               <b-form-input
                                 v-model="totalTaxInDecimal"
-                                @keypress="preventNum"
+                                @keyup="preventNum"
                                 type="number"
                                 class="mb-0"
                                 style="width: 140px"
@@ -737,7 +737,7 @@
                                           v-model="item.singleAmountTransaction"
                                           type="number"
                                           class="mb-0"
-                                          @keypress="preventNum"
+                                          @keyup="preventNum"
                                           step="any"
                                           placeholder="0.00"
                                           @input="populateValues()"
