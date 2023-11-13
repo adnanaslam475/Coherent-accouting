@@ -10550,12 +10550,10 @@ export default {
       this.openLightbox();
     },
     removeTaxMsg(e) {
-      console.log("sssssss");
       this.inValidTax = this.$refs.tax.flags.valid == false;
       return this.$refs.tax.flags.valid;
     },
     removeTotalMsg(e) {
-      console.log("sssssss2");
       this.inValidTotal = this.$refs.total.flags.valid == false;
       return this.$refs.total.flags.valid;
     },

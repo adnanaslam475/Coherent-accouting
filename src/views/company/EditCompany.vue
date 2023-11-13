@@ -969,7 +969,6 @@ export default {
         this.getCompanyStatus = this.getCompanyStatus.status;
       }
 
-      console.log("thisssssssss", this.form);
       var data = JSON.stringify({
         companyBankName: this.companyBankName,
         companyBankBic: this.companyBankBic,
