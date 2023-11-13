@@ -10025,7 +10025,7 @@
           </b-col>
 
           <!-- Right Col: Card -->
-          <b-col cols="12" md="2" xl="2" class="invoice-actions mt-md-0 mt-2">
+          <b-col cols="12" md="2" xl="2" class="invoice-actions mt-md-0 mt-2 d-none">
             <!-- Action Buttons -->
             <b-card>
               <!-- Button: DOwnload -->
