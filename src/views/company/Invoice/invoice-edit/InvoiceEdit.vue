@@ -1193,7 +1193,7 @@
                       invoiceEdit(invoiceData, 'preview', AccountTypeOption)
                     "
                   >
-                    sdsds{{ $t("add_invoice.preview") }}
+                    {{ $t("add_invoice.preview") }}
                   </b-button>
 
                   <b-button
@@ -1206,7 +1206,7 @@
                     <b-spinner v-if="loading" small variant="light" />
                     {{ $t("add_invoice.save") }}
                   </b-button>
-                  
+
                   <b-button
                     v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                     variant="outline-primary"
@@ -10025,7 +10025,12 @@
           </b-col>
 
           <!-- Right Col: Card -->
-          <b-col cols="12" md="2" xl="2" class="invoice-actions mt-md-0 mt-2 d-none">
+          <b-col
+            cols="12"
+            md="2"
+            xl="2"
+            class="invoice-actions mt-md-0 mt-2 d-none"
+          >
             <!-- Action Buttons -->
             <b-card>
               <!-- Button: DOwnload -->
@@ -10052,7 +10057,7 @@
                 <b-spinner v-if="loading" small variant="light" />
                 {{ $t("add_invoice.save") }}
               </b-button>
-              
+
               <b-button
                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                 variant="outline-primary"
