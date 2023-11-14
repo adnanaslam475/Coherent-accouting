@@ -89,10 +89,7 @@
             @show="resetModal"
             @ok="handleOk"
           >
-            <b-row
-              class="text-center my-3"
-              style="border: 2px solid rgb(64, 255, 0)"
-            >
+            <b-row class="text-center my-3">
               <b-col md="12">
                 <b-button
                   variant="primary"
@@ -1202,6 +1199,7 @@ export default {
             link.remove();
           });
       } catch (error) {
+        console.log("eeeeee", error);
         this.$toast({
           component: ToastificationContent,
           props: {
@@ -1267,7 +1265,6 @@ export default {
             }
           )
           .then(function (response) {
-            const headers = response.headers;
             const blobData = response.data;
             const exportDataBlob = new Blob([blobData], {
               type: blobData.type,
@@ -1297,12 +1294,12 @@ export default {
         });
         this.$refs.modal_exportValue.hide();
       } catch (error) {
-        console.error("Error:", error);
         if (error.response.status === 409) {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `Няма фактури за този период!`,
+              // error.response.data.errorMessage
+              title: error.response.data.errorMessage || "",
               icon: "AlertTriangleIcon",
               variant: "danger",
             },

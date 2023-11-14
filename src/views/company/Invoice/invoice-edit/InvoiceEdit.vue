@@ -353,7 +353,7 @@
                         >
                           <div class="text-uppercase grey-text-color">TAX</div>
                           <h4 style="color: #625f6e" class="pt-1">
-                            <!-- name="Single Price sssssssssssssssssssssssssssssssss" -->
+                            <!-- name="Single Price" -->
                             <validation-provider
                               #default="{ errors }"
                               name="tax"
@@ -1217,7 +1217,6 @@
                       () => {
                         if (removeTaxMsg() && removeTotalMsg()) {
                           syncWithQuickBookHandler();
-                          return;
                         }
                       }
                     "
@@ -11074,7 +11073,7 @@ export default {
     var platform = ref(null);
     var cToQb = ref(null);
     var cToX = ref(null);
-    var platform = ref(null);
+   
     const isUploading = ref("");
 
     const showLogo = ref(null);
