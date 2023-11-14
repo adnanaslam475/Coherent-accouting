@@ -379,7 +379,7 @@
       <template #head(id)>
         <b-form-checkbox
           :checked="
-            (isCheck === false ? fetchInvoices : invoices).length ==
+            (isCheck === false ? fetchInvoices || [] : invoices || []).length ==
             selectAll.length
           "
           @change="
@@ -1270,7 +1270,7 @@ export default {
           }
           if (
             this.invoices !== null &&
-            this.invoices.length === this.totalInvoices
+            this.invoices?.length === this.totalInvoices
           ) {
             this.loadMore = false;
           } else {
@@ -1402,7 +1402,7 @@ export default {
             await this.searchInvoices();
           }
           // Check if there are no more invoices to load
-          if (this.invoices.length === this.totalInvoices) {
+          if (this.invoices?.length === this.totalInvoices) {
             this.loadMore = false;
           } else {
             setTimeout(() => {
@@ -1514,7 +1514,7 @@ export default {
       this.fileLoadingExport = true;
       const token = useJwt.getToken();
       const formData = new FormData();
-      for (let i = 0; i < this.exportFiles.length; i++) {
+      for (let i = 0; i < this.exportFiles?.length; i++) {
         formData.append("files", this.exportFiles[i]);
       }
       let companyID = this.$route.params.id;

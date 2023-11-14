@@ -1385,12 +1385,14 @@
                     >
                       {{ $t("add_invoice.preview") }}
                     </b-button>
-
+                    <!-- another opne -->
                     <b-button
                       v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                       variant="outline-primary"
+
                       class="mr-2"
                       :disabled="loading"
+                      @click="invoiceAdd(invoiceData, 'save', AccountTypeOption)"
                       type="submit"
                     >
                       <b-spinner v-if="loading" small variant="light" />
@@ -10282,7 +10284,7 @@ export default {
     formIsValid() {
       let i = 0;
       let requiredField = [];
-      while (i < this.invoiceData.transactions.length) {
+      while (i < this.invoiceData.transactions?.length) {
         const temp = [
           this.$refs.transectionServiceOrItemDescription[i].flags.valid,
           this.$refs.transectionQuantity[i].flags.valid,
