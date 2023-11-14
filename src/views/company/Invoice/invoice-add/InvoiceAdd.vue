@@ -1353,7 +1353,7 @@
 
                   <b-card class="d-flex" style="text-align: end">
                     <!-- herer -->
-                    <b-button
+                    <!-- <b-button
                       v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                       variant="outline-primary"
                       type="button"
@@ -1372,7 +1372,7 @@
                           ? $t("add_invoice.sync_with_xero")
                           : $t("add_invoice.sync_with_quickbook")
                       }}
-                    </b-button>
+                    </b-button> -->
                     <b-button
                       v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                       variant="outline-primary"
@@ -10365,7 +10365,6 @@ export default {
   },
   methods: {
     connectDis(isSyncing, platform, cToQb, cToX) {
-      console.log("this", isSyncing || platform == "QUICK_BOOKS");
       return isSyncing || platform == "QUICK_BOOKS"
         ? platform == "QUICK_BOOKS" && !cToQb
         : platform == "XERO" && !cToX;
@@ -10383,7 +10382,6 @@ export default {
       };
       axios(config)
         .then((response) => {
-          console.log("alllll", response.data);
           this.accounts = response.data;
         })
         .catch(function (error) {});
@@ -11377,7 +11375,7 @@ export default {
         useJwt
           .syncWithQuickBook(
             token,
-            router.currentRoute.params.id,
+            router.currentRoute.params.id||'',
             router.currentRoute.params.companyId,
             temp
           )
@@ -11395,6 +11393,7 @@ export default {
             this.isSyncing = false;
           })
           .catch((error) => {
+            console.log("eeee", error, 'prms======',router.currentRoute);
             this.$toast({
               component: ToastificationContent,
               props: {
@@ -11899,6 +11898,7 @@ export default {
       companyData,
       invoiceImage,
       jobPostItems,
+      syncWithQuickBookHandler,
       categoryItems,
     };
   },

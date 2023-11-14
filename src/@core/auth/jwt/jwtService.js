@@ -271,7 +271,7 @@ export default class JwtService {
     );
   }
 
-  syncWithQuickBook(t, invoiceId, companyId, body) {
+  syncWithQuickBook(t, invoiceId, companyId, body, add = false) {
     return this.axiosIns.post(
       `${this.jwtConfig.syncWithQuickBookPostEndPoint}/${invoiceId}/${companyId}`,
       body,
