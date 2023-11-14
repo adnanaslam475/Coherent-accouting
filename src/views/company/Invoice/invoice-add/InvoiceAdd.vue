@@ -1389,10 +1389,11 @@
                     <b-button
                       v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                       variant="outline-primary"
-
                       class="mr-2"
                       :disabled="loading"
-                      @click="invoiceAdd(invoiceData, 'save', AccountTypeOption)"
+                      @click="
+                        invoiceAdd(invoiceData, 'save', AccountTypeOption)
+                      "
                       type="submit"
                     >
                       <b-spinner v-if="loading" small variant="light" />
@@ -10284,6 +10285,7 @@ export default {
     formIsValid() {
       let i = 0;
       let requiredField = [];
+      console.log("formIsValid", this.invoiceData.transactions?.length);
       while (i < this.invoiceData.transactions?.length) {
         const temp = [
           this.$refs.transectionServiceOrItemDescription[i].flags.valid,
@@ -11377,7 +11379,7 @@ export default {
         useJwt
           .syncWithQuickBook(
             token,
-            router.currentRoute.params.id||'',
+            router.currentRoute.params.id || "",
             router.currentRoute.params.companyId,
             temp
           )
@@ -11395,7 +11397,7 @@ export default {
             this.isSyncing = false;
           })
           .catch((error) => {
-            console.log("eeee", error, 'prms======',router.currentRoute);
+            console.log("eeee", error, "prms======", router.currentRoute);
             this.$toast({
               component: ToastificationContent,
               props: {
