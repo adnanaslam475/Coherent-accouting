@@ -509,14 +509,7 @@
                                     >
                                       {{ $t("add_invoice.single_price") }}
                                     </b-col>
-                                    <!-- <b-col
-                                      cols="12"
-                                      lg="1"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
-                                    >
-                                      Tax
-                                    </b-col> -->
+
                                     <b-col
                                       cols="12"
                                       lg="1"
@@ -525,35 +518,9 @@
                                     >
                                       {{ $t("add_invoice.total_price") }}
                                     </b-col>
-
-                                    <!-- <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.s_no") }}
-                              </b-col>
-                              <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'">
-                                {{ $t("add_invoice.item_service") }}
-                              </b-col>
-                              <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.qty") }}
-                              </b-col>
-                              <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.measure") }}
-                              </b-col>
-                              <b-col cols="12" lg="2">
-                                {{ $t("add_invoice.single_price") }}
-                              </b-col>
-                              <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.currency") }}
-                              </b-col>
-                             
-                              <b-col cols="12" lg="2">
-                                {{ $t("add_invoice.total_price") }}
-                              </b-col> -->
                                   </b-row>
-                                  <!-- <div class="form-item-action-col" /> -->
                                 </div>
 
-                                <!-- Form Input Fields OR content inside bordered area  -->
-                                <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                                 <div
                                   v-for="(
                                     item, index
@@ -577,13 +544,17 @@
                                       >
                                       <validation-provider
                                         #default="{ errors, invalid }"
-                                        name="transectionCurrency"
+                                        name="account"
                                         rules="required"
+                                        ref="account"
                                         immediate
                                       >
                                         <b-form-select
                                           v-model="item.account"
                                           :options="accounts"
+                                          name="account"
+                                          id="account"
+                                          ref="account"
                                         >
                                         </b-form-select>
                                         <small
@@ -707,20 +678,6 @@
                                       </validation-provider>
                                     </b-col>
 
-                                    <!-- <b-col cols="12" lg="1">
-                                <label class="d-inline d-lg-none">No.</label>
-
-                                <b-form-input :value="index + 1" type="text" class="mb-0 text-left" disabled />
-                              </b-col> -->
-
-                                    <!-- <b-col cols="12" lg="1">
-                                <label class="d-inline d-lg-none">Measure</label>
-                                <validation-provider #default="{ errors }" name="transectionMeasurement" rules="required">
-                                  <b-form-select v-model="item.measurement" type="text" class="mb-0"
-                                    :options="measureOptions" />
-                                  <small class="text-danger">{{ errors[0] }}</small>
-                                </validation-provider>
-                              </b-col> -->
                                     <b-col cols="12" lg="2">
                                       <label class="d-inline d-lg-none"
                                         >Single Price</label
@@ -837,29 +794,6 @@
                       >
                         + {{ $t("add_invoice.add_item") }}
                       </div>
-
-                      <!-- <div
-                      no-body
-                      class="invoice-add-card mb-1"
-                      style="border-bottom: 1px solid lightgrey; border-top: 1px solid lightgrey"
-                    >
-               
-                      <div class="invoice-padding p-0">
-                        <div ref="form" class="repeater-form h-auto">
-                          <b-row class="flex-grow-1 py-1 px-1 invoice-add-transections">
-                       
-                            <b-col cols="12" lg="10"> </b-col>
-                            <b-col cols="12" lg="1" class="pl-1">
-                              <span> 0.00</span>
-                            </b-col>
-                            <b-col cols="12" lg="1" class="pl-1 text-truncate">
-                              {{ invoiceData.totalAmount }}
-                            </b-col>
-                          </b-row>
-                          <div class="d-flex justify-content-center py-50 position-relative top-custom"></div>
-                        </div>
-                      </div>
-                    </div> -->
 
                       <!-- Bank Details Switch -->
                       <b-row v-if="companyInBG">
@@ -1302,7 +1236,8 @@
                           v-if="invoiceData.documentType == 'INVOICE'"
                         >
                           <span class="title mr-1" style="width: 307px"
-                            >{{ $t("add_invoice.recp_add") }}:</span    >
+                            >{{ $t("add_invoice.recp_add") }}:</span
+                          >
                           <b-input-group
                             class="input-group invoice-edit-input-group"
                           >
@@ -1351,6 +1286,27 @@
                   </b-tabs>
 
                   <b-card class="d-flex" style="text-align: end">
+                    <!-- herer -->
+                    <!-- <b-button
+                      v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                      variant="outline-primary"
+                      type="button"
+                      class="mr-2"
+                      :disabled="connectDis(isSyncing, platform, cToQb, cToX)"
+                      @click="
+                        () => {
+                          // if (removeTaxMsg() && removeTotalMsg()) {
+                          syncWithQuickBookHandler();
+                          // }
+                        }
+                      "
+                    >
+                      {{
+                        platform == "XERO"
+                          ? $t("add_invoice.sync_with_xero")
+                          : $t("add_invoice.sync_with_quickbook")
+                      }}
+                    </b-button> -->
                     <b-button
                       v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                       variant="outline-primary"
@@ -1363,11 +1319,14 @@
                     >
                       {{ $t("add_invoice.preview") }}
                     </b-button>
-
+                    <!-- another opne -->
                     <b-button
                       v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                       variant="outline-primary"
                       class="mr-2"
+                      @click="
+                        invoiceAdd(invoiceData, 'save', AccountTypeOption)
+                      "
                       :disabled="loading"
                       type="submit"
                     >
@@ -1410,35 +1369,6 @@
                   </b-card>
                 </b-col>
               </b-row>
-
-              <!-- <b-col cols="12" md="2" xl="2" class="invoice-actions mt-md-0 mt-2">
-          
-            <b-card>
-             
-              <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" class="mb-75" block
-                type="button" :disabled="loading" @click="invoiceEdit(invoiceData, 'preview', AccountTypeOption)">
-                {{ $t("add_invoice.preview") }}
-
-              </b-button>
-
-             
-              <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" block type="submit"
-                :disabled="loading">
-                <b-spinner v-if="loading" small variant="light" />
-                {{ $t("add_invoice.save") }}
-              </b-button>
-              <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" block type="button"
-                @click="clearForm">
-                {{ $t("add_invoice.clear") }}
-              </b-button>
-
-              <b-button v-if="!invoiceData.verified" v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary"
-                type="button" block :disabled="loading" @click="invoiceEdit(invoiceData, 'verify', AccountTypeOption)">
-                <b-spinner v-if="loading" small variant="light" />
-                {{ $t("add_invoice.verify") }}
-              </b-button>
-            </b-card>
-          </b-col> -->
             </b-row>
           </b-modal>
         </b-row>
@@ -10159,7 +10089,7 @@ export default {
       notBank: false,
 
       bankProcess: "",
-
+      accounts: [],
       showLogo: false,
       isUploading: i18n.tc("add_invoice.upload_logo"),
       logoToUpload: "",
@@ -10205,18 +10135,11 @@ export default {
         { value: 30, text: "30" },
         { value: 31, text: "31" },
       ],
-      // days: [{ text: i18n.tc("company_info.MON"), value: "MON" }, { text: "TUE", value: "TUE" }, { text: "WED", value: "WED" }, { text: "THU", value: "THU" }, { text: "FRI", value: "FRI" }, { text: "SAT", value: "SAT" }, { text: "SUN", value: "SUN" }],
       daySelected: false,
       clauseToSend: "",
       bankNameToSend: "",
       isWeekSelected: false,
-      // bankList: [
-      //   { name: i18n.tc("add_invoice.bank-1") },
-      //   { name: i18n.tc("add_invoice.bank-2") },
-      //   { name: i18n.tc("add_invoice.bank-3") },
-      //   { name: i18n.tc("add_invoice.bank-4") },
-      //   { name: i18n.tc("add_invoice.bank-5") },
-      // ],
+
       isBank: false,
       noVatClause: [
         { clause: "чл.113 ал.9 от ЗДДС" },
@@ -10284,21 +10207,13 @@ export default {
   mixins: [heightTransition],
   mounted() {
     this.getAccounts();
-    // this.initTrHeight();
   },
-  created() {
-    // window.addEventListener("resize", this.initTrHeight);
-  },
-  destroyed() {
-    // window.removeEventListener("resize", this.initTrHeight);
-  },
+
   computed: {
     formIsValid() {
       let i = 0;
       let requiredField = [];
-      while (i < this.invoiceData.transactions.length) {
-        // console.log(this.$refs.transectionServiceOrItemDescription[i].flags)
-        // console.log(i)
+      while (i < this.invoiceData.transactions?.length) {
         const temp = [
           this.$refs.transectionServiceOrItemDescription[i].flags.valid,
           this.$refs.transectionQuantity[i].flags.valid,
@@ -10311,14 +10226,15 @@ export default {
         }
 
         if (this.invoiceData.hasDropDown) {
-          requiredField.push(this.$refs.account[i].flags.valid);
+          requiredField.push(this.$refs.account[i].flags?.valid || true);
         }
 
         requiredField.push(...temp);
 
         i++;
       }
-      return requiredField.every((item) => (item === true ? true : false));
+      let a = requiredField.every((item) => (item === true ? true : false));
+      return a;
     },
     bankList() {
       return [
@@ -10380,6 +10296,11 @@ export default {
     ...mapGetters("verticalMenu", ["getActiveTab"]),
   },
   methods: {
+    connectDis(isSyncing, platform, cToQb, cToX) {
+      return isSyncing || platform == "QUICK_BOOKS"
+        ? platform == "QUICK_BOOKS" && !cToQb
+        : platform == "XERO" && !cToX;
+    },
     getAccounts() {
       var config = {
         method: "get",
@@ -10393,21 +10314,12 @@ export default {
       };
       axios(config)
         .then((response) => {
-          console.log(response.data);
           this.accounts = response.data;
-          // this.banks = response.data
-          // console.log(this.banks, 'there are banks')
         })
         .catch(function (error) {});
     },
     fillBankApi() {
       let self = this;
-
-      console.log(
-        this.invoiceData,
-        self.companyBankBic,
-        "this is invoice Data"
-      );
     },
     checkProcessType(type) {
       let self = this;
@@ -10458,16 +10370,13 @@ export default {
             )
             .then((response) => {
               if (response.status === 200) {
-                // console.log(response.data);
                 const reader = new FileReader();
                 reader.readAsDataURL(response.data);
                 reader.onload = function () {
                   const filePath = reader.result;
                   self.logoToUpload = filePath;
                   self.showLogo = true;
-                  console.log(self.showLogo);
                   self.isUploading = i18n.tc("add_invoice.change_logo");
-                  // console.log(filePath);
                 };
               }
             })
@@ -10572,16 +10481,7 @@ export default {
         this.clauseToSend = this.invoiceData.vatCondition.clause;
       }
     },
-    // selectBankName() {
-    //   let self = this
-    //   console.log('======>', this.invoiceData, self.companyBankBic,)
-    //   this.invoiceData.bankApi.bic = self.companyBankBic
-    //   if (this.invoiceData.bankApi.name === null) {
-    //     this.bankNameToSend = "";
-    //   } else {
-    //     this.bankNameToSend = this.invoiceData.bankApi.name.name;
-    //   }
-    // },
+
     addNewItemInItemForm() {
       // this.$refs.form.style.overflow = "hidden"
       this.invoiceData.transactions.push(
@@ -10602,16 +10502,11 @@ export default {
       this.daySelected = false;
     },
     invoiceAdd(invoiceData, redirectPage, AccountTypeOption) {
-      //assign the data of recipient and creator
-      //creator supplier company
       if (this.invoiceData?.binaryId && this.invoiceData.binaryId !== null) {
-        if (
-          (redirectPage === "save" || redirectPage === "verify") &&
-          !this.formIsValid
-        )
+        if (["save", "verify"].includes(redirectPage) && !this.formIsValid) {
           return;
+        }
       }
-
       var self = this;
 
       if (invoiceData.scheduled == true) {
@@ -10625,28 +10520,11 @@ export default {
           }
         }
       }
-
-      // if (invoiceData.documentType == "RECEIPT") {
-      //   invoiceData.supplierCompany = {}
-      // }
-      // invoiceData.bankApi.name = this.bankNameToSend;
       invoiceData.vatCondition = this.clauseToSend;
-
-      // if (invoiceData.vatPercent !== "0") {
-      //   invoiceData.vatCondition = "";
-      // }
-
-      // Company ID validation on the basis of transactionType
 
       invoiceData.paymentProcess = this.bankProcess;
 
       if (invoiceData.transactionType === "INCOME" && self.companyInBG) {
-        console.log(
-          "company eic======>",
-          invoiceData.supplierCompany.companyEic,
-          "supplier ID=====>",
-          this.supplierID
-        );
         if (invoiceData.supplierCompany.companyEic !== this.supplierID) {
           this.companyIDisInvalid = true;
         }
@@ -10657,7 +10535,6 @@ export default {
       } else {
         this.companyIDisInvalid = false;
       }
-
       let regExp =
         /^((AT)(U\d{8})|(BE)(0\d{9})|(CY)(\d{8}[LX])|(CZ)(\d{8,10})|(DE)(\d{9})|(DK)(\d{8})|(EE)(\d{9})|(EL|GR)(\d{9})|(ES)([\dA-Z]\d{7}[\dA-Z])|(FI)(\d{8})|(FR)([\dA-Z]{2}\d{9})|(HU)(\d{8})|(IE)(\d{7}[A-Z]{2})|(IT)(\d{11})|(LT)(\d{9}|\d{12})|(LU)(\d{8})|(LV)(\d{11})|(MT)(\d{8})|(NL)(\d{9}(B\d{2}|BO2))|(PL)(\d{10})|(PT)(\d{9})|(RO)(\d{2,10})|(SE)(\d{12})|(SI)(\d{8})|(SK)(\d{10}))$/gim;
       let ValidateVatNumber =
@@ -10670,7 +10547,6 @@ export default {
           invoiceData.recipientCompany.companyOwnerName;
         invoiceData.recipientCompany.companyVatEic = "";
       }
-      // console.log(invoiceData.cronScheduleApi.dayOfWeek, invoiceData.scheduled);
       if (invoiceData.cronScheduleApi != null) {
         if (invoiceData.cronScheduleApi.dayOfWeek) {
           this.daySelected = false;
@@ -10678,10 +10554,6 @@ export default {
           this.daySelected = true;
         }
       }
-
-      // if (invoiceData.scheduled === false) {
-      //   invoiceData.cronScheduleApi = "NO";
-      // }
       if (validateVat) {
         let validateRegExp = invoiceData.recipientCompany.companyVatEic;
         validateRegExp = validateRegExp.replace(/\W|_/g, "");
@@ -10700,7 +10572,6 @@ export default {
       } else {
         this.vatPercentValidate = false;
       }
-
       if (self.companyInBG) {
         if (this.bankProcess == null || this.bankProcess == "") {
           this.notBank = true;
@@ -10714,12 +10585,11 @@ export default {
       if (self.companyInBG == false) {
         delete invoiceData.paymentProcess;
       }
-
-      this.$refs.invoiceForm.validate().then((success) => {
-        // if (success && this.companyIDisInvalid === false && this.isWeekSelected === false) {
-        if (!success) {
-          return;
-        }
+      this.$refs.invoiceForm.validate().then((success,  ) => {
+        // if (!success) {
+        //   console.log("not_sucesssssss");
+        //   return;
+        // }
         if (
           success &&
           this.isTemplateOne === false &&
@@ -10737,6 +10607,17 @@ export default {
             },
           });
         } else {
+          if (!invoiceData.transactions.every((v) => v.account)) {
+            this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `Please complete this form`,
+                  icon: "AlertTriangleIcon",
+                  variant: "danger",
+                },
+              });
+            return;
+          }
           invoiceData.transactions.map((item) => {
             item.transactionTotalAmountNonVat = (
               parseFloat(item.singleAmountTransaction) *
@@ -10837,13 +10718,10 @@ export default {
               });
             });
         }
-        // }
       });
     },
     showMsgBoxTwo(id, invoiceData) {
       const h = this.$createElement;
-      // Using HTML string
-      // More complex structure
       const messageVNode = h("div", { class: ["bvModalFont"] }, [
         h("p", { class: ["text-center card-text"] }, [
           `${this.$t("protocol.description")}`,
@@ -10917,20 +10795,18 @@ export default {
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
 
-    onMounted(() => {
-      console.log(router.currentRoute.params);
-      // console.log(invoiceData)
-    });
-
     var supplierVat = ref(false);
     var recipientVat = ref(false);
     var vatPercentValidate = ref(false);
     var AccountTypeOption = ref("company");
     var AccountTypeOptionToggleValue = false;
     var companyName = ref("");
+    var platform = ref(null);
+    var cToQb = ref(null);
+    var cToX = ref(null);
     var companyData = ref(null);
-    var zeroVat = ref(false);
     var modelShow = ref(false);
+    var isSyncing = ref(false);
     const invoiceImage = ref("");
     var showInvoiceInput = ref(false);
     var companyTab = ref(0);
@@ -10950,8 +10826,6 @@ export default {
         return invoiceData.value.totalAmount.toFixed(0);
       },
       set(newVal) {
-        // invoiceData.value.totalAmount
-        console.log(newVal);
         invoiceData.value.totalAmount = +newVal || null;
       },
     });
@@ -11183,7 +11057,6 @@ export default {
       useJwt
         .getCompany(router.currentRoute.params.companyId)
         .then((response) => {
-          console.log(response, "=======");
           let Response = response.data;
 
           invoiceData.value.supplierCompany.companyOwnerName =
@@ -11200,9 +11073,7 @@ export default {
 
           companyBankBic.value = Response?.companyBankBic;
         })
-        .catch((error) => {
-          // console.log(error);
-        });
+        .catch((error) => {});
     }
 
     invoiceData.value.currency =
@@ -11266,16 +11137,12 @@ export default {
         }
         companyName.value = response.data.companyName;
         companyData.value = response.data;
-
-        // if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == "") {
-        //   invoiceData.value.vatPercent = 0
-        // }
-        console.log(companyName.value, "this is company name ");
+        platform.value = response.data.exportProperties.platform;
+        cToQb.value = response.data.connectedToQBO;
+        cToX.value = response.data.connectedToXero;
         supplierID.value = response.data.companyIdentificationNumber;
       })
-      .catch((error) => {
-        // console.log(error);
-      });
+      .catch((error) => {});
 
     var populateValues = () => {
       var amountNonVat = invoiceData.value.transactions.reduce((acc, ele) => {
@@ -11367,6 +11234,88 @@ export default {
         },
       };
     };
+
+    function syncWithQuickBookHandler() {
+      this.isSyncing = true;
+      let token = useJwt.getToken();
+
+      if (platform.value == "XERO") {
+        useJwt
+          .syncWithXero(
+            token,
+            router.currentRoute.params.id,
+            router.currentRoute.params.companyId,
+            invoiceData.value
+          )
+          .then((res) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: !res.data.success
+                  ? res.data.errorMessage
+                  : this.$t("invoice_details.publishedxero"),
+                icon: "EditIcon",
+                variant: !res.data.success ? "danger" : "success",
+              },
+            });
+            this.isSyncing = false;
+          })
+          .catch((error) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `${error.response?.data?.errorMessage}`,
+                icon: "AlertTriangleIcon",
+                variant: "danger",
+              },
+            });
+            this.isSyncing = false;
+          });
+      } else {
+        let temp = { ...invoiceData.value };
+        temp.transactions = temp.transactions.map((v) => ({
+          ...v,
+          transactionTotalAmount:
+            +v.singleAmountTransaction * v.quantity + v.vatAmountTransaction,
+        }));
+        temp.transactions = temp.transactions.map((v) => ({
+          ...v,
+          transactionTotalAmountNonVat:
+            +v.singleAmountTransaction * +v.quantity,
+        }));
+        useJwt
+          .syncWithQuickBook(
+            token,
+            router.currentRoute.params.id || "",
+            router.currentRoute.params.companyId,
+            temp
+          )
+          .then((res) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: !res.data.success
+                  ? res.data.errorMessage
+                  : this.$t("invoice_details.publishedq"),
+                icon: "EditIcon",
+                variant: !res.data.success ? "danger" : "success",
+              },
+            });
+            this.isSyncing = false;
+          })
+          .catch((error) => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `${error.response?.data?.errorMessage}`,
+                icon: "AlertTriangleIcon",
+                variant: "danger",
+              },
+            });
+            this.isSyncing = false;
+          });
+      }
+    }
     var datalist = ref([]);
     var showSuggestions = ref(false);
 
@@ -11392,7 +11341,6 @@ export default {
     };
 
     const autoCompletefn = (item) => {
-      console.log(item.value);
       if (item.company_name) {
         invoiceData.value.supplierCompany.companName = item.company_name;
       }
@@ -11515,7 +11463,6 @@ export default {
     };
 
     const autoCompletefnRecipient = (item) => {
-      console.log(item);
       if (item.company_name) {
         invoiceData.value.recipientCompany.companName = item.company_name;
       }
@@ -11764,7 +11711,6 @@ export default {
       )
       .then((response) => {
         const invoiceNumberValue = response.data;
-        console.log(invoiceNumberValue);
         if (invoiceData.value.logoId == "") {
           if (
             invoiceNumberValue?.length !== 0 &&
@@ -11794,6 +11740,9 @@ export default {
       companyName,
       supplierID,
       populateValues,
+      platform,
+      cToQb,
+      cToX,
       supplierVat,
       recipientVat,
       vatPercentValidate,
@@ -11820,6 +11769,7 @@ export default {
       datalistEic,
       showSuggestionsEic,
       SearchCompanyEic,
+      isSyncing,
       autoCompletefnEic,
       hideSuggestionEic,
       ShowSuggestionEic,
@@ -11858,6 +11808,7 @@ export default {
       companyData,
       invoiceImage,
       jobPostItems,
+      syncWithQuickBookHandler,
       categoryItems,
     };
   },
