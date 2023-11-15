@@ -509,14 +509,7 @@
                                     >
                                       {{ $t("add_invoice.single_price") }}
                                     </b-col>
-                                    <!-- <b-col
-                                      cols="12"
-                                      lg="1"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
-                                    >
-                                      Tax
-                                    </b-col> -->
+
                                     <b-col
                                       cols="12"
                                       lg="1"
@@ -525,35 +518,9 @@
                                     >
                                       {{ $t("add_invoice.total_price") }}
                                     </b-col>
-
-                                    <!-- <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.s_no") }}
-                              </b-col>
-                              <b-col cols="12" :lg="invoiceData.hasDropDown ? '2' : '4'">
-                                {{ $t("add_invoice.item_service") }}
-                              </b-col>
-                              <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.qty") }}
-                              </b-col>
-                              <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.measure") }}
-                              </b-col>
-                              <b-col cols="12" lg="2">
-                                {{ $t("add_invoice.single_price") }}
-                              </b-col>
-                              <b-col cols="12" lg="1">
-                                {{ $t("add_invoice.currency") }}
-                              </b-col>
-                             
-                              <b-col cols="12" lg="2">
-                                {{ $t("add_invoice.total_price") }}
-                              </b-col> -->
                                   </b-row>
-                                  <!-- <div class="form-item-action-col" /> -->
                                 </div>
 
-                                <!-- Form Input Fields OR content inside bordered area  -->
-                                <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                                 <div
                                   v-for="(
                                     item, index
@@ -577,13 +544,17 @@
                                       >
                                       <validation-provider
                                         #default="{ errors, invalid }"
-                                        name="transectionCurrency"
+                                        name="account"
                                         rules="required"
+                                        ref="account"
                                         immediate
                                       >
                                         <b-form-select
                                           v-model="item.account"
                                           :options="accounts"
+                                          name="account"
+                                          id="account"
+                                          ref="account"
                                         >
                                         </b-form-select>
                                         <small
@@ -707,20 +678,6 @@
                                       </validation-provider>
                                     </b-col>
 
-                                    <!-- <b-col cols="12" lg="1">
-                                <label class="d-inline d-lg-none">No.</label>
-
-                                <b-form-input :value="index + 1" type="text" class="mb-0 text-left" disabled />
-                              </b-col> -->
-
-                                    <!-- <b-col cols="12" lg="1">
-                                <label class="d-inline d-lg-none">Measure</label>
-                                <validation-provider #default="{ errors }" name="transectionMeasurement" rules="required">
-                                  <b-form-select v-model="item.measurement" type="text" class="mb-0"
-                                    :options="measureOptions" />
-                                  <small class="text-danger">{{ errors[0] }}</small>
-                                </validation-provider>
-                              </b-col> -->
                                     <b-col cols="12" lg="2">
                                       <label class="d-inline d-lg-none"
                                         >Single Price</label
@@ -837,29 +794,6 @@
                       >
                         + {{ $t("add_invoice.add_item") }}
                       </div>
-
-                      <!-- <div
-                      no-body
-                      class="invoice-add-card mb-1"
-                      style="border-bottom: 1px solid lightgrey; border-top: 1px solid lightgrey"
-                    >
-               
-                      <div class="invoice-padding p-0">
-                        <div ref="form" class="repeater-form h-auto">
-                          <b-row class="flex-grow-1 py-1 px-1 invoice-add-transections">
-                       
-                            <b-col cols="12" lg="10"> </b-col>
-                            <b-col cols="12" lg="1" class="pl-1">
-                              <span> 0.00</span>
-                            </b-col>
-                            <b-col cols="12" lg="1" class="pl-1 text-truncate">
-                              {{ invoiceData.totalAmount }}
-                            </b-col>
-                          </b-row>
-                          <div class="d-flex justify-content-center py-50 position-relative top-custom"></div>
-                        </div>
-                      </div>
-                    </div> -->
 
                       <!-- Bank Details Switch -->
                       <b-row v-if="companyInBG">
@@ -1390,10 +1324,10 @@
                       v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                       variant="outline-primary"
                       class="mr-2"
-                      :disabled="loading"
                       @click="
                         invoiceAdd(invoiceData, 'save', AccountTypeOption)
                       "
+                      :disabled="loading"
                       type="submit"
                     >
                       <b-spinner v-if="loading" small variant="light" />
@@ -10273,19 +10207,12 @@ export default {
   mixins: [heightTransition],
   mounted() {
     this.getAccounts();
-    // this.initTrHeight();
   },
-  created() {
-    // window.addEventListener("resize", this.initTrHeight);
-  },
-  destroyed() {
-    // window.removeEventListener("resize", this.initTrHeight);
-  },
+
   computed: {
     formIsValid() {
       let i = 0;
       let requiredField = [];
-      console.log("formIsValid", this.invoiceData.transactions?.length);
       while (i < this.invoiceData.transactions?.length) {
         const temp = [
           this.$refs.transectionServiceOrItemDescription[i].flags.valid,
@@ -10299,14 +10226,15 @@ export default {
         }
 
         if (this.invoiceData.hasDropDown) {
-          requiredField.push(this.$refs.account[i].flags.valid);
+          requiredField.push(this.$refs.account[i].flags?.valid || true);
         }
 
         requiredField.push(...temp);
 
         i++;
       }
-      return requiredField.every((item) => (item === true ? true : false));
+      let a = requiredField.every((item) => (item === true ? true : false));
+      return a;
     },
     bankList() {
       return [
@@ -10574,16 +10502,11 @@ export default {
       this.daySelected = false;
     },
     invoiceAdd(invoiceData, redirectPage, AccountTypeOption) {
-      //assign the data of recipient and creator
-      //creator supplier company
       if (this.invoiceData?.binaryId && this.invoiceData.binaryId !== null) {
-        if (
-          (redirectPage === "save" || redirectPage === "verify") &&
-          !this.formIsValid
-        )
+        if (["save", "verify"].includes(redirectPage) && !this.formIsValid) {
           return;
+        }
       }
-
       var self = this;
 
       if (invoiceData.scheduled == true) {
@@ -10597,18 +10520,7 @@ export default {
           }
         }
       }
-
-      // if (invoiceData.documentType == "RECEIPT") {
-      //   invoiceData.supplierCompany = {}
-      // }
-      // invoiceData.bankApi.name = this.bankNameToSend;
       invoiceData.vatCondition = this.clauseToSend;
-
-      // if (invoiceData.vatPercent !== "0") {
-      //   invoiceData.vatCondition = "";
-      // }
-
-      // Company ID validation on the basis of transactionType
 
       invoiceData.paymentProcess = this.bankProcess;
 
@@ -10623,7 +10535,6 @@ export default {
       } else {
         this.companyIDisInvalid = false;
       }
-
       let regExp =
         /^((AT)(U\d{8})|(BE)(0\d{9})|(CY)(\d{8}[LX])|(CZ)(\d{8,10})|(DE)(\d{9})|(DK)(\d{8})|(EE)(\d{9})|(EL|GR)(\d{9})|(ES)([\dA-Z]\d{7}[\dA-Z])|(FI)(\d{8})|(FR)([\dA-Z]{2}\d{9})|(HU)(\d{8})|(IE)(\d{7}[A-Z]{2})|(IT)(\d{11})|(LT)(\d{9}|\d{12})|(LU)(\d{8})|(LV)(\d{11})|(MT)(\d{8})|(NL)(\d{9}(B\d{2}|BO2))|(PL)(\d{10})|(PT)(\d{9})|(RO)(\d{2,10})|(SE)(\d{12})|(SI)(\d{8})|(SK)(\d{10}))$/gim;
       let ValidateVatNumber =
@@ -10643,10 +10554,6 @@ export default {
           this.daySelected = true;
         }
       }
-
-      // if (invoiceData.scheduled === false) {
-      //   invoiceData.cronScheduleApi = "NO";
-      // }
       if (validateVat) {
         let validateRegExp = invoiceData.recipientCompany.companyVatEic;
         validateRegExp = validateRegExp.replace(/\W|_/g, "");
@@ -10665,7 +10572,6 @@ export default {
       } else {
         this.vatPercentValidate = false;
       }
-
       if (self.companyInBG) {
         if (this.bankProcess == null || this.bankProcess == "") {
           this.notBank = true;
@@ -10679,12 +10585,11 @@ export default {
       if (self.companyInBG == false) {
         delete invoiceData.paymentProcess;
       }
-
-      this.$refs.invoiceForm.validate().then((success) => {
-        // if (success && this.companyIDisInvalid === false && this.isWeekSelected === false) {
-        if (!success) {
-          return;
-        }
+      this.$refs.invoiceForm.validate().then((success,  ) => {
+        // if (!success) {
+        //   console.log("not_sucesssssss");
+        //   return;
+        // }
         if (
           success &&
           this.isTemplateOne === false &&
@@ -10702,6 +10607,17 @@ export default {
             },
           });
         } else {
+          if (!invoiceData.transactions.every((v) => v.account)) {
+            this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `Please complete this form`,
+                  icon: "AlertTriangleIcon",
+                  variant: "danger",
+                },
+              });
+            return;
+          }
           invoiceData.transactions.map((item) => {
             item.transactionTotalAmountNonVat = (
               parseFloat(item.singleAmountTransaction) *
@@ -10802,13 +10718,10 @@ export default {
               });
             });
         }
-        // }
       });
     },
     showMsgBoxTwo(id, invoiceData) {
       const h = this.$createElement;
-      // Using HTML string
-      // More complex structure
       const messageVNode = h("div", { class: ["bvModalFont"] }, [
         h("p", { class: ["text-center card-text"] }, [
           `${this.$t("protocol.description")}`,
@@ -10880,10 +10793,6 @@ export default {
     onUnmounted(() => {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
-    });
-
-    onMounted(() => {
-      // console.log("SSSSS", router.currentRoute.params);
     });
 
     var supplierVat = ref(false);
@@ -11164,9 +11073,7 @@ export default {
 
           companyBankBic.value = Response?.companyBankBic;
         })
-        .catch((error) => {
-          // console.log(error);
-        });
+        .catch((error) => {});
     }
 
     invoiceData.value.currency =
@@ -11397,7 +11304,6 @@ export default {
             this.isSyncing = false;
           })
           .catch((error) => {
-            console.log("eeee", error, "prms======", router.currentRoute);
             this.$toast({
               component: ToastificationContent,
               props: {
