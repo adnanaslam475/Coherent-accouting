@@ -203,12 +203,6 @@
                 class="cursor-pointer clear-all"
                 @click="endDate = ''"
               />
-              <!-- <feather-icon
-                  size="16"
-                  icon="CalendarIcon"
-                  class="cursor-pointer clear-all"
-                  @click="dateTo = ''"
-                /> -->
             </div>
             <div class="position-relative flex-1">
               <b-form-input

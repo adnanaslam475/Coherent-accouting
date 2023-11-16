@@ -430,7 +430,8 @@
         <b-form-checkbox
           @change="() => selectSingle(data.item.id)"
           :checked="!!selectAll.includes(data.item.id)"
-        ></b-form-checkbox>
+        >
+        </b-form-checkbox>
       </template>
 
       <!-- Column: invoiceNumber -->
@@ -644,7 +645,7 @@
             class="mr-1 cursor-pointer"
             @click="
               $router.push({
-                name: 'company-invoice-preview',
+                name: 'company-invoice-edit',
                 params: { id: data.item.id, companyId: companyId },
               })
             "

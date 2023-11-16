@@ -14,7 +14,7 @@
 
       <div
         class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 gap-2"
-        style="padding: 0 1rem;"
+        style="padding: 0 1rem"
       >
         <!-- Header: Left Content -->
         <div class="mt-md-0 mt-2 flex-1">
@@ -103,16 +103,16 @@
           </b-card>
         </div>
       </div>
-      <div style="padding: 0 1rem;">
+      <div style="padding: 0 1rem">
         <b-card no-body class="invoice-preview date-issued">
-        <b-card-header class="justify-content-end">
-          <div class="invoice-date-wrapper invoice-middle-content">
-            <p class="invoice-date-title">Date Issued:</p>
-            <p class="invoice-date">
-              {{ invoiceData.dateIssued }}
-            </p>
-          </div>
-        </b-card-header>
+          <b-card-header class="justify-content-end">
+            <div class="invoice-date-wrapper invoice-middle-content">
+              <p class="invoice-date-title">Date Issued:</p>
+              <p class="invoice-date">
+                {{ invoiceData.dateIssued }}
+              </p>
+            </div>
+          </b-card-header>
         </b-card>
       </div>
 
@@ -236,11 +236,11 @@ export default {
       type: Object,
       required: true,
     },
-  }
+  },
 };
 </script>
 <style>
-.invoice-table th{
+.invoice-table th {
   font-size: 10px !important;
 }
 </style>
