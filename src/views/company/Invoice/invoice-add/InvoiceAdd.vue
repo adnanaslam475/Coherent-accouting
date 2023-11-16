@@ -1031,41 +1031,6 @@
                         >
                       </template>
                       <div>
-                        <!-- <div class="d-flex align-items-center mb-1">
-                    <p class=" mr-1 mb-0" style='width:200px'>
-                      Invoice Number
-                    </p>
-                    <validation-provider #default="{ errors }" name="invoiceNumber" vid="Invoice" rules="required">
-                      <b-input-group class="input-group-merge invoice-edit-input-group invoice-input-top"
-                        style='width: 307px'>
-                        <b-input-group-prepend is-text>
-                          <feather-icon icon="HashIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input id="invoice-data-id" v-model="invoiceData.invoiceNumber" />
-                      </b-input-group>
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </div> -->
-                        <!-- <div class="d-flex align-items-center mb-1">
-                    <span class="title mr-1" style='width:200px'>
-                      {{ $t("Type") }}:
-                    </span>
-                    <validation-provider #default="{ errors }" name="transectionType" rules="required">
-                      <b-form-select style='width: 307px' v-model="invoiceData.transactionType" @change="() => {
-                        companyIDisInvalid = false;
-                      }
-                        ">
-                        <b-form-select-option value="EXPENSE">{{
-                          $t("company_invoices.EXPENSE")
-                        }}</b-form-select-option>
-                        <b-form-select-option value="INCOME">{{
-                          $t("company_invoices.INCOME")
-                        }}</b-form-select-option>
-                      </b-form-select>
-                      <small class="text-danger">{{ errors[0] }}</small>
-                    </validation-provider>
-                  </div> -->
-
                         <div class="mb-1">
                           <h6 style="color: #625f6e" class="mb-1">
                             {{ $t("Supplier") }}
@@ -10585,7 +10550,7 @@ export default {
       if (self.companyInBG == false) {
         delete invoiceData.paymentProcess;
       }
-      this.$refs.invoiceForm.validate().then((success,  ) => {
+      this.$refs.invoiceForm.validate().then((success) => {
         // if (!success) {
         //   console.log("not_sucesssssss");
         //   return;
@@ -10609,13 +10574,13 @@ export default {
         } else {
           if (!invoiceData.transactions.every((v) => v.account)) {
             this.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: `Please complete this form`,
-                  icon: "AlertTriangleIcon",
-                  variant: "danger",
-                },
-              });
+              component: ToastificationContent,
+              props: {
+                title: `Please complete this form`,
+                icon: "AlertTriangleIcon",
+                variant: "danger",
+              },
+            });
             return;
           }
           invoiceData.transactions.map((item) => {
