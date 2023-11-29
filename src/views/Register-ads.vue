@@ -341,7 +341,6 @@
           <!-- divider -->
         </b-col>
       </b-col>
-      <!-- /Register-->
     </b-row>
     <b-modal
       id="modal-scrollable"
