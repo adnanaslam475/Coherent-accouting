@@ -104,7 +104,7 @@
     "publish": ": Terms of Use published on    The Platform is governed by and interpreted in accordance with Bulgarian    right. All other non-contractual obligations arising out of or in    connection with the published Terms of Use, are governed and interpreted    according to Bulgarian law. For all not governed by the Terms for    In matters of use, the provisions of Bulgarian law apply.",
     "tries": ": The developer tries hard efforts to maintain up-to-date information in the web-based  system. The developer cannot guarantee or claim that its comprehensiveness and reliability.",
     "guarantee": ": The developer makes no guarantees the free and continuous access to the Platform, as well as no ensures that the Platform is protected from errors during the    its use.",
-"relation":": The user in relation to The Platform communicates with the Developer as follows in writing by e-mail. Correspondence will be deemed received at written confirmation by the User or the Developer. IN in the event that no confirmation is received within 7 days, correspondence shall be deemed received unless on electronic mail of the sender, a message is received that the letter was not delivered to the recipient due to technical reasons.",
+    "relation":": The user in relation to The Platform communicates with the Developer as follows in writing by e-mail. Correspondence will be deemed received at written confirmation by the User or the Developer. IN in the event that no confirmation is received within 7 days, correspondence shall be deemed received unless on electronic mail of the sender, a message is received that the letter was not delivered to the recipient due to technical reasons.",
 
 
     "sign_up": "Sign Up",
@@ -716,12 +716,6 @@
     "no": "No"
   },
 
-  "policies":{
-      "policies-h-1" :"Payment Terms and Conditions:",
-      "para-1":"These terms typically outline the agreed-upon timelines for payments, accepted payment methods, and any applicable fees or discounts. Businesses may set specific due dates or implement a net payment period, specifying when payments are expected after the delivery of goods or services. Clear communication of these terms helps manage expectations, reduce disputes, and foster a positive business relationship. To encourage timely payments and deter delayed transactions, many businesses include provisions for late payment penalties in their payment policies. These penalties may involve additional fees or interest charges for payments made after the agreed-upon due date. Clearly outlining these penalties in the payment policy provides transparency and sets expectations for customers. However, it's essential for businesses to strike a balance, ensuring that the penalties are reasonable and fair, considering unforeseen circumstances that may lead to payment delays. Payment policies should also address situations where refunds or cancellations are necessary. These policies clarify the conditions under which refunds are provided, such as defective products, unsatisfactory services, or cancellations within a specified timeframe. It's essential for businesses to communicate these policies clearly to manage customer expectations and avoid disputes. A well-defined refund and cancellation policy contributes to customer trust and loyalty, demonstrating a commitment to fair and ethical business practices.",
-      "para-2":"Understanding the payment terms and conditions is crucial for both businesses and customers to ensure a smooth and transparent transaction process. These terms typically outline the agreed-upon timelines for payments, accepted payment methods, and any applicable fees or discounts. Businesses may set specific due dates or implement a net payment period, specifying when payments are expected after the delivery of goods or services. Clear communication of these terms helps manage expectations, reduce disputes, and foster a positive business relationship."
-
-    },
   "incomeSalesServices": "Income Sales Services",
   "incomeSalesGoods": "Income Sales Goods",
   "GeneralExpenses": "General Expenses",
