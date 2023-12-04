@@ -10,45 +10,7 @@
             </div>
             <div style="margin-top: 4px; margin-bottom: 4px">for</div>
             <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="50"
-                height="50"
-                viewBox="0 0 64 64"
-              >
-                <path
-                  fill="#82d8bb"
-                  d="M32 4A28 28 0 1 0 32 60A28 28 0 1 0 32 4Z"
-                ></path>
-                <path
-                  fill="#72caaf"
-                  d="M32 9A23 23 0 1 0 32 55A23 23 0 1 0 32 9Z"
-                ></path>
-                <path
-                  fill="#fff"
-                  d="M22 21c-6.065 0-11 4.935-11 11s4.935 11 11 11v-4c-3.86 0-7-3.14-7-7s3.14-7 7-7h4v22c0 2.209 1.791 4 4 4V21H22zM42 43c6.065 0 11-4.935 11-11s-4.935-11-11-11v4c3.86 0 7 3.14 7 7s-3.14 7-7 7h-4V17c0-2.209-1.791-4-4-4v30H42z"
-                ></path>
-                <path
-                  fill="none"
-                  stroke="#8d6c9f"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-miterlimit="10"
-                  stroke-width="2"
-                  d="M22 21c-6.065 0-11 4.935-11 11s4.935 11 11 11v-4c-3.86 0-7-3.14-7-7s3.14-7 7-7h4v22c0 2.209 1.791 4 4 4V21H22zM42 43c6.065 0 11-4.935 11-11s-4.935-11-11-11v4c3.86 0 7 3.14 7 7s-3.14 7-7 7h-4V17c0-2.209-1.791-4-4-4v30H42z"
-                ></path>
-                <path
-                  fill="none"
-                  stroke="#8d6c9f"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-miterlimit="10"
-                  stroke-width="2"
-                  d="M32 4A28 28 0 1 0 32 60 28 28 0 1 0 32 4zM29 9.201c-.677.088-1.343.209-2 .355M23 10.879c-4.066 1.735-7.534 4.592-10 8.197M34.098 52.919L34.202 54.916M39.096 51.79L39.681 53.703M43.673 49.485L44.703 51.2M47.556 46.142L48.971 47.556"
-                ></path>
-              </svg>
+              <img src="@/assets/images/icons/quickbooks.png" style="margin-top: 15px;" alt="" width="100"/>
             </div>
             <div
               style="margin-top: 4px; margin-bottom: 4px; white-space: nowrap"
