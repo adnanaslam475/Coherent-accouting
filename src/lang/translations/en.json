@@ -715,6 +715,13 @@
     "yes": "Yes",
     "no": "No"
   },
+
+  "policies":{
+      "policies-h-1" :"Payment Terms and Conditions:",
+      "para-1":"These terms typically outline the agreed-upon timelines for payments, accepted payment methods, and any applicable fees or discounts. Businesses may set specific due dates or implement a net payment period, specifying when payments are expected after the delivery of goods or services. Clear communication of these terms helps manage expectations, reduce disputes, and foster a positive business relationship. To encourage timely payments and deter delayed transactions, many businesses include provisions for late payment penalties in their payment policies. These penalties may involve additional fees or interest charges for payments made after the agreed-upon due date. Clearly outlining these penalties in the payment policy provides transparency and sets expectations for customers. However, it's essential for businesses to strike a balance, ensuring that the penalties are reasonable and fair, considering unforeseen circumstances that may lead to payment delays. Payment policies should also address situations where refunds or cancellations are necessary. These policies clarify the conditions under which refunds are provided, such as defective products, unsatisfactory services, or cancellations within a specified timeframe. It's essential for businesses to communicate these policies clearly to manage customer expectations and avoid disputes. A well-defined refund and cancellation policy contributes to customer trust and loyalty, demonstrating a commitment to fair and ethical business practices.",
+      "para-2":"Understanding the payment terms and conditions is crucial for both businesses and customers to ensure a smooth and transparent transaction process. These terms typically outline the agreed-upon timelines for payments, accepted payment methods, and any applicable fees or discounts. Businesses may set specific due dates or implement a net payment period, specifying when payments are expected after the delivery of goods or services. Clear communication of these terms helps manage expectations, reduce disputes, and foster a positive business relationship."
+
+    },
   "incomeSalesServices": "Income Sales Services",
   "incomeSalesGoods": "Income Sales Goods",
   "GeneralExpenses": "General Expenses",

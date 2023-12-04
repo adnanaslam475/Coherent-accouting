@@ -32,6 +32,21 @@ const router = new VueRouter({
         ],
       },
     },
+
+    {
+      path: "/policies",
+      name: "policies",
+      component: () => import("@/views/Policies.vue"),
+      meta: {
+        pageTitle: "policies",
+        breadcrumb: [
+          {
+            text: "policies",
+            active: true,
+          },
+        ],
+      },
+    },
     {
       path: "/second-page",
       name: "second-page",

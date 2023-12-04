@@ -649,7 +649,7 @@ export default {
   },
   methods: {
     passErrHandler() {
-      console.log("sssssssss");
+      // console.log("sssssssss");
       if (this.password.length && this.password.length < 8) {
         this.passErr = "Password length must be greater than or equal to 8";
       }

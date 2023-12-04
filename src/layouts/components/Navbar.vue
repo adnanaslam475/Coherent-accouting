@@ -25,6 +25,7 @@
       </div>
       <dark-Toggler class="d-none d-lg-block" />
       <!-- For Multilingual -->
+      
       <b-nav-item-dropdown
         id="dropdown-grouped"
         variant="link"
@@ -54,6 +55,8 @@
           <span class="ml-50">{{ localeObj.name }}</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
+
+
       <!-- For Multilingual -->
       <b-nav-item-dropdown
         class="dropdown-notification mr-25"
@@ -249,6 +252,14 @@
         >
           <feather-icon size="16" icon="CreditCardIcon" class="mr-50" />
           <span>Pricing</span>
+        </b-dropdown-item>
+
+        <b-dropdown-item
+          :to="{ name: 'policies' }"
+          link-class="d-flex align-items-center"
+        >
+          <feather-icon size="16" icon="InfoIcon" class="mr-50" />
+          <span>Policies</span>
         </b-dropdown-item>
         <!-- <b-dropdown-item link-class="d-flex align-items-center">
                  <feather-icon
