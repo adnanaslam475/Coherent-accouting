@@ -396,8 +396,8 @@
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
             >{{ $t("lbl.throughtext") }}
-            <a href="https://accounting.controlisy.bg">
-              https://accounting.controlisy.bg</a
+            <a href="https://coherent-accounting.com">
+              https://coherent-accounting.com</a
             >{{ $t("lbl.onwhich") }} <br />
 
             {{ $t("lbl.webbased") }}
