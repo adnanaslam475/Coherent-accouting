@@ -367,7 +367,7 @@
     <b-modal
       id="modal-scrollable"
       scrollable
-      title="Условия на Ползване Coherent Accounting"
+      title="User Terms of Use Coherent Accounting"
       cancel-title="Close"
       ok-title="Accept"
       cancel-variant="outline-secondary"
@@ -378,319 +378,321 @@
       <b-card-text style="height: 400px">
         <span style="white-space: break-spaces">
           <p>
-            Моля, запознайте се внимателно и се съгласете с тези условия, преди
-            да използвате уеб-базирана система на
+            Please read carefully and agree to these terms before
+            to use a web-based system of
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
             >
-            . Ако имате каквито и да било въпроси или притеснения относно Общите
-            условия, моля свържете се с нас.
+            . If you have any questions or concerns about the General
+            conditions, please contact us.
           </p>
           <ul>
-            <li class="p-list">Обхват и приложение</li>
+            <li class="p-list">Scope and Application</li>
           </ul>
           <p>
-            Настоящите условия за ползване се прилагат при посещаването и
-            използване на уеб-базирана система, разработена и достъпна на адрес
+            These terms of use apply when visiting and
+            using a web-based system developed and available at
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
             >
-            с наименование „Coherent Accounting“. Настоящите условията за
-            ползване уреждат взаимоотношенията между разработчикът и всеки
-            потребител, който използва и/или достъпва платформата на адрес
+           
+with the name "Coherent Accounting". The present terms and conditions for
+            terms of use govern the relationship between the developer and each
+            user who uses and/or accesses the platform at address
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
-            >. Със посещаването на платформата и/или създаване на акаунт и
-            неговото използване, се съгласявате, изцяло приемате и се
-            задължавате да спазвате настоящите условия за ползване.
+            >. By visiting the platform and/or creating an account and
+            its use, you agree, fully accept and
+            you must comply with these terms of use.
           </p>
           <ul>
-            <li class="p-list">Общи условия</li>
+            <li class="p-list">General terms</li>
           </ul>
           <p>
-            <b> Член 1</b>: Използваните термини в Общите условия имат следните
-            значения:
+            <b> Article 1</b>: The terms used in the General Terms and Conditions have the following
+            meanings:
           </p>
           <p>
-            "Разработчик" – софтуерен разработчик, разработил и изградил
-            платформата . Собственик на платформата и интелектуалната
-            собственост върху нея "Потребител" – всяко физическо или юридическо
-            лице, което посещава и/или достъпва и/или използва уеб-базирана
-            система достъпна на адрес
+            "Developer" – software developer who developed and built
+            the platform. Owner of the platform and the intellectual
+            ownership of it "User" - any physical or legal entity
+            a person who visits and/or accesses and/or uses a web-based
+            system available at address
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
-            >. Чрез създаване и/или използване на акаунт предоставящ достъп до
-            услугите разработени в платформата с наименование "Coherent
+            >. By creating and/or using an account providing access to
+            the services developed in the platform named "Coherent
             Accounting". <br />
-            "Акаунт" – отделна част в платформата, съдържаща информация за
-            Потребителят. Чрез акаунта се предоставя достъп до платформата.
-            Акаунтът включва данни за потребителят, които трябва да бъдат
-            достоверни и валидни. Разработчикът не носи отговорност за невалидни
-            данни. <br />
-            "Платформа" – уеб-базирана система достъпна на интернет адресът
+            "Account" – a separate part in the platform containing information about
+            The user. Access to the platform is provided through the account.
+            The account includes user data that must be
+            credible and valid. The developer is not responsible for invalid
+            data. <br />
+            "Platform" – a web-based system available at the Internet address
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
-            >, чрез който се достъпва и/или използват разработените услуги.
-            Софтуерът и се създават нови профили и интернет адресът
+            >, through which the developed services are accessed and/or used.
+            The software and new profiles are created and the internet address
             <a href="https://accounting.controlisy.bg">
               https://accounting.controlisy.bg</a
-            >, на който се намира Софтуера. <br />
-            "Уеб-базирана система" – софтуерът с наименование „Coherent
-            Accounting“. Софтуерът предоставя възможност за OCR на фактури и
-            дигитализация им, модул за дигитални фактури, генериране на отчети
-            по чл. 117, ал.1 от ЗДДС и други. Подробно описание и представяне на
-            платформа е описана на уеб страница
+            >, on which the Software is located. <br />
+            "Web-based system" - the software named "Coherent
+            Accounting'. The software provides the ability to OCR invoices and
+            their digitization, module for digital invoices, generation of reports
+            according to Art. 117, paragraph 1 of VAT and others. Detailed description and presentation of
+            platform is described on the web page
             <a href="https://coherent-accounting.com/about">
               https://coherent-accounting.com/about</a
             >.
           </p>
           <p>
-            <b> Член 2</b>: Разработчикът има правото и може да изменя или
-            допълва Условията за ползване по всяко време. В случай на изменение
-            или допълнение, разбойникът се задължава да публикува актуалната
-            версия на Условията за ползване и ще бъдат налични и достъпни на
-            платформата. Потребителите ще се считат за уведомени за съответните
-            изменения или допълнения на Условията за ползване от момента на
-            тяхното публикуване на Платформа. Всеки Потребител носи отговорност
-            и е длъжен редовно да следи на платформата за изменения или
-            допълнения на Условията за ползване. Всички изменения или допълнения
-            в Условията за ползване влизат незабавно, освен ако не е изрично
-            друго упоменато от Разработчикът. <br />
-            По своя преценка Разработчикът има право до уведомява всеки
-            Потребител при промяна или допълнение на Условията за ползване.
+            <b> Article 2</b>: The developer has the right and may amend or
+            supplements the Terms of Use at any time. In case of amendment
+            or addition, the robber undertakes to publish the current one
+            version of the Terms of Use and will be available and accessible at
+            the platform. Users will be deemed to have been notified of the relevant
+            amendments or additions to the Terms of Use from the time of
+            their publication on the Platform. Each User is responsible
+            and is obliged to regularly monitor the platform for amendments or
+            additions to the Terms of Use. Any amendments or additions
+            in the Terms of Use shall enter into force immediately, unless otherwise expressly provided
+            otherwise mentioned by the Developer. <br />
+            At its discretion, the Developer has the right to notify anyone
+            User upon modification or addition of the Terms of Use.
             <br />
-            В случай, че Потребител не е съгласен с промените или допълненията
-            на Условията за ползване, то Потребителят има правото и следва да
-            прекрати използването на Платформата. Като с прекратяването на
-            използването на Платформата се прекратяват и взаимоотношенията с
-            Разработчикът. В хипотезата по предходното изречение Потребителят
-            няма право да изисква каквото и да е обезщетение от стана на
-            Разработчикът.
+            In case the User does not agree with the changes or additions
+            of the Terms of Use, the User has the right and should
+            stop using the Platform. As with the termination of
+            the use of the Platform is terminated and the relationship with
+            The developer. In the hypothesis of the previous sentence, the User
+            shall not be entitled to claim any compensation from the estate of
+            The developer.
           </p>
           <p>
-            <b> Член 3</b>: Разработчикът не носи отговорност за прекратяване на
-            предоставянето на услугите си при настъпване на обстоятелства не
-            зависещи от него и извън неговия контрол - случаи на непреодолима
-            сила, случайни събития, проблеми в глобалната интернет мрежа,
-            действия или бездействия на трети лица и т.н.
+            <b> Article 3</b>: Developer shall not be liable for termination of
+            the provision of its services in the event of circumstances not
+            dependent on him and beyond his control - cases of force majeure
+            force, random events, problems in the global internet network,
+            actions or omissions of third parties, etc.
           </p>
           <p>
-            <b> Член 4</b>: Разработчикът не предоставя гаранция за използваните
-            инструменти, документооборота или функционалности на Платформата. В
-            хипотеза на предходното изречение Разработчикът не носи отговорност
-            за вреди и отклонения произтичащи от тяхното използване.
+            <b> Article 4</b>: The developer does not provide a warranty for the used
+            tools, document flow or functionality of the Platform. IN
+            hypothesis of the previous sentence The developer is not responsible
+            for damages and deviations resulting from their use.
           </p>
           <p>
-            <b> Член 5</b>: Разработчикът не носи отговорност за данните в
-            базата данни, когато Потребителят се предоставя достъп до
-            Платформата с неговият Акаунт на трети лица достъп. В случай на
-            установяване на не регламентиран достъп, Разработчикът не носи
-            отговорност за липсваща или изтрита информация, документи или друго
-            съдържание (доколкото не се дължи на негова вина). Потребителят носи
-            отговорност за съхранението на пароли, опазване от нерегламентиран
-            достъп, управлението на информация, документи или друго съдържание.
+            <b>Article 5</b>: The developer is not responsible for the data in
+            the database when the User is granted access to
+            The Platform with its Account of third parties access. In case of
+            establishment of unregulated access, the Developer does not bear
+            responsibility for missing or deleted information, documents or otherwise
+            content (unless due to his fault). The user carries
+            responsibility for the storage of passwords, protection from unregulated
+            access, management of information, documents or other content.
           </p>
           <p>
-            <b> Член 6</b>: Разработчикът има правото по всяко време да добавя,
-            премахва или променя функционалности на Платформата. Разработчикът
-            може да прави модификации и обновяване на уеб-базираната система,
-            без съгласието на Потребителят или предварително уведомление.
-            Потребителят използва Платформата във вида, в който е налична,
-            включително след съответните промени съгласно предходното изречение.
+            <b> Ч Article 6</b>: The Developer has the right at any time to add,
+            removes or changes functionality of the Platform. The developer
+            can make modifications and updates to the web-based system,
+            without the User's consent or prior notice.
+            The User uses the Platform in the form in which it is available,
+            including after the relevant changes according to the previous sentence.
           </p>
           <p>
-            <b> Член 7</b>: Разработчикът има право да прекрати достъпа, на
-            даден Потребител при нарушение на което и да е условие от Условията
-            за ползване с 7 дневно предизвестие или допълнително писмено
-            договорено друго. В хипотезата по предходното изречение
-            Разработчикът не дължи никакви обезщетения на заплатени/предплатени
-            суми от страна на Потребителят, нито каквото и да е обезщетение на
-            Потребителят.
+            <b> Article 7</b>: The Developer has the right to terminate access, on
+            a User in violation of any term of the Terms
+            for use with 7 days' notice or additional written notice
+            agreed otherwise. In the hypothesis of the previous sentence
+            Developer does not owe any compensation to paid/prepaid
+            sums by the User, nor any compensation to
+            The user.
           </p>
           <p>
-            <b> Член 9</b>: Потребител може да е физическо лице или юридическо
-            лице, което ще използва уеб-базирана платформа професионално
-            качество и ще използва Платформата за извършване на търговска или
-            професионална дейност. Платформата не е предназначен за потребители
-            по смисъла на Закона за защита на потребителите, доколкото е
-            изключително свързан с упражняването на търговска или професионална
-            дейност.
+            <b> Article 9</b>: A user may be a natural person or a legal entity
+            a person who will use a web-based platform professionally
+            quality and will use the Platform to carry out commercial or
+            professional activity. The Platform is not intended for users
+            within the meaning of the Consumer Protection Act to the extent that it is
+            exclusively related to the exercise of a commercial or professional activity
+            activity.
           </p>
           <p>
-            <b> Член 10</b>: Потребителят е длъжен да използва Платформата при
-            строго спазване на Условията за ползване. Потребителят може да
-            използва Платформата като се съобразява с всички функционалности и
-            ограничения й. Потребителят няма право да използва платформата за
-            противозаконни цели или са в противоречения с Условията на ползване
-            или биха нанесли щети на Разработчикът.
+            <b> Article 10</b>: The User is obliged to use the Platform at
+            strict compliance with the Terms of Use. The user can
+            uses the Platform taking into account all functionalities and
+            its limitations. The User is not entitled to use the Platform for
+            unlawful purposes or are in contradiction with the Terms of Use
+            or would cause damage to the Developer.
           </p>
           <p>
-            <b> Член 11</b>: Потребителят е длъжен да използва уеб-базираната
-            система само и единствено по предназначение. Потребителят се
-            задължава да не използва уеб-базираната платформа за извън обхвата
-            й. Разработчикът има правото незабавно да прекрати достъпа до
-            Платформата на Потребител, който нарушава Българското
-            законодателство или се опитва да наруши целостта и функционалности
-            на платформата, чрез допълнителни сорс кодове. Разработчикът има
-            право, без предварително уведомление и без да носи отговорност за
-            това, да архивира или изтрие информация, документи и/или всяко друго
-            съдържание от базата данни на Платформата, които са в нарушение на
-            Условията за ползване или Българското законодателство.
+            <b> Article 11</b>: The user is obliged to use the web-based
+            system for its intended purpose only. The user
+            undertakes not to use the web-based platform for out-of-scope
+            j. Developer has the right to immediately terminate access to
+            The platform of a User who violates the Bulgarian
+            legislation or attempts to violate the integrity and functionalities
+            on the platform, through additional source codes. The developer has
+            right, without prior notice and without liability for
+            that, to archive or delete information, documents and/or any other
+            content from the Platform's database that are in violation of
+            Terms of use or Bulgarian legislation.
           </p>
           <p>
-            <b> Член 12</b>: В случай , че Потребителят предостави своят Акаунт
-            на трети лица, се задължава да осигури запознаване и спазване на
-            Условията за ползване от всички лица и работата с Платформата.
+           
+            <b> Article 12</b>: In case the User provides his Account
+            to third parties, undertakes to ensure familiarization and compliance with
+            Terms of use by all persons and working with the Platform.
           </p>
           <p>
-            <b> Член 13</b>: По Закона за авторско право и сродните му права,
-            Закона за марките и географските означения и останалите приложими
-            нормативни актове е забранено материали, медийни файлове и други
-            подобни, които са публикувани на уеб-базираната формата да бъдат
-            копирани, разпространявани или предоставяни с каквото и да е цел без
-            изричното съгласие на Разработчикът.
+            <b> Article 13</b>: Under the Copyright and Related Rights Act,
+            The Law on Trademarks and Geographical Indications and others applicable
+            normative acts is prohibited materials, media files and others
+            similar that are published on the web-based form to be
+            copied, distributed or made available for any purpose without
+            the express consent of the Developer.
           </p>
           <p>
-            <b> Член 14</b>: Чрез регистрацията си в уеб-базираната система,
-            Разработчикът предоставя на Потребителя неизключително и срочно
-            право на ползване на Платформа. Потребителят не придобива
-            собственост и/или каквито и да е права на интелектуална собственост.
+            <b> Article 14</b>: Through your registration in the web-based system,
+            The Developer provides the User non-exclusively and immediately
+            right to use the Platform. The user does not acquire
+            ownership and/or any intellectual property rights.
           </p>
           <ul>
-            <li class="p-list">Регистрация</li>
+            <li class="p-list">Registration</li>
           </ul>
           <p>
-            За да ползвате уеб-базирана система е необходимо да се регистрирате,
-            като попълните достъпната в реално време (on-line) електронна форма
-            за регистрация на
+            To use the web-based system you need to register,
+            by filling out the electronic form available in real time (on-line).
+            for registration of
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
             >
           </p>
           <p>
-            <b> Член 15</b>: Потребителят е длъжен да предостави пълни и верни
-            данни относно своята самоличност, или относно представляваното от
-            Него юридическо лице, както и другите изискуеми от данни за
-            регистрацията. Разработчикът не носи отговорност за актуализацията
-            на данните в Акаунта на Потребителят.
+            <b> Article 15</b>: The user is obliged to provide complete and true
+            data about your identity, or about what is represented by
+            Its legal entity, as well as the other required data for
+            the registration. The developer is not responsible for the update
+            of the data in the User's Account.
           </p>
           <p>
-            <b> Член 16</b>: Потребителят може да се регистрира само веднъж.
-            Разработчикът забранява регистрацията под измислено име, чуждо име
-            или изменено собствено име. При предоставяне на неверни данни или
-            фалшиви, Разработчикът не носи отговорност и може незабавно да
-            прекрати достъпа до Платформата.
+            <b> Article 16</b>: User may register only once.
+            The developer prohibits registration under a fictitious name, a foreign name
+            or changed first name. When providing false data or
+            fake, the Developer is not responsible and may immediately
+            terminate access to the Platform.
           </p>
           <p>
-            <b> Член 17</b>: При регистрацията Потребителят трябва да въведе
-            e-mail и парола, които не са използвани при друга регистрация в
-            Платформата. Чрез това e-mail и парола Потребителят се
-            индивидуализира при използване на предоставяните услуги.
+            <b> Article 17</b>: Upon registration, the User must enter
+            e-mail and password that were not used during another registration in
+            The platform. Through this e-mail and password, the User
+            individualized when using the services provided.
           </p>
           <p>
-            <b> Член 18</b>: С отбелязване с отметка в полето „Съгласявам се
-            Условия на Ползване ” , Потребителят декларира, че е запознат с
-            Условията за ползване и ги приема изцяло. Със записването на
-            изявлението по предходното изречение от Разработчикът, електронното
-            изявление придобива и качеството на електронен документ по смисъла
-            на Закона за електронния документ и електронните удостоверителни
-            услуги.
+            <b> Article 18</b>: By ticking the box “I agree
+            Terms of Use ”, the User declares that he is familiar with
+            I accept the terms of use in full. With the recording of
+            the statement under the preceding sentence by the Developer, the electronic one
+            a statement also acquires the quality of an electronic document in the meaning
+            of the Law on electronic documents and electronic certificates
+            services.
           </p>
           <p>
-            <b> Член 19</b>: Потребителят се съгласява и декларира, че ще
-            предостави вярна, точна, актуална и пълна информация при попълване
-            на регистрационната форма и последващото добавяне или промяна на
-            данни в Акаунта си. Разработчикът запазва правото да може по всяко
-            време да променя обема на изискваните данни за регистрация на
-            Потребител. Също така да изисква допълване на такива данни в Акаунта
-            на вече регистриран Потребител.
+            <b> Article 19</b>: The User agrees and declares that he will
+            provide true, accurate, current and complete information when filling out
+            of the registration form and the subsequent addition or change of
+            data in your Account. The developer reserves the right to any
+            time to change the volume of data required for registration of
+            User. Also to require completion of such data in the Account
+            of an already registered User.
           </p>
           <p>
-            <b> Член 20</b>: Разработчикът не се ангажира да проверява
-            съдържанието на разположените на неговата платформа файлове и данни,
-            си запазваме правото за премахване, деактивиране или заместване, без
-            предупреждение, на файлове, които не съответстват на законовите
-            разпоредби и на изискванията на тези Правила, както и на такива,
-            които и биха могли по негова преценка да застрашат сигурността на
-            сървърите и/или на съхраняваната на тях информация, ако той сметнем
-            това за необходимо без задължителното да уведоми Потребителят. По
-            преценка на Разработчика може да уведоми Потребителят, че ще бъдат
-            предприети мерки.
+            <b> Article 20</b>: The Developer does not undertake to verify
+            the content of the files and data located on its platform,
+            we reserve the right to remove, disable or replace, without
+            warning, of files that do not conform to the legal ones
+            provisions and requirements of these Rules, as well as such,
+            which could, in his judgment, endanger the security of
+            the servers and/or the information stored on them, if we consider it
+            this as necessary without necessarily notifying the User. Po
+            discretion of the Developer may notify the User that they will be
+            Measures taken.
           </p>
           <p>
-            <b> Член 21</b>: След деклариране на Вашето съгласие с общите
-            условия, на посочения от Потребителят електронен адрес ще бъдат
-            изпратени данни за активиране на Регистрацията.
+            <b> Article 21</b>: After declaring your agreement with the general
+            conditions, at the email address specified by the User will be
+            sent data to activate the Registration.
           </p>
           <p>
             <b> Член 22</b>: След активирането на акаунта се счита, че между
             Потребителят и Разработчикът е сключен договор.
           </p>
           <ul>
-            <li class="p-list">Ограничаване на отговорността</li>
+            <li class="p-list">Limitation of Liability</li>
           </ul>
           <p>
-            <b> Член 23</b>: Разработчикът не носи отговорност за претърпени
-            вреди и пропуснати ползи, настъпили вследствие спирането,
-            променянето или ограничаването на услугите, изтриването,
-            модифицирането, загубването, недостоверността, неточността, или
-            непълнотата на данни, материали или информация, пренасяни,
-            използвани, записвани или станали достъпни чрез
+            <b> Article 23</b>: The developer is not responsible for any damages
+            damages and lost profits arising as a result of the suspension,
+            changing or limiting the services, deleting,
+            the modification, loss, unreliability, inaccuracy, or
+            the incompleteness of data, materials or information transmitted,
+            used, recorded or made available through
             <a href="https://coherent-accounting.com/about"
               >https://coherent-accounting.com/about</a
             >
           </p>
           <p>
-            <b> Член 24</b>: Разработчикът не носи отговорност за претърпени
-            вреди и пропуснати ползи, настъпили вследствие достъп на трети лица
-            Акаунта на Потребителят.
+            <b> Article 24</b>: The developer is not responsible for any damages
+            damages and lost profits resulting from access by third parties
+            User's account.
           </p>
           <p>
-            <b> Член 25</b>: Разработчикът не носи отговорност за претърпени
-            вреди и пропуснати ползи, настъпили вследствие на правилното
-            използване на уеб-базирана платформа и не проверени данни от страна
-            на Потребителят.
+            <b> Article 25</b>: The developer is not responsible for any damages
+            damages and lost profits arising as a result of the right
+            using a web-based platform and not verified by the party
+            of the User.
           </p>
           <ul>
-            <li class="p-list">Други условия</li>
+            <li class="p-list">Other Terms</li>
           </ul>
           <p>
-            <b> Член 26</b>: Всички спорове, породени от публикуваните на
-            платформата Условия за ползване или отнасящи се до тях, дори и
-            споровете, породени или отнасящи се до тяхното тълкуване,
-            недействителност, изпълнение или прекратяване, както и споровете за
-            попълване на празноти или приспособяването на Условията за ползване
-            към нововъзникнали обстоятелства, ще бъдат разрешавани спрямо
-            Българското законодателство.
+            <b> Article 26</b>: All disputes arising from the published on
+            the Platform Terms of Use or relating thereto, even
+            disputes arising out of or relating to their interpretation,
+            invalidity, performance or termination, as well as disputes about
+            filling in gaps or adapting the Terms of Use
+            to newly arising circumstances, will be resolved against
+            Bulgarian legislation.
           </p>
           <p>
-            <b> Член 27</b>: Условията за ползване публикувани на Платформата се
-            уреждат от и тълкуват в съответствие с българското право. Всички
-            други извъндоговорни задължения, породени от или във връзка с
-            публикуваните Условията за ползване, се уреждат и тълкуват спрямо
-            българското право. За всички неуредени от Условията за ползване
-            въпроси се прилагат разпоредбите на българското право.
+            <b> Article 27</b>: The terms of use published on the Platform are
+            governed by and interpreted in accordance with Bulgarian law. All
+            other non-contractual obligations arising out of or in connection with
+            the published Terms of Use shall be governed by and construed in accordance with
+            Bulgarian law. For all not governed by the Terms of Use
+            matters, the provisions of Bulgarian law apply.
           </p>
           <p>
-            <b> Член 28</b>: Разработчикът се старае и полага усилия за
-            поддържане на актуална информация в уеб-базираната система.
-            Разработчикът не може да гарантира или претендира за нейната
-            изчерпателност и надеждност.
+            <b> Article 28</b>: The Developer shall try and make efforts to
+            maintaining up-to-date information in the web-based system.
+            The developer cannot guarantee or claim its
+            comprehensiveness and reliability.
           </p>
           <p>
-            <b> Член 29</b>: Разработчикът не гарантира свободният и непрекъснат
-            достъп до Платформата, както и не гарантира, че Платформата е
-            защитена от грешки по време на използването й.
+            <b> Article 29</b>: The developer does not guarantee the free and continuous
+            access to the Platform, and does not guarantee that the Platform is
+            protected from errors during its use.
           </p>
           <p>
-            <b> Член 30</b>: Потребителят по отношение на Платформата комуникира
-            с Разработчикът, както следва в писмена форма по електронна поща.
-            Кореспонденция ще се счита за получена при писмено потвърждение от
-            страна на Потребителят или Разработчикът. В случай, че не бъде
-            получено потвърждение в рамките на 7 дни , кореспонденцията се
-            приема за получена, освен ако на електронната поща на изпращача бъде
-            получено съобщение, че писмото не е доставено до получателя поради
-            технически причини.
+            <b> Article 30</b>: The User in relation to the Platform communicates
+            with the Developer as follows in writing by e-mail.
+            Correspondence will be considered received upon written confirmation from
+            User or Developer side. In case it doesn't
+            received confirmation within 7 days, the correspondence is
+            considered received, unless the sender's e-mail is
+            message received that the letter was not delivered to the recipient due to
+            technical reasons.
           </p>
         </span>
       </b-card-text>
