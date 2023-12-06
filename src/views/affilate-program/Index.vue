@@ -72,11 +72,24 @@
 
           <template #cell(user)="data">
             <div class="d-flex align-items-center">
-              <feather-icon
-                icon="UserIcon"
-                size="30"
-                style="margin-right: 20px"
-              />
+              <div class="d-flex align-items-center">
+                <div
+                  style="
+                    margin-right: 8px;
+                    border-radius: 50%;
+                    background-color: #7367f0;
+                    color: white;
+                    min-width: 32px;
+                    min-height: 28px;
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <span>{{ data.item.user.firstName.substr(0, 1).toUpperCase()
+                  }}{{ data.item.user.lastName.substr(0, 1).toUpperCase() }}</span>
+                </div>
+              </div>
               <div>
                 <h5 style="color: #0a64bc">
                   {{ data.item.user.firstName }} {{ data.item.user.lastName }}
