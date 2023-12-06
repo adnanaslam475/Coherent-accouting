@@ -803,6 +803,17 @@
     "no": "No"
   },
 
+  "affiliate_program": {
+    "title": "Affiliate Program",
+    "title_referral_url": "My Referral URL",
+    "title_reffered_friends": "Your Reffered Friends",
+    "user":"User",
+    "subscribed_to_date": "Subscribe To Date",
+    "Paid_for_current_month": "Paid For Current Month",
+    "paid": "Paid",
+    "unpaid": "Unpaid",
+    "no_record": "No records found"
+  },
   "incomeSalesServices": "Income Sales Services",
   "incomeSalesGoods": "Income Sales Goods",
   "GeneralExpenses": "General Expenses",

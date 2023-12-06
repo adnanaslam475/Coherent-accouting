@@ -828,6 +828,17 @@
     "yes": "ДА",
     "no": "НЕ"
   },
+  "affiliate_program": {
+    "title": "Партньорска програма",
+    "title_referral_url": "Моят препоръчан URL адрес",
+    "title_reffered_friends": "Вашите препоръчани приятели",
+    "user":"Потребител",
+    "subscribed_to_date": "Абониране за дата",
+    "Paid_for_current_month": "Платено за текущия месец",
+    "paid": "Платено",
+    "unpaid": "Неплатени",
+    "no_record": "Не бяха намерени записи"
+  },
   "incomeSalesServices": "Сметка покупки/разходи",
   "incomeSalesGoods": "Доход от продажба на стоки",
   "userName": "Потребителско име",

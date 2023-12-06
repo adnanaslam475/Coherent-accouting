@@ -460,6 +460,12 @@ const router = new VueRouter({
         ],
       },
     },
+    // Affiliate Program routes starting from here
+    {
+      path: "/affiliate-program",
+      name: "affiliate-program",
+      component: () => import("@/views/affilate-program/Index.vue"),
+    },
   ],
 });
 
