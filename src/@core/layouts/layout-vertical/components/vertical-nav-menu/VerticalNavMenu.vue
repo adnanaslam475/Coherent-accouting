@@ -104,6 +104,11 @@ export default {
         icon: 'UserIcon',
       },
       {
+        title: "affiliate_program.title",
+        route: "affiliate-program",
+        icon: "UsersIcon",
+      },
+      {
         title: 'contacts',
         route: 'contacts',
         icon: 'BookIcon',

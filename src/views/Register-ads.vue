@@ -646,6 +646,18 @@ export default {
       }
       return this.sideImg;
     },
+    affiliateId() {
+      let affiliateId = null;
+      affiliateId = this.$route.query && this.$route.query.affiliateId;
+
+      if (affiliateId && !Number.isNaN(affiliateId)) {
+        affiliateId = parseInt(affiliateId, 10);
+      } else {
+        affiliateId = null;
+      }
+
+      return affiliateId
+    },
   },
   methods: {
     passErrHandler() {
@@ -691,6 +703,7 @@ export default {
                       identifier: "",
                       ipAddress: IpAddress,
                       isoAlpha2Country: this.country?.value,
+                      affiliateId: this.affiliateId
                     })
                     .then((response) => {
                       this.loading = false;
