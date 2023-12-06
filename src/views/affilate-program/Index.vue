@@ -173,17 +173,17 @@ export default {
       fields: [
         {
           key: "user",
-          label: "User",
+          label: "Refferal Info",
           sortable: true,
         },
         {
           key: "subscribedToDate",
-          label: "Subscribe To Date",
+          label: "Subscribed To Date",
           sortable: true,
         },
         {
           key: "active",
-          label: "Paid For Current Month",
+          label: "Payment Status",
           sortable: true,
         },
       ],
