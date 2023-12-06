@@ -1,44 +1,46 @@
 <template>
   <div>
-    <div class="mb-5">
-      <h3 class="mb-1">
-        {{ $t("affiliate_program.title_referral_url") }}
-      </h3>
-      <div class="row">
-        <div class="input-group col-6 abc affiliate-link">
-          <input
-            v-model="affiliateLink"
-            type="text"
-            class="search-product form-control"
-            style="height: 38px"
-            disabled
-          >
-          <div class="input-group-append">
-            <div
-              id="affiliate-link-copy"
-              class="input-group-text"
-              style="height: 38px; cursor: pointer"
-              @click="copyAffiliateLink"
+    <div class="mb-5 d-flex align-items-center justify-content-center">
+      <div class="w-100">
+        <h3 class="mb-1 text-center">
+          {{ $t("affiliate_program.title_referral_url") }}
+        </h3>
+        <div class="w-100">
+          <div class="input-group affiliate-link-copy  w-100">
+            <input
+              v-model="affiliateLink"
+              type="text"
+              class="search-product form-control"
+              style="height: 38px"
+              disabled
             >
-              <CopyToClipboard
-                :text="affiliateLink"
-                @copy="copyAffiliateLink"
+            <div class="input-group-append">
+              <div
+                id="affiliate-link-copy"
+                class="input-group-text"
+                style="height: 38px; cursor: pointer"
+                @click="copyAffiliateLink"
               >
-                <feather-icon
-                  icon="CopyIcon"
-                  size="14"
-                />
-              </CopyToClipboard>
+                <CopyToClipboard
+                  :text="affiliateLink"
+                  @copy="copyAffiliateLink"
+                >
+                  <feather-icon
+                    icon="CopyIcon"
+                    size="14"
+                  />
+                </CopyToClipboard>
+              </div>
+              <b-tooltip target="affiliate-link-copy">{{
+                copyToClipboard
+              }}</b-tooltip>
             </div>
-            <b-tooltip target="affiliate-link-copy">{{
-              copyToClipboard
-            }}</b-tooltip>
           </div>
         </div>
       </div>
     </div>
     <div>
-      <h2 class="mb-1">
+      <h2 class="mb-1 text-center">
         {{ $t("affiliate_program.title_reffered_friends") }}
       </h2>
       <b-card>
@@ -309,10 +311,20 @@ export default {
 .input-group {
   box-shadow: none !important;
 }
-.affiliate-link {
+.affiliate-link-copy {
   input.form-control:disabled {
     text-align: left;
     background-color: #fff;
+  }
+
+  max-width: 600px;
+  margin: 0 auto;
+}
+.dark-layout {
+  .affiliate-link-copy {
+    input.form-control:disabled {
+      background-color: #283046;
+    }
   }
 }
 </style>
