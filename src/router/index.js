@@ -96,6 +96,14 @@ const router = new VueRouter({
       },
     },
     {
+      path: "/connection",
+      name: "connection",
+      component: () => import("@/views/Connection_Terminated.vue"),
+      meta: {
+        layout: "full",
+      },
+    },
+    {
       path: "/account/forgot-password",
       name: "auth-forgot-password",
       component: () => import("@/views/ForgotPassword.vue"),
