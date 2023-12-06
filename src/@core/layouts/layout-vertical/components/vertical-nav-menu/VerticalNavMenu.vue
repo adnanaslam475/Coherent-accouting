@@ -106,7 +106,7 @@ export default {
       {
         title: "affiliate_program.title",
         route: "affiliate-program",
-        icon: "UsersIcon",
+        icon: "ShieldIcon",
       },
       {
         title: 'contacts',
