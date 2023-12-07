@@ -506,7 +506,7 @@ export default {
       plansPrice: [],
       pricing: {
         basicPlan: {
-          title: "Free",
+          title: "Small",
           img: require("@/assets/images/illustration/Pot1.svg"),
           subtitle: "A simple start for everyone",
           monthlyPrice: 45,

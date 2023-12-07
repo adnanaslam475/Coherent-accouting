@@ -1,6 +1,6 @@
 <template>
   <div class="auth-wrapper auth-v2">
-    <b-row class="auth-inner m-0">
+    <b-row style="border: 1px solid red" class="auth-inner m-0">
       <!-- Brand logo-->
       <b-link class="brand-logo">
         <vuexy-logo />
@@ -206,14 +206,6 @@
                   vid="country"
                   rules="required"
                 >
-                  <!-- <b-form-select
-                      v-model="country"
-                      :options="items"
-                      id="register-country"
-                      name="register-country"
-                      :state="errors.length > 0 ? false:null"
-                    >
-                    </b-form-select> -->
                   <v-select
                     v-model="country"
                     :options="options"

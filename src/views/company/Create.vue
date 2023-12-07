@@ -1177,7 +1177,9 @@ export default {
         companyCurrency: currency,
         companyVatNumber: this.form.vat_no,
         digitalSignature: "",
-        companyFinancialStartOfYear: moment(this.form.fin_year).format("YYYY-MM-DD"),
+        companyFinancialStartOfYear: moment(this.form.fin_year).format(
+          "YYYY-MM-DD"
+        ),
         vat: this.isVatCheck,
         exportProperties: {
           id: this.exportProperties.id,

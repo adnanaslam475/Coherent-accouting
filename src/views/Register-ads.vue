@@ -11,7 +11,6 @@
           <b-img fluid :src="imgUrl" alt="Register V2" />
         </div>
       </b-col>
-      <!-- /Left Text-->
 
       <!-- Register-->
       <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
@@ -230,6 +229,12 @@
                       v-model="password"
                       class="form-control-merge"
                       :type="passwordFieldType"
+                      @change="
+                        () => {
+                          passErr = '';
+                        }
+                      "
+                      @blur="passErrHandler()"
                       :state="errors.length > 0 ? false : null"
                       name="register-password"
                       placeholder="············"
@@ -242,7 +247,7 @@
                       />
                     </b-input-group-append>
                   </b-input-group>
-                  <small class="text-danger">{{ errors[0] }}</small>
+                  <small class="text-danger">{{ passErr || errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
@@ -253,32 +258,6 @@
                   vid="country"
                   rules="required"
                 >
-                  <!-- <b-form-select v-model="country" :options="countries" id="register-country" name="register-country"
-                    :state="errors.length > 0 ? false : null">
-                    <template #option="{ option }">
-                      {{ option }}
-                      <div style="
-                          display: flex;
-                          align-items: center;
-                          justify-content: left;
-                          grid-gap: 8px;
-                        ">
-                        <img :src="getImg(option.src)" />
-                        {{ option.text }}
-                      </div>
-                    </template>
-                    <template #option="option">
-                      {{ option }}
-                      <span style="
-                          display: flex;++
-                          align-items: center;
-                          justify-content: left;
-                          grid-gap: 8px;
-                        ">
-                        <img :src="getImg(option.src)" /> {{ option.text }}
-                      </span>
-                    </template>
-                  </b-form-select> -->
                   <v-select
                     v-model="country"
                     :options="countries"
@@ -367,7 +346,7 @@
     <b-modal
       id="modal-scrollable"
       scrollable
-      title="User Terms of Use Coherent Accounting"
+      :title="$t('lbl.termofuse')"
       cancel-title="Close"
       ok-title="Accept"
       cancel-variant="outline-secondary"
@@ -378,321 +357,161 @@
       <b-card-text style="height: 400px">
         <span style="white-space: break-spaces">
           <p>
-            Please read carefully and agree to these terms before
-            to use a web-based system of
+            {{ $t("lbl.termofuseone") }}
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
             >
-            . If you have any questions or concerns about the General
-            conditions, please contact us.
+            {{ $t("lbl.termofusetwo") }}
           </p>
           <ul>
-            <li class="p-list">Scope and Application</li>
+            <li class="p-list">{{ $t("lbl.termofusethree") }}</li>
           </ul>
           <p>
-            These terms of use apply when visiting and
-            using a web-based system developed and available at
+            {{ $t("lbl.text_one") }}
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
             >
-           
-with the name "Coherent Accounting". The present terms and conditions for
-            terms of use govern the relationship between the developer and each
-            user who uses and/or accesses the platform at address
+            {{ $t("lbl.text_two") }}
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
-            >. By visiting the platform and/or creating an account and
-            its use, you agree, fully accept and
-            you must comply with these terms of use.
+            >
+            {{ $t("lbl.text_three") }}
           </p>
+
           <ul>
-            <li class="p-list">General terms</li>
+            <li class="p-list">{{ $t("lbl.gt") }}</li>
           </ul>
           <p>
-            <b> Article 1</b>: The terms used in the General Terms and Conditions have the following
-            meanings:
+            <b> {{ $t("lbl.ar1") }}</b
+            >{{ $t("lbl.means") }}
           </p>
           <p>
-            "Developer" – software developer who developed and built
-            the platform. Owner of the platform and the intellectual
-            ownership of it "User" - any physical or legal entity
-            a person who visits and/or accesses and/or uses a web-based
-            system available at address
+            {{ $t("lbl.textdev") }}
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
-            >. By creating and/or using an account providing access to
-            the services developed in the platform named "Coherent
-            Accounting". <br />
-            "Account" – a separate part in the platform containing information about
-            The user. Access to the platform is provided through the account.
-            The account includes user data that must be
-            credible and valid. The developer is not responsible for invalid
-            data. <br />
-            "Platform" – a web-based system available at the Internet address
+            >{{ $t("lbl.textdev1") }}<br />
+            {{ $t("lbl.textdev2") }} <br />
+
+            {{ $t("lbl.textdev3") }}
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
-            >, through which the developed services are accessed and/or used.
-            The software and new profiles are created and the internet address
-            <a href="https://accounting.controlisy.bg">
-              https://accounting.controlisy.bg</a
-            >, on which the Software is located. <br />
-            "Web-based system" - the software named "Coherent
-            Accounting'. The software provides the ability to OCR invoices and
-            their digitization, module for digital invoices, generation of reports
-            according to Art. 117, paragraph 1 of VAT and others. Detailed description and presentation of
-            platform is described on the web page
+            >{{ $t("lbl.throughtext") }}
+            <a href="https://coherent-accounting.com">
+              https://coherent-accounting.com</a
+            >{{ $t("lbl.onwhich") }} <br />
+
+            {{ $t("lbl.webbased") }}
             <a href="https://coherent-accounting.com/about">
               https://coherent-accounting.com/about</a
             >.
           </p>
+
           <p>
-            <b> Article 2</b>: The developer has the right and may amend or
-            supplements the Terms of Use at any time. In case of amendment
-            or addition, the robber undertakes to publish the current one
-            version of the Terms of Use and will be available and accessible at
-            the platform. Users will be deemed to have been notified of the relevant
-            amendments or additions to the Terms of Use from the time of
-            their publication on the Platform. Each User is responsible
-            and is obliged to regularly monitor the platform for amendments or
-            additions to the Terms of Use. Any amendments or additions
-            in the Terms of Use shall enter into force immediately, unless otherwise expressly provided
-            otherwise mentioned by the Developer. <br />
-            At its discretion, the Developer has the right to notify anyone
-            User upon modification or addition of the Terms of Use.
+            <b> {{ $t("lbl.ar1") }} 2</b>{{ $t("lbl.devrights") }}<br />
+            {{ $t("lbl.asits") }}
             <br />
-            In case the User does not agree with the changes or additions
-            of the Terms of Use, the User has the right and should
-            stop using the Platform. As with the termination of
-            the use of the Platform is terminated and the relationship with
-            The developer. In the hypothesis of the previous sentence, the User
-            shall not be entitled to claim any compensation from the estate of
-            The developer.
+            {{ $t("lbl.in_case") }}
           </p>
           <p>
-            <b> Article 3</b>: Developer shall not be liable for termination of
-            the provision of its services in the event of circumstances not
-            dependent on him and beyond his control - cases of force majeure
-            force, random events, problems in the global internet network,
-            actions or omissions of third parties, etc.
+            <b> {{ $t("lbl.ar1") }} 3</b> {{ $t("lbl.the_dev") }}
+          </p>
+
+          <p>
+            <b> {{ $t("lbl.ar1") }} 4</b> {{ $t("lbl.devp") }}
           </p>
           <p>
-            <b> Article 4</b>: The developer does not provide a warranty for the used
-            tools, document flow or functionality of the Platform. IN
-            hypothesis of the previous sentence The developer is not responsible
-            for damages and deviations resulting from their use.
+            <b> {{ $t("lbl.ar1") }} 5</b>{{ $t("lbl.devpp") }}
+          </p>
+
+          <p>
+            <b> {{ $t("lbl.ar1") }} 6</b>{{ $t("lbl.hasright") }}
           </p>
           <p>
-            <b>Article 5</b>: The developer is not responsible for the data in
-            the database when the User is granted access to
-            The Platform with its Account of third parties access. In case of
-            establishment of unregulated access, the Developer does not bear
-            responsibility for missing or deleted information, documents or otherwise
-            content (unless due to his fault). The user carries
-            responsibility for the storage of passwords, protection from unregulated
-            access, management of information, documents or other content.
+            <b> {{ $t("lbl.ar1") }} 7</b>{{ $t("lbl.terminate") }}
           </p>
           <p>
-            <b> Ч Article 6</b>: The Developer has the right at any time to add,
-            removes or changes functionality of the Platform. The developer
-            can make modifications and updates to the web-based system,
-            without the User's consent or prior notice.
-            The User uses the Platform in the form in which it is available,
-            including after the relevant changes according to the previous sentence.
+            <b> {{ $t("lbl.ar1") }} 9</b>
           </p>
           <p>
-            <b> Article 7</b>: The Developer has the right to terminate access, on
-            a User in violation of any term of the Terms
-            for use with 7 days' notice or additional written notice
-            agreed otherwise. In the hypothesis of the previous sentence
-            Developer does not owe any compensation to paid/prepaid
-            sums by the User, nor any compensation to
-            The user.
+            <b> {{ $t("lbl.ar1") }} 10</b>{{ $t("lbl.natural") }}
           </p>
           <p>
-            <b> Article 9</b>: A user may be a natural person or a legal entity
-            a person who will use a web-based platform professionally
-            quality and will use the Platform to carry out commercial or
-            professional activity. The Platform is not intended for users
-            within the meaning of the Consumer Protection Act to the extent that it is
-            exclusively related to the exercise of a commercial or professional activity
-            activity.
+            <b> {{ $t("lbl.ar1") }} 11</b> {{ $t("lbl.obliged") }}
           </p>
           <p>
-            <b> Article 10</b>: The User is obliged to use the Platform at
-            strict compliance with the Terms of Use. The user can
-            uses the Platform taking into account all functionalities and
-            its limitations. The User is not entitled to use the Platform for
-            unlawful purposes or are in contradiction with the Terms of Use
-            or would cause damage to the Developer.
+            <b> {{ $t("lbl.ar1") }} 12</b>{{ $t("lbl.event") }}
           </p>
           <p>
-            <b> Article 11</b>: The user is obliged to use the web-based
-            system for its intended purpose only. The user
-            undertakes not to use the web-based platform for out-of-scope
-            j. Developer has the right to immediately terminate access to
-            The platform of a User who violates the Bulgarian
-            legislation or attempts to violate the integrity and functionalities
-            on the platform, through additional source codes. The developer has
-            right, without prior notice and without liability for
-            that, to archive or delete information, documents and/or any other
-            content from the Platform's database that are in violation of
-            Terms of use or Bulgarian legislation.
+            <b> {{ $t("lbl.ar1") }} 13</b> {{ $t("lbl.copyright") }}
           </p>
           <p>
-           
-            <b> Article 12</b>: In case the User provides his Account
-            to third parties, undertakes to ensure familiarization and compliance with
-            Terms of use by all persons and working with the Platform.
-          </p>
-          <p>
-            <b> Article 13</b>: Under the Copyright and Related Rights Act,
-            The Law on Trademarks and Geographical Indications and others applicable
-            normative acts is prohibited materials, media files and others
-            similar that are published on the web-based form to be
-            copied, distributed or made available for any purpose without
-            the express consent of the Developer.
-          </p>
-          <p>
-            <b> Article 14</b>: Through your registration in the web-based system,
-            The Developer provides the User non-exclusively and immediately
-            right to use the Platform. The user does not acquire
-            ownership and/or any intellectual property rights.
+            <b> {{ $t("lbl.ar1") }} 14</b>{{ $t("lbl.registering") }}
           </p>
           <ul>
-            <li class="p-list">Registration</li>
+            <li class="p-list">{{ $t("lbl.regss") }}</li>
           </ul>
           <p>
-            To use the web-based system you need to register,
-            by filling out the electronic form available in real time (on-line).
-            for registration of
+            {{ $t("lbl.reset") }}
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
             >
           </p>
           <p>
-            <b> Article 15</b>: The user is obliged to provide complete and true
-            data about your identity, or about what is represented by
-            Its legal entity, as well as the other required data for
-            the registration. The developer is not responsible for the update
-            of the data in the User's Account.
+            <b> {{ $t("lbl.ar1") }} 15</b>{{ $t("lbl.objto") }}
           </p>
           <p>
-            <b> Article 16</b>: User may register only once.
-            The developer prohibits registration under a fictitious name, a foreign name
-            or changed first name. When providing false data or
-            fake, the Developer is not responsible and may immediately
-            terminate access to the Platform.
+            <b> {{ $t("lbl.ar1") }} 16</b>{{ $t("lbl.usercan") }}
           </p>
           <p>
-            <b> Article 17</b>: Upon registration, the User must enter
-            e-mail and password that were not used during another registration in
-            The platform. Through this e-mail and password, the User
-            individualized when using the services provided.
+            <b> {{ $t("lbl.ar1") }} 17</b> {{ $t("lbl.upon") }}
           </p>
           <p>
-            <b> Article 18</b>: By ticking the box “I agree
-            Terms of Use ”, the User declares that he is familiar with
-            I accept the terms of use in full. With the recording of
-            the statement under the preceding sentence by the Developer, the electronic one
-            a statement also acquires the quality of an electronic document in the meaning
-            of the Law on electronic documents and electronic certificates
-            services.
+            <b> {{ $t("lbl.ar1") }} 18</b> {{ $t("lbl.tick") }}
           </p>
           <p>
-            <b> Article 19</b>: The User agrees and declares that he will
-            provide true, accurate, current and complete information when filling out
-            of the registration form and the subsequent addition or change of
-            data in your Account. The developer reserves the right to any
-            time to change the volume of data required for registration of
-            User. Also to require completion of such data in the Account
-            of an already registered User.
+            <b> {{ $t("lbl.ar1") }} 19</b>{{ $t("lbl.agrees") }}
           </p>
           <p>
-            <b> Article 20</b>: The Developer does not undertake to verify
-            the content of the files and data located on its platform,
-            we reserve the right to remove, disable or replace, without
-            warning, of files that do not conform to the legal ones
-            provisions and requirements of these Rules, as well as such,
-            which could, in his judgment, endanger the security of
-            the servers and/or the information stored on them, if we consider it
-            this as necessary without necessarily notifying the User. Po
-            discretion of the Developer may notify the User that they will be
-            Measures taken.
+            <b> {{ $t("lbl.ar1") }} 20</b> {{ $t("lbl.makes") }}
           </p>
           <p>
-            <b> Article 21</b>: After declaring your agreement with the general
-            conditions, at the email address specified by the User will be
-            sent data to activate the Registration.
+            <b> {{ $t("lbl.ar1") }} 21</b> {{ $t("lbl.declares") }}
           </p>
           <p>
-            <b> Член 22</b>: След активирането на акаунта се счита, че между
-            Потребителят и Разработчикът е сключен договор.
+            <b> {{ $t("lbl.ar1") }} 22</b> {{ $t("lbl.active") }}
           </p>
           <ul>
-            <li class="p-list">Limitation of Liability</li>
+            <li class="p-list">{{ $t("lbl.limits") }}</li>
           </ul>
           <p>
-            <b> Article 23</b>: The developer is not responsible for any damages
-            damages and lost profits arising as a result of the suspension,
-            changing or limiting the services, deleting,
-            the modification, loss, unreliability, inaccuracy, or
-            the incompleteness of data, materials or information transmitted,
-            used, recorded or made available through
+            <b> {{ $t("lbl.ar1") }} 23</b>{{ $t("lbl.responsible") }}
             <a href="https://coherent-accounting.com/about"
               >https://coherent-accounting.com/about</a
             >
           </p>
           <p>
-            <b> Article 24</b>: The developer is not responsible for any damages
-            damages and lost profits resulting from access by third parties
-            User's account.
+            <b> {{ $t("lbl.ar1") }} 24</b>{{ $t("lbl.not") }}
           </p>
           <p>
-            <b> Article 25</b>: The developer is not responsible for any damages
-            damages and lost profits arising as a result of the right
-            using a web-based platform and not verified by the party
-            of the User.
+            <b> {{ $t("lbl.ar1") }} 25</b>{{ $t("lbl.not") }}
           </p>
           <ul>
-            <li class="p-list">Other Terms</li>
+            <li class="p-list">{{ $t("lbl.othert") }} </li>
           </ul>
           <p>
-            <b> Article 26</b>: All disputes arising from the published on
-            the Platform Terms of Use or relating thereto, even
-            disputes arising out of or relating to their interpretation,
-            invalidity, performance or termination, as well as disputes about
-            filling in gaps or adapting the Terms of Use
-            to newly arising circumstances, will be resolved against
-            Bulgarian legislation.
+            <b> {{ $t("lbl.ar1") }} 26</b>{{ $t("lbl.dispute") }}
           </p>
           <p>
-            <b> Article 27</b>: The terms of use published on the Platform are
-            governed by and interpreted in accordance with Bulgarian law. All
-            other non-contractual obligations arising out of or in connection with
-            the published Terms of Use shall be governed by and construed in accordance with
-            Bulgarian law. For all not governed by the Terms of Use
-            matters, the provisions of Bulgarian law apply.
+            <b> {{ $t("lbl.ar1") }} 27</b>{{ $t("lbl.publish") }}
           </p>
           <p>
-            <b> Article 28</b>: The Developer shall try and make efforts to
-            maintaining up-to-date information in the web-based system.
-            The developer cannot guarantee or claim its
-            comprehensiveness and reliability.
+            <b> {{ $t("lbl.ar1") }} 28</b>{{ $t("lbl.tries") }}
           </p>
           <p>
-            <b> Article 29</b>: The developer does not guarantee the free and continuous
-            access to the Platform, and does not guarantee that the Platform is
-            protected from errors during its use.
+            <b> {{ $t("lbl.ar1") }} 29</b>{{ $t("lbl.guarantee") }}
           </p>
           <p>
-            <b> Article 30</b>: The User in relation to the Platform communicates
-            with the Developer as follows in writing by e-mail.
-            Correspondence will be considered received upon written confirmation from
-            User or Developer side. In case it doesn't
-            received confirmation within 7 days, the correspondence is
-            considered received, unless the sender's e-mail is
-            message received that the letter was not delivered to the recipient due to
-            technical reasons.
+            <b> {{ $t("lbl.ar1") }} 30</b>{{ $t("lbl.relation") }}
           </p>
         </span>
       </b-card-text>
@@ -702,7 +521,6 @@ with the name "Coherent Accounting". The present terms and conditions for
 
 <script>
 /* eslint-disable global-require */
-import Vue from "vue";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import VuexyLogo from "@core/layouts/components/Logo.vue";
 import vSelect from "vue-select";
@@ -801,10 +619,10 @@ export default {
       vatNumber: "",
       registrationNumber: "",
       sideImg: require("@/assets/images/pages/register-v2.svg"),
-      // validation
       required,
       email,
       selected: null,
+      passErr: "",
       country: null,
       account: null,
       countries: [],
@@ -828,12 +646,33 @@ export default {
       }
       return this.sideImg;
     },
+    affiliateId() {
+      let affiliateId = null;
+      affiliateId = this.$route.query && this.$route.query.affiliateId;
+
+      if (affiliateId && !Number.isNaN(affiliateId)) {
+        affiliateId = parseInt(affiliateId, 10);
+      } else {
+        affiliateId = null;
+      }
+
+      return affiliateId
+    },
   },
   methods: {
+    passErrHandler() {
+      // console.log("sssssssss");
+      if (this.password.length && this.password.length < 8) {
+        this.passErr = "Password length must be greater than or equal to 8";
+      }
+    },
     register() {
       this.$refs.registerForm.validate().then((success) => {
         if (success) {
           this.loading = true;
+          if (this.password.length && this.password.length < 8) {
+            this.passErr = "Password length must be greater than or equal to 8";
+          }
           useJwt
             .clientToken()
             .then((res) => {
@@ -864,6 +703,7 @@ export default {
                       identifier: "",
                       ipAddress: IpAddress,
                       isoAlpha2Country: this.country?.value,
+                      affiliateId: this.affiliateId
                     })
                     .then((response) => {
                       this.loading = false;
@@ -938,7 +778,6 @@ export default {
             });
         })
         .catch((error) => {
-          // this.$refs.registerForm.setErrors(error)
           this.$toast({
             component: ToastificationContent,
             props: {

@@ -11073,7 +11073,7 @@ export default {
     var platform = ref(null);
     var cToQb = ref(null);
     var cToX = ref(null);
-   
+
     const isUploading = ref("");
 
     const showLogo = ref(null);
