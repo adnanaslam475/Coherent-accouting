@@ -808,8 +808,8 @@
     "title_referral_url": "My Referral URL",
     "title_reffered_friends": "Your Reffered Friends",
     "user":"User",
-    "subscribed_to_date": "Subscribe To Date",
-    "Paid_for_current_month": "Paid For Current Month",
+    "subscribed_to_date": "Subscribed To Date",
+    "Paid_for_current_month": "Has active plan",
     "paid": "Paid",
     "unpaid": "Unpaid",
     "no_record": "No records found"
