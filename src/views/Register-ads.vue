@@ -218,7 +218,7 @@
                   #default="{ errors }"
                   v-bind:name="$t('register.lbl_password')"
                   vid="password"
-                  rules="required"
+                  rules="required|min:8"
                 >
                   <b-input-group
                     class="input-group-merge"

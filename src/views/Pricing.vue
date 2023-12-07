@@ -93,8 +93,17 @@
                     v-for="(data, index) in pricing.basicPlan.planBenefits"
                     :key="index"
                   >
-                    <div v-if="index === 0">40 {{ $t("companiess") }}</div>
-                    <div v-else>{{ $t("pricing." + data) }}</div>
+                    <div v-if="data === 'companiess'">
+                      {{ pricing.basicPlan.companyLimit }}
+                      {{ $t("companiess") }}
+                    </div>
+                    <div v-else-if="data === 'unlimited_ocr_invoices'">
+                      {{ pricing.basicPlan.documentLimit }}
+                      {{ $t("unlimited_ocr_invoices") }}
+                    </div>
+                    <div v-else>
+                      {{ $t(data) }}
+                    </div>
                   </b-list-group-item>
                 </b-list-group>
                 <!--/ plan benefit -->
@@ -169,7 +178,14 @@
                     v-for="(data, index) in pricing.beginnerPlan.planBenefits"
                     :key="index"
                   >
-                    <div v-if="index === 0">60 {{ $t("companiess") }}</div>
+                    <div v-if="data === 'companiess'">
+                      {{ pricing.beginnerPlan.companyLimit }}
+                      {{ $t("companiess") }}
+                    </div>
+                    <div v-else-if="data === 'unlimited_ocr_invoices'">
+                      {{ pricing.beginnerPlan.documentLimit }}
+                      {{ $t("unlimited_ocr_invoices") }}
+                    </div>
                     <div v-else>{{ $t("pricing." + data) }}</div>
                   </b-list-group-item>
                 </b-list-group>
@@ -237,7 +253,14 @@
                   class="list-group-circle text-left"
                 >
                   <b-list-group-item>
-                    <div v-if="index === 0">100 {{ $t("companiess") }}</div>
+                    <div v-if="data === 'companiess'">
+                      {{ pricing.starterPlan.companyLimit }}
+                      {{ $t("companiess") }}
+                    </div>
+                    <div v-else-if="data === 'unlimited_ocr_invoices'">
+                      {{ pricing.starterPlan.documentLimit }}
+                      {{ $t("unlimited_ocr_invoices") }}
+                    </div>
                     <div v-else>{{ $t("pricing." + data) }}</div>
                   </b-list-group-item>
                 </b-list-group>
@@ -307,7 +330,14 @@
                   class="list-group-circle text-left"
                 >
                   <b-list-group-item>
-                    <div v-if="index === 0">150 {{ $t("companiess") }}</div>
+                    <div v-if="data === 'companiess'">
+                      {{ pricing.primaryPlan.companyLimit }}
+                      {{ $t("companiess") }}
+                    </div>
+                    <div v-else-if="data === 'unlimited_ocr_invoices'">
+                      {{ pricing.primaryPlan.documentLimit }}
+                      {{ $t("unlimited_ocr_invoices") }}
+                    </div>
                     <div v-else>{{ $t("pricing." + data) }}</div>
                   </b-list-group-item>
                 </b-list-group>
@@ -375,7 +405,14 @@
                   class="list-group-circle text-left"
                 >
                   <b-list-group-item>
-                    <div v-if="index === 0">250 {{ $t("companiess") }}</div>
+                    <div v-if="data === 'companiess'">
+                      {{ pricing.platinumPlan.companyLimit }}
+                      {{ $t("companiess") }}
+                    </div>
+                    <div v-else-if="data === 'unlimited_ocr_invoices'">
+                      {{ pricing.platinumPlan.documentLimit }}
+                      {{ $t("unlimited_ocr_invoices") }}
+                    </div>
                     <div v-else>{{ $t("pricing." + data) }}</div>
                   </b-list-group-item>
                 </b-list-group>
@@ -715,76 +752,92 @@ export default {
 
     //get plans
     getPlansValues() {
-      useJwt.getPlansPrices().then((response) => {
-        this.plansPrice = response.data;
-        for (let i = 0; i < this.plansPrice.length; i++) {
-          if (
-            this.plansPrice[i].name === "BASIC" &&
-            this.plansPrice[i].planType === "MONTHLY"
-          ) {
-            this.monthlyBasic = this.plansPrice[i].fee;
+      useJwt
+        .getPlansPrices()
+        .then((response) => {
+          this.plansPrice = response.data;
+          for (let i = 0; i < this.plansPrice.length; i++) {
+            if (this.plansPrice[i].name === "BASIC") {
+              this.pricing.basicPlan.companyLimit =
+                this.plansPrice[i].compnayLimit;
+              this.pricing.basicPlan.documentLimit =
+                this.plansPrice[i].documentLimit;
+              if (this.plansPrice[i].planType === "MONTHLY") {
+                this.monthlyBasic = this.plansPrice[i].fee;
+              }
+              if (this.plansPrice[i].planType === "YEARLY") {
+                this.annualBasic = this.plansPrice[i].yearPrice;
+                this.annualBasicMonth = this.plansPrice[i].fee;
+              }
+            }
+
+            if (this.plansPrice[i].name === "BEGINNER") {
+              this.pricing.beginnerPlan.companyLimit =
+                this.plansPrice[i].compnayLimit;
+              this.pricing.beginnerPlan.documentLimit =
+                this.plansPrice[i].documentLimit;
+              if (this.plansPrice[i].planType === "MONTHLY") {
+                this.monthlyBeginner = this.plansPrice[i].fee;
+              }
+              if (this.plansPrice[i].planType === "YEARLY") {
+                this.annualBeginner = this.plansPrice[i].yearPrice;
+                this.annualBeginnerMonth = this.plansPrice[i].fee;
+              }
+            }
+
+            if (this.plansPrice[i].name === "STARTER") {
+              this.pricing.starterPlan.companyLimit =
+                this.plansPrice[i].compnayLimit;
+              this.pricing.starterPlan.documentLimit =
+                this.plansPrice[i].documentLimit;
+              if (this.plansPrice[i].planType === "MONTHLY") {
+                this.monthlyStarter = this.plansPrice[i].fee;
+              }
+              if (this.plansPrice[i].planType === "YEARLY") {
+                this.annualStarter = this.plansPrice[i].yearPrice;
+                this.annualStarterMonth = this.plansPrice[i].fee;
+              }
+            }
+
+            if (this.plansPrice[i].name === "ENTERPRISE") {
+              this.pricing.primaryPlan.companyLimit =
+                this.plansPrice[i].compnayLimit;
+              this.pricing.primaryPlan.documentLimit =
+                this.plansPrice[i].documentLimit;
+              if (this.plansPrice[i].planType === "MONTHLY") {
+                this.monthlyEnterprise = this.plansPrice[i].fee;
+              }
+              if (this.plansPrice[i].planType === "YEARLY") {
+                this.annualEnterprise = this.plansPrice[i].yearPrice;
+                this.annualEnterpriseMonth = this.plansPrice[i].fee;
+              }
+            }
+
+            if (this.plansPrice[i].name === "PLATINIUM") {
+              this.pricing.platinumPlan.companyLimit =
+                this.plansPrice[i].compnayLimit;
+              this.pricing.platinumPlan.documentLimit =
+                this.plansPrice[i].documentLimit;
+              if (this.plansPrice[i].planType === "MONTHLY") {
+                this.monthlyPlatinum = this.plansPrice[i].fee;
+              }
+              if (this.plansPrice[i].planType === "YEARLY") {
+                this.annualPlatinum = this.plansPrice[i].yearPrice;
+                this.annualPlatinumMonth = this.plansPrice[i].fee;
+              }
+            }
           }
-          if (
-            this.plansPrice[i].name === "BASIC" &&
-            this.plansPrice[i].planType === "YEARLY"
-          ) {
-            this.annualBasic = this.plansPrice[i].yearPrice;
-            this.annualBasicMonth = this.plansPrice[i].fee;
-          }
-          if (
-            this.plansPrice[i].name === "BEGINNER" &&
-            this.plansPrice[i].planType === "MONTHLY"
-          ) {
-            this.monthlyBeginner = this.plansPrice[i].fee;
-          }
-          if (
-            this.plansPrice[i].name === "BEGINNER" &&
-            this.plansPrice[i].planType === "YEARLY"
-          ) {
-            this.annualBeginner = this.plansPrice[i].yearPrice;
-            this.annualBeginnerMonth = this.plansPrice[i].fee;
-          }
-          if (
-            this.plansPrice[i].name === "STARTER" &&
-            this.plansPrice[i].planType === "MONTHLY"
-          ) {
-            this.monthlyStarter = this.plansPrice[i].fee;
-          }
-          if (
-            this.plansPrice[i].name === "STARTER" &&
-            this.plansPrice[i].planType === "YEARLY"
-          ) {
-            this.annualStarter = this.plansPrice[i].yearPrice;
-            this.annualStarterMonth = this.plansPrice[i].fee;
-          }
-          if (
-            this.plansPrice[i].name === "ENTERPRISE" &&
-            this.plansPrice[i].planType === "MONTHLY"
-          ) {
-            this.monthlyEnterprise = this.plansPrice[i].fee;
-          }
-          if (
-            this.plansPrice[i].name === "ENTERPRISE" &&
-            this.plansPrice[i].planType === "YEARLY"
-          ) {
-            this.annualEnterprise = this.plansPrice[i].yearPrice;
-            this.annualEnterpriseMonth = this.plansPrice[i].fee;
-          }
-          if (
-            this.plansPrice[i].name === "PLATINIUM" &&
-            this.plansPrice[i].planType === "MONTHLY"
-          ) {
-            this.monthlyPlatinum = this.plansPrice[i].fee;
-          }
-          if (
-            this.plansPrice[i].name === "PLATINIUM" &&
-            this.plansPrice[i].planType === "YEARLY"
-          ) {
-            this.annualPlatinum = this.plansPrice[i].yearPrice;
-            this.annualPlatinumMonth = this.plansPrice[i].fee;
-          }
-        }
-      });
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: "Error fetching prices",
+              icon: "AlertTriangleIcon",
+              variant: "danger",
+            },
+          });
+        });
     },
     upGradePlan(plan) {
       const response = axios.post(
