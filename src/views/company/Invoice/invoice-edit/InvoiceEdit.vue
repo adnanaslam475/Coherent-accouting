@@ -537,7 +537,7 @@
                                         v-model="item.account"
                                         :options="accounts"
                                         v-b-tooltip.hover
-                                        
+                                        @change="(v) => {if(index==0)askForAllPostCode(v,'account')}"
                                         :title="item.account"
                                       >
                                       </b-form-select>
@@ -568,7 +568,7 @@
                                         :options="categoryItems"
                                         v-model="item.account"
                                         v-b-tooltip.hover
-                                        @change="(v) => askForAllPostCode(v,'account')"
+                                        @change="(v) => {if(index==0)askForAllPostCode(v,'account')}"
                                         :title="item.account"
                                       />
                                       <small
@@ -598,7 +598,7 @@
                                         v-model="item.taxType"
                                         v-b-tooltip.hover
                                         :title="item.taxType"
-                                        @change="(v) => askForAllPostCode(v,'taxType')"
+                                        @change="(v) => {if(index==0)askForAllPostCode(v,'taxType')}"
                                       >
                                       </b-form-select>
                                       <small

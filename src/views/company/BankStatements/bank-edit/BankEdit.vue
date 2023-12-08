@@ -364,7 +364,7 @@
                                         v-b-tooltip.hover
                                         :title="item.account"
                                         rules="required"
-                                        @change="(v) => askForAllPostCode(v,'account')"
+                                        @change="(v) => {if(index==0)askForAllPostCode(v,'account')}"
                                         immediate
                                       >
                                       </b-form-select>
@@ -397,7 +397,7 @@
                                         v-model="item.account"
                                         v-b-tooltip.hover
                                         :title="item.account"
-                                        @change="(v) => askForAllPostCode(v,'account')"
+                                        @change="(v) => {if(index==0)askForAllPostCode(v,'account')}"
                                       />
                                       <small
                                         class="text-danger"
@@ -427,7 +427,7 @@
                                         v-model="item.taxType"
                                         v-b-tooltip.hover
                                         :title="item.taxType"
-                                        @change="(v) => askForAllPostCode(v,'taxType')"
+                                        @change="(v) => {if(index==0)askForAllPostCode(v,'taxType')}"
                                       >
                                       </b-form-select>
                                       <small
@@ -1614,7 +1614,6 @@ export default {
     const addSameValueInAll = (condition) => {
       if (condition) {
         const arr = invoiceData.value.bankStatementTransactions;
-        console.log('invoivv', )
         const temp = {
           ...invoiceData.value,
           bankStatementTransactions: arr.map((v) => {
