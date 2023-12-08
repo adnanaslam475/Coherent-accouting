@@ -125,6 +125,12 @@
               </b-badge>
             </div>
           </template>
+
+          <!-- registrationDate Column -->
+          <template #head(registrationDate)>
+            {{ $t("affiliate_program.registration_date") }}
+          </template>
+
         </b-table>
         <b-row class="text-center mb-2">
           <b-col cols="12">
@@ -186,6 +192,11 @@ export default {
         {
           key: "active",
           label: "Payment Status",
+          sortable: true,
+        },
+        {
+          key: "registrationDate",
+          label: "registrationDate",
           sortable: true,
         },
       ],

@@ -810,6 +810,7 @@
     "user":"User",
     "subscribed_to_date": "Subscribed To Date",
     "Paid_for_current_month": "Has active plan",
+    "registration_date": "Registration Date",
     "paid": "Paid",
     "unpaid": "Unpaid",
     "no_record": "No records found"
