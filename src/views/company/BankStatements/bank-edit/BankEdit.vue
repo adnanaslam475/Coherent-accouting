@@ -374,7 +374,6 @@
                                         v-if="invalid"
                                         >{{ "This field is required" }}</small
                                       >
-                                      <!-- <small class="text-danger">{{ errors[0] }}</small> -->
                                     </validation-provider>
                                   </b-col>
                                   <b-col
@@ -398,6 +397,7 @@
                                         v-model="item.account"
                                         v-b-tooltip.hover
                                         :title="item.account"
+                                        @change="(v) => askForAllPostCode(v,'account')"
                                       />
                                       <small
                                         class="text-danger"
@@ -427,6 +427,7 @@
                                         v-model="item.taxType"
                                         v-b-tooltip.hover
                                         :title="item.taxType"
+                                        @change="(v) => askForAllPostCode(v,'taxType')"
                                       >
                                       </b-form-select>
                                       <small
@@ -1612,10 +1613,11 @@ export default {
 
     const addSameValueInAll = (condition) => {
       if (condition) {
-        const arr = invoiceData.value.transactions;
+        const arr = invoiceData.value.bankStatementTransactions;
+        console.log('invoivv', )
         const temp = {
           ...invoiceData.value,
-          transactions: arr.map((v) => {
+          bankStatementTransactions: arr.map((v) => {
             return { ...v, [modalName.value]: askAllTaxType.value };
           }),
         };
