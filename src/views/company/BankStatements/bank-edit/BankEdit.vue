@@ -263,7 +263,7 @@
                                     class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
-                                    {{ $t("add_invoice.caetgory") }}
+                                    {{ $t("add_invoice.category") }}
                                   </b-col>
                                   <b-col
                                     v-if="isXero && isAccount"
@@ -364,6 +364,7 @@
                                         v-b-tooltip.hover
                                         :title="item.account"
                                         rules="required"
+                                        @change="(v) => askForAllPostCode(v,'account')"
                                         immediate
                                       >
                                       </b-form-select>
@@ -761,6 +762,22 @@
               </b-col>
             </b-row>
           </b-row>
+          <b-modal
+            v-model="askAllModalShow"
+            size="xs"
+            centered
+            :hide-backdrop="false"
+            :scrollable="false"
+            :no-close-on-backdrop="true"
+            no-close-on-esc
+            :ok-title="$t('modal_labels.ys')"
+            :cancel-title="$t('modal_labels.no')"
+            @hidden="() => addSameValueInAll(false)"
+            @ok="() => addSameValueInAll(true)"
+          >
+            {{ $t("modal_labels.areyousure") }}
+          </b-modal>
+        </b-modal>
         </b-modal>
         <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0"></b-row>
       </b-form>
@@ -1012,7 +1029,6 @@ export default {
     },
 
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
-      console.log(this.formIsValid);
       if (this.invoiceData?.binaryId && this.invoiceData.binaryId !== null) {
         if (
           (redirectPage === "save" || redirectPage === "verify") &&
@@ -1025,12 +1041,6 @@ export default {
       this.$refs.invoiceEditForm.validate().then((success) => {
         // if (this.companyIDisInvalid === false && this.isWeekSelected === false) {
         this.loading = true;
-        console.log("control ->");
-
-        // if (!invoiceData.sechduled) {
-        //   invoiceData.cronScheduleApi = null
-
-        // }
         if (redirectPage == "verify") {
           invoiceData.verified = true;
         }
@@ -1059,7 +1069,6 @@ export default {
             });
 
             if (redirectPage == "invoices") {
-              console.log("one1------", router.currentRoute.params);
               return this.$router.push({
                 name: "CompanyView",
                 params: {
@@ -1069,7 +1078,6 @@ export default {
                 },
               });
             } else if (redirectPage == "verify") {
-              console.log("one2------", router.currentRoute.params);
               return this.$router.push({
                 name: "CompanyView",
                 params: {
@@ -1078,7 +1086,6 @@ export default {
                 },
               });
             } else {
-              console.log("save");
               return true;
             }
           })
@@ -1186,7 +1193,6 @@ export default {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
 
     function closeModel() {
-      console.log("bankedit_close");
       this.modelShow = false;
       this.$router.push({
         name: "CompanyView",
@@ -1249,6 +1255,11 @@ export default {
     var companyInBG = ref(false);
     var isQuickBook = ref(false);
     var isXero = ref(false);
+
+
+    const askAllModalShow = ref(null);
+    const askAllTaxType = ref(null);
+    const modalName = ref('');
     let uploadValue = {
       companyOwnerName: "",
 
@@ -1366,13 +1377,7 @@ export default {
         // }
       });
 
-    // const handleChange = (item) => {
-    //   console.log(item, 'here is handle change');
-
-    //   supplierID.value = item.companyEic
-    //   console.log(supplierID.value)
-
-    // };
+   
     var companyData = ref(null);
     var companyName = ref("");
 
@@ -1414,16 +1419,13 @@ export default {
         companyName.value = response.data.companyName;
 
         supplierID.value = response.data.companyIdentificationNumber;
-        // if (companyData.value.companyVatNumber == null || companyData.value.companyVatNumber == '') {
-        //   invoiceData.value.vatPercent = 0
-        // }
+       
       })
       .catch((error) => {
         // console.log(error);
       });
 
     const checkAccount = () => {
-      console.log(companyData.value.exportProperties.platform, "----------");
       if (companyData.value.exportProperties.platform == "XERO") {
         isXero.value = !isXero.value;
       }
@@ -1602,12 +1604,36 @@ export default {
       }
     };
 
+    const askForAllPostCode = (val,name) => {
+      askAllModalShow.value = true;
+      askAllTaxType.value = val;
+      modalName.value=name
+    };
+
+    const addSameValueInAll = (condition) => {
+      if (condition) {
+        const arr = invoiceData.value.transactions;
+        const temp = {
+          ...invoiceData.value,
+          transactions: arr.map((v) => {
+            return { ...v, [modalName.value]: askAllTaxType.value };
+          }),
+        };
+        invoiceData.value = temp;
+      }  
+      askAllModalShow.value = null;
+      askAllTaxType.value = null;
+      modalName.value=''
+    };
+
     return {
       showTaxInput,
       showTotalInput,
       isQuickBook,
       isXero,
-
+      askAllModalShow,
+      askAllTaxType,
+   modalName,askForAllPostCode,addSameValueInAll,
       trHeight,
       loading,
       showinvoiceCurrency,

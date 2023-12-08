@@ -9731,9 +9731,7 @@ export default {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
-    // onMounted(() => {
-    //   getCompanyInfo()
-    // })
+     
     var AccountTypeOption = ref("company");
     var AccountTypeOptionToggleValue = false;
 

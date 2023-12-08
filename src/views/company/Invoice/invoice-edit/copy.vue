@@ -5223,7 +5223,7 @@ import {
   qtyValid,
 } from "@validations";
 import Logo from "@core/layouts/components/Logo.vue";
-import { ref, onUnmounted, onMounted } from "@vue/composition-api";
+import { ref, onUnmounted,  } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
 import Ripple from "vue-ripple-directive";
 import store from "@/store";
@@ -5916,9 +5916,7 @@ export default {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
-    // onMounted(() => {
-    //   getCompanyInfo()
-    // })
+    
     var AccountTypeOption = ref("company");
     var AccountTypeOptionToggleValue = false;
 

@@ -104,8 +104,7 @@
     "publish": ": Terms of Use published on    The Platform is governed by and interpreted in accordance with Bulgarian    right. All other non-contractual obligations arising out of or in    connection with the published Terms of Use, are governed and interpreted    according to Bulgarian law. For all not governed by the Terms for    In matters of use, the provisions of Bulgarian law apply.",
     "tries": ": The developer tries hard efforts to maintain up-to-date information in the web-based  system. The developer cannot guarantee or claim that its comprehensiveness and reliability.",
     "guarantee": ": The developer makes no guarantees the free and continuous access to the Platform, as well as no ensures that the Platform is protected from errors during the    its use.",
-"relation":": The user in relation to The Platform communicates with the Developer as follows in writing by e-mail. Correspondence will be deemed received at written confirmation by the User or the Developer. IN in the event that no confirmation is received within 7 days, correspondence shall be deemed received unless on electronic mail of the sender, a message is received that the letter was not delivered to the recipient due to technical reasons.",
-
+    "relation": ": The user in relation to The Platform communicates with the Developer as follows in writing by e-mail. Correspondence will be deemed received at written confirmation by the User or the Developer. IN in the event that no confirmation is received within 7 days, correspondence shall be deemed received unless on electronic mail of the sender, a message is received that the letter was not delivered to the recipient due to technical reasons.",
 
     "sign_up": "Sign Up",
     "pricing": "Pricing",
@@ -393,7 +392,10 @@
   },
   "modal_labels": {
     "ok": "Next",
-    "close": "Exit"
+    "close": "Exit",
+    "ys": "Yes",
+    "no": "No",
+    "areyousure": "Do you want to add same value in all?"
   },
   "vat_reports": {
     "dropFiles": "Drop files here...",
@@ -534,7 +536,7 @@
     "RESOLVED": "RESOLVED"
   },
   "add_invoice": {
-    "caetgory": "ACCOUNT CODE",
+    "category": "ACCOUNT CODE",
     "job_cost_code": "Tax Type",
     "account": "Account",
     "recp_add": "Recipient Address",

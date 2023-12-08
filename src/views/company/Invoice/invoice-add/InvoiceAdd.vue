@@ -473,7 +473,7 @@
                                       class="text-uppercase grey-text-color"
                                       style="font-size: 14px"
                                     >
-                                      {{ $t("add_invoice.caetgory") }}
+                                      {{ $t("add_invoice.category") }}
                                     </b-col>
                                     <b-col
                                       v-if="invoiceData.xero"
@@ -9956,7 +9956,7 @@ import {
   qtyValid,
 } from "@validations";
 import Logo from "@core/layouts/components/Logo.vue";
-import { ref, onUnmounted, computed, onMounted } from "@vue/composition-api";
+import { ref, onUnmounted, computed } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
 import Ripple from "vue-ripple-directive";
 import store from "@/store";

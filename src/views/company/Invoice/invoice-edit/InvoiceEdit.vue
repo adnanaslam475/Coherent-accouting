@@ -453,7 +453,7 @@
                                     class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
-                                    {{ $t("add_invoice.caetgory") }}
+                                    {{ $t("add_invoice.category") }}
                                   </b-col>
                                   <b-col
                                     v-if="invoiceData.xero"
@@ -537,6 +537,7 @@
                                         v-model="item.account"
                                         :options="accounts"
                                         v-b-tooltip.hover
+                                        
                                         :title="item.account"
                                       >
                                       </b-form-select>
@@ -567,6 +568,7 @@
                                         :options="categoryItems"
                                         v-model="item.account"
                                         v-b-tooltip.hover
+                                        @change="(v) => askForAllPostCode(v,'account')"
                                         :title="item.account"
                                       />
                                       <small
@@ -596,6 +598,7 @@
                                         v-model="item.taxType"
                                         v-b-tooltip.hover
                                         :title="item.taxType"
+                                        @change="(v) => askForAllPostCode(v,'taxType')"
                                       >
                                       </b-form-select>
                                       <small
@@ -1255,6 +1258,21 @@
               </b-col>
             </b-row>
           </b-row>
+          <b-modal
+            v-model="askAllModalShow"
+            size="xs"
+            centered
+            :hide-backdrop="false"
+            :scrollable="false"
+            :no-close-on-backdrop="true"
+            no-close-on-esc
+            :ok-title="$t('modal_labels.ys')"
+            :cancel-title="$t('modal_labels.no')"
+            @hidden="() => addSameValueInAll(false)"
+            @ok="() => addSameValueInAll(true)"
+          >
+            {{ $t("modal_labels.areyousure") }}
+          </b-modal>
         </b-modal>
         <b-row
           v-if="
@@ -2238,7 +2256,6 @@
                 >
                   <b-row ref="row" class="pb-0 m-0">
                     <!-- Item Form -->
-                    <!-- ? This will be in loop => So consider below markup for single item -->
                     <b-col
                       cols="12"
                       class="p-0"
@@ -3884,7 +3901,7 @@
                         >
                           <b-row ref="row" class="pb-0 m-0">
                             <!-- Item Form -->
-                            <!-- ? This will be in loop => So consider below markup for single item -->
+                            <!-- ? This will be in loop => So consider below markup for single -->
                             <b-col cols="12" class="p-0 border">
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div
@@ -5665,7 +5682,7 @@
                         >
                           <b-row ref="row" class="pb-0 m-0">
                             <!-- Item Form -->
-                            <!-- ? This will be in loop => So consider below markup for single item -->
+                            <!-- ? This will be in loop => So consider below markup for single  -->
                             <b-col cols="12" class="p-0 border">
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div
@@ -7496,7 +7513,7 @@
                         >
                           <b-row ref="row" class="pb-0 m-0">
                             <!-- Item Form -->
-                            <!-- ? This will be in loop => So consider below markup for single item -->
+                            <!-- ? This will be in loop => So consider below markup for single  -->
                             <b-col cols="12" class="p-0 border">
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div
@@ -9292,7 +9309,7 @@
                         >
                           <b-row ref="row" class="pb-0 m-0">
                             <!-- Item Form -->
-                            <!-- ? This will be in loop => So consider below markup for single item -->
+                            <!-- ? This will be in loop => So consider below markup for single  -->
                             <b-col cols="12" class="p-0 border">
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div
@@ -10238,7 +10255,15 @@ import {
   qtyValid,
 } from "@validations";
 import Logo from "@core/layouts/components/Logo.vue";
-import { ref, onUnmounted, computed } from "@vue/composition-api";
+import {
+  ref,
+  onUnmounted,
+  onMounted,
+  getCurrentInstance,
+  getCurrentScope,
+  computed,
+} from "@vue/composition-api";
+
 import { preventNum } from "@core/comp-functions/forms/prevent-num";
 import { heightTransition } from "@core/mixins/ui/transition";
 import Ripple from "vue-ripple-directive";
@@ -10452,10 +10477,7 @@ export default {
   mounted() {
     this.getAccounts();
   },
-  updated() {
-    // this.inValidTax = this.$refs.tax.flags.valid === false;
-    // this.inValidTotal = this.$refs.tax.flags.valid === false;
-  },
+
   computed: {
     formIsValid() {
       let i = 0;
@@ -10548,11 +10570,12 @@ export default {
     showSingle() {
       this.openLightbox();
     },
-    removeTaxMsg(e) {
+
+    removeTaxMsg() {
       this.inValidTax = this.$refs.tax.flags.valid == false;
       return this.$refs.tax.flags.valid;
     },
-    removeTotalMsg(e) {
+    removeTotalMsg() {
       this.inValidTotal = this.$refs.total.flags.valid == false;
       return this.$refs.total.flags.valid;
     },
@@ -10780,10 +10803,7 @@ export default {
         if (["save", "verify"].includes(redirectPage) && !this.formIsValid)
           return;
       }
-      if (!this.$refs.tax.flags.valid || !this.$refs.total.flags.valid) {
-        console.log("againnnnnnnnnnn2");
-        return;
-      }
+
       if (invoiceData.scheduled == true) {
         if (invoiceData.cronScheduleApi !== null) {
           if (!invoiceData.cronScheduleApi.dayOfWeek) {
@@ -10817,7 +10837,6 @@ export default {
           invoiceData.recipientCompany.companyOwnerName;
         invoiceData.recipientCompany.companyVatEic = "";
       }
-
       invoiceData?.transactions?.map((item) => {
         item.transactionTotalAmountNonVat = (
           parseFloat(item.singleAmountTransaction) * parseFloat(item.quantity)
@@ -10998,9 +11017,13 @@ export default {
     },
   },
   setup() {
+    // onMounted(() => {
+    //   console.log("all==>", getCurrentInstance()?.data);
+    // });
+    // const {   } = getCurrentInstance().data;
+
     var loading = ref(false);
     var trHeight = ref(0);
-
     var showInvoiceInput = ref(false);
     var showTaxInput = ref(false);
     var showTotalInput = ref(false);
@@ -11012,6 +11035,9 @@ export default {
     const jobPostSelected = ref();
     const selectedCategory = ref();
     var bankProcess = ref("");
+    const askAllModalShow = ref(null);
+    const askAllTaxType = ref(null);
+    const modalName = ref('');
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
 
     function closeModel() {
@@ -11460,6 +11486,7 @@ export default {
       invoiceData.value.vatAmount = parseFloat(totalVatAmount).toFixed(2);
       return parseFloat(totalVatAmount).toFixed(2);
     };
+
     const tradeDiscountAmount = (item, vatPercent, tradeDiscountPercent) => {
       tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0;
       vatPercent = vatPercent ? vatPercent : 0;
@@ -11475,6 +11502,7 @@ export default {
       ).toFixed(2);
       return parseFloat(totaltradeDiscountAmount).toFixed(2);
     };
+
     const totalPrice = (item, vatPercent, tradeDiscountPercent) => {
       tradeDiscountPercent = tradeDiscountPercent ? tradeDiscountPercent : 0;
       vatPercent = vatPercent ? vatPercent : 0;
@@ -12057,9 +12085,36 @@ export default {
       }
     };
 
+    const askForAllPostCode = (val,name) => {
+      console.log('askForAllPostCode')
+      askAllModalShow.value = true;
+      askAllTaxType.value = val;
+      modalName.value=name
+    };
+
+    const addSameValueInAll = (condition) => {
+      if (condition) {
+        const arr = invoiceData.value.transactions;
+        const temp = {
+          ...invoiceData.value,
+          transactions: arr.map((v) => {
+            return { ...v, [modalName.value]: askAllTaxType.value };
+          }),
+        };
+        invoiceData.value = temp;
+      }  
+      askAllModalShow.value = null;
+      askAllTaxType.value = null;
+      modalName.value=''
+    };
     return {
       showTaxInput,
       showTotalInput,
+      askAllModalShow,
+      askAllTaxType,
+      askForAllPostCode,
+      modalName,
+      addSameValueInAll,
       totalTax,
       totalTaxInDecimal,
       totalAmountInDecimal,

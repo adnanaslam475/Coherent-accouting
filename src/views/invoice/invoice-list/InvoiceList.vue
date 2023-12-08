@@ -805,7 +805,6 @@ export default {
     },
 
     companyID(newVal) {
-      console.log("companyID watcher triggered", newVal);
       this.exportDto.companyId = newVal;
     },
 
@@ -869,12 +868,7 @@ export default {
       // Fetch the invoices first
       await this.fetchInvoices();
       // Populate the exportDto object
-      console.log(
-        "exportModal method called",
-        this.companyID,
-        this.selectedMonthData.date,
-        this.companyinfo
-      );
+
       this.exportDto.companyId = this.companyID;
       this.exportDto.date = this.selectedMonthData.date;
       this.exportDto.platformName =
@@ -1156,24 +1150,8 @@ export default {
       this.isCheck = true;
       this.pageNum = 1;
       this.perPageRecords = 10;
-      const data1 = {
-        dateFrom: this.startDate,
-        dateTo: this.endDate,
-      };
-      const config = {
-        params: {
-          direction: this.isSortDirDesc ? "desc" : "asc",
-          sortField: this.sortBy,
-          verified: "true",
-          searchTerm: this.searchQuery,
-        },
-      };
+
       this.companyId = router.currentRoute.params.id;
-      // const data = await axios.post(
-      //   `/account/api/invoice/search/${this.companyId}/1/${this.perPageRecords}`,
-      //   data1,
-      //   config,
-      // )
 
       this.invoices = data.data.elements;
       tableAreaBusy.style.opacity = "1";
