@@ -537,7 +537,12 @@
                                         v-model="item.account"
                                         :options="accounts"
                                         v-b-tooltip.hover
-                                        @change="(v) => {if(index==0)askForAllPostCode(v,'account')}"
+                                        @change="
+                                          (v) => {
+                                            if (index == 0)
+                                              askForAllPostCode(v, 'account');
+                                          }
+                                        "
                                         :title="item.account"
                                       >
                                       </b-form-select>
@@ -568,7 +573,12 @@
                                         :options="categoryItems"
                                         v-model="item.account"
                                         v-b-tooltip.hover
-                                        @change="(v) => {if(index==0)askForAllPostCode(v,'account')}"
+                                        @change="
+                                          (v) => {
+                                            if (index == 0)
+                                              askForAllPostCode(v, 'account');
+                                          }
+                                        "
                                         :title="item.account"
                                       />
                                       <small
@@ -598,7 +608,12 @@
                                         v-model="item.taxType"
                                         v-b-tooltip.hover
                                         :title="item.taxType"
-                                        @change="(v) => {if(index==0)askForAllPostCode(v,'taxType')}"
+                                        @change="
+                                          (v) => {
+                                            if (index == 0)
+                                              askForAllPostCode(v, 'taxType');
+                                          }
+                                        "
                                       >
                                       </b-form-select>
                                       <small
@@ -10659,6 +10674,7 @@ export default {
               }
             )
             .then((response) => {
+              
               if (response.status === 200) {
                 const reader = new FileReader();
                 reader.readAsDataURL(response.data);
@@ -11037,7 +11053,7 @@ export default {
     var bankProcess = ref("");
     const askAllModalShow = ref(null);
     const askAllTaxType = ref(null);
-    const modalName = ref('');
+    const modalName = ref("");
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
 
     function closeModel() {
@@ -12085,11 +12101,11 @@ export default {
       }
     };
 
-    const askForAllPostCode = (val,name) => {
-      console.log('askForAllPostCode')
+    const askForAllPostCode = (val, name) => {
+      console.log("askForAllPostCode");
       askAllModalShow.value = true;
       askAllTaxType.value = val;
-      modalName.value=name
+      modalName.value = name;
     };
 
     const addSameValueInAll = (condition) => {
@@ -12102,10 +12118,10 @@ export default {
           }),
         };
         invoiceData.value = temp;
-      }  
+      }
       askAllModalShow.value = null;
       askAllTaxType.value = null;
-      modalName.value=''
+      modalName.value = "";
     };
     return {
       showTaxInput,

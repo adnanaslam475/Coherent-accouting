@@ -148,7 +148,13 @@ export default {
   },
   created() {
     if (!localStorage.getItem("user_token")) {
-      console.log('emailapi clledddddd')
+      // console.log(
+      //   "csrf",
+      //   document
+      //     .querySelector('meta[name="csrf-token"]')
+      //     ?.getAttribute("content"),
+      //   document.head.querySelector('meta[name="csrf-token"]')
+      // );
       useJwt
         .login({
           grant_type: "password",

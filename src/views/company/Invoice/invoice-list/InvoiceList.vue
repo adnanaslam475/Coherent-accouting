@@ -154,7 +154,7 @@
               <validation-observer ref="selectMonthRules" tag="form">
                 <validation-provider
                   #default="{ errors }"
-                  :name="$t('month_selected')"
+                  name="month_selected"
                   rules="required"
                 >
                   <vue-monthly-picker

@@ -351,7 +351,7 @@ export default {
       sortDesc: false,
       sortBy: "id",
       currentPage: 1,
-      perPage: "10",
+      perPage: "5",
       totalRecords: "",
       totalPages: "",
       searchQuery: "",
@@ -364,7 +364,7 @@ export default {
       progress: 0,
       imageD: "",
       server: {
-        process: (file, load, error, progress, abort) => {
+        process: (_, load, error, progress, abort) => {
           const formData = new FormData();
 
           formData.append("file", load);

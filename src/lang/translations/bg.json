@@ -244,6 +244,7 @@
     "lbl_password": "Парола",
     "lbl_country": "Държава",
     "country_placeholder": "Моля изберете държава",
+    "status_place":"Моля, изберете статут на фирма",
     "i_agree_to": "Съгласявам се",
     "lbl_privacy_term_link": "Условия на Ползване Coherent Accounting",
     "lbl_privacy": "Условия на Ползване Coherent Accounting",
@@ -638,6 +639,7 @@
     "person_address": "Адрес",
     "person_id_no": "ЕГН/ЛНЧ",
     "vat": "ДДС",
+
     "yes": "ДА",
     "no": "НЕ",
     "supplier": "Доставчик",
@@ -727,6 +729,7 @@
     "company_email": "Фирмена поща",
     "company_fin_year": "Фирмена финансова година",
     "vat": "ДДС",
+    "status":"състояние",
     "next": "Следваща",
     "previous": "Предишна",
     "create": "Създай",

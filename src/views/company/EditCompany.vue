@@ -263,7 +263,7 @@
               >
                 <validation-provider
                   #default="{ errors }"
-                  v-bind:name="$t('status')"
+                  v-bind:name="$t('create_company.status')"
                   rules="required"
                 >
                   <v-select
@@ -280,7 +280,7 @@
                     "
                     id="company-status"
                     name="country-status"
-                    v-bind:placeholder="$t('Please select company status')"
+                    v-bind:placeholder="$t('register.status_place')"
                     :value="$store.state.selected"
                     v-on:input="updateCompanyStatus()"
                   >
@@ -362,7 +362,7 @@
               >
                 <validation-provider
                   #default="{ errors }"
-                  v-bind:name="$t('companyBankName')"
+                  v-bind:name="$t('add_invoice.bank')"
                 >
                   <v-select
                     v-model="companyBankName"
@@ -504,7 +504,7 @@
               >
                 <validation-provider
                   #default="{ errors }"
-                  v-bind:name="$t('company email')"
+                  v-bind:name="$t('companies.email')"
                   rules="required|email"
                 >
                   <b-form-input
@@ -526,7 +526,7 @@
               >
                 <validation-provider
                   #default="{ errors }"
-                  v-bind:name="$t('company_fin_year')"
+                  v-bind:name="$t('create_company.company_fin_year')"
                   rules="required"
                 >
                   <div class="position-relative mr-1">
@@ -576,7 +576,7 @@
               >
                 <validation-provider
                   #default="{ errors }"
-                  v-bind:name="$t('status')"
+                  v-bind:name="$t('create_company.status')"
                   rules="required"
                 >
                   <b-form-select
@@ -606,7 +606,7 @@
               >
                 <validation-provider
                   #default="{ errors }"
-                  v-bind:name="$t('status')"
+                  v-bind:name="$t('create_company.status')"
                   rules="required"
                 >
                   {{ selectedPlatformProperty }}
@@ -906,16 +906,17 @@ export default {
     };
   },
   computed: {
-    platformPropertiesOptions() {
-      const keysToKeep = [];
-      const filteredProperties = this.platformProperties.filter((property) =>
-        keysToKeep.includes(property)
-      );
-      return filteredProperties.map((property) => ({
-        value: property,
-        text: property,
-      }));
-    },
+    // platformPropertiesOptions() {
+    //   console.log("tttttttttttttttttttttttttttttttttttt");
+    //   const keysToKeep = [];
+    //   const filteredProperties = this.platformProperties.filter((property) =>
+    //     keysToKeep.includes(property)
+    //   );
+    //   return filteredProperties.map((property) => ({
+    //     value: property,
+    //     text: property,
+    //   }));
+    // },
   },
 
   methods: {

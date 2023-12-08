@@ -6,7 +6,7 @@
         md="6"
         sm="12"
         cols="12"
-        v-for="(item,index) in $t('videos_content')"
+        v-for="item in $t('videos_content')"
         :key="item.index"
       >
         <embed-types :item="item" />
@@ -15,13 +15,11 @@
   </div>
 </template>
 <script>
-import {
-  BRow, BCol, BCard, BCardBody,
-} from 'bootstrap-vue'
+import { BRow, BCol, BCard, BCardBody } from "bootstrap-vue";
 // eslint-disable-next-line import/extensions
-import EmbedTypes from '@/views/EmbedTypes'
+import EmbedTypes from "@/views/EmbedTypes";
 // eslint-disable-next-line import/extensions
-import navbarAds from '@/views/navbarAds'
+import navbarAds from "@/views/navbarAds";
 
 export default {
   components: {
@@ -31,9 +29,8 @@ export default {
     BCard,
     BCardBody,
     navbarAds,
-  }
-}
+  },
+};
 </script>
 <style lang="">
-/*  */
 </style>

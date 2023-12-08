@@ -38,6 +38,7 @@
   },
   "paymentProcess": "Payment Process",
   "paymentMethods": {
+    "null": "",
     "CASH": "CASH",
     "BANK_TRANSFER": "BANK TRANSFER",
     "CARD": "CARD",
@@ -241,6 +242,7 @@
     "lbl_password": "Password",
     "lbl_country": "Country",
     "country_placeholder": "Please select your country",
+    "status_place": "Please select company status",
     "i_agree_to": "I agree to",
     "lbl_privacy_term_link": "privacy policy & terms",
     "lbl_privacy": "Terms and Conditions",
@@ -258,7 +260,8 @@
     "lbl_email": "Email",
     "email_placeholder": "john@example.com",
     "lbl_btn_submit": "Send reset link",
-    "login_link": "Back to login"
+    "login_link": "Back to login",
+    "month_selected": "month_selected"
   },
   "reset_password": {
     "title": "Reset Password \uD83D\uDD12",
@@ -740,6 +743,7 @@
     "company_email": "Company Email",
     "company_fin_year": "Company Financial Year",
     "vat": "Tax Rate",
+    "status": "status",
     "next": "Next",
     "previous": "Previous",
     "create": "Create",

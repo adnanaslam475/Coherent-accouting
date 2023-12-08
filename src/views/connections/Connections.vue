@@ -359,7 +359,6 @@ export default {
           },
         })
         .then(({ data }) => {
-          console.log("dddddd", data);
           this.companyInfo = data;
           this.forXero =
             data.exportProperties && data.exportProperties.platform !== "XERO";

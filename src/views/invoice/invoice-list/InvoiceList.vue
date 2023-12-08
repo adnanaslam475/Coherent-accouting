@@ -74,9 +74,11 @@
           >
             <form ref="form" @submit.stop.prevent="handleMonthSelect">
               <validation-observer ref="selectMonthRules" tag="form">
+                <!-- :name="$t('month_selected')" -->
                 <validation-provider
                   #default="{ errors }"
                   :name="$t('month_selected')"
+                  name="month_selected"
                   rules="required"
                 >
                   <vue-monthly-picker

@@ -1,5 +1,5 @@
 <template>
-  <section   class="invoice-add-wrapper">
+  <section class="invoice-add-wrapper">
     <!-- Alert: No item found -->
     <TabList />
     <b-alert variant="danger" :show="invoiceData === undefined">

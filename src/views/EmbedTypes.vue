@@ -8,7 +8,7 @@
         allowfullscreen
       />
       <h4 class="text-primary mt-1">
-        {{ $t(`${item.video.title}`)}}
+        {{ $t(`${item.video.title}`) }}
       </h4>
     </div>
 
@@ -22,7 +22,7 @@
 import BCardCode from "@core/components/b-card-code";
 import { BEmbed, BCardText } from "bootstrap-vue";
 import { codeTypes } from "./code";
-import axios from "axios";
+
 export default {
   props: ["item"],
   components: {

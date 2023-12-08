@@ -1364,33 +1364,7 @@
                 </div>
               </div>
 
-              <!-- <table class="no-page-break"
-                style="width: 80%; margin: auto; padding-top: 1rem; border-collapse: collapse;">
-                <tr>
-                  <td style="text-align: center; ">
-                    <div style="margin-bottom: 10px;">
-                      {{ invoiceData.supplierCompany.companyOwnerName }}
-                    </div>
-                    <div style=" border-bottom: 1px dashed black;">
-                     
-                    </div>
-                    <div style="margin-top: 5px;">
-                      {{ new Date().toLocaleDateString() }}
-                    </div>
-                  </td>
-                  <td style="text-align: center; padding: 15px;">
-                    <div style="margin-bottom: 10px;">
-                      {{ invoiceData.recipientCompany.companyOwnerName }}
-                    </div>
-                    <div style=" border-bottom: 1px dashed black;">
-                    
-            </div>
-            <div style="margin-top: 5px;">
-              {{ new Date().toLocaleDateString() }}
-            </div>
-            </td>
-            </tr>
-            </table> -->
+             
             </div>
           </div>
         </div>

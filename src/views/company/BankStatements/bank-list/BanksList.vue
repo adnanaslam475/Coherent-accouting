@@ -66,7 +66,7 @@
               <validation-observer ref="selectMonthRules" tag="form">
                 <validation-provider
                   #default="{ errors }"
-                  :name="$t('month_selected')"
+                  name="month_selected"
                   rules="required"
                 >
                   <vue-monthly-picker
@@ -338,7 +338,7 @@
                   : getImage(data.item.binaryId, data.item.id, 2)
               "
               class="cursor-pointer"
-              style="height: 30px; width: 30px;"
+              style="height: 30px; width: 30px"
           /></span>
         </span>
       </template>
@@ -722,7 +722,7 @@ export default {
     setTimeout(() => {
       this.isCheck = true;
     }, 1500);
-    // this.fetchInvoices();
+    this.refreshList();
     this.observeScroll();
 
     this.getCompany();
@@ -843,7 +843,6 @@ export default {
         : [...this.selectAll, id];
     },
     async exportByIds() {
-      let companyName = this.comp;
       try {
         await axios
           .post(
@@ -898,7 +897,6 @@ export default {
             // link.remove();
           });
       } catch (error) {
-        console.log("erere", error);
         this.$toast({
           component: ToastificationContent,
           props: {
@@ -931,33 +929,33 @@ export default {
         });
     },
 
-    async exportModal() {
-      // Fetch the invoices first
-      await this.fetchInvoices();
+    // async exportModalz() {
+    //   // Fetch the invoices first
+    //   await this.fetchInvoices();
 
-      this.exportDto.companyId = this.companyID;
-      this.exportDto.date = this.selectedMonthData.date;
-      this.exportDto.platformName =
-        this.companyinfo &&
-        this.companyinfo.exportProperties &&
-        this.companyinfo.exportProperties.platform
-          ? this.companyinfo.exportProperties.platform
-          : "Ajure";
-      // Validate if the required fields have a value
-      if (
-        !this.exportDto.companyId ||
-        !this.exportDto.date ||
-        !this.exportDto.platformName
-      ) {
-        return;
-      }
-      // Show the modal
-      this.$bvModal.show("export-info-modal");
-      // Then get the export file
-      await this.getExportFile();
-      // Toggle the visibility of the modal
-      this.isExportModalVisible = !this.isExportModalVisible;
-    },
+    //   this.exportDto.companyId = this.companyID;
+    //   this.exportDto.date = this.selectedMonthData.date;
+    //   this.exportDto.platformName =
+    //     this.companyinfo &&
+    //     this.companyinfo.exportProperties &&
+    //     this.companyinfo.exportProperties.platform
+    //       ? this.companyinfo.exportProperties.platform
+    //       : "Ajure";
+    //   // Validate if the required fields have a value
+    //   if (
+    //     !this.exportDto.companyId ||
+    //     !this.exportDto.date ||
+    //     !this.exportDto.platformName
+    //   ) {
+    //     return;
+    //   }
+    //   // Show the modal
+    //   this.$bvModal.show("export-info-modal");
+    //   // Then get the export file
+    //   await this.getExportFile();
+    //   // Toggle the visibility of the modal
+    //   this.isExportModalVisible = !this.isExportModalVisible;
+    // },
     toggleExportModal() {
       this.isExportModalVisible = !this.isExportModalVisible;
     },
@@ -1098,7 +1096,6 @@ export default {
           )
           .then(function (response) {
             const headers = response.headers;
-            const contentDisposition = headers["Content-Disposition"];
             const blobData = response.data;
             const exportDataBlob = new Blob([blobData], {
               type: blobData.type,
@@ -1196,7 +1193,7 @@ export default {
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
       const totalRecordss = this.invoices?.length;
-      let Records = (totalRecordss / 10) * 10;
+      let Records = (totalRecordss / 10) * 10 || 10;
       this.pageNum = Records / 10;
       if (totalRecordss < 10) {
         Records = 10;
@@ -1246,7 +1243,7 @@ export default {
         }
         tableAreaBusy.style.opacity = "1";
       } catch (error) {
-        console.log(error);
+        console.log("errrrrr->", error);
       }
     },
 
@@ -1305,20 +1302,18 @@ export default {
         },
       };
       this.companyId = router.currentRoute.params.id;
-      const data = await axios
+      await axios
         .post(
           `/account/api/bank-statement/search/${this.companyId}/1/${this.perPageRecords}`,
           data1,
           config
         )
         .then((res) => {
+          console.log("thisone", res.data.elements);
           this.invoices = res.data.elements;
           tableAreaBusy.style.opacity = "1";
           this.loadMore = false;
         });
-
-      // this.invoices = data.data.elements;
-      // tableAreaBusy.style.opacity = "1";
     },
 
     async listInvoices() {
@@ -1555,7 +1550,6 @@ export default {
   },
 
   created() {
-    // window.addEventListener("scroll", this.handleScroll);
     this.handleOk = this.handleOk.bind(this);
   },
 

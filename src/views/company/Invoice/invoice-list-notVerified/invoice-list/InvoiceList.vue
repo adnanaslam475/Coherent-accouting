@@ -138,7 +138,7 @@
       </b-row>
     </div>
 
-    <b-row class="text-center text-danger">
+    <b-row  class="text-center text-danger">
       <b-col>
         <p style="font-size: 1.05rem">
           {{ $t("add_invoice.not_recognised_01") }}
