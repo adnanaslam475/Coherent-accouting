@@ -25,7 +25,7 @@
               @click="closeModel"
             />
           </template>
-          <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0">
+          <b-row v-if="invoiceData&& invoiceData.binaryId?invoiceData.binaryId:null" class="invoice-add mx-0">
             <b-row class="w-100 mx-0">
               <b-col cols="12" xl="5" md="5" class="p-2" style="">
                 <div>
@@ -780,7 +780,8 @@
           </b-modal>
         </b-modal>
         </b-modal>
-        <b-row v-if="invoiceData.binaryId" class="invoice-add mx-0"></b-row>
+        <b-row v-if="invoiceData&&invoiceData.binaryId?invoiceData.binaryId:null"   class="invoice-add mx-0"></b-row>
+        
       </b-form>
     </validation-observer>
     <invoice-sidebar-add-new-customer />
@@ -1030,7 +1031,7 @@ export default {
     },
 
     invoiceEdit(invoiceData, redirectPage, AccountTypeOption) {
-      if (this.invoiceData?.binaryId && this.invoiceData.binaryId !== null) {
+      if (this.invoiceData?.binaryId && this.invoiceData?.binaryId !== null) {
         if (
           (redirectPage === "save" || redirectPage === "verify") &&
           !this.formIsValid
@@ -1326,16 +1327,16 @@ export default {
             });
         }
 
-        if (invoiceData.value.binaryId) {
+        if (invoiceData.value?.binaryId) {
           modelShow.value = true;
         } else {
           modelShow.value = false;
         }
 
-        if (invoiceData.value.binaryId) {
+        if (invoiceData.value?.binaryId) {
           axios
             .get(
-              `${axios.defaults.baseURL}/binaries/api/get-binary/${invoiceData.value.binaryId}/${router.currentRoute.params.companyId}`,
+              `${axios.defaults.baseURL}/binaries/api/get-binary/${invoiceData.value?.binaryId}/${router.currentRoute.params.companyId}`,
               { responseType: "blob" }
             )
             .then((response) => {
