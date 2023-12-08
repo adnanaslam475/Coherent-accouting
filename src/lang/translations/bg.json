@@ -835,6 +835,7 @@
     "user":"Потребител",
     "subscribed_to_date": "Абониране за дата",
     "Paid_for_current_month": "Платено за текущия месец",
+    "registration_date": "Дата на Регистрация",
     "paid": "Платено",
     "unpaid": "Неплатени",
     "no_record": "Не бяха намерени записи"
