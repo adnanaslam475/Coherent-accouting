@@ -11,7 +11,7 @@ const axiosIns = axios.create({
   // timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}
 })
-
+ 
 Vue.prototype.$http = axiosIns
 
 export default axiosIns

@@ -338,7 +338,7 @@
                   : getImage(data.item.binaryId, data.item.id, 2)
               "
               class="cursor-pointer"
-              style="height: 30px; width: 30px"
+              style="height: 30px; width: 30px;"
           /></span>
         </span>
       </template>

@@ -218,7 +218,7 @@
                   #default="{ errors }"
                   v-bind:name="$t('register.lbl_password')"
                   vid="password"
-                  rules="required"
+                  rules="required|min:8"
                 >
                   <b-input-group
                     class="input-group-merge"
@@ -395,8 +395,8 @@
             <a href="https://coherent-accounting.com/"
               >https://coherent-accounting.com/</a
             >{{ $t("lbl.throughtext") }}
-            <a href="https://accounting.controlisy.bg">
-              https://accounting.controlisy.bg</a
+            <a href="https://coherent-accounting.com">
+              https://coherent-accounting.com</a
             >{{ $t("lbl.onwhich") }} <br />
 
             {{ $t("lbl.webbased") }}
@@ -645,10 +645,22 @@ export default {
       }
       return this.sideImg;
     },
+    affiliateId() {
+      let affiliateId = null;
+      affiliateId = this.$route.query && this.$route.query.affiliateId;
+
+      if (affiliateId && !Number.isNaN(affiliateId)) {
+        affiliateId = parseInt(affiliateId, 10);
+      } else {
+        affiliateId = null;
+      }
+
+      return affiliateId
+    },
   },
   methods: {
     passErrHandler() {
-      console.log("sssssssss");
+      // console.log("sssssssss");
       if (this.password.length && this.password.length < 8) {
         this.passErr = "Password length must be greater than or equal to 8";
       }
@@ -690,6 +702,7 @@ export default {
                       identifier: "",
                       ipAddress: IpAddress,
                       isoAlpha2Country: this.country?.value,
+                      affiliateId: this.affiliateId
                     })
                     .then((response) => {
                       this.loading = false;

@@ -32,6 +32,21 @@ const router = new VueRouter({
         ],
       },
     },
+
+    {
+      path: "/policies",
+      name: "policies",
+      component: () => import("@/views/Policies.vue"),
+      meta: {
+        pageTitle: "policies",
+        breadcrumb: [
+          {
+            text: "policies",
+            active: true,
+          },
+        ],
+      },
+    },
     {
       path: "/second-page",
       name: "second-page",
@@ -91,6 +106,14 @@ const router = new VueRouter({
       path: "/about",
       name: "about",
       component: () => import("@/views/About.vue"),
+      meta: {
+        layout: "full",
+      },
+    },
+    {
+      path: "/connection",
+      name: "connection",
+      component: () => import("@/views/Connection_Terminated.vue"),
       meta: {
         layout: "full",
       },
@@ -444,6 +467,12 @@ const router = new VueRouter({
           },
         ],
       },
+    },
+    // Affiliate Program routes starting from here
+    {
+      path: "/affiliate-program",
+      name: "affiliate-program",
+      component: () => import("@/views/affilate-program/Index.vue"),
     },
   ],
 });

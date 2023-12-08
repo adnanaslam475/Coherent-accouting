@@ -57,7 +57,7 @@
                 >
                   <validation-provider
                     #default="{ errors }"
-                    v-bind:name="$t('lbl_email')"
+                    v-bind:name="$t('login.lbl_email')"
                     vid="email"
                     rules="required|email"
                   >
