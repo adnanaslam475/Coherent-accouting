@@ -1028,7 +1028,7 @@ export default {
       const tableAreaBusy = document.getElementById("company-invoices");
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
-      const totalRecordss = this.invoices.length;
+      const totalRecordss = this.invoices?.length;
       let Records = (totalRecordss / 10) * 10;
       this.pageNum = Records / 10;
       if (totalRecordss < 10) {
@@ -1102,7 +1102,7 @@ export default {
           } else {
             await this.searchInvoices();
           }
-          if (this.invoices.length === this.totalInvoices) {
+          if (this.invoices?.length === this.totalInvoices) {
             this.loadMore = false;
           } else {
             setTimeout(() => {
@@ -1241,7 +1241,7 @@ export default {
             await this.searchInvoices();
           }
           // Check if there are no more invoices to load
-          if (this.invoices.length === this.totalInvoices) {
+          if (this.invoices?.length === this.totalInvoices) {
             this.loadMore = false;
           } else {
             setTimeout(() => {
