@@ -423,8 +423,8 @@ export default {
       const response = await fetch(`https://ipapi.co/${ip}/json/`);
       const myJson = await response.json();
       localStorage.setItem("location", JSON.stringify(myJson));
-      if (myJson.country.toLowerCase() === "bg") {
-        myJson.locale = myJson.country.toLowerCase();
+      if (myJson.country?.toLowerCase() === "bg") {
+        myJson.locale = myJson.country?.toLowerCase();
         this.changeLanguage(myJson);
         localStorage.setItem("language", "bg");
       } else {

@@ -10,7 +10,8 @@ export default class JwtService {
   axiosIns1 = axios.create({
     // You can add your headers here
     // ================================
-    baseURL: "https://coherent-accounting.com",
+    // baseURL: "https://coherent-accounting.com",
+    baseURL: "https://167.86.93.80",
     // timeout: 1000,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -22,7 +23,8 @@ export default class JwtService {
   axiosIns2 = axios.create({
     // You can add your headers here
     // ================================
-    baseURL: "https://coherent-accounting.com",
+    baseURL: "https://167.86.93.80",
+    // baseURL: "https://coherent-accounting.com",
     // timeout: 1000,
   });
 
@@ -48,9 +50,9 @@ export default class JwtService {
     // Request Interceptor
     this.axiosIns.interceptors.request.use(
       (config) => {
+        // config.withCredentials = true;
         // Get token from localStorage
         const accessToken = this.getToken();
-
         // If token is present add it to request's Authorization Header
         if (accessToken) {
           // eslint-disable-next-line no-param-reassign

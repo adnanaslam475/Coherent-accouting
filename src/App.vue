@@ -20,6 +20,9 @@ import store from "@/store";
 
 import useJwt from "@/auth/jwt/useJwt";
 
+import Cookies from "js-cookie";
+import { getCookieValue } from "./auth/utils";
+
 const LayoutVertical = () => import("@/layouts/vertical/LayoutVertical.vue");
 const LayoutHorizontal = () =>
   import("@/layouts/horizontal/LayoutHorizontal.vue");
@@ -51,32 +54,41 @@ export default {
     },
   },
   mounted() {
-    axios
-      .get(`${axios.defaults.baseURL}/account/api/maintenance/health`)
-      .then((res) => {
-        this.isUnderMaintenance =
-          res.status == 500 || res.data.isUnderMaintenance;
-        if (res.status == 500 || res.data.isUnderMaintenance) {
-          router.push("/under-maintenance");
-        }
-      })
-      .catch(() => {
-        this.isUnderMaintenance = true;
-        router.push("/under-maintenance");
-      });
-    axios
-      .get(`${axios.defaults.baseURL}/index/api/maintenance/health`)
-      .then((res) => {
-        if (
-          this.isUnderMaintenance &&
-          (res.data.isUnderMaintenance || res.status == 500)
-        ) {
-          router.push("/under-maintenance");
-        }
-      })
-      .catch(() => {
-        router.push("/under-maintenance");
-      });
+    setTimeout(() => {
+      console.log(
+        "cookies-----------------",
+        Cookies.get("XSRF-TOKEN"),
+        document.cookie,
+        "after--->",
+        getCookieValue("XSRF-TOKEN")
+      );
+    }, 0);
+    // axios
+    //   .get(`${axios.defaults.baseURL}/account/api/maintenance/health`)
+    //   .then((res) => {
+    //     this.isUnderMaintenance =
+    //       res.status == 500 || res.data.isUnderMaintenance;
+    //     if (res.status == 500 || res.data.isUnderMaintenance) {
+    //       router.push("/under-maintenance");
+    //     }
+    //   })
+    //   .catch(() => {
+    //     this.isUnderMaintenance = true;
+    //     router.push("/under-maintenance");
+    //   });
+    // axios
+    //   .get(`${axios.defaults.baseURL}/index/api/maintenance/health`)
+    //   .then((res) => {
+    //     if (
+    //       this.isUnderMaintenance &&
+    //       (res.data.isUnderMaintenance || res.status == 500)
+    //     ) {
+    //       router.push("/under-maintenance");
+    //     }
+    //   })
+    //   .catch(() => {
+    //     router.push("/under-maintenance");
+    //   });
   },
 
   beforeCreate() {
@@ -147,14 +159,9 @@ export default {
     };
   },
   created() {
+    const t = localStorage.getItem("accessToken");
+
     if (!localStorage.getItem("user_token")) {
-      // console.log(
-      //   "csrf",
-      //   document
-      //     .querySelector('meta[name="csrf-token"]')
-      //     ?.getAttribute("content"),
-      //   document.head.querySelector('meta[name="csrf-token"]')
-      // );
       useJwt
         .login({
           grant_type: "password",
@@ -164,9 +171,44 @@ export default {
         .then((response) => {
           localStorage.setItem("user_token", response.data.access_token);
         })
-        .catch((error) => {
-          //
-        });
+        .catch((error) => {})
+        .finally(() => {});
+    }
+    axios
+      .get(axios.defaults.baseURL)
+      .then((r) => {})
+      .catch((e) => {
+        console.log("base_err===========>");
+      });
+    if (t) {
+      axios
+        .get(`${axios.defaults.baseURL}/account/api/maintenance/health`)
+        .then((res) => {
+          this.isUnderMaintenance =
+            res.status == 500 || res.data.isUnderMaintenance;
+          if (res.status == 500 || res.data.isUnderMaintenance) {
+            router.push("/under-maintenance");
+          }
+        })
+        .catch((e) => {
+          this.isUnderMaintenance = true;
+          router.push("/under-maintenance");
+        })
+        .finally(() => {});
+      axios
+        .get(`${axios.defaults.baseURL}/index/api/maintenance/health`)
+        .then((res) => {
+          if (
+            this.isUnderMaintenance &&
+            (res.data.isUnderMaintenance || res.status == 500)
+          ) {
+            router.push("/under-maintenance");
+          }
+        })
+        .catch((e) => {
+          router.push("/under-maintenance");
+        })
+        .finally(() => {});
     }
   },
 };
