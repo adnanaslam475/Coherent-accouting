@@ -55,14 +55,12 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      console.log(
-        "cookies-----------------",
-        Cookies.get("XSRF-TOKEN"),
-        document.cookie,
-        "after--->",
-        getCookieValue("XSRF-TOKEN")
-      );
+      console.log(getCookieValue("XSRF-TOKEN"));
     }, 0);
+    // axios.defaults.headers.common = {
+    //   "X-Requested-With": "XMLHttpRequest",
+    //   "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+    // };
     // axios
     //   .get(`${axios.defaults.baseURL}/account/api/maintenance/health`)
     //   .then((res) => {
@@ -178,7 +176,6 @@ export default {
       .get(axios.defaults.baseURL)
       .then((r) => {})
       .catch((e) => {
-        console.log("base_err===========>");
       });
     if (t) {
       axios

@@ -32,7 +32,6 @@ export function getCookieValue(name) {
   var pattern = RegExp(name + "=.[^;]*");
   var matched = document.cookie.match(pattern);
   if (matched) {
-    console.log("this", matched[0].split("="));
     var cookie = matched[0].split("=");
     return cookie[1];
   }

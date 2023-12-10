@@ -1,84 +1,99 @@
-import axios from 'axios'
+import axios from "axios";
 import useJwt from "@/auth/jwt/useJwt";
+import { getCookieValue } from "@/auth/utils";
 export default {
   namespaced: true,
   state: {},
   getters: {},
   mutations: {},
   actions: {
-
-      //fetching list of all vat reports
+    //fetching list of all vat reports
     fetchVatReports(ctx, queryParams) {
-      let pageNumber = queryParams.currentPage
-      let perPageValue = queryParams.perPage
-      let companyId = queryParams.companyId
+      let pageNumber = queryParams.currentPage;
+      let perPageValue = queryParams.perPage;
+      let companyId = queryParams.companyId;
 
-      let token = useJwt.getToken()
+      let token = useJwt.getToken();
       let axiosVatReports = axios.create({
-        baseURL: 'https://coherent-accounting.com',
-      })
+        baseURL: "https://coherent-accounting.com",
+        withCredentials: true,
+        headers: {
+          "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+        },
+      });
 
       //searching a list of values
       if (queryParams.q) {
         let config = {
-          headers: { 'Authorization': "Bearer " + token },
+          headers: { Authorization: "Bearer " + token },
           params: {
-            direction: queryParams.direction ? 'desc' : 'asc',
+            direction: queryParams.direction ? "desc" : "asc",
             sortField: queryParams.sortField,
-            searchTerm: queryParams.q
+            searchTerm: queryParams.q,
           },
-        }
+        };
         return new Promise((resolve, reject) => {
           axiosVatReports
-            .get(`account/api/report/search/${pageNumber ? pageNumber : 1}/${perPageValue ? perPageValue : 10}`, config)
+            .get(
+              `account/api/report/search/${pageNumber ? pageNumber : 1}/${
+                perPageValue ? perPageValue : 10
+              }`,
+              config
+            )
             .then((response) => {
-              resolve(response)
+              resolve(response);
             })
             .catch((error) => {
-              reject(error)
-            })
-        })
-
+              reject(error);
+            });
+        });
       }
       //getting a list of values
       else {
- 
         let config = {
-          headers: { 'Authorization': "Bearer " + token },
+          headers: { Authorization: "Bearer " + token },
           params: {
-            direction: queryParams.direction ? 'desc' : 'asc',
+            direction: queryParams.direction ? "desc" : "asc",
             sortField: queryParams.sortField,
           },
-        }
+        };
         return new Promise((resolve, reject) => {
           axiosVatReports
-            .get(`/account/api/report/list/${companyId}/${pageNumber ? pageNumber : 1}/${perPageValue ? perPageValue : 10}`, config)
+            .get(
+              `/account/api/report/list/${companyId}/${
+                pageNumber ? pageNumber : 1
+              }/${perPageValue ? perPageValue : 10}`,
+              config
+            )
             .then((response) => {
-              resolve(response)
+              resolve(response);
             })
             .catch((error) => {
-              reject(error)
-            })
-        })
-
+              reject(error);
+            });
+        });
       }
     },
 
-     //fetching a single vat-report
-     fetchSingleVatReport(ctx, { id }) {
-      let token = useJwt.getToken()
-      let  axiosVatReports = axios.create({
-        baseURL: 'https://coherent-accounting.com',
-      })
+    //fetching a single vat-report
+    fetchSingleVatReport(ctx, { id }) {
+      let token = useJwt.getToken();
+      let axiosVatReports = axios.create({
+        baseURL: "https://coherent-accounting.com",
+        withCredentials: true,
+        headers: {
+          "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+        },
+      });
       let config = {
-        headers: {'Authorization': "Bearer "+token},
-      }
+        headers: { Authorization: "Bearer " + token },
+      };
       return new Promise((resolve, reject) => {
         axiosVatReports
-          .get(`/account/api/report/${id}`,config)
-          .then(response => resolve(response))
-          .catch(error => reject(error))
-      })
+          .get(`/account/api/report/${id}`, config)
+          .then((response) => resolve(response))
+          .catch((error) => reject(error));
+      });
     },
-  }
-}
+  },
+};
