@@ -10,7 +10,7 @@ const axiosIns = axios.create({
   // baseURL: 'https://coherent-accounting.com',
   baseURL: "https://167.86.93.80",
   // headers: {'X-Custom-Header': 'foobar'}
-  withCredentials: true,
+  // withCredentials: true,
   headers: {
     "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
   },

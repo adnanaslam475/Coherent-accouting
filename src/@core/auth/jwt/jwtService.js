@@ -15,7 +15,7 @@ export default class JwtService {
     baseURL: "https://167.86.93.80",
     // timeout: 1000,
     headers: {
-      withCredentials: true,
+      // withCredentials: true,
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
@@ -29,7 +29,7 @@ export default class JwtService {
     baseURL: "https://167.86.93.80",
     // baseURL: "https://coherent-accounting.com",
     // timeout: 1000,
-    withCredentials: true,
+    // withCredentials: true,
     headers: {
       "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
     },

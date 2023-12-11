@@ -11,7 +11,7 @@ export default {
       let token = useJwt.getToken();
       let axiosInvoice = axios.create({
         baseURL: "https://coherent-accounting.com",
-        withCredentials: true,
+        // withCredentials: true,
         headers: {
           "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
         },
