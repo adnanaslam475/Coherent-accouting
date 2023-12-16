@@ -55,7 +55,8 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      console.log(getCookieValue("XSRF-TOKEN"));
+      axios.defaults.headers["X-XSRF-TOKEN"] = getCookieValue("XSRF-TOKEN");
+      console.log("setime", getCookieValue("XSRF-TOKEN"));
     }, 0);
   },
 
@@ -179,8 +180,10 @@ export default {
     axios
       .get(`${axios.defaults.baseURL}/index/health`)
       .then((res) => {
-        axios.defaults.headers["X-XSRF-TOKEN"] =
-          res.headers["Set-Cookie"] || getCookieValue("XSRF-TOKEN");
+        if (res.headers["Set-Cookie"] || getCookieValue("XSRF-TOKEN")) {
+          axios.defaults.headers["X-XSRF-TOKEN"] =
+            res.headers["Set-Cookie"] || getCookieValue("XSRF-TOKEN");
+        }
         console.log(
           "res=======>",
           res,
