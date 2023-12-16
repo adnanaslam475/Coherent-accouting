@@ -17,9 +17,9 @@ export default {
       let axiosVatReports = axios.create({
         baseURL: "https://coherent-accounting.com",
         // withCredentials: true,
-        headers: {
-          "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
-        },
+        // headers: {
+        //   "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+        // },
       });
 
       //searching a list of values
@@ -81,9 +81,9 @@ export default {
       let axiosVatReports = axios.create({
         baseURL: "https://coherent-accounting.com",
         // withCredentials: true,
-        headers: {
-          "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
-        },
+        // headers: {
+        //   "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+        // },
       });
       let config = {
         headers: { Authorization: "Bearer " + token },

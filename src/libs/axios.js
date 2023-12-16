@@ -11,9 +11,9 @@ const axiosIns = axios.create({
   baseURL: "https://167.86.93.80",
   // headers: {'X-Custom-Header': 'foobar'}
   // withCredentials: true,
-  headers: {
-    "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
-  },
+  // headers: {
+  //   "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+  // },
 });
 
 Vue.prototype.$http = axiosIns;

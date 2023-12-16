@@ -12,9 +12,9 @@ export default {
       let axiosInvoice = axios.create({
         baseURL: "https://coherent-accounting.com",
         // withCredentials: true,
-        headers: {
-          "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
-        },
+        // headers: {
+        //   "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+        // },
       });
       let config = {
         headers: { Authorization: "Bearer " + token },

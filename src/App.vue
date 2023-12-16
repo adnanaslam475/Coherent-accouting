@@ -179,11 +179,22 @@ export default {
     axios
       .get(`${axios.defaults.baseURL}/index/health`)
       .then((res) => {
-        // axios.defaults.baseURL
-        console.log("reeeeeeeeeeee", res, res.headers["Set-Cookie"]);
+        axios.defaults.headers["X-XSRF-TOKEN"] =
+          res.headers["Set-Cookie"] || getCookieValue("XSRF-TOKEN");
+        console.log(
+          "res=======>",
+          res,
+
+          "set-cokie->",
+          res.headers["Set-Cookie"],
+          "cookie=->",
+          res.headers["Cookie"],
+          "XSRF-TOKEN  ==>",
+          res.headers["XSRF-TOKEN"]
+        );
       })
       .catch((e) => {
-        console.log("eeeeeeeeeeee,e", e);
+        console.log("error----->", e);
       })
       .finally(() => {});
   },

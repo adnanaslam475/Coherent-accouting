@@ -19,7 +19,7 @@ export default class JwtService {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
-      "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+      // "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
     },
   });
 
@@ -30,9 +30,9 @@ export default class JwtService {
     // baseURL: "https://coherent-accounting.com",
     // timeout: 1000,
     // withCredentials: true,
-    headers: {
-      "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
-    },
+    // headers: {
+    //   "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+    // },
   });
 
   axiosIns4 = axios.create({
