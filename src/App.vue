@@ -57,33 +57,6 @@ export default {
     setTimeout(() => {
       console.log(getCookieValue("XSRF-TOKEN"));
     }, 0);
-
-    // axios
-    //   .get(`${axios.defaults.baseURL}/account/api/maintenance/health`)
-    //   .then((res) => {
-    //     this.isUnderMaintenance =
-    //       res.status == 500 || res.data.isUnderMaintenance;
-    //     if (res.status == 500 || res.data.isUnderMaintenance) {
-    //       router.push("/under-maintenance");
-    //     }
-    //   })
-    //   .catch(() => {
-    //     this.isUnderMaintenance = true;
-    //     router.push("/under-maintenance");
-    //   });
-    // axios
-    //   .get(`${axios.defaults.baseURL}/index/api/maintenance/health`)
-    //   .then((res) => {
-    //     if (
-    //       this.isUnderMaintenance &&
-    //       (res.data.isUnderMaintenance || res.status == 500)
-    //     ) {
-    //       router.push("/under-maintenance");
-    //     }
-    //   })
-    //   .catch(() => {
-    //     router.push("/under-maintenance");
-    //   });
   },
 
   beforeCreate() {
@@ -203,6 +176,16 @@ export default {
         })
         .finally(() => {});
     }
+    axios
+      .get(`${axios.defaults.baseURL}/index/health`)
+      .then((res) => {
+        // axios.defaults.baseURL
+        console.log("reeeeeeeeeeee", res, res.headers["Set-Cookie"]);
+      })
+      .catch((e) => {
+        console.log("eeeeeeeeeeee,e", e);
+      })
+      .finally(() => {});
   },
 };
 </script>
