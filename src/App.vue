@@ -190,7 +190,11 @@ export default {
           "cookie=->",
           res.headers["Cookie"],
           "XSRF-TOKEN  ==>",
-          res.headers["XSRF-TOKEN"]
+          res.headers["XSRF-TOKEN"],
+          "X-Xsrf-Token=->",
+          res.headers["X-Xsrf-Token"],
+          "getC=>",
+          getCookieValue("XSRF-TOKEN")
         );
       })
       .catch((e) => {

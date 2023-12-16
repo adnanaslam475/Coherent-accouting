@@ -15,7 +15,8 @@ export default {
 
       let token = useJwt.getToken();
       let axiosVatReports = axios.create({
-        baseURL: "https://coherent-accounting.com",
+        // baseURL: "https://coherent-accounting.com",
+        baseURL: "https://167.86.93.80",
         // withCredentials: true,
         // headers: {
         //   "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
@@ -79,7 +80,8 @@ export default {
     fetchSingleVatReport(ctx, { id }) {
       let token = useJwt.getToken();
       let axiosVatReports = axios.create({
-        baseURL: "https://coherent-accounting.com",
+        // baseURL: "https://coherent-accounting.com",
+        baseURL: "https://167.86.93.80",
         // withCredentials: true,
         // headers: {
         //   "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
