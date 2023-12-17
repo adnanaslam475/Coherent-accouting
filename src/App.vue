@@ -197,7 +197,9 @@ export default {
           "X-Xsrf-Token=->",
           res.headers["X-Xsrf-Token"],
           "getC=>",
-          getCookieValue("XSRF-TOKEN")
+          getCookieValue("XSRF-TOKEN"),
+          "nav",
+          navigator
         );
       })
       .catch((e) => {
