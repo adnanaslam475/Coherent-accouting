@@ -55,35 +55,6 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      // axios
-      //   .get("https://www.coherent-accounting.com/account/api/init/health")
-      //   // .get(`${axios.defaults.baseURL}/index/health`)
-      //   .then((res) => {
-      //     // if (res.headers["Set-Cookie"] || getCookieValue("XSRF-TOKEN")) {
-      //     axios.defaults.headers["X-XSRF-TOKEN"] =
-      //       res.headers["Set-Cookie"] || getCookieValue("XSRF-TOKEN");
-      //     // }
-      //     console.log(
-      //       "res=======>",
-      //       res.data,
-      //       "set-cokie->",
-      //       res.headers["Set-Cookie"],
-      //       "cookie=->",
-      //       res.headers["Cookie"],
-      //       "XSRF-TOKEN  ==>",
-      //       res.headers["XSRF-TOKEN"],
-      //       "X-Xsrf-Token=->",
-      //       res.headers["X-Xsrf-Token"],
-      //       "getC=>",
-      //       getCookieValue("XSRF-TOKEN"),
-      //       "nav",
-      //       navigator
-      //     );
-      //   })
-      //   .catch((e) => {
-      //     console.log("error----->", e);
-      //   })
-      //   .finally(() => {});
       axios.defaults.headers["X-XSRF-TOKEN"] = getCookieValue("XSRF-TOKEN");
       console.log("setime", getCookieValue("XSRF-TOKEN"));
     }, 0);
@@ -217,22 +188,6 @@ export default {
           axios.defaults.headers["X-XSRF-TOKEN"] =
             res.headers["Set-Cookie"] || getCookieValue("XSRF-TOKEN");
         }
-        console.log(
-          "res=======>",
-          res,
-
-          "set-cokie->",
-          res.headers["Set-Cookie"],
-          "cookie=->",
-          res.headers["Cookie"],
-          "XSRF-TOKEN  ==>",
-          res.headers["XSRF-TOKEN"],
-          "X-Xsrf-Token=->",
-          res.headers["X-Xsrf-Token"],
-          "getC=>",
-          getCookieValue("XSRF-TOKEN"),
-          "nav"
-        );
       })
       .catch((e) => {
         console.log("error----->", e);
