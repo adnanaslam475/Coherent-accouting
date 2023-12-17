@@ -56,7 +56,6 @@ export default {
   mounted() {
     setTimeout(() => {
       axios.defaults.headers["X-XSRF-TOKEN"] = getCookieValue("XSRF-TOKEN");
-      console.log("setime", getCookieValue("XSRF-TOKEN"));
     }, 0);
   },
 

@@ -35,5 +35,5 @@ export function getCookieValue(name) {
     var cookie = matched[0].split("=");
     return cookie[1];
   }
-  return false;
+  return '';
 }
