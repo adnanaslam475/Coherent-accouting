@@ -3,7 +3,6 @@ import axios from "axios";
 var qs = require("qs");
 var FormData = require("form-data");
 import router from "@/router";
-import { getCookieValue } from "@/auth/utils";
 
 export default class JwtService {
   // Will be used by this service for making API calls
@@ -15,11 +14,9 @@ export default class JwtService {
     // baseURL: "https://167.86.93.80",
     // timeout: 1000,
     headers: {
-      // withCredentials: true,
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
-      // "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
     },
   });
 
@@ -29,10 +26,6 @@ export default class JwtService {
     // baseURL: "https://167.86.93.80",
     baseURL: "https://coherent-accounting.com",
     // timeout: 1000,
-    // withCredentials: true,
-    // headers: {
-    //   "X-XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
-    // },
   });
 
   axiosIns4 = axios.create({
