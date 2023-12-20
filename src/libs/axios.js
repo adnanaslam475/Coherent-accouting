@@ -12,6 +12,22 @@ const axiosIns = axios.create({
   // headers: {'X-Custom-Header': 'foobar'}
 });
 
+axiosIns.interceptors.response.use(
+  response => {
+    try {
+      if (typeof response.data === "string") {
+        // eslint-disable-next-line no-param-reassign
+        response.data = JSON.parse(response.data);
+      }
+    } catch {
+      /* empty */
+    }
+
+    return response;
+  },
+  error => Promise.reject(error)
+);
+
 Vue.prototype.$http = axiosIns;
 
 export default axiosIns;
