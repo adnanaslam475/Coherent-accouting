@@ -11,19 +11,37 @@
       <!-- /Brand logo-->
 
       <!-- Left Text-->
-      <b-col lg="8" class="d-none d-lg-flex align-items-center p-5">
+      <b-col
+        lg="8"
+        class="d-none d-lg-flex align-items-center p-5"
+      >
         <div
           class="w-100 d-lg-flex align-items-center justify-content-center px-5"
         >
-          <b-img fluid :src="imgUrl" alt="Login V2" />
+          <b-img
+            fluid
+            :src="imgUrl"
+            alt="Login V2"
+          />
         </div>
       </b-col>
       <!-- /Left Text-->
 
       <!-- Login-->
-      <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
-        <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
-          <b-card-title class="mb-1 font-weight-bold" title-tag="h2">
+      <b-col
+        lg="4"
+        class="d-flex align-items-center auth-bg px-2 p-lg-5"
+      >
+        <b-col
+          sm="8"
+          md="6"
+          lg="12"
+          class="px-xl-2 mx-auto"
+        >
+          <b-card-title
+            class="mb-1 font-weight-bold"
+            title-tag="h2"
+          >
             {{ $t("login.title") }}
           </b-card-title>
           <b-card-text class="mb-2">
@@ -31,16 +49,22 @@
           </b-card-text>
 
           <!-- form -->
-          <validation-observer ref="loginForm" #default="{ invalid }">
-            <b-form class="auth-login-form mt-2" @submit.prevent="login">
+          <validation-observer
+            ref="loginForm"
+            #default="{ invalid }"
+          >
+            <b-form
+              class="auth-login-form mt-2"
+              @submit.prevent="login"
+            >
               <!-- email -->
               <b-form-group
-                v-bind:label="$t('login.lbl_email')"
+                :label="$t('login.lbl_email')"
                 label-for="login-email"
               >
                 <validation-provider
                   #default="{ errors }"
-                  v-bind:name="$t('lbl_email')"
+                  :name="$t('lbl_email')"
                   rules="required|email"
                 >
                   <b-form-input
@@ -48,7 +72,7 @@
                     v-model="userEmail"
                     :state="errors.length > 0 ? false : null"
                     name="login-email"
-                    v-bind:placeholder="$t('login.email_placeholder')"
+                    :placeholder="$t('login.email_placeholder')"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -66,7 +90,7 @@
                 </div>
                 <validation-provider
                   #default="{ errors }"
-                  v-bind:name="$t('login.lbl_password')"
+                  :name="$t('login.lbl_password')"
                   vid="password"
                   rules="required"
                 >
@@ -81,7 +105,7 @@
                       class="form-control-merge"
                       :type="passwordFieldType"
                       name="login-password"
-                      v-bind:placeholder="$t('login.lbl_password')"
+                      :placeholder="$t('login.lbl_password')"
                     />
                     <b-input-group-append is-text>
                       <feather-icon
@@ -140,8 +164,8 @@
 
 <script>
 /* eslint-disable global-require */
-import { ValidationProvider, ValidationObserver } from "vee-validate";
-import VuexyLogo from "@core/layouts/components/Logo.vue";
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
   BRow,
   BCol,
@@ -158,18 +182,18 @@ import {
   BButton,
   BAlert,
   VBTooltip,
-} from "bootstrap-vue";
-import useJwt from "@/auth/jwt/useJwt";
-import { required, email } from "@validations";
-import { togglePasswordVisibility } from "@core/mixins/ui/forms";
-import store from "@/store/index";
-import { getHomeRouteForLoggedInUser } from "@/auth/utils";
+} from 'bootstrap-vue'
+import useJwt from '@/auth/jwt/useJwt'
+import { required, email } from '@validations'
+import { togglePasswordVisibility } from '@core/mixins/ui/forms'
+import store from '@/store/index'
+import { getHomeRouteForLoggedInUser } from '@/auth/utils'
 
-import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   directives: {
-    "b-tooltip": VBTooltip,
+    'b-tooltip': VBTooltip,
   },
   components: {
     BRow,
@@ -193,66 +217,66 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
-      status: "",
-      password: "",
-      userEmail: "",
-      sideImg: require("@/assets/images/pages/login-v2.svg"),
+      status: '',
+      password: '',
+      userEmail: '',
+      sideImg: require('@/assets/images/pages/login-v2.svg'),
 
       // validation rules
       required,
       email,
-    };
+    }
   },
   computed: {
     passwordToggleIcon() {
-      return this.passwordFieldType === "password" ? "EyeIcon" : "EyeOffIcon";
+      return this.passwordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon'
     },
     imgUrl() {
-      if (store.state.appConfig.layout.skin === "dark") {
+      if (store.state.appConfig.layout.skin === 'dark') {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.sideImg = require("@/assets/images/pages/login-v2-dark.svg");
-        return this.sideImg;
+        this.sideImg = require('@/assets/images/pages/login-v2-dark.svg')
+        return this.sideImg
       }
-      return this.sideImg;
+      return this.sideImg
     },
   },
   methods: {
     login() {
-      this.$refs.loginForm.validate().then((success) => {
+      this.$refs.loginForm.validate().then(success => {
         if (success) {
           useJwt
             .login({
-              grant_type: "password",
+              grant_type: 'password',
               username: this.userEmail,
               password: this.password,
             })
-            .then((response) => {
-              localStorage.setItem("userData", JSON.stringify(response.data));
+            .then(response => {
+              localStorage.setItem('userData', JSON.stringify(response.data))
               this.$toast({
                 component: ToastificationContent,
                 props: {
-                  title: `Password Token API hit successfully`,
-                  icon: "EditIcon",
-                  variant: "success",
+                  title: 'Password Token API hit successfully',
+                  icon: 'EditIcon',
+                  variant: 'success',
                 },
-              });
-              return this.$router.push("/");
+              })
+              return this.$router.push('/')
             })
-            .catch((error) => {
+            .catch(error => {
               this.$toast({
                 component: ToastificationContent,
                 props: {
-                  title: `Incorrect Email or password`,
-                  icon: "EditIcon",
-                  variant: "error",
+                  title: 'Incorrect Email or password',
+                  icon: 'EditIcon',
+                  variant: 'error',
                 },
-              });
-            });
+              })
+            })
         }
-      });
+      })
     },
   },
-};
+}
 </script>
 
 <style lang="scss">
