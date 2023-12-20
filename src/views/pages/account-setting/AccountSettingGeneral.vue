@@ -599,7 +599,7 @@ export default {
           Authorization: "Bearer " + localStorage.getItem("accessToken"),
           "Access-Control-Allow-Credentials": true,
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "https://coherent-accounting.com/",
+          "Access-Control-Allow-Origin": "https://coherent-accounting.com",
         },
       };
       axios(config)

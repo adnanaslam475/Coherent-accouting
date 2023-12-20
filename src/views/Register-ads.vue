@@ -357,8 +357,8 @@
         <span style="white-space: break-spaces">
           <p>
             {{ $t("lbl.termofuseone") }}
-            <a href="https://coherent-accounting.com/"
-              >https://coherent-accounting.com/</a
+            <a href="https://coherent-accounting.com"
+              >https://coherent-accounting.com</a
             >
             {{ $t("lbl.termofusetwo") }}
           </p>
@@ -367,12 +367,12 @@
           </ul>
           <p>
             {{ $t("lbl.text_one") }}
-            <a href="https://coherent-accounting.com/"
-              >https://coherent-accounting.com/</a
+            <a href="https://coherent-accounting.com"
+              >https://coherent-accounting.com</a
             >
             {{ $t("lbl.text_two") }}
-            <a href="https://coherent-accounting.com/"
-              >https://coherent-accounting.com/</a
+            <a href="https://coherent-accounting.com"
+              >https://coherent-accounting.com</a
             >
             {{ $t("lbl.text_three") }}
           </p>
@@ -386,22 +386,22 @@
           </p>
           <p>
             {{ $t("lbl.textdev") }}
-            <a href="https://coherent-accounting.com/"
-              >https://coherent-accounting.com/</a
+            <a href="https://coherent-accounting.com"
+              >https://coherent-accounting.com</a
             >{{ $t("lbl.textdev1") }}<br />
             {{ $t("lbl.textdev2") }} <br />
 
             {{ $t("lbl.textdev3") }}
-            <a href="https://coherent-accounting.com/"
-              >https://coherent-accounting.com/</a
+            <a href="https://coherent-accounting.com"
+              >https://coherent-accounting.com</a
             >{{ $t("lbl.throughtext") }}
             <a href="https://coherent-accounting.com">
               https://coherent-accounting.com</a
             >{{ $t("lbl.onwhich") }} <br />
 
             {{ $t("lbl.webbased") }}
-            <a href="https://coherent-accounting.com/about">
-              https://coherent-accounting.com/about</a
+            <a href="https://coherent-accounting.comabout">
+              https://coherent-accounting.comabout</a
             >.
           </p>
 
@@ -451,8 +451,8 @@
           </ul>
           <p>
             {{ $t("lbl.reset") }}
-            <a href="https://coherent-accounting.com/"
-              >https://coherent-accounting.com/</a
+            <a href="https://coherent-accounting.com"
+              >https://coherent-accounting.com</a
             >
           </p>
           <p>
@@ -484,8 +484,8 @@
           </ul>
           <p>
             <b> {{ $t("lbl.ar1") }} 23</b>{{ $t("lbl.responsible") }}
-            <a href="https://coherent-accounting.com/about"
-              >https://coherent-accounting.com/about</a
+            <a href="https://coherent-accounting.comabout"
+              >https://coherent-accounting.comabout</a
             >
           </p>
           <p>

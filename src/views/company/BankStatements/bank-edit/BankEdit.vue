@@ -604,7 +604,7 @@ export default {
           Authorization: "Bearer " + localStorage.getItem("accessToken"),
           "Access-Control-Allow-Credentials": true,
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "https://coherent-accounting.com/",
+          "Access-Control-Allow-Origin": "https://coherent-accounting.com",
         },
       };
       axios(config)
@@ -983,7 +983,7 @@ export default {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             "Access-Control-Allow-Credentials": true,
-            "Access-Control-Allow-Origin": "https://coherent-accounting.com/",
+            "Access-Control-Allow-Origin": "https://coherent-accounting.com",
           },
         })
         .then((response) => {
