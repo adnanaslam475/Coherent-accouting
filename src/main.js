@@ -1,57 +1,58 @@
-import Vue from 'vue'
-import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
-import VueCompositionAPI from '@vue/composition-api'
-import VueI18n from 'vue-i18n'
-import TawkMessengerVue from '@tawk.to/tawk-messenger-vue-2'
-import EncryptionUtilPlugin from './encryptionUtil.js'
+import Vue from "vue";
+import { ToastPlugin, ModalPlugin } from "bootstrap-vue";
+import VueCompositionAPI from "@vue/composition-api";
+import EncryptionUtilPlugin from "./encryptionUtil.js";
 
-import router from './router'
-import store from './store'
-import App from './App.vue'
-import messages from './lang'
+import router from "./router";
+import store from "./store";
+import App from "./App.vue";
+import VueI18n from "vue-i18n";
+import messages from "./lang";
 
 // Global Components
-import './global-components'
+import "./global-components";
 
 // 3rd party plugins
-import '@/libs/portal-vue'
-import '@/libs/toastification'
+import "@/libs/portal-vue";
+import "@/libs/toastification";
+
+import TawkMessengerVue from "@tawk.to/tawk-messenger-vue-2";
 
 Vue.use(TawkMessengerVue, {
-  propertyId: '63adc524c2f1ac1e202abeb4',
-  widgetId: '1glfck6br',
-})
+  propertyId: "63adc524c2f1ac1e202abeb4",
+  widgetId: "1glfck6br",
+});
 Vue.use(EncryptionUtilPlugin, {
-  key: 'yourEncryptionKey',
-  initVector: 'yourInitializationVector',
-})
+  key: "yourEncryptionKey",
+  initVector: "yourInitializationVector",
+});
 
 // BSV Plugin Registration
-Vue.use(ToastPlugin)
-Vue.use(ModalPlugin)
+Vue.use(ToastPlugin);
+Vue.use(ModalPlugin);
 
 // Composition API
-Vue.use(VueCompositionAPI)
+Vue.use(VueCompositionAPI);
 
 // For multilingual
-Vue.use(VueI18n)
+Vue.use(VueI18n);
 
 export const i18n = new VueI18n({
-  locale: 'en',
-  fallbackLocale: 'en',
+  locale: "en",
+  fallbackLocale: "en",
   messages,
-})
+});
 
-require('@core/scss/core.scss')
+require("@core/scss/core.scss");
 
 // import assets styles
-require('@/assets/scss/style.scss')
+require("@/assets/scss/style.scss");
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
   i18n,
-  render: h => h(App),
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");
