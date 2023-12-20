@@ -286,7 +286,7 @@ export default {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
               "Access-Control-Allow-Credentials": true,
-              "Access-Control-Allow-Origin": "http://localhost:8080",
+              "Access-Control-Allow-Origin": "https://coherent-accounting.com/",
             },
           }
         )
@@ -317,7 +317,7 @@ export default {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
               "Access-Control-Allow-Credentials": true,
-              "Access-Control-Allow-Origin": "http://localhost:8080",
+              "Access-Control-Allow-Origin": "https://coherent-accounting.com/",
             },
           }
         )
@@ -355,7 +355,7 @@ export default {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             "Access-Control-Allow-Credentials": true,
-            "Access-Control-Allow-Origin": "http://localhost:8080",
+            "Access-Control-Allow-Origin": "https://coherent-accounting.com/",
           },
         })
         .then(({ data }) => {
