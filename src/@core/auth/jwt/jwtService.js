@@ -16,6 +16,7 @@ export default class JwtService {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
+      "Access-Control-Allow-Origin": "https://coherent-accounting.com",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
     },
   });

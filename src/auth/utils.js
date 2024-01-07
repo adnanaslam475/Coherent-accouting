@@ -1,4 +1,4 @@
-import useJwt from "@/auth/jwt/useJwt";
+import useJwt from '@/auth/jwt/useJwt'
 
 /**
  * Return if user is logged in
@@ -8,12 +8,12 @@ import useJwt from "@/auth/jwt/useJwt";
 // eslint-disable-next-line arrow-body-style
 export const isUserLoggedIn = () => {
   return (
-    localStorage.getItem("userData") &&
-    localStorage.getItem(useJwt.jwtConfig.storageTokenKeyName)
-  );
-};
+    localStorage.getItem('userData')
+    && localStorage.getItem(useJwt.jwtConfig.storageTokenKeyName)
+  )
+}
 
-export const getUserData = () => JSON.parse(localStorage.getItem("userData"));
+export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
 
 /**
  * This function is used for demo purpose route navigation
@@ -23,17 +23,17 @@ export const getUserData = () => JSON.parse(localStorage.getItem("userData"));
  * NOTE: If you have different pages to navigate based on user ability then this function can be useful. However, you need to update it.
  * @param {String} userRole Role of user
  */
-export const getHomeRouteForLoggedInUser = (userRole) => {
-  if (userRole === "admin") return "/";
-  if (userRole === "client") return { name: "access-control" };
-  return { name: "auth-login" };
-};
+export const getHomeRouteForLoggedInUser = userRole => {
+  if (userRole === 'admin') return '/'
+  if (userRole === 'client') return { name: 'access-control' }
+  return { name: 'auth-login' }
+}
 export function getCookieValue(name) {
-  var pattern = RegExp(name + "=.[^;]*");
-  var matched = document.cookie.match(pattern);
+  const pattern = RegExp(`${name}=.[^;]*`)
+  const matched = document.cookie.match(pattern)
   if (matched) {
-    var cookie = matched[0].split("=");
-    return cookie[1];
+    const cookie = matched[0].split('=')
+    return cookie[1]
   }
-  return '';
+  return ''
 }
