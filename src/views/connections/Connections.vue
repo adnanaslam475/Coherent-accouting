@@ -10,7 +10,12 @@
             </div>
             <div style="margin-top: 4px; margin-bottom: 4px">for</div>
             <div>
-              <img src="@/assets/images/icons/quickbooks.png" style="margin-top: 15px;" alt="" width="100"/>
+              <img
+                src="@/assets/images/icons/quickbooks.png"
+                style="margin-top: 15px"
+                alt=""
+                width="100"
+              />
             </div>
             <div
               style="margin-top: 4px; margin-bottom: 4px; white-space: nowrap"
@@ -61,7 +66,7 @@
         </b-card>
       </b-col>
 
-      <b-col cols="12" md="3">
+      <!-- <b-col cols="12" md="3">
         <b-card
           style="max-width: 20rem; min-height: 230px"
           @mouseenter="isFetching ? null : getCompany()"
@@ -76,14 +81,11 @@
             <div>
               <img src="@/assets/images/icons/xero-icon.png" alt="" />
             </div>
-            <!-- <div class="m-0" style="margin-top: 4px; margin-bottom: 4px">
-              Coherent Accounting for Xero
-            </div> -->
+
             <p
               style="margin-top: 5px !important"
               class="text-center m-0 font-weight-bold"
             >
-              <!-- Connected to {{ companyInfo.tenantName }} -->
               {{
                 companyInfo.connectedToXero
                   ? $t("companies.con_to") +
@@ -92,7 +94,6 @@
               }}
             </p>
 
-            <!-- for below -->
             <b-button
               :variant="
                 companyInfo.exportProperties &&
@@ -110,7 +111,6 @@
               @click="showConnectionModal('xero')"
               v-if="!companyInfo.connectedToXero"
             >
-              <!-- <b-img :src="xeroConnectImg" style="width: 80%" alt="logo" /> -->
               Connect
             </b-button>
             <b-button
@@ -119,12 +119,11 @@
               v-else
               @click="disconnectSoftware('xero')"
             >
-              <!-- <b-img :src="xeroDisconnectImg" style="width: 90%" alt="logo" /> -->
               Disconnect
             </b-button>
           </div>
         </b-card>
-      </b-col>
+      </b-col> -->
     </b-row>
 
     <b-modal
