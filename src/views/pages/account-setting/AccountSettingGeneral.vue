@@ -283,13 +283,11 @@
                   <span class="switch-icon-right"> OFF </span>
                 </b-form-checkbox>
 
-                
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
 
-          
           <b-col md="12" v-if="userApiKey">
             <div class="d-flex">
               <div>API KEY</div>
@@ -628,9 +626,12 @@ export default {
 };
 </script>
 <style lang="scss">
-  @import "@core/scss/vue/libs/vue-select.scss";
+@import "@core/scss/vue/libs/vue-select.scss";
 
-  [dir=ltr] .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
-    transform: translateX(3rem);
-  }
+[dir="ltr"]
+  .custom-switch
+  .custom-control-input:checked
+  ~ .custom-control-label::after {
+  transform: translateX(3rem);
+}
 </style>
