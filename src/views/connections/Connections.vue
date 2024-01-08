@@ -26,7 +26,6 @@
                 style="margin-top: 5px !important"
                 class="text-center m-0 font-weight-bold"
               >
-                <!-- companyInfo.connectedToQBO -->
                 {{
                   companyInfo.connectedToQBO
                     ? $t("companies.con_to") +
@@ -35,8 +34,19 @@
                 }}
               </p>
             </div>
-
-            <b-button
+            <img
+              src="@/assets/images/icons/intuit.jpg"
+              style="margin-top: 15px"
+              alt=""
+              width="100"
+              @click="showConnectionModal('qbo')"
+              :disabled="
+                companyInfo.exportProperties &&
+                companyInfo.exportProperties.platform !== 'QUICK_BOOKS'
+              "
+              v-if="!companyInfo.connectedToQBO"
+            />
+            <!-- <b-button
               :class="{
                 'mt-1': true,
               }"
@@ -54,7 +64,7 @@
               v-if="!companyInfo.connectedToQBO"
             >
               Connect
-            </b-button>
+            </b-button> -->
             <b-button
               variant="outline-primary"
               class="mt-1"
