@@ -514,7 +514,7 @@
     "dateIssued": "Date Issued"
   },
   "invoice_details": {
-    "publishedq": "Successfully published to Quickbooks",
+    "publishedq": "Successfully published to QuickBooks",
     "publishedxero": "Successfully published to Xero",
     "invoiceNumber": "Invoice Number",
     "recipientCompanyName": "Recipient Company Name: {name}",
