@@ -1,4 +1,4 @@
-{
+D:\Projects\Startup\Accounting\accounting-fe\src\lang\translations\bg.json{
   "reverse": "Reverse",
   "Data": "Data",
   "from_period": "From St. Period",
@@ -313,7 +313,7 @@
   "about": {
     "title": "About us",
     "label_abt_1": "What is Coherent Accounting?",
-    "desc_abt_1": "Coherent Accounting is cheapest revolutional platform for accountants and bookkeepers. It reduces the manual work for inputting invoices,receipts and Bank statements data into Accouning platform such as XERO, Quick Books, FreshBooks, WAVE, Zoho and etc.It reduces the manual work up to 80%. Specially for people who want to be more productive and to safe boring manual tasks. With OCR and Artiffiicaial Intelligence the system extract all data from the invocies.",
+    "desc_abt_1": "Coherent Accounting is cheapest revolutional platform for accountants and bookkeepers. It reduces the manual work for inputting invoices,receipts and Bank statements data into Accouning platform such as XERO, QuickBooks, FreshBooks, WAVE, Zoho and etc.It reduces the manual work up to 80%. Specially for people who want to be more productive and to safe boring manual tasks. With OCR and Artiffiicaial Intelligence the system extract all data from the invocies.",
     "label_abt_2": "OCR of Invoices annd Digitalization",
     "desc_abt_2": "You can reduce the paper waste and help the nature while go paperless. You only digital invoices and together we will safe the planet",
     "label_abt_3": "FREE Invoices module",
@@ -861,9 +861,9 @@
   "featureLable3": "OCR data extraction from Bank statements",
   "featureLable4": "One click publishing to XERO",
   "featureLable5": "One click publishing to QuickBooks Online",
-  "featureLable6": "Auto Sync to Xero and Quickbooks every 5 mins if every reviewed file",
+  "featureLable6": "Auto Sync to Xero and QuickBooks every 5 mins if every reviewed file",
   "featureLable7": "Export and Import with file of extracted data from the invoices,receipts and Bank statements to XERO Online",
-  "featureLable8": "Export and Import with file of extracted data from the invoices,receipts and Bank statements to Quick Books",
+  "featureLable8": "Export and Import with file of extracted data from the invoices,receipts and Bank statements to QuickBooks",
   "featureLable9": "Export and Import with file of extracted data from the invoices,receipts and Bank statements to Fresh Books",
   "featureLable10": "Duplicate scanner for duplicate documents",
   "featureLable11": "Free designer digital invoices with logo",
