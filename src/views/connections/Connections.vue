@@ -36,7 +36,7 @@
               </p>
             </div>
 
-            <b-button
+            <button
               :class="{
                 'mt-1': true,
               }"
@@ -53,8 +53,8 @@
               @click="showConnectionModal('qbo')"
               v-if="!companyInfo.connectedToQBO"
             >
-              Sign In With Intuit
-            </b-button>
+            <img src="@/assets/images/logo/C2QB_green_btn_short_hover.svg" />
+            </button>
             <b-button
               variant="outline-primary"
               class="mt-1"
@@ -165,7 +165,7 @@
           <b-tab title="How to connect" active>
             <ol>
               <li class="my-1">
-                Click the <b>Connect software</b> button - you'll be redirected
+                Click the <b>Connect to QuickBooks</b> button - you'll be redirected
                 from Coherent Accounting to
                 {{ type == "qbo" ? "QuickBook" : "Xero" }} Online and promoted
                 to log in.
@@ -190,15 +190,15 @@
           </b-tab>
         </b-tabs>
       </div>
-      <div class="mt-1" style="float: right">
+      <div style="float: right">
         <b-button @click="isConnection = false" variant="outline"
           >Cancel</b-button
         >
-        <b-button
+        <button
           @click="connectToQuickBooks(type)"
           :disabled="isConnecting"
           variant="success"
-          >Connect software</b-button
+          > <img src="@/assets/images/logo/C2QB_green_btn_short_hover.svg" /></button
         >
       </div>
     </b-modal>
