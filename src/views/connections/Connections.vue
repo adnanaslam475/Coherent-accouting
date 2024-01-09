@@ -38,7 +38,7 @@
 
             <button
               :class="{
-                'mt-1': true,
+                'btn btn-outline': true,
               }"
               :variant="
                 companyInfo.exportProperties &&
@@ -53,7 +53,7 @@
               @click="showConnectionModal('qbo')"
               v-if="!companyInfo.connectedToQBO"
             >
-            <img src="@/assets/images/logo/C2QB_green_btn_short_hover.svg" />
+            <img src="@/assets/images/logo/C2QB_green_btn_med_hover.svg" />
             </button>
             <b-button
               variant="outline-primary"
@@ -194,11 +194,11 @@
         <b-button @click="isConnection = false" variant="outline"
           >Cancel</b-button
         >
-        <button
+        <button class="btn btn-outline"
           @click="connectToQuickBooks(type)"
           :disabled="isConnecting"
           variant="success"
-          > <img src="@/assets/images/logo/C2QB_green_btn_short_hover.svg" /></button
+          > <img src="@/assets/images/logo/C2QB_green_btn_med_hover.svg" /></button
         >
       </div>
     </b-modal>
