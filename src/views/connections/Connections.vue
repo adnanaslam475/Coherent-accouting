@@ -328,7 +328,7 @@ export default {
             component: ToastificationContent,
             props: {
               title: `${
-                type == "qbo" ? "Quickbook" : "Xero"
+                type == "qbo" ? "QuickBooks" : "Xero"
               } disconnect successfully`,
               icon: "AlertTriangleIcon",
               variant: "success",
