@@ -464,6 +464,14 @@ const router = new VueRouter({
       name: 'affiliate-program',
       component: () => import('@/views/affilate-program/Index.vue'),
     },
+    {
+      path: '/info',
+      name: 'info',
+      component: () => import('@/views/info/Index.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
   ],
 })
 
@@ -486,6 +494,7 @@ router.beforeEach((to, _, next) => {
     || to.name === 'company-invoice-previews'
     || to.name === 'company-invoice-add'
     || to.name === 'company-invoice-edit'
+    || to.name === 'affiliate-program'
   ) {
     if (!isLoggedIn) return next({ name: 'login' })
 

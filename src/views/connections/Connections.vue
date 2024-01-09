@@ -43,8 +43,8 @@
               :variant="
                 companyInfo.exportProperties &&
                 companyInfo.exportProperties.platform == 'QUICK_BOOKS'
-                  ? 'outline-success'
-                  : 'outline-secondary'
+                  ? 'primary'
+                  : 'primary'
               "
               :disabled="
                 companyInfo.exportProperties &&
@@ -53,7 +53,7 @@
               @click="showConnectionModal('qbo')"
               v-if="!companyInfo.connectedToQBO"
             >
-              Connect
+              Sign In With Intuit
             </b-button>
             <b-button
               variant="outline-primary"
