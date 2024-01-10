@@ -2,7 +2,11 @@
   <div>
     <b-row>
       <b-col cols="12" md="3">
-        <b-card style="max-width: 20rem; min-height: 230px" class="mb-2">
+        <b-card 
+          style="max-width: 20rem; min-height: 230px"
+          class="mb-2"
+          @mouseenter="isFetching ? null : getCompany()"
+        >
           <div class="custome-card">
             <div style="color: green">
               <feather-icon icon="CheckCircleIcon" stroke="green" />
