@@ -7,19 +7,9 @@
           <!-- old password -->
           <b-col cols="6">
             <b-form-group :label='$t("change_password.old_password")' label-for="old-password">
-              <validation-provider
-                #default="{ errors }"
-                name="Password"
-                vid="Password"
-                rules="required"
-              >
-                <b-form-input
-                  id="old-password"
-                  v-model="passwordValueOld"
-                  :state="errors.length > 0 ? false : null"
-                  :type="passwordFieldTypeOld"
-                  :placeholder='$t("change_password.old_password")'
-                />
+              <validation-provider #default="{ errors }" name="Password" vid="Password" rules="required">
+                <b-form-input id="old-password" v-model="passwordValueOld" :state="errors.length > 0 ? false : null"
+                  :type="passwordFieldTypeOld" :placeholder='$t("change_password.old_password")' />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
@@ -104,20 +94,11 @@
 
           <!-- new password -->
           <b-col cols="6">
+
             <b-form-group :label='$t("change_password.new_password")' label-for="new-password">
-              <validation-provider
-                #default="{ errors }"
-                name="New Password"
-                vid="newPassword"
-                rules="required"
-              >
-                <b-form-input
-                  id="new-password"
-                  v-model="newPasswordValue"
-                  :state="errors.length > 0 ? false : null"
-                  :type="passwordFieldTypeNew"
-                  :placeholder='$t("change_password.new_password")'
-                />
+              <validation-provider #default="{ errors }" name="New Password" vid="newPassword" rules="min:8">
+                <b-form-input id="new-password" v-model="newPasswordValue" :state="errors.length > 0 ? false : null"
+                  :type="passwordFieldTypeNew" :placeholder='$t("change_password.new_password")' />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
@@ -126,18 +107,10 @@
           <!-- confirm password -->
           <b-col cols="6">
             <b-form-group :label='$t("change_password.confirm_new_password")' label-for="ac-password">
-              <validation-provider
-                #default="{ errors }"
-                name="Confirm New Password"
-                rules="required|confirmed:newPassword"
-              >
-                <b-form-input
-                  id="ac-password"
-                  v-model="RetypePassword"
-                  :state="errors.length > 0 ? false : null"
-                  :type="passwordFieldTypeRetype"
-                  :placeholder='$t("change_password.new_password")'
-                />
+              <validation-provider #default="{ errors }" name="Confirm New Password"
+                rules="required|confirmed:newPassword">
+                <b-form-input id="ac-password" v-model="RetypePassword" :state="errors.length > 0 ? false : null"
+                  :type="passwordFieldTypeRetype" :placeholder='$t("change_password.new_password")' />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
@@ -145,13 +118,8 @@
 
           <!-- buttons -->
           <b-col cols="12">
-            <b-button
-              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-              variant="primary"
-              class="mt-1 mr-1"
-              type="submit"
-            >
-            {{ $t("change_password.save_changes") }}
+            <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="primary" class="mt-1 mr-1" type="submit">
+              {{ $t("change_password.save_changes") }}
             </b-button>
           </b-col>
           <!--/ buttons -->
@@ -211,6 +179,7 @@ export default {
       passwordFieldTypeOld: "password",
       passwordFieldTypeNew: "password",
       passwordFieldTypeRetype: "password",
+      passErr: "",
     };
   },
   computed: {
@@ -237,6 +206,12 @@ export default {
   //   },
   // },
   methods: {
+    passErrHandler() {
+
+      if (this.newPasswordValue.length && this.newPasswordValue.length < 8) {
+        this.passErr = "Password length must be greater than or equal to 8";
+      }
+    },
     togglePasswordOld() {
       this.passwordFieldTypeOld =
         this.passwordFieldTypeOld === "password" ? "text" : "password";
@@ -252,6 +227,9 @@ export default {
     validationForm() {
       this.$refs.simpleRules.validate().then((success) => {
         if (success) {
+          if (this.password.length && this.password.length < 8) {
+            this.passErr = "Password length must be greater than or equal to 8";
+          }
           // eslint-disable-next-line
           this.updatePassword();
         }
