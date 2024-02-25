@@ -85,6 +85,1192 @@
                       >
                     </template>
 
+                    <div v-if="companyInBG">
+                      <b-row
+                      class="mt-0 mb-2 mx-0"
+                      style="height: 5px; border-top: 1px solid lightgrey"
+                    >
+                      <b-col
+                        cols="12"
+                        xl="12"
+                        md="12"
+                        class="px-0"
+                        style="text-align: end"
+                      >
+                        <b-button-group
+                          size="md"
+                          class=" "
+                          style="transform: translate(0px, -50px)"
+                        >
+                          <b-button
+                            variant=""
+                            :style="
+                              invoiceData.transactionType == 'INCOME'
+                                ? 'background-color: #007AFF !important; color: white;'
+                                : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                            "
+                            @click="
+                              () => {
+                                invoiceData.transactionType = 'INCOME';
+                              }
+                            "
+                            >Income</b-button
+                          >
+                          <b-button
+                            variant=""
+                            :style="
+                              invoiceData.transactionType == 'EXPENSE'
+                                ? 'background-color: #007AFF !important; color: white;'
+                                : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                            "
+                            @click="
+                              () => {
+                                invoiceData.transactionType = 'EXPENSE';
+                              }
+                            "
+                            >Expense</b-button
+                          >
+                        </b-button-group>
+                      </b-col>
+                    </b-row>
+
+                    <b-row
+                      class="mt-2 mx-0 pb-2"
+                      style="border-bottom: 1px solid lightgrey"
+                    >
+                      <b-col class="pl-0">
+                        <div class="d-flex pl-0" style="flex-direction: column">
+                          <span class="grey-text-color"> DOCUMENT DATE </span>
+                          <span>
+                            <validation-provider
+                              #default="{ errors }"
+                              name="dateIssued"
+                              rules="required"
+                            >
+                              <div class="position-relative d-inline-flex">
+                                <flat-pickr
+                                  v-model="invoiceData.dateIssued"
+                                  class="form-control invoice-edit-input invoice-input-top"
+                                  placeholder="Document Date"
+                                />
+                                <feather-icon
+                                  v-if="invoiceData.dateIssued === ''"
+                                  size="16"
+                                  icon="CalendarIcon"
+                                  class="cursor-pointer clear-all"
+                                />
+                                <feather-icon
+                                  v-else
+                                  size="16"
+                                  icon="XIcon"
+                                  class="cursor-pointer clear-all"
+                                  @click="invoiceData.dateIssued = ''"
+                                />
+                              </div>
+                            </validation-provider>
+                          </span>
+                        </div>
+                      </b-col>
+
+                      <b-col cols="12" md="6" class="pl-0">
+                        <div class="d-flex pl-0" style="flex-direction: column">
+                          <span class="grey-text-color"> DOCUMENT DATE </span>
+                          <span>
+                            <validation-provider
+                              #default="{ errors }"
+                              name="dueDate"
+                              rules="required"
+                            >
+                              <div class="position-relative d-inline-flex">
+                                <flat-pickr
+                                  v-model="invoiceData.dueDate"
+                                  class="form-control invoice-edit-input invoice-input-top"
+                                  placeholder="Document Date"
+                                />
+                                <feather-icon
+                                  v-if="invoiceData.dueDate === ''"
+                                  size="16"
+                                  icon="CalendarIcon"
+                                  class="cursor-pointer clear-all"
+                                />
+                                <feather-icon
+                                  v-else
+                                  size="16"
+                                  icon="XIcon"
+                                  class="cursor-pointer clear-all"
+                                  @click="invoiceData.dueDate = ''"
+                                />
+                              </div>
+                            </validation-provider>
+                          </span>
+                        </div>
+                      </b-col>
+                      <b-col
+                        class="px-0 text-end"
+                        v-if="invoiceData.possibleDuplicate"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-baseline mr-0 text-end"
+                          style="flex-direction: column; float: right"
+                        >
+                          <div
+                            class="text-uppercase grey-text-color mr-1"
+                            style="color: red"
+                          >
+                            Possible Duplicate
+                          </div>
+                          <div class="pt-1">
+                            <feather-icon
+                              size="16"
+                              icon="XCircleIcon"
+                              class="cursor-pointer ml-auto"
+                              stroke="red"
+                              @click="changePossibleDuplicate(false)"
+                            />
+                          </div>
+                        </div>
+                      </b-col>
+                    </b-row>
+
+                    <!-- <hr> -->
+                    <b-row
+                      class="mt-2 mx-0 pb-2 d-flex align-items-end"
+                      style="border-bottom: 1px solid lightgrey"
+                    >
+                      <b-col class="pl-0">
+                        <div class="d-flex" style="flex-direction: column">
+                          <span class="text-uppercase grey-text-color">
+                            DOCUMENT TYPE
+                          </span>
+                          <span>
+                            <div class="position-relative pt-1">
+                              <b-button-group
+                                size="md"
+                                class=" "
+                                v-if="invoiceData.transactionType == 'EXPENSE'"
+                              >
+                                <b-button
+                                  variant=""
+                                  :style="
+                                    invoiceData.documentType == 'RECEIPT'
+                                      ? 'background-color: #007AFF !important; color: white;'
+                                      : ' border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  "
+                                  class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.documentType = 'RECEIPT';
+                                      invoiceData.recipientCompany = {};
+                                    }
+                                  "
+                                  >Receipt</b-button
+                                >
+                                <b-button
+                                  variant=""
+                                  :style="
+                                    invoiceData.documentType == 'INVOICE'
+                                      ? 'background-color: #007AFF !important; color: white;'
+                                      : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  "
+                                  class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.documentType = 'INVOICE';
+                                    }
+                                  "
+                                  >Bill</b-button
+                                >
+                              </b-button-group>
+                              <b-button-group size="md" v-else>
+                                <b-button
+                                  variant=""
+                                  :style="
+                                    invoiceData.documentType == 'RECEIPT'
+                                      ? 'background-color: #007AFF !important; color: white;'
+                                      : ' border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  "
+                                  class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.documentType = 'RECEIPT';
+                                      invoiceData.recipientCompany = {};
+                                    }
+                                  "
+                                  >Receipt</b-button
+                                >
+                                <b-button
+                                  variant=""
+                                  :style="
+                                    invoiceData.documentType == 'INVOICE'
+                                      ? 'background-color: #007AFF !important; color: white'
+                                      : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  "
+                                  class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.documentType = 'INVOICE';
+                                    }
+                                  "
+                                  >INVOICE</b-button
+                                >
+                              </b-button-group>
+                            </div>
+                          </span>
+                        </div>
+                      </b-col>
+                      <b-col class="pl-0">
+                        <div class="d-flex" style="flex-direction: column">
+                          <span class="text-uppercase grey-text-color">
+                            ORIGINAL/PROFORMA
+                          </span>
+                          <span>
+                            <div class="position-relative pt-1">
+                              <b-button-group
+                                size="md"
+                                class=" "
+                              >
+                                <b-button
+                                  variant=""
+                                  :style="
+                                    invoiceData.invoiceType == 'ORIGINAL'
+                                      ? 'background-color: #007AFF !important; color: white;'
+                                      : ' border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  "
+                                  class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.invoiceType = 'ORIGINAL';
+                                      invoiceData.recipientCompany = {};
+                                    }
+                                  "
+                                  >Original</b-button
+                                >
+                                <b-button
+                                  variant=""
+                                  :style="
+                                    invoiceData.invoiceType == 'PROFORMA'
+                                      ? 'background-color: #007AFF !important; color: white;'
+                                      : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  "
+                                  class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.invoiceType = 'PROFORMA';
+                                    }
+                                  "
+                                  >Proforma</b-button
+                                >
+                              </b-button-group>
+                            </div>
+                          </span>
+                        </div>
+                      </b-col>
+
+                      <b-col class="pl-0">
+                        <div class="d-flex" style="flex-direction: column">
+                          <span class="text-uppercase grey-text-color">
+                            PAYED/NOT PAYED
+                          </span>
+                          <span>
+                            <div class="position-relative pt-1">
+                              <b-button-group
+                                size="md"
+                                class=" "
+                              >
+                                <b-button
+                                  variant=""
+                                  :style="
+                                    invoiceData.paymentStatus == 'PAYED'
+                                      ? 'background-color: #007AFF !important; color: white;'
+                                      : ' border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  "
+                                  class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.paymentStatus = 'PAYED';
+                                      invoiceData.recipientCompany = {};
+                                    }
+                                  "
+                                  >payed</b-button
+                                >
+                                <b-button
+                                  variant=""
+                                  :style="
+                                    invoiceData.paymentStatus == 'NOT_PAYED'
+                                      ? 'background-color: #007AFF !important; color: white;'
+                                      : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  "
+                                  class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.paymentStatus = 'NOT_PAYED';
+                                    }
+                                  "
+                                  >not payed</b-button
+                                >
+                              </b-button-group>
+                            </div>
+                          </span>
+                        </div>
+                      </b-col>
+
+                      <b-col class="pl-0">
+                        <div class="d-flex" style="flex-direction: column">
+                          <span>
+                            <div class="position-relative pt-1">
+                              <b-button-group
+                                size="md"
+                                class=" "
+                              >
+                                <b-button
+                                  variant=""
+                                  :style="
+                                    invoiceData.saleType == 'GOODS'
+                                      ? 'background-color: #007AFF !important; color: white;'
+                                      : ' border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  "
+                                  class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.saleType = 'GOODS';
+                                      invoiceData.recipientCompany = {};
+                                    }
+                                  "
+                                  >goods</b-button
+                                >
+                                <b-button
+                                  variant=""
+                                  :style="
+                                    invoiceData.saleType == 'SERVICE'
+                                      ? 'background-color: #007AFF !important; color: white;'
+                                      : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                                  "
+                                  class="text-uppercase"
+                                  @click="
+                                    () => {
+                                      invoiceData.saleType = 'SERVICE';
+                                    }
+                                  "
+                                  >service</b-button
+                                >
+                              </b-button-group>
+                            </div>
+                          </span>
+                        </div>
+                      </b-col>
+                    </b-row>
+
+                    <b-row class="mt-2 mx-0 pb-1"> 
+                      <b-col class="px-0 text-end">
+                        <div class="d-flex mr-0 flex-column float-right">
+                          <div class="text-uppercase grey-text-color">
+                            INVOICE #
+                          </div>
+                          <div class="pt-1">
+                            <b-form-input
+                              v-model="invoiceData.invoiceNumber"
+                              type="text"
+                              class="mb-0"
+                              style="width: 130px"
+                            />
+                          </div>
+                        </div>
+                      </b-col>
+                    </b-row>
+
+                    <b-row class="mt-2 mx-0 pb-1">
+                      <b-col class="pl-0">
+                        <div class="d-flex" style="flex-direction: column">
+                          <div class="text-uppercase grey-text-color">
+                            {{ $t("add_invoice.currency") }}
+                          </div>
+                          <div class="pt-1">
+                            <b-form-select
+                              v-model="invoiceData.currency"
+                              :options="currencyOptions"
+                              style="width: 100px"
+                            />
+                          </div>
+                        </div>
+                      </b-col>
+                      <b-col class="px-0">
+                        <div
+                          class="d-flex"
+                          style="flex-direction: column; float: right"
+                        >
+                          <div class="text-uppercase grey-text-color">
+                            TOTAL
+                          </div>
+                          <h4 style="color: #625f6e" class="pt-1">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="total"
+                              rules="required"
+                              ref="total"
+                            >
+                              <b-form-input
+                                v-model="totalAmountInDecimal"
+                                type="number"
+                                name="total"
+                                @keyup="preventNum"
+                                @change="removeTotalMsg"
+                                class="mb-0"
+                                style="width: 130px"
+                              />
+                              <small
+                                class="text-danger"
+                                style="font-size: 10px"
+                                v-if="inValidTotal"
+                                >{{ "This field is required" }}</small
+                              >
+                            </validation-provider>
+                          </h4>
+                        </div>
+                        <div
+                          class="d-flex mr-2"
+                          style="flex-direction: column; float: right"
+                        >
+                          <div class="text-uppercase grey-text-color">TAX</div>
+                          <h4 style="color: #625f6e" class="pt-1">
+                            <!-- name="Single Price" -->
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tax"
+                              rules="required"
+                              ref="tax"
+                            >
+                              <b-form-input
+                                id="tax"
+                                name="tax"
+                                v-model="totalTaxInDecimal"
+                                type="number"
+                                @keyup="preventNum"
+                                @change="removeTaxMsg"
+                                class="mb-0"
+                                style="width: 130px"
+                              />
+                              <small
+                                class="text-danger"
+                                style="font-size: 10px"
+                                v-if="inValidTax"
+                                >{{ "This field is required" }}</small
+                              >
+                            </validation-provider>
+                          </h4>
+                        </div>
+                      </b-col>
+                    </b-row>
+                    <b-row
+                      class="d-flex justify-content-end align-items-center"
+                    >
+                      <p class="invoice-total-title">
+                        {{ $t("add_invoice.tax") }}:
+                      </p>
+                      <b-col cols="3">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="vat"
+                              ref="vatPercent"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.vatPercent"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+
+                                <b-input-group-append is-text>
+                                  <span>%</span>
+                                </b-input-group-append>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                      </b-col>      
+                    </b-row>
+                    <b-row
+                      class="d-flex justify-content-end align-items-center"
+                    >
+                    <p class="invoice-total-title">
+                       Discount Percent:
+                      </p>
+                      <b-col cols="3">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tradeDiscountPercent"
+                              ref="tradeDiscountPercent"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.tradeDiscountPercent"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+
+                                <b-input-group-append is-text>
+                                  <span>%</span>
+                                </b-input-group-append>
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                      </b-col>
+                  </b-row>
+
+                  <b-row
+                      class="pb-3 d-flex justify-content-end align-items-center"
+                    >
+                      <p class="invoice-total-title">
+                        Discount Sum:
+                      </p>
+                      <b-col cols="3">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tradeDiscountAmount"
+                              ref="tradeDiscountAmount"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.tradeDiscountAmount"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                      </b-col>      
+                    </b-row>
+
+                    <div no-body class="invoice-add-card mb-1">
+                      <!-- Items Section -->
+                      <div class="invoice-padding p-0">
+                        <div
+                          ref="form"
+                          class="repeater-form h-auto"
+                          :style="{ height: trHeight }"
+                        >
+                          <b-row ref="row" class="pb-0 m-0">
+                            <!-- Item Form -->
+                            <!-- ? This will be in loop => So consider below markup for single item -->
+                            <b-col cols="12" class="p-0">
+                              <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
+                              <div class="d-none d-lg-flex p-custom">
+                                <b-row
+                                  class="flex-grow-1 invoice-add-transections pb-1"
+                                  style="border-bottom: 1px solid lightgrey"
+                                >
+                                  <!-- Single Item Form Headers -->
+
+                                  <b-col
+                                    cols="12"
+                                    lg="3"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                    v-if="invoiceData.hasDropDown"
+                                  >
+                                    {{ $t("add_invoice.account") }}
+                                  </b-col>
+                                  <b-col
+                                    v-if="invoiceData.xero"
+                                    cols="12"
+                                    lg="2"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
+                                    {{ $t("add_invoice.category") }}
+                                  </b-col>
+                                  <b-col
+                                    v-if="invoiceData.xero"
+                                    cols="12"
+                                    lg="2"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
+                                    {{ $t("add_invoice.job_cost_code") }}
+                                  </b-col>
+
+                                  <b-col
+                                    cols="12"
+                                    lg="4"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
+                                    Description
+                                  </b-col>
+                                  <b-col
+                                    cols="12"
+                                    lg="1"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
+                                   Measure
+                                  </b-col>
+                                  <b-col
+                                    cols="12"
+                                    lg="1"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
+                                    {{ $t("add_invoice.qty") }}
+                                  </b-col>
+                                  <b-col
+                                    cols="12"
+                                    lg="2"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
+                                    <!-- this is for new -->
+                                    {{ $t("add_invoice.single_price") }}
+                                  </b-col>
+
+                                  <b-col
+                                    cols="12"
+                                    lg="1"
+                                    class="text-uppercase grey-text-color"
+                                    style="font-size: 14px"
+                                  >
+                                    {{ $t("add_invoice.total_price") }}
+                                  </b-col>
+                                </b-row>
+                                <!-- <div class="form-item-action-col" /> -->
+                              </div>
+
+                              <!-- Form Input Fields OR content inside bordered area  -->
+                              <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
+                              <div
+                                v-for="(
+                                  item, index
+                                ) in invoiceData.transactions"
+                                :key="index"
+                                class="d-flex pl-2"
+                              >
+                                <b-row
+                                  class="flex-grow-1 py-1 invoice-add-transections"
+                                  style="border-bottom: 1px solid lightgrey"
+                                >
+                                  <!-- Single Item Form Headers -->
+
+                                  <b-col
+                                    cols="12"
+                                    lg="3"
+                                    v-if="invoiceData.hasDropDown"
+                                  >
+                                    <label class="d-inline d-lg-none"
+                                      >Account</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      name="Account"
+                                      rules="required"
+                                      ref="account"
+                                    >
+                                      <b-form-select
+                                        id="account"
+                                        v-model="item.account"
+                                        :options="accounts"
+                                        v-b-tooltip.hover
+                                        @change="
+                                          (v) => {
+                                            if (index == 0)
+                                              askForAllPostCode(v, 'account');
+                                          }
+                                        "
+                                        :title="item.account"
+                                      >
+                                      </b-form-select>
+                                      <small
+                                        class="text-danger"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
+                                      <!-- <small class="text-danger">{{ errors[0] }}</small> -->
+                                    </validation-provider>
+                                  </b-col>
+                                  <b-col
+                                    cols="12"
+                                    lg="2"
+                                    v-if="invoiceData.xero"
+                                  >
+                                    <label class="d-inline d-lg-none"
+                                      >Category</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      name="Category"
+                                      rules="required"
+                                      ref="selectCategory"
+                                    >
+                                      <b-form-select
+                                        id="selectCategory"
+                                        :options="categoryItems"
+                                        v-model="item.account"
+                                        v-b-tooltip.hover
+                                        @change="
+                                          (v) => {
+                                            if (index == 0)
+                                              askForAllPostCode(v, 'account');
+                                          }
+                                        "
+                                        :title="item.account"
+                                      />
+                                      <small
+                                        class="text-danger"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
+                                    </validation-provider>
+                                  </b-col>
+                                  <b-col
+                                    cols="12"
+                                    lg="2"
+                                    v-if="invoiceData.xero"
+                                  >
+                                    <label class="d-inline d-lg-none"
+                                      >Job Post Code</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      name="Job Post Code"
+                                      rules="required"
+                                      ref="postCode"
+                                    >
+                                      <b-form-select
+                                        id="postCode"
+                                        :options="jobPostItems"
+                                        v-model="item.taxType"
+                                        v-b-tooltip.hover
+                                        :title="item.taxType"
+                                        @change="
+                                          (v) => {
+                                            if (index == 0)
+                                              askForAllPostCode(v, 'taxType');
+                                          }
+                                        "
+                                      >
+                                      </b-form-select>
+                                      <small
+                                        class="text-danger"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
+                                    </validation-provider>
+                                  </b-col>
+                                  <b-col cols="12" lg="4">
+                                    <label class="d-inline d-lg-none"
+                                      >Description</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors, invalid }"
+                                      ref="transectionServiceOrItemDescription"
+                                      name="Description"
+                                      rules="required"
+                                    >
+                                      <b-form-input
+                                        id="transectionServiceOrItemDescription"
+                                        v-model="item.serviceOrItemDescription"
+                                        :dir="
+                                          $store.state.appConfig.isRTL
+                                            ? 'rtl'
+                                            : 'ltr'
+                                        "
+                                        type="text"
+                                        class="mb-0"
+                                        v-b-tooltip.hover
+                                        :title="item.serviceOrItemDescription"
+                                      />
+                                      <small
+                                        class="text-danger"
+                                        style="font-size: 10px"
+                                        v-if="invalid"
+                                        >{{ "This field is required" }}</small
+                                      >
+                                    </validation-provider>
+                                  </b-col>
+
+                                  <b-col cols="12" lg="1">
+                                    <label class="d-inline d-lg-none"
+                                      >Measure</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors }"
+                                      name="Measure"
+                                      rules="required"
+                                      ref="transectionMeasure"
+                                    >
+                                      <b-form-input
+                                        id="transectionMeasure"
+                                        v-model="item.measurement"
+                                        type="text"
+                                        class="mb-0 p-0 text-center"
+                                        placeholder="pcs"
+                                        step="0.0000000001"
+                                        @input="populateValues()"
+                                        v-b-tooltip.hover
+                                        :title="item.quantity"
+                                      />
+                                      <small class="text-danger">{{
+                                        errors[0]
+                                      }}</small>
+                                    </validation-provider>
+                                  </b-col>
+
+                                  <b-col cols="12" lg="1">
+                                    <label class="d-inline d-lg-none"
+                                      >Qty</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors }"
+                                      name="Qty"
+                                      rules="required"
+                                      ref="transectionQuantity"
+                                    >
+                                      <b-form-input
+                                        id="transectionQuantity"
+                                        v-model="item.quantity"
+                                        type="number"
+                                        class="mb-0 p-0 text-center"
+                                        placeholder="0"
+                                        step="0.0000000001"
+                                        @input="populateValues()"
+                                        v-b-tooltip.hover
+                                        :title="item.quantity"
+                                      />
+                                      <small class="text-danger">{{
+                                        errors[0]
+                                      }}</small>
+                                    </validation-provider>
+                                  </b-col>
+
+                                  <b-col cols="12" lg="2">
+                                    <label class="d-inline d-lg-none"
+                                      >Single Price</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors }"
+                                      name="Single Price"
+                                      rules="required|singlePriceValid"
+                                      ref="transectionSingleAmountTransaction"
+                                    >
+                                      <b-form-input
+                                        id="transectionSingleAmountTransaction"
+                                        v-model="item.singleAmountTransaction"
+                                        type="number"
+                                        class="mb-0"
+                                        @keyup="preventNum"
+                                        step="any"
+                                        placeholder="0.00"
+                                        @input="populateValues()"
+                                        v-b-tooltip.hover
+                                        :title="item.singleAmountTransaction"
+                                      />
+                                      <!-- </b-input-group> -->
+                                      <small class="text-danger">{{
+                                        errors[0]
+                                      }}</small>
+                                    </validation-provider>
+                                  </b-col>
+
+                                  <b-col
+                                    cols="12"
+                                    lg="1"
+                                    class="pl-2"
+                                    style="padding-top: 10px"
+                                  >
+                                    <label class="d-inline d-lg-none"
+                                      >Total Price</label
+                                    >
+                                    <validation-provider
+                                      #default="{ errors }"
+                                      name="transectionTotal"
+                                      rules="required"
+                                    >
+                                      <span
+                                        v-if="
+                                          item.transactionTotalAmountNonVat &&
+                                          item.transactionTotalAmountNonVat > 0
+                                        "
+                                        v-b-tooltip.hover
+                                        :title="
+                                          item.transactionTotalAmountNonVat
+                                        "
+                                        >{{
+                                          (
+                                            parseFloat(
+                                              item.singleAmountTransaction
+                                            ) * parseFloat(item.quantity)
+                                          ).toFixed(2)
+                                        }}</span
+                                      >
+                                      <span v-else transactionTotalAmountNonVat>
+                                        {{
+                                          (
+                                            parseFloat(
+                                              item.singleAmountTransaction
+                                            ) * parseFloat(item.quantity)
+                                          ).toFixed(2)
+                                        }}</span
+                                      >
+                                    </validation-provider>
+                                  </b-col>
+                                </b-row>
+                                <div
+                                  class="d-flex justify-content-end position-relative top-custom m-0"
+                                  :style="
+                                    invoiceData.hasDropDown
+                                      ? 'padding-top: 2px; left: 3px; z-index:5 !important'
+                                      : 'padding-top: 2px; left: 26px; z-index:5 !important'
+                                  "
+                                >
+                                  <feather-icon
+                                    v-if="invoiceData.transactions.length !== 1"
+                                    size="14"
+                                    icon="Trash2Icon"
+                                    color="red"
+                                    class="cursor-pointer m-0"
+                                    @click="removeItem(index)"
+                                  />
+                                  <feather-icon
+                                    v-if="invoiceData.transactions.length == 1"
+                                    size="14"
+                                    icon="Trash2Icon"
+                                    color="red"
+                                    class="cursor-pointer invisible m-0"
+                                  />
+                                </div>
+                              </div>
+                            </b-col>
+                          </b-row>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      size="sm"
+                      @click="addNewItemInItemForm"
+                      class="mb-2 grey-text-color curspor-pointer"
+                      style="
+                        background-color: transparent !important;
+                        cursor: pointer;
+                        border: 0px;
+                        color: #007aff !important;
+                      "
+                    >
+                      + {{ $t("add_invoice.add_item") }}
+                    </div>
+
+                    <!-- Bank Details Switch -->
+                    <b-row v-if="companyInBG">
+                      <b-col>
+                        <b-col>
+                          <label class="">{{
+                            $t("select_bank_process")
+                          }}</label>
+                          <b-form-select
+                            v-model="bankProcess"
+                            :options="banks"
+                            id="invoice-bank"
+                            name="invoice-bank"
+                            v-bind:placeholder="$t('Please select bank...')"
+                            :value="$store.state.selected"
+                            @change="checkProcessType(bankProcess)"
+                          >
+                          </b-form-select>
+                        </b-col>
+                      </b-col>
+                    </b-row>
+
+                    <!-- Bank Details -->
+                    <b-card
+                      no-body
+                      class="invoice-add-card mb-1 mt-1"
+                      v-if="isBank"
+                    >
+                      <b-card-body
+                        class="invoice-padding form-item-section p-2 border border-1 border-primary rounded"
+                      >
+                        <div>
+                          <b-form-row>
+                            <!-- Bank name -->
+                            <b-col>
+                              <span>{{ $t("add_invoice.bank") }}: </span>
+                              <validation-provider
+                                #default="{ errors }"
+                                name="bank"
+                                rules="required"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.bankApi.name"
+                                  id="invoice-bank"
+                                  name="invoice-bank"
+                                  v-bind:placeholder="
+                                    $t('Please select bank...')
+                                  "
+                                  :value="$store.state.selected"
+                                >
+                                </b-form-input>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
+                              </validation-provider>
+                            </b-col>
+                            <!-- bic  -->
+                            <b-col>
+                              <b-form-group
+                                id="input-group-1"
+                                label="BIC"
+                                label-for="BIC"
+                              >
+                                <validation-provider
+                                  #default="{ errors }"
+                                  name="BIC"
+                                  rules="required"
+                                >
+                                  <b-form-input
+                                    id="invoice-bic"
+                                    v-model="invoiceData.bankApi.bic"
+                                    :state="errors.length > 0 ? false : null"
+                                    placeholder="BIC..."
+                                    style="background: #fcfcfc; height: 34px"
+                                  />
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </b-form-group>
+                            </b-col>
+                            <!-- iban -->
+                            <b-col>
+                              <b-form-group
+                                id="input-group-1"
+                                label="IBAN"
+                                label-for="IBAN"
+                              >
+                                <validation-provider
+                                  #default="{ errors }"
+                                  name="IBAN"
+                                  rules="required"
+                                >
+                                  <b-form-input
+                                    id="ivvoice-iban"
+                                    v-model="invoiceData.bankApi.iban"
+                                    :state="errors.length > 0 ? false : null"
+                                    placeholder="IBAN..."
+                                    style="background: #fcfcfc; height: 34px"
+                                  />
+                                  <small class="text-danger">{{
+                                    errors[0]
+                                  }}</small>
+                                </validation-provider>
+                              </b-form-group>
+                            </b-col>
+                          </b-form-row>
+                        </div>
+                      </b-card-body>
+                    </b-card>
+
+                    <b-row class="mt-2">
+                      <b-col v-if="invoiceData.vatPercent == 0 && companyInBG">
+                        <b-card no-body class="">
+                          <b-card-body
+                            class="invoice-padding form-item-section p-2 rounded"
+                          >
+                            <b-form-group
+                              id="input-group-4"
+                              :label="$t('add_invoice.taxExclusive')"
+                              label-for="non-vat-clause"
+                            >
+                              <validation-provider
+                                #default="{ errors }"
+                                name="non-vat-clause"
+                                rules="required"
+                              >
+                                <v-select
+                                  v-model="invoiceData.vatCondition"
+                                  :options="noVatClause"
+                                  id="non-vat-clause"
+                                  name="non-vat-clause"
+                                  v-bind:placeholder="
+                                    $t('Please select non-vat clause..')
+                                  "
+                                  :value="$store.state.selected"
+                                  @input="selectVatClause()"
+                                >
+                                  <template
+                                    #selected-option="option"
+                                    v-if="clauseToSend != ''"
+                                  >
+                                    <div
+                                      style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: left;
+                                        grid-gap: 8px;
+                                      "
+                                    >
+                                      {{ clauseToSend }}
+                                    </div>
+                                  </template>
+                                  <template #selected-option="option" v-else>
+                                    <div
+                                      style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: left;
+                                        grid-gap: 8px;
+                                      "
+                                    >
+                                      {{ option.label }}
+                                    </div>
+                                  </template>
+
+                                  <template v-slot:option="option">
+                                    <span
+                                      style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: left;
+                                        grid-gap: 8px;
+                                      "
+                                    >
+                                      {{ option.label }}
+                                    </span>
+                                  </template>
+                                </v-select>
+                                <small class="text-danger">{{
+                                  errors[0]
+                                }}</small>
+                              </validation-provider>
+                            </b-form-group>
+                          </b-card-body>
+                        </b-card>
+                      </b-col>
+                      <b-col> </b-col>
+                      <b-col> </b-col>
+                    </b-row>
+                    </div>
+
+                    <div v-else>
                     <b-row
                       class="mt-0 mb-2 mx-0"
                       style="height: 5px; border-top: 1px solid lightgrey"
@@ -137,13 +1323,13 @@
                       class="mt-2 mx-0 pb-2"
                       style="border-bottom: 1px solid lightgrey"
                     >
-                      <b-col cols="12" md="6" class="pl-0">
+                      <b-col class="pl-0">
                         <div class="d-flex pl-0" style="flex-direction: column">
                           <span class="grey-text-color"> DOCUMENT DATE </span>
                           <span>
                             <validation-provider
                               #default="{ errors }"
-                              name="dueDate"
+                              name="dateIssued"
                               rules="required"
                             >
                               <div class="position-relative d-inline-flex">
@@ -987,6 +2173,7 @@
                       <b-col> </b-col>
                       <b-col> </b-col>
                     </b-row>
+                  </div>
                   </b-tab>
 
                   <!-- Vendor Tab -->
@@ -997,7 +2184,586 @@
                         >Vendor</span
                       >
                     </template>
-                    <div>
+
+                    <b-row v-if="companyInBG"
+                      class="mt-0 mb-2 mx-0"
+                      style="height: 5px; border-top: 1px solid lightgrey"
+                    >
+                      <b-col
+                        cols="12"
+                        xl="12"
+                        md="12"
+                        class="px-0"
+                        style="text-align: end"
+                      >
+                        <b-button-group
+                          size="md"
+                          class=" "
+                          style="transform: translate(0px, -50px)"
+                        >
+                          <b-button
+                            variant=""
+                            :style="
+                              AccountTypeOption == 'person'
+                                ? 'background-color: #007AFF !important; color: white;'
+                                : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                            "
+                            @click="
+                              () => {
+                                AccountTypeOption = 'person';
+                              }
+                            "
+                            >Person</b-button
+                          >
+                          <b-button
+                            variant=""
+                            :style="
+                              AccountTypeOption == 'company'
+                                ? 'background-color: #007AFF !important; color: white;'
+                                : 'border-color: #007AFF !important; color: #007AFF  !important; background-color: transparent !important'
+                            "
+                            @click="
+                              () => {
+                                AccountTypeOption = 'company';
+                              }
+                            "
+                            >Company</b-button
+                          >
+                        </b-button-group>
+                      </b-col>
+                    </b-row>
+                    <div v-if="companyInBG" class="d-flex">
+                      <div class="flex-grow-1 mr-2">
+                      <div class="mb-1">
+                        <h6 style="color: #625f6e" class="mb-1">
+                          {{ $t("add_invoice.supplier") }}
+                        </h6>
+
+                        <span
+                          class="title mr-1 grey-text-color"
+                          style="width: 307px"
+                          >Company Name:
+                        </span>
+                        <b-input-group
+                          class="input-group invoice-edit-input-group w-100"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            name="supplierCompanyName"
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              style=""
+                              v-model="invoiceData.supplierCompany.companName"
+                              @input="
+                                SearchCompanyName(
+                                  invoiceData.supplierCompany.companName
+                                )
+                              "
+                              list="my-company_name"
+                              autocomplete="off"
+                              @blur="hideSuggestion()"
+                              @focus="ShowSuggestion(datalist)"
+                            />
+                            <b-list-group
+                              v-if="showSuggestions"
+                              id="my-company_name"
+                              class="input-suggesstions"
+                              style="width: 100%"
+                            >
+                              <b-list-group-item
+                                v-for="data in datalist"
+                                :key="data.eic"
+                                @click="autoCompletefn(data)"
+                                @mousedown="autoCompletefn(data)"
+                              >
+                                {{ data.company_name }}
+                              </b-list-group-item>
+                            </b-list-group>
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                      <div
+                        class="mb-1"
+                      >
+                        <span
+                          class="title mr-1 grey-text-color"
+                          style="width: 307px"
+                        >
+                          Company Address:
+                        </span>
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group w-100"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            name="supplierCompanyAddress"
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              style=""
+                              v-model="
+                                invoiceData.supplierCompany.companyAddress
+                              "
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+
+                      <div
+                        class="mb-1"
+                      >
+                        <span
+                          class="title mr-1 grey-text-color"
+                          style="width: 307px"
+                        >
+                        Company ID Number:
+                        </span>
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group w-100"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            name="supplierCompanyId"
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              style=""
+                              v-model="
+                                invoiceData.supplierCompany.companyEic
+                              "
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+
+                      <div
+                        class="mb-1"
+                      >
+                        <span
+                          class="title mr-1 grey-text-color"
+                          style="width: 307px"
+                        >
+                        Company Owner:
+                        </span>
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group w-100"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            name="supplierCompanyOwnerName"
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              style=""
+                              v-model="
+                                invoiceData.supplierCompany.companyOwnerName
+                              "
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+
+                      <div
+                        class="mb-1"
+                      >
+                        <span
+                          class="title mr-1 grey-text-color"
+                          style="width: 307px"
+                        >
+                        VAT:
+                        </span>
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group w-100"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            name="supplierCompanyVat"
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              style=""
+                              v-model="
+                                invoiceData.supplierCompany.companyVatEic
+                              "
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                    </div>
+
+                    <div v-if="AccountTypeOption == 'company'" class="flex-grow-1 ml-2">
+                      <h6
+                        style="color: #625f6e"
+                        class="mb-1"
+                        v-if="invoiceData.documentType == 'INVOICE'"
+                      >
+                      {{ $t("add_invoice.recipient") }}
+                      </h6>
+                      <div
+                        class="mb-1"
+                        v-if="invoiceData.documentType == 'INVOICE'"
+                      >
+                        <span class="title mr-1" style="width: 307px"
+                          >Company Name:</span
+                        >
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            :name="
+                              AccountTypeOption == 'company'
+                                ? 'recipientCompanyName'
+                                : 'personName'
+                            "
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              v-model="invoiceData.recipientCompany.companName"
+                              @input="
+                                SearchCompanyNameRecipient(
+                                  invoiceData.recipientCompany.companName
+                                )
+                              "
+                              list="my-company_name"
+                              autocomplete="off"
+                              @blur="hideSuggestionRecipient()"
+                              @focus="
+                                ShowSuggestionRecipient(datalistRecipient)
+                              "
+                            />
+                            <b-list-group
+                              v-if="showSuggestionsRecipient"
+                              id="my-company_name"
+                              class="input-suggesstions"
+                              style="width: 100%"
+                            >
+                              <b-list-group-item
+                                button
+                                v-for="data in datalistRecipient"
+                                :key="data.eic"
+                                @click="autoCompletefnRecipient(data)"
+                                @mousedown="autoCompletefnRecipient(data)"
+                              >
+                                {{ data.company_name }}
+                              </b-list-group-item>
+                            </b-list-group>
+
+                            <b-list-group
+                              v-if="showSuggestionsPerson"
+                              id="my-company_name"
+                              class="input-suggesstions"
+                              style="width: 100%"
+                            >
+                              <b-list-group-item
+                                v-for="data in datalistPerson"
+                                :key="data.eic"
+                                @click="autoCompletefnPerson(data)"
+                                @mousedown="autoCompletefnPerson(data)"
+                              >
+                                {{ data.firstMiddleAndLastName }}
+                              </b-list-group-item>
+                            </b-list-group>
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                      <div
+                        class="mb-1"
+                        v-if="invoiceData.documentType == 'INVOICE'"
+                      >
+                        <span class="title mr-1" style="width: 307px"
+                          >Company Address:</span
+                        >
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            :name="
+                              AccountTypeOption == 'company'
+                                ? 'recipientCompanyAddress'
+                                : 'personAddress'
+                            "
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              v-model="
+                                invoiceData.recipientCompany.companyAddress
+                              "
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+
+                      <div
+                        class="mb-1"
+                        v-if="invoiceData.documentType == 'INVOICE'"
+                      >
+                        <span class="title mr-1" style="width: 307px"
+                          >Company ID Number:</span
+                        >
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            :name="
+                              AccountTypeOption == 'company'
+                                ? 'recipientCompanyId'
+                                : 'personId'
+                            "
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              v-model="
+                                invoiceData.recipientCompany.companyEic
+                              "
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+
+                      <div
+                        class="mb-1"
+                        v-if="invoiceData.documentType == 'INVOICE'"
+                      >
+                        <span class="title mr-1" style="width: 307px"
+                          >Company Owner:</span
+                        >
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            :name="
+                              AccountTypeOption == 'company'
+                                ? 'recipientCompanyOwner'
+                                : 'personId'
+                            "
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              v-model="
+                                invoiceData.recipientCompany.companyOwnerName
+                              "
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+
+                      <div
+                        class="mb-1"
+                        v-if="invoiceData.documentType == 'INVOICE'"
+                      >
+                        <span class="title mr-1" style="width: 307px"
+                          >VAT:</span
+                        >
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            :name="
+                              AccountTypeOption == 'company'
+                                ? 'recipientCompanyVat'
+                                : 'personVat'
+                            "
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              v-model="
+                                invoiceData.recipientCompany.companyVatEic
+                              "
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                    </div>
+
+                    <div v-else class="flex-grow-1 ml-2">
+                      <h6
+                        style="color: #625f6e"
+                        class="mb-1"
+                        v-if="invoiceData.documentType == 'INVOICE'"
+                      >
+                      {{ $t("add_invoice.recipient") }}
+                      </h6>
+                      <div
+                        class="mb-1"
+                        v-if="invoiceData.documentType == 'INVOICE'"
+                      >
+                        <span class="title mr-1" style="width: 307px"
+                          >Person Name:</span
+                        >
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            :name="
+                              AccountTypeOption == 'company'
+                                ? 'recipientCompanyName'
+                                : 'personName'
+                            "
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              v-model="invoiceData.recipientCompany.companName"
+                              @input="
+                                SearchCompanyNameRecipient(
+                                  invoiceData.recipientCompany.companName
+                                )
+                              "
+                              list="my-company_name"
+                              autocomplete="off"
+                              @blur="hideSuggestionRecipient()"
+                              @focus="
+                                ShowSuggestionRecipient(datalistRecipient)
+                              "
+                            />
+                            <b-list-group
+                              v-if="showSuggestionsRecipient"
+                              id="my-company_name"
+                              class="input-suggesstions"
+                              style="width: 100%"
+                            >
+                              <b-list-group-item
+                                button
+                                v-for="data in datalistRecipient"
+                                :key="data.eic"
+                                @click="autoCompletefnRecipient(data)"
+                                @mousedown="autoCompletefnRecipient(data)"
+                              >
+                                {{ data.company_name }}
+                              </b-list-group-item>
+                            </b-list-group>
+
+                            <b-list-group
+                              v-if="showSuggestionsPerson"
+                              id="my-company_name"
+                              class="input-suggesstions"
+                              style="width: 100%"
+                            >
+                              <b-list-group-item
+                                v-for="data in datalistPerson"
+                                :key="data.eic"
+                                @click="autoCompletefnPerson(data)"
+                                @mousedown="autoCompletefnPerson(data)"
+                              >
+                                {{ data.firstMiddleAndLastName }}
+                              </b-list-group-item>
+                            </b-list-group>
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                      <div
+                        class="mb-1"
+                        v-if="invoiceData.documentType == 'INVOICE'"
+                      >
+                        <span class="title mr-1" style="width: 307px"
+                          >Person Address:</span
+                        >
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            :name="
+                              AccountTypeOption == 'company'
+                                ? 'recipientCompanyAddress'
+                                : 'personAddress'
+                            "
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              v-model="
+                                invoiceData.recipientCompany.companyAddress
+                              "
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+
+                      <div
+                        class="mb-1"
+                        v-if="invoiceData.documentType == 'INVOICE'"
+                      >
+                        <span class="title mr-1" style="width: 307px"
+                          >Person ID Number:</span
+                        >
+
+                        <b-input-group
+                          class="input-group invoice-edit-input-group"
+                        >
+                          <validation-provider
+                            #default="{ errors }"
+                            :name="
+                              AccountTypeOption == 'company'
+                                ? 'recipientCompanyId'
+                                : 'personId'
+                            "
+                            rules="required"
+                            class="w-100"
+                          >
+                            <b-form-input
+                              v-model="
+                                invoiceData.recipientCompany.companyEic
+                              "
+                              autocomplete="off"
+                            />
+                            <small class="text-danger">{{ errors[0] }}</small>
+                          </validation-provider>
+                        </b-input-group>
+                      </div>
+                    </div>
+                    </div>
+                  
+                    <div v-else>
                       <div class="mb-1">
                         <h6 style="color: #625f6e" class="mb-1">
                           {{ $t("add_invoice.supplier") }}
@@ -1161,7 +2927,7 @@
                         </b-input-group>
                       </div>
                       <div
-                        class="mb-3 pb-2"
+                        class="mb-1"
                         style="border-bottom: 1px solid lightgrey"
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
