@@ -227,7 +227,7 @@ export default {
     validationForm() {
       this.$refs.simpleRules.validate().then((success) => {
         if (success) {
-          if (this.password.length && this.password.length < 8) {
+          if (this.newPasswordValue.length && this.newPasswordValue.length < 8) {
             this.passErr = "Password length must be greater than or equal to 8";
           }
           // eslint-disable-next-line
