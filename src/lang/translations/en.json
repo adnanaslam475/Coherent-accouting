@@ -51,7 +51,7 @@
   "paymentStatus": {
     "paymentStatus": "Payment Status",
     "payed": "PAYED",
-    "not_payed": "NOT PAYED"
+    "not_payed": "UNPAYED"
   },
   "lbl": {
     "login": "Login",
