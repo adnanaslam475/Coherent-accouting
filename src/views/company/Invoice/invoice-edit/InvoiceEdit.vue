@@ -114,8 +114,9 @@
                                 invoiceData.transactionType = 'INCOME';
                               }
                             "
-                            >Income</b-button
-                          >
+                            >{{
+                            $t("company_invoices.INCOME")
+                          }}</b-button>
                           <b-button
                             variant=""
                             :style="
@@ -128,8 +129,9 @@
                                 invoiceData.transactionType = 'EXPENSE';
                               }
                             "
-                            >Expense</b-button
-                          >
+                            >{{
+                            $t("company_invoices.EXPENSE")
+                          }}</b-button>
                         </b-button-group>
                       </b-col>
                     </b-row>
@@ -140,7 +142,7 @@
                     >
                       <b-col class="pl-0">
                         <div class="d-flex pl-0" style="flex-direction: column">
-                          <span class="grey-text-color"> DOCUMENT DATE </span>
+                          <span class="grey-text-color"> {{ $t("add_invoice.date") }} </span>
                           <span>
                             <validation-provider
                               #default="{ errors }"
@@ -174,7 +176,7 @@
 
                       <b-col cols="12" md="6" class="pl-0">
                         <div class="d-flex pl-0" style="flex-direction: column">
-                          <span class="grey-text-color"> DOCUMENT DATE </span>
+                          <span class="grey-text-color"> {{ $t("add_invoice.due_date") }} </span>
                           <span>
                             <validation-provider
                               #default="{ errors }"
@@ -240,7 +242,7 @@
                       <b-col class="pl-0">
                         <div class="d-flex" style="flex-direction: column">
                           <span class="text-uppercase grey-text-color">
-                            DOCUMENT TYPE
+                            {{ $t("add_invoice.document_type") }}
                           </span>
                           <span>
                             <div class="position-relative pt-1">
@@ -263,7 +265,7 @@
                                       invoiceData.recipientCompany = {};
                                     }
                                   "
-                                  >Receipt</b-button
+                                  >{{ $t("add_invoice.receipt") }}</b-button
                                 >
                                 <b-button
                                   variant=""
@@ -296,7 +298,7 @@
                                       invoiceData.recipientCompany = {};
                                     }
                                   "
-                                  >Receipt</b-button
+                                  >{{ $t("add_invoice.receipt") }}</b-button
                                 >
                                 <b-button
                                   variant=""
@@ -311,7 +313,7 @@
                                       invoiceData.documentType = 'INVOICE';
                                     }
                                   "
-                                  >INVOICE</b-button
+                                  >{{ $t("add_invoice.invoice") }}</b-button
                                 >
                               </b-button-group>
                             </div>
@@ -321,7 +323,7 @@
                       <b-col class="pl-0">
                         <div class="d-flex" style="flex-direction: column">
                           <span class="text-uppercase grey-text-color">
-                            ORIGINAL/PROFORMA
+                            {{ $t("add_invoice.ORIGINAL")}}/{{ $t("add_invoice.PROFORMA")}}
                           </span>
                           <span>
                             <div class="position-relative pt-1">
@@ -343,7 +345,7 @@
                                       invoiceData.recipientCompany = {};
                                     }
                                   "
-                                  >Original</b-button
+                                  >{{ $t("add_invoice.ORIGINAL") }}</b-button
                                 >
                                 <b-button
                                   variant=""
@@ -358,7 +360,7 @@
                                       invoiceData.invoiceType = 'PROFORMA';
                                     }
                                   "
-                                  >Proforma</b-button
+                                  >{{ $t("add_invoice.PROFORMA") }}</b-button
                                 >
                               </b-button-group>
                             </div>
@@ -369,7 +371,7 @@
                       <b-col class="pl-0">
                         <div class="d-flex" style="flex-direction: column">
                           <span class="text-uppercase grey-text-color">
-                            PAYED/NOT PAYED
+                            {{ $t("paymentStatus.payed") }}/{{ $t("paymentStatus.not_payed") }}
                           </span>
                           <span>
                             <div class="position-relative pt-1">
@@ -391,7 +393,7 @@
                                       invoiceData.recipientCompany = {};
                                     }
                                   "
-                                  >payed</b-button
+                                  >{{ $t("paymentStatus.payed") }}</b-button
                                 >
                                 <b-button
                                   variant=""
@@ -406,7 +408,7 @@
                                       invoiceData.paymentStatus = 'NOT_PAYED';
                                     }
                                   "
-                                  >not payed</b-button
+                                  >{{ $t("paymentStatus.not_payed") }}</b-button
                                 >
                               </b-button-group>
                             </div>
@@ -436,7 +438,7 @@
                                       invoiceData.recipientCompany = {};
                                     }
                                   "
-                                  >goods</b-button
+                                  >{{ $t("add_invoice.goods") }}</b-button
                                 >
                                 <b-button
                                   variant=""
@@ -451,7 +453,7 @@
                                       invoiceData.saleType = 'SERVICE';
                                     }
                                   "
-                                  >service</b-button
+                                  >{{ $t("add_invoice.service") }}</b-button
                                 >
                               </b-button-group>
                             </div>
@@ -464,7 +466,7 @@
                       <b-col class="px-0 text-end">
                         <div class="d-flex mr-0 flex-column float-right">
                           <div class="text-uppercase grey-text-color">
-                            INVOICE #
+                            {{ $t("add_invoice.invoice") }} #
                           </div>
                           <div class="pt-1">
                             <b-form-input
@@ -530,7 +532,7 @@
                           class="d-flex mr-2"
                           style="flex-direction: column; float: right"
                         >
-                          <div class="text-uppercase grey-text-color">TAX</div>
+                          <div class="text-uppercase grey-text-color">{{ $t("add_invoice.vat") }}</div>
                           <h4 style="color: #625f6e" class="pt-1">
                             <!-- name="Single Price" -->
                             <validation-provider
@@ -599,7 +601,7 @@
                       class="d-flex justify-content-end align-items-center"
                     >
                     <p class="invoice-total-title">
-                       Discount Percent:
+                      {{ $t("add_invoice.discount_percent") }}:
                       </p>
                       <b-col cols="3">
                         <div class="invoice-total-item">
@@ -635,7 +637,7 @@
                       class="pb-3 d-flex justify-content-end align-items-center"
                     >
                       <p class="invoice-total-title">
-                        Discount Sum:
+                        {{ $t("add_invoice.discount_sum") }}:
                       </p>
                       <b-col cols="3">
                         <div class="invoice-total-item">
@@ -660,7 +662,7 @@
                             </validation-provider>
                           </p>
                         </div>
-                      </b-col>      
+                      </b-col>
                     </b-row>
 
                     <div no-body class="invoice-add-card mb-1">
@@ -717,7 +719,7 @@
                                     class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
-                                    Description
+                                    {{ $t("add_invoice.service_item_description") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
@@ -725,7 +727,7 @@
                                     class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
-                                   Measure
+                                    {{ $t("add_invoice.measure") }}
                                   </b-col>
                                   <b-col
                                     cols="12"
@@ -908,7 +910,6 @@
                                       >
                                     </validation-provider>
                                   </b-col>
-
                                   <b-col cols="12" lg="1">
                                     <label class="d-inline d-lg-none"
                                       >Measure</label
@@ -1391,7 +1392,7 @@
                       <b-col cols="12" md="6" class="pl-0">
                         <div class="d-flex" style="flex-direction: column">
                           <span class="text-uppercase grey-text-color">
-                            DOCUMENT TYPE
+                            {{ $t("add_invoice.document_type") }}
                           </span>
                           <span>
                             <div class="position-relative pt-1">
@@ -1472,7 +1473,7 @@
                       <b-col class="px-0 text-end">
                         <div class="d-flex mr-0 flex-column float-right">
                           <div class="text-uppercase grey-text-color">
-                            INVOICE #
+                            {{ $t("add_invoice.invoice") }} #
                           </div>
                           <div class="pt-1">
                             <b-form-input
@@ -2213,7 +2214,7 @@
                                 AccountTypeOption = 'person';
                               }
                             "
-                            >Person</b-button
+                            >{{ $t("add_invoice.person") }}</b-button
                           >
                           <b-button
                             variant=""
@@ -2227,7 +2228,7 @@
                                 AccountTypeOption = 'company';
                               }
                             "
-                            >Company</b-button
+                            >{{ $t("add_invoice.company") }}</b-button
                           >
                         </b-button-group>
                       </b-col>
@@ -2292,7 +2293,7 @@
                           class="title mr-1 grey-text-color"
                           style="width: 307px"
                         >
-                          Company Address:
+                          {{ $t("add_invoice.company_address") }}:
                         </span>
 
                         <b-input-group
@@ -2323,7 +2324,7 @@
                           class="title mr-1 grey-text-color"
                           style="width: 307px"
                         >
-                        Company ID Number:
+                        {{ $t("add_invoice.company_id_no") }}:
                         </span>
 
                         <b-input-group
@@ -2354,7 +2355,7 @@
                           class="title mr-1 grey-text-color"
                           style="width: 307px"
                         >
-                        Company Owner:
+                        {{ $t("add_invoice.company_owner") }}:
                         </span>
 
                         <b-input-group
@@ -2385,7 +2386,7 @@
                           class="title mr-1 grey-text-color"
                           style="width: 307px"
                         >
-                        VAT:
+                        {{ $t("company_info.vat_number") }}:
                         </span>
 
                         <b-input-group
@@ -2423,7 +2424,7 @@
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
                         <span class="title mr-1" style="width: 307px"
-                          >Company Name:</span
+                          >{{ $t("companies.company_name") }}:</span
                         >
 
                         <b-input-group
@@ -2494,7 +2495,7 @@
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
                         <span class="title mr-1" style="width: 307px"
-                          >Company Address:</span
+                          >{{ $t("add_invoice.company_address") }}:</span
                         >
 
                         <b-input-group
@@ -2526,7 +2527,7 @@
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
                         <span class="title mr-1" style="width: 307px"
-                          >Company ID Number:</span
+                          >{{ $t("add_invoice.company_id_no") }}:</span
                         >
 
                         <b-input-group
@@ -2558,7 +2559,7 @@
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
                         <span class="title mr-1" style="width: 307px"
-                          >Company Owner:</span
+                          >{{ $t("add_invoice.company_owner") }}:</span
                         >
 
                         <b-input-group
@@ -2590,7 +2591,7 @@
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
                         <span class="title mr-1" style="width: 307px"
-                          >VAT:</span
+                          >{{ $t("company_info.vat_number") }}:</span
                         >
 
                         <b-input-group
@@ -2631,7 +2632,7 @@
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
                         <span class="title mr-1" style="width: 307px"
-                          >Person Name:</span
+                          >{{ $t("add_invoice.person_name") }}:</span
                         >
 
                         <b-input-group
@@ -2702,7 +2703,7 @@
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
                         <span class="title mr-1" style="width: 307px"
-                          >Person Address:</span
+                          >{{ $t("add_invoice.person_address") }}:</span
                         >
 
                         <b-input-group
@@ -2734,7 +2735,7 @@
                         v-if="invoiceData.documentType == 'INVOICE'"
                       >
                         <span class="title mr-1" style="width: 307px"
-                          >Person ID Number:</span
+                          >{{ $t("add_invoice.person_id_no") }}:</span
                         >
 
                         <b-input-group
@@ -2762,7 +2763,7 @@
                       </div>
                     </div>
                     </div>
-                  
+
                     <div v-else>
                       <div class="mb-1">
                         <h6 style="color: #625f6e" class="mb-1">
