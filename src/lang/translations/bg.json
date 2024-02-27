@@ -710,7 +710,8 @@
     "your_title": "Твоето заглавие",
     "email": "електронна поща",
     "your_email": "твоят имейл",
-    "message": "Съобщение"
+    "message": "Съобщение",
+    "document_type": "ТИП НА ДОКУМЕНТА"
   },
   "create_company": {
     "software": "Софтуер за експорт",

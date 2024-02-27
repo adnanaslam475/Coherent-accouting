@@ -724,7 +724,9 @@
     "your_title": "Your Title",
     "email": "Email",
     "your_email": "Your Email",
-    "message": "Message"
+    "message": "Message",
+    "document_type": "DOCUMENT TYPE"
+
   },
   "create_company": {
     "software": "Software",
