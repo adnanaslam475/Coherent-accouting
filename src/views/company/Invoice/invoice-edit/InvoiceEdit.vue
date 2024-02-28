@@ -235,11 +235,11 @@
                     </b-row>
 
                     <!-- <hr> -->
-                    <b-row
-                      class="mt-2 mx-0 pb-2 d-flex align-items-end"
+                    <div
+                      class="mt-2 mx-0 pb-2 d-flex flex-wrap align-items-end"
                       style="border-bottom: 1px solid lightgrey"
                     >
-                      <b-col class="pl-0">
+                      <div class="pl-0 mr-1">
                         <div class="d-flex" style="flex-direction: column">
                           <span class="text-uppercase grey-text-color">
                             {{ $t("add_invoice.document_type") }}
@@ -280,7 +280,7 @@
                                       invoiceData.documentType = 'INVOICE';
                                     }
                                   "
-                                  >Bill</b-button
+                                  >{{ $t("add_invoice.bill") }}</b-button
                                 >
                               </b-button-group>
                               <b-button-group size="md" v-else>
@@ -319,8 +319,8 @@
                             </div>
                           </span>
                         </div>
-                      </b-col>
-                      <b-col class="pl-0">
+                      </div>
+                      <div class="pl-0 mr-1">
                         <div class="d-flex" style="flex-direction: column">
                           <span class="text-uppercase grey-text-color">
                             {{ $t("add_invoice.ORIGINAL")}}/{{ $t("add_invoice.PROFORMA")}}
@@ -366,9 +366,9 @@
                             </div>
                           </span>
                         </div>
-                      </b-col>
+                      </div>
 
-                      <b-col class="pl-0">
+                      <div class="pl-0 mr-1">
                         <div class="d-flex" style="flex-direction: column">
                           <span class="text-uppercase grey-text-color">
                             {{ $t("paymentStatus.payed") }}/{{ $t("paymentStatus.not_payed") }}
@@ -414,9 +414,9 @@
                             </div>
                           </span>
                         </div>
-                      </b-col>
+                      </div>
 
-                      <b-col class="pl-0">
+                      <div class="pl-0 mr-1">
                         <div class="d-flex" style="flex-direction: column">
                           <span>
                             <div class="position-relative pt-1">
@@ -459,8 +459,8 @@
                             </div>
                           </span>
                         </div>
-                      </b-col>
-                    </b-row>
+                      </div>
+                    </div>
 
                     <b-row class="mt-2 mx-0 pb-1"> 
                       <b-col class="px-0 text-end">
@@ -680,7 +680,7 @@
                               <!-- ? Flex to keep separate width for XIcon and SettingsIcon -->
                               <div class="d-none d-lg-flex p-custom">
                                 <b-row
-                                  class="flex-grow-1 invoice-add-transections pb-1"
+                                  class="flex-grow-1 invoice-add-transections pb-1 justify-content-between"
                                   style="border-bottom: 1px solid lightgrey"
                                 >
                                   <!-- Single Item Form Headers -->
@@ -724,7 +724,7 @@
                                   <b-col
                                     cols="12"
                                     lg="1"
-                                    class="text-uppercase grey-text-color"
+                                    class="text-uppercase grey-text-color mr-2"
                                     style="font-size: 14px"
                                   >
                                     {{ $t("add_invoice.measure") }}
@@ -769,7 +769,7 @@
                                 class="d-flex pl-2"
                               >
                                 <b-row
-                                  class="flex-grow-1 py-1 invoice-add-transections"
+                                  class="flex-grow-1 py-1 invoice-add-transections justify-content-between"
                                   style="border-bottom: 1px solid lightgrey"
                                 >
                                   <!-- Single Item Form Headers -->
@@ -910,7 +910,7 @@
                                       >
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="1">
+                                  <b-col cols="12" lg="1" class="mr-2">
                                     <label class="d-inline d-lg-none"
                                       >Measure</label
                                     >
@@ -2243,7 +2243,7 @@
                         <span
                           class="title mr-1 grey-text-color"
                           style="width: 307px"
-                          >Company Name:
+                          >{{ $t("companies.company_name") }}:
                         </span>
                         <b-input-group
                           class="input-group invoice-edit-input-group w-100"
@@ -14016,6 +14016,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn {
+  padding: 0.786rem 0.8rem;
+}
 .reverse-button {
   position: relative;
   top: 50%;
