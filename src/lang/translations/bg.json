@@ -1,6 +1,7 @@
 {
   "reverse": "Обратен",
   "Data": "Данни",
+  "vendor": "Доставчик",
   "from_period": "От периода св",
   "to_period": "До св. Период",
   "total_debit": "Общ дебит",
@@ -712,7 +713,8 @@
     "your_email": "твоят имейл",
     "message": "Съобщение",
     "document_type": "ТИП НА ДОКУМЕНТА",
-    "bill": "Бил"
+    "bill": "Бил",
+    "possible_duplicate": "Възможен дубликат"
   },
   "create_company": {
     "software": "Софтуер за експорт",

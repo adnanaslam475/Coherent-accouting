@@ -1,6 +1,7 @@
 {
   "reverse": "Reverse",
   "Data": "Data",
+  "vendor": "vendor",
   "from_period": "From St. Period",
   "to_period": "To St. Period",
   "total_debit": "Total Debit",
@@ -726,7 +727,8 @@
     "your_email": "Your Email",
     "message": "Message",
     "document_type": "DOCUMENT TYPE",
-    "bill": "Bill"
+    "bill": "Bill",
+    "possible_duplicate": "Possible Duplicate"
 
   },
   "create_company": {

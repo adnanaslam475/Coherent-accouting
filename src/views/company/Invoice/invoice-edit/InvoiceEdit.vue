@@ -81,7 +81,7 @@
                     <template #title>
                       <feather-icon icon="FileTextIcon" />
                       <span style="font-size: 0.8vw" class="text-capitalize"
-                        >Data</span
+                        >{{ $t("Data") }}</span
                       >
                     </template>
 
@@ -136,78 +136,80 @@
                       </b-col>
                     </b-row>
 
-                    <b-row
-                      class="mt-2 mx-0 pb-2"
+                    <div
+                      class="mt-2 mx-0 pb-2 d-flex flex-wrap justify-content-between"
                       style="border-bottom: 1px solid lightgrey"
                     >
-                      <b-col class="pl-0">
-                        <div class="d-flex pl-0" style="flex-direction: column">
-                          <span class="grey-text-color"> {{ $t("add_invoice.date") }} </span>
-                          <span>
-                            <validation-provider
-                              #default="{ errors }"
-                              name="dateIssued"
-                              rules="required"
-                            >
-                              <div class="position-relative d-inline-flex">
-                                <flat-pickr
-                                  v-model="invoiceData.dateIssued"
-                                  class="form-control invoice-edit-input invoice-input-top"
-                                  placeholder="Document Date"
-                                />
-                                <feather-icon
-                                  v-if="invoiceData.dateIssued === ''"
-                                  size="16"
-                                  icon="CalendarIcon"
-                                  class="cursor-pointer clear-all"
-                                />
-                                <feather-icon
-                                  v-else
-                                  size="16"
-                                  icon="XIcon"
-                                  class="cursor-pointer clear-all"
-                                  @click="invoiceData.dateIssued = ''"
-                                />
-                              </div>
-                            </validation-provider>
-                          </span>
+                      <div class="d-flex flex-wrap mr-2">
+                        <div class="mr-1">
+                          <div class="d-flex pl-0" style="flex-direction: column">
+                            <span class="grey-text-color"> {{ $t("add_invoice.date") }} </span>
+                            <span>
+                              <validation-provider
+                                #default="{ errors }"
+                                name="dateIssued"
+                                rules="required"
+                              >
+                                <div class="position-relative d-inline-flex">
+                                  <flat-pickr
+                                    v-model="invoiceData.dateIssued"
+                                    class="form-control invoice-edit-input invoice-input-top"
+                                    placeholder="Document Date"
+                                  />
+                                  <feather-icon
+                                    v-if="invoiceData.dateIssued === ''"
+                                    size="16"
+                                    icon="CalendarIcon"
+                                    class="cursor-pointer clear-all"
+                                  />
+                                  <feather-icon
+                                    v-else
+                                    size="16"
+                                    icon="XIcon"
+                                    class="cursor-pointer clear-all"
+                                    @click="invoiceData.dateIssued = ''"
+                                  />
+                                </div>
+                              </validation-provider>
+                            </span>
+                          </div>
                         </div>
-                      </b-col>
 
-                      <b-col cols="12" md="6" class="pl-0">
-                        <div class="d-flex pl-0" style="flex-direction: column">
-                          <span class="grey-text-color"> {{ $t("add_invoice.due_date") }} </span>
-                          <span>
-                            <validation-provider
-                              #default="{ errors }"
-                              name="dueDate"
-                              rules="required"
-                            >
-                              <div class="position-relative d-inline-flex">
-                                <flat-pickr
-                                  v-model="invoiceData.dueDate"
-                                  class="form-control invoice-edit-input invoice-input-top"
-                                  placeholder="Document Date"
-                                />
-                                <feather-icon
-                                  v-if="invoiceData.dueDate === ''"
-                                  size="16"
-                                  icon="CalendarIcon"
-                                  class="cursor-pointer clear-all"
-                                />
-                                <feather-icon
-                                  v-else
-                                  size="16"
-                                  icon="XIcon"
-                                  class="cursor-pointer clear-all"
-                                  @click="invoiceData.dueDate = ''"
-                                />
-                              </div>
-                            </validation-provider>
-                          </span>
+                        <div class="pl-0">
+                          <div class="d-flex pl-0" style="flex-direction: column">
+                            <span class="grey-text-color"> {{ $t("add_invoice.due_date") }} </span>
+                            <span>
+                              <validation-provider
+                                #default="{ errors }"
+                                name="dueDate"
+                                rules="required"
+                              >
+                                <div class="position-relative d-inline-flex">
+                                  <flat-pickr
+                                    v-model="invoiceData.dueDate"
+                                    class="form-control invoice-edit-input invoice-input-top"
+                                    placeholder="Document Date"
+                                  />
+                                  <feather-icon
+                                    v-if="invoiceData.dueDate === ''"
+                                    size="16"
+                                    icon="CalendarIcon"
+                                    class="cursor-pointer clear-all"
+                                  />
+                                  <feather-icon
+                                    v-else
+                                    size="16"
+                                    icon="XIcon"
+                                    class="cursor-pointer clear-all"
+                                    @click="invoiceData.dueDate = ''"
+                                  />
+                                </div>
+                              </validation-provider>
+                            </span>
+                          </div>
                         </div>
-                      </b-col>
-                      <b-col
+                      </div>
+                      <div
                         class="px-0 text-end"
                         v-if="invoiceData.possibleDuplicate"
                       >
@@ -217,22 +219,22 @@
                         >
                           <div
                             class="text-uppercase grey-text-color mr-1"
-                            style="color: red"
+                            style="color: red; margin-right: 1em !important;"
                           >
-                            Possible Duplicate
+                          <span>{{ $t("add_invoice.possible_duplicate") }}</span>
                           </div>
                           <div class="pt-1">
                             <feather-icon
                               size="16"
                               icon="XCircleIcon"
-                              class="cursor-pointer ml-auto"
+                              class="cursor-pointer ml-auto mr-0"
                               stroke="red"
                               @click="changePossibleDuplicate(false)"
                             />
                           </div>
                         </div>
-                      </b-col>
-                    </b-row>
+                      </div>
+                    </div>
 
                     <!-- <hr> -->
                     <div
@@ -715,7 +717,7 @@
 
                                   <b-col
                                     cols="12"
-                                    lg="4"
+                                    lg="6"
                                     class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
@@ -766,7 +768,7 @@
                                   item, index
                                 ) in invoiceData.transactions"
                                 :key="index"
-                                class="d-flex pl-2"
+                                class="d-flex"
                               >
                                 <b-row
                                   class="flex-grow-1 py-1 invoice-add-transections justify-content-between"
@@ -879,7 +881,7 @@
                                       >
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="4">
+                                  <b-col cols="12" lg="6">
                                     <label class="d-inline d-lg-none"
                                       >Description</label
                                     >
@@ -2182,7 +2184,7 @@
                     <template #title>
                       <feather-icon icon="UserIcon" />
                       <span style="font-size: 0.8vw" class="text-capitalize"
-                        >Vendor</span
+                        >{{ $t("vendor") }}</span
                       >
                     </template>
 
