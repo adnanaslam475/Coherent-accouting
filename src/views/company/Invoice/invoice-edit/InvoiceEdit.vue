@@ -136,80 +136,78 @@
                       </b-col>
                     </b-row>
 
-                    <div
-                      class="mt-2 mx-0 pb-2 d-flex flex-wrap justify-content-between"
+                    <b-row
+                      class="mt-2 mx-0 pb-2"
                       style="border-bottom: 1px solid lightgrey"
                     >
-                      <div class="d-flex flex-wrap mr-2">
-                        <div class="mr-1">
-                          <div class="d-flex pl-0" style="flex-direction: column">
-                            <span class="grey-text-color"> {{ $t("add_invoice.date") }} </span>
-                            <span>
-                              <validation-provider
-                                #default="{ errors }"
-                                name="dateIssued"
-                                rules="required"
-                              >
-                                <div class="position-relative d-inline-flex">
-                                  <flat-pickr
-                                    v-model="invoiceData.dateIssued"
-                                    class="form-control invoice-edit-input invoice-input-top"
-                                    placeholder="Document Date"
-                                  />
-                                  <feather-icon
-                                    v-if="invoiceData.dateIssued === ''"
-                                    size="16"
-                                    icon="CalendarIcon"
-                                    class="cursor-pointer clear-all"
-                                  />
-                                  <feather-icon
-                                    v-else
-                                    size="16"
-                                    icon="XIcon"
-                                    class="cursor-pointer clear-all"
-                                    @click="invoiceData.dateIssued = ''"
-                                  />
-                                </div>
-                              </validation-provider>
-                            </span>
-                          </div>
+                      <b-col cols="3" class="mr-3">
+                        <div class="d-flex pl-0" style="flex-direction: column">
+                          <span class="grey-text-color"> {{ $t("add_invoice.date") }} </span>
+                          <span>
+                            <validation-provider
+                              #default="{ errors }"
+                              name="dateIssued"
+                              rules="required"
+                            >
+                              <div class="position-relative d-inline-flex">
+                                <flat-pickr
+                                  v-model="invoiceData.dateIssued"
+                                  class="form-control invoice-edit-input invoice-input-top"
+                                  placeholder="Document Date"
+                                />
+                                <feather-icon
+                                  v-if="invoiceData.dateIssued === ''"
+                                  size="16"
+                                  icon="CalendarIcon"
+                                  class="cursor-pointer clear-all"
+                                />
+                                <feather-icon
+                                  v-else
+                                  size="16"
+                                  icon="XIcon"
+                                  class="cursor-pointer clear-all"
+                                  @click="invoiceData.dateIssued = ''"
+                                />
+                              </div>
+                            </validation-provider>
+                          </span>
                         </div>
+                      </b-col>
 
-                        <div class="pl-0">
-                          <div class="d-flex pl-0" style="flex-direction: column">
-                            <span class="grey-text-color"> {{ $t("add_invoice.due_date") }} </span>
-                            <span>
-                              <validation-provider
-                                #default="{ errors }"
-                                name="dueDate"
-                                rules="required"
-                              >
-                                <div class="position-relative d-inline-flex">
-                                  <flat-pickr
-                                    v-model="invoiceData.dueDate"
-                                    class="form-control invoice-edit-input invoice-input-top"
-                                    placeholder="Document Date"
-                                  />
-                                  <feather-icon
-                                    v-if="invoiceData.dueDate === ''"
-                                    size="16"
-                                    icon="CalendarIcon"
-                                    class="cursor-pointer clear-all"
-                                  />
-                                  <feather-icon
-                                    v-else
-                                    size="16"
-                                    icon="XIcon"
-                                    class="cursor-pointer clear-all"
-                                    @click="invoiceData.dueDate = ''"
-                                  />
-                                </div>
-                              </validation-provider>
-                            </span>
-                          </div>
+                      <b-col cols="4" class="pl-0">
+                        <div class="d-flex pl-0" style="flex-direction: column">
+                          <span class="grey-text-color"> {{ $t("add_invoice.due_date") }} </span>
+                          <span>
+                            <validation-provider
+                              #default="{ errors }"
+                              name="dueDate"
+                              rules="required"
+                            >
+                              <div class="position-relative d-inline-flex">
+                                <flat-pickr
+                                  v-model="invoiceData.dueDate"
+                                  class="form-control invoice-edit-input invoice-input-top"
+                                  placeholder="Document Date"
+                                />
+                                <feather-icon
+                                  v-if="invoiceData.dueDate === ''"
+                                  size="16"
+                                  icon="CalendarIcon"
+                                  class="cursor-pointer clear-all"
+                                />
+                                <feather-icon
+                                  v-else
+                                  size="16"
+                                  icon="XIcon"
+                                  class="cursor-pointer clear-all"
+                                  @click="invoiceData.dueDate = ''"
+                                />
+                              </div>
+                            </validation-provider>
+                          </span>
                         </div>
-                      </div>
-                      <div
+                      </b-col>
+                      <b-col
                         class="px-0 text-end"
                         v-if="invoiceData.possibleDuplicate"
                       >
@@ -219,22 +217,22 @@
                         >
                           <div
                             class="text-uppercase grey-text-color mr-1"
-                            style="color: red; margin-right: 1em !important;"
+                            style="color: red"
                           >
-                          <span>{{ $t("add_invoice.possible_duplicate") }}</span>
+                          {{ $t("add_invoice.possible_duplicate") }}
                           </div>
                           <div class="pt-1">
                             <feather-icon
                               size="16"
                               icon="XCircleIcon"
-                              class="cursor-pointer ml-auto mr-0"
+                              class="cursor-pointer ml-auto"
                               stroke="red"
                               @click="changePossibleDuplicate(false)"
                             />
                           </div>
                         </div>
-                      </div>
-                    </div>
+                      </b-col>
+                    </b-row>
 
                     <!-- <hr> -->
                     <div
@@ -530,38 +528,6 @@
                             </validation-provider>
                           </h4>
                         </div>
-                        <div
-                          class="d-flex mr-2"
-                          style="flex-direction: column; float: right"
-                        >
-                          <div class="text-uppercase grey-text-color">{{ $t("add_invoice.vat") }}</div>
-                          <h4 style="color: #625f6e" class="pt-1">
-                            <!-- name="Single Price" -->
-                            <validation-provider
-                              #default="{ errors }"
-                              name="tax"
-                              rules="required"
-                              ref="tax"
-                            >
-                              <b-form-input
-                                id="tax"
-                                name="tax"
-                                v-model="totalTaxInDecimal"
-                                type="number"
-                                @keyup="preventNum"
-                                @change="removeTaxMsg"
-                                class="mb-0"
-                                style="width: 130px"
-                              />
-                              <small
-                                class="text-danger"
-                                style="font-size: 10px"
-                                v-if="inValidTax"
-                                >{{ "This field is required" }}</small
-                              >
-                            </validation-provider>
-                          </h4>
-                        </div>
                       </b-col>
                     </b-row>
                     <b-row
@@ -597,7 +563,42 @@
                             </validation-provider>
                           </p>
                         </div>
-                      </b-col>      
+                      </b-col>
+                    </b-row>
+                    <b-row
+                      class="d-flex justify-content-end align-items-center"
+                    >
+                      <p class="invoice-total-title">
+                        {{ $t("add_invoice.vat") }}:
+                      </p>
+                      <b-col cols="3">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-amount">
+                            <!-- name="Single Price" -->
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tax"
+                              rules="required"
+                              ref="tax"
+                            >
+                              <b-form-input
+                                id="tax"
+                                name="tax"
+                                v-model="totalTaxInDecimal"
+                                type="number"
+                                @keyup="preventNum"
+                                @change="removeTaxMsg"
+                                class="text-right"
+                              />
+                              <small
+                                class="text-danger"
+                                v-if="inValidTax"
+                                >{{ "This field is required" }}</small
+                              >
+                            </validation-provider>
+                          </p>
+                        </div>
+                      </b-col>
                     </b-row>
                     <b-row
                       class="d-flex justify-content-end align-items-center"
