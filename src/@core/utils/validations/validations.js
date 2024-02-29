@@ -55,6 +55,8 @@ export const alphaNum = extend("alpha-num", rule_alpha_num);
 
 export const length = extend("length", rule_length);
 
+
+
 export const positive = extend("positive", {
   validate: validatorPositive,
   message: "Please enter positive number!",
@@ -89,6 +91,15 @@ export const singlePriceValid = extend("singlePriceValid", {
 export const qtyValid = extend("qtyValid", {
   validate: validatorQty,
   message: `Qunatity should be greater than 0`,
+});
+
+extend('special_symbols', {
+  validate(value) {
+    // Regular expression to match any special symbols
+    const regexPattern = /[\!@#\$%\^&\*\(\)\-_=\+\\\|\[\]\{\};:'",\.<>\/\?]/;
+    return !regexPattern.test(value);
+  },
+  message: 'The {_field_} cannot contain special symbols.'
 });
 
 // Install English and Arabic localizations.

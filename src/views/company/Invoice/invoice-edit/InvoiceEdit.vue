@@ -12441,7 +12441,6 @@ export default {
               }
             )
             .then((response) => {
-              
               if (response.status === 200) {
                 const reader = new FileReader();
                 reader.readAsDataURL(response.data);

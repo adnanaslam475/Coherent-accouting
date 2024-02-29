@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="app"
-    class="h-100"
-    :class="[skinClasses]"
-  >
+  <div id="app" class="h-100" :class="[skinClasses]">
     <component :is="layout">
       <router-view />
     </component>
@@ -142,13 +138,13 @@ export default {
         .then(response => {
           localStorage.setItem('user_token', response.data.access_token)
         })
-        .catch(error => {})
-        .finally(() => {})
+        .catch(error => { })
+        .finally(() => { })
     }
     axios
       .get(axios.defaults.baseURL)
-      .then(r => {})
-      .catch(e => {})
+      .then(r => { })
+      .catch(e => { })
     if (t) {
       axios
         .get(`${axios.defaults.baseURL}/account/api/maintenance/health`)
@@ -162,7 +158,7 @@ export default {
           this.isUnderMaintenance = true
           router.push('/under-maintenance')
         })
-        .finally(() => {})
+        .finally(() => { })
       axios
         .get(`${axios.defaults.baseURL}/index/health`)
         .then(res => {
@@ -171,7 +167,7 @@ export default {
         .catch(e => {
           console.log('error in index/health :', e)
         })
-        .finally(() => {})
+        .finally(() => { })
       axios
         .get(`${axios.defaults.baseURL}/index/api/maintenance/health`)
         .then(res => {
@@ -185,7 +181,7 @@ export default {
         .catch(e => {
           router.push('/under-maintenance')
         })
-        .finally(() => {})
+        .finally(() => { })
     }
     axios
       .get(`${axios.defaults.baseURL}/index/health`, {
@@ -195,13 +191,20 @@ export default {
       })
       .then(res => {
         if (res.headers['Set-Cookie'] || getCookieValue('XSRF-TOKEN')) {
-          axios.defaults.headers['X-XSRF-TOKEN'] = res.headers['Set-Cookie'] || getCookieValue('XSRF-TOKEN')
+          let cookieValue = res.headers['Set-Cookie'] || getCookieValue('XSRF-TOKEN');
+
+          // Append Secure attribute if it's not already present
+          if (!cookieValue.includes('Secure')) {
+            cookieValue += '; Secure';
+          }
+
+          axios.defaults.headers['X-XSRF-TOKEN'] = cookieValue;
         }
       })
       .catch(e => {
         console.log('error----->', e)
       })
-      .finally(() => {})
+      .finally(() => { })
   },
 }
 </script>

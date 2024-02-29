@@ -627,7 +627,7 @@
                                       <validation-provider
                                         #default="{ errors, invalid }"
                                         name="Description"
-                                        rules="required"
+                                        rules="required|special_symbols"
                                         ref="transectionServiceOrItemDescription"
                                         immediate
                                       >
