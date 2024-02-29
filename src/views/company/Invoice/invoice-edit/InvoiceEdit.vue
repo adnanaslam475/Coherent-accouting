@@ -81,7 +81,7 @@
                     <template #title>
                       <feather-icon icon="FileTextIcon" />
                       <span style="font-size: 0.8vw" class="text-capitalize"
-                        >Data</span
+                        >{{ $t("Data") }}</span
                       >
                     </template>
 
@@ -140,7 +140,7 @@
                       class="mt-2 mx-0 pb-2"
                       style="border-bottom: 1px solid lightgrey"
                     >
-                      <b-col class="pl-0">
+                      <b-col cols="3" class="mr-3">
                         <div class="d-flex pl-0" style="flex-direction: column">
                           <span class="grey-text-color"> {{ $t("add_invoice.date") }} </span>
                           <span>
@@ -174,7 +174,7 @@
                         </div>
                       </b-col>
 
-                      <b-col cols="12" md="6" class="pl-0">
+                      <b-col cols="4" class="pl-0">
                         <div class="d-flex pl-0" style="flex-direction: column">
                           <span class="grey-text-color"> {{ $t("add_invoice.due_date") }} </span>
                           <span>
@@ -219,7 +219,7 @@
                             class="text-uppercase grey-text-color mr-1"
                             style="color: red"
                           >
-                            Possible Duplicate
+                          {{ $t("add_invoice.possible_duplicate") }}
                           </div>
                           <div class="pt-1">
                             <feather-icon
@@ -528,38 +528,6 @@
                             </validation-provider>
                           </h4>
                         </div>
-                        <div
-                          class="d-flex mr-2"
-                          style="flex-direction: column; float: right"
-                        >
-                          <div class="text-uppercase grey-text-color">{{ $t("add_invoice.vat") }}</div>
-                          <h4 style="color: #625f6e" class="pt-1">
-                            <!-- name="Single Price" -->
-                            <validation-provider
-                              #default="{ errors }"
-                              name="tax"
-                              rules="required"
-                              ref="tax"
-                            >
-                              <b-form-input
-                                id="tax"
-                                name="tax"
-                                v-model="totalTaxInDecimal"
-                                type="number"
-                                @keyup="preventNum"
-                                @change="removeTaxMsg"
-                                class="mb-0"
-                                style="width: 130px"
-                              />
-                              <small
-                                class="text-danger"
-                                style="font-size: 10px"
-                                v-if="inValidTax"
-                                >{{ "This field is required" }}</small
-                              >
-                            </validation-provider>
-                          </h4>
-                        </div>
                       </b-col>
                     </b-row>
                     <b-row
@@ -595,7 +563,42 @@
                             </validation-provider>
                           </p>
                         </div>
-                      </b-col>      
+                      </b-col>
+                    </b-row>
+                    <b-row
+                      class="d-flex justify-content-end align-items-center"
+                    >
+                      <p class="invoice-total-title">
+                        {{ $t("add_invoice.vat") }}:
+                      </p>
+                      <b-col cols="3">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-amount">
+                            <!-- name="Single Price" -->
+                            <validation-provider
+                              #default="{ errors }"
+                              name="tax"
+                              rules="required"
+                              ref="tax"
+                            >
+                              <b-form-input
+                                id="tax"
+                                name="tax"
+                                v-model="totalTaxInDecimal"
+                                type="number"
+                                @keyup="preventNum"
+                                @change="removeTaxMsg"
+                                class="text-right"
+                              />
+                              <small
+                                class="text-danger"
+                                v-if="inValidTax"
+                                >{{ "This field is required" }}</small
+                              >
+                            </validation-provider>
+                          </p>
+                        </div>
+                      </b-col>
                     </b-row>
                     <b-row
                       class="d-flex justify-content-end align-items-center"
@@ -715,7 +718,7 @@
 
                                   <b-col
                                     cols="12"
-                                    lg="4"
+                                    lg="6"
                                     class="text-uppercase grey-text-color"
                                     style="font-size: 14px"
                                   >
@@ -766,7 +769,7 @@
                                   item, index
                                 ) in invoiceData.transactions"
                                 :key="index"
-                                class="d-flex pl-2"
+                                class="d-flex"
                               >
                                 <b-row
                                   class="flex-grow-1 py-1 invoice-add-transections justify-content-between"
@@ -879,7 +882,7 @@
                                       >
                                     </validation-provider>
                                   </b-col>
-                                  <b-col cols="12" lg="4">
+                                  <b-col cols="12" lg="6">
                                     <label class="d-inline d-lg-none"
                                       >Description</label
                                     >
@@ -2182,7 +2185,7 @@
                     <template #title>
                       <feather-icon icon="UserIcon" />
                       <span style="font-size: 0.8vw" class="text-capitalize"
-                        >Vendor</span
+                        >{{ $t("vendor") }}</span
                       >
                     </template>
 
