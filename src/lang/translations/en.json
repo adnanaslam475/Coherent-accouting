@@ -725,7 +725,8 @@
     "email": "Email",
     "your_email": "Your Email",
     "message": "Message",
-    "document_type": "DOCUMENT TYPE"
+    "document_type": "DOCUMENT TYPE",
+    "bill": "Bill"
 
   },
   "create_company": {

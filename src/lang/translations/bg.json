@@ -711,7 +711,8 @@
     "email": "електронна поща",
     "your_email": "твоят имейл",
     "message": "Съобщение",
-    "document_type": "ТИП НА ДОКУМЕНТА"
+    "document_type": "ТИП НА ДОКУМЕНТА",
+    "bill": "Бил"
   },
   "create_company": {
     "software": "Софтуер за експорт",
