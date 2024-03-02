@@ -534,6 +534,38 @@
                       class="d-flex justify-content-end align-items-center"
                     >
                       <p class="invoice-total-title">
+                        {{ $t("add_invoice.sum") }}:
+                      </p>
+                      <b-col cols="3">
+                        <div class="invoice-total-item">
+                          <p class="invoice-total-amount">
+                            <validation-provider
+                              #default="{ errors }"
+                              name="vat"
+                              ref="vatPercent"
+                            >
+                              <b-input-group
+                                class="input-group-merge invoice-edit-input-group"
+                              >
+                                <b-form-input
+                                  v-model="invoiceData.amountNonVat"
+                                  step="any"
+                                  type="number"
+                                  class="text-right"
+                                  @input="populateValues()"
+                                />
+                              </b-input-group>
+                              <small class="text-danger">{{ errors[0] }}</small>
+                            </validation-provider>
+                          </p>
+                        </div>
+                      </b-col>
+                    </b-row>
+
+                    <b-row
+                      class="d-flex justify-content-end align-items-center"
+                    >
+                      <p class="invoice-total-title">
                         {{ $t("add_invoice.tax") }}:
                       </p>
                       <b-col cols="3">
@@ -12946,6 +12978,19 @@ export default {
       },
     });
 
+    const totalSum = computed(() => {
+      const totalTransactionAmount = invoiceData.value.transactions
+        .reduce((acc, ele) => {
+          const singleAmount = parseFloat(ele.singleAmountTransaction) || 0;
+          const quantity = parseFloat(ele.quantity) || 0;
+          return acc + singleAmount*quantity;
+        }, 0)
+        .toFixed(2);
+
+      invoiceData.value.amountNonVat = totalTransactionAmount;
+      return totalTransactionAmount;
+    });
+
     let uploadValue = {
       companyOwnerName: "",
       companName: "",
@@ -13903,6 +13948,7 @@ export default {
       totalTax,
       totalTaxInDecimal,
       totalAmountInDecimal,
+      totalSum,
       trHeight,
       loading,
       showinvoiceCurrency,

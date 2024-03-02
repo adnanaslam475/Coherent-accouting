@@ -630,6 +630,7 @@ export default {
     }, 1500);
     this.observeScroll();
     this.getMyCurrentPlan();
+    this.refreshList()
   },
 
   methods: {

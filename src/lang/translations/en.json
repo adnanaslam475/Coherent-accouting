@@ -728,7 +728,8 @@
     "message": "Message",
     "document_type": "DOCUMENT TYPE",
     "bill": "Bill",
-    "possible_duplicate": "Possible Duplicate"
+    "possible_duplicate": "Possible Duplicate",
+    "sum": "Sum"
 
   },
   "create_company": {
