@@ -715,7 +715,7 @@
     "document_type": "ТИП НА ДОКУМЕНТА",
     "bill": "Фактура",
     "possible_duplicate": "Възможен дубликат",
-    "sum": "Сума"
+    "sum": "Дан. основа"
   },
   "create_company": {
     "software": "Софтуер за експорт",
