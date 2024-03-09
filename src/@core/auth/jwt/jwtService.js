@@ -11,11 +11,12 @@ export default class JwtService {
   axiosIns1 = axios.create({
     // You can add your headers here
     // ================================
+    withCredentials: true,
     baseURL: "https://coherent-accounting.com",
     // baseURL: "https://167.86.93.80",
     // timeout: 1000,
     headers: {
-      // "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+      "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       "Access-Control-Allow-Origin": "https://coherent-accounting.com",
@@ -27,11 +28,13 @@ export default class JwtService {
     // You can add your headers here
     // ================================
     // baseURL: "https://167.86.93.80",
+    withCredentials: true,
     baseURL: "https://coherent-accounting.com",
     // timeout: 1000,
   });
 
   axiosIns4 = axios.create({
+    withCredentials: true,
     baseURL: "https://api.ipify.org/?format=json",
   });
 
@@ -53,6 +56,7 @@ export default class JwtService {
     // Request Interceptor
     this.axiosIns.interceptors.request.use(
       (config) => {
+        // console.log("configggggg", config.withCredentials);
         // config.withCredentials = true;
         // Get token from localStorage
         const accessToken = this.getToken();
