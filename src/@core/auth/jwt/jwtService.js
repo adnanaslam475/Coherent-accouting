@@ -3,6 +3,7 @@ import axios from "axios";
 var qs = require("qs");
 var FormData = require("form-data");
 import router from "@/router";
+import { getCookieValue } from "@/auth/utils";
 
 export default class JwtService {
   // Will be used by this service for making API calls
@@ -14,6 +15,7 @@ export default class JwtService {
     // baseURL: "https://167.86.93.80",
     // timeout: 1000,
     headers: {
+      // "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       "Access-Control-Allow-Origin": "https://coherent-accounting.com",
@@ -163,10 +165,11 @@ export default class JwtService {
     let headers = {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
+      "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
     };
     return this.axiosIns2.post(this.jwtConfig.loginEndpoint, data, {
-      headers: headers,
+      headers,
     });
   }
 
@@ -187,7 +190,7 @@ export default class JwtService {
       Accept: "application/json",
     };
     return this.axiosIns2.post(this.jwtConfig.registerEndpoint, ...args, {
-      headers: headers,
+      headers,
     });
   }
 
@@ -199,7 +202,7 @@ export default class JwtService {
       this.jwtConfig.resetPasswordRequestEndpoint,
       ...args,
       {
-        headers: headers,
+        headers,
       }
     );
   }
@@ -209,7 +212,7 @@ export default class JwtService {
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
     };
     return this.axiosIns2.post(this.jwtConfig.resetPasswordEndpoint, ...args, {
-      headers: headers,
+      headers,
     });
   }
 
@@ -225,7 +228,7 @@ export default class JwtService {
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
     };
     return this.axiosIns2.get(this.jwtConfig.countryToken, {
-      headers: headers,
+      headers,
     });
   }
 
@@ -462,7 +465,7 @@ export default class JwtService {
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
     };
     return this.axiosIns.get(this.jwtConfig.GetUserCurrentPlan, {
-      headers: headers,
+      headers,
     });
   }
 
@@ -474,7 +477,7 @@ export default class JwtService {
     return this.axiosIns.get(
       `${this.jwtConfig.validateVat + "?vatNumber=" + data}`,
       {
-        headers: headers,
+        headers,
       }
     );
   }
@@ -483,6 +486,6 @@ export default class JwtService {
     let headers = {
       Authorization: `Bearer ${token}`,
     };
-    return this.axiosIns.post(`/api/export`, data, { headers: headers });
+    return this.axiosIns.post(`/api/export`, data, { headers });
   }
 }
