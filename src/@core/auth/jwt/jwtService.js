@@ -163,9 +163,9 @@ export default class JwtService {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
-      "XSRF-TOKEN":
-        getCookieValue("XSRF-TOKEN") ||
-        document.cookie?.split(";")[0].split("=")[1],
+      // "XSRF-TOKEN":
+      //   getCookieValue("XSRF-TOKEN") ||
+      //   document.cookie?.split(";")[0].split("=")[1],
     };
     console.log(
       "cXSRF-TOKEN------",
