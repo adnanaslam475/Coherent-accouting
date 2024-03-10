@@ -136,9 +136,16 @@ export default {
           password: "1234",
         })
         .then((response) => {
-          localStorage.setItem("user_token", response.data.access_token);
+          localStorage.setItem(
+            "user_token",
+            response.data.access_token["x-xsrf-token"]
+          );
         })
         .catch((error) => {
+          store.commit(
+            "verticalMenu/SET_PREVENT_REFRESH",
+            error.response.headers["x-xsrf-token"]
+          );
           console.log("err142-==>", error.response.headers);
           axios.defaults.headers["XSRF-TOKEN"] =
             error.response.headers["x-xsrf-token"];

@@ -166,9 +166,10 @@ import useJwt from "@/auth/jwt/useJwt";
 import { required, email } from "@validations";
 import { togglePasswordVisibility } from "@core/mixins/ui/forms";
 import store from "@/store/index";
-import { getCookieValue, getHomeRouteForLoggedInUser } from "@/auth/utils";
+import { getCookieValue } from "@/auth/utils";
 import navbarAds from "./navbarAds.vue";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import { mapGetters } from "vuex";
 
 export default {
   directives: {
@@ -231,6 +232,7 @@ export default {
       }
       return this.sideImg;
     },
+    ...mapGetters("verticalMenu", ["getRefresh"]),
   },
   methods: {
     login() {
@@ -239,12 +241,16 @@ export default {
       this.$refs.loginForm.validate().then((success) => {
         if (success) {
           this.loading = true;
+          console.log("this.getRefresh", this.getRefresh);
           useJwt
-            .login({
-              grant_type: "password",
-              username: this.userEmail,
-              password: this.password,
-            })
+            .login(
+              {
+                grant_type: "password",
+                username: this.userEmail,
+                password: this.password,
+              },
+              this.getRefresh
+            )
             .then((response) => {
               this.loading = false;
               localStorage.setItem("userData", JSON.stringify(response));

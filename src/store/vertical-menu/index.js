@@ -5,7 +5,7 @@ export default {
   state: {
     isVerticalMenuCollapsed: $themeConfig.layout.menu.isCollapsed,
     activeTab: 1,
-    refresh: true,
+    refresh: 'true',
     savedInvoices: [],
   },
   getters: {
