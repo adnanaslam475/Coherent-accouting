@@ -1,16 +1,12 @@
 <template>
-  <div
-    role="tablist"
-    class="collapse-icon"
-    :class="collapseClasses"
-  >
+  <div role="tablist" class="collapse-icon" :class="collapseClasses">
     <slot />
   </div>
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
-
+import { v4 as uuidv4 } from "uuid";
+import { mapGetters } from "vuex";
 export default {
   props: {
     accordion: {
@@ -23,32 +19,33 @@ export default {
     },
     type: {
       type: String,
-      default: 'default',
+      default: "default",
     },
   },
   data() {
     return {
-      collapseID: '',
-    }
+      collapseID: "",
+    };
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     collapseClasses() {
-      const classes = []
+      const classes = [];
 
       // Collapse Type
       const collapseVariants = {
-        default: 'collapse-default',
-        border: 'collapse-border',
-        shadow: 'collapse-shadow',
-        margin: 'collapse-margin',
-      }
-      classes.push(collapseVariants[this.type])
+        default: "collapse-default",
+        border: "collapse-border",
+        shadow: "collapse-shadow",
+        margin: "collapse-margin",
+      };
+      classes.push(collapseVariants[this.type]);
 
-      return classes
+      return classes;
     },
   },
   created() {
-    this.collapseID = uuidv4()
+    this.collapseID = uuidv4();
   },
-}
+};
 </script>

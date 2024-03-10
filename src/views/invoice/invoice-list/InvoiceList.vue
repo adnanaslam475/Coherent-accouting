@@ -678,6 +678,8 @@ import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import router from "@/router";
 import SvgIcon from "@jamescoyle/vue-icon";
+import { mapGetters } from "vuex";
+
 import { mdiTrayArrowUp } from "@mdi/js";
 import flatPickr from "vue-flatpickr-component";
 import Ripple from "vue-ripple-directive";
@@ -791,6 +793,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     modalDisabled() {
       // your condition here...
       return !this.exportDto || !this.companyinfo;

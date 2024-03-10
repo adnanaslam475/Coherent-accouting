@@ -375,7 +375,6 @@ import {
   BFormCheckbox,
 } from "bootstrap-vue";
 import Ripple from "vue-ripple-directive";
-import { useInputImageRenderer } from "@core/comp-functions/forms/form-utils";
 
 import { ref } from "@vue/composition-api";
 import axios from "@/libs/axios";
@@ -385,6 +384,7 @@ import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import vSelect from "vue-select";
 // import countries from '@/@fake-db/data/other/countries'
 import { confirmed, min, required } from "vee-validate/dist/rules";
+import { mapGetters } from "vuex";
 
 extend("required", required);
 extend("min", min);
@@ -446,6 +446,7 @@ export default {
     this.populateCountries();
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     // passwordToggleIcon() {
     //   return this.isApiKey == false ? 'EyeIcon' : 'EyeOffIcon'
     // },

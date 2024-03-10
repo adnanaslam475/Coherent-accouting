@@ -150,8 +150,8 @@ import useJwt from "@/auth/jwt/useJwt";
 import { required, email } from "@validations";
 import { togglePasswordVisibility } from "@core/mixins/ui/forms";
 import store from "@/store/index";
-import { getCookieValue, getHomeRouteForLoggedInUser } from "@/auth/utils";
-
+import { getHomeRouteForLoggedInUser } from "@/auth/utils";
+import { mapGetters } from "vuex";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 export default {
@@ -191,6 +191,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     passwordToggleIcon() {
       return this.passwordFieldType === "password" ? "EyeIcon" : "EyeOffIcon";
     },
@@ -205,8 +206,6 @@ export default {
   },
   methods: {
     login() {
-      console.log("cXSRF-TOKEN225------", getCookieValue("XSRF-TOKEN"));
-
       this.$refs.loginForm.validate().then((success) => {
         if (success) {
           useJwt

@@ -25,7 +25,7 @@
       </div>
       <dark-Toggler class="d-none d-lg-block" />
       <!-- For Multilingual -->
-      
+
       <b-nav-item-dropdown
         id="dropdown-grouped"
         variant="link"
@@ -55,7 +55,6 @@
           <span class="ml-50">{{ localeObj.name }}</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
-
 
       <!-- For Multilingual -->
       <b-nav-item-dropdown
@@ -299,7 +298,7 @@ import Ripple from "vue-ripple-directive";
 import { ref } from "@vue/composition-api";
 import axios from "@/libs/axios";
 import useJwt from "@/auth/jwt/useJwt";
-import router from "@/router";
+import { mapGetters } from "vuex";
 import { EventBus } from "@/GlobalEventBus";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
@@ -339,6 +338,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     currentLocale() {
       return this.locales.find((l) => l.locale === this.$i18n.locale);
     },

@@ -1,32 +1,19 @@
 <template>
-  <b-card-code
-    title="Using custom form components"
-  >
+  <b-card-code title="Using custom form components">
     <b-card-text>
-      The scope contains attributes and event handlers that can be directly bound to most custom inputs or select
-      components.
+      The scope contains attributes and event handlers that can be directly
+      bound to most custom inputs or select components.
     </b-card-text>
 
     <div>
       <b-form-group label="Tagged input using select">
-
         <!-- prop `add-on-change` is needed to enable adding tags vie the `change` event -->
-        <b-form-tags
-          v-model="value"
-          size="lg"
-          add-on-change
-          no-outer-focus
-        >
-          <template #default="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
-            <ul
-              v-if="tags.length > 0"
-              class="list-inline d-inline-block mb-1"
-            >
-              <li
-                v-for="tag in tags"
-                :key="tag"
-                class="list-inline-item"
-              >
+        <b-form-tags v-model="value" size="lg" add-on-change no-outer-focus>
+          <template
+            #default="{ tags, inputAttrs, inputHandlers, disabled, removeTag }"
+          >
+            <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-1">
+              <li v-for="tag in tags" :key="tag" class="list-inline-item">
                 <b-form-tag
                   :title="tag"
                   :disabled="disabled"
@@ -44,14 +31,8 @@
               v-on="inputHandlers"
             >
               <template #first>
-
                 <!-- This is required to prevent bugs with Safari -->
-                <option
-                  disabled
-                  value=""
-                >
-                  Choose a tag...
-                </option>
+                <option disabled value="">Choose a tag...</option>
               </template>
             </b-form-select>
           </template>
@@ -66,11 +47,15 @@
 </template>
 
 <script>
-import BCardCode from '@core/components/b-card-code'
+import BCardCode from "@core/components/b-card-code";
 import {
-  BFormTags, BFormTag, BFormGroup, BFormSelect, BCardText,
-} from 'bootstrap-vue'
-import { codeCustom } from './code'
+  BFormTags,
+  BFormTag,
+  BFormGroup,
+  BFormSelect,
+  BCardText,
+} from "bootstrap-vue";
+import { codeCustom } from "./code";
 
 export default {
   components: {
@@ -83,15 +68,23 @@ export default {
   },
   data() {
     return {
-      options: ['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'],
+      options: [
+        "Apple",
+        "Orange",
+        "Banana",
+        "Lime",
+        "Peach",
+        "Chocolate",
+        "Strawberry",
+      ],
       value: [],
       codeCustom,
-    }
+    };
   },
   computed: {
     availableOptions() {
-      return this.options.filter(opt => this.value.indexOf(opt) === -1)
+      return this.options.filter((opt) => this.value.indexOf(opt) === -1);
     },
   },
-}
+};
 </script>

@@ -5,15 +5,17 @@
       <b-card
         no-body
         class="knowledge-base-bg text-center"
-        :style="{backgroundImage: `url(${require('@/assets/images/banner/banner.png')})`}"
+        :style="{
+          backgroundImage: `url(${require('@/assets/images/banner/banner.png')})`,
+        }"
       >
         <b-card-body class="card-body">
-          <h2 class="text-primary">
-            Dedicated Source Used on Website
-          </h2>
+          <h2 class="text-primary">Dedicated Source Used on Website</h2>
           <b-card-text class="mb-2">
             <span>Popular searches: </span>
-            <span class="font-weight-bolder">Sales automation, Email marketing</span>
+            <span class="font-weight-bolder"
+              >Sales automation, Email marketing</span
+            >
           </b-card-text>
 
           <!-- form -->
@@ -36,7 +38,6 @@
     <!--/ search input -->
 
     <section id="knowledge-base-content">
-
       <!-- content -->
       <b-row class="kb-search-content-info match-height">
         <b-col
@@ -51,7 +52,12 @@
             :img-src="item.img"
             :img-alt="item.img.slice(5)"
             img-top
-            @click="$router.push({ name: 'pages-knowledge-base-category', params: { category: item.category } })"
+            @click="
+              $router.push({
+                name: 'pages-knowledge-base-category',
+                params: { category: item.category },
+              })
+            "
           >
             <h4>{{ item.title }}</h4>
             <b-card-text class="mt-1">
@@ -59,14 +65,8 @@
             </b-card-text>
           </b-card>
         </b-col>
-        <b-col
-          v-show="!filteredKB.length"
-          cols="12"
-          class="text-center"
-        >
-          <h4 class="mt-4">
-            Search result not found!!
-          </h4>
+        <b-col v-show="!filteredKB.length" cols="12" class="text-center">
+          <h4 class="mt-4">Search result not found!!</h4>
         </b-col>
       </b-row>
     </section>
@@ -75,8 +75,16 @@
 
 <script>
 import {
-  BRow, BCol, BCard, BCardBody, BForm, BInputGroup, BFormInput, BCardText, BInputGroupPrepend,
-} from 'bootstrap-vue'
+  BRow,
+  BCol,
+  BCard,
+  BCardBody,
+  BForm,
+  BInputGroup,
+  BFormInput,
+  BCardText,
+  BInputGroupPrepend,
+} from "bootstrap-vue";
 
 export default {
   components: {
@@ -92,23 +100,29 @@ export default {
   },
   data() {
     return {
-      knowledgeBaseSearchQuery: '',
+      knowledgeBaseSearchQuery: "",
       kb: [],
-
-    }
+    };
   },
   computed: {
     filteredKB() {
-      const knowledgeBaseSearchQueryLower = this.knowledgeBaseSearchQuery.toLowerCase()
-      return this.kb.filter(item => item.title.toLowerCase().includes(knowledgeBaseSearchQueryLower) || item.desc.toLowerCase().includes(knowledgeBaseSearchQueryLower))
+      const knowledgeBaseSearchQueryLower =
+        this.knowledgeBaseSearchQuery.toLowerCase();
+      return this.kb.filter(
+        (item) =>
+          item.title.toLowerCase().includes(knowledgeBaseSearchQueryLower) ||
+          item.desc.toLowerCase().includes(knowledgeBaseSearchQueryLower)
+      );
     },
   },
   created() {
-    this.$http.get('/kb/data/knowledge_base').then(res => { this.kb = res.data })
+    this.$http.get("/kb/data/knowledge_base").then((res) => {
+      this.kb = res.data;
+    });
   },
-}
+};
 </script>
 
 <style lang="scss">
-@import '@core/scss/vue/pages/page-knowledge-base.scss';
+@import "@core/scss/vue/pages/page-knowledge-base.scss";
 </style>

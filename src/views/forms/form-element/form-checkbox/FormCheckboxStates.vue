@@ -1,7 +1,5 @@
 <template>
-  <b-card-code
-    title="Contextual state and validation"
-  >
+  <b-card-code title="Contextual state and validation">
     <b-card-text>
       <span>Bootstrap includes validation styles for </span>
       <code>valid</code>
@@ -34,11 +32,14 @@
 </template>
 
 <script>
-import BCardCode from '@core/components/b-card-code'
+import BCardCode from "@core/components/b-card-code";
 import {
-  BFormCheckboxGroup, BFormInvalidFeedback, BFormValidFeedback, BCardText,
-} from 'bootstrap-vue'
-import { codeStates } from './code'
+  BFormCheckboxGroup,
+  BFormInvalidFeedback,
+  BFormValidFeedback,
+  BCardText,
+} from "bootstrap-vue";
+import { codeStates } from "./code";
 
 export default {
   components: {
@@ -52,17 +53,17 @@ export default {
     return {
       value: [],
       options: [
-        { text: 'First Check', value: 'first' },
-        { text: 'Second Check', value: 'second' },
-        { text: 'Third Check', value: 'third' },
+        { text: "First Check", value: "first" },
+        { text: "Second Check", value: "second" },
+        { text: "Third Check", value: "third" },
       ],
       codeStates,
-    }
+    };
   },
   computed: {
     state() {
-      return this.value.length === 2
+      return this.value.length === 2;
     },
   },
-}
+};
 </script>

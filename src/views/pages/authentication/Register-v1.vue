@@ -176,6 +176,8 @@ import {
   BCard, BLink, BCardTitle, BCardText, BForm,
   BButton, BFormInput, BFormGroup, BInputGroup, BInputGroupAppend, BFormCheckbox,
 } from 'bootstrap-vue'
+
+import {mapGetters} from 'vuex'
 import VuexyLogo from '@core/layouts/components/Logo.vue'
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
@@ -215,7 +217,10 @@ export default {
     email,
   }
 },
-  computed: {
+  computed: { 
+
+ ...mapGetters("verticalMenu", ["getXsrfToken"]),
+
     passwordToggleIcon() {
       return this.passwordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon'
     },

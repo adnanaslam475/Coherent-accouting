@@ -1,7 +1,5 @@
 <template>
-  <b-card-code
-    title="Disabled and readonly states"
-  >
+  <b-card-code title="Disabled and readonly states">
     <b-card-text>
       <span>Setting the </span>
       <code>disabled</code>
@@ -15,22 +13,15 @@
 
     <div class="d-flex justify-content-center">
       <div>
-
         <!-- checkbox -->
         <b-form-group label="Select calendar interactive state">
           <b-form-radio-group
             v-model="state"
             aria-controls="ex-disabled-readonly"
           >
-            <b-form-radio value="disabled">
-              Disabled
-            </b-form-radio>
-            <b-form-radio value="readonly">
-              Readonly
-            </b-form-radio>
-            <b-form-radio value="normal">
-              Normal
-            </b-form-radio>
+            <b-form-radio value="disabled"> Disabled </b-form-radio>
+            <b-form-radio value="readonly"> Readonly </b-form-radio>
+            <b-form-radio value="normal"> Normal </b-form-radio>
           </b-form-radio-group>
         </b-form-group>
 
@@ -50,11 +41,15 @@
 </template>
 
 <script>
-import BCardCode from '@core/components/b-card-code'
+import BCardCode from "@core/components/b-card-code";
 import {
-  BFormGroup, BFormRadioGroup, BFormRadio, BCalendar, BCardText,
-} from 'bootstrap-vue'
-import { codeStates } from './code'
+  BFormGroup,
+  BFormRadioGroup,
+  BFormRadio,
+  BCalendar,
+  BCardText,
+} from "bootstrap-vue";
+import { codeStates } from "./code";
 
 export default {
   components: {
@@ -67,17 +62,17 @@ export default {
   },
   data() {
     return {
-      state: 'disabled',
+      state: "disabled",
       codeStates,
-    }
+    };
   },
   computed: {
     disabled() {
-      return this.state === 'disabled'
+      return this.state === "disabled";
     },
     readonly() {
-      return this.state === 'readonly'
+      return this.state === "readonly";
     },
   },
-}
+};
 </script>

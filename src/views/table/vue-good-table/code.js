@@ -250,7 +250,7 @@ export default {
   },
 }
 </script>
-`
+`;
 
 export const codeColumnSearch = `
 <template>
@@ -501,7 +501,7 @@ export default {
   },
 }
 </script>
-`
+`;
 
 export const codeRowGroup = `
 <template>
@@ -743,7 +743,7 @@ export default {
   },
 }
 </script>
-`
+`;
 
 export const codeAdvance = `
 <template>
@@ -1003,7 +1003,7 @@ export default {
   },
 }
 </script>
-`
+`;
 
 export const codeI18n = `
 <template>
@@ -1293,7 +1293,7 @@ export default {
   },
 }
 </script>
-`
+`;
 
 export const codeSSR = `
 <template>
@@ -1576,4 +1576,4 @@ export default {
   },
 }
 </script>
-`
+`;

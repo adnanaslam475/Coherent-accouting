@@ -188,6 +188,7 @@ import {
 import { required, email } from "@validations";
 import { togglePasswordVisibility } from "@core/mixins/ui/forms";
 import store from "@/store/index";
+import { mapGetters } from "vuex";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
@@ -253,6 +254,7 @@ export default {
       }
       return this.sideImg;
     },
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
   },
   methods: {
     async register() {

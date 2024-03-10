@@ -1,7 +1,5 @@
 <template>
-  <b-card-code
-    title="Disabled and readonly states"
-  >
+  <b-card-code title="Disabled and readonly states">
     <b-card-text>
       <span>Setting the </span>
       <code>disabled</code>
@@ -14,8 +12,8 @@
       <span>Setting the </span>
       <code>readonly</code>
       <span>
-        prop will disable selecting a time, but will keep the component interactive, allowing for tabbing between
-        spinbuttons. The
+        prop will disable selecting a time, but will keep the component
+        interactive, allowing for tabbing between spinbuttons. The
       </span>
       <code>v-model</code>
       <span> will not be updated in the readonly state.</span>
@@ -27,15 +25,9 @@
           v-model="state"
           aria-controls="ex-disabled-readonly"
         >
-          <b-form-radio value="disabled">
-            Disabled
-          </b-form-radio>
-          <b-form-radio value="readonly">
-            Readonly
-          </b-form-radio>
-          <b-form-radio value="normal">
-            Normal
-          </b-form-radio>
+          <b-form-radio value="disabled"> Disabled </b-form-radio>
+          <b-form-radio value="readonly"> Readonly </b-form-radio>
+          <b-form-radio value="normal"> Normal </b-form-radio>
         </b-form-radio-group>
       </b-form-group>
       <b-form-timepicker
@@ -52,11 +44,15 @@
 </template>
 
 <script>
-import BCardCode from '@core/components/b-card-code'
+import BCardCode from "@core/components/b-card-code";
 import {
-  BFormTimepicker, BFormGroup, BFormRadioGroup, BFormRadio, BCardText,
-} from 'bootstrap-vue'
-import { codeState } from './code'
+  BFormTimepicker,
+  BFormGroup,
+  BFormRadioGroup,
+  BFormRadio,
+  BCardText,
+} from "bootstrap-vue";
+import { codeState } from "./code";
 
 export default {
   components: {
@@ -69,17 +65,17 @@ export default {
   },
   data() {
     return {
-      state: 'disabled',
+      state: "disabled",
       codeState,
-    }
+    };
   },
   computed: {
     disabled() {
-      return this.state === 'disabled'
+      return this.state === "disabled";
     },
     readonly() {
-      return this.state === 'readonly'
+      return this.state === "readonly";
     },
   },
-}
+};
 </script>

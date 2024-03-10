@@ -45,6 +45,7 @@
 import { BLink, BFormInput, BButton, BForm, BImg } from "bootstrap-vue";
 import VuexyLogo from "@core/layouts/components/Logo.vue";
 import store from "@/store/index";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -61,6 +62,8 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
+
     imgUrl() {
       if (store.state.appConfig.layout.skin === "dark") {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties

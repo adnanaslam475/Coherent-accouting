@@ -1,32 +1,21 @@
 <template>
-  <b-card-code
-    title="Advanced custom rendering usage"
-  >
+  <b-card-code title="Advanced custom rendering usage">
     <b-card-text>
       <span>In situations where the </span>
       <code>inputHandlers</code>
       <span>
-        will not work with your custom input, or if you need greater control over tag creation, you can take advantage
-        of the additional properties provided via the default slot's scope.
+        will not work with your custom input, or if you need greater control
+        over tag creation, you can take advantage of the additional properties
+        provided via the default slot's scope.
       </span>
     </b-card-text>
 
     <div>
       <b-form-group label="Tagged input using dropdown">
-        <b-form-tags
-          v-model="value"
-          no-outer-focus
-        >
+        <b-form-tags v-model="value" no-outer-focus>
           <template #default="{ tags, disabled, addTag, removeTag }">
-            <ul
-              v-if="tags.length > 0"
-              class="list-inline d-inline-block mb-1"
-            >
-              <li
-                v-for="tag in tags"
-                :key="tag"
-                class="list-inline-item"
-              >
+            <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-1">
+              <li v-for="tag in tags" :key="tag" class="list-inline-item">
                 <b-form-tag
                   :title="tag"
                   :disabled="disabled"
@@ -91,7 +80,7 @@
 </template>
 
 <script>
-import BCardCode from '@core/components/b-card-code'
+import BCardCode from "@core/components/b-card-code";
 import {
   BFormTags,
   BFormGroup,
@@ -103,8 +92,8 @@ import {
   BFormTag,
   BDropdownText,
   BCardText,
-} from 'bootstrap-vue'
-import { codeAdvanceCustom } from './code'
+} from "bootstrap-vue";
+import { codeAdvanceCustom } from "./code";
 
 export default {
   components: {
@@ -122,42 +111,54 @@ export default {
   },
   data() {
     return {
-      options: ['Apple', 'Orange', 'Banana', 'Lime', 'Peach', 'Chocolate', 'Strawberry'],
-      search: '',
+      options: [
+        "Apple",
+        "Orange",
+        "Banana",
+        "Lime",
+        "Peach",
+        "Chocolate",
+        "Strawberry",
+      ],
+      search: "",
       value: [],
       codeAdvanceCustom,
-    }
+    };
   },
   computed: {
     criteria() {
       // Compute the search criteria
-      return this.search.trim().toLowerCase()
+      return this.search.trim().toLowerCase();
     },
     availableOptions() {
-      const { criteria } = this
+      const { criteria } = this;
 
       // Filter out already selected options
-      const options = this.options.filter(opt => this.value.indexOf(opt) === -1)
+      const options = this.options.filter(
+        (opt) => this.value.indexOf(opt) === -1
+      );
       if (criteria) {
         // Show only options that match criteria
-        return options.filter(opt => opt.toLowerCase().indexOf(criteria) > -1)
+        return options.filter(
+          (opt) => opt.toLowerCase().indexOf(criteria) > -1
+        );
       }
 
       // Show all options available
-      return options
+      return options;
     },
     searchDesc() {
       if (this.criteria && this.availableOptions.length === 0) {
-        return 'There are no tags matching your search criteria'
+        return "There are no tags matching your search criteria";
       }
-      return ''
+      return "";
     },
   },
   methods: {
     onOptionClick({ option, addTag }) {
-      addTag(option)
-      this.search = ''
+      addTag(option);
+      this.search = "";
     },
   },
-}
+};
 </script>

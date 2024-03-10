@@ -280,6 +280,7 @@ import {
 } from "bootstrap-vue";
 import { VueGoodTable } from "vue-good-table";
 import store from "@/store/index";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -343,6 +344,8 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
+
     statusVariant() {
       const statusColor = {
         /* eslint-disable key-spacing */

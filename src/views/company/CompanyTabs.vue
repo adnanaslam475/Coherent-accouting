@@ -207,6 +207,7 @@ export default {
   },
   computed: {
     ...mapGetters("app", ["getCurrentTab"]),
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
   },
   mounted() {
     this.companyID = this.$route.params.id;

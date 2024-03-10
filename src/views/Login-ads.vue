@@ -166,7 +166,6 @@ import useJwt from "@/auth/jwt/useJwt";
 import { required, email } from "@validations";
 import { togglePasswordVisibility } from "@core/mixins/ui/forms";
 import store from "@/store/index";
-import { getCookieValue } from "@/auth/utils";
 import navbarAds from "./navbarAds.vue";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import { mapGetters } from "vuex";
@@ -221,6 +220,7 @@ export default {
     };
   },
   computed: {
+    
     passwordToggleIcon() {
       return this.passwordFieldType === "password" ? "EyeIcon" : "EyeOffIcon";
     },
@@ -232,16 +232,15 @@ export default {
       }
       return this.sideImg;
     },
-    ...mapGetters("verticalMenu", ["getRefresh"]),
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
   },
   methods: {
     login() {
-      console.log("cXSRF-TOKEN237------", getCookieValue("XSRF-TOKEN"));
+      // console.log("cXSRF-TOKEN237------", getCookieValue("XSRF-TOKEN"));
 
       this.$refs.loginForm.validate().then((success) => {
         if (success) {
           this.loading = true;
-          console.log("this.getRefresh", this.getRefresh);
           useJwt
             .login(
               {
@@ -249,7 +248,7 @@ export default {
                 username: this.userEmail,
                 password: this.password,
               },
-              this.getRefresh
+              this.getXsrfToken
             )
             .then((response) => {
               this.loading = false;

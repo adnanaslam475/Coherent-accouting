@@ -11,10 +11,8 @@ export default class JwtService {
   axiosIns1 = axios.create({
     // You can add your headers here
     // ================================
-    // withCredentials: true,
     baseURL: "https://coherent-accounting.com",
     // baseURL: "https://167.86.93.80",
-    // timeout: 1000,
     headers: {
       "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
       "Content-Type": "application/x-www-form-urlencoded",
@@ -26,13 +24,10 @@ export default class JwtService {
 
   axiosIns2 = axios.create({
     // baseURL: "https://167.86.93.80",
-    // withCredentials: true,
     baseURL: "https://coherent-accounting.com",
-    // timeout: 1000,
   });
 
   axiosIns4 = axios.create({
-    // withCredentials: true,
     baseURL: "https://api.ipify.org/?format=json",
   });
 
@@ -164,15 +159,8 @@ export default class JwtService {
       Accept: "application/json",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
       "X-XSRF-TOKEN": args ? args[1] : "",
-      // getCookieValue("XSRF-TOKEN") ||
-      //   document.cookie?.split(";")[0].split("=")[1],
     };
-    console.log(
-      "cXSRF-TOKEN------",
-      getCookieValue("XSRF-TOKEN"),
-      "doc---",
-      document.cookie
-    );
+
     return this.axiosIns2.post(this.jwtConfig.loginEndpoint, data, {
       headers,
     });
@@ -282,7 +270,7 @@ export default class JwtService {
     );
   }
 
-  syncWithQuickBook(t, invoiceId, companyId, body, add = false) {
+  syncWithQuickBook(t, invoiceId, companyId, body) {
     return this.axiosIns.post(
       `${this.jwtConfig.syncWithQuickBookPostEndPoint}/${invoiceId}/${companyId}`,
       body,

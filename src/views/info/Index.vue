@@ -2,7 +2,13 @@
   <div class="">
     <b-row class="info-wrapper m-0 align-items-start">
       <navbarAds />
-      <b-col sm="12" lg="6" order="2" order-lg="1" class="d-flex align-items-center px-2 p-lg-5">
+      <b-col
+        sm="12"
+        lg="6"
+        order="2"
+        order-lg="1"
+        class="d-flex align-items-center px-2 p-lg-5"
+      >
         <div>
           <div class="mb-3">
             <h1>Coherent Accounting</h1>
@@ -40,7 +46,13 @@
           </b-button>
         </div>
       </b-col>
-      <b-col sm="12" lg="6" order="1" order-lg="2" class="d-flex align-items-center p-5">
+      <b-col
+        sm="12"
+        lg="6"
+        order="1"
+        order-lg="2"
+        class="d-flex align-items-center p-5"
+      >
         <div
           class="w-100 d-lg-flex align-items-center justify-content-center px-5"
         >

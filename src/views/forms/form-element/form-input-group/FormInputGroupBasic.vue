@@ -43,10 +43,7 @@
       </b-input-group>
 
       <!-- append and pepend -->
-      <b-input-group
-        prepend="$"
-        append=".00"
-      >
+      <b-input-group prepend="$" append=".00">
         <b-form-input placeholder="100" />
       </b-input-group>
 
@@ -63,12 +60,17 @@
 </template>
 
 <script>
-import BCardCode from '@core/components/b-card-code'
+import BCardCode from "@core/components/b-card-code";
 import {
-  BInputGroup, BFormInput, BInputGroupPrepend, BInputGroupAppend, BFormGroup, BFormTextarea,
-} from 'bootstrap-vue'
-import { togglePasswordVisibility } from '@core/mixins/ui/forms'
-import { codeBasic } from './code'
+  BInputGroup,
+  BFormInput,
+  BInputGroupPrepend,
+  BInputGroupAppend,
+  BFormGroup,
+  BFormTextarea,
+} from "bootstrap-vue";
+import { togglePasswordVisibility } from "@core/mixins/ui/forms";
+import { codeBasic } from "./code";
 
 export default {
   components: {
@@ -84,12 +86,12 @@ export default {
   data() {
     return {
       codeBasic,
-    }
+    };
   },
   computed: {
     passwordToggleIcon() {
-      return this.passwordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon'
+      return this.passwordFieldType === "password" ? "EyeIcon" : "EyeOffIcon";
     },
   },
-}
+};
 </script>

@@ -593,7 +593,7 @@ export default {
       return total;
     },
 
-    ...mapGetters("verticalMenu", ["getActiveTab"]),
+    ...mapGetters("verticalMenu", ["getActiveTab",'getXsrfToken']),
   },
   methods: {
     getAccounts() {

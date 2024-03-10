@@ -611,6 +611,7 @@ import {
 import useJwt from "@/auth/jwt/useJwt";
 import axios from "@/libs/axios";
 import moment from "moment";
+import { mapGetters } from "vuex";
 import vSelect from "vue-select";
 import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
@@ -1250,6 +1251,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     platformPropertiesOptions() {
       const keysToKeep = ["micro_invest", "ajure"];
       const filteredProperties = this.platformProperties.filter((property) =>

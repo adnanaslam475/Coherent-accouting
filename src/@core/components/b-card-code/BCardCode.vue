@@ -1,9 +1,5 @@
 <template>
-  <b-card
-    v-bind="cardAttrs"
-    no-body
-    v-on="$listeners"
-  >
+  <b-card v-bind="cardAttrs" no-body v-on="$listeners">
     <!-- Title & SubTitle -->
     <!-- <div class="card-header">
       
@@ -62,11 +58,16 @@
 
 <script>
 import {
-  BCard, BCardTitle, BCardSubTitle, BCardBody, BCollapse,
-} from 'bootstrap-vue'
-import 'prismjs'
-import 'prismjs/themes/prism-tomorrow.css'
-import Prism from 'vue-prism-component'
+  BCard,
+  BCardTitle,
+  BCardSubTitle,
+  BCardBody,
+  BCollapse,
+} from "bootstrap-vue";
+import "prismjs";
+import "prismjs/themes/prism-tomorrow.css";
+import Prism from "vue-prism-component";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -80,79 +81,80 @@ export default {
   inheritAttrs: false,
   props: {
     codeLanguage: {
-      default: 'markup',
+      default: "markup",
       type: String,
     },
   },
   data() {
     return {
-      parentID: '',
+      parentID: "",
       code_visible: false,
-    }
+    };
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     cardAttrs() {
-      const cardAttrs = JSON.parse(JSON.stringify(this.$attrs))
-      delete cardAttrs.title
-      delete cardAttrs['sub-title']
-      return cardAttrs
+      const cardAttrs = JSON.parse(JSON.stringify(this.$attrs));
+      delete cardAttrs.title;
+      delete cardAttrs["sub-title"];
+      return cardAttrs;
     },
   },
   created() {
-    this.parentID = String(Math.floor(Math.random() * 10) + 1)
+    this.parentID = String(Math.floor(Math.random() * 10) + 1);
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import 'bootstrap/scss/functions';
-@import '~@core/scss/base/bootstrap-extended/variables';
-@import 'bootstrap/scss/variables';
-@import '~@core/scss/base/components/variables-dark';
+@import "bootstrap/scss/functions";
+@import "~@core/scss/base/bootstrap-extended/variables";
+@import "bootstrap/scss/variables";
+@import "~@core/scss/base/components/variables-dark";
 
 .card-code {
-  pre[class*='language-'] {
+  pre[class*="language-"] {
     margin: 0;
     max-height: 350px;
     border-radius: 0.5rem;
   }
 
-    /* width */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-      background: #2d2d2d;
-      border-radius: 100%;
+  /* width */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: #2d2d2d;
+    border-radius: 100%;
 
-      .dark-layout & {
-        background-color: $theme-dark-body-bg !important;
-      }
+    .dark-layout & {
+      background-color: $theme-dark-body-bg !important;
     }
+  }
 
-    /* Track */
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-      border-radius: 0.5rem;
-      background: rgba(241,241,241,.4);
-    }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.5rem;
+    background: rgba(241, 241, 241, 0.4);
+  }
 
-    /* Handle on hover */
-    // ::-webkit-scrollbar-thumb:hover {
-    // }
+  /* Handle on hover */
+  // ::-webkit-scrollbar-thumb:hover {
+  // }
 
-    ::-webkit-scrollbar-corner {
-      display: none;
-    }
+  ::-webkit-scrollbar-corner {
+    display: none;
+  }
 }
 
 .code-toggler {
   border-bottom: 1px solid transparent;
 
-  &[aria-expanded='false'] {
+  &[aria-expanded="false"] {
     border-bottom-color: $primary;
   }
 }

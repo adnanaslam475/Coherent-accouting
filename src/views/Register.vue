@@ -318,6 +318,7 @@ import { togglePasswordVisibility } from "@core/mixins/ui/forms";
 import store from "@/store/index";
 import useJwt from "@/auth/jwt/useJwt";
 import vSelect from "vue-select";
+import { mapGetters } from "vuex";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 export default {
   components: {
@@ -372,6 +373,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     passwordToggleIcon() {
       return this.passwordFieldType === "password" ? "EyeIcon" : "EyeOffIcon";
     },

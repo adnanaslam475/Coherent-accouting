@@ -31,7 +31,8 @@
 </template>
 
 <script>
-import { BNavItemDropdown, BDropdownItem, BImg } from 'bootstrap-vue'
+import { BNavItemDropdown, BDropdownItem, BImg } from "bootstrap-vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -41,43 +42,42 @@ export default {
   },
   // ! Need to move this computed property to comp function once we get to Vue 3
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     currentLocale() {
-      return this.locales.find(l => l.locale === this.$i18n.locale)
+      return this.locales.find((l) => l.locale === this.$i18n.locale);
     },
   },
   setup() {
     /* eslint-disable global-require */
     const locales = [
       {
-        locale: 'en',
-        img: require('@/assets/images/flags/en.png'),
-        name: 'English',
+        locale: "en",
+        img: require("@/assets/images/flags/en.png"),
+        name: "English",
       },
       {
-        locale: 'fr',
-        img: require('@/assets/images/flags/fr.png'),
-        name: 'French',
+        locale: "fr",
+        img: require("@/assets/images/flags/fr.png"),
+        name: "French",
       },
       {
-        locale: 'de',
-        img: require('@/assets/images/flags/de.png'),
-        name: 'German',
+        locale: "de",
+        img: require("@/assets/images/flags/de.png"),
+        name: "German",
       },
       {
-        locale: 'pt',
-        img: require('@/assets/images/flags/pt.png'),
-        name: 'Portuguese',
+        locale: "pt",
+        img: require("@/assets/images/flags/pt.png"),
+        name: "Portuguese",
       },
-    ]
+    ];
     /* eslint-disable global-require */
 
     return {
       locales,
-    }
+    };
   },
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -7,14 +7,8 @@
         </h2>
         <span>{{ statisticTitle }}</span>
       </div>
-      <b-avatar
-        :variant="`light-${color}`"
-        size="45"
-      >
-        <feather-icon
-          size="21"
-          :icon="icon"
-        />
+      <b-avatar :variant="`light-${color}`" size="45">
+        <feather-icon size="21" :icon="icon" />
       </b-avatar>
     </b-card-body>
 
@@ -25,15 +19,15 @@
       :options="chartOptionsComputed"
       :series="chartData"
     />
-
   </b-card>
 </template>
 
 <script>
-import { BCard, BCardBody, BAvatar } from 'bootstrap-vue'
-import VueApexCharts from 'vue-apexcharts'
-import { $themeColors } from '@themeConfig'
-import { lineChartOptions } from './chartOptions'
+import { BCard, BCardBody, BAvatar } from "bootstrap-vue";
+import VueApexCharts from "vue-apexcharts";
+import { $themeColors } from "@themeConfig";
+import { mapGetters } from "vuex";
+import { lineChartOptions } from "./chartOptions";
 
 export default {
   components: {
@@ -53,11 +47,11 @@ export default {
     },
     statisticTitle: {
       type: String,
-      default: '',
+      default: "",
     },
     color: {
       type: String,
-      default: 'primary',
+      default: "primary",
     },
     chartData: {
       type: Array,
@@ -69,33 +63,36 @@ export default {
     },
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     chartOptionsComputed() {
       if (this.chartOptions === null) {
-        const options = JSON.parse(JSON.stringify(lineChartOptions))
+        const options = JSON.parse(JSON.stringify(lineChartOptions));
 
-        options.fill.gradient.gradientToColors = [this.gradientToColor(this.color)]
-        options.colors = [$themeColors[this.color]]
+        options.fill.gradient.gradientToColors = [
+          this.gradientToColor(this.color),
+        ];
+        options.colors = [$themeColors[this.color]];
 
-        return options
+        return options;
       }
-      return this.chartOptions
+      return this.chartOptions;
     },
   },
   methods: {
     gradientToColor(color) {
       const gradientToColors = {
-        primary: '#A9A2F6',
-        success: '#55DD92',
-        warning: '#ffc085',
-        danger: '#F97794',
-        info: '#59E0F0',
-        secondary: '#B4B9BF',
-        light: '#D0D4DB',
-        dark: '#919191',
-      }
+        primary: "#A9A2F6",
+        success: "#55DD92",
+        warning: "#ffc085",
+        danger: "#F97794",
+        info: "#59E0F0",
+        secondary: "#B4B9BF",
+        light: "#D0D4DB",
+        dark: "#919191",
+      };
 
-      return gradientToColors[color]
+      return gradientToColors[color];
     },
   },
-}
+};
 </script>

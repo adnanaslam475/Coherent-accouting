@@ -89,6 +89,7 @@ import {
 } from "bootstrap-vue";
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import Ripple from "vue-ripple-directive";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -114,6 +115,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     totalAmount() {
       let total = 0;
       this.items.forEach((i) => {

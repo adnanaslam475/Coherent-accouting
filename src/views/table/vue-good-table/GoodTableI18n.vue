@@ -1,11 +1,7 @@
 <template>
   <b-card-code title="I18n Table">
-
     <!-- alert -->
-    <b-alert
-      variant="primary"
-      show
-    >
+    <b-alert variant="primary" show>
       <div class="alert-body">
         <span>Change language from navbar to view effect.</span>
       </div>
@@ -15,10 +11,10 @@
     <div class="custom-search d-flex justify-content-end">
       <b-form-group>
         <div class="d-flex align-items-center">
-          <label class="mr-1">{{ $t('message.seachLabel') }}</label>
+          <label class="mr-1">{{ $t("message.seachLabel") }}</label>
           <b-form-input
             v-model="searchTerm"
-            :placeholder=" $t('message.SearchPlaceholder')"
+            :placeholder="$t('message.SearchPlaceholder')"
             type="text"
             class="d-inline-block"
           />
@@ -33,7 +29,8 @@
       :rtl="direction"
       :search-options="{
         enabled: true,
-        externalQuery: searchTerm }"
+        externalQuery: searchTerm,
+      }"
       :select-options="{
         enabled: true,
         selectOnCheckboxOnly: true, // only select when checkbox is clicked instead of the row
@@ -45,50 +42,28 @@
       }"
       :pagination-options="{
         enabled: true,
-        perPage:pageLength
+        perPage: pageLength,
       }"
     >
-
       <!-- Slot: Table Column -->
-      <template
-        slot="table-column"
-        slot-scope="props"
-      >
-        <span
-          v-if="props.column.label ==='Name'"
-          class="text-nowrap"
-        >
-          {{ $t('message.tableHeader.name') }}
+      <template slot="table-column" slot-scope="props">
+        <span v-if="props.column.label === 'Name'" class="text-nowrap">
+          {{ $t("message.tableHeader.name") }}
         </span>
-        <span
-          v-else-if="props.column.label ==='Email'"
-          class="text-nowrap"
-        >
-          {{ $t('message.tableHeader.email') }}
+        <span v-else-if="props.column.label === 'Email'" class="text-nowrap">
+          {{ $t("message.tableHeader.email") }}
         </span>
-        <span
-          v-else-if="props.column.label ==='Date'"
-          class="text-nowrap"
-        >
-          {{ $t('message.tableHeader.date') }}
+        <span v-else-if="props.column.label === 'Date'" class="text-nowrap">
+          {{ $t("message.tableHeader.date") }}
         </span>
-        <span
-          v-else-if="props.column.label ==='Salary'"
-          class="text-nowrap"
-        >
-          {{ $t('message.tableHeader.salary') }}
+        <span v-else-if="props.column.label === 'Salary'" class="text-nowrap">
+          {{ $t("message.tableHeader.salary") }}
         </span>
-        <span
-          v-else-if="props.column.label ==='Status'"
-          class="text-nowrap"
-        >
-          {{ $t('message.tableHeader.status') }}
+        <span v-else-if="props.column.label === 'Status'" class="text-nowrap">
+          {{ $t("message.tableHeader.status") }}
         </span>
-        <span
-          v-else-if="props.column.label ==='Action'"
-          class="text-nowrap"
-        >
-          {{ $t('message.tableHeader.action') }}
+        <span v-else-if="props.column.label === 'Action'" class="text-nowrap">
+          {{ $t("message.tableHeader.action") }}
         </span>
         <span v-else>
           {{ props.column.label }}
@@ -96,20 +71,10 @@
       </template>
 
       <!-- Slot: Table Row -->
-      <template
-        slot="table-row"
-        slot-scope="props"
-      >
-
+      <template slot="table-row" slot-scope="props">
         <!-- Column: Name -->
-        <span
-          v-if="props.column.field === 'fullName'"
-          class="text-nowrap"
-        >
-          <b-avatar
-            :src="props.row.avatar"
-            class="mx-1"
-          />
+        <span v-if="props.column.field === 'fullName'" class="text-nowrap">
+          <b-avatar :src="props.row.avatar" class="mx-1" />
           <span>{{ props.row.fullName }}</span>
         </span>
 
@@ -136,17 +101,11 @@
                 />
               </template>
               <b-dropdown-item>
-                <feather-icon
-                  icon="Edit2Icon"
-                  class="mr-50"
-                />
+                <feather-icon icon="Edit2Icon" class="mr-50" />
                 <span>Edit</span>
               </b-dropdown-item>
               <b-dropdown-item>
-                <feather-icon
-                  icon="TrashIcon"
-                  class="mr-50"
-                />
+                <feather-icon icon="TrashIcon" class="mr-50" />
                 <span>Delete</span>
               </b-dropdown-item>
             </b-dropdown>
@@ -160,22 +119,24 @@
       </template>
 
       <!-- pagination -->
-      <template
-        slot="pagination-bottom"
-        slot-scope="props"
-      >
+      <template slot="pagination-bottom" slot-scope="props">
         <div class="d-flex justify-content-between flex-wrap">
           <div class="d-flex align-items-center mb-0 mt-1">
             <span class="text-nowrap">
-              {{ $t('message.pagelength') }}
+              {{ $t("message.pagelength") }}
             </span>
             <b-form-select
               v-model="pageLength"
-              :options="['3','5','10']"
+              :options="['3', '5', '10']"
               class="mx-1"
-              @input="(value)=>props.perPageChanged({currentPerPage:value})"
+              @input="
+                (value) => props.perPageChanged({ currentPerPage: value })
+              "
             />
-            <span class="text-nowrap">  {{ $t('message.of') }} {{ props.total }} {{ $t('message.pageText2') }} </span>
+            <span class="text-nowrap">
+              {{ $t("message.of") }} {{ props.total }}
+              {{ $t("message.pageText2") }}
+            </span>
           </div>
           <div>
             <b-pagination
@@ -188,19 +149,13 @@
               prev-class="prev-item"
               next-class="next-item"
               class="mt-1 mb-0"
-              @input="(value)=>props.pageChanged({currentPage:value})"
+              @input="(value) => props.pageChanged({ currentPage: value })"
             >
               <template #prev-text>
-                <feather-icon
-                  icon="ChevronLeftIcon"
-                  size="18"
-                />
+                <feather-icon icon="ChevronLeftIcon" size="18" />
               </template>
               <template #next-text>
-                <feather-icon
-                  icon="ChevronRightIcon"
-                  size="18"
-                />
+                <feather-icon icon="ChevronRightIcon" size="18" />
               </template>
             </b-pagination>
           </div>
@@ -215,13 +170,22 @@
 </template>
 
 <script>
-import BCardCode from '@core/components/b-card-code/BCardCode.vue'
+import BCardCode from "@core/components/b-card-code/BCardCode.vue";
 import {
-  BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BAlert, BDropdown, BDropdownItem,
-} from 'bootstrap-vue'
-import { VueGoodTable } from 'vue-good-table'
-import store from '@/store/index'
-import { codeI18n } from './code'
+  BAvatar,
+  BBadge,
+  BPagination,
+  BFormGroup,
+  BFormInput,
+  BFormSelect,
+  BAlert,
+  BDropdown,
+  BDropdownItem,
+} from "bootstrap-vue";
+import { VueGoodTable } from "vue-good-table";
+import store from "@/store/index";
+import { codeI18n } from "./code";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -244,63 +208,64 @@ export default {
       dir: false,
       columns: [
         {
-          label: 'Name',
-          field: 'fullName',
+          label: "Name",
+          field: "fullName",
         },
         {
-          label: 'Email',
-          field: 'email',
+          label: "Email",
+          field: "email",
         },
         {
-          label: 'Date',
-          field: 'startDate',
+          label: "Date",
+          field: "startDate",
         },
         {
-          label: 'Salary',
-          field: 'salary',
+          label: "Salary",
+          field: "salary",
         },
         {
-          label: 'Status',
-          field: 'status',
+          label: "Status",
+          field: "status",
         },
         {
-          label: 'Action',
-          field: 'action',
+          label: "Action",
+          field: "action",
         },
       ],
       rows: [],
-      searchTerm: '',
-
-    }
+      searchTerm: "",
+    };
   },
   computed: {
     statusVariant() {
       const statusColor = {
         /* eslint-disable key-spacing */
-        Current      : 'light-primary',
-        Professional : 'light-success',
-        Rejected     : 'light-danger',
-        Resigned     : 'light-warning',
-        Applied      : 'light-info',
+        Current: "light-primary",
+        Professional: "light-success",
+        Rejected: "light-danger",
+        Resigned: "light-warning",
+        Applied: "light-info",
         /* eslint-enable key-spacing */
-      }
+      };
 
-      return status => statusColor[status]
+      return (status) => statusColor[status];
     },
     direction() {
       if (store.state.appConfig.isRTL) {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.dir = true
-        return this.dir
+        this.dir = true;
+        return this.dir;
       }
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.dir = false
-      return this.dir
+      this.dir = false;
+      return this.dir;
     },
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
   },
   created() {
-    this.$http.get('/good-table/basic')
-      .then(res => { this.rows = res.data })
+    this.$http.get("/good-table/basic").then((res) => {
+      this.rows = res.data;
+    });
   },
-}
+};
 </script>

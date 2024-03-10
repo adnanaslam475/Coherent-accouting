@@ -664,6 +664,7 @@ import { digits } from "@validations";
 import flatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 import { extend } from "vee-validate";
+import { mapGetters } from "vuex";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 extend("required", {
@@ -906,6 +907,8 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
+
     // platformPropertiesOptions() {
     //   console.log("tttttttttttttttttttttttttttttttttttt");
     //   const keysToKeep = [];

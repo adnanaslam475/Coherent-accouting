@@ -1,6 +1,5 @@
 <template>
   <b-card-code title="SSR">
-
     <!-- search input -->
     <div class="custom-search d-flex justify-content-end">
       <b-form-group>
@@ -25,7 +24,7 @@
       :rtl="direction"
       :search-options="{
         enabled: true,
-        externalQuery: searchTerm
+        externalQuery: searchTerm,
       }"
       :select-options="{
         enabled: true,
@@ -41,20 +40,10 @@
       }"
       @on-sort-change="onSortChange"
     >
-      <template
-        slot="table-row"
-        slot-scope="props"
-      >
-
+      <template slot="table-row" slot-scope="props">
         <!-- Column: Name -->
-        <span
-          v-if="props.column.field === 'fullName'"
-          class="text-nowrap"
-        >
-          <b-avatar
-            :src="props.row.avatar"
-            class="mx-1"
-          />
+        <span v-if="props.column.field === 'fullName'" class="text-nowrap">
+          <b-avatar :src="props.row.avatar" class="mx-1" />
           <span class="text-nowrap">{{ props.row.fullName }}</span>
         </span>
 
@@ -81,17 +70,11 @@
                 />
               </template>
               <b-dropdown-item>
-                <feather-icon
-                  icon="Edit2Icon"
-                  class="mr-50"
-                />
+                <feather-icon icon="Edit2Icon" class="mr-50" />
                 <span>Edit</span>
               </b-dropdown-item>
               <b-dropdown-item>
-                <feather-icon
-                  icon="TrashIcon"
-                  class="mr-50"
-                />
+                <feather-icon icon="TrashIcon" class="mr-50" />
                 <span>Delete</span>
               </b-dropdown-item>
             </b-dropdown>
@@ -105,17 +88,11 @@
       </template>
 
       <!-- pagination -->
-      <template
-        slot="pagination-bottom"
-        slot-scope="props"
-      >
+      <template slot="pagination-bottom" slot-scope="props">
         <div class="d-flex justify-content-between flex-wrap">
-
           <!-- page length -->
           <div class="d-flex align-items-center mb-0 mt-1">
-            <span class="text-nowrap ">
-              Showing 1 to
-            </span>
+            <span class="text-nowrap"> Showing 1 to </span>
             <b-form-select
               v-model="pageLength"
               :options="pages"
@@ -140,16 +117,10 @@
               @change="handleChangePage"
             >
               <template #prev-text>
-                <feather-icon
-                  icon="ChevronLeftIcon"
-                  size="18"
-                />
+                <feather-icon icon="ChevronLeftIcon" size="18" />
               </template>
               <template #next-text>
-                <feather-icon
-                  icon="ChevronRightIcon"
-                  size="18"
-                />
+                <feather-icon icon="ChevronRightIcon" size="18" />
               </template>
             </b-pagination>
           </div>
@@ -168,16 +139,24 @@
 </template>
 
 <script>
-import BCardCode from '@core/components/b-card-code/BCardCode.vue'
+import BCardCode from "@core/components/b-card-code/BCardCode.vue";
 import {
-  BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown,
-} from 'bootstrap-vue'
-import { VueGoodTable } from 'vue-good-table'
-import 'prismjs'
-import 'prismjs/themes/prism-tomorrow.css'
-import Prism from 'vue-prism-component'
-import store from '@/store/index'
-import { codeSSR } from './code'
+  BAvatar,
+  BBadge,
+  BPagination,
+  BFormGroup,
+  BFormInput,
+  BFormSelect,
+  BDropdownItem,
+  BDropdown,
+} from "bootstrap-vue";
+import { VueGoodTable } from "vue-good-table";
+import "prismjs";
+import "prismjs/themes/prism-tomorrow.css";
+import Prism from "vue-prism-component";
+import store from "@/store";
+import { codeSSR } from "./code";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -198,86 +177,98 @@ export default {
       log: [],
       pageLength: 3,
       dir: false,
-      pages: ['3', '5', '10'],
+      pages: ["3", "5", "10"],
       codeSSR,
       columns: [
         {
-          label: 'Name',
-          field: 'fullName',
+          label: "Name",
+          field: "fullName",
         },
         {
-          label: 'Email',
-          field: 'email',
+          label: "Email",
+          field: "email",
         },
         {
-          label: 'Date',
-          field: 'startDate',
+          label: "Date",
+          field: "startDate",
         },
         {
-          label: 'Salary',
-          field: 'salary',
+          label: "Salary",
+          field: "salary",
         },
         {
-          label: 'Status',
-          field: 'status',
+          label: "Status",
+          field: "status",
         },
         {
-          label: 'Action',
-          field: 'action',
+          label: "Action",
+          field: "action",
         },
       ],
       rows: [],
-      searchTerm: '',
-      status: [{
-        1: 'Current', 2: 'Professional', 3: 'Rejected', 4: 'Resigned', 5: 'Applied',
-      },
-      {
-        1: 'light-primary', 2: 'light-success', 3: 'light-danger', 4: 'light-warning', 5: 'light-info',
-      }],
-    }
+      searchTerm: "",
+      status: [
+        {
+          1: "Current",
+          2: "Professional",
+          3: "Rejected",
+          4: "Resigned",
+          5: "Applied",
+        },
+        {
+          1: "light-primary",
+          2: "light-success",
+          3: "light-danger",
+          4: "light-warning",
+          5: "light-info",
+        },
+      ],
+    };
   },
   computed: {
     statusVariant() {
       const statusColor = {
         /* eslint-disable key-spacing */
-        Current      : 'light-primary',
-        Professional : 'light-success',
-        Rejected     : 'light-danger',
-        Resigned     : 'light-warning',
-        Applied      : 'light-info',
+        Current: "light-primary",
+        Professional: "light-success",
+        Rejected: "light-danger",
+        Resigned: "light-warning",
+        Applied: "light-info",
         /* eslint-enable key-spacing */
-      }
+      };
 
-      return status => statusColor[status]
+      return (status) => statusColor[status];
     },
     direction() {
       if (store.state.appConfig.isRTL) {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.dir = true
-        return this.dir
+        this.dir = true;
+        return this.dir;
       }
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.dir = false
-      return this.dir
+      this.dir = false;
+      return this.dir;
     },
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
   },
   created() {
-    this.$http.get('/good-table/table_ssr')
-      .then(res => { this.rows = res.data })
+    this.$http.get("/good-table/table_ssr").then((res) => {
+      this.rows = res.data;
+    });
   },
   methods: {
     handleSearch(searching) {
-      this.log.push(`The user searched for: ${searching}`)
+      this.log.push(`The user searched for: ${searching}`);
     },
     handleChangePage(page) {
-      this.log.push(`The user changed the page to: ${page}`)
+      this.log.push(`The user changed the page to: ${page}`);
     },
     handlePageChange(active) {
-      this.log.push(`the user change page:  ${active}`)
+      this.log.push(`the user change page:  ${active}`);
     },
     onSortChange(params) {
-      this.log.push(`the user ordered:  ${params[0].type}`)
+      this.log.push(`the user ordered:  ${params[0].type}`);
     },
   },
-}
+};
 </script>

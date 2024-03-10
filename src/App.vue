@@ -17,7 +17,7 @@ import axios from "@/libs/axios";
 import { useWindowSize, useCssVar } from "@vueuse/core";
 import router from "@/router";
 import store from "@/store";
-
+import { mapGetters } from "vuex";
 import useJwt from "@/auth/jwt/useJwt";
 
 import { getCookieValue } from "./auth/utils";
@@ -44,6 +44,7 @@ export default {
   // ! We can move this computed: layout & contentLayoutType once we get to use Vue 3
   // Currently, router.currentRoute is not reactive and doesn't trigger any change
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     layout() {
       if (this.$route.meta.layout === "full") return "layout-full";
       return `layout-${this.contentLayoutType}`;
@@ -143,12 +144,11 @@ export default {
         })
         .catch((error) => {
           store.commit(
-            "verticalMenu/SET_PREVENT_REFRESH",
+            "verticalMenu/SET_TOKEN",
             error.response.headers["x-xsrf-token"]
           );
-          console.log("err142-==>", error.response.headers);
-          axios.defaults.headers["XSRF-TOKEN"] =
-            error.response.headers["x-xsrf-token"];
+          // axios.defaults.headers["XSRF-TOKEN"] =
+          //   error.response.headers["x-xsrf-token"];
         })
         .finally(() => {});
     }

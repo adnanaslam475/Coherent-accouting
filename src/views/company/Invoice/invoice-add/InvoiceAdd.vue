@@ -10175,6 +10175,8 @@ export default {
   },
 
   computed: {
+     
+
     formIsValid() {
       let i = 0;
       let requiredField = [];
@@ -10258,7 +10260,7 @@ export default {
         { text: i18n.tc("units.pcs"), value: "pcs" },
       ];
     },
-    ...mapGetters("verticalMenu", ["getActiveTab"]),
+    ...mapGetters("verticalMenu", ["getActiveTab", "getXsrfToken"]),
   },
   methods: {
     connectDis(isSyncing, platform, cToQb, cToX) {

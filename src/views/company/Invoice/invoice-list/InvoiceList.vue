@@ -984,7 +984,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("verticalMenu", ["getRefresh"]),
+    ...mapGetters("verticalMenu", ["getRefresh", "getXsrfToken"]),
     monthLabels() {
       let arr = [
         this.$t("months.Jan"),
@@ -1431,11 +1431,6 @@ export default {
             this.endDate === "" &&
             this.searchQuery === ""
           ) {
-            // console.log("awaithandleasearch");
-            // if (!this.getRefresh) {
-            //   store.commit("verticalMenu/SET_PREVENT_REFRESH", true);
-            //   // return;
-            // }
             await this.handleSearchSelect();
           } else {
             await this.searchInvoices();

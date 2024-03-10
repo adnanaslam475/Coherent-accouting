@@ -77,6 +77,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css
 // Import image preview and file type validation plugins
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import { mapGetters } from "vuex";
 
 extend("required", {
   ...required,
@@ -212,6 +213,8 @@ export default {
   },
 
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
+
     InvoicesTableColumns() {
       return [
         { key: "isChecked", label: this.$t("invoiceTable.isChecked") },

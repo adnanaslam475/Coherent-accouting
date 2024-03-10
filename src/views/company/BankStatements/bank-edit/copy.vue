@@ -9010,7 +9010,7 @@ import {
   qtyValid,
 } from "@validations";
 import Logo from "@core/layouts/components/Logo.vue";
-import { ref, onUnmounted,   } from "@vue/composition-api";
+import { ref, onUnmounted } from "@vue/composition-api";
 import { heightTransition } from "@core/mixins/ui/transition";
 import Ripple from "vue-ripple-directive";
 import store from "@/store";
@@ -9054,6 +9054,7 @@ import router from "@/router";
 import { setTimeout } from "timers";
 import axios from "@/libs/axios";
 import { i18n } from "@/main.js";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -9224,6 +9225,7 @@ export default {
     // window.removeEventListener("resize", this.initTrHeight);
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     bankList() {
       return [
         { name: this.$t("add_invoice.bank-1") },
@@ -9731,7 +9733,7 @@ export default {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
-     
+
     var AccountTypeOption = ref("company");
     var AccountTypeOptionToggleValue = false;
 

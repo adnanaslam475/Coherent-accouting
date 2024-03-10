@@ -566,6 +566,7 @@ import InvoiceDownload from "../invoice-download/InvoiceDownload.vue";
 import invoiceStoreModule from "../invoiceStoreModule";
 import useInvoicesList from "./useInvoiceList";
 import { i18n } from "@/main.js";
+import { mapGetters } from "vuex";
 import axios from "@/libs/axios";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import VueMonthlyPicker from "vue-monthly-picker";
@@ -731,6 +732,8 @@ export default {
   },
 
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
+
     monthLabels() {
       let arr = [
         this.$t("months.Jan"),

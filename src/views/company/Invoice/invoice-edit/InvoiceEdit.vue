@@ -12381,7 +12381,7 @@ export default {
         { text: i18n.tc("company_info.SUN"), value: "SUN" },
       ];
     },
-    ...mapGetters("verticalMenu", ["getActiveTab"]),
+    ...mapGetters("verticalMenu", ["getActiveTab",'getXsrfToken']),
   },
   methods: {
     showSingle() {

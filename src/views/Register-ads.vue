@@ -495,7 +495,7 @@
             <b> {{ $t("lbl.ar1") }} 25</b>{{ $t("lbl.not") }}
           </p>
           <ul>
-            <li class="p-list">{{ $t("lbl.othert") }} </li>
+            <li class="p-list">{{ $t("lbl.othert") }}</li>
           </ul>
           <p>
             <b> {{ $t("lbl.ar1") }} 26</b>{{ $t("lbl.dispute") }}
@@ -555,11 +555,11 @@ import {
   BModal,
   BFormSelectOption,
 } from "bootstrap-vue";
-import { required, email, password } from "@validations";
+import { required, email } from "@validations";
 import { togglePasswordVisibility } from "@core/mixins/ui/forms";
 import store from "@/store/index";
 import useJwt from "@/auth/jwt/useJwt";
-
+import { mapGetters } from "vuex";
 import navbarAds from "./navbarAds.vue";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 export default {
@@ -634,6 +634,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("verticalMenu", ["getXsrfToken"]),
     passwordToggleIcon() {
       return this.passwordFieldType === "password" ? "EyeIcon" : "EyeOffIcon";
     },
@@ -655,7 +656,7 @@ export default {
         affiliateId = null;
       }
 
-      return affiliateId
+      return affiliateId;
     },
   },
   methods: {
@@ -702,7 +703,7 @@ export default {
                       identifier: "",
                       ipAddress: IpAddress,
                       isoAlpha2Country: this.country?.value,
-                      affiliateId: this.affiliateId
+                      affiliateId: this.affiliateId,
                     })
                     .then((response) => {
                       this.loading = false;
