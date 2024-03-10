@@ -138,7 +138,11 @@ export default {
         .then((response) => {
           localStorage.setItem("user_token", response.data.access_token);
         })
-        .catch((error) => {})
+        .catch((error) => {
+          console.log("err142-==>", error.response.headers);
+          axios.defaults.headers["XSRF-TOKEN"] =
+            error.response.headers["x-xsrf-token"];
+        })
         .finally(() => {});
     }
     axios
@@ -201,7 +205,7 @@ export default {
           }
           console.log(
             "ckoievalue----->",
-            cookieValue,
+            cookieValue
             // cookieValue?.split(";")[0].split("=")[1]
           );
           axios.defaults.headers["X-XSRF-TOKEN"] = cookieValue;

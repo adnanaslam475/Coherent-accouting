@@ -163,11 +163,14 @@ export default class JwtService {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
-      "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+      "XSRF-TOKEN":
+        getCookieValue("XSRF-TOKEN") ||
+        document.cookie?.split(";")[0].split("=")[1],
     };
     console.log(
       "cXSRF-TOKEN------",
       getCookieValue("XSRF-TOKEN"),
+      "doc---",
       document.cookie
     );
     return this.axiosIns2.post(this.jwtConfig.loginEndpoint, data, {
