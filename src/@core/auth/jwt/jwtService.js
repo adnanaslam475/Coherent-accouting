@@ -16,7 +16,7 @@ export default class JwtService {
     // baseURL: "https://167.86.93.80",
     // timeout: 1000,
     headers: {
-      // "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+      "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       "Access-Control-Allow-Origin": "https://coherent-accounting.com",
@@ -165,7 +165,11 @@ export default class JwtService {
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
       "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
     };
-    console.log("cXSRF-TOKEN------", getCookieValue("XSRF-TOKEN"));
+    console.log(
+      "cXSRF-TOKEN------",
+      getCookieValue("XSRF-TOKEN"),
+      document.cookie
+    );
     return this.axiosIns2.post(this.jwtConfig.loginEndpoint, data, {
       headers,
     });

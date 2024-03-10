@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <b-card header-bg-variant="light" :header="$t('lbl.termofuse')" >
-            <b-card-text>
+  <div>
+    <b-card header-bg-variant="light" :header="$t('lbl.termofuse')">
+      <b-card-text>
         <span style="white-space: break-spaces">
           <p>
             {{ $t("lbl.termofuseone") }}
@@ -73,11 +73,12 @@
           </p>
 
           <p>
-            <b> {{ $t("lbl.ar6") }} </b> 
-              <b> {{ $t("lbl.modification") }} 
+            <b> {{ $t("lbl.ar6") }} </b>
+            <b>
+              {{ $t("lbl.modification") }}
 
-              <br />
-            </b>{{ $t("lbl.hasright") }}
+              <br /> </b
+            >{{ $t("lbl.hasright") }}
           </p>
           <p>
             <b> {{ $t("lbl.ar7") }} </b>
@@ -92,26 +93,26 @@
             {{ $t("lbl.platform1") }}
           </p>
           <p>
-            <b> {{ $t("lbl.ar10") }}  </b>
+            <b> {{ $t("lbl.ar10") }} </b>
             <b> {{ $t("lbl.complicance") }}</b>
-              <br />
-    
+            <br />
+
             {{ $t("lbl.natural") }}
           </p>
           <p>
             <b> {{ $t("lbl.ar11") }} </b>
             <b> {{ $t("lbl.Intended") }} </b>
             <br />
-             {{ $t("lbl.obliged") }}
+            {{ $t("lbl.obliged") }}
           </p>
           <p>
             <b> {{ $t("lbl.ar12") }} </b>
             <b> {{ $t("lbl.accounts") }} </b>
             <br />
-              {{ $t("lbl.event") }}
+            {{ $t("lbl.event") }}
           </p>
           <p>
-            <b> {{ $t("lbl.ar13") }} </b> 
+            <b> {{ $t("lbl.ar13") }} </b>
             <b> {{ $t("lbl.Restrictions") }}</b>
             <br />
             {{ $t("lbl.copyright") }}
@@ -134,7 +135,7 @@
           <p>
             <b> {{ $t("lbl.ar15") }} </b>
             <b> {{ $t("lbl.obligationss") }}</b>
-              <br />
+            <br />
             {{ $t("lbl.objto") }}
           </p>
           <p>
@@ -144,7 +145,7 @@
             {{ $t("lbl.usercan") }}
           </p>
           <p>
-            <b> {{ $t("lbl.ar17") }} </b> 
+            <b> {{ $t("lbl.ar17") }} </b>
             <b> {{ $t("lbl.info") }} </b>
             <br />
             {{ $t("lbl.upon") }}
@@ -153,7 +154,7 @@
             <b> {{ $t("lbl.ar18") }} </b>
             <b> {{ $t("lbl.terms") }}</b>
             <br />
-             {{ $t("lbl.tick") }}
+            {{ $t("lbl.tick") }}
           </p>
           <p>
             <b> {{ $t("lbl.ar19") }} </b>
@@ -162,21 +163,21 @@
             {{ $t("lbl.agrees") }}
           </p>
           <p>
-            <b> {{ $t("lbl.ar20") }} </b> 
+            <b> {{ $t("lbl.ar20") }} </b>
             <b> {{ $t("lbl.developer") }} </b>
             <br />
             {{ $t("lbl.makes") }}
           </p>
           <p>
-            <b> {{ $t("lbl.ar21") }} </b> 
-             <b>{{ $t("lbl.activation") }}</b>
-             <br />
+            <b> {{ $t("lbl.ar21") }} </b>
+            <b>{{ $t("lbl.activation") }}</b>
+            <br />
             {{ $t("lbl.declares") }}
           </p>
           <p>
             <b> {{ $t("lbl.ar22") }} </b>
-             <b> {{ $t("lbl.contract") }}</b>
-             <br />
+            <b> {{ $t("lbl.contract") }}</b>
+            <br />
             {{ $t("lbl.active") }}
           </p>
           <ul>
@@ -185,7 +186,7 @@
           <p>
             <b> {{ $t("lbl.ar23") }} </b>
             <b> {{ $t("lbl.damages") }}</b>
-             <br />
+            <br />
             {{ $t("lbl.responsible") }}
             <a href="https://coherent-accounting.comabout"
               >https://coherent-accounting.comabout</a
@@ -204,7 +205,7 @@
             {{ $t("lbl.not") }}
           </p>
           <ul>
-            <li class="p-list">{{ $t("lbl.othert") }} </li>
+            <li class="p-list">{{ $t("lbl.othert") }}</li>
           </ul>
           <p>
             <b> {{ $t("lbl.ar26") }} </b>
@@ -238,38 +239,33 @@
           </p>
         </span>
       </b-card-text>
-        </b-card>
-        
+    </b-card>
 
-        <b-card header-bg-variant="light" :header="$t('lbl.termofuse-1')" >
-            <b-card-text>
+    <b-card header-bg-variant="light" :header="$t('lbl.termofuse-1')">
+      <b-card-text>
         <span style="white-space: break-spaces">
           <p>
-            {{ $t("lbl.termofuseone-1") }}  
-          
-            
+            {{ $t("lbl.termofuseone-1") }}
           </p>
           <ul>
             <li class="p-list">1. {{ $t("lbl.introduction") }}</li>
           </ul>
           <p>
-            Welcome   to {{ $t("lbl.welcome") }}
+            Welcome to {{ $t("lbl.welcome") }}
             <a href="https://coherent-accounting.com"
               >https://coherent-accounting.com</a
             >
             {{ $t("lbl.explains") }}
-            
+
             <a href="https://coherent-accounting.com"
               >https://coherent-accounting.com</a
             >
-            
           </p>
 
           <ul>
             <li class="p-list">2. {{ $t("lbl.cookies") }}</li>
           </ul>
           <p>
-            
             {{ $t("lbl.cookies-para") }}
           </p>
 
@@ -277,108 +273,77 @@
             <li class="p-list">3. {{ $t("lbl.use") }}</li>
           </ul>
           <p>
-            
             {{ $t("lbl.cookies-para-1") }}
           </p>
 
           <p>
             <b> {{ $t("lbl.essential") }} </b>
-            
+
             {{ $t("lbl.nessary") }}
-           
           </p>
           <p>
             <b> {{ $t("lbl.Performance") }} </b>
             {{ $t("lbl.analyze") }}
             <br />
-          
           </p>
 
           <p>
             <b> {{ $t("lbl.FunctionalityCookies") }} </b>
             {{ $t("lbl.enhanced ") }}
-           
           </p>
           <p>
             <b> {{ $t("lbl.Targeting") }} </b>
             {{ $t("lbl.advertising") }}
-          
           </p>
-
 
           <ul>
             <li class="p-list">4. {{ $t("lbl.Consent") }}</li>
           </ul>
           <p>
-            
             {{ $t("lbl.cookies-para-3") }}
           </p>
-          
 
           <ul>
             <li class="p-list">5. {{ $t("lbl.Party") }}</li>
           </ul>
           <p>
-            
             {{ $t("lbl.cookies-para-4") }}
           </p>
-          
 
           <ul>
             <li class="p-list">6. {{ $t("lbl.Changes") }}</li>
           </ul>
           <p>
-            
             {{ $t("lbl.cookies-para-5") }}
           </p>
-          
 
           <ul>
             <li class="p-list">7. {{ $t("lbl.ContactUs") }}</li>
           </ul>
           <p>
-            
             {{ $t("lbl.cookies-para-6") }}
           </p>
-          
-
-         
-          
-          
-
-         
-        
-         
-      
         </span>
       </b-card-text>
-        </b-card>
-
-    </div>
+    </b-card>
+  </div>
 </template>
 
 <script>
-import {
-    BCard,
-    BCardText
-
-} from "bootstrap-vue";
+import { BCard, BCardText } from "bootstrap-vue";
 
 export default {
-    components: {
-        BCard,
-        BCardText
-    }
-}
+  components: {
+    BCard,
+    BCardText,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
-
 .p-list {
   font-size: 1vw;
   color: #0a64bc;
   font-weight: bold;
 }
-
 </style>
