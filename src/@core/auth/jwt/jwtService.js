@@ -20,13 +20,12 @@ export default class JwtService {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       "Access-Control-Allow-Origin": "https://coherent-accounting.com",
+      // "Access-Control-Allow-Origin": "*",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
     },
   });
 
   axiosIns2 = axios.create({
-    // You can add your headers here
-    // ================================
     // baseURL: "https://167.86.93.80",
     withCredentials: true,
     baseURL: "https://coherent-accounting.com",
@@ -40,7 +39,6 @@ export default class JwtService {
 
   axiosIns = null;
 
-  // jwtConfig <= Will be used by this service
   jwtConfig = { ...jwtDefaultConfig };
 
   // For Refreshing Token
@@ -56,11 +54,7 @@ export default class JwtService {
     // Request Interceptor
     this.axiosIns.interceptors.request.use(
       (config) => {
-        // console.log("configggggg", config.withCredentials);
-        // config.withCredentials = true;
-        // Get token from localStorage
         const accessToken = this.getToken();
-        // If token is present add it to request's Authorization Header
         if (accessToken) {
           // eslint-disable-next-line no-param-reassign
           config.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`;
@@ -169,9 +163,10 @@ export default class JwtService {
     let headers = {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
-      "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
+      // "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
     };
+    // console.log("cXSRF-TOKEN------", getCookieValue("XSRF-TOKEN"));
     return this.axiosIns2.post(this.jwtConfig.loginEndpoint, data, {
       headers,
     });
