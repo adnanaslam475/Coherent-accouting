@@ -11,29 +11,28 @@ export default class JwtService {
   axiosIns1 = axios.create({
     // You can add your headers here
     // ================================
-    withCredentials: true,
+    // withCredentials: true,
     baseURL: "https://coherent-accounting.com",
     // baseURL: "https://167.86.93.80",
     // timeout: 1000,
     headers: {
-      "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+      // "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       "Access-Control-Allow-Origin": "https://coherent-accounting.com",
-      // "Access-Control-Allow-Origin": "*",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
     },
   });
 
   axiosIns2 = axios.create({
     // baseURL: "https://167.86.93.80",
-    withCredentials: true,
+    // withCredentials: true,
     baseURL: "https://coherent-accounting.com",
     // timeout: 1000,
   });
 
   axiosIns4 = axios.create({
-    withCredentials: true,
+    // withCredentials: true,
     baseURL: "https://api.ipify.org/?format=json",
   });
 
@@ -164,9 +163,9 @@ export default class JwtService {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
-      // "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
+      "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
     };
-    // console.log("cXSRF-TOKEN------", getCookieValue("XSRF-TOKEN"));
+    console.log("cXSRF-TOKEN------", getCookieValue("XSRF-TOKEN"));
     return this.axiosIns2.post(this.jwtConfig.loginEndpoint, data, {
       headers,
     });
