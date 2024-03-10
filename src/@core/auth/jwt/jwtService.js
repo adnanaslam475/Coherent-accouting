@@ -4,31 +4,33 @@ var qs = require("qs");
 var FormData = require("form-data");
 import router from "@/router";
 import { getCookieValue } from "@/auth/utils";
+import store from "@/store";
 
 export default class JwtService {
   // Will be used by this service for making API calls
-
   axiosIns1 = axios.create({
     // You can add your headers here
     // ================================
     baseURL: "https://coherent-accounting.com",
     // baseURL: "https://167.86.93.80",
     headers: {
-      "XSRF-TOKEN": getCookieValue("XSRF-TOKEN"),
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       "Access-Control-Allow-Origin": "https://coherent-accounting.com",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
+      "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token,
     },
   });
 
   axiosIns2 = axios.create({
     // baseURL: "https://167.86.93.80",
     baseURL: "https://coherent-accounting.com",
+    "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token,
   });
 
   axiosIns4 = axios.create({
     baseURL: "https://api.ipify.org/?format=json",
+    "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token,
   });
 
   axiosIns = null;
@@ -49,9 +51,12 @@ export default class JwtService {
     this.axiosIns.interceptors.request.use(
       (config) => {
         const accessToken = this.getToken();
+        console.log("config.headers_also", config.headers);
         if (accessToken) {
           // eslint-disable-next-line no-param-reassign
           config.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`;
+          config.headers["X-XSRF-TOKEN"] =
+            store.state?.verticalMenu?.xsrf_token;
         }
         return config;
       },
@@ -148,6 +153,7 @@ export default class JwtService {
   }
 
   login(...args) {
+    console.log("sto", store.state);
     let data = new FormData();
     for (var key in arguments[0]) {
       if (arguments[0].hasOwnProperty(key)) {

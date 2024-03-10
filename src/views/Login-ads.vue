@@ -220,7 +220,6 @@ export default {
     };
   },
   computed: {
-    
     passwordToggleIcon() {
       return this.passwordFieldType === "password" ? "EyeIcon" : "EyeOffIcon";
     },
@@ -236,8 +235,6 @@ export default {
   },
   methods: {
     login() {
-      // console.log("cXSRF-TOKEN237------", getCookieValue("XSRF-TOKEN"));
-
       this.$refs.loginForm.validate().then((success) => {
         if (success) {
           this.loading = true;

@@ -131,12 +131,16 @@ export default {
 
     if (!localStorage.getItem("user_token")) {
       useJwt
-        .login({
-          grant_type: "password",
-          username: "amazon_6011_@abv.bg",
-          password: "1234",
-        })
+        .login(
+          {
+            grant_type: "password",
+            username: "amazon_6011_@abv.bg",
+            password: "1234",
+          },
+          this.getXsrfToken
+        )
         .then((response) => {
+          console.log("jusefortest", response.headers);
           localStorage.setItem(
             "user_token",
             response.data.access_token["x-xsrf-token"]
@@ -147,8 +151,6 @@ export default {
             "verticalMenu/SET_TOKEN",
             error.response.headers["x-xsrf-token"]
           );
-          // axios.defaults.headers["XSRF-TOKEN"] =
-          //   error.response.headers["x-xsrf-token"];
         })
         .finally(() => {});
     }
