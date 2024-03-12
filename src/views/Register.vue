@@ -403,47 +403,50 @@ export default {
 
       this.$refs.registerForm.validate().then((success) => {
         if (success) {
-          useJwt.clientToken().then((res) => {
-            let token = res.data.access_token;
-            useJwt
-              .register(token, {
-                firstname: this.firstname,
-                lastname: this.lastname,
-                email: this.userEmail,
-                password: this.password,
-                accountType: "COMPANY",
-                companyAddress: this.companyAddress,
-                companyName: this.companyName,
-                companyRegistrationNumber: "test",
-                country: this.country?.value,
-                gdpr: this.gdpr,
-                identifier: "test",
-                ipAddress: "test",
-                isoAlpha2Country: "test",
-              })
-              .then((response) => {
-                localStorage.setItem("userData", JSON.stringify(response));
-                this.$toast({
-                  component: ToastificationContent,
-                  props: {
-                    title: `Client Token and Create User APIs hit successfully`,
-                    icon: "EditIcon",
-                    variant: "success",
-                  },
+          useJwt
+            .clientToken(this.getXsrfToken)
+
+            .then((res) => {
+              let token = res.data.access_token;
+              useJwt
+                .register(token, {
+                  firstname: this.firstname,
+                  lastname: this.lastname,
+                  email: this.userEmail,
+                  password: this.password,
+                  accountType: "COMPANY",
+                  companyAddress: this.companyAddress,
+                  companyName: this.companyName,
+                  companyRegistrationNumber: "test",
+                  country: this.country?.value,
+                  gdpr: this.gdpr,
+                  identifier: "test",
+                  ipAddress: "test",
+                  isoAlpha2Country: "test",
+                })
+                .then((response) => {
+                  localStorage.setItem("userData", JSON.stringify(response));
+                  this.$toast({
+                    component: ToastificationContent,
+                    props: {
+                      title: `Client Token and Create User APIs hit successfully`,
+                      icon: "EditIcon",
+                      variant: "success",
+                    },
+                  });
+                  return this.$router.push("/");
+                })
+                .catch((error) => {
+                  this.$toast({
+                    component: ToastificationContent,
+                    props: {
+                      title: `${error.response.data.errorMessage}`,
+                      icon: "EditIcon",
+                      variant: "error",
+                    },
+                  });
                 });
-                return this.$router.push("/");
-              })
-              .catch((error) => {
-                this.$toast({
-                  component: ToastificationContent,
-                  props: {
-                    title: `${error.response.data.errorMessage}`,
-                    icon: "EditIcon",
-                    variant: "error",
-                  },
-                });
-              });
-          });
+            });
         }
       });
     },
@@ -460,7 +463,7 @@ export default {
   populateCountries() {
     var optionsArr = this;
     useJwt
-      .clientToken()
+      .clientToken(this.getXsrfToken)
       .then((res) => {
         let token = res.data.access_token;
         useJwt

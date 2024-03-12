@@ -149,7 +149,7 @@ export default {
         if (success) {
           this.loading = true;
           useJwt
-            .clientToken()
+            .clientToken(this.getXsrfToken)
             .then((res) => {
               let token = res.data.access_token;
               useJwt

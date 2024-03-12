@@ -447,20 +447,11 @@ export default {
   },
   computed: {
     ...mapGetters("verticalMenu", ["getXsrfToken"]),
-    // passwordToggleIcon() {
-    //   return this.isApiKey == false ? 'EyeIcon' : 'EyeOffIcon'
-    // },
   },
-  // watch: {
-  //   'userDetail.accountType': function (newV, oldV) {
-  //     console.log(newV, oldV)
-  //   },
-  // },
+
   methods: {
     copyToClipboard(text) {
       if (!text) return; // If no text is provided, don't proceed
-
-      // Create a temporary textarea element
 
       const textArea = document.createElement("textarea");
       textArea.value = text;
@@ -525,7 +516,7 @@ export default {
     },
     populateCountries() {
       useJwt
-        .clientToken()
+        .clientToken(this.getXsrfToken)
         .then((res) => {
           const token = res.data.access_token;
           useJwt

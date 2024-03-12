@@ -274,7 +274,7 @@ export default {
       const success = await this.$refs.registerForm.validate();
       if (success) {
         useJwt
-          .clientToken()
+          .clientToken(this.getXsrfToken)
           .then((res) => {
             let token = res.data.access_token;
             useJwt

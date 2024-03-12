@@ -175,11 +175,13 @@ export default class JwtService {
   getIpAddress() {
     return this.axiosIns4.get();
   }
-  clientToken() {
+  clientToken(t) {
     const data = qs.stringify({
       grant_type: "client_credentials",
     });
-    return this.axiosIns1.post(this.jwtConfig.clientToken, data);
+    return this.axiosIns1.post(this.jwtConfig.clientToken, data, {
+      headers: { "X-XSRF-TOKEN": t },
+    });
   }
 
   register(token, ...args) {
@@ -219,7 +221,9 @@ export default class JwtService {
     let data = new FormData();
     data.append("grant_type", "refresh_token");
     data.append("refresh_token", this.getRefreshToken());
-    return this.axiosIns1.post(this.jwtConfig.refreshEndpoint, data);
+    return this.axiosIns1.post(this.jwtConfig.refreshEndpoint, data, {
+      headers: { "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token },
+    });
   }
 
   countries(token) {

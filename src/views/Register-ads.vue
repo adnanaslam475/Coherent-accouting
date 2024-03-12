@@ -674,7 +674,7 @@ export default {
             this.passErr = "Password length must be greater than or equal to 8";
           }
           useJwt
-            .clientToken()
+            .clientToken(this.getXsrfToken)
             .then((res) => {
               let token = res.data.access_token;
               useJwt
@@ -751,7 +751,8 @@ export default {
     populateCountries() {
       var optionsArr = this;
       useJwt
-        .clientToken()
+        .clientToken(this.getXsrfToken)
+
         .then((res) => {
           let token = res.data.access_token;
           useJwt
