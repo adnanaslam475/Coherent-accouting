@@ -130,6 +130,7 @@ export default {
     const t = localStorage.getItem("accessToken");
 
     if (!localStorage.getItem("user_token")) {
+      console.log("caleeedddddddd");
       useJwt
         .login(
           {
