@@ -39,6 +39,9 @@
           <b-nav-item href="https://my.visme.co/view/6x8g07m3-comparison-coherent-accounting-vs-others" target="_blank">
             Comparison Coherent vs Others
           </b-nav-item>
+          <b-nav-item href="https://www.freeprivacypolicy.com/live/c542ed07-08d4-496e-acce-a6f745585517" target="_blank">
+            Privacy policy
+          </b-nav-item>
           <b-nav-item href="/why-choose-us">
             {{ $t("navbar.why_choose_use") }}
           </b-nav-item>
