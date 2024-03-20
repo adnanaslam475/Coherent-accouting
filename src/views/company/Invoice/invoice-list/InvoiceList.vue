@@ -379,9 +379,9 @@
       responsive
       primary-key="id"
       :sort-by.sync="sortBy"
-      empty-text="No matching records found"
       :sort-desc.sync="isSortDirDesc"
-      class="position-relative invoiceList h-100"
+      empty-text="No matching records found"
+      class="position-relative invoiceList h-10"
       id="company-invoices"
       :select-mode="selectMode"
       v-model="selectedItems"
@@ -397,16 +397,6 @@
       <template #head(select)>
         <b-form-checkbox v-model="selectAll"></b-form-checkbox>
       </template>
-      <!-- <template slot="head()">
-        <b-table-sticky-head>
-          <b-tr>
-            <b-th>
-              <b-form-checkbox v-model="selectAll" @change="selectAllRows"></b-form-checkbox>
-            </b-th>
-
-          </b-tr>
-        </b-table-sticky-head>
-      </template> -->
 
       <template #head(invoiceStatus)>
         <feather-icon icon="TrendingUpIcon" class="mx-auto" />
@@ -415,13 +405,10 @@
       <!-- Column: CHECKBOXES -->
       <template #head(id)>
         <b-form-checkbox
-          :checked="
-            ((isCheck === false ? fetchInvoices : invoices) || []).length ==
-            (selectAll || []).length
-          "
+          :checked="(invoices || []).length == (selectAll || []).length"
           @change="
-            () => {
-              selectAllRows(isCheck === false ? fetchInvoices : invoices);
+            (e) => {
+              selectAllRows(invoices);
             }
           "
         ></b-form-checkbox>
@@ -905,7 +892,7 @@ export default {
       isLoading: false, // assuming it's a boolean indicating a loading state
       // other data properties...
       companyinfo: null,
-      isSortDirDesc: true, // or any default value
+      // isSortDirDesc: true, // or any default value
       sortBy: null, // or any default value
       exportDto: {
         companyId: "",
@@ -991,10 +978,6 @@ export default {
     this.getCompany();
   },
 
-  // updated() {
-  //   console.log("this.isce", this.isCheck, this.fetchInvoices(), this.invoices);
-  // },
-
   computed: {
     ...mapGetters("verticalMenu", ["getRefresh", "getXsrfToken"]),
     monthLabels() {
@@ -1039,6 +1022,7 @@ export default {
         ? this.selectAll.filter((v) => v !== id)
         : [...this.selectAll, id];
     },
+
     getMediaType(val) {
       const mediaTypes = {
         png: "jpg",
@@ -1212,7 +1196,6 @@ export default {
             link.remove();
           });
       } catch (error) {
-        console.log("eeeeee", error);
         this.$toast({
           component: ToastificationContent,
           props: {
@@ -1502,7 +1485,6 @@ export default {
       let config = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
-          // sortField: this.sortBy,
           sortField: "id",
           verified: "true",
         },

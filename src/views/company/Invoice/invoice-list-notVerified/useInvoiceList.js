@@ -29,6 +29,7 @@ export default function useInvoicesList() {
   const currentPage = ref(1);
   const perPageOptions = [10, 25, 50, 100];
   const searchQuery = ref("");
+  const deleteRefresh = ref(false);
   const dateFrom = ref("");
   const dateTo = ref("");
   const sortBy = ref("id");
@@ -49,12 +50,19 @@ export default function useInvoicesList() {
   });
 
   const refetchData = () => {
-    // console.log("refInvoiceListTable.value", refInvoiceListTable.value);
     refInvoiceListTable.value.refresh();
   };
 
   watch(
-    [currentPage, perPage, dateFrom, dateTo, searchQuery, statusFilter],
+    [
+      currentPage,
+      perPage,
+      dateFrom,
+      dateTo,
+      deleteRefresh,
+      searchQuery,
+      statusFilter,
+    ],
     () => {
       refetchData();
     }
@@ -130,6 +138,7 @@ export default function useInvoicesList() {
     perPageOptions,
     searchQuery,
     dateFrom,
+    deleteRefresh,
     dateTo,
     sortBy,
     isSortDirDesc,

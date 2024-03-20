@@ -6,14 +6,14 @@
           {{ $t("affiliate_program.title_referral_url") }}
         </h3>
         <div class="w-100">
-          <div class="input-group affiliate-link-copy  w-100">
+          <div class="input-group affiliate-link-copy w-100">
             <input
               v-model="affiliateLink"
               type="text"
               class="search-product form-control"
               style="height: 38px"
               disabled
-            >
+            />
             <div class="input-group-append">
               <div
                 id="affiliate-link-copy"
@@ -25,10 +25,7 @@
                   :text="affiliateLink"
                   @copy="copyAffiliateLink"
                 >
-                  <feather-icon
-                    icon="CopyIcon"
-                    size="14"
-                  />
+                  <feather-icon icon="CopyIcon" size="14" />
                 </CopyToClipboard>
               </div>
               <b-tooltip target="affiliate-link-copy">{{
@@ -56,10 +53,7 @@
           <template>
             <div class="d-flex align-items-center justify-content-center">
               <div class="mb-1 start-chat-icon">
-                <feather-icon
-                  icon="FolderIcon"
-                  size="40"
-                />
+                <feather-icon icon="FolderIcon" size="40" />
               </div>
               <h5 class="sidebar-toggle start-chat-text">
                 {{ $t("affiliate_program.no_record") }}
@@ -88,8 +82,12 @@
                     align-items: center;
                   "
                 >
-                  <span>{{ data.item.user.firstName.substr(0, 1).toUpperCase()
-                  }}{{ data.item.user.lastName.substr(0, 1).toUpperCase() }}</span>
+                  <span
+                    >{{ data.item.user.firstName.substr(0, 1).toUpperCase()
+                    }}{{
+                      data.item.user.lastName.substr(0, 1).toUpperCase()
+                    }}</span
+                  >
                 </div>
               </div>
               <div>
@@ -97,7 +95,8 @@
                   {{ data.item.user.firstName }} {{ data.item.user.lastName }}
                 </h5>
                 <p style="margin-bottom: 0px">
-                  {{ data.item.user.email }}</p>
+                  {{ data.item.user.email }}
+                </p>
               </div>
             </div>
           </template>
@@ -121,7 +120,11 @@
                 }`"
                 class="text-capitalize"
               >
-                {{ data.item.active ? $t("affiliate_program.paid") : $t("affiliate_program.unpaid") }}
+                {{
+                  data.item.active
+                    ? $t("affiliate_program.paid")
+                    : $t("affiliate_program.unpaid")
+                }}
               </b-badge>
             </div>
           </template>
@@ -130,19 +133,11 @@
           <template #head(registrationDate)>
             {{ $t("affiliate_program.registration_date") }}
           </template>
-
         </b-table>
         <b-row class="text-center mb-2">
           <b-col cols="12">
-            <b-spinner
-              v-if="loadMore"
-              large
-              variant="primary"
-            />
-            <div
-              v-else
-              style="height: 35px"
-            />
+            <b-spinner v-if="loadMore" large variant="primary" />
+            <div v-else style="height: 35px" />
             <div ref="loadMoreObserver" />
           </b-col>
         </b-row>
@@ -152,7 +147,13 @@
 </template>
 <script>
 import {
-  BTable, BTooltip, BCard, BBadge, BSpinner, BRow, BCol,
+  BTable,
+  BTooltip,
+  BCard,
+  BBadge,
+  BSpinner,
+  BRow,
+  BCol,
 } from "bootstrap-vue";
 
 import axios from "@/libs/axios";
@@ -246,16 +247,19 @@ export default {
     // getting the list of all affiliates
     async getAllAffiliates() {
       axios
-        .get(`/account/api/affiliate/get-user-affiliates/${this.currentPage}/10`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            "Access-Control-Allow-Credentials": true,
-            "Access-Control-Allow-Origin": "https://coherent-accounting.com",
-          },
-        })
-        .then(response => {
+        .get(
+          `/account/api/affiliate/get-user-affiliates/${this.currentPage}/10`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              "Access-Control-Allow-Credentials": true,
+              "Access-Control-Allow-Origin": "https://coherent-accounting.com",
+            },
+          }
+        )
+        .then((response) => {
           if (response && response.data && response.data.elements) {
-            const affilates = response.data.elements.map(affilate => ({
+            const affilates = response.data.elements.map((affilate) => ({
               user: {
                 email: affilate.email,
                 firstName: affilate.firstName,
@@ -293,7 +297,7 @@ export default {
         rootMargin: "0px",
         threshold: 1.0,
       };
-      const observer = new IntersectionObserver(async entries => {
+      const observer = new IntersectionObserver(async (entries) => {
         this.loadMore = true;
         if (entries[0].isIntersecting) {
           this.currentPage += 1;

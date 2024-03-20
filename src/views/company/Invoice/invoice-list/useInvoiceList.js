@@ -15,13 +15,24 @@ export default function useInvoicesList() {
   const tableColumns = [
     { key: "id", sortable: false },
     { key: "invoiceNumber", sortable: true },
-    { key: "scheduled", sortable: true },
+    { key: "scheduled", sortable: false },
     { key: "exported", sortable: true },
-
-    { key: "invoiceDate", label: "date Issued", sortable: true },
+    {
+      key: "invoiceDate",
+      label: "date Issued",
+      sortable: true,
+    },
     { key: "transactionType", sortable: true },
-    { key: "recipientCompanyName", label: "recipient Company", sortable: true },
-    { key: "supplierCompanyName", label: "supplier Company", sortable: true },
+    {
+      key: "recipientCompanyName",
+      label: "recipient Company",
+      sortable: true,
+    },
+    {
+      key: "supplierCompanyName",
+      label: "supplier Company",
+      sortable: true,
+    },
     { key: "amountNonVat", sortable: true },
     { key: "totalAmount", sortable: true },
     { key: "vatAmount", sortable: true },
@@ -56,7 +67,7 @@ export default function useInvoicesList() {
   };
 
   watch(
-    [currentPage, perPage, dateFrom, dateTo, searchQuery, statusFilter],
+    [currentPage, perPage, dateFrom, sortBy, dateTo, searchQuery, statusFilter],
     () => {
       refetchData();
     }
@@ -64,9 +75,8 @@ export default function useInvoicesList() {
 
   const fetchInvoices = (ctx, callback) => {
     store
-
       .dispatch("app-invoice/fetchInvoices", {
-        sortField: sortBy.value,
+        sortField: ctx.sortBy || sortBy.value,
         direction: isSortDirDesc.value,
         verified: true,
         currentPage: currentPage.value,
@@ -84,8 +94,7 @@ export default function useInvoicesList() {
           totalInvoices.value = elements.length;
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         toast({
           component: ToastificationContent,
           props: {

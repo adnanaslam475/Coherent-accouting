@@ -204,20 +204,19 @@
       <!-- Column: CHECKBOXES -->
       <template #head(id)>
         <b-form-checkbox
-          :checked="
-            ((isCheck === false ? fetchInvoices : invoices) || []).length ==
-            (selectAll || []).length
-          "
-          @change="
-            () => selectAllRows(isCheck === false ? fetchInvoices : invoices)
-          "
+          :checked="(invoices || []).length == (selectAll || []).length"
+          @change="() => selectAllRows(invoices)"
         ></b-form-checkbox>
       </template>
 
       <!-- Add a slot for custom column -->
       <template #cell(id)="data">
         <b-form-checkbox
-          @change="(e) => {selectSingle(data.item.id)}"
+          @change="
+            (e) => {
+              selectSingle(data.item.id);
+            }
+          "
           :checked="!!selectAll.includes(data.item.id)"
         >
         </b-form-checkbox>
@@ -227,6 +226,7 @@
       <template #head(invoiceNumber)>
         {{ $t("company_invoices.invoice_no") }}
       </template>
+
       <template #cell(invoiceNumber)="data">
         <b-link
           :to="{
@@ -300,16 +300,6 @@
           <p class="mb-0">
             {{ data.item.recipientCompany.companyOwnerName }}
           </p>
-
-          <!-- <p class="mb-0">
-            Company Vat Eic: {{ data.item.recipientCompany.companyVatEic }}
-          </p>
-          <p class="mb-0">
-            Company Address: {{ data.item.recipientCompany.companyAddress }}
-          </p>
-          <p class="mb-0">
-            Owner EGN: {{ data.item.recipientCompany.ownerEGN }}
-          </p> -->
         </b-tooltip>
       </template>
 
@@ -824,7 +814,6 @@ export default {
         );
         this.invoices = data1.data.elements;
       }
-
       tableAreaBusy.style.opacity = "1";
       this.loadMore = false;
     },
@@ -841,8 +830,11 @@ export default {
             },
           }
         );
-        this.selectAll = [];
-        this.refreshList();
+        // this.invoices = this.invoices.filter(
+        //   (v) => !this.selectAll.includes(v.id)
+        // );
+        // this.selectAll = [];
+        this.deleteRefresh = "delete";
       } catch (error) {
         this.$toast({
           component: ToastificationContent,
@@ -1173,9 +1165,6 @@ export default {
   created() {
     // window.addEventListener("scroll", this.handleScroll);
   },
-  // updated() {
-  //   console.log("this", this.isCheck);
-  // },
 
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
@@ -1201,6 +1190,7 @@ export default {
     const {
       fetchInvoices,
       tableColumns,
+      deleteRefresh,
       perPage,
       currentPage,
       totalInvoices,
@@ -1252,6 +1242,7 @@ export default {
       endDate,
       companyId,
       sortBy,
+      deleteRefresh,
       isSortDirDesc,
       refInvoiceListTable,
       statusFilter,

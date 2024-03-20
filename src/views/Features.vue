@@ -9,12 +9,7 @@
     </section>
     <section id="features-content">
       <b-row class="kb-search-content-info match-height m-0">
-        <b-col
-          v-for="item in features"
-          :key="item.question"
-          md="12"
-          sm="12"
-        >
+        <b-col v-for="item in features" :key="item.question" md="12" sm="12">
           <app-collapse
             id="faq-payment-qna"
             accordion
@@ -37,12 +32,7 @@
           {{  $t('features.description') }}
         </p> -->
       </div>
-      <b-table
-        class="my-settings"
-        striped
-        hover
-        :items="items"
-      />
+      <b-table class="my-settings" striped hover :items="items" />
     </section>
     <section class="mt-50">
       <div class="text-center">
@@ -65,10 +55,7 @@
               class="mx-auto d-flex align-items-center justify-content-center"
             >
               <!-- Basic Plan -->
-              <b-col
-                md="4"
-                class="text-center"
-              >
+              <b-col md="4" class="text-center">
                 <b-card
                   img-src="../assets/images/partners/one.jpg"
                   img-alt="Image"
@@ -78,7 +65,8 @@
                     target="_blank"
                     href="https://sites.google.com/"
                     class="card-link"
-                  >ЛОГО Д И З</a>
+                    >ЛОГО Д И З</a
+                  >
                   <!-- <b-card-text>
                       This is a wider card with supporting text below as a natural lead-in to additional content.
                       This content is a little bit longer.
@@ -88,10 +76,7 @@
                     </template> -->
                 </b-card>
               </b-col>
-              <b-col
-                md="4"
-                class="text-center"
-              >
+              <b-col md="4" class="text-center">
                 <b-card
                   img-src="../assets/images/partners/two.jpg"
                   img-alt="Image"
@@ -101,7 +86,8 @@
                     target="_blank"
                     href="https://sites.google.com/"
                     class="card-link"
-                  >ЛОГО ЗОДИ</a>
+                    >ЛОГО ЗОДИ</a
+                  >
                   <!-- <b-card-text>
                       This is a wider card with supporting text below as a natural lead-in to additional content.
                       This content is a little bit longer.
@@ -132,7 +118,8 @@
 
 <script>
 import {
-  BAvatar, BTable,
+  BAvatar,
+  BTable,
   BRow,
   BCol,
   BCard,
@@ -143,11 +130,11 @@ import {
   BCardText,
   BInputGroupPrepend,
   BImg,
-} from 'bootstrap-vue'
-import AppCollapse from '@core/components/app-collapse/AppCollapse.vue'
-import AppCollapseItem from '@core/components/app-collapse/AppCollapseItem.vue'
-import { i18n } from '@/main.js'
-import navbarAds from './navbarAds.vue'
+} from "bootstrap-vue";
+import AppCollapse from "@core/components/app-collapse/AppCollapse.vue";
+import AppCollapseItem from "@core/components/app-collapse/AppCollapseItem.vue";
+import { i18n } from "@/main.js";
+import navbarAds from "./navbarAds.vue";
 
 export default {
   components: {
@@ -177,89 +164,89 @@ export default {
     return {
       items: [
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable1'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable1"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable2'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable2"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable3'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable3"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable4'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable4"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable5'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable5"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable6'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable6"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable7'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable7"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable8'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable8"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable9'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable9"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable10'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable10"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable11'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable11"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable12'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable12"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable13'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable13"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable14'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable14"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable15'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable15"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable16'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable16"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable17'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable17"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable18'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable18"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable19'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable19"),
+          [i18n.tc("companies.status")]: "✅",
         },
         {
-          [i18n.tc('lbl.features')]: i18n.tc('featureLable20'),
-          [i18n.tc('companies.status')]: '✅',
+          [i18n.tc("lbl.features")]: i18n.tc("featureLable20"),
+          [i18n.tc("companies.status")]: "✅",
         },
       ],
-    }
+    };
   },
-}
+};
 </script>
 <style lang="scss">
 @import "@core/scss/vue/pages/page-auth.scss";

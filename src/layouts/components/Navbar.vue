@@ -137,7 +137,7 @@
                 </b-link>
               </b-row>
               <small class="notification-text">
-                {{ $t("notifications.click") }}
+                <!-- {{ $t("notifications.click") }} -->
                 <a
                   href="javascript:void(0)"
                   @click="downloadFile(notification)"

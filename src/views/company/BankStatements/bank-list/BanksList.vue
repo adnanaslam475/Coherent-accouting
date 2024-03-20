@@ -378,13 +378,8 @@
       <!-- Column: CHECKBOXES -->
       <template #head(id)>
         <b-form-checkbox
-          :checked="
-            (isCheck === false ? fetchInvoices || [] : invoices || []).length ==
-            selectAll.length
-          "
-          @change="
-            () => selectAllRows(isCheck === false ? fetchInvoices : invoices)
-          "
+          :checked="(invoices || []).length == selectAll.length"
+          @change="() => selectAllRows(invoices)"
         ></b-form-checkbox>
       </template>
       <template #cell(id)="data">
