@@ -154,6 +154,14 @@
     </div>
 
     <b-row class="text-center text-danger">
+      <b-button
+        variant="primary"
+        class="ml-3 mb-1"
+        @click="selectAll && selectAll.length ? deleteInvoices() : null"
+        :disabled="!selectAll.length"
+      >
+        {{ $t("company_info.delete") }}
+      </b-button>
       <b-col>
         <p style="font-size: 1.05rem">
           {{ $t("add_invoice.not_recognised_01") }}
@@ -164,9 +172,10 @@
     </b-row>
 
     <!--  Table Starts  -->
+    <!-- isCheck === false ? fetchInvoices : invoices -->
     <b-table
       ref="refInvoiceListTable"
-      :items="isCheck === false ? fetchInvoices : invoices"
+      :items="fetchInvoices"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -185,9 +194,33 @@
           <h5 class="sidebar-toggle start-chat-text">No records found</h5>
         </div>
       </template>
-
+      <template #head(select)>
+        <b-form-checkbox v-model="selectAll"></b-form-checkbox>
+      </template>
       <template #head(invoiceStatus)>
         <feather-icon icon="TrendingUpIcon" class="mx-auto" />
+      </template>
+
+      <!-- Column: CHECKBOXES -->
+      <template #head(id)>
+        <b-form-checkbox
+          :checked="
+            ((isCheck === false ? fetchInvoices : invoices) || []).length ==
+            (selectAll || []).length
+          "
+          @change="
+            () => selectAllRows(isCheck === false ? fetchInvoices : invoices)
+          "
+        ></b-form-checkbox>
+      </template>
+
+      <!-- Add a slot for custom column -->
+      <template #cell(id)="data">
+        <b-form-checkbox
+          @change="(e) => {selectSingle(data.item.id)}"
+          :checked="!!selectAll.includes(data.item.id)"
+        >
+        </b-form-checkbox>
       </template>
 
       <!-- Column: invoiceNumber -->
@@ -348,8 +381,9 @@
               data.item.currency === 'лв' ||
               data.item.currency === 'лв.'
             "
-            >лв. {{ data.value }}</span
           >
+            {{ data.value }} лв.
+          </span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -366,8 +400,9 @@
               data.item.currency === 'лв' ||
               data.item.currency === 'лв.'
             "
-            >лв. {{ data.value }}</span
           >
+            {{ data.value }} лв.
+          </span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -527,12 +562,12 @@ import {
   BSpinner,
   BProgress,
   BImg,
-  BBreadcrumb,
+  BFormCheckbox,
   BProgressBar,
 } from "bootstrap-vue";
 import { avatarText } from "@core/utils/filter";
 import vSelect from "vue-select";
-import { onUnmounted } from "@vue/composition-api";
+import { onUnmounted, onMounted, onUpdated } from "@vue/composition-api";
 import store from "@/store";
 import VueHtml2pdf from "vue-html2pdf";
 import useJwt from "@/auth/jwt/useJwt";
@@ -570,6 +605,7 @@ export default {
     BCardText,
     BAlert,
     VBToggle,
+    BFormCheckbox,
     VueHtml2pdf,
     BCardHeader,
     InvoiceDownload,
@@ -586,6 +622,7 @@ export default {
 
   data() {
     return {
+      selectAll: [],
       isActive: false,
       loadMore: false,
       startDate: "",
@@ -597,8 +634,8 @@ export default {
       pageNum: 1,
       images: [{ image: "", type: "", id: "" }],
       images1: [],
-      isCheck: false,
       file: null,
+      isCheck: false,
       fileLoading: false,
       path: mdiTrayArrowUp,
       observer: null,
@@ -630,10 +667,25 @@ export default {
     }, 1500);
     this.observeScroll();
     this.getMyCurrentPlan();
-    this.refreshList()
+    this.refreshList();
   },
 
   methods: {
+    selectAllRows(all) {
+      if (this.selectAll.length && this.selectAll.length < all.length) {
+        this.selectAll = (all || []).map((v) => v.id);
+      } else if (this.selectAll.length) {
+        this.selectAll = [];
+      } else {
+        this.selectAll = (all || []).map((v) => v.id);
+      }
+    },
+    selectSingle(id) {
+      this.selectAll = this.selectAll.includes(id)
+        ? this.selectAll.filter((v) => v !== id)
+        : [...this.selectAll, id];
+    },
+
     getMediaType(val) {
       const mediaTypes = {
         png: "jpg",
@@ -745,6 +797,7 @@ export default {
           searchTerm: this.searchQuery,
         },
       };
+
       let config1 = {
         params: {
           direction: this.isSortDirDesc ? "desc" : "asc",
@@ -775,8 +828,33 @@ export default {
       tableAreaBusy.style.opacity = "1";
       this.loadMore = false;
     },
+    async deleteInvoices() {
+      try {
+        await axios.post(
+          `${axios.defaults.baseURL}/account/api/invoice/delete-multiple`,
+          this.selectAll,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        );
+        this.selectAll = [];
+        this.refreshList();
+      } catch (error) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `${error.response.data.errorMessage}`,
+            icon: "DeleteIcon",
+            variant: "danger",
+          },
+        });
+      }
+    },
     getMoreLoadInv(event) {
-      console.log(" Coming here data ", event);
       this.handleSearchSelect(event);
     },
     observeScroll() {
@@ -953,10 +1031,6 @@ export default {
       this.$emit("state", this.state());
     },
 
-    onProgress(event) {
-      console.log(`Processed: ${event} / 100`);
-    },
-
     generatePDF(itemID) {
       this.$refs[`invoicePdf${itemID}`].generatePdf();
     },
@@ -993,27 +1067,25 @@ export default {
       config.id = "";
       let companyID = this.$route.params.id;
       let token = useJwt.getToken();
-      useJwt
-        .addCompanyInvoice(token, companyID, config)
-        .then(async (response) => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Invoice Duplicated Successfully`,
-              icon: "EditIcon",
-              variant: "success",
-            },
-          });
-          // refetchData();
-          var tableAreaBusy = document.getElementById(
-            "company-invoices-not-verified"
-          );
-          tableAreaBusy.style.opacity = "0.5";
-          this.refreshList();
+      useJwt.addCompanyInvoice(token, companyID, config).then(async () => {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `Invoice Duplicated Successfully`,
+            icon: "EditIcon",
+            variant: "success",
+          },
         });
+        // refetchData();
+        var tableAreaBusy = document.getElementById(
+          "company-invoices-not-verified"
+        );
+        tableAreaBusy.style.opacity = "0.5";
+        this.refreshList();
+      });
     },
 
-    invoiceDelete(id, refetchData) {
+    invoiceDelete(id) {
       const token = useJwt.getToken();
       useJwt
         .DeleteCompanyInvoice(token, id)
@@ -1061,7 +1133,6 @@ export default {
             if (progressVal?.length !== 0 && progressVal !== undefined) {
               self.progressCount = progressVal.progress;
               self.progressStatus = progressVal.progressStatus;
-              console.log(self.progressCount, self.progressStatus);
             }
             if (progressVal.progress == "100") {
               clearInterval(myInterval);
@@ -1071,7 +1142,7 @@ export default {
 
       useJwt
         .addMultipleFileInvoice(token, companyID, formData)
-        .then((response) => {
+        .then(() => {
           this.multiplefileLoading = false;
           self.refetchData();
           this.refreshList();
@@ -1102,6 +1173,9 @@ export default {
   created() {
     // window.addEventListener("scroll", this.handleScroll);
   },
+  // updated() {
+  //   console.log("this", this.isCheck);
+  // },
 
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";

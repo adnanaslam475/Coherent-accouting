@@ -51,7 +51,6 @@ export default class JwtService {
     this.axiosIns.interceptors.request.use(
       (config) => {
         const accessToken = this.getToken();
-        console.log("config.headers_also", config.headers);
         if (accessToken) {
           // eslint-disable-next-line no-param-reassign
           config.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`;

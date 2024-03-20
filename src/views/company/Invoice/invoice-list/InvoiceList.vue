@@ -371,10 +371,10 @@
     <!--  Error Message Starts  -->
 
     <!--  Table Starts  -->
-
+    <!-- :items="isCheck === false ? fetchInvoices : invoices" -->
     <b-table
       ref="refInvoiceListTable"
-      :items="isCheck === false ? fetchInvoices : invoices"
+      :items="fetchInvoices"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -420,7 +420,9 @@
             (selectAll || []).length
           "
           @change="
-            () => selectAllRows(isCheck === false ? fetchInvoices : invoices)
+            () => {
+              selectAllRows(isCheck === false ? fetchInvoices : invoices);
+            }
           "
         ></b-form-checkbox>
       </template>
@@ -428,7 +430,11 @@
       <!-- Add a slot for custom column -->
       <template #cell(id)="data">
         <b-form-checkbox
-          @change="() => selectSingle(data.item.id)"
+          @change="
+            (e) => {
+              selectSingle(data.item.id);
+            }
+          "
           :checked="!!selectAll.includes(data.item.id)"
         >
         </b-form-checkbox>
@@ -607,8 +613,9 @@
               data.item.currency === 'лв' ||
               data.item.currency === 'лв.'
             "
-            >лв. {{ data.value }}</span
           >
+            {{ data.value }} лв.
+          </span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -625,7 +632,8 @@
               data.item.currency === 'лв' ||
               data.item.currency === 'лв.'
             "
-            >лв. {{ data.value }}</span
+          >
+            {{ data.value }} лв.</span
           >
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
@@ -982,6 +990,10 @@ export default {
 
     this.getCompany();
   },
+
+  // updated() {
+  //   console.log("this.isce", this.isCheck, this.fetchInvoices(), this.invoices);
+  // },
 
   computed: {
     ...mapGetters("verticalMenu", ["getRefresh", "getXsrfToken"]),

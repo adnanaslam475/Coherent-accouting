@@ -271,10 +271,10 @@
     </b-row>
     <!--  Error Message Starts  -->
     <!--  Table Starts  -->
-
+    <!-- isCheck === false ? fetchInvoices : invoices -->
     <b-table
       ref="refInvoiceListTable"
-      :items="isCheck === false ? fetchInvoices : invoices"
+      :items="fetchInvoices"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -389,7 +389,11 @@
       </template>
       <template #cell(id)="data">
         <b-form-checkbox
-          @change="() => selectSingle(data.item.id)"
+          @change="
+            (e) => {
+              selectSingle(data.item.id);
+            }
+          "
           :checked="!!selectAll.includes(data.item.id)"
         ></b-form-checkbox>
       </template>

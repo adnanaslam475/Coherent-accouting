@@ -138,7 +138,7 @@
       </b-row>
     </div>
 
-    <b-row  class="text-center text-danger">
+    <b-row class="text-center text-danger">
       <b-col>
         <p style="font-size: 1.05rem">
           {{ $t("add_invoice.not_recognised_01") }}
@@ -148,9 +148,10 @@
       </b-col>
     </b-row>
 
+    <!-- :items="isCheck === false ? fetchInvoices : invoices" -->
     <b-table
       ref="refInvoiceListTable"
-      :items="isCheck === false ? fetchInvoices : invoices"
+      :items="fetchInvoices"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -314,8 +315,8 @@
               data.item.currency === 'лв' ||
               data.item.currency === 'лв.'
             "
-            >лв. {{ data.value }}</span
-          >
+            >{{ data.value }} лв.
+          </span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -332,8 +333,9 @@
               data.item.currency === 'лв' ||
               data.item.currency === 'лв.'
             "
-            >лв. {{ data.value }}</span
           >
+            {{ data.value }} лв.
+          </span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>
@@ -350,8 +352,9 @@
               data.item.currency === 'лв' ||
               data.item.currency === 'лв.'
             "
-            >лв. {{ data.value }}</span
           >
+            {{ data.value }} лв.
+          </span>
           <span v-else>{{ data.item.currency }} {{ data.value }}</span>
         </span>
       </template>

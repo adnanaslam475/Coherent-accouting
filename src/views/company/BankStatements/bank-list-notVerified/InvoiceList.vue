@@ -164,9 +164,10 @@
     </b-row>
 
     <!--  Table Starts  -->
+    <!-- :items="isCheck === false ? fetchInvoices : invoices" -->
     <b-table
       ref="refInvoiceListTable"
-      :items="isCheck === false ? fetchInvoices : invoices"
+      :items="fetchInvoices"
       :fields="tableColumns"
       responsive
       primary-key="id"

@@ -141,15 +141,9 @@
                 <a
                   href="javascript:void(0)"
                   @click="downloadFile(notification)"
-                  >{{ $t("notifications.here") }}</a
+                  >{{ notification.message }}</a
                 >
-                <!--                <a-->
-                <!--                  v-if="fullIndex !== notification.id"-->
-                <!--                  href="javascript:void(0)"-->
-                <!--                  @click="fullIndex = notification.id"-->
-                <!--                >-->
-                <!--                  read more-->
-                <!--                </a>-->
+                <!-- {{ $t("notifications.here") }} -->
               </small>
             </b-media>
           </b-link>

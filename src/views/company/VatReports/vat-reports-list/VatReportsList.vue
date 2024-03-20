@@ -212,9 +212,9 @@
       :fields="tableColumns"
       primary-key="id"
       :sort-by.sync="sortBy"
+      :sort-desc.sync="isSortDirDesc"
       show-empty
       empty-text="No matching records found"
-      :sort-desc.sync="isSortDirDesc"
       class="position-relative invoiceList"
     >
       <template #empty="scope">
@@ -222,10 +222,7 @@
           <div class="mb-1 start-chat-icon">
             <feather-icon icon="FolderIcon" size="40" />
           </div>
-          <h5 class="sidebar-toggle start-chat-text">
-            No records found
-            <!-- dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
-          </h5>
+          <h5 class="sidebar-toggle start-chat-text">No records found</h5>
         </div>
       </template>
 
@@ -547,12 +544,6 @@ extend("required", {
   message: "This field is mandatory",
 });
 
-// Create component
-const FilePond = vueFilePond(
-  FilePondPluginFileValidateType,
-  FilePondPluginImagePreview
-);
-
 export default {
   components: {
     BCard,
@@ -722,15 +713,7 @@ export default {
     async updateVatReport() {
       var config = this.vatReport;
 
-      // config.asset = {
-      //   binaryId: this.binary.binaryId,
-      //   notes: this.notes,
-      //   type: "ASSET",
-      //   id:0
-      // };
-
       config.asset = this.dataToSend;
-      // console.log(config);
 
       await axios
         .put("/account/api/report/update/" + this.vatIdtoUpdate, config)
@@ -749,7 +732,7 @@ export default {
             this.refetchData();
           }
         })
-        .catch((error) => {
+        .catch(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -784,7 +767,6 @@ export default {
             this.dataToSend.notes = response.data.notes;
             this.dataToSend.type = response.data.type;
             this.dataToSend.id = response.data.id;
-            // console.log(this.dataToSend);
 
             this.updateVatReport();
           }
@@ -793,7 +775,7 @@ export default {
     },
 
     // getting zip file from backend
-    getZipFile(refetchData) {
+    getZipFile(refetchdata) {
       this.$nextTick(() => {
         this.$bvModal.show("modal-spinner");
       });
@@ -842,7 +824,7 @@ export default {
                     variant: "success",
                   },
                 });
-                refetchData();
+                refetchdata();
               }
             })
             .catch((error) => {
@@ -950,7 +932,7 @@ export default {
     actionTab() {
       this.$emit("state", this.state());
     },
-    showMsgBoxTwo(id, refetchData) {
+    showMsgBoxTwo(id, refetchdata) {
       const h = this.$createElement;
       // Using HTML string
       // More complex structure
@@ -970,16 +952,16 @@ export default {
         })
         .then((value) => {
           if (value) {
-            this.vatReportDelete(id, refetchData);
+            this.vatReportDelete(id, refetchdata);
           }
         });
     },
     // Delete vat report
-    vatReportDelete(id, refetchData) {
+    vatReportDelete(id, refetchdata) {
       const token = useJwt.getToken();
       useJwt
         .DeleteVatReport(token, id)
-        .then((response) => {
+        .then(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -988,7 +970,7 @@ export default {
               variant: "success",
             },
           });
-          refetchData();
+          refetchdata();
         })
         .catch((error) => {
           this.$toast({

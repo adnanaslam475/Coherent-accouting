@@ -177,10 +177,10 @@ export default {
       axios
         .get(`${axios.defaults.baseURL}/index/health`)
         .then((res) => {
-          console.log("res of index/health :", res);
+          // console.log("res of index/health :", res);
         })
         .catch((e) => {
-          console.log("error in index/health :", e);
+          // console.log("error in index/health :", e);
         })
         .finally(() => {});
       axios

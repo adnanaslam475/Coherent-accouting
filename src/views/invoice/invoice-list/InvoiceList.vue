@@ -240,9 +240,10 @@
 
     <div>
       <!--  Table Starts  -->
+      <!-- :items="isCheck === false ? fetchInvoices : invoices" -->
       <b-table
         ref="refInvoiceListTable"
-        :items="isCheck === false ? fetchInvoices : invoices"
+        :items="fetchInvoices"
         id="company-invoices"
         :fields="tableColumns"
         responsive
@@ -422,8 +423,9 @@
                 data.item.currency === 'лв' ||
                 data.item.currency === 'лв.'
               "
-              >лв. {{ data.value }}</span
             >
+              {{ data.value }} лв.
+            </span>
             <span v-else>{{ data.item.currency }} {{ data.value }}</span>
           </span>
         </template>
@@ -443,8 +445,9 @@
                 data.item.currency === 'лв' ||
                 data.item.currency === 'лв.'
               "
-              >лв. {{ data.value }}</span
             >
+              {{ data.value }} лв.
+            </span>
             <span v-else>{{ data.item.currency }} {{ data.value }}</span>
           </span>
         </template>
@@ -464,8 +467,9 @@
                 data.item.currency === 'лв' ||
                 data.item.currency === 'лв.'
               "
-              >лв. {{ data.value }}</span
             >
+              {{ data.value }} лв.
+            </span>
             <span v-else>{{ data.item.currency }} {{ data.value }}</span>
           </span>
         </template>
