@@ -165,9 +165,10 @@
 
     <!--  Table Starts  -->
     <!-- :items="isCheck === false ? fetchInvoices : invoices" -->
+    <!-- :items="invoices && invoices.length > 1 ? invoices : fetchInvoices" -->
     <b-table
       ref="refInvoiceListTable"
-      :items="fetchInvoices"
+      :items="invoices"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -969,7 +970,7 @@ export default {
   },
 
   created() {
-    // window.addEventListener("scroll", this.handleScroll);
+    console.log("this", this.invoices);
   },
 
   setup() {
