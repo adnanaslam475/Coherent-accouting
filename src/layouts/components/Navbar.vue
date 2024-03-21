@@ -122,7 +122,7 @@
               <b-row class="justify-content-between m-0">
                 <p class="media-heading notifWidth">
                   <span class="font-weight-bolder">
-                    {{ notification.subject }}
+                    {{ $t("notifications.error") }}
                   </span>
                 </p>
                 <b-link class="icon-trash-notifications">
@@ -137,13 +137,14 @@
                 </b-link>
               </b-row>
               <small class="notification-text">
-                <!-- {{ $t("notifications.click") }} -->
                 <a
                   href="javascript:void(0)"
                   @click="downloadFile(notification)"
-                  >{{ notification.message }}</a
                 >
-                <!-- {{ $t("notifications.here") }} -->
+                  {{ $t("notifications.errorpre") }}
+                  {{ notification.message }}
+                  {{ $t("notifications.errorpost") }}
+                </a>
               </small>
             </b-media>
           </b-link>

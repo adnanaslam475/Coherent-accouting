@@ -597,6 +597,10 @@
   "notifications": {
     "notification": "Notifications",
     "click": "You can download file by clicking",
+    "error": "Document process error",
+    "error_ocr": " Please check tab `Bull OCR Docs` of the company",
+    "errorpre": "File with name: ",
+    "errorpost": " was not processed. Please send it again",
     "here": "here",
     "readAll": "Read all notifications"
   },

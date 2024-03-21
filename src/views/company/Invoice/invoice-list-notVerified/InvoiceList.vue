@@ -1132,7 +1132,7 @@ export default {
 
       useJwt
         .addMultipleFileInvoice(token, companyID, formData)
-        .then(() => {
+        .then((res) => {
           this.multiplefileLoading = false;
           self.refetchData();
           this.refreshList();
@@ -1140,7 +1140,7 @@ export default {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Please check tab "Bull OCR Docs" of the company',
+              title: this.$t("notifications.error_ocr"),
               icon: "EditIcon",
               variant: "success",
             },
