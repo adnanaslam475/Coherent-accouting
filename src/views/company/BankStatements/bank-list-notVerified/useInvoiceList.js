@@ -72,7 +72,6 @@ export default function useInvoicesList() {
       })
       .then((response) => {
         const { elements } = response.data;
-        console.log("fetchInvoices", response.data.elements);
         invoices.value = response.data.elements;
         if (callback) {
           callback(elements);
