@@ -41,6 +41,7 @@ export default function useInvoicesList() {
   const perPage = ref(10);
   const totalInvoices = ref(0);
   const currentPage = ref(1);
+  const deleteRefresh = ref(false);
   const perPageOptions = [10, 25, 50, 100];
   const searchQuery = ref("");
   const dateFrom = ref("");
@@ -67,7 +68,16 @@ export default function useInvoicesList() {
   };
 
   watch(
-    [currentPage, perPage, dateFrom, sortBy, dateTo, searchQuery, statusFilter],
+    [
+      currentPage,
+      perPage,
+      dateFrom,
+      sortBy,
+      deleteRefresh,
+      dateTo,
+      searchQuery,
+      statusFilter,
+    ],
     () => {
       refetchData();
     }
@@ -136,6 +146,7 @@ export default function useInvoicesList() {
   return {
     fetchInvoices,
     tableColumns,
+    deleteRefresh,
     perPage,
     currentPage,
     totalInvoices,

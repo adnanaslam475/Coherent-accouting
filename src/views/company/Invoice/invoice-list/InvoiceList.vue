@@ -360,6 +360,14 @@
 
     <!--  Error Message Starts  -->
     <b-row class="text-center text-danger">
+      <b-button
+        variant="primary"
+        class="ml-3 mb-1"
+        @click="selectAll && selectAll.length ? deleteInvoices() : null"
+        :disabled="!selectAll.length"
+      >
+        {{ $t("company_info.delete") }}
+      </b-button>
       <b-col>
         <p style="font-size: 1.05rem">
           {{ $t("add_invoice.not_recognised_01") }}
@@ -1412,6 +1420,34 @@ export default {
       }
     },
 
+    async deleteInvoices() {
+      try {
+        await axios.post(
+          `${axios.defaults.baseURL}/account/api/invoice/delete-multiple`,
+          this.selectAll,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        );
+        this.selectAll = [];
+
+        this.deleteRefresh = "delete";
+      } catch (error) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `${error.response.data.errorMessage}`,
+            icon: "DeleteIcon",
+            variant: "danger",
+          },
+        });
+      }
+    },
+
     observeScroll() {
       const options = {
         root: null,
@@ -1768,6 +1804,7 @@ export default {
     const {
       fetchInvoices,
       tableColumns,
+      deleteRefresh,
       perPage,
       currentPage,
       totalInvoices,
@@ -1794,6 +1831,7 @@ export default {
       fetchInvoices,
       tableColumns,
       perPage,
+      deleteRefresh,
       currentPage,
       totalInvoices,
       dataMeta,
