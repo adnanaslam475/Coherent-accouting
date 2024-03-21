@@ -1137,10 +1137,17 @@ export default {
           self.refetchData();
           this.refreshList();
           event.target.value = "";
+          console.log("thisssssss", res.data);
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: this.$t("notifications.error_ocr"),
+              title:
+                this.$t("notifications.total") +
+                res.data.total +
+                this.$t("notifications.success") +
+                res.data.successfulOcrCount +
+                this.$t("notifications.unsuccess") +
+                res.data.unsuccessfulOcrCount,
               icon: "EditIcon",
               variant: "success",
             },
