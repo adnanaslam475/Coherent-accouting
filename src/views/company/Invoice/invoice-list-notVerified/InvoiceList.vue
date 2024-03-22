@@ -831,7 +831,9 @@ export default {
             },
           }
         );
-
+        this.invoices = this.invoices.filter(
+          (v) => !this.selectAll.includes(v.id)
+        );
         this.selectAll = [];
         this.deleteRefresh = "delete";
       } catch (error) {

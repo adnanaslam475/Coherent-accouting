@@ -383,6 +383,7 @@
     <b-table
       ref="refInvoiceListTable"
       :items="invoices"
+      style="border: 2px solid red"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -1434,8 +1435,10 @@ export default {
             },
           }
         );
+        this.invoices = this.invoices.filter(
+          (v) => !this.selectAll.includes(v.id)
+        );
         this.selectAll = [];
-
         this.deleteRefresh = "delete";
       } catch (error) {
         this.$toast({
@@ -1508,7 +1511,9 @@ export default {
       console.log("this1510", this.pageNum, this.invoices);
       await axios
         .post(
-          `/account/api/invoice/search/${this.companyId}/${this.pageNum}/${this.perPageRecords}`,
+          `/account/api/invoice/search/${this.companyId}/${Math.ceil(
+            this.pageNum || 0
+          )}/${this.perPageRecords}`,
           data1,
           config
         )
@@ -1518,7 +1523,7 @@ export default {
             ...(this.invoices?.length ? this.invoices : []),
             ...(res.data.elements?.length ? res.data.elements : [])
           );
-          this.pageNum++
+          this.pageNum++;
           this.invoices = arr;
           tableAreaBusy.style.opacity = "1";
           this.loadMore = false;
