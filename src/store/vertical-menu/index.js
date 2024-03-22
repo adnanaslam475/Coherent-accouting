@@ -8,6 +8,7 @@ export default {
     refresh: true,
     savedInvoices: [],
     xsrf_token: "",
+    notifications_refresh: false,
   },
   getters: {
     getActiveTab(state) {
@@ -18,6 +19,9 @@ export default {
     },
     getXsrfToken(state) {
       return state.xsrf_token;
+    },
+    geNotificationRefresh(state) {
+      return state.notifications_refresh;
     },
   },
   mutations: {
@@ -32,6 +36,10 @@ export default {
     },
     SET_TOKEN(state, token) {
       state.xsrf_token = token;
+    },
+    SET_NOTI_REFRESH(state, temp) {
+      console.log("SET_NOTI_REFRESH");
+      state.notifications_refresh = temp;
     },
   },
   actions: {},

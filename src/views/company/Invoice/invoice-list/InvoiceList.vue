@@ -382,7 +382,7 @@
     <!-- :items="isCheck === false ? fetchInvoices : invoices" -->
     <b-table
       ref="refInvoiceListTable"
-      :items="fetchInvoices"
+      :items="invoices"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -1400,15 +1400,16 @@ export default {
           this.searchQuery === ""
         ) {
           this.companyId = router.currentRoute.params.id;
+          // this.pageNum = this.pageNum + 1;
           const data = await axios.get(
-            `/account/api/invoice/list/${this.companyId}/1/${Records}`,
+            `/account/api/invoice/list/${this.companyId}/${this.pageNum}/${Records}`,
             config1
           );
           this.invoices = data.data.elements;
         } else {
           this.companyId = router.currentRoute.params.id;
           const data1 = await axios.post(
-            `/account/api/invoice/search/${this.companyId}/1/${Records}`,
+            `/account/api/invoice/search/${this.companyId}/10/${Records}`,
             payLoadDates,
             config
           );
@@ -1485,7 +1486,7 @@ export default {
       var tableAreaBusy = document.getElementById("company-invoices");
       tableAreaBusy.style.opacity = "0.5";
       this.isCheck = true;
-      this.pageNum = 1;
+      // this.pageNum = 1;
       this.perPageRecords = 10;
       let data1 = {
         dateFrom: this.startDate,
@@ -1503,16 +1504,27 @@ export default {
         },
       };
       this.companyId = router.currentRoute.params.id;
+
+      console.log("this1510", this.pageNum, this.invoices);
       await axios
         .post(
-          `/account/api/invoice/search/${this.companyId}/1/${this.perPageRecords}`,
+          `/account/api/invoice/search/${this.companyId}/${this.pageNum}/${this.perPageRecords}`,
           data1,
           config
         )
         .then((res) => {
-          this.invoices = res.data.elements;
+          let arr = [];
+          arr.push(
+            ...(this.invoices?.length ? this.invoices : []),
+            ...(res.data.elements?.length ? res.data.elements : [])
+          );
+          this.pageNum++
+          this.invoices = arr;
           tableAreaBusy.style.opacity = "1";
           this.loadMore = false;
+        })
+        .catch((e) => {
+          console.log("eeeee", e);
         });
     },
 
@@ -1526,6 +1538,7 @@ export default {
         },
       };
       this.companyId = router.currentRoute.params.id;
+      // this.pageNum = this.pageNum + 1;
       const data = await axios.get(
         `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
         config
@@ -1559,6 +1572,8 @@ export default {
         },
       };
       this.companyId = router.currentRoute.params.id;
+
+      // console.log("thissss", this.pageNum);
       const data = await axios.post(
         `/account/api/invoice/search/${this.companyId}/${this.pageNum}/10`,
         data1,

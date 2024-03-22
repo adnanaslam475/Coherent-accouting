@@ -1311,7 +1311,6 @@ export default {
           config
         )
         .then((res) => {
-          console.log("thisone", res.data.elements);
           this.invoices = res.data.elements;
           tableAreaBusy.style.opacity = "1";
           this.loadMore = false;

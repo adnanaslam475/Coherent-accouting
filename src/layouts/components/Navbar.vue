@@ -287,13 +287,15 @@ import {
   BNavItemDropdown,
   BRow,
 } from "bootstrap-vue";
+// import { watch, computed } from "vue";
 import DarkToggler from "@core/layouts/components/app-navbar/components/DarkToggler.vue";
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import Ripple from "vue-ripple-directive";
-import { ref } from "@vue/composition-api";
+import { ref, computed, watch } from "@vue/composition-api";
 import axios from "@/libs/axios";
 import useJwt from "@/auth/jwt/useJwt";
-import { mapGetters } from "vuex";
+import { mapGetters, useStore } from "vuex";
+import store from "@/store";
 import { EventBus } from "@/GlobalEventBus";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
@@ -333,7 +335,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("verticalMenu", ["getXsrfToken"]),
+    ...mapGetters("verticalMenu", ["geNotificationRefresh"]),
     currentLocale() {
       return this.locales.find((l) => l.locale === this.$i18n.locale);
     },
@@ -540,6 +542,15 @@ export default {
     },
   },
   setup() {
+    // const userData = computed(
+    //   () => store.state?.verticalMenu?.notifications_refresh
+    // );
+
+    // watch(userData, (newValue, oldValue) => {
+    //   console.log("userData changed:", newValue);
+    //   console.log("Old value:", oldValue);
+    // });
+
     /* eslint-disable global-require */
     const locales = [
       {

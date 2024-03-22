@@ -175,7 +175,7 @@
     <!-- isCheck === false ? fetchInvoices : invoices -->
     <b-table
       ref="refInvoiceListTable"
-      :items="fetchInvoices"
+      :items="invoices"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -564,6 +564,7 @@ import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 import router from "@/router";
 import SvgIcon from "@jamescoyle/vue-icon";
+import { mapGetters } from "vuex";
 import { mdiTrayArrowUp } from "@mdi/js";
 import { mdiCloudUploadOutline } from "@mdi/js";
 import flatPickr from "vue-flatpickr-component";
@@ -635,7 +636,7 @@ export default {
       invoices: [],
     };
   },
-
+  computed: { ...mapGetters("verticalMenu", ["geNotificationRefresh"]) },
   watch: {
     endDate: function () {
       this.handleSearchSelect(10);
@@ -929,8 +930,11 @@ export default {
         },
       };
       this.companyId = router.currentRoute.params.id;
+      // console.log("agyaaaaaaaaaaa");
       const data = await axios.get(
-        `/account/api/invoice/list/${this.companyId}/${this.pageNum}/10`,
+        `/account/api/invoice/list/${this.companyId}/${Math.ceil(
+          this.pageNum || 0
+        )}/10`,
         config
       );
       if (data.data.elements.length > 1) {
@@ -940,6 +944,7 @@ export default {
           if (data.data.elements.length === 0) {
             this.pageNum -= 1;
           }
+          console.log("thiss.inc", this.invoices.length);
         }
       } else {
         this.loadMore = false;
@@ -1132,12 +1137,25 @@ export default {
 
       useJwt
         .addMultipleFileInvoice(token, companyID, formData)
-        .then((res) => {
+        .then(async (res) => {
           this.multiplefileLoading = false;
           self.refetchData();
           this.refreshList();
           event.target.value = "";
-          console.log("thisssssss", res.data);
+          store.commit(
+            "verticalMenu/SET_NOTI_REFRESH",
+            !this.geNotificationRefresh
+          );
+
+          const data = await axios.get(
+            `account/api/notification/list/${this.page}/10?sortField=sentDate&direction=desc`
+          );
+          if (this.page > 1) {
+            this.notifications.push(...data.data.elements);
+          } else {
+            this.notifications = data.data.elements;
+          }
+
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -1165,10 +1183,6 @@ export default {
           });
         });
     },
-  },
-
-  created() {
-    // window.addEventListener("scroll", this.handleScroll);
   },
 
   setup() {
