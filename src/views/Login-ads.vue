@@ -255,7 +255,6 @@ export default {
               return this.$router.push({ name: "home" });
             })
             .catch((error) => {
-              console.log("errrr==>", error.response.headers["x-xsrf-token"]);
               this.loading = false;
               this.$toast({
                 component: ToastificationContent,

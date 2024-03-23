@@ -1144,19 +1144,19 @@ export default {
           self.refetchData();
           this.refreshList();
           event.target.value = "";
-          store.commit(
-            "verticalMenu/SET_NOTI_REFRESH",
-            !this.geNotificationRefresh
-          );
+          // store.commit(
+          //   "verticalMenu/SET_NOTI_REFRESH",
+          //   !this.geNotificationRefresh
+          // );
 
-          const data = await axios.get(
-            `account/api/notification/list/${this.page}/10?sortField=sentDate&direction=desc`
-          );
-          if (this.page > 1) {
-            this.notifications.push(...data.data.elements);
-          } else {
-            this.notifications = data.data.elements;
-          }
+          // const data = await axios.get(
+          //   `account/api/notification/list/${this.page}/10?sortField=sentDate&direction=desc`
+          // );
+          // if (this.page > 1) {
+          //   this.notifications.push(...data.data.elements);
+          // } else {
+          //   this.notifications = data.data.elements;
+          // }
 
           this.$toast({
             component: ToastificationContent,

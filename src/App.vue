@@ -130,7 +130,6 @@ export default {
     const t = localStorage.getItem("accessToken");
 
     if (!localStorage.getItem("user_token")) {
-      console.log("caleeedddddddd");
       useJwt
         .login(
           {
@@ -150,7 +149,7 @@ export default {
         .catch((error) => {
           store.commit(
             "verticalMenu/SET_TOKEN",
-            error.response.headers["x-xsrf-token"]
+            error.response?.headers["x-xsrf-token"]
           );
         })
         .finally(() => {});
