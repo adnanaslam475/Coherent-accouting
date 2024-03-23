@@ -127,25 +127,7 @@
       </li>
     </ul>
     <h4>Usage Data</h4>
-    <p>Usage Data is collected automatically when using the Service.</p>
-    <p>
-      Usage Data may include information such as Your Device's Internet Protocol
-      address (e.g. IP address), browser type, browser version, the pages of our
-      Service that You visit, the time and date of Your visit, the time spent on
-      those pages, unique device identifiers and other diagnostic data.
-    </p>
-    <p>
-      When You access the Service by or through a mobile device, We may collect
-      certain information automatically, including, but not limited to, the type
-      of mobile device You use, Your mobile device unique ID, the IP address of
-      Your mobile device, Your mobile operating system, the type of mobile
-      Internet browser You use, unique device identifiers and other diagnostic
-      data.
-    </p>
-    <p>
-      We may also collect information that Your browser sends whenever You visit
-      our Service or when You access the Service by or through a mobile device.
-    </p>
+    <p>Data is NOT collected automatically when using the Service.</p>
     <h4>Tracking Technologies and Cookies</h4>
     <p>
       We use Cookies and similar tracking technologies to track the activity on
@@ -177,12 +159,6 @@
       Persistent Cookies remain on Your personal computer or mobile device when
       You go offline, while Session Cookies are deleted as soon as You close
       Your web browser. Learn more about cookies on the
-      <a
-        href="https://www.freeprivacypolicy.com/blog/sample-privacy-policy-template/#Use_Of_Cookies_And_Tracking"
-        target="_blank"
-        >Free Privacy Policy website</a
-      >
-      article.
     </p>
     <p>
       We use both Session and Persistent Cookies for the purposes set out below:
@@ -279,16 +255,6 @@
       </li>
       <li>
         <p>
-          <strong>For business transfers:</strong> We may use Your information
-          to evaluate or conduct a merger, divestiture, restructuring,
-          reorganization, dissolution, or other sale or transfer of some or all
-          of Our assets, whether as a going concern or as part of bankruptcy,
-          liquidation, or similar proceeding, in which Personal Data held by Us
-          about our Service users is among the assets transferred.
-        </p>
-      </li>
-      <li>
-        <p>
           <strong>For other purposes</strong>: We may use Your information for
           other purposes, such as data analysis, identifying usage trends,
           determining the effectiveness of our promotional campaigns and to
@@ -305,32 +271,11 @@
         Service, to contact You.
       </li>
       <li>
-        <strong>For business transfers:</strong> We may share or transfer Your
-        personal information in connection with, or during negotiations of, any
-        merger, sale of Company assets, financing, or acquisition of all or a
-        portion of Our business to another company.
-      </li>
-      <li>
         <strong>With Affiliates:</strong> We may share Your information with Our
         affiliates, in which case we will require those affiliates to honor this
         Privacy Policy. Affiliates include Our parent company and any other
         subsidiaries, joint venture partners or other companies that We control
         or that are under common control with Us.
-      </li>
-      <li>
-        <strong>With business partners:</strong> We may share Your information
-        with Our business partners to offer You certain products, services or
-        promotions.
-      </li>
-      <li>
-        <strong>With other users:</strong> when You share personal information
-        or otherwise interact in the public areas with other users, such
-        information may be viewed by all users and may be publicly distributed
-        outside.
-      </li>
-      <li>
-        <strong>With Your consent</strong>: We may disclose Your personal
-        information for any other purpose with Your consent.
       </li>
     </ul>
     <h3>Retention of Your Personal Data</h3>
@@ -350,18 +295,6 @@
       data for longer time periods.
     </p>
     <h3>Transfer of Your Personal Data</h3>
-    <p>
-      Your information, including Personal Data, is processed at the Company's
-      operating offices and in any other places where the parties involved in
-      the processing are located. It means that this information may be
-      transferred to — and maintained on — computers located outside of Your
-      state, province, country or other governmental jurisdiction where the data
-      protection laws may differ than those from Your jurisdiction.
-    </p>
-    <p>
-      Your consent to this Privacy Policy followed by Your submission of such
-      information represents Your agreement to that transfer.
-    </p>
     <p>
       The Company will take all steps reasonably necessary to ensure that Your
       data is treated securely and in accordance with this Privacy Policy and no
