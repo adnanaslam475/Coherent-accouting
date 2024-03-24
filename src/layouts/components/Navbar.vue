@@ -355,6 +355,16 @@ export default {
       self.getNotifications();
     });
   },
+  updated() {
+    const userData = computed(
+      () => store.state?.verticalMenu?.notifications_refresh
+    );
+
+    watch(userData, (newValue, oldValue) => {
+      this.getNotifications();
+      this.getNotificationCount()
+    });
+  },
   methods: {
     parseMessage(value) {
       const data = JSON.parse(value.message);
@@ -386,7 +396,6 @@ export default {
           { responseType: "blob" }
         )
         .then((response) => {
-          console.log(response);
           if (response.status === 200) {
             const reader = new FileReader();
             reader.readAsDataURL(response.data);
@@ -402,7 +411,6 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error);
           this.makeToast(
             "danger",
             error.response.errorCode,
@@ -519,12 +527,10 @@ export default {
     },
     async deleteNotification(notificationId) {
       const noti = {};
-      console.log(notificationId);
       noti.notificationId = notificationId;
       const data = await axios.delete(
         `account/api/notification/${notificationId}`
       );
-      console.log(data);
       if (data.status === 204) {
         // eslint-disable-next-line radix
         this.notifications = this.notifications.filter(
@@ -542,15 +548,6 @@ export default {
     },
   },
   setup() {
-    // const userData = computed(
-    //   () => store.state?.verticalMenu?.notifications_refresh
-    // );
-
-    // watch(userData, (newValue, oldValue) => {
-    //   console.log("userData changed:", newValue);
-    //   console.log("Old value:", oldValue);
-    // });
-
     /* eslint-disable global-require */
     const locales = [
       {
