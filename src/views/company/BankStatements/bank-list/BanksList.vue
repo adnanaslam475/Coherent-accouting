@@ -274,7 +274,7 @@
     <!-- isCheck === false ? fetchInvoices : invoices -->
     <b-table
       ref="refInvoiceListTable"
-      :items="fetchInvoices"
+      :items="invoices"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -1048,7 +1048,7 @@ export default {
             "Access-Control-Allow-Credentials": true,
           },
         });
-        this.platform = response.data.exportProperties.platform;
+        this.platform = response.data.exportProperties?.platform;
         this.EIC = response.data.companyIdentificationNumber;
       } catch (error) {
         console.log(error);

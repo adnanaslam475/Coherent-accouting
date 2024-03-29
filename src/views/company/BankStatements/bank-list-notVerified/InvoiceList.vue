@@ -969,10 +969,6 @@ export default {
     },
   },
 
-  created() {
-    console.log("this", this.invoices);
-  },
-
   setup() {
     const INVOICE_APP_STORE_MODULE_NAME = "app-invoice";
 
