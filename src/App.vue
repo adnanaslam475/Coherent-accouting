@@ -174,15 +174,6 @@ export default {
         })
         .finally(() => {});
       axios
-        .get(`${axios.defaults.baseURL}/index/health`)
-        .then((res) => {
-          // console.log("res of index/health :", res);
-        })
-        .catch((e) => {
-          // console.log("error in index/health :", e);
-        })
-        .finally(() => {});
-      axios
         .get(`${axios.defaults.baseURL}/index/api/maintenance/health`)
         .then((res) => {
           if (
@@ -197,34 +188,6 @@ export default {
         })
         .finally(() => {});
     }
-    axios
-      .get(`${axios.defaults.baseURL}/index/health`, {
-        headers: {
-          "Access-Control-Allow-Origin": "https://coherent-accounting.com",
-        },
-      })
-      .then((res) => {
-        if (res.headers["Set-Cookie"] || getCookieValue("XSRF-TOKEN")) {
-          let cookieValue =
-            res.headers["Set-Cookie"] || getCookieValue("XSRF-TOKEN");
-
-          // Append Secure attribute if it's not already present
-          if (!cookieValue.includes("Secure")) {
-            cookieValue += "; Secure";
-          }
-          console.log(
-            "ckoievalue----->",
-            cookieValue
-            // cookieValue?.split(";")[0].split("=")[1]
-          );
-          axios.defaults.headers["X-XSRF-TOKEN"] = cookieValue;
-          axios.defaults.headers["XSRF-TOKEN"] = cookieValue;
-        }
-      })
-      .catch((e) => {
-        console.log("error----->", e);
-      })
-      .finally(() => {});
   },
 };
 </script>
