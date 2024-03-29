@@ -2,7 +2,7 @@
   <div>
     <b-row>
       <b-col cols="12" md="3">
-        <b-card 
+        <b-card
           style="max-width: 20rem; min-height: 230px"
           class="mb-2"
           @mouseenter="isFetching ? null : getCompany()"
@@ -57,7 +57,7 @@
               @click="showConnectionModal('qbo')"
               v-if="!companyInfo.connectedToQBO"
             >
-            <img src="@/assets/images/logo/C2QB_green_btn_med_hover.svg" />
+              <img src="@/assets/images/logo/C2QB_green_btn_med_hover.svg" />
             </button>
             <b-button
               variant="outline-primary"
@@ -70,7 +70,7 @@
         </b-card>
       </b-col>
 
-      <!-- <b-col cols="12" md="3">
+      <b-col cols="12" md="3">
         <b-card
           style="max-width: 20rem; min-height: 230px"
           @mouseenter="isFetching ? null : getCompany()"
@@ -127,7 +127,7 @@
             </b-button>
           </div>
         </b-card>
-      </b-col> -->
+      </b-col>
     </b-row>
 
     <b-modal
@@ -169,8 +169,8 @@
           <b-tab title="How to connect" active>
             <ol>
               <li class="my-1">
-                Click the <b>Connect to QuickBooks</b> button - you'll be redirected
-                from Coherent Accounting to
+                Click the <b>Connect to QuickBooks</b> button - you'll be
+                redirected from Coherent Accounting to
                 {{ type == "qbo" ? "QuickBook" : "Xero" }} Online and promoted
                 to log in.
               </li>
@@ -198,12 +198,14 @@
         <b-button @click="isConnection = false" variant="outline"
           >Cancel</b-button
         >
-        <button class="btn btn-outline"
+        <button
+          class="btn btn-outline"
           @click="connectToQuickBooks(type)"
           :disabled="isConnecting"
           variant="success"
-          > <img src="@/assets/images/logo/C2QB_green_btn_med_hover.svg" /></button
         >
+          <img src="@/assets/images/logo/C2QB_green_btn_med_hover.svg" />
+        </button>
       </div>
     </b-modal>
   </div>
@@ -324,7 +326,7 @@ export default {
             },
           }
         )
-        .then((response) => {
+        .then(() => {
           type == "qbo"
             ? (this.companyInfo.connectedToQBO = false)
             : (this.companyInfo.connectedToXero = false);
