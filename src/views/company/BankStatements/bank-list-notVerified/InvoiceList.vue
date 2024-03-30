@@ -59,6 +59,7 @@
           >
             <feather-icon icon="RefreshCcwIcon" />
           </b-button>
+
           <!-- Progressbar -->
           <div class="progress-item d-flex flex-column w-50 ml-2">
             <h5 class="text-center">{{ progressStatus }}</h5>
@@ -154,6 +155,14 @@
     </div>
 
     <b-row class="text-center text-danger">
+      <!-- <b-button
+        variant="primary"
+        class="ml-3 mb-1"
+        @click="selectAll && selectAll.length ? deleteInvoices() : null"
+        :disabled="!selectAll.length"
+      >
+        {{ $t("company_info.delete") }}
+      </b-button> -->
       <b-col>
         <p style="font-size: 1.05rem">
           {{ $t("add_invoice.not_recognised_01") }}

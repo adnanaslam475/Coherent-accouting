@@ -38,16 +38,10 @@
                 ? togglenewExportModal({}, 'mul')
                 : showDatePickerModal()
             "
-            :disabled="!isActive"
+            :disabled="!selectAll.length"
             v-else
           >
-            {{
-              $t(
-                selectAll && selectAll.length
-                  ? "company_invoices.Export_invoice"
-                  : "company_invoices.Export_invoice_month"
-              )
-            }}
+            {{ $t("company_invoices.Export_invoice") }}
           </b-button>
 
           <!-- Date Picker Modal -->
@@ -127,7 +121,7 @@
                 : ''
             "
             title-class="w-100 text-center"
-            :ok-title="$t('company_invoices.Export_invoicess')"
+            :ok-title="$t('company_invoices.Export_invoice')"
             :cancel-title="$t('company_invoices.cancel')"
             scrollable
             @ok="getExportFile()"

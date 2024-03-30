@@ -68,13 +68,7 @@
             :disabled="!isActive"
             v-else
           >
-            {{
-              $t(
-                selectAll && selectAll.length
-                  ? "company_invoices.Export_invoice"
-                  : "company_invoices.Export_invoice_month"
-              )
-            }}
+            {{ $t("company_invoices.Export_invoice") }}
             <!-- Export Invoice -->
           </b-button>
 
@@ -183,7 +177,7 @@
                 : ''
             "
             title-class="w-100 text-center"
-            :ok-title="$t('company_invoices.Export_invoicess')"
+            :ok-title="$t('company_invoices.Export_invoice')"
             :cancel-title="$t('company_invoices.cancel')"
             scrollable
             @ok="getExportFile()"

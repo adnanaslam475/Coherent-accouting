@@ -107,7 +107,7 @@
                 : ''
             "
             title-class="w-100 text-center"
-            :ok-title="$t('company_invoices.Export_invoicess')"
+            :ok-title="$t('company_invoices.Export_invoice')"
             :cancel-title="$t('company_invoices.cancel')"
             scrollable
             :ok-disabled="modalDisabled"
