@@ -255,6 +255,14 @@
 
     <!--  Error Message Starts  -->
     <b-row class="text-center text-danger">
+      <b-button
+        variant="primary"
+        class="ml-3 mb-1"
+        @click="selectAll && selectAll.length ? deleteInvoices() : null"
+        :disabled="!selectAll.length"
+      >
+        {{ $t("company_info.delete") }}
+      </b-button>
       <b-col>
         <p style="font-size: 1.05rem">
           {{ $t("add_invoice.not_recognised_01") }}
@@ -1197,7 +1205,35 @@ export default {
         console.log("errrrrr->", error);
       }
     },
-
+    async deleteInvoices() {
+      try {
+        await axios.post(
+          `${axios.defaults.baseURL}/account/api/bank-statement/delete-multiple/${this.companyId}`,
+          this.selectAll,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        );
+        this.invoices = this.invoices.filter(
+          (v) => !this.selectAll.includes(v.id)
+        );
+        this.selectAll = [];
+        this.deleteRefresh = "delete";
+      } catch (error) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `${error.response.data.errorMessage}`,
+            icon: "DeleteIcon",
+            variant: "danger",
+          },
+        });
+      }
+    },
     observeScroll() {
       const options = {
         root: null,

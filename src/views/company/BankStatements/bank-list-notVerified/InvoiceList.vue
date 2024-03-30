@@ -155,14 +155,14 @@
     </div>
 
     <b-row class="text-center text-danger">
-      <!-- <b-button
+      <b-button
         variant="primary"
         class="ml-3 mb-1"
         @click="selectAll && selectAll.length ? deleteInvoices() : null"
         :disabled="!selectAll.length"
       >
         {{ $t("company_info.delete") }}
-      </b-button> -->
+      </b-button>
       <b-col>
         <p style="font-size: 1.05rem">
           {{ $t("add_invoice.not_recognised_01") }}
@@ -173,8 +173,6 @@
     </b-row>
 
     <!--  Table Starts  -->
-    <!-- :items="isCheck === false ? fetchInvoices : invoices" -->
-    <!-- :items="invoices && invoices.length > 1 ? invoices : fetchInvoices" -->
     <b-table
       ref="refInvoiceListTable"
       :items="invoices"
@@ -254,6 +252,25 @@
           />
         </span>
       </template>
+
+      <!-- Column: CHECKBOXES -->
+      <template #head(id)>
+        <b-form-checkbox
+          :checked="(invoices || []).length == selectAll.length"
+          @change="() => selectAllRows(invoices)"
+        ></b-form-checkbox>
+      </template>
+      <template #cell(id)="data">
+        <b-form-checkbox
+          @change="
+            () => {
+              selectSingle(data.item.id);
+            }
+          "
+          :checked="!!selectAll.includes(data.item.id)"
+        ></b-form-checkbox>
+      </template>
+
       <template #head(fromDate)> From Date </template>
 
       <template #cell(fromDate)="data">
@@ -391,6 +408,7 @@ import {
   BTable,
   BMedia,
   BAvatar,
+  BFormCheckbox,
   BLink,
   BBadge,
   BDropdown,
@@ -437,6 +455,7 @@ export default {
     BTable,
     BMedia,
     BAvatar,
+    BFormCheckbox,
     BLink,
     BBadge,
     BDropdown,
@@ -467,6 +486,7 @@ export default {
 
   data() {
     return {
+      selectAll: [],
       isActive: false,
       loadMore: false,
       startDate: "",
@@ -517,6 +537,20 @@ export default {
   },
 
   methods: {
+    selectAllRows(all) {
+      if (this.selectAll.length && this.selectAll.length < all.length) {
+        this.selectAll = (all || []).map((v) => v.id);
+      } else if (this.selectAll.length) {
+        this.selectAll = [];
+      } else {
+        this.selectAll = (all || []).map((v) => v.id);
+      }
+    },
+    selectSingle(id) {
+      this.selectAll = this.selectAll.includes(id)
+        ? this.selectAll.filter((v) => v !== id)
+        : [...this.selectAll, id];
+    },
     getMediaType(val) {
       const mediaTypes = {
         png: "jpg",
@@ -660,6 +694,35 @@ export default {
       this.loadMore = false;
     },
 
+    async deleteInvoices() {
+      try {
+        await axios.post(
+          `${axios.defaults.baseURL}/account/api/bank-statement/delete-multiple/${this.companyId}`,
+          this.selectAll,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        );
+        this.invoices = this.invoices.filter(
+          (v) => !this.selectAll.includes(v.id)
+        );
+        this.selectAll = [];
+        this.deleteRefresh = "delete";
+      } catch (error) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `${error.response.data.errorMessage}`,
+            icon: "DeleteIcon",
+            variant: "danger",
+          },
+        });
+      }
+    },
     observeScroll() {
       const options = {
         root: null,

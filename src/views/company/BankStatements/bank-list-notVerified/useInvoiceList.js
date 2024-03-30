@@ -13,6 +13,7 @@ export default function useInvoicesList() {
 
   // Table Handlers
   const tableColumns = [
+    { key: "id", label: "", sortable: false },
     { key: "fromDate", label: "From Date", sortable: true },
     { key: "toDate", label: "To Date", sortable: true },
     { key: "description", label: "Description", sortable: true },
