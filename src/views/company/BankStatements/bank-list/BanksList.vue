@@ -28,13 +28,14 @@
 
             <!-- Add From File -->
           </b-button>
+
           <b-button
             variant="primary"
             style="cursor: pointer"
             class="mr-1"
             @click="
               selectAll && selectAll.length
-                ? exportByIds()
+                ? togglenewExportModal({}, 'mul')
                 : showDatePickerModal()
             "
             :disabled="!isActive"
@@ -47,7 +48,6 @@
                   : "company_invoices.Export_invoice_month"
               )
             }}
-            <!-- Export Invoice -->
           </b-button>
 
           <!-- Date Picker Modal -->
@@ -91,7 +91,7 @@
             :cancel-title="$t('company_invoices.cancel')"
             @show="resetModal"
             :no-close-on-backdrop="true"
-            @ok="exportRequestApiHandler"
+            @ok="ismultiple ? exportByIds() : exportRequestApiHandler()"
             :ok-disabled="!selectedCompany || exporting"
           >
             <div class="d-block">
@@ -690,6 +690,7 @@ export default {
         { value: 30, text: "Last month" },
         { value: 365, text: "This year" },
       ],
+      ismultiple: false,
     };
   },
   watch: {
@@ -852,7 +853,7 @@ export default {
             {
               companyId: router.currentRoute.params.id,
               ids: this.selectAll,
-              platform: this.platform,
+              platform: this.selectedCompany || "AJURE",
             },
             {
               headers: {
@@ -875,28 +876,6 @@ export default {
             const blob = new Blob([response.data], { type: "text/csv" });
 
             saveAs(blob, `EIC__BANK_STEMENT_DATE_${formattedDate}`);
-            // const blobData = response.data;
-            // const exportDataBlob = new Blob([blobData], {
-            //   type: blobData.type,
-            // });
-            // const url = window.URL.createObjectURL(exportDataBlob);
-            // const link = document.createElement("a");
-
-            // saveAs(
-            //   blob,
-            //   `EIC_${companyName.companyIdentificationNumber}_DATE_${formattedDate}`
-            // );
-            // ${companyName.companyIdentificationNumber}
-            // let fileName = `EIC_Bank_statement_date_${formattedDate}`;
-            // link.href = url;
-            // if (blobData.type == "application/zip") {
-            //   link.setAttribute("download", fileName + ".zip"); // download as .zip
-            // } else {
-            //   link.setAttribute("download", fileName + ".txt"); // download as .txt
-            // }
-            // document.body.appendChild(link);
-            // link.click();
-            // link.remove();
           });
       } catch (error) {
         this.$toast({
@@ -931,42 +910,18 @@ export default {
         });
     },
 
-    // async exportModalz() {
-    //   // Fetch the invoices first
-    //   await this.fetchInvoices();
-
-    //   this.exportDto.companyId = this.companyID;
-    //   this.exportDto.date = this.selectedMonthData.date;
-    //   this.exportDto.platformName =
-    //     this.companyinfo &&
-    //     this.companyinfo.exportProperties &&
-    //     this.companyinfo.exportProperties.platform
-    //       ? this.companyinfo.exportProperties.platform
-    //       : "Ajure";
-    //   // Validate if the required fields have a value
-    //   if (
-    //     !this.exportDto.companyId ||
-    //     !this.exportDto.date ||
-    //     !this.exportDto.platformName
-    //   ) {
-    //     return;
-    //   }
-    //   // Show the modal
-    //   this.$bvModal.show("export-info-modal");
-    //   // Then get the export file
-    //   await this.getExportFile();
-    //   // Toggle the visibility of the modal
-    //   this.isExportModalVisible = !this.isExportModalVisible;
-    // },
     toggleExportModal() {
       this.isExportModalVisible = !this.isExportModalVisible;
     },
-    togglenewExportModal(d) {
+    togglenewExportModal(d, mul) {
       this.$refs.new_export_model.show();
-      this.exportData = d;
+      if (mul) {
+        this.ismultiple = true;
+      } else this.exportData = d;
     },
     async exportRequestApiHandler() {
       this.exporting = true;
+
       const { data } = await axios.post(
         `${axios.defaults.baseURL}/account/api/export-single-bank-statement`,
         {
