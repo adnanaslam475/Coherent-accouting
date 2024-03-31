@@ -377,7 +377,6 @@
     <b-table
       ref="refInvoiceListTable"
       :items="invoices"
-      style="border: 2px solid red"
       :fields="tableColumns"
       responsive
       primary-key="id"
@@ -1502,7 +1501,6 @@ export default {
       };
       this.companyId = router.currentRoute.params.id;
 
-      console.log("this1510", this.pageNum, this.invoices);
       await axios
         .post(
           `/account/api/invoice/search/${this.companyId}/${Math.ceil(

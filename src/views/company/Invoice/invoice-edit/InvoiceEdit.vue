@@ -45,26 +45,24 @@
 
             <b-row class="w-100 mx-0">
               <b-col cols="12" xl="5" md="5" class="p-2" style="">
-                <div>
-                  <div
-                    style="
-                      border: 1px solid lightgrey;
-                      box-shadow: 0 4px 24px 0 rgba(34, 41, 60, 0.1);
-                      cursor: pointer;
-                    "
+                <div
+                  style="
+                    border: 1px solid lightgrey;
+                    box-shadow: 0 4px 24px 0 rgba(34, 41, 60, 0.1);
+                    cursor: pointer;
+                  "
+                >
+                  <image-zoom
+                    ref="imageZoom"
+                    :click-zoom="false"
+                    :regular="invoiceImage"
+                    :zoom-amount="3"
+                    :regular-webp="invoiceImage"
+                    :zoom="invoiceImage"
+                    :zoom-webp="invoiceImage"
+                    img-class="img-fluid"
                   >
-                    <image-zoom
-                      ref="imageZoom"
-                      :click-zoom="false"
-                      :regular="invoiceImage"
-                      :zoom-amount="3"
-                      :regular-webp="invoiceImage"
-                      :zoom="invoiceImage"
-                      :zoom-webp="invoiceImage"
-                      img-class="img-fluid"
-                    >
-                    </image-zoom>
-                  </div>
+                  </image-zoom>
                 </div>
               </b-col>
 
@@ -139,10 +137,7 @@
                         style="border-bottom: 1px solid lightgrey"
                       >
                         <b-col cols="3" class="mr-3">
-                          <div
-                            class="d-flex pl-0"
-                            style="flex-direction: column"
-                          >
+                          <div class="d-flex pl-0 flex-column">
                             <span class="grey-text-color">
                               {{ $t("add_invoice.date") }}
                             </span>
@@ -178,10 +173,7 @@
                         </b-col>
 
                         <b-col cols="4" class="pl-0">
-                          <div
-                            class="d-flex pl-0"
-                            style="flex-direction: column"
-                          >
+                          <div class="d-flex pl-0 flex-column">
                             <span class="grey-text-color">
                               {{ $t("add_invoice.due_date") }}
                             </span>
@@ -248,7 +240,7 @@
                         style="border-bottom: 1px solid lightgrey"
                       >
                         <div class="pl-0 mr-1">
-                          <div class="d-flex" style="flex-direction: column">
+                          <div class="d-flex flex-column">
                             <span class="text-uppercase grey-text-color">
                               {{ $t("add_invoice.document_type") }}
                             </span>
@@ -331,7 +323,7 @@
                           </div>
                         </div>
                         <div class="pl-0 mr-1">
-                          <div class="d-flex" style="flex-direction: column">
+                          <div class="d-flex flex-column">
                             <span class="text-uppercase grey-text-color">
                               {{ $t("add_invoice.ORIGINAL") }}/{{
                                 $t("add_invoice.PROFORMA")
@@ -378,7 +370,7 @@
                         </div>
 
                         <div class="pl-0 mr-1">
-                          <div class="d-flex" style="flex-direction: column">
+                          <div class="d-flex flex-column">
                             <span class="text-uppercase grey-text-color">
                               {{ $t("paymentStatus.payed") }}/{{
                                 $t("paymentStatus.not_payed")
@@ -427,7 +419,7 @@
                         </div>
 
                         <div class="pl-0 mr-1">
-                          <div class="d-flex" style="flex-direction: column">
+                          <div class="d-flex flex-column">
                             <span>
                               <div class="position-relative pt-1">
                                 <b-button-group size="md" class=" ">
@@ -505,10 +497,7 @@
                       </b-row>
                       <b-row class="mt-2 mx-0 pb-1">
                         <b-col class="px-0">
-                          <div
-                            class="d-flex"
-                            style="flex-direction: column; float: right"
-                          >
+                          <div class="d-flex flex-column" style="float: right">
                             <div class="text-uppercase grey-text-color">
                               TOTAL
                             </div>
@@ -560,7 +549,7 @@
                                     v-model="invoiceData.amountNonVat"
                                     step="any"
                                     type="number"
-                                    class="text-right"
+                                    class="text-right zzzzzzzzzzz"
                                     @input="populateValues()"
                                   />
                                 </b-input-group>
@@ -738,27 +727,34 @@
                                     <b-col
                                       cols="12"
                                       lg="3"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                       v-if="invoiceData.hasDropDown"
                                     >
                                       {{ $t("add_invoice.account") }}
                                     </b-col>
                                     <b-col
-                                      v-if="invoiceData.xero"
+                                      v-if="
+                                        invoiceData.xero &&
+                                        companyData &&
+                                        companyData.companyIsoAlpha2Country !==
+                                          'BG'
+                                      "
                                       cols="12"
                                       lg="2"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       {{ $t("add_invoice.category") }}
                                     </b-col>
                                     <b-col
-                                      v-if="invoiceData.xero"
+                                      v-if="
+                                        invoiceData.xero &&
+                                        companyData &&
+                                        companyData.companyIsoAlpha2Country !==
+                                          'BG'
+                                      "
                                       cols="12"
                                       lg="2"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       {{ $t("add_invoice.job_cost_code") }}
                                     </b-col>
@@ -766,8 +762,7 @@
                                     <b-col
                                       cols="12"
                                       lg="6"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       {{
                                         $t(
@@ -778,24 +773,21 @@
                                     <b-col
                                       cols="12"
                                       lg="1"
-                                      class="text-uppercase grey-text-color mr-2"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color mr-2 tm_f14"
                                     >
                                       {{ $t("add_invoice.measure") }}
                                     </b-col>
                                     <b-col
                                       cols="12"
                                       lg="1"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       {{ $t("add_invoice.qty") }}
                                     </b-col>
                                     <b-col
                                       cols="12"
                                       lg="2"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       <!-- this is for new -->
                                       {{ $t("add_invoice.single_price") }}
@@ -804,8 +796,7 @@
                                     <b-col
                                       cols="12"
                                       lg="1"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       {{ $t("add_invoice.total_price") }}
                                     </b-col>
@@ -861,13 +852,17 @@
                                           v-if="invalid"
                                           >{{ "This field is required" }}</small
                                         >
-                                        <!-- <small class="text-danger">{{ errors[0] }}</small> -->
                                       </validation-provider>
                                     </b-col>
                                     <b-col
                                       cols="12"
                                       lg="2"
-                                      v-if="invoiceData.xero"
+                                      v-if="
+                                        invoiceData.xero &&
+                                        companyData &&
+                                        companyData.companyIsoAlpha2Country !==
+                                          'BG'
+                                      "
                                     >
                                       <label class="d-inline d-lg-none"
                                         >Category</label
@@ -901,7 +896,12 @@
                                     <b-col
                                       cols="12"
                                       lg="2"
-                                      v-if="invoiceData.xero"
+                                      v-if="
+                                        invoiceData.xero &&
+                                        companyData &&
+                                        companyData.companyIsoAlpha2Country !==
+                                          'BG'
+                                      "
                                     >
                                       <label class="d-inline d-lg-none"
                                         >Job Post Code</label
@@ -1036,6 +1036,7 @@
                                           type="number"
                                           class="mb-0"
                                           @keyup="preventNum"
+                                          style="border: 2px solid red"
                                           step="any"
                                           placeholder="0.00"
                                           @input="populateValues()"
@@ -1391,10 +1392,7 @@
                         style="border-bottom: 1px solid lightgrey"
                       >
                         <b-col class="pl-0">
-                          <div
-                            class="d-flex pl-0"
-                            style="flex-direction: column"
-                          >
+                          <div class="d-flex pl-0 flex-column">
                             <span class="grey-text-color"> DOCUMENT DATE </span>
                             <span>
                               <validation-provider
@@ -1459,7 +1457,7 @@
                         style="border-bottom: 1px solid lightgrey"
                       >
                         <b-col cols="12" md="6" class="pl-0">
-                          <div class="d-flex" style="flex-direction: column">
+                          <div class="d-flex flex-column">
                             <span class="text-uppercase grey-text-color">
                               {{ $t("add_invoice.document_type") }}
                             </span>
@@ -1559,7 +1557,7 @@
                       </b-row>
                       <b-row class="mt-2 mx-0 pb-1">
                         <b-col class="pl-0">
-                          <div class="d-flex" style="flex-direction: column">
+                          <div class="d-flex flex-column">
                             <div class="text-uppercase grey-text-color">
                               {{ $t("add_invoice.currency") }}
                             </div>
@@ -1573,10 +1571,7 @@
                           </div>
                         </b-col>
                         <b-col class="px-0">
-                          <div
-                            class="d-flex"
-                            style="flex-direction: column; float: right"
-                          >
+                          <div class="d-flex flex-column" style="float: right">
                             <div class="text-uppercase grey-text-color">
                               TOTAL
                             </div>
@@ -1606,8 +1601,8 @@
                             </h4>
                           </div>
                           <div
-                            class="d-flex mr-2"
-                            style="flex-direction: column; float: right"
+                            class="d-flex mr-2 flex-column"
+                            style="float: right"
                           >
                             <div class="text-uppercase grey-text-color">
                               TAX
@@ -1702,27 +1697,34 @@
                                     <b-col
                                       cols="12"
                                       lg="3"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                       v-if="invoiceData.hasDropDown"
                                     >
                                       {{ $t("add_invoice.account") }}
                                     </b-col>
                                     <b-col
-                                      v-if="invoiceData.xero"
+                                      v-if="
+                                        invoiceData.xero &&
+                                        companyData &&
+                                        companyData.companyIsoAlpha2Country !==
+                                          'BG'
+                                      "
                                       cols="12"
                                       lg="2"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       {{ $t("add_invoice.category") }}
                                     </b-col>
                                     <b-col
-                                      v-if="invoiceData.xero"
+                                      v-if="
+                                        invoiceData.xero &&
+                                        companyData &&
+                                        companyData.companyIsoAlpha2Country !==
+                                          'BG'
+                                      "
                                       cols="12"
                                       lg="2"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       {{ $t("add_invoice.job_cost_code") }}
                                     </b-col>
@@ -1730,24 +1732,21 @@
                                     <b-col
                                       cols="12"
                                       lg="4"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       Description
                                     </b-col>
                                     <b-col
                                       cols="12"
                                       lg="1"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       {{ $t("add_invoice.qty") }}
                                     </b-col>
                                     <b-col
                                       cols="12"
                                       lg="2"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       <!-- this is for new -->
                                       {{ $t("add_invoice.single_price") }}
@@ -1756,8 +1755,7 @@
                                     <b-col
                                       cols="12"
                                       lg="1"
-                                      class="text-uppercase grey-text-color"
-                                      style="font-size: 14px"
+                                      class="text-uppercase grey-text-color tm_f14"
                                     >
                                       {{ $t("add_invoice.total_price") }}
                                     </b-col>
@@ -1819,7 +1817,12 @@
                                     <b-col
                                       cols="12"
                                       lg="2"
-                                      v-if="invoiceData.xero"
+                                      v-if="
+                                        invoiceData.xero &&
+                                        companyData &&
+                                        companyData.companyIsoAlpha2Country !==
+                                          'BG'
+                                      "
                                     >
                                       <label class="d-inline d-lg-none"
                                         >Category</label
@@ -1853,7 +1856,12 @@
                                     <b-col
                                       cols="12"
                                       lg="2"
-                                      v-if="invoiceData.xero"
+                                      v-if="
+                                        invoiceData.xero &&
+                                        companyData &&
+                                        companyData.companyIsoAlpha2Country !==
+                                          'BG'
+                                      "
                                     >
                                       <label class="d-inline d-lg-none"
                                         >Job Post Code</label
@@ -12122,14 +12130,7 @@ import {
   qtyValid,
 } from "@validations";
 import Logo from "@core/layouts/components/Logo.vue";
-import {
-  ref,
-  onUnmounted,
-  onMounted,
-  getCurrentInstance,
-  getCurrentScope,
-  computed,
-} from "@vue/composition-api";
+import { ref, onUnmounted, onUpdated, computed } from "@vue/composition-api";
 
 import { preventNum } from "@core/comp-functions/forms/prevent-num";
 import { heightTransition } from "@core/mixins/ui/transition";
@@ -12344,7 +12345,7 @@ export default {
   mounted() {
     this.getAccounts();
   },
-
+  updated() {},
   computed: {
     formIsValid() {
       let i = 0;
@@ -12484,7 +12485,7 @@ export default {
         .then((response) => {
           this.accounts = response.data;
         })
-        .catch(function (error) {});
+        .catch(function () {});
     },
     reverse() {
       let temp = this.invoiceData.supplierCompany;
@@ -12754,7 +12755,7 @@ export default {
               router.currentRoute.params.companyId,
               temp
             )
-            .then((response) => {
+            .then(() => {
               this.loading = false;
 
               this.$toast({
@@ -12884,11 +12885,6 @@ export default {
     },
   },
   setup() {
-    // onMounted(() => {
-    //   console.log("all==>", getCurrentInstance()?.data);
-    // });
-    // const {   } = getCurrentInstance().data;
-
     var loading = ref(false);
     var trHeight = ref(0);
     var showInvoiceInput = ref(false);
@@ -12929,6 +12925,7 @@ export default {
       if (store.hasModule(INVOICE_APP_STORE_MODULE_NAME))
         store.unregisterModule(INVOICE_APP_STORE_MODULE_NAME);
     });
+    const invoiceData = ref(null);
 
     var AccountTypeOption = ref("company");
     var AccountTypeOptionToggleValue = false;
@@ -12950,8 +12947,6 @@ export default {
       taxType: "",
       account: "",
     };
-
-    const invoiceData = ref(null);
 
     const hasBankDetails = ref(false);
     const visible = ref(false);
@@ -13010,21 +13005,21 @@ export default {
     const totalAmountInDecimal = computed({
       get() {
         if (invoiceData.value.totalAmount?.toString().includes("."))
-          return invoiceData.value.totalAmount;
-        return invoiceData.value.totalAmount?.toFixed(0);
+          return invoiceData.value.totalAmount.toFixed(2);
+        return invoiceData.value.totalAmount.toFixed(2);
       },
       set(newVal) {
-        invoiceData.value.totalAmount = +newVal || null;
+        invoiceData.value.totalAmount = +newVal.toFixed(2) || null;
       },
     });
     const totalTaxInDecimal = computed({
       get() {
-        if (invoiceData.value.vatAmount?.toString().includes("."))
-          return invoiceData.value.vatAmount;
-        return invoiceData.value.vatAmount?.toFixed(0);
+        // if (invoiceData.value.vatAmount?.toString().includes("."))
+        //   return invoiceData.value.vatAmount;
+        return invoiceData.value.vatAmount?.toFixed(2);
       },
       set(newVal) {
-        invoiceData.value.vatAmount = +newVal || null;
+        invoiceData.value.vatAmount = +newVal.toFixed(2) || null;
       },
     });
 
@@ -13037,7 +13032,7 @@ export default {
         }, 0)
         .toFixed(2);
 
-      invoiceData.value.amountNonVat = totalTransactionAmount;
+      invoiceData.value.amountNonVat = totalTransactionAmount.toFixed(2);
       return totalTransactionAmount;
     });
 
@@ -13065,7 +13060,16 @@ export default {
             : response?.data?.currency?.toLowerCase().trim() == "bgn"
             ? "лв."
             : response.data.currency;
-        invoiceData.value = response.data;
+        invoiceData.value = {
+          ...response.data,
+          amountNonVat: response.data.amountNonVat.toFixed(2),
+          tradeDiscountAmount: response.data.tradeDiscountAmount.toFixed(2),
+          transactions: [...response.data.transactions].map((v) => ({
+            ...v,
+            singleAmountTransaction: v.singleAmountTransaction.toFixed(2),
+          })),
+        };
+
         if (invoiceData.value.xero) {
           axios
             .get(
@@ -13249,8 +13253,9 @@ export default {
         recipientVat.value = invoiceData?.value?.recipientCompany?.companyVatEic
           ? true
           : false;
-        InvoiceTypeOptionToggleValue.value =
-          invoiceData?.value?.invoiceType == "PROFORMA" ? true : false;
+        InvoiceTypeOptionToggleValue.value = !!(
+          invoiceData?.value?.invoiceType == "PROFORMA"
+        );
         saleTypeOptionToggleValue.value =
           invoiceData?.value?.saleType == "GOODS" ? true : false;
         InvoicePayedToggleValue.value =
@@ -13277,7 +13282,6 @@ export default {
           isScheduled.value = false;
         }
         if (invoiceData.value.cronScheduleApi.dayOfWeek) {
-          //  alert(invoiceData.value.cronScheduleApi.dayOfWeek);
           invoiceData.cronScheduleApi.scheduleType =
             invoiceData.value.cronScheduleApi.scheduleType;
           invoiceData.cronScheduleApi.dayOfMonth =
@@ -13343,7 +13347,7 @@ export default {
         companyData.value = response.data;
         supplierID.value = response.data.companyIdentificationNumber;
       })
-      .catch((error) => {});
+      .catch(() => {});
 
     const amountNonVat = (item) => {
       let totalAmountNonVat = item.reduce((acc, ele) => {
@@ -13966,7 +13970,6 @@ export default {
     };
 
     const askForAllPostCode = (val, name) => {
-      console.log("askForAllPostCode");
       askAllModalShow.value = true;
       askAllTaxType.value = val;
       modalName.value = name;
