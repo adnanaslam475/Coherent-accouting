@@ -65,8 +65,8 @@
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary"
-                      >€</sup
-                    >
+                      >$</sup
+                    > 
                     <span
                       class="pricing-basic-value font-weight-bolder text-primary"
                     >
@@ -83,7 +83,7 @@
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                    >€ {{ annualBasic }} / {{ $t("pricing.year") }}</small
+                    >$ {{ annualBasic }} / {{ $t("pricing.year") }}</small
                   >
                 </div>
 
@@ -148,7 +148,7 @@
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary"
-                      >€</sup
+                      >$</sup
                     >
                     <span
                       class="pricing-basic-value font-weight-bolder text-primary"
@@ -168,7 +168,7 @@
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                    >€ {{ annualBeginner }} / {{ $t("pricing.year") }}</small
+                    >$ {{ annualBeginner }} / {{ $t("pricing.year") }}</small
                   >
                 </div>
 
@@ -221,7 +221,7 @@
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary"
-                      >€</sup
+                      >$</sup
                     >
                     <span
                       class="pricing-basic-value font-weight-bolder text-primary"
@@ -241,7 +241,7 @@
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                    >€ {{ annualStarter }} / {{ $t("pricing.year") }}</small
+                    >$ {{ annualStarter }} / {{ $t("pricing.year") }}</small
                   >
                 </div>
                 <!--/ annual plan -->
@@ -296,7 +296,7 @@
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary"
-                      >€</sup
+                      >$</sup
                     >
                     <span
                       class="pricing-basic-value font-weight-bolder text-primary"
@@ -318,7 +318,7 @@
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                    >€ {{ annualEnterprise }} / {{ $t("pricing.year") }}</small
+                    >$ {{ annualEnterprise }} / {{ $t("pricing.year") }}</small
                   >
                 </div>
                 <!--/ annual plan -->
@@ -373,7 +373,7 @@
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary"
-                      >€</sup
+                      >$</sup
                     >
                     <span
                       class="pricing-basic-value font-weight-bolder text-primary"
@@ -393,7 +393,7 @@
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                    >€ {{ annualPlatinum }} / {{ $t("pricing.year") }}</small
+                    >$ {{ annualPlatinum }} / {{ $t("pricing.year") }}</small
                   >
                 </div>
                 <!--/ annual plan -->

@@ -115,7 +115,7 @@
         <!-- Price -->
         <p style="margin-bottom: 0.7rem">
           <b>{{ $t("current_plan.price") }} : </b>
-          {{ currentPlan.planMonthPrice }} € {{ $t("current_plan.per_month") }}
+          {{ currentPlan.planMonthPrice }} $ {{ $t("current_plan.per_month") }}
         </p>
         <!-- limits -->
         <p>
