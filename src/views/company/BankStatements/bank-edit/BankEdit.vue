@@ -130,7 +130,7 @@
                     <b-row>
                       <b-col>
                         <b-form-checkbox v-model="isAccount" name="is-account" @change="checkAccount">
-                          {{ $t("show_accounts") }}xxx
+                          {{ $t("show_accounts") }} 
                         </b-form-checkbox>
                       </b-col>
                     </b-row>
