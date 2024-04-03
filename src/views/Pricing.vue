@@ -373,7 +373,7 @@
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary"
-                      >$</sup
+                      >$Custom</sup
                     >
                     <span
                       class="pricing-basic-value font-weight-bolder text-primary"
@@ -381,19 +381,16 @@
                       <!-- {{
                       monthlyPlanShow ? pricing.platinumPlan.monthlyPrice : pricing.platinumPlan.yearlyPlan.perMonth
                     }} -->
-                      {{
-                        monthlyPlanShow ? monthlyPlatinum : annualPlatinumMonth
-                      }}
                     </span>
                     <sub
                       class="pricing-duration text-body font-medium-1 font-weight-bold"
-                      >/{{ $t("pricing.month") }}</sub
+                      ></sub
                     >
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                    >$ {{ annualPlatinum }} / {{ $t("pricing.year") }}</small
+                    ></small
                   >
                 </div>
                 <!--/ annual plan -->
@@ -406,14 +403,13 @@
                 >
                   <b-list-group-item>
                     <div v-if="data === 'companiess'">
-                      {{ pricing.platinumPlan.companyLimit }}
-                      {{ $t("companiess") }}
+                      {{ "Contact us for this plan"}}
+ 
                     </div>
                     <div v-else-if="data === 'unlimited_ocr_invoices'">
-                      {{ pricing.platinumPlan.documentLimit }}
-                      {{ $t("unlimited_ocr_invoices") }}
+                      {{ "Contact us for this plan"}}
                     </div>
-                    <div v-else>{{ $t("pricing." + data) }}</div>
+                    <div v-else>{{ "Contact us for this plan"}}</div>
                   </b-list-group-item>
                 </b-list-group>
                 <!--/ plan benefit -->
