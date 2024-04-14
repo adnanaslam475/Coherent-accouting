@@ -1517,7 +1517,7 @@
                                         invoiceData.documentType = 'INVOICE';
                                       }
                                     "
-                                    >Bill</b-button
+                                    >Invoice</b-button
                                   >
                                 </b-button-group>
                                 <b-button-group size="md" v-else>
