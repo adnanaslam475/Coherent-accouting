@@ -80,7 +80,7 @@ export default class JwtService {
               "Access token expired:"
             )
           ) {
-            this.refreshToken()
+            this.refreshToken(store.state?.verticalMenu?.xsrf_token)
               .then((r) => {
                 // Update accessToken in localStorage
                 this.setToken(r.data.access_token);
@@ -216,12 +216,12 @@ export default class JwtService {
     });
   }
 
-  refreshToken() {
+  refreshToken(token) {
     let data = new FormData();
     data.append("grant_type", "refresh_token");
     data.append("refresh_token", this.getRefreshToken());
     return this.axiosIns1.post(this.jwtConfig.refreshEndpoint, data, {
-      headers: { "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token },
+      headers: { "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token||token },
     });
   }
 
