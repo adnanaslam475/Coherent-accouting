@@ -35,6 +35,7 @@ export default {
       state.refresh = refresh;
     },
     SET_TOKEN(state, token) {
+      console.log("stststtsts", token);
       state.xsrf_token = token;
     },
     SET_NOTI_REFRESH(state, temp) {

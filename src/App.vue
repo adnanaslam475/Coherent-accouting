@@ -79,6 +79,7 @@ export default {
           console.log("line79", response.data.access_token);
         })
         .catch((error) => {
+          console.log("line82", error.response?.headers);
           store.commit(
             "verticalMenu/SET_TOKEN",
             error.response?.headers["x-xsrf-token"]
