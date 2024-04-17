@@ -140,7 +140,6 @@ export default {
           this.getXsrfToken
         )
         .then((response) => {
-          console.log("jusefortest", response.headers);
           localStorage.setItem(
             "user_token",
             response.data.access_token["x-xsrf-token"]

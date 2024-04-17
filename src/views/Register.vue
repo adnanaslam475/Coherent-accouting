@@ -409,21 +409,25 @@ export default {
             .then((res) => {
               let token = res.data.access_token;
               useJwt
-                .register(token, {
-                  firstname: this.firstname,
-                  lastname: this.lastname,
-                  email: this.userEmail,
-                  password: this.password,
-                  accountType: "COMPANY",
-                  companyAddress: this.companyAddress,
-                  companyName: this.companyName,
-                  companyRegistrationNumber: "test",
-                  country: this.country?.value,
-                  gdpr: this.gdpr,
-                  identifier: "test",
-                  ipAddress: "test",
-                  isoAlpha2Country: "test",
-                })
+                .register(
+                  token,
+                  {
+                    firstname: this.firstname,
+                    lastname: this.lastname,
+                    email: this.userEmail,
+                    password: this.password,
+                    accountType: "COMPANY",
+                    companyAddress: this.companyAddress,
+                    companyName: this.companyName,
+                    companyRegistrationNumber: "test",
+                    country: this.country?.value,
+                    gdpr: this.gdpr,
+                    identifier: "test",
+                    ipAddress: "test",
+                    isoAlpha2Country: "test",
+                  },
+                  this.getXsrfToken
+                )
                 .then((response) => {
                   localStorage.setItem("userData", JSON.stringify(response));
                   this.$toast({

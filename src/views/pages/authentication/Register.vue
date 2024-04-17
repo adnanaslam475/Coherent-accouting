@@ -225,6 +225,7 @@ export default {
       // validation
       required,
       email,
+      xsrfToken: "",
     };
   },
   computed: {
@@ -256,6 +257,9 @@ export default {
     },
     ...mapGetters("verticalMenu", ["getXsrfToken"]),
   },
+  updated() {
+    this.xsrfToken = this.getXsrfToken;
+  },
   methods: {
     async register() {
       if (!this.status) {
@@ -278,21 +282,25 @@ export default {
           .then((res) => {
             let token = res.data.access_token;
             useJwt
-              .register(token, {
-                firstname: this.firstname,
-                lastname: this.lastname,
-                email: this.userEmail,
-                password: this.password,
-                accountType: "COMPANY",
-                companyAddress: "test",
-                companyName: "test",
-                companyRegistrationNumber: "test",
-                country: "test",
-                gdpr: true,
-                identifier: "test",
-                ipAddress: "test",
-                isoAlpha2Country: "test",
-              })
+              .register(
+                token,
+                {
+                  firstname: this.firstname,
+                  lastname: this.lastname,
+                  email: this.userEmail,
+                  password: this.password,
+                  accountType: "COMPANY",
+                  companyAddress: "test",
+                  companyName: "test",
+                  companyRegistrationNumber: "test",
+                  country: "test",
+                  gdpr: true,
+                  identifier: "test",
+                  ipAddress: "test",
+                  isoAlpha2Country: "test",
+                },
+                this.getXsrfToken
+              )
               .then((response) => {
                 useJwt.setToken(response.data.accessToken);
                 useJwt.setRefreshToken(response.data.refreshToken);

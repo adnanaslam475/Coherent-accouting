@@ -152,7 +152,7 @@ export default class JwtService {
   }
 
   login(...args) {
-    console.log("sto", store.state);
+    console.log("sto============", args[1]);
     let data = new FormData();
     for (var key in arguments[0]) {
       if (arguments[0].hasOwnProperty(key)) {
@@ -184,10 +184,12 @@ export default class JwtService {
   }
 
   register(token, ...args) {
+    console.log("args[1]_register----", args[1]);
     let headers = {
       "Content-Type": "application/json",
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
       Accept: "application/json",
+      "X-XSRF-TOKEN": args ? args[1] : "",
     };
     return this.axiosIns2.post(this.jwtConfig.registerEndpoint, ...args, {
       headers,
@@ -221,7 +223,9 @@ export default class JwtService {
     data.append("grant_type", "refresh_token");
     data.append("refresh_token", this.getRefreshToken());
     return this.axiosIns1.post(this.jwtConfig.refreshEndpoint, data, {
-      headers: { "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token||token },
+      headers: {
+        "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token || token,
+      },
     });
   }
 
