@@ -756,7 +756,7 @@ export default {
       //   .then((res) => {
       //     let token = res.data.access_token;
           useJwt
-            .countries(token)
+            .countries()
             .then((response) => {
               response.data.map(function (value) {
                 optionsArr.countries.push({
