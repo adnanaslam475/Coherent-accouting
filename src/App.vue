@@ -138,9 +138,13 @@ export default {
           this.getXsrfToken
         )
         .then((response) => {
+          store.commit(
+            "verticalMenu/SET_TOKEN",
+            response?.data?.access_token["x-xsrf-token"]
+          );
           localStorage.setItem(
             "user_token",
-            response.data.access_token["x-xsrf-token"]
+            response.data.access_token["x-xsrf-token"] || ""
           );
         })
         .catch((error) => {

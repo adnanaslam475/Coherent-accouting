@@ -228,8 +228,9 @@ export default class JwtService {
   }
 
   countries(token) {
+    console.log("this.getToken()", this.getToken());
     let headers = {
-      Authorization: `${this.jwtConfig.tokenType} ${token}`,
+      Authorization: `${this.jwtConfig.tokenType} ${this.getToken() || ""}`,
       "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token,
     };
     return this.axiosIns2.get(this.jwtConfig.countryToken, {

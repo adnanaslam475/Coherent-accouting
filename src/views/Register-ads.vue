@@ -750,15 +750,15 @@ export default {
     },
     populateCountries() {
       var optionsArr = this;
-      useJwt
-        .clientToken(this.getXsrfToken)
+      // useJwt
+      //   .clientToken(this.getXsrfToken)
 
-        .then((res) => {
-          let token = res.data.access_token;
+      //   .then((res) => {
+      //     let token = res.data.access_token;
           useJwt
             .countries(token)
             .then((response) => {
-              response.data.map(function (value, key) {
+              response.data.map(function (value) {
                 optionsArr.countries.push({
                   Country: value.isoAlpha2Country,
                   value: value.isoAlpha2Country,
@@ -777,18 +777,7 @@ export default {
                 },
               });
             });
-        })
-        .catch((error) => {
-          console.log("eeeee782---", error);
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `${error.errorMessage}`,
-              icon: "EditIcon",
-              variant: "error",
-            },
-          });
-        });
+        
     },
   },
   mounted() {
