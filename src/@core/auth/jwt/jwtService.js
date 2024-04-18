@@ -184,7 +184,7 @@ export default class JwtService {
   }
 
   register(token, ...args) {
-    console.log("args[1]_register----", args[1]);
+    console.log("args[1]_register----", args[1], store.state);
     let headers = {
       "Content-Type": "application/json",
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
