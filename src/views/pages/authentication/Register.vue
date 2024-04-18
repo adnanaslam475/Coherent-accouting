@@ -257,9 +257,7 @@ export default {
     },
     ...mapGetters("verticalMenu", ["getXsrfToken"]),
   },
-  updated() {
-    this.xsrfToken = this.getXsrfToken;
-  },
+
   methods: {
     async register() {
       if (!this.status) {
@@ -280,7 +278,6 @@ export default {
         useJwt
           .clientToken(this.getXsrfToken)
           .then((res) => {
-
             let token = res.data.access_token;
             useJwt
               .register(

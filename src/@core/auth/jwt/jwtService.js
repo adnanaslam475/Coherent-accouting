@@ -3,7 +3,6 @@ import axios from "axios";
 var qs = require("qs");
 var FormData = require("form-data");
 import router from "@/router";
-import { getCookieValue } from "@/auth/utils";
 import store from "@/store";
 
 export default class JwtService {
@@ -152,7 +151,6 @@ export default class JwtService {
   }
 
   login(...args) {
-    console.log("sto============", args[1]);
     let data = new FormData();
     for (var key in arguments[0]) {
       if (arguments[0].hasOwnProperty(key)) {
@@ -184,7 +182,7 @@ export default class JwtService {
   }
 
   register(token, ...args) {
-    console.log("args[1]_register----", args[1], store.state);
+    console.log(" register----", store.state);
     let headers = {
       "Content-Type": "application/json",
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
@@ -232,6 +230,7 @@ export default class JwtService {
   countries(token) {
     let headers = {
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
+      "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token,
     };
     return this.axiosIns2.get(this.jwtConfig.countryToken, {
       headers,

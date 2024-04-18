@@ -490,11 +490,11 @@ export default {
             });
           })
           .catch((error) => {
-            //   this.$refs.registerForm.setErrors(error)
+            console.log("eroere", error);
             this.$toast({
               component: ToastificationContent,
               props: {
-                title: `${error}`,
+                title: `${error}  `,
                 icon: "EditIcon",
                 variant: "error",
               },
@@ -502,11 +502,10 @@ export default {
           });
       })
       .catch((error) => {
-        // this.$refs.registerForm.setErrors(error)
         this.$toast({
           component: ToastificationContent,
           props: {
-            title: `${error.errorMessage}`,
+            title: `${error.errorMessage}  `,
             icon: "EditIcon",
             variant: "error",
           },

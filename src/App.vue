@@ -57,77 +57,10 @@ export default {
     setTimeout(() => {
       axios.defaults.headers["X-XSRF-TOKEN"] = getCookieValue("XSRF-TOKEN");
     }, 0);
-    const t = localStorage.getItem("accessToken");
-
-    // if (!localStorage.getItem("user_token")) {
-    setTimeout(() => {
-      useJwt
-        .login(
-          {
-            grant_type: "password",
-            username: "amazon_6011_@abv.bg",
-            password: "1234",
-          },
-          this.getXsrfToken
-        )
-        .then((response) => {
-          localStorage.setItem(
-            "user_token",
-            response.data.access_token["x-xsrf-token"]
-          );
-          axios.defaults.headers["X-XSRF-TOKEN"] =
-            response?.headers["x-xsrf-token"];
-        })
-        .catch((error) => {
-          axios.defaults.headers["X-XSRF-TOKEN"] =
-            error.response?.headers["x-xsrf-token"];
-          store.commit(
-            "verticalMenu/SET_TOKEN",
-            error.response?.headers["x-xsrf-token"]
-          );
-        })
-        .finally(() => {});
-    }, 50);
-
-    // }
-    axios
-      .get(axios.defaults.baseURL)
-      .then((r) => {})
-      .catch((e) => {});
-    if (t) {
-      axios
-        .get(`${axios.defaults.baseURL}/account/api/maintenance/health`)
-        .then((res) => {
-          this.isUnderMaintenance =
-            res.status === 500 || res.data.isUnderMaintenance;
-          if (res.status === 500 || res.data.isUnderMaintenance) {
-            router.push("/under-maintenance");
-          }
-        })
-        .catch((e) => {
-          this.isUnderMaintenance = true;
-          router.push("/under-maintenance");
-        })
-        .finally(() => {});
-      axios
-        .get(`${axios.defaults.baseURL}/index/api/maintenance/health`)
-        .then((res) => {
-          if (
-            this.isUnderMaintenance &&
-            (res.data.isUnderMaintenance || res.status == 500)
-          ) {
-            router.push("/under-maintenance");
-          }
-        })
-        .catch((e) => {
-          router.push("/under-maintenance");
-        })
-        .finally(() => {});
-    }
-  },
-  created() {
     // const t = localStorage.getItem("accessToken");
-    // if (!localStorage.getItem("user_token")) {
+
+    // // if (!localStorage.getItem("user_token")) {
+    // setTimeout(() => {
     //   useJwt
     //     .login(
     //       {
@@ -142,15 +75,21 @@ export default {
     //         "user_token",
     //         response.data.access_token["x-xsrf-token"]
     //       );
+    //       axios.defaults.headers["X-XSRF-TOKEN"] =
+    //         response?.headers["x-xsrf-token"];
     //     })
     //     .catch((error) => {
+    //       axios.defaults.headers["X-XSRF-TOKEN"] =
+    //         error.response?.headers["x-xsrf-token"];
     //       store.commit(
     //         "verticalMenu/SET_TOKEN",
     //         error.response?.headers["x-xsrf-token"]
     //       );
     //     })
     //     .finally(() => {});
-    // }
+    // }, 50);
+
+    // // }
     // axios
     //   .get(axios.defaults.baseURL)
     //   .then((r) => {})
@@ -185,6 +124,67 @@ export default {
     //     })
     //     .finally(() => {});
     // }
+  },
+  created() {
+    const t = localStorage.getItem("accessToken");
+    if (!this.getXsrfToken) {
+      useJwt
+        .login(
+          {
+            grant_type: "password",
+            username: "amazon_6011_@abv.bg",
+            password: "1234",
+          },
+          this.getXsrfToken
+        )
+        .then((response) => {
+          localStorage.setItem(
+            "user_token",
+            response.data.access_token["x-xsrf-token"]
+          );
+        })
+        .catch((error) => {
+          store.commit(
+            "verticalMenu/SET_TOKEN",
+            error.response?.headers["x-xsrf-token"]
+          );
+        })
+        .finally(() => {});
+    }
+    axios
+      .get(axios.defaults.baseURL)
+      .then((r) => {})
+      .catch((e) => {});
+    if (t) {
+      axios
+        .get(`${axios.defaults.baseURL}/account/api/maintenance/health`)
+        .then((res) => {
+          this.isUnderMaintenance =
+            res.status === 500 || res.data.isUnderMaintenance;
+          if (res.status === 500 || res.data.isUnderMaintenance) {
+            router.push("/under-maintenance");
+          }
+        })
+        .catch((e) => {
+          this.isUnderMaintenance = true;
+          router.push("/under-maintenance");
+        })
+        .finally(() => {});
+      axios
+        .get(`${axios.defaults.baseURL}/index/api/maintenance/health`)
+        .then((res) => {
+          if (
+            this.isUnderMaintenance &&
+            (res.data.isUnderMaintenance || res.status == 500)
+          ) {
+            router.push("/under-maintenance");
+          }
+        })
+        .catch((e) => {
+          router.push("/under-maintenance");
+        })
+        .finally(() => {});
+    }
   },
 
   beforeCreate() {
