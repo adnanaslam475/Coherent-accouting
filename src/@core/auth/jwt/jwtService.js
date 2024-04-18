@@ -189,7 +189,7 @@ export default class JwtService {
       "Content-Type": "application/json",
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
       Accept: "application/json",
-      "X-XSRF-TOKEN": args ? args[1] : "",
+      "X-XSRF-TOKEN": store.state.verticalMenu?.xsrf_token,
     };
     return this.axiosIns2.post(this.jwtConfig.registerEndpoint, ...args, {
       headers,

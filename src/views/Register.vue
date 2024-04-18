@@ -403,7 +403,6 @@ export default {
 
       this.$refs.registerForm.validate().then((success) => {
         if (success) {
-          console.log("store", store);
           useJwt
             .clientToken(this.getXsrfToken)
 
