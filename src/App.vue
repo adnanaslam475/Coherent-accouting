@@ -58,7 +58,6 @@ export default {
       axios.defaults.headers["X-XSRF-TOKEN"] = getCookieValue("XSRF-TOKEN");
     }, 0);
     const t = localStorage.getItem("accessToken");
-    console.log("getCookieValue", getCookieValue("XSRF-TOKEN"));
 
     // if (!localStorage.getItem("user_token")) {
     setTimeout(() => {
@@ -76,10 +75,12 @@ export default {
             "user_token",
             response.data.access_token["x-xsrf-token"]
           );
-          console.log("line79", response.data.access_token);
+          axios.defaults.headers["X-XSRF-TOKEN"] =
+            response?.headers["x-xsrf-token"];
         })
         .catch((error) => {
-          console.log("line82", error.response?.headers);
+          axios.defaults.headers["X-XSRF-TOKEN"] =
+            error.response?.headers["x-xsrf-token"];
           store.commit(
             "verticalMenu/SET_TOKEN",
             error.response?.headers["x-xsrf-token"]

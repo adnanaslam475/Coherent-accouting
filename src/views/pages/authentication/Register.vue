@@ -277,9 +277,12 @@ export default {
 
       const success = await this.$refs.registerForm.validate();
       if (success) {
+        console.log("store", store);
         useJwt
           .clientToken(this.getXsrfToken)
           .then((res) => {
+            console.log("store2", store);
+
             let token = res.data.access_token;
             useJwt
               .register(
