@@ -150,7 +150,6 @@
                     #default="{ errors }"
                     name="registrationNumber"
                     vid="registrationNumber"
-                    rules="required"
                   >
                     <b-form-input
                       id="register-registrationNumber"
@@ -173,7 +172,6 @@
                     #default="{ errors }"
                     name="vatNumber"
                     vid="vatNumber"
-                    rules="required"
                   >
                     <b-form-input
                       id="register-vatNumber"
