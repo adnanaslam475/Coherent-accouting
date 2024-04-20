@@ -129,7 +129,7 @@ const router = new VueRouter({
       },
     },
     {
-      path: "/account/reset-password",
+      path: "/reset-password",
       name: "auth-reset-password-v1",
       component: () => import("@/views/ResetPassword-v1.vue"),
       meta: {
