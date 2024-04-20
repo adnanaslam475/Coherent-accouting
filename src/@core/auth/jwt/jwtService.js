@@ -182,7 +182,6 @@ export default class JwtService {
   }
 
   register(token, ...args) {
-    console.log(" register----", store.state);
     let headers = {
       "Content-Type": "application/json",
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
@@ -197,6 +196,7 @@ export default class JwtService {
   resetPasswordRequest(token, ...args) {
     let headers = {
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
+      "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token || token,
     };
     return this.axiosIns2.post(
       this.jwtConfig.resetPasswordRequestEndpoint,
@@ -228,7 +228,6 @@ export default class JwtService {
   }
 
   countries(token) {
-    console.log("this.getToken()", this.getToken());
     let headers = {
       // Authorization: `${this.jwtConfig.tokenType} ${this.getToken() || ""}`,
       // "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token,
