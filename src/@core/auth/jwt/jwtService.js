@@ -206,10 +206,11 @@ export default class JwtService {
       }
     );
   }
-
+  
   resetPassword(token, ...args) {
     let headers = {
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
+      "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token || token,
     };
     return this.axiosIns2.post(this.jwtConfig.resetPasswordEndpoint, ...args, {
       headers,
