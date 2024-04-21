@@ -188,42 +188,43 @@ export default {
       this.$refs.simpleRules.validate().then((success) => {
         if (success) {
           this.loading = true;
+          console.log("comerherer191");
+          // useJwt
+          //   .clientToken(this.getXsrfToken)
+          //   .then((res) => {
+          //     let token = res.data.access_token;
           useJwt
-            .clientToken(this.getXsrfToken)
-            .then((res) => {
-              let token = res.data.access_token;
-              useJwt
-                .resetPassword(token, {
-                  confirmPassword: this.cPassword,
-                  password: this.password,
-                  token: window?.location?.search?.split("=")[1]
-                    ? window.location.search.split("=")[1]
-                    : "",
-                })
-                .then((response) => {
-                  this.loading = false;
-                  // this.$toast({
-                  //     component: ToastificationContent,
-                  //     props: {
-                  //     title: `resetPasswordApi hit successfully`,
-                  //     icon: 'EditIcon',
-                  //     variant: 'success',
-                  //     },
-                  // })
-                  return this.$router.push({ name: "login" });
-                })
-                .catch((error) => {
-                  this.loading = false;
-                  //   this.$refs.registerForm.setErrors(error)
-                  this.$toast({
-                    component: ToastificationContent,
-                    props: {
-                      title: `${error.response.data.errorMessage}`,
-                      icon: "EditIcon",
-                      variant: "error",
-                    },
-                  });
-                });
+            .resetPassword(token, {
+              confirmPassword: this.cPassword,
+              password: this.password,
+              token: window?.location?.search?.split("=")[1]
+                ? window.location.search.split("=")[1]
+                : "",
+            })
+            .then((response) => {
+              this.loading = false;
+              // this.$toast({
+              //     component: ToastificationContent,
+              //     props: {
+              //     title: `resetPasswordApi hit successfully`,
+              //     icon: 'EditIcon',
+              //     variant: 'success',
+              //     },
+              // })
+              return this.$router.push({ name: "login" });
+            })
+            .catch((error) => {
+              this.loading = false;
+              //   this.$refs.registerForm.setErrors(error)
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `${error.response.data.errorMessage}`,
+                  icon: "EditIcon",
+                  variant: "error",
+                },
+              });
+              // });
             })
             .catch((error) => {
               // this.$refs.registerForm.setErrors(error)
