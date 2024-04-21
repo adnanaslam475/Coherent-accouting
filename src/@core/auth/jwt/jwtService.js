@@ -177,7 +177,7 @@ export default class JwtService {
       grant_type: "client_credentials",
     });
     return this.axiosIns1.post(this.jwtConfig.clientToken, data, {
-      headers: { "X-XSRF-TOKEN": t },
+      headers: { "X-XSRF-TOKEN": store.state.verticalMenu?.xsrf_token || t },
     });
   }
 
@@ -206,7 +206,7 @@ export default class JwtService {
       }
     );
   }
-  
+
   resetPassword(token, ...args) {
     let headers = {
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
