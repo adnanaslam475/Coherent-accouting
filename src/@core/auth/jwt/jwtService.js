@@ -13,6 +13,7 @@ export default class JwtService {
     baseURL: "https://coherent-accounting.com",
     // baseURL: "https://167.86.93.80",
     headers: {
+      "Origin": "https://coherent-accounting.com",
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
       "Access-Control-Allow-Origin": "https://coherent-accounting.com",
@@ -25,6 +26,11 @@ export default class JwtService {
     // baseURL: "https://167.86.93.80",
     baseURL: "https://coherent-accounting.com",
     "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token,
+    headers: {
+      "Origin": "https://coherent-accounting.com",
+      "Access-Control-Allow-Origin": "https://coherent-accounting.com",
+      "Access-Control-Allow-Credentials": true,
+    },
   });
 
   axiosIns4 = axios.create({
@@ -160,7 +166,10 @@ export default class JwtService {
     let headers = {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
+      "Origin": "https://coherent-accounting.com",
       Authorization: "Basic YWNtZTphY21lc2VjcmV0",
+      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Origin": "https://coherent-accounting.com",
       "X-XSRF-TOKEN": args ? args[1] : "",
     };
 
@@ -186,6 +195,7 @@ export default class JwtService {
       "Content-Type": "application/json",
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
       Accept: "application/json",
+      "Origin": "https://coherent-accounting.com",
       "X-XSRF-TOKEN": store.state.verticalMenu?.xsrf_token,
     };
     return this.axiosIns2.post(this.jwtConfig.registerEndpoint, ...args, {
