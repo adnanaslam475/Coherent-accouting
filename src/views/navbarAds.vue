@@ -42,6 +42,9 @@
           <b-nav-item href="https://www.freeprivacypolicy.com/live/c542ed07-08d4-496e-acce-a6f745585517" target="_blank">
             Privacy policy
           </b-nav-item>
+          <b-nav-item href="https://calendly.com/andrew_belonogov/ca-call" target="_blank">
+            BOOK FREE meeting
+          </b-nav-item>
           <b-nav-item href="/why-choose-us">
             {{ $t("navbar.why_choose_use") }}
           </b-nav-item>
