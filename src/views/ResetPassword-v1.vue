@@ -133,6 +133,7 @@ import {
 import { required } from "@validations";
 import useJwt from "@/auth/jwt/useJwt";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import store from "@/store";
 
 export default {
   components: {
@@ -194,7 +195,7 @@ export default {
           //   .then((res) => {
           //     let token = res.data.access_token;
           useJwt
-            .resetPassword(token, {
+            .resetPassword(this.getXsrfToken, {
               confirmPassword: this.cPassword,
               password: this.password,
               token: window?.location?.search?.split("=")[1]
@@ -203,6 +204,7 @@ export default {
             })
             .then((response) => {
               this.loading = false;
+              console.log("reeee", response);
               // this.$toast({
               //     component: ToastificationContent,
               //     props: {
