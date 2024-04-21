@@ -157,8 +157,12 @@ export default {
     }
     axios
       .get(axios.defaults.baseURL)
-      .then((r) => {})
-      .catch((e) => {});
+      .then((r) => {
+        console.log("res161", r);
+      })
+      .catch((e) => {
+        console.log("err164", e);
+      });
     if (t) {
       axios
         .get(`${axios.defaults.baseURL}/account/api/maintenance/health`)

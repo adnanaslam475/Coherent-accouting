@@ -218,10 +218,11 @@ export default class JwtService {
   }
 
   resetPassword(token, ...args) {
-    let headers = {
+    const headers = {
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
       "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token || token,
     };
+    console.log("store.state", store.state);
     return this.axiosIns2.post(this.jwtConfig.resetPasswordEndpoint, ...args, {
       headers,
     });

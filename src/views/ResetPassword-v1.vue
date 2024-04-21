@@ -189,7 +189,7 @@ export default {
       this.$refs.simpleRules.validate().then((success) => {
         if (success) {
           this.loading = true;
-          console.log("comerherer191");
+          console.log("comerherer191", store.state);
           // useJwt
           //   .clientToken(this.getXsrfToken)
           //   .then((res) => {
