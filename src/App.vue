@@ -138,6 +138,7 @@ export default {
           this.getXsrfToken
         )
         .then((response) => {
+          console.log("this141", response);
           store.commit(
             "verticalMenu/SET_TOKEN",
             response?.data?.access_token["x-xsrf-token"]
@@ -148,6 +149,7 @@ export default {
           );
         })
         .catch((error) => {
+          console.log("this151", error);
           store.commit(
             "verticalMenu/SET_TOKEN",
             error.response?.headers["x-xsrf-token"]
