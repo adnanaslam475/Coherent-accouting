@@ -218,12 +218,9 @@ export default class JwtService {
   }
 
   resetPassword(token, ...args) {
-    const params = new URLSearchParams(document.location.search);
-    const xsrf_token = params.get("xsrf");
-
     const headers = {
       Authorization: `${this.jwtConfig.tokenType} ${token}`,
-      "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token || xsrf_token,
+      "X-XSRF-TOKEN": store.state?.verticalMenu?.xsrf_token || token,
     };
     return this.axiosIns2.post(this.jwtConfig.resetPasswordEndpoint, ...args, {
       headers,

@@ -194,13 +194,15 @@ export default {
           //   .clientToken(this.getXsrfToken)
           //   .then((res) => {
           //     let token = res.data.access_token;
+          const params = new URLSearchParams(document.location.search);
+          const token = params.get("token");
+          const xsrf = params.get("xsrf");
+
           useJwt
-            .resetPassword(this.getXsrfToken, {
+            .resetPassword(xsrf, {
               confirmPassword: this.cPassword,
               password: this.password,
-              token: window?.location?.search?.split("=")[1]
-                ? window.location.search.split("=")[1]
-                : "",
+              token
             })
             .then((response) => {
               this.loading = false;
