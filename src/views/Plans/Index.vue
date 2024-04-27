@@ -206,20 +206,17 @@
 
             <!-- Starter Plan -->
             <!-- Starter Plan -->
-            <b-col md="4">
+            <!-- <b-col md="4">
               <b-card align="center" class="pb-1">
-                <!-- img -->
                 <b-img
                   v-if="aeroplanImage"
                   :src="aeroplanImage"
                   class="mb-2 w-25"
                   alt="starter svg img"
                 />
-                <!--/ img -->
                 <h3>{{ pricing.starterPlan.title }}</h3>
                 <b-card-text>{{ $t("pricing.big_organisations") }}</b-card-text>
 
-                <!-- annual plan -->
                 <div class="annual-plan">
                   <div class="plan-price mt-2">
                     <sup class="font-medium-1 font-weight-bold text-primary"
@@ -243,9 +240,6 @@
                     >$ {{ annualStarter }} / {{ $t("pricing.year") }}</small
                   >
                 </div>
-                <!--/ annual plan -->
-
-                <!-- plan benefit -->
                 <b-list-group
                   v-for="(data, index) in pricing.starterPlan.planBenefits"
                   :key="index"
@@ -263,9 +257,6 @@
                     <div v-else>{{ $t("pricing." + data) }}</div>
                   </b-list-group-item>
                 </b-list-group>
-                <!--/ plan benefit -->
-
-                <!-- buttons -->
                 <b-button
                   v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                   block
@@ -276,7 +267,7 @@
                   {{ $t("pricing.upgrade") }}
                 </b-button>
               </b-card>
-            </b-col>
+            </b-col> -->
 
             <!-- Enterprise Plan -->
             <b-col md="4">
@@ -385,14 +376,12 @@
                     </span>
                     <sub
                       class="pricing-duration text-body font-medium-1 font-weight-bold"
-                      ></sub
-                    >
+                    ></sub>
                   </div>
                   <small
                     v-show="!monthlyPlanShow"
                     class="annual-pricing text-muted"
-                    ></small
-                  >
+                  ></small>
                 </div>
                 <!--/ annual plan -->
 
@@ -404,12 +393,12 @@
                 >
                   <b-list-group-item>
                     <div v-if="data === 'companiess'">
-                      {{ "Contact us for this plan"}}
+                      {{ "Contact us for this plan" }}
                     </div>
                     <div v-else-if="data === 'unlimited_ocr_invoices'">
-                      {{"Contact us for this plan"}}
+                      {{ "Contact us for this plan" }}
                     </div>
-                    <div v-else>{{"Contact us for this plan"}}</div>
+                    <div v-else>{{ "Contact us for this plan" }}</div>
                   </b-list-group-item>
                 </b-list-group>
 

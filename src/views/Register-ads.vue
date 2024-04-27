@@ -675,6 +675,8 @@ export default {
             .clientToken(this.getXsrfToken)
             .then((res) => {
               let token = res.data.access_token;
+              const params = new URLSearchParams(document.location.search);
+              const affiliateId = params.get("affiliateId");
               useJwt
                 .getIpAddress()
                 .then((res) => {
@@ -701,9 +703,9 @@ export default {
                       identifier: "",
                       ipAddress: IpAddress,
                       isoAlpha2Country: this.country?.value,
-                      affiliateId: this.affiliateId,
+                      affiliateId: this.affiliateId || affiliateId,
                     })
-                    .then((response) => {
+                    .then(() => {
                       this.loading = false;
                       return this.$router.push({ name: "verify-email" });
                     })
@@ -753,29 +755,28 @@ export default {
 
       //   .then((res) => {
       //     let token = res.data.access_token;
-          useJwt
-            .countries()
-            .then((response) => {
-              response.data.map(function (value) {
-                optionsArr.countries.push({
-                  Country: value.isoAlpha2Country,
-                  value: value.isoAlpha2Country,
-                  text: value.country,
-                  src: value.isoAlpha2Country.toLocaleLowerCase(),
-                });
-              });
-            })
-            .catch((error) => {
-              this.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: `${error}`,
-                  icon: "EditIcon",
-                  variant: "error",
-                },
-              });
+      useJwt
+        .countries()
+        .then((response) => {
+          response.data.map(function (value) {
+            optionsArr.countries.push({
+              Country: value.isoAlpha2Country,
+              value: value.isoAlpha2Country,
+              text: value.country,
+              src: value.isoAlpha2Country.toLocaleLowerCase(),
             });
-        
+          });
+        })
+        .catch((error) => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `${error}`,
+              icon: "EditIcon",
+              variant: "error",
+            },
+          });
+        });
     },
   },
   mounted() {
